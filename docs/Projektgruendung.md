@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 1.1 | 29.09.2026 | Josef Walter – erstellt mit KI-Unterstützung |
+| 1.2 | 29.09.2026 | Josef Walter – erstellt mit KI-Unterstützung |
 
 ## 1. Zweck
 
@@ -48,11 +48,23 @@ UX- und Fachentscheidungen werden darauf geprüft, ob daraus neue Anforderungen 
 - Dashboard „small and simple“,
 - digitaler und analoger Raum als gemeinsame Verbreitungslogik.
 
-## 5. G1 – bisher verbindlich entschiedener MVP-Rahmen
+## 5. G1 – Produktumfang und MVP
 
-Das MVP ist die erste wirklich produktiv betreibbare FIB-Version. Es wird nicht auf Kosten von Datenqualität, Quellenbindung, Redaktionsworkflow, Sicherheit, stabilen URLs oder fachlicher Struktur verkleinert. Gestaffelt werden vor allem Komfortfunktionen und zusätzliche Automatisierungen, soweit sie nicht zum Kernnutzen von FIB gehören.
+Das MVP ist die erste wirklich produktiv betreibbare FIB-Version. Es wird nicht auf Kosten von Datenqualität, Quellenbindung, Redaktionsworkflow, Sicherheit, stabilen URLs oder fachlicher Struktur verkleinert.
 
-### 5.1 Quellenmonitor und KI-gestützte Inhaltserstellung
+### 5.1 MVP-Grundsatz
+
+Zum MVP gehören alle Funktionen und Strukturen, die:
+
+- den Kernnutzen von FIB ausmachen,
+- die laufende Redaktion wesentlich entlasten,
+- das Datenmodell oder die langfristige Informationsarchitektur prägen,
+- für einen sicheren und nachvollziehbaren Produktivbetrieb erforderlich sind,
+- oder später nur mit unverhältnismäßigem Umbau nachgerüstet werden könnten.
+
+Nach dem Go-live ausgebaut werden vor allem Komfortfunktionen, zusätzliche Kanäle und Automatisierungen, deren spätere Ergänzung die Grundarchitektur nicht verändert.
+
+### 5.2 Quellenmonitor und KI-gestützte Inhaltserstellung
 
 Die automatische Erstellung redaktioneller Entwürfe aus Fundstellen ist ein **Kernfeature von FIB und Bestandteil des MVP**.
 
@@ -83,22 +95,122 @@ Dieser Grundsatz gilt analog für:
 
 „Unsere Einordnung“ bleibt trotz KI-Unterstützung eine ausdrücklich politische, redaktionell verantwortete Ebene und wird nicht automatisch ohne Freigabe veröffentlicht.
 
-### 5.2 Freie Besucherfragen
+### 5.3 Funktionsstaffelung
+
+#### MVP – zum ersten produktiven Go-live
+
+- öffentliche Presseschau / Beiträge,
+- Themen,
+- Sitzungen,
+- Quellen und strukturierte Quellenrollen,
+- Bezugsobjekte und explizit geprüfte Beziehungen,
+- Kategorien, Orte und fachliche Schlagworte,
+- Aktualisierungs- und Versionshistorie,
+- stabile öffentliche URLs und Direktlinks,
+- responsive und mobil optimierte Oberfläche,
+- überarbeitete grundlegende UX und Informationsarchitektur,
+- Suche und grundlegende Filter,
+- Redaktionssystem,
+- Benutzerkonten, Rollen und Freigabeworkflow,
+- automatische Quellenbeobachtung und Fundstellenerkennung,
+- KI-gestützte Relevanzprüfung und Zuordnung,
+- automatische Entwurfserstellung für Beiträge und Aktualisierungen,
+- KI-gestützte Themenanlage und Themenfortschreibung,
+- KI-Vorschläge für „Unsere Einordnung“ mit zwingender redaktioneller Freigabe,
+- vorbereitete „Mehr wissen?“-Fragen und gespeicherte Antworten,
+- strukturierte Trennung von Sachinformation und „Unsere Einordnung“,
+- Bilder und Bildmetadaten,
+- PWA-Grundfunktion,
+- „Neu seit letztem Besuch“ ohne Benutzerkonto,
+- Web Push nach Opt-in,
+- Teilen, Social Preview und Drucken/PDF,
+- Info-/Transparenzfunktion je Beitrag und „Über FIB“,
+- technische SEO-Grundlagen einschließlich sprechender URLs, Meta-Daten, Canonical, Sitemap und strukturierter Daten,
+- grundlegende datensparsame Erfolgsmessung,
+- Marketing-/Verbreitungsranking,
+- kompaktes internes Dashboard für Betrieb, Nutzung und Kosten,
+- modellunabhängige KI-Abstraktionsschicht,
+- konfigurierbare Kostenlimits,
+- Datenschutz-Grundkonzept,
+- produktives Logging in erforderlichem und datensparsamem Umfang,
+- Backup/Restore,
+- technisches Monitoring,
+- mindestens zwei technische Administratoren,
+- organisationsfähige Eigentums- und Secrets-Struktur,
+- Datenqualitätsprüfung und Migration des relevanten Demonstratorbestands.
+
+#### Unmittelbare Ausbaustufe nach Go-live
+
+- freie Besucherfragen mit Live-KI,
+- differenziertere Push-Präferenzen nach Themen und Häufigkeit,
+- App-Icon-Badge soweit technisch unterstützt,
+- eigener FIB-Newsletter bzw. weitergehende Newsletter-Integration,
+- Mastodon-Integration und automatisierte Teaser,
+- weitergehende Automatisierung von Themenfortschreibung und Verknüpfungen,
+- erweiterte Kanal- und Kampagnenauswertung,
+- weitergehende Erfolgsmessung auf Basis der ersten Nutzungsdaten,
+- zusätzliche Komfortfunktionen im Redaktionssystem,
+- weitergehende automatische Qualitäts- und Konsistenzprüfungen,
+- begrenztes Offline-Lesen bereits geladener öffentlicher Inhalte, sofern mit vertretbarem Aufwand möglich.
+
+#### Spätere Erweiterungen / derzeit nicht MVP
+
+- vollständige Offline-Nutzung mit bidirektionaler Synchronisation und Konfliktlösung,
+- komplexe Personalisierung für öffentliche Nutzer,
+- umfangreiche Nutzerkonten für Besucher,
+- komfortables Admin-UI für Providerwechsel, sofern die technische Umschaltung zunächst einfacher möglich ist,
+- Signal-Integration, sofern später ein klarer fachlicher und technischer Nutzen nachgewiesen wird,
+- weitere Verbreitungs- oder Social-Media-Kanäle ohne belegten Mehrwert,
+- zusätzliche Funktionen, die erst aus realer Nutzung und Baseline-Messung abgeleitet werden.
+
+### 5.4 Ausdrückliche Nicht-Ziele der ersten Version
+
+Das MVP soll nicht:
+
+- eine allgemeine regionale Nachrichtenplattform werden,
+- vollständig autonom veröffentlichen,
+- die redaktionelle Verantwortung ersetzen,
+- eine komplexe Social-Media-Suite werden,
+- vollständige Offline-Synchronisation anbieten,
+- öffentliche Benutzerkonten als Voraussetzung für das Lesen benötigen,
+- personenbezogene Nutzungsprofile für Marketing aufbauen,
+- jede theoretisch mögliche KI-Funktion bereits zum Go-live enthalten.
+
+### 5.5 Wichtigste Aufwandstreiber
+
+Für die weitere Gründungsphase werden insbesondere folgende Aufwandstreiber berücksichtigt:
+
+1. automatische, qualitativ belastbare Entwurfserstellung aus heterogenen Quellen,
+2. Erkennung „neuer Beitrag versus Aktualisierung eines bestehenden Vorgangs“,
+3. Themenfortschreibung und strukturierte Beziehungen,
+4. klare Trennung und redaktionelle Verantwortung von Sachinformation und politischer Einordnung,
+5. neue UX / Informationsarchitektur mit Auswirkungen auf das Datenmodell,
+6. Redaktionsworkflow mit Rollen und Rechten,
+7. PWA und Web Push,
+8. SEO-taugliche stabile öffentliche Seiten,
+9. Migration und Datenqualitätsprüfung des Demonstratorbestands,
+10. modellunabhängige KI-Schicht mit Kosten- und Qualitätskontrolle,
+11. produktiver Betrieb mit Backup, Restore, Monitoring und organisationsgebundener Administration.
+
+### 5.6 Freie Besucherfragen
 
 Freie Live-KI-Fragen sind **kein zwingender Bestandteil des ersten Go-live**. Das MVP enthält vorbereitete „Mehr wissen?“-Fragen und gespeicherte Antworten. Die Architektur wird so angelegt, dass freie Fragen später ergänzt werden können.
 
-### 5.3 Web Push
+### 5.7 Web Push
 
 Web Push gehört zum **MVP**, weil freiwillige Bindung ein ausdrückliches Produktziel von FIB ist. Erweiterte Präferenzen und Komfortfunktionen können nach dem ersten Go-live ausgebaut werden.
 
-### 5.4 Offline-Fähigkeit
+### 5.8 Offline-Fähigkeit
 
-Eine vollständige Offline-Anwendung mit bidirektionaler Synchronisation ist **kein MVP-Ziel**. Redaktion und Datenpflege bleiben online. Begrenztes Offline-Lesen bereits geladener öffentlicher Inhalte kann im Rahmen der PWA vorgesehen werden, sofern dies ohne unverhältnismäßige Zusatzkomplexität möglich ist.
+Eine vollständige Offline-Anwendung mit bidirektionaler Synchronisation ist **kein MVP-Ziel**. Redaktion und Datenpflege bleiben online. Begrenztes Offline-Lesen bereits geladener öffentlicher Inhalte kann nach dem Go-live ergänzt werden, sofern dies ohne unverhältnismäßige Zusatzkomplexität möglich ist.
+
+### 5.9 Abschluss G1
+
+G1 – Produktumfang und MVP ist abgeschlossen.
+
+Die genaue Ausgestaltung einzelner MVP-Funktionen wird in den folgenden Gründungspaketen präzisiert, insbesondere in G2 UX/Fachfunktionen, G3 Datenmodell, G4 Sicherheit/Datenschutz und G5 Architektur.
 
 ## 6. Offene Gründungspakete
-
-### G1 – Produktumfang und MVP
-Die Kernentscheidungen sind getroffen. Die vollständige Funktionsliste wird noch abschließend den Stufen MVP, unmittelbar danach und spätere Ausbaustufe zugeordnet.
 
 ### G2 – UX, Informationsarchitektur und Fachfunktionen
 Nutzeraufgaben, Navigation, Beiträge, Themen, Sitzungen, Suche, Filter, „Mehr wissen?“, Aktualisierungen, Historie und mobile Bedienung.
@@ -137,7 +249,7 @@ Das öffentliche Echtsystem soll auf Infrastruktur der GRÜNEN betrieben werden,
 
 ## 8. Reihenfolge
 
-1. G1 Produktumfang und MVP
+1. G1 Produktumfang und MVP – abgeschlossen
 2. G2 UX / Informationsarchitektur / Fachfunktionen
 3. G3 Datenanforderungen / Datenmodell
 4. G4 Schutzbedarf / Datenschutz / Offline
@@ -158,5 +270,6 @@ Die Projektgründungsphase ist abgeschlossen, wenn die wesentlichen Grundentsche
 
 | Version | Datum | Änderung |
 |---|---|---|
+| 1.2 | 29.09.2026 | G1 abgeschlossen: vollständige MVP-/Ausbaustufen-Abgrenzung, Nicht-Ziele und zentrale Aufwandstreiber festgelegt. |
 | 1.1 | 29.09.2026 | G1 konkretisiert: automatische Entwurfserstellung für Beiträge, Themen und Einordnungen als MVP-Kernfeature; Web Push im MVP; freie Live-Fragen und vollständige Offline-Synchronisation nicht im ersten Go-live. |
 | 1.0 | 29.09.2026 | Projektgründungsrahmen für das FIB-Echtsystem angelegt. |
