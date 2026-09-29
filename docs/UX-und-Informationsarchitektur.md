@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 1.2 | 29.09.2026 | Josef Walter – erstellt mit KI-Unterstützung |
+| 1.3 | 29.09.2026 | Josef Walter – erstellt mit KI-Unterstützung |
 
 ## 1. Zweck
 
@@ -255,7 +255,38 @@ Nicht jede fachliche Aktualisierung erzeugt automatisch einen Push. Beiträge bz
 
 Wesentliche Aktualisierungen bestehender Beiträge müssen so adressierbar sein, dass ein Push direkt zur relevanten Aktualisierung führen kann.
 
-## 11. UX-Grundsätze
+## 11. Startseite, Listenansicht und Detailansicht
+
+Die Startseite dient primär der Orientierung und Auswahl. Sie besteht aus drei festen inhaltlichen Blöcken:
+
+1. **Aktuelle Meldungen**
+   - neue Beiträge,
+   - fachlich relevant aktualisierte Beiträge.
+2. **Anstehende Sitzungen**
+   - die nächsten tatsächlich bevorstehenden Sitzungen,
+   - unabhängig davon, ob sich an ihren Datensätzen zuletzt etwas geändert hat.
+3. **Geänderte Themen**
+   - Themen, deren aktueller Sachstand sich zuletzt relevant verändert hat.
+
+Der Besuchskontext „seit dem letzten Besuch“ wird nicht als eigener vierter Block geführt, sondern innerhalb der drei bestehenden Blöcke angezeigt. Bei Wiederholungsbesuchern können z. B. Hinweise erscheinen wie „2 neu seit deinem letzten Besuch“ oder „1 Thema seit deinem letzten Besuch aktualisiert“. Bei Erstbesuchern entfallen diese Hinweise.
+
+Die Startseite bleibt dadurch strukturell stabil; nur die Hervorhebung innerhalb der Blöcke passt sich an den Besuchskontext an.
+
+Wählt der Nutzer einen Block bzw. ein Element daraus, wechselt er in die jeweilige Listenansicht:
+
+- Aktuelle Meldungen → Beitragsliste,
+- Sitzungen → Sitzungsliste,
+- Themen → Themenliste.
+
+Die Listenansichten übernehmen die Grundidee des Demonstrators, werden aber für das Echtsystem weiter optimiert, insbesondere hinsichtlich Kennzeichnung von Neuigkeit, Aktualisierung, Bedeutung und Sachkontext.
+
+Als übergreifendes UX-Modell gilt:
+
+> **Startseite = Orientierung und Auswahl**  
+> **Listenansicht = Überblick und Vergleich**  
+> **Detailseite = Verständnis und Vertiefung**
+
+## 12. UX-Grundsätze
 
 - mobile Nutzung ist ein Primärfall,
 - direkte Einstiege müssen ohne vorherige Navigation verständlich sein,
@@ -268,7 +299,7 @@ Wesentliche Aktualisierungen bestehender Beiträge müssen so adressierbar sein,
 - die UI soll neugierig machen, ohne Informationen künstlich zu verstecken,
 - Barrierearmut und verständliche Sprache werden bei der Detailkonzeption berücksichtigt.
 
-## 12. Datenmodell-Auswirkungen
+## 13. Datenmodell-Auswirkungen
 
 Bereits aus den bisherigen UX-Entscheidungen ergeben sich voraussichtlich Anforderungen an:
 
@@ -287,7 +318,7 @@ Bereits aus den bisherigen UX-Entscheidungen ergeben sich voraussichtlich Anford
 
 Diese Punkte werden in G3 fachlich präzisiert und in ein logisches Datenmodell überführt.
 
-## 13. Nächste G2-Arbeit
+## 14. Nächste G2-Arbeit
 
 Die vier zentralen Nutzerwege sind fachlich durchgearbeitet.
 
@@ -297,6 +328,7 @@ Als nächstes werden daraus die konkrete **Startseitenlogik und Navigationsstruk
 
 | Version | Datum | Änderung |
 |---|---|---|
+| 1.3 | 29.09.2026 | Startseitenlogik mit drei festen Inhaltsblöcken sowie Zusammenspiel von Start-, Listen- und Detailansicht festgelegt. |
 | 1.2 | 29.09.2026 | Nutzerwege 2–4 ergänzt: Themenseite als Sachstandsseite, Erst-/Folgebeitragslogik und Push-Einstieg; Datenmodell-Auswirkungen erweitert. |
 | 1.1 | 29.09.2026 | Aktualisierungslogik und verbindliche Ereignisregel „bestehenden Beitrag aktualisieren oder neuen Beitrag anlegen“ ergänzt; Datenmodell-Auswirkungen präzisiert. |
 | 1.0 | 29.09.2026 | G2-Primärquelle mit Leitidee, Nutzeraufgaben, Grundstruktur, Beitragshierarchie und ersten Datenmodell-Auswirkungen angelegt. |
