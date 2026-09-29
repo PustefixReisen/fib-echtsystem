@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 1.6 | 29.09.2026 | Josef Walter – erstellt mit KI-Unterstützung |
+| 1.7 | 29.09.2026 | Josef Walter – erstellt mit KI-Unterstützung |
 
 ## 1. Zweck
 
@@ -387,7 +387,7 @@ Pro Eintrag werden grundsätzlich angezeigt:
 
 - Sitzungstitel bzw. Gremium,
 - Datum und Uhrzeit,
-- wenige für FIB relevante Tagesordnungspunkte bzw. Themen.
+- **TOPs:** wenige für FIB relevante Tagesordnungspunkte; die verkürzte Auswahl endet mit „…“.
 
 **Ort und Verfahrensstatus werden in der Listenansicht nicht angezeigt.** Diese Informationen gehören auf die Sitzungsdetailseite.
 
@@ -443,6 +443,7 @@ Als nächstes werden daraus die konkrete **Startseitenlogik und Navigationsstruk
 
 | Version | Datum | Änderung |
 |---|---|---|
+| 1.7 | 29.09.2026 | Bezeichnung in der Sitzungsliste auf „TOPs“ festgelegt; verkürzte TOP-Auswahl endet mit „…“. |
 | 1.6 | 29.09.2026 | Sitzungsliste bewusst reduziert; Ort und Verfahrensstatus aus der Listenansicht entfernt; Sitzungsabschluss an freigegebene Niederschrift gebunden. |
 | 1.5 | 29.09.2026 | Themenliste, Statuslogik inkl. 90-Tage-Prüfung und schlanke konfigurierbare Pflichtbestätigung für ausgewählte Felder festgelegt. |
 | 1.4 | 29.09.2026 | Meldungsliste konkretisiert; Datumslogik mit getrenntem Ursprungs- und Aktualisierungsdatum sowie kompakter Anzeige festgelegt. |
