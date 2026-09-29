@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 1.8 | 29.09.2026 | Josef Walter – erstellt mit KI-Unterstützung |
+| 1.9 | 29.09.2026 | Josef Walter – erstellt mit KI-Unterstützung |
 
 ## 1. Zweck
 
@@ -412,7 +412,54 @@ Der **Beschlusstext wird dabei nicht gekürzt**, sondern vollständig übernomme
 
 Beschlüsse und Ergebnisse aus der Niederschrift werden **nur in der Sitzungsdetailansicht** angezeigt. Die Sitzungsliste bleibt bei der knappen Auswahl relevanter TOPs.
 
-## 15. UX-Grundsätze
+## 15. Sitzungsdetailseite
+
+Die Sitzungsdetailseite ist **TOP-zentriert** aufgebaut.
+
+### 15.1 Titelblock
+
+Der Titelblock enthält:
+
+- Gremium,
+- Datum und Uhrzeit,
+- Ort,
+- bei vergangenen Sitzungen den Status der Niederschrift.
+
+Der Niederschriftsstatus ist Teil des Titelbereichs bzw. steht unmittelbar darunter.
+
+Mögliche sachliche Zustände sind insbesondere:
+
+- Niederschrift noch nicht genehmigt,
+- Niederschrift genehmigt · öffentlich verfügbar,
+- Niederschrift genehmigt · öffentlich nicht auffindbar.
+
+Vor der Sitzung wird kein Niederschriftsstatus angezeigt.
+
+### 15.2 TOPs
+
+Auf der Detailseite werden **alle öffentlichen TOPs aus dem RIS** aufgeführt, nicht nur die für FIB intern als besonders relevant ausgewählten.
+
+Zu jedem TOP können unmittelbar angezeigt bzw. verknüpft werden:
+
+- TOP-Nummer und Bezeichnung,
+- Beschlussvorlage und weitere amtliche Unterlagen,
+- verknüpftes FIB-Thema als direkter Link,
+- verknüpfte FIB-Beiträge,
+- Presseberichte zum TOP,
+- nach Vorliegen einer lesbaren Niederschrift der vollständige Beschlusstext,
+- Abstimmungsergebnis, sofern in der Niederschrift angegeben.
+
+Verknüpfungen werden möglichst direkt am betreffenden TOP angezeigt und nicht zusätzlich in separaten Sammelblöcken wiederholt.
+
+### 15.3 Presseberichte
+
+Amtliche Unterlagen und journalistische Berichterstattung werden klar getrennt dargestellt.
+
+Presseberichte werden möglichst dem konkreten TOP zugeordnet. Bezieht sich ein Bericht auf die Sitzung insgesamt und lässt sich keinem einzelnen TOP sinnvoll zuordnen, erscheint er auf Sitzungsebene unter **„Berichterstattung zur Sitzung“**.
+
+Damit bleibt jederzeit erkennbar, welche Information aus amtlichen Primärquellen und welche aus journalistischer Berichterstattung stammt.
+
+## 16. UX-Grundsätze
 
 - mobile Nutzung ist ein Primärfall,
 - direkte Einstiege müssen ohne vorherige Navigation verständlich sein,
@@ -425,7 +472,7 @@ Beschlüsse und Ergebnisse aus der Niederschrift werden **nur in der Sitzungsdet
 - die UI soll neugierig machen, ohne Informationen künstlich zu verstecken,
 - Barrierearmut und verständliche Sprache werden bei der Detailkonzeption berücksichtigt.
 
-## 16. Datenmodell-Auswirkungen
+## 17. Datenmodell-Auswirkungen
 
 Bereits aus den bisherigen UX-Entscheidungen ergeben sich voraussichtlich Anforderungen an:
 
@@ -444,7 +491,7 @@ Bereits aus den bisherigen UX-Entscheidungen ergeben sich voraussichtlich Anford
 
 Diese Punkte werden in G3 fachlich präzisiert und in ein logisches Datenmodell überführt.
 
-## 17. Nächste G2-Arbeit
+## 18. Nächste G2-Arbeit
 
 Die vier zentralen Nutzerwege sind fachlich durchgearbeitet.
 
@@ -454,6 +501,7 @@ Als nächstes werden daraus die konkrete **Startseitenlogik und Navigationsstruk
 
 | Version | Datum | Änderung |
 |---|---|---|
+| 1.9 | 29.09.2026 | Sitzungsdetailseite festgelegt: alle öffentlichen RIS-TOPs, Niederschriftsstatus im Titelbereich, TOP-nahe Verknüpfungen sowie getrennte Presseberichterstattung. |
 | 1.8 | 29.09.2026 | Niederschriftenlogik präzisiert: Genehmigung und öffentliche Verfügbarkeit getrennt; wertungsfreier Transparenzhinweis; vollständige Beschlüsse TOP-bezogen nur in der Detailansicht. |
 | 1.7 | 29.09.2026 | Bezeichnung in der Sitzungsliste auf „TOPs“ festgelegt; verkürzte TOP-Auswahl endet mit „…“. |
 | 1.6 | 29.09.2026 | Sitzungsliste bewusst reduziert; Ort und Verfahrensstatus aus der Listenansicht entfernt; Sitzungsabschluss an freigegebene Niederschrift gebunden. |
