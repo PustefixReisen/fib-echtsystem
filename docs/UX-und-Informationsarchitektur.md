@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 1.4 | 29.09.2026 | Josef Walter – erstellt mit KI-Unterstützung |
+| 1.5 | 29.09.2026 | Josef Walter – erstellt mit KI-Unterstützung |
 
 ## 1. Zweck
 
@@ -319,7 +319,67 @@ Für die Standard-Sortierung der Meldungsliste ist dagegen das Datum der **letzt
 
 Bei aktualisierten Beiträgen soll bereits die Kurzfassung möglichst den neuen Informationswert erkennen lassen.
 
-## 13. UX-Grundsätze
+## 13. Themenliste und Statuspflege
+
+Die Themenliste bleibt bewusst knapp. Pro Thema werden grundsätzlich angezeigt:
+
+- Titel,
+- sehr kurze Zusammenfassung des aktuellen Gesamtstands,
+- Datum der letzten fachlich relevanten Änderung,
+- Status.
+
+Beispiel:
+
+> **Hundewiese**  
+> Standortfrage weiter offen; neue Vorlage konkretisiert Schallschutz und Kosten.  
+> **zuletzt geändert 29.09.2026 · aktiv**
+
+Die Themenliste beantwortet damit primär die Frage „Wo steht der Sachverhalt?“ und nicht „Was ist zuletzt passiert?“.
+
+### 13.1 Statuswerte
+
+Für Themen gelten zunächst die öffentlichen Statuswerte:
+
+- **aktiv**,
+- **ruhend**,
+- **abgeschlossen**.
+
+Der Status wird vom System bzw. der KI vorgeschlagen, aber vor Veröffentlichung durch die Redaktion ausdrücklich bestätigt.
+
+Für **ruhend** gilt als prüfbares Kriterium:
+
+> Ein Thema ist Kandidat für „ruhend“, wenn seit 90 Tagen keine fachlich relevante Entwicklung eingetreten ist und kein konkret belegter nächster Schritt absehbar ist.
+
+Ein Thema bleibt trotz längerer Pause aktiv, wenn ein belegter nächster Schritt besteht, z. B. angekündigte Prüfung, Gutachten, Sitzung, Ausschreibung oder Umsetzungsphase.
+
+Wird ein Vorgang ausdrücklich auf unbestimmte Zeit zurückgestellt, kann er auch vor Ablauf der 90 Tage als ruhend bestätigt werden.
+
+Nach 90 Tagen ohne fachliche relevante Änderung erzeugt das System einen Prüfhinweis für die Redaktion, ändert den veröffentlichten Status aber nicht automatisch.
+
+### 13.2 Explizit zu bestätigende Felder
+
+Bestimmte fachlich besonders wirksame Angaben müssen von der Redaktion ausdrücklich bestätigt werden, auch wenn sie den KI-Vorschlag unverändert übernimmt.
+
+Als Ausgangspunkt gelten insbesondere:
+
+- Status des Themas,
+- aktueller Stand,
+- offene Punkte,
+- nächste Schritte,
+- wichtige Entscheidungen,
+- Zuordnung Beitrag ↔ Thema/Vorgang,
+- Entscheidung „neues Ereignis oder Aktualisierung“,
+- fachliche Aktualisierungsrelevanz,
+- „Unsere Einordnung“,
+- Abschluss eines Vorgangs.
+
+Andere Felder können im normalen Gesamtfreigabeprozess als mitgeprüft gelten.
+
+Welche Felder eine explizite Bestätigung erfordern, soll als **schlanke Admin-Stammdatenpflege** geführt werden. Im MVP ist dafür ausschließlich die Eigenschaft **„explizite Bestätigung erforderlich: ja/nein“** konfigurierbar.
+
+Nicht Bestandteil des MVP ist eine frei konfigurierbare Prüfregel-Engine mit komplexen Bedingungen, Abhängigkeiten oder feldspezifischen Workflows. Ziel ist begrenzte betriebliche Flexibilität ohne unnötige Überkonfiguration.
+
+## 14. UX-Grundsätze
 
 - mobile Nutzung ist ein Primärfall,
 - direkte Einstiege müssen ohne vorherige Navigation verständlich sein,
@@ -332,7 +392,7 @@ Bei aktualisierten Beiträgen soll bereits die Kurzfassung möglichst den neuen 
 - die UI soll neugierig machen, ohne Informationen künstlich zu verstecken,
 - Barrierearmut und verständliche Sprache werden bei der Detailkonzeption berücksichtigt.
 
-## 14. Datenmodell-Auswirkungen
+## 15. Datenmodell-Auswirkungen
 
 Bereits aus den bisherigen UX-Entscheidungen ergeben sich voraussichtlich Anforderungen an:
 
@@ -351,7 +411,7 @@ Bereits aus den bisherigen UX-Entscheidungen ergeben sich voraussichtlich Anford
 
 Diese Punkte werden in G3 fachlich präzisiert und in ein logisches Datenmodell überführt.
 
-## 15. Nächste G2-Arbeit
+## 16. Nächste G2-Arbeit
 
 Die vier zentralen Nutzerwege sind fachlich durchgearbeitet.
 
@@ -361,6 +421,7 @@ Als nächstes werden daraus die konkrete **Startseitenlogik und Navigationsstruk
 
 | Version | Datum | Änderung |
 |---|---|---|
+| 1.5 | 29.09.2026 | Themenliste, Statuslogik inkl. 90-Tage-Prüfung und schlanke konfigurierbare Pflichtbestätigung für ausgewählte Felder festgelegt. |
 | 1.4 | 29.09.2026 | Meldungsliste konkretisiert; Datumslogik mit getrenntem Ursprungs- und Aktualisierungsdatum sowie kompakter Anzeige festgelegt. |
 | 1.3 | 29.09.2026 | Startseitenlogik mit drei festen Inhaltsblöcken sowie Zusammenspiel von Start-, Listen- und Detailansicht festgelegt. |
 | 1.2 | 29.09.2026 | Nutzerwege 2–4 ergänzt: Themenseite als Sachstandsseite, Erst-/Folgebeitragslogik und Push-Einstieg; Datenmodell-Auswirkungen erweitert. |
