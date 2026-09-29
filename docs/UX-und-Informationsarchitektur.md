@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 1.3 | 29.09.2026 | Josef Walter – erstellt mit KI-Unterstützung |
+| 1.4 | 29.09.2026 | Josef Walter – erstellt mit KI-Unterstützung |
 
 ## 1. Zweck
 
@@ -286,7 +286,40 @@ Als übergreifendes UX-Modell gilt:
 > **Listenansicht = Überblick und Vergleich**  
 > **Detailseite = Verständnis und Vertiefung**
 
-## 12. UX-Grundsätze
+## 12. Listenansichten – Meldungen
+
+Die Meldungsliste dient Auswahl und Einordnung, nicht der vollständigen Erklärung.
+
+Pro Eintrag werden grundsätzlich gezeigt:
+
+- Überschrift,
+- sehr kurze Zusammenfassung,
+- fachliches Ursprungs-/Ereignisdatum,
+- bei fachlich relevanter späterer Änderung zusätzlich das Aktualisierungsdatum,
+- zugehöriges Thema bzw. Sachkontext, sofern vorhanden,
+- bei Folgebeiträgen ein knapper Hinweis auf den laufenden Vorgang.
+
+Die interne Relevanzbewertung wird nicht als öffentlicher Wert oder Label angezeigt. Sie kann intern Sortierung, Hervorhebung oder Verbreitungsentscheidungen unterstützen.
+
+Für Metadaten werden keine unnötigen dekorativen Icons verwendet. Datum und Aktualisierungsstatus werden sprachlich bzw. typografisch klar dargestellt.
+
+### 12.1 Datumsdarstellung und Sortierung
+
+Ursprungs-/Ereignisdatum und Aktualisierungsdatum sind fachlich unterschiedliche Informationen und werden getrennt gespeichert.
+
+Verbindliche Darstellungsregel bei aktualisierten Beiträgen:
+
+> **17.09.2026 · aktualisiert 29.09.2026**
+
+Bei einem nicht aktualisierten Beitrag wird nur das Ursprungs-/Ereignisdatum angezeigt.
+
+Eine Aktualisierung ersetzt das Ursprungsdatum nicht.
+
+Für die Standard-Sortierung der Meldungsliste ist dagegen das Datum der **letzten fachlich relevanten Neuigkeit** maßgeblich. Dadurch können ein neuer Beitrag und ein wesentlich aktualisierter älterer Beitrag gleichrangig nach Aktualität einsortiert werden. Technische oder rein redaktionelle Änderungen verändern diese Sortierung nicht.
+
+Bei aktualisierten Beiträgen soll bereits die Kurzfassung möglichst den neuen Informationswert erkennen lassen.
+
+## 13. UX-Grundsätze
 
 - mobile Nutzung ist ein Primärfall,
 - direkte Einstiege müssen ohne vorherige Navigation verständlich sein,
@@ -299,7 +332,7 @@ Als übergreifendes UX-Modell gilt:
 - die UI soll neugierig machen, ohne Informationen künstlich zu verstecken,
 - Barrierearmut und verständliche Sprache werden bei der Detailkonzeption berücksichtigt.
 
-## 13. Datenmodell-Auswirkungen
+## 14. Datenmodell-Auswirkungen
 
 Bereits aus den bisherigen UX-Entscheidungen ergeben sich voraussichtlich Anforderungen an:
 
@@ -318,7 +351,7 @@ Bereits aus den bisherigen UX-Entscheidungen ergeben sich voraussichtlich Anford
 
 Diese Punkte werden in G3 fachlich präzisiert und in ein logisches Datenmodell überführt.
 
-## 14. Nächste G2-Arbeit
+## 15. Nächste G2-Arbeit
 
 Die vier zentralen Nutzerwege sind fachlich durchgearbeitet.
 
@@ -328,6 +361,7 @@ Als nächstes werden daraus die konkrete **Startseitenlogik und Navigationsstruk
 
 | Version | Datum | Änderung |
 |---|---|---|
+| 1.4 | 29.09.2026 | Meldungsliste konkretisiert; Datumslogik mit getrenntem Ursprungs- und Aktualisierungsdatum sowie kompakter Anzeige festgelegt. |
 | 1.3 | 29.09.2026 | Startseitenlogik mit drei festen Inhaltsblöcken sowie Zusammenspiel von Start-, Listen- und Detailansicht festgelegt. |
 | 1.2 | 29.09.2026 | Nutzerwege 2–4 ergänzt: Themenseite als Sachstandsseite, Erst-/Folgebeitragslogik und Push-Einstieg; Datenmodell-Auswirkungen erweitert. |
 | 1.1 | 29.09.2026 | Aktualisierungslogik und verbindliche Ereignisregel „bestehenden Beitrag aktualisieren oder neuen Beitrag anlegen“ ergänzt; Datenmodell-Auswirkungen präzisiert. |
