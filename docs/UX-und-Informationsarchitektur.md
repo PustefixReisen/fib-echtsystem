@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 1.9 | 29.09.2026 | Josef Walter – erstellt mit KI-Unterstützung |
+| 2.0 | 29.09.2026 | Josef Walter – erstellt mit KI-Unterstützung |
 
 ## 1. Zweck
 
@@ -459,7 +459,76 @@ Presseberichte werden möglichst dem konkreten TOP zugeordnet. Bezieht sich ein 
 
 Damit bleibt jederzeit erkennbar, welche Information aus amtlichen Primärquellen und welche aus journalistischer Berichterstattung stammt.
 
-## 16. UX-Grundsätze
+## 16. Meldungsdetailseite
+
+Die Meldungsdetailseite unterscheidet zwischen Erstbeitrag, Folgebeitrag und aktualisiertem bestehenden Beitrag.
+
+### 16.1 Erstbeitrag
+
+Ein Erstbeitrag benötigt keinen eigenen Block „Was ist neu?“, weil der gesamte Beitrag neu ist.
+
+Grundstruktur:
+
+1. Titel,
+2. Datum,
+3. Kurzfassung,
+4. kurzer Grundkontext „Worum geht es?“,
+5. Sachinformation,
+6. Quellen,
+7. „Unsere Einordnung“,
+8. „Mehr wissen?“,
+9. Zusammenhang zu Thema, Sitzung und weiteren relevanten Inhalten.
+
+### 16.2 Folgebeitrag
+
+Ein Folgebeitrag fokussiert auf die neue Entwicklung.
+
+Grundstruktur:
+
+1. Titel,
+2. Datum,
+3. Kurzfassung,
+4. **Was ist neu?** – 1 bis 3 Sätze zur konkreten neuen Entwicklung,
+5. **Bisheriger Stand** – nur so viel Kontext wie zum Verständnis nötig,
+6. Sachinformation,
+7. Quellen,
+8. „Unsere Einordnung“,
+9. „Mehr wissen?“,
+10. Zusammenhang.
+
+Der Leser soll einen Folgebeitrag ohne vorheriges Öffnen älterer Beiträge verstehen können.
+
+### 16.3 Aktualisierter bestehender Beitrag
+
+Bei einer fachlich relevanten Aktualisierung wird unmittelbar unter Kurzfassung und Datumszeile der neue Informationswert hervorgehoben.
+
+Beispiel:
+
+> **17.09.2026 · aktualisiert 29.09.2026**  
+> **Neu seit 29.09.2026:** Die inzwischen veröffentlichte Unterlage enthält zusätzlich …
+
+Danach wird der Beitrag in seinem **aktuellen Gesamtstand** dargestellt.
+
+### 16.4 Mehrere Aktualisierungen
+
+Bei mehrfach fortgeschriebenen Beiträgen wird nur die **neueste wesentliche Aktualisierung** prominent angezeigt.
+
+Frühere fachliche Aktualisierungen bleiben über eine zurückhaltende Funktion wie **„Frühere Aktualisierungen anzeigen“** nachvollziehbar.
+
+Die Aktualisierungshistorie zeigt primär:
+
+- Datum,
+- kurze Beschreibung der fachlichen Änderung.
+
+Sie zeigt nicht standardmäßig vollständige frühere Textfassungen.
+
+Für interne Nachvollziehbarkeit, Audit und Wiederherstellung können vollständige Versionen dennoch gespeichert werden.
+
+Verbindlicher Grundsatz:
+
+> **Der aktuelle Beitrag zeigt den heutigen Wissensstand; die Aktualisierungshistorie erklärt, wie sich dieser Wissensstand verändert hat.**
+
+## 17. UX-Grundsätze
 
 - mobile Nutzung ist ein Primärfall,
 - direkte Einstiege müssen ohne vorherige Navigation verständlich sein,
@@ -472,7 +541,7 @@ Damit bleibt jederzeit erkennbar, welche Information aus amtlichen Primärquelle
 - die UI soll neugierig machen, ohne Informationen künstlich zu verstecken,
 - Barrierearmut und verständliche Sprache werden bei der Detailkonzeption berücksichtigt.
 
-## 17. Datenmodell-Auswirkungen
+## 18. Datenmodell-Auswirkungen
 
 Bereits aus den bisherigen UX-Entscheidungen ergeben sich voraussichtlich Anforderungen an:
 
@@ -491,7 +560,7 @@ Bereits aus den bisherigen UX-Entscheidungen ergeben sich voraussichtlich Anford
 
 Diese Punkte werden in G3 fachlich präzisiert und in ein logisches Datenmodell überführt.
 
-## 18. Nächste G2-Arbeit
+## 19. Nächste G2-Arbeit
 
 Die vier zentralen Nutzerwege sind fachlich durchgearbeitet.
 
@@ -501,6 +570,7 @@ Als nächstes werden daraus die konkrete **Startseitenlogik und Navigationsstruk
 
 | Version | Datum | Änderung |
 |---|---|---|
+| 2.0 | 29.09.2026 | Meldungsdetailseite mit Erst-/Folgebeitrag, Hervorhebung fachlicher Aktualisierungen und kompakter Aktualisierungshistorie festgelegt. |
 | 1.9 | 29.09.2026 | Sitzungsdetailseite festgelegt: alle öffentlichen RIS-TOPs, Niederschriftsstatus im Titelbereich, TOP-nahe Verknüpfungen sowie getrennte Presseberichterstattung. |
 | 1.8 | 29.09.2026 | Niederschriftenlogik präzisiert: Genehmigung und öffentliche Verfügbarkeit getrennt; wertungsfreier Transparenzhinweis; vollständige Beschlüsse TOP-bezogen nur in der Detailansicht. |
 | 1.7 | 29.09.2026 | Bezeichnung in der Sitzungsliste auf „TOPs“ festgelegt; verkürzte TOP-Auswahl endet mit „…“. |
