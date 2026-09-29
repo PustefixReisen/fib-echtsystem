@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 2.0 | 29.09.2026 | Josef Walter – erstellt mit KI-Unterstützung |
+| 2.1 | 29.09.2026 | Josef Walter – erstellt mit KI-Unterstützung |
 
 ## 1. Zweck
 
@@ -82,21 +82,15 @@ Wichtige Aktualisierungen älterer Vorgänge dürfen nicht allein wegen des ursp
 
 ### 5.2 Themen
 
-Themenseiten sollen primär die Frage beantworten:
+Der Themenbegriff wird in G2 neu geschärft.
 
-> **Wo stehen wir bei diesem Thema?**
+> **Themen werden nicht von oben als feste Kategorien gesetzt. Sie werden aus dem Zusammenhang mehrerer Ereignisse, Beiträge und Vorgänge erkannt und anschließend redaktionell bestätigt.**
 
-Vorgesehene Informationsbausteine sind insbesondere:
+Ein Thema ist eine übergeordnete Fragestellung, die mehrere unterschiedliche Entwicklungen, Perspektiven oder Vorgänge zusammenführt. Ein einzelner länger laufender Sachverhalt ist dagegen nicht automatisch ein Thema.
 
-- aktueller Stand,
-- wichtigste Entwicklungen,
-- offene Punkte,
-- relevante Entscheidungen,
-- zugehörige Beiträge,
-- Quellen und Bezüge,
-- „Mehr wissen?“.
+Beispiele für typische Themen sind etwa Wohnungsbau, kommunale Wärmeplanung/Geothermie oder Ortsentwicklung. Ein konkreter Vorgang wie die Hundewiese ist zunächst als Vorgang/Sachverhalt zu behandeln und nur dann Teil eines Themas, wenn ein belastbarer übergeordneter Zusammenhang erkennbar ist.
 
-Die genaue Struktur wird in G2 weiterentwickelt.
+Vor der weiteren Gestaltung von Themenliste und Themendetailseite wird deshalb zuerst die fachliche Themenlogik festgelegt.
 
 ### 5.3 Sitzungen
 
@@ -191,7 +185,30 @@ Beispiele:
 
 Mehrere Beiträge zu demselben länger laufenden Sachverhalt bleiben über Thema/Vorgang und Ereignisbeziehungen miteinander verbunden.
 
-## 8. Nutzerweg 2 – aktueller Stand eines Themas
+## 8. Themenlogik – in Überarbeitung
+
+Die bisherige Annahme, ein Thema primär als kumulierten Verlauf eines länger laufenden Sachverhalts darzustellen, wird verworfen.
+
+Für G2 gilt stattdessen folgende Arbeitsrichtung:
+
+1. **Erkennen:** Das System untersucht mehrere Ereignisse, Beiträge und Vorgänge auf wiederkehrende oder gemeinsame übergeordnete Fragestellungen.
+2. **Abgrenzen:** Es wird geprüft, ob tatsächlich ein Thema vorliegt oder nur ein einzelner Vorgang bzw. eine Beitragskette.
+3. **Kontext bestimmen:** Für ein mögliches Thema wird ermittelt, welcher lokale, regionale, landes-, bundesweite, fachliche oder gesellschaftliche Kontext zum Verständnis tatsächlich relevant ist.
+4. **Begrenzen:** Kontext wird nur aufgenommen, wenn er die konkrete kommunale Fragestellung erklärt oder verändert. Bloße thematische Ähnlichkeit reicht nicht.
+5. **Bestätigen:** Ein neu erkanntes Thema und seine Abgrenzung werden redaktionell ausdrücklich bestätigt; Themen werden nicht automatisch veröffentlicht.
+
+Ein Thema soll typischerweise mehrere der folgenden Merkmale erfüllen:
+
+- dauerhafte oder wiederkehrende kommunale Fragestellung,
+- mehrere unterschiedliche Ereignisse oder Vorgänge tragen dazu bei,
+- mehrere fachliche oder politische Perspektiven sind relevant,
+- einzelne Meldungen reichen zum Verständnis nicht aus,
+- übergeordnete Rahmenbedingungen oder Erkenntnisse können für die lokale Situation relevant sein,
+- das Thema bleibt sinnvoll bestehen, auch wenn einzelne Vorgänge abgeschlossen sind.
+
+Die endgültige Themenliste und Themendetailseite werden erst nach Erprobung dieser Logik an realen FIB-Fällen festgelegt.
+
+## 8a. Nutzerweg 2 – aktueller Stand eines Themas
 
 Eine Themenseite ist keine bloße Sammlung verknüpfter Beiträge, sondern eine eigenständige Sachstandsseite.
 
@@ -319,7 +336,11 @@ Für die Standard-Sortierung der Meldungsliste ist dagegen das Datum der **letzt
 
 Bei aktualisierten Beiträgen soll bereits die Kurzfassung möglichst den neuen Informationswert erkennen lassen.
 
-## 13. Themenliste und Statuspflege
+## 13. Themenliste und Statuspflege – vorläufig
+
+Die in diesem Abschnitt bisher entwickelte Listen- und Statuslogik ist **vorläufig** und wird nach Abschluss der Themenlogik erneut geprüft. Insbesondere darf die Themenliste nicht auf einer Gleichsetzung von Thema und länger laufendem Vorgang beruhen.
+
+
 
 Die Themenliste bleibt bewusst knapp. Pro Thema werden grundsätzlich angezeigt:
 
@@ -570,6 +591,7 @@ Als nächstes werden daraus die konkrete **Startseitenlogik und Navigationsstruk
 
 | Version | Datum | Änderung |
 |---|---|---|
+| 2.1 | 29.09.2026 | Themenbegriff korrigiert: Themen entstehen bottom-up aus Zusammenhängen mehrerer Ereignisse/Beiträge/Vorgänge; neue Themenlogik mit Erkennen, Abgrenzen, Kontextbestimmung und redaktioneller Bestätigung als vorgelagerter G2-Schritt festgelegt. |
 | 2.0 | 29.09.2026 | Meldungsdetailseite mit Erst-/Folgebeitrag, Hervorhebung fachlicher Aktualisierungen und kompakter Aktualisierungshistorie festgelegt. |
 | 1.9 | 29.09.2026 | Sitzungsdetailseite festgelegt: alle öffentlichen RIS-TOPs, Niederschriftsstatus im Titelbereich, TOP-nahe Verknüpfungen sowie getrennte Presseberichterstattung. |
 | 1.8 | 29.09.2026 | Niederschriftenlogik präzisiert: Genehmigung und öffentliche Verfügbarkeit getrennt; wertungsfreier Transparenzhinweis; vollständige Beschlüsse TOP-bezogen nur in der Detailansicht. |
