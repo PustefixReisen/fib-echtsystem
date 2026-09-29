@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 1.0 | 29.09.2026 | Josef Walter – erstellt mit KI-Unterstützung |
+| 1.1 | 29.09.2026 | Josef Walter – erstellt mit KI-Unterstützung |
 
 ## 1. Zweck
 
@@ -156,6 +156,41 @@ Daraus folgt als Anforderung für G3:
 - Aktualisierungen müssen strukturiert und historisierbar modelliert werden,
 - ein bloßes Änderungsdatum reicht voraussichtlich nicht aus.
 
+### 7.1 Technische Änderung, redaktionelle Aktualisierung, fachliche Neuigkeit
+
+FIB unterscheidet drei Ebenen:
+
+- **technische Änderung** – z. B. Tippfehler, Linkkorrektur oder interne Metadatenänderung; erzeugt keine öffentliche Neuigkeit,
+- **redaktionelle Aktualisierung** – z. B. Präzisierung oder zusätzliche Quelle ohne neuen Sachstand; wird historisiert, aber normalerweise nicht als „neu“ hervorgehoben,
+- **fachliche Aktualisierung** – z. B. neue Vorlage, neuer Beschluss, neue Kostenangabe oder geänderter Planungsstand; kann öffentlich als neue Entwicklung erscheinen.
+
+Für „Neu seit letztem Besuch“, Sortierung und Push ist daher nicht das technische Änderungsdatum maßgeblich, sondern die fachlich relevante Aktualisierung.
+
+### 7.2 Aktualisierung oder neuer Beitrag
+
+Verbindliche Grundregel:
+
+> **Ein Beitrag steht für ein eigenständiges berichtenswertes Ereignis. Neue Informationen zum selben Ereignis aktualisieren den bestehenden Beitrag. Ein neues eigenständiges Ereignis mit ausreichendem Nachrichtenwert erzeugt einen neuen Beitrag.**
+
+Die Entscheidung erfolgt zweistufig:
+
+1. **Ist es ein neues Ereignis?**
+   - Nein: bestehenden Beitrag aktualisieren.
+   - Ja: weiter zu Schritt 2.
+2. **Hat dieses Ereignis eigenen Nachrichtenwert für FIB?**
+   - Ja: neuer Beitrag.
+   - Nein: bestehenden Beitrag, Sitzungseintrag oder Themenstand aktualisieren.
+
+Beispiele:
+
+- zusätzliche Kostenangabe zu derselben veröffentlichten Vorlage → bestehenden Beitrag aktualisieren,
+- Korrektur eines Links → technische Änderung, keine öffentliche Neuigkeit,
+- Gemeinderat fasst später einen Beschluss → neues eigenständiges Ereignis, in der Regel neuer Beitrag,
+- Umsetzung beginnt Monate später → neues eigenständiges Ereignis, in der Regel neuer Beitrag,
+- reine Terminverschiebung ohne weiteren Nachrichtenwert → meist Aktualisierung statt neuer Beitrag.
+
+Mehrere Beiträge zu demselben länger laufenden Sachverhalt bleiben über Thema/Vorgang und Ereignisbeziehungen miteinander verbunden.
+
 ## 8. UX-Grundsätze
 
 - mobile Nutzung ist ein Primärfall,
@@ -176,6 +211,10 @@ Bereits aus den bisherigen UX-Entscheidungen ergeben sich voraussichtlich Anford
 - stabile IDs und URLs für Beiträge, Themen und Sitzungen,
 - strukturierten aktuellen Stand eines Themas,
 - strukturierte Aktualisierungsereignisse,
+- eigenständige Ereignisse innerhalb eines Themas/Vorgangs,
+- Beziehung Ereignis → Beitrag,
+- Unterscheidung zwischen technischer Änderung, redaktioneller Aktualisierung und fachlicher Neuigkeit,
+- Kennzeichnung, ob eine Änderung für „Neu seit letztem Besuch“ bzw. Push relevant ist,
 - offene Punkte,
 - relevante Entscheidungen,
 - explizite Beziehungen zwischen Inhalten,
@@ -199,4 +238,5 @@ Aus den Nutzerwegen werden weitere Anforderungen an UI, Fachlogik und Datenmodel
 
 | Version | Datum | Änderung |
 |---|---|---|
+| 1.1 | 29.09.2026 | Aktualisierungslogik und verbindliche Ereignisregel „bestehenden Beitrag aktualisieren oder neuen Beitrag anlegen“ ergänzt; Datenmodell-Auswirkungen präzisiert. |
 | 1.0 | 29.09.2026 | G2-Primärquelle mit Leitidee, Nutzeraufgaben, Grundstruktur, Beitragshierarchie und ersten Datenmodell-Auswirkungen angelegt. |
