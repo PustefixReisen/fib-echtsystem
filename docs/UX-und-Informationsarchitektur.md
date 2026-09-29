@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 2.1 | 29.09.2026 | Josef Walter – erstellt mit KI-Unterstützung |
+| 2.2 | 29.09.2026 | Josef Walter – erstellt mit KI-Unterstützung |
 
 ## 1. Zweck
 
@@ -197,14 +197,39 @@ Für G2 gilt stattdessen folgende Arbeitsrichtung:
 4. **Begrenzen:** Kontext wird nur aufgenommen, wenn er die konkrete kommunale Fragestellung erklärt oder verändert. Bloße thematische Ähnlichkeit reicht nicht.
 5. **Bestätigen:** Ein neu erkanntes Thema und seine Abgrenzung werden redaktionell ausdrücklich bestätigt; Themen werden nicht automatisch veröffentlicht.
 
-Ein Thema soll typischerweise mehrere der folgenden Merkmale erfüllen:
+Ein Thema kann sich durch unterschiedliche Indikatoren erkennen lassen. Diese Indikatoren sind **Hinweise und keine harten Ausschlusskriterien**. Dazu gehören insbesondere:
 
 - dauerhafte oder wiederkehrende kommunale Fragestellung,
 - mehrere unterschiedliche Ereignisse oder Vorgänge tragen dazu bei,
-- mehrere fachliche oder politische Perspektiven sind relevant,
-- einzelne Meldungen reichen zum Verständnis nicht aus,
-- übergeordnete Rahmenbedingungen oder Erkenntnisse können für die lokale Situation relevant sein,
+- gemeinsames Problem oder gemeinsames Ziel,
+- wiederkehrender Zielkonflikt,
+- gemeinsame kommunale Handlungsebene,
+- gemeinsame externe Rahmenbedingungen,
+- wiederkehrende Akteure oder Zuständigkeiten,
+- räumlicher Zusammenhang,
+- zeitliche Wiederkehr,
+- mehrere relevante Perspektiven oder Dimensionen,
+- übergeordnete Erkenntnisse oder Beispiele außerhalb Feldkirchens mit konkretem Erklärungswert für die lokale Situation,
+- **Erklärungsgewinn durch Zusammenführung**: Aus der Verbindung mehrerer Vorgänge entsteht eine verständliche Aussage über Feldkirchen, die in keinem Einzelbeitrag allein enthalten ist,
 - das Thema bleibt sinnvoll bestehen, auch wenn einzelne Vorgänge abgeschlossen sind.
+
+Für die automatische Erkennung gilt bewusst eine **hohe Sensitivität**:
+
+> **Lieber ein plausibler Themenvorschlag zu viel als ein relevantes Thema übersehen.**
+
+Ein Themenvorschlag ist noch kein veröffentlichtes Thema. Die Redaktion prüft, verändert oder verwirft ihn und legt gemeinsam mit der KI den eigentlichen Themenkontext fest.
+
+Ein Themenvorschlag soll deshalb mindestens transparent ausweisen:
+
+- mögliches Thema,
+- erkannte gemeinsame Fragestellung,
+- auslösende Vorgänge und Beiträge,
+- erkannte Muster, Gemeinsamkeiten oder Zielkonflikte,
+- warum der Zusammenhang über einen Einzelvorgang hinausgeht,
+- möglichen Erklärungsgewinn,
+- vorgeschlagene Kontextdimensionen,
+- relevante externe Beispiele bzw. Rahmenbedingungen,
+- Unsicherheiten und Gegenargumente.
 
 Die endgültige Themenliste und Themendetailseite werden erst nach Erprobung dieser Logik an realen FIB-Fällen festgelegt.
 
@@ -591,6 +616,7 @@ Als nächstes werden daraus die konkrete **Startseitenlogik und Navigationsstruk
 
 | Version | Datum | Änderung |
 |---|---|---|
+| 2.2 | 29.09.2026 | Themen-Erkennung als indikatorenbasierte, bewusst sensitive Vorschlagslogik präzisiert; Erklärungsgewinn, gemeinsame Probleme/Ziele und weitere Zusammenhangssignale ergänzt. |
 | 2.1 | 29.09.2026 | Themenbegriff korrigiert: Themen entstehen bottom-up aus Zusammenhängen mehrerer Ereignisse/Beiträge/Vorgänge; neue Themenlogik mit Erkennen, Abgrenzen, Kontextbestimmung und redaktioneller Bestätigung als vorgelagerter G2-Schritt festgelegt. |
 | 2.0 | 29.09.2026 | Meldungsdetailseite mit Erst-/Folgebeitrag, Hervorhebung fachlicher Aktualisierungen und kompakter Aktualisierungshistorie festgelegt. |
 | 1.9 | 29.09.2026 | Sitzungsdetailseite festgelegt: alle öffentlichen RIS-TOPs, Niederschriftsstatus im Titelbereich, TOP-nahe Verknüpfungen sowie getrennte Presseberichterstattung. |
