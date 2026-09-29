@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 1.1 | 29.09.2026 | Josef Walter – erstellt mit KI-Unterstützung |
+| 1.2 | 29.09.2026 | Josef Walter – erstellt mit KI-Unterstützung |
 
 ## Statusmodell
 
@@ -23,8 +23,8 @@ Es gelten die zentralen Status aus `PustefixReisen/pustivo/docs/governance/Dokum
 | Phase | Status | Ergebnis / nächster Schritt |
 |---|---|---|
 | Projektbasis / Repository | **Abgeschlossen** | separates Repository und initiale Dokumentationsstruktur vorhanden |
-| G1 Produktumfang / MVP | **In Arbeit** | Kernentscheidungen getroffen: KI-Entwurfserstellung einschließlich Beiträge/Themen/Einordnungen und Web Push gehören zum MVP; freie Live-Fragen und vollständige Offline-Synchronisation nicht. Vollständige Funktionsstaffelung noch abschließen |
-| G2 UX / Informationsarchitektur / Fachfunktionen | **Geplant** | Benutzerführung und Fachfunktionen systematisch nachschärfen |
+| G1 Produktumfang / MVP | **Abgeschlossen** | MVP, unmittelbare Ausbaustufe, spätere Erweiterungen, Nicht-Ziele und Aufwandstreiber verbindlich festgelegt |
+| G2 UX / Informationsarchitektur / Fachfunktionen | **In Arbeit** | Nutzeraufgaben, Informationsarchitektur, Benutzerführung und fachliche Weiterentwicklung des Demonstratorstands systematisch konzipieren |
 | G3 Datenanforderungen / Datenmodell | **Geplant** | aus Fach- und UX-Konzept ableiten |
 | G4 Schutzbedarf / Datenschutz / Offline | **Geplant** | Schutzklassen und Betriebsanforderungen festlegen |
 | G5 Zielarchitektur / Stack / Hosting / Deployment | **Geplant** | technische Zielarchitektur nach Anforderungen entscheiden |
@@ -38,17 +38,16 @@ Es gelten die zentralen Status aus `PustefixReisen/pustivo/docs/governance/Dokum
 
 ## Nächster konkreter Schritt
 
-**G1 abschließen:** Die verbleibenden bekannten Zielanforderungen werden abschließend in drei Gruppen eingeordnet:
+**G2 – UX, Informationsarchitektur und Fachfunktionen**
 
-1. erforderlich zum ersten produktiven Go-live,
-2. unmittelbar folgende Ausbaustufe,
-3. spätere Erweiterung.
+Zuerst werden die wichtigsten Nutzeraufgaben und Nutzerwege beschrieben. Darauf aufbauend werden öffentliche Navigation, Startseite, Beiträge, Themen, Sitzungen, Suche/Filter, „Mehr wissen?“, Aktualisierungen und PWA-Funktionen als zusammenhängendes Nutzungskonzept überprüft und weiterentwickelt.
 
-Danach beginnt G2 mit der Überarbeitung von UX, Informationsarchitektur und Fachfunktionen.
+Jede relevante UX- oder Fachentscheidung wird dabei ausdrücklich auf Auswirkungen auf das spätere Datenmodell geprüft.
 
 ## Änderungshistorie
 
 | Version | Datum | Änderung |
 |---|---|---|
+| 1.2 | 29.09.2026 | G1 als abgeschlossen markiert; G2 UX/Informationsarchitektur/Fachfunktionen begonnen. |
 | 1.1 | 29.09.2026 | G1-Kernentscheidungen zur KI-gestützten Inhaltserstellung, Web Push, freien Live-Fragen und Offline-Fähigkeit dokumentiert. |
 | 1.0 | 29.09.2026 | Initiale Roadmap für die Projektgründungsphase angelegt. |
