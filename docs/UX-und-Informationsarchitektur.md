@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 2.2 | 29.09.2026 | Josef Walter – erstellt mit KI-Unterstützung |
+| 2.3 | 29.09.2026 | Josef Walter – erstellt mit KI-Unterstützung |
 
 ## 1. Zweck
 
@@ -232,6 +232,35 @@ Ein Themenvorschlag soll deshalb mindestens transparent ausweisen:
 - Unsicherheiten und Gegenargumente.
 
 Die endgültige Themenliste und Themendetailseite werden erst nach Erprobung dieser Logik an realen FIB-Fällen festgelegt.
+
+### 8.1 Iterative Themendefinition und Kalibrierung
+
+Nach Auswahl eines Themenkandidaten formuliert die KI einen ersten Thementext, der die lokalen Beiträge und Vorgänge mit dem tatsächlich erklärungsrelevanten übergeordneten Kontext verbindet.
+
+Die Redaktion bewertet dabei nicht nur den Text, sondern insbesondere die fachliche Abgrenzung des Themas. Aus Korrekturen entstehen Schärfungen der Themendefinition.
+
+Die interne Themendefinition soll mindestens enthalten:
+
+- Thementitel,
+- Leitfrage,
+- lokalen Bezug zu Feldkirchen,
+- einbezogene Perspektiven bzw. Dimensionen,
+- ausdrückliche Abgrenzung,
+- relevante übergeordnete Kontexte,
+- Ausgangsvorgänge und -beiträge,
+- Unsicherheiten bzw. offene Abgrenzungsfragen.
+
+Der Arbeitsprozess ist iterativ:
+
+> **Themenkandidat → Entwurf → Kontextschärfung → bestätigte Themendefinition → laufende Weiterentwicklung**
+
+Die bestätigte Themendefinition dient anschließend als Arbeitsrahmen für die KI. Neue Beiträge und Vorgänge werden nicht nur über Schlagworte, sondern danach geprüft, ob sie zur bestätigten Leitfrage und zu den definierten Perspektiven beitragen.
+
+Wenn neue Entwicklungen eine bisher nicht berücksichtigte Perspektive nahelegen, schlägt die KI eine Überprüfung oder Erweiterung der Themendefinition vor; sie ändert die veröffentlichte Definition nicht selbstständig.
+
+Die wiederkehrenden redaktionellen Überarbeitungen und Entscheidungen zu Themenkandidaten dienen zugleich der **Kalibrierung der Themen-Erkennungslogik**. Die KI soll aus bestätigten, veränderten und verworfenen Themenvorschlägen ableiten, welche Arten von Zusammenhängen für FIB tatsächlich als Themen geeignet sind.
+
+Diese Kalibrierung bleibt redaktionell kontrolliert: Sie verbessert die Vorschlagslogik, ersetzt aber weder die explizite Themenbestätigung noch die redaktionelle Verantwortung.
 
 ## 8a. Nutzerweg 2 – aktueller Stand eines Themas
 
@@ -616,6 +645,7 @@ Als nächstes werden daraus die konkrete **Startseitenlogik und Navigationsstruk
 
 | Version | Datum | Änderung |
 |---|---|---|
+| 2.3 | 29.09.2026 | Iterative Themendefinition ergänzt; redaktionelle Schärfung dient zugleich zur Kalibrierung der KI-Themenerkennung. |
 | 2.2 | 29.09.2026 | Themen-Erkennung als indikatorenbasierte, bewusst sensitive Vorschlagslogik präzisiert; Erklärungsgewinn, gemeinsame Probleme/Ziele und weitere Zusammenhangssignale ergänzt. |
 | 2.1 | 29.09.2026 | Themenbegriff korrigiert: Themen entstehen bottom-up aus Zusammenhängen mehrerer Ereignisse/Beiträge/Vorgänge; neue Themenlogik mit Erkennen, Abgrenzen, Kontextbestimmung und redaktioneller Bestätigung als vorgelagerter G2-Schritt festgelegt. |
 | 2.0 | 29.09.2026 | Meldungsdetailseite mit Erst-/Folgebeitrag, Hervorhebung fachlicher Aktualisierungen und kompakter Aktualisierungshistorie festgelegt. |
