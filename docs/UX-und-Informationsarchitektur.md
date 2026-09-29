@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 1.1 | 29.09.2026 | Josef Walter – erstellt mit KI-Unterstützung |
+| 1.2 | 29.09.2026 | Josef Walter – erstellt mit KI-Unterstützung |
 
 ## 1. Zweck
 
@@ -191,7 +191,71 @@ Beispiele:
 
 Mehrere Beiträge zu demselben länger laufenden Sachverhalt bleiben über Thema/Vorgang und Ereignisbeziehungen miteinander verbunden.
 
-## 8. UX-Grundsätze
+## 8. Nutzerweg 2 – aktueller Stand eines Themas
+
+Eine Themenseite ist keine bloße Sammlung verknüpfter Beiträge, sondern eine eigenständige Sachstandsseite.
+
+Sie beantwortet zuerst:
+
+- worum geht es,
+- wo stehen wir aktuell,
+- was ist zuletzt passiert,
+- was ist noch offen.
+
+Vorgesehene Struktur:
+
+1. Themenkopf mit Kurzbeschreibung,
+2. aktueller Stand,
+3. letzte wesentliche Entwicklung,
+4. Verlauf wichtiger Ereignisse,
+5. offene Punkte / nächste belegte Schritte,
+6. wichtige Entscheidungen,
+7. zugehörige Beiträge und Sitzungen,
+8. themenbezogenes „Mehr wissen?“,
+9. themenbezogene „Unsere Einordnung“.
+
+Der aktuelle Stand ist der kumulierte Wissensstand und nicht einfach der jüngste Beitrag.
+
+„Offene Punkte“ und „nächste Schritte“ dürfen nur aus belegbaren Informationen abgeleitet werden. Vermutungen werden nicht als offene oder bevorstehende Schritte dargestellt.
+
+Neue relevante Ereignisse lösen automatisch einen KI-Vorschlag zur Fortschreibung des aktuellen Stands, der offenen Punkte, der nächsten Schritte und gegebenenfalls der themenbezogenen Einordnung aus. Veröffentlichung erfolgt erst nach redaktioneller Prüfung und Freigabe.
+
+Beitragsbezogene und themenbezogene politische Einordnungen werden getrennt behandelt:
+
+- **beitragsbezogen:** Bewertung einer konkreten neuen Entwicklung,
+- **themenbezogen:** grundsätzliche politische Position zum länger laufenden Thema.
+
+## 9. Nutzerweg 3 – direkter Einstieg über einen Beitrag
+
+Jeder Beitrag muss ohne vorherigen Besuch der Start- oder Themenseite verständlich sein.
+
+Dabei wird zwischen Erst- und Folgebeitrag unterschieden:
+
+- **Erstbeitrag:** erklärt den Grundkontext ausführlicher.
+- **Folgebeitrag:** fokussiert auf die neue Entwicklung und enthält nur den unmittelbar nötigen Rückblick.
+- **Themenseite:** enthält den vollständigen Sachzusammenhang und Verlauf.
+
+Ein Folgebeitrag soll den Nutzer mit einem kurzen Kontextblock orientieren und einen klaren Übergang zur vollständigen Themenseite bieten.
+
+Nicht alle Beziehungen eines Beitrags werden gleich prominent dargestellt. Im Beitrag erscheint nur der für das Verständnis unmittelbar nötige Zusammenhang; der vollständige Verlauf bleibt auf der Themenseite.
+
+## 10. Nutzerweg 4 – Einstieg über Push
+
+Push dient als gezielter Einstieg in eine konkrete neue Entwicklung.
+
+Grundregeln:
+
+- Push enthält Thema bzw. Sachverhalt und die neue Entwicklung knapp,
+- ein Tipp öffnet direkt den betroffenen Beitrag bzw. die relevante Aktualisierung,
+- der Zielinhalt zeigt sofort „Was ist neu?“,
+- bei Folgebeiträgen folgt ein kurzer Kontextblock,
+- von dort führt ein klarer Weg zur vollständigen Themenseite.
+
+Nicht jede fachliche Aktualisierung erzeugt automatisch einen Push. Beiträge bzw. Ereignisse benötigen eine eigene Benachrichtigungsrelevanz, die getrennt vom Marketing-/Verbreitungsranking geführt wird.
+
+Wesentliche Aktualisierungen bestehender Beiträge müssen so adressierbar sein, dass ein Push direkt zur relevanten Aktualisierung führen kann.
+
+## 11. UX-Grundsätze
 
 - mobile Nutzung ist ein Primärfall,
 - direkte Einstiege müssen ohne vorherige Navigation verständlich sein,
@@ -204,7 +268,7 @@ Mehrere Beiträge zu demselben länger laufenden Sachverhalt bleiben über Thema
 - die UI soll neugierig machen, ohne Informationen künstlich zu verstecken,
 - Barrierearmut und verständliche Sprache werden bei der Detailkonzeption berücksichtigt.
 
-## 9. Datenmodell-Auswirkungen
+## 12. Datenmodell-Auswirkungen
 
 Bereits aus den bisherigen UX-Entscheidungen ergeben sich voraussichtlich Anforderungen an:
 
@@ -223,20 +287,16 @@ Bereits aus den bisherigen UX-Entscheidungen ergeben sich voraussichtlich Anford
 
 Diese Punkte werden in G3 fachlich präzisiert und in ein logisches Datenmodell überführt.
 
-## 10. Nächste G2-Arbeit
+## 13. Nächste G2-Arbeit
 
-Als nächstes werden mindestens diese typischen Nutzerwege im Detail durchgespielt:
+Die vier zentralen Nutzerwege sind fachlich durchgearbeitet.
 
-1. regelmäßiger Besucher: „Was ist seit meinem letzten Besuch neu?“
-2. thematisch Interessierter: „Was ist der aktuelle Stand bei der Hundewiese?“
-3. externer Einstieg: „Ich habe einen Link zu einem einzelnen Beitrag bekommen.“
-4. Push-Einstieg: „Ich wurde über eine Aktualisierung informiert.“
-
-Aus den Nutzerwegen werden weitere Anforderungen an UI, Fachlogik und Datenmodell abgeleitet.
+Als nächstes werden daraus die konkrete **Startseitenlogik und Navigationsstruktur** abgeleitet. Anschließend folgen Detailkonzeption von Suche/Filter, Sitzungen, „Mehr wissen?“ und den PWA-spezifischen Bedienelementen.
 
 ## Änderungshistorie
 
 | Version | Datum | Änderung |
 |---|---|---|
+| 1.2 | 29.09.2026 | Nutzerwege 2–4 ergänzt: Themenseite als Sachstandsseite, Erst-/Folgebeitragslogik und Push-Einstieg; Datenmodell-Auswirkungen erweitert. |
 | 1.1 | 29.09.2026 | Aktualisierungslogik und verbindliche Ereignisregel „bestehenden Beitrag aktualisieren oder neuen Beitrag anlegen“ ergänzt; Datenmodell-Auswirkungen präzisiert. |
 | 1.0 | 29.09.2026 | G2-Primärquelle mit Leitidee, Nutzeraufgaben, Grundstruktur, Beitragshierarchie und ersten Datenmodell-Auswirkungen angelegt. |
