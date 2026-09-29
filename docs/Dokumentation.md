@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 1.0 | 29.09.2026 | Josef Walter – erstellt mit KI-Unterstützung |
+| 1.1 | 29.09.2026 | Josef Walter – erstellt mit KI-Unterstützung |
 
 ## 1. Zweck
 
@@ -47,7 +47,7 @@ Weitere zentrale Governance-Dokumente werden während der Projektgründung gepr�
 | Projektgründung / Gründungsentscheidungen | `docs/Projektgruendung.md` | in Arbeit |
 | Roadmap / nächster Schritt | `docs/Roadmap.md` | vorhanden |
 | Fachkonzept | noch anzulegen bzw. aus Demonstrator-Primärquellen zu überführen | offen |
-| UX / Informationsarchitektur / Benutzerführung | noch anzulegen | offen |
+| UX / Informationsarchitektur / Benutzerführung | `docs/UX-und-Informationsarchitektur.md` | in Arbeit |
 | Architektur | noch anzulegen | offen |
 | Datenmodell | noch anzulegen | offen |
 | Sicherheit / Datenschutz | noch anzulegen | offen |
@@ -94,4 +94,5 @@ Für dauerhaft gepflegte Dokumente gilt grundsätzlich:
 
 | Version | Datum | Änderung |
 |---|---|---|
+| 1.1 | 29.09.2026 | `docs/UX-und-Informationsarchitektur.md` als verbindliche Primärquelle für G2 aufgenommen. |
 | 1.0 | 29.09.2026 | Dokumentationslandkarte für das FIB-Echtsystem angelegt. |
