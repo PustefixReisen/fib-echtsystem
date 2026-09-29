@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 1.5 | 29.09.2026 | Josef Walter – erstellt mit KI-Unterstützung |
+| 1.6 | 29.09.2026 | Josef Walter – erstellt mit KI-Unterstützung |
 
 ## 1. Zweck
 
@@ -379,7 +379,29 @@ Welche Felder eine explizite Bestätigung erfordern, soll als **schlanke Admin-S
 
 Nicht Bestandteil des MVP ist eine frei konfigurierbare Prüfregel-Engine mit komplexen Bedingungen, Abhängigkeiten oder feldspezifischen Workflows. Ziel ist begrenzte betriebliche Flexibilität ohne unnötige Überkonfiguration.
 
-## 14. UX-Grundsätze
+## 14. Sitzungsliste
+
+Die Sitzungsliste bleibt bewusst knapp und dient vor allem der zeitlichen Orientierung.
+
+Pro Eintrag werden grundsätzlich angezeigt:
+
+- Sitzungstitel bzw. Gremium,
+- Datum und Uhrzeit,
+- wenige für FIB relevante Tagesordnungspunkte bzw. Themen.
+
+**Ort und Verfahrensstatus werden in der Listenansicht nicht angezeigt.** Diese Informationen gehören auf die Sitzungsdetailseite.
+
+Bevorstehende Sitzungen werden strikt nach Sitzungstermin sortiert. Änderungen an Unterlagen beeinflussen die Reihenfolge nicht.
+
+Eine Sitzung bleibt nach ihrer Durchführung fachlich offen, solange die freigegebene Niederschrift noch nicht vorliegt bzw. noch nicht ausgewertet wurde.
+
+Verbindliche Regel:
+
+> **Eine Sitzung gilt in FIB erst dann als abgeschlossen, wenn die Niederschrift freigegeben wurde.**
+
+Vorlagen, Beratungsergebnisse oder einzelne veröffentlichte Beschlüsse können bereits vorher ausgewertet und mit Beiträgen bzw. Themen verknüpft werden; sie schließen die Sitzung als Ganzes jedoch nicht ab.
+
+## 15. UX-Grundsätze
 
 - mobile Nutzung ist ein Primärfall,
 - direkte Einstiege müssen ohne vorherige Navigation verständlich sein,
@@ -392,7 +414,7 @@ Nicht Bestandteil des MVP ist eine frei konfigurierbare Prüfregel-Engine mit ko
 - die UI soll neugierig machen, ohne Informationen künstlich zu verstecken,
 - Barrierearmut und verständliche Sprache werden bei der Detailkonzeption berücksichtigt.
 
-## 15. Datenmodell-Auswirkungen
+## 16. Datenmodell-Auswirkungen
 
 Bereits aus den bisherigen UX-Entscheidungen ergeben sich voraussichtlich Anforderungen an:
 
@@ -411,7 +433,7 @@ Bereits aus den bisherigen UX-Entscheidungen ergeben sich voraussichtlich Anford
 
 Diese Punkte werden in G3 fachlich präzisiert und in ein logisches Datenmodell überführt.
 
-## 16. Nächste G2-Arbeit
+## 17. Nächste G2-Arbeit
 
 Die vier zentralen Nutzerwege sind fachlich durchgearbeitet.
 
@@ -421,6 +443,7 @@ Als nächstes werden daraus die konkrete **Startseitenlogik und Navigationsstruk
 
 | Version | Datum | Änderung |
 |---|---|---|
+| 1.6 | 29.09.2026 | Sitzungsliste bewusst reduziert; Ort und Verfahrensstatus aus der Listenansicht entfernt; Sitzungsabschluss an freigegebene Niederschrift gebunden. |
 | 1.5 | 29.09.2026 | Themenliste, Statuslogik inkl. 90-Tage-Prüfung und schlanke konfigurierbare Pflichtbestätigung für ausgewählte Felder festgelegt. |
 | 1.4 | 29.09.2026 | Meldungsliste konkretisiert; Datumslogik mit getrenntem Ursprungs- und Aktualisierungsdatum sowie kompakter Anzeige festgelegt. |
 | 1.3 | 29.09.2026 | Startseitenlogik mit drei festen Inhaltsblöcken sowie Zusammenspiel von Start-, Listen- und Detailansicht festgelegt. |
