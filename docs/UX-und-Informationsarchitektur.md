@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 1.7 | 29.09.2026 | Josef Walter – erstellt mit KI-Unterstützung |
+| 1.8 | 29.09.2026 | Josef Walter – erstellt mit KI-Unterstützung |
 
 ## 1. Zweck
 
@@ -393,13 +393,24 @@ Pro Eintrag werden grundsätzlich angezeigt:
 
 Bevorstehende Sitzungen werden strikt nach Sitzungstermin sortiert. Änderungen an Unterlagen beeinflussen die Reihenfolge nicht.
 
-Eine Sitzung bleibt nach ihrer Durchführung fachlich offen, solange die freigegebene Niederschrift noch nicht vorliegt bzw. noch nicht ausgewertet wurde.
+Eine Sitzung bleibt nach ihrer Durchführung fachlich offen, solange die Genehmigung der Niederschrift noch nicht öffentlich belegt ist.
 
 Verbindliche Regel:
 
-> **Eine Sitzung gilt in FIB erst dann als abgeschlossen, wenn die Niederschrift freigegeben wurde.**
+> **Eine Sitzung gilt in FIB als abgeschlossen, sobald die Genehmigung ihrer Niederschrift öffentlich belegt ist.**
 
-Vorlagen, Beratungsergebnisse oder einzelne veröffentlichte Beschlüsse können bereits vorher ausgewertet und mit Beiträgen bzw. Themen verknüpft werden; sie schließen die Sitzung als Ganzes jedoch nicht ab.
+Dabei werden zwei Sachverhalte getrennt geführt:
+
+- **Niederschrift genehmigt** – z. B. nachgewiesen über den entsprechenden TOP einer späteren Sitzung,
+- **Niederschrift öffentlich einsehbar** – nur wenn ein öffentlich zugängliches Dokument bzw. ein belastbarer Veröffentlichungsnachweis vorliegt.
+
+Ist die Niederschrift genehmigt, aber öffentlich nicht auffindbar, wird dies auf der Sitzungsdetailseite deutlich und wertungsfrei angezeigt, z. B. **„Niederschrift genehmigt · öffentlich nicht auffindbar“**.
+
+Liegt eine öffentlich lesbare Niederschrift vor, wird sie TOP-bezogen ausgewertet. Die dort dokumentierten Beschlüsse bzw. Ergebnisse werden den zugehörigen Tagesordnungspunkten strukturiert zugeordnet und redaktionell freigegeben.
+
+Der **Beschlusstext wird dabei nicht gekürzt**, sondern vollständig übernommen, soweit er in der Niederschrift öffentlich zugänglich ist.
+
+Beschlüsse und Ergebnisse aus der Niederschrift werden **nur in der Sitzungsdetailansicht** angezeigt. Die Sitzungsliste bleibt bei der knappen Auswahl relevanter TOPs.
 
 ## 15. UX-Grundsätze
 
@@ -443,6 +454,7 @@ Als nächstes werden daraus die konkrete **Startseitenlogik und Navigationsstruk
 
 | Version | Datum | Änderung |
 |---|---|---|
+| 1.8 | 29.09.2026 | Niederschriftenlogik präzisiert: Genehmigung und öffentliche Verfügbarkeit getrennt; wertungsfreier Transparenzhinweis; vollständige Beschlüsse TOP-bezogen nur in der Detailansicht. |
 | 1.7 | 29.09.2026 | Bezeichnung in der Sitzungsliste auf „TOPs“ festgelegt; verkürzte TOP-Auswahl endet mit „…“. |
 | 1.6 | 29.09.2026 | Sitzungsliste bewusst reduziert; Ort und Verfahrensstatus aus der Listenansicht entfernt; Sitzungsabschluss an freigegebene Niederschrift gebunden. |
 | 1.5 | 29.09.2026 | Themenliste, Statuslogik inkl. 90-Tage-Prüfung und schlanke konfigurierbare Pflichtbestätigung für ausgewählte Felder festgelegt. |
