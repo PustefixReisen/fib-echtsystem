@@ -4,11 +4,13 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 2.3 | 29.09.2026 | Josef Walter – erstellt mit KI-Unterstützung |
+| 2.4 | 30.09.2026 | Josef Walter – erstellt mit KI-Unterstützung |
 
 ## 1. Zweck
 
 Dieses Dokument ist die verbindliche Primärquelle für öffentliche Benutzerführung, Informationsarchitektur und grundlegende UX-Prinzipien des FIB-Echtsystems.
+
+Für die fachliche Erkennung, Abgrenzung und Pflege von Themen und Vorgängen gilt ergänzend `docs/Themen-und-Vorgangslogik.md` als verbindliche fachliche Primärquelle.
 
 Der Demonstrator dient als Referenz, ist aber kein unveränderlicher UI-Blueprint.
 
@@ -16,26 +18,29 @@ Der Demonstrator dient als Referenz, ist aber kein unveränderlicher UI-Blueprin
 
 > **FIB soll nicht primär Dokumente oder Beiträge präsentieren, sondern den aktuellen Wissensstand zu einem Sachverhalt erschließen.**
 
-Die öffentlichen Ebenen haben unterschiedliche Aufgaben:
+Die fachlichen Ebenen haben unterschiedliche Aufgaben:
 
-- **Beitrag:** Was ist neu?
-- **Thema:** Wo stehen wir?
+- **Beitrag / Meldung:** Was ist konkret neu passiert?
+- **Vorgang:** Wie entwickelt sich ein konkreter länger laufender Sachverhalt und wo steht er aktuell?
+- **Thema:** Welche übergeordnete Fragestellung verbindet mehrere Vorgänge, Perspektiven und Rahmenbedingungen?
 - **Sitzung:** Was wird beraten oder entschieden?
 - **Mehr wissen?:** Was steckt dahinter?
 
-Diese Funktionen sollen fachlich und gestalterisch klar unterscheidbar bleiben.
+Intern bleiben Beitrag, Vorgang und Thema klar getrennte Objekttypen. Öffentlich wird diese interne Differenzierung nur so stark sichtbar gemacht, wie sie dem Verständnis dient.
 
 ## 3. Zentrale Nutzeraufgaben
 
 FIB muss insbesondere folgende Nutzerfragen unterstützen:
 
-1. Was gibt es Neues in Feldkirchen?
-2. Was ist bei einem bestimmten Thema der aktuelle Stand?
-3. Was wird demnächst beraten oder entschieden?
-4. Warum ist diese Meldung wichtig?
-5. Ich möchte es genauer verstehen.
-6. Ich möchte künftig nichts dazu verpassen.
-7. Ich suche etwas Bestimmtes.
+1. Welche Meldungen gibt es in Feldkirchen?
+2. Was beschäftigt Feldkirchen länger und wie ist der aktuelle Stand?
+3. Wie hat sich ein konkreter Sachverhalt entwickelt?
+4. Welche übergeordneten Zusammenhänge gibt es?
+5. Was wird demnächst beraten oder entschieden?
+6. Warum ist eine Meldung oder Entwicklung wichtig?
+7. Ich möchte es genauer verstehen.
+8. Ich möchte künftig nichts dazu verpassen.
+9. Ich suche etwas Bestimmtes.
 
 ## 4. Einstiegswege
 
@@ -54,47 +59,41 @@ Daraus folgt:
 
 Die Startseite darf nicht vorausgesetzt werden.
 
-Beiträge, Themen und Sitzungen benötigen daher stabile Identitäten, eigenständige URLs und verständlichen Kontext auch bei direktem Einstieg.
+Meldungen, Themen, Vorgänge und Sitzungen benötigen stabile Identitäten, eigenständige URLs und verständlichen Kontext auch bei direktem Einstieg.
 
-## 5. Vorgesehene öffentliche Grundstruktur
+## 5. Öffentliche Grundstruktur und Hauptnavigation
 
-Als Ausgangspunkt für die weitere G2-Konzeption gelten vier Hauptzugänge:
+Die vorläufig verbindliche öffentliche Hauptnavigation lautet:
 
-- **Aktuell**
+- **Meldungen**
 - **Themen**
 - **Sitzungen**
 - **Suchen**
 
-Die konkrete Menügestaltung wird erst nach Durcharbeitung der Nutzerwege endgültig festgelegt.
+Der Begriff **„Aktuell“** ist kein eigener Hauptbereich. Er beschreibt ausschließlich eine zeitliche Auswahl bzw. Hervorhebung, insbesondere auf der Startseite.
 
-### 5.1 Aktuell
+### 5.1 Meldungen
 
-Der Einstieg „Aktuell“ soll nicht nur eine endlose chronologische Beitragsliste zeigen.
+Der Navigationspunkt **Meldungen** führt zur vollständigen Liste der veröffentlichten Beiträge/Meldungen. Die Liste enthält also nicht nur aktuelle Meldungen.
 
-Er soll mindestens unterscheiden können zwischen:
-
-- neu seit dem letzten Besuch,
-- wichtigen aktuellen Entwicklungen,
-- zuletzt aktualisierten Vorgängen,
-- weiteren aktuellen Meldungen.
-
-Wichtige Aktualisierungen älterer Vorgänge dürfen nicht allein wegen des ursprünglichen Veröffentlichungsdatums weit nach unten rutschen.
+„Aktuell“ wird innerhalb der Startseite oder anderer Ansichten verwendet, wenn tatsächlich nur neue bzw. fachlich relevant aktualisierte Inhalte gemeint sind.
 
 ### 5.2 Themen
 
-Der Themenbegriff wird in G2 neu geschärft.
+Der öffentliche Bereich **Themen** führt eine gemeinsame Liste aus:
 
-> **Themen werden nicht von oben als feste Kategorien gesetzt. Sie werden aus dem Zusammenhang mehrerer Ereignisse, Beiträge und Vorgänge erkannt und anschließend redaktionell bestätigt.**
+- übergeordneten **Themen** und
+- konkreten länger laufenden **Vorgängen**.
 
-Ein Thema ist eine übergeordnete Fragestellung, die mehrere unterschiedliche Entwicklungen, Perspektiven oder Vorgänge zusammenführt. Ein einzelner länger laufender Sachverhalt ist dagegen nicht automatisch ein Thema.
+Die fachliche Unterscheidung bleibt intern verbindlich, wird öffentlich aber nicht überbetont. Besucher sollen nicht zuerst die Datenmodell-Terminologie verstehen müssen.
 
-Beispiele für typische Themen sind etwa Wohnungsbau, kommunale Wärmeplanung/Geothermie oder Ortsentwicklung. Ein konkreter Vorgang wie die Hundewiese ist zunächst als Vorgang/Sachverhalt zu behandeln und nur dann Teil eines Themas, wenn ein belastbarer übergeordneter Zusammenhang erkennbar ist.
+Ein dezenter Hinweis wie „Übergeordnetes Thema“ oder „Konkreter Vorgang“ kann angezeigt werden, wenn er dem Verständnis hilft. Er ist jedoch kein dominantes Gestaltungselement.
 
-Vor der weiteren Gestaltung von Themenliste und Themendetailseite wird deshalb zuerst die fachliche Themenlogik festgelegt.
+Vorgänge dürfen auch dann in dieser gemeinsamen Liste erscheinen, wenn sie noch keinem übergeordneten Thema zugeordnet sind.
 
 ### 5.3 Sitzungen
 
-Die Sitzungsebene soll transparent zeigen:
+Die Sitzungsebene zeigt transparent:
 
 - was ansteht,
 - welche Unterlagen vorliegen,
@@ -112,221 +111,14 @@ Intern kann sie strukturierte Felder nutzen, insbesondere:
 
 - Volltext,
 - Thema,
+- Vorgang,
 - Ort,
 - Kategorie,
 - Bezugsobjekt.
 
 Die technische Umsetzung wird später festgelegt.
 
-## 6. Beitrag als Einstiegsknoten
-
-Ein Beitrag soll nicht nur Nachrichtentext sein, sondern als Einstieg in den gesamten Sachzusammenhang funktionieren.
-
-Als Ausgangspunkt gilt folgende Informationshierarchie:
-
-1. Überschrift,
-2. Kurzfassung,
-3. Was ist neu?,
-4. Sachinformation,
-5. Quellen,
-6. Unsere Einordnung,
-7. Mehr wissen?,
-8. Zusammenhang / zugehörige Themen, Sitzungen und Bezüge.
-
-Die endgültige Reihenfolge und Darstellung wird anhand der Nutzerwege geprüft.
-
-## 7. Aktualisierungen
-
-Bei aktualisierten Beiträgen soll der neue Informationswert unmittelbar erkennbar sein.
-
-Beispielprinzip:
-
-> **Neu seit 17. September:** Die veröffentlichte Beschlussvorlage enthält jetzt konkrete Angaben zu Schallschutzkosten und einer Park-Alternative.
-
-Nutzer sollen nicht selbst alte und neue Textfassungen vergleichen müssen.
-
-Daraus folgt als Anforderung für G3:
-
-- Aktualisierungen müssen strukturiert und historisierbar modelliert werden,
-- ein bloßes Änderungsdatum reicht voraussichtlich nicht aus.
-
-### 7.1 Technische Änderung, redaktionelle Aktualisierung, fachliche Neuigkeit
-
-FIB unterscheidet drei Ebenen:
-
-- **technische Änderung** – z. B. Tippfehler, Linkkorrektur oder interne Metadatenänderung; erzeugt keine öffentliche Neuigkeit,
-- **redaktionelle Aktualisierung** – z. B. Präzisierung oder zusätzliche Quelle ohne neuen Sachstand; wird historisiert, aber normalerweise nicht als „neu“ hervorgehoben,
-- **fachliche Aktualisierung** – z. B. neue Vorlage, neuer Beschluss, neue Kostenangabe oder geänderter Planungsstand; kann öffentlich als neue Entwicklung erscheinen.
-
-Für „Neu seit letztem Besuch“, Sortierung und Push ist daher nicht das technische Änderungsdatum maßgeblich, sondern die fachlich relevante Aktualisierung.
-
-### 7.2 Aktualisierung oder neuer Beitrag
-
-Verbindliche Grundregel:
-
-> **Ein Beitrag steht für ein eigenständiges berichtenswertes Ereignis. Neue Informationen zum selben Ereignis aktualisieren den bestehenden Beitrag. Ein neues eigenständiges Ereignis mit ausreichendem Nachrichtenwert erzeugt einen neuen Beitrag.**
-
-Die Entscheidung erfolgt zweistufig:
-
-1. **Ist es ein neues Ereignis?**
-   - Nein: bestehenden Beitrag aktualisieren.
-   - Ja: weiter zu Schritt 2.
-2. **Hat dieses Ereignis eigenen Nachrichtenwert für FIB?**
-   - Ja: neuer Beitrag.
-   - Nein: bestehenden Beitrag, Sitzungseintrag oder Themenstand aktualisieren.
-
-Beispiele:
-
-- zusätzliche Kostenangabe zu derselben veröffentlichten Vorlage → bestehenden Beitrag aktualisieren,
-- Korrektur eines Links → technische Änderung, keine öffentliche Neuigkeit,
-- Gemeinderat fasst später einen Beschluss → neues eigenständiges Ereignis, in der Regel neuer Beitrag,
-- Umsetzung beginnt Monate später → neues eigenständiges Ereignis, in der Regel neuer Beitrag,
-- reine Terminverschiebung ohne weiteren Nachrichtenwert → meist Aktualisierung statt neuer Beitrag.
-
-Mehrere Beiträge zu demselben länger laufenden Sachverhalt bleiben über Thema/Vorgang und Ereignisbeziehungen miteinander verbunden.
-
-## 8. Themenlogik – in Überarbeitung
-
-Die bisherige Annahme, ein Thema primär als kumulierten Verlauf eines länger laufenden Sachverhalts darzustellen, wird verworfen.
-
-Für G2 gilt stattdessen folgende Arbeitsrichtung:
-
-1. **Erkennen:** Das System untersucht mehrere Ereignisse, Beiträge und Vorgänge auf wiederkehrende oder gemeinsame übergeordnete Fragestellungen.
-2. **Abgrenzen:** Es wird geprüft, ob tatsächlich ein Thema vorliegt oder nur ein einzelner Vorgang bzw. eine Beitragskette.
-3. **Kontext bestimmen:** Für ein mögliches Thema wird ermittelt, welcher lokale, regionale, landes-, bundesweite, fachliche oder gesellschaftliche Kontext zum Verständnis tatsächlich relevant ist.
-4. **Begrenzen:** Kontext wird nur aufgenommen, wenn er die konkrete kommunale Fragestellung erklärt oder verändert. Bloße thematische Ähnlichkeit reicht nicht.
-5. **Bestätigen:** Ein neu erkanntes Thema und seine Abgrenzung werden redaktionell ausdrücklich bestätigt; Themen werden nicht automatisch veröffentlicht.
-
-Ein Thema kann sich durch unterschiedliche Indikatoren erkennen lassen. Diese Indikatoren sind **Hinweise und keine harten Ausschlusskriterien**. Dazu gehören insbesondere:
-
-- dauerhafte oder wiederkehrende kommunale Fragestellung,
-- mehrere unterschiedliche Ereignisse oder Vorgänge tragen dazu bei,
-- gemeinsames Problem oder gemeinsames Ziel,
-- wiederkehrender Zielkonflikt,
-- gemeinsame kommunale Handlungsebene,
-- gemeinsame externe Rahmenbedingungen,
-- wiederkehrende Akteure oder Zuständigkeiten,
-- räumlicher Zusammenhang,
-- zeitliche Wiederkehr,
-- mehrere relevante Perspektiven oder Dimensionen,
-- übergeordnete Erkenntnisse oder Beispiele außerhalb Feldkirchens mit konkretem Erklärungswert für die lokale Situation,
-- **Erklärungsgewinn durch Zusammenführung**: Aus der Verbindung mehrerer Vorgänge entsteht eine verständliche Aussage über Feldkirchen, die in keinem Einzelbeitrag allein enthalten ist,
-- das Thema bleibt sinnvoll bestehen, auch wenn einzelne Vorgänge abgeschlossen sind.
-
-Für die automatische Erkennung gilt bewusst eine **hohe Sensitivität**:
-
-> **Lieber ein plausibler Themenvorschlag zu viel als ein relevantes Thema übersehen.**
-
-Ein Themenvorschlag ist noch kein veröffentlichtes Thema. Die Redaktion prüft, verändert oder verwirft ihn und legt gemeinsam mit der KI den eigentlichen Themenkontext fest.
-
-Ein Themenvorschlag soll deshalb mindestens transparent ausweisen:
-
-- mögliches Thema,
-- erkannte gemeinsame Fragestellung,
-- auslösende Vorgänge und Beiträge,
-- erkannte Muster, Gemeinsamkeiten oder Zielkonflikte,
-- warum der Zusammenhang über einen Einzelvorgang hinausgeht,
-- möglichen Erklärungsgewinn,
-- vorgeschlagene Kontextdimensionen,
-- relevante externe Beispiele bzw. Rahmenbedingungen,
-- Unsicherheiten und Gegenargumente.
-
-Die endgültige Themenliste und Themendetailseite werden erst nach Erprobung dieser Logik an realen FIB-Fällen festgelegt.
-
-### 8.1 Iterative Themendefinition und Kalibrierung
-
-Nach Auswahl eines Themenkandidaten formuliert die KI einen ersten Thementext, der die lokalen Beiträge und Vorgänge mit dem tatsächlich erklärungsrelevanten übergeordneten Kontext verbindet.
-
-Die Redaktion bewertet dabei nicht nur den Text, sondern insbesondere die fachliche Abgrenzung des Themas. Aus Korrekturen entstehen Schärfungen der Themendefinition.
-
-Die interne Themendefinition soll mindestens enthalten:
-
-- Thementitel,
-- Leitfrage,
-- lokalen Bezug zu Feldkirchen,
-- einbezogene Perspektiven bzw. Dimensionen,
-- ausdrückliche Abgrenzung,
-- relevante übergeordnete Kontexte,
-- Ausgangsvorgänge und -beiträge,
-- Unsicherheiten bzw. offene Abgrenzungsfragen.
-
-Der Arbeitsprozess ist iterativ:
-
-> **Themenkandidat → Entwurf → Kontextschärfung → bestätigte Themendefinition → laufende Weiterentwicklung**
-
-Die bestätigte Themendefinition dient anschließend als Arbeitsrahmen für die KI. Neue Beiträge und Vorgänge werden nicht nur über Schlagworte, sondern danach geprüft, ob sie zur bestätigten Leitfrage und zu den definierten Perspektiven beitragen.
-
-Wenn neue Entwicklungen eine bisher nicht berücksichtigte Perspektive nahelegen, schlägt die KI eine Überprüfung oder Erweiterung der Themendefinition vor; sie ändert die veröffentlichte Definition nicht selbstständig.
-
-Die wiederkehrenden redaktionellen Überarbeitungen und Entscheidungen zu Themenkandidaten dienen zugleich der **Kalibrierung der Themen-Erkennungslogik**. Die KI soll aus bestätigten, veränderten und verworfenen Themenvorschlägen ableiten, welche Arten von Zusammenhängen für FIB tatsächlich als Themen geeignet sind.
-
-Diese Kalibrierung bleibt redaktionell kontrolliert: Sie verbessert die Vorschlagslogik, ersetzt aber weder die explizite Themenbestätigung noch die redaktionelle Verantwortung.
-
-## 8a. Nutzerweg 2 – aktueller Stand eines Themas
-
-Eine Themenseite ist keine bloße Sammlung verknüpfter Beiträge, sondern eine eigenständige Sachstandsseite.
-
-Sie beantwortet zuerst:
-
-- worum geht es,
-- wo stehen wir aktuell,
-- was ist zuletzt passiert,
-- was ist noch offen.
-
-Vorgesehene Struktur:
-
-1. Themenkopf mit Kurzbeschreibung,
-2. aktueller Stand,
-3. letzte wesentliche Entwicklung,
-4. Verlauf wichtiger Ereignisse,
-5. offene Punkte / nächste belegte Schritte,
-6. wichtige Entscheidungen,
-7. zugehörige Beiträge und Sitzungen,
-8. themenbezogenes „Mehr wissen?“,
-9. themenbezogene „Unsere Einordnung“.
-
-Der aktuelle Stand ist der kumulierte Wissensstand und nicht einfach der jüngste Beitrag.
-
-„Offene Punkte“ und „nächste Schritte“ dürfen nur aus belegbaren Informationen abgeleitet werden. Vermutungen werden nicht als offene oder bevorstehende Schritte dargestellt.
-
-Neue relevante Ereignisse lösen automatisch einen KI-Vorschlag zur Fortschreibung des aktuellen Stands, der offenen Punkte, der nächsten Schritte und gegebenenfalls der themenbezogenen Einordnung aus. Veröffentlichung erfolgt erst nach redaktioneller Prüfung und Freigabe.
-
-Beitragsbezogene und themenbezogene politische Einordnungen werden getrennt behandelt:
-
-- **beitragsbezogen:** Bewertung einer konkreten neuen Entwicklung,
-- **themenbezogen:** grundsätzliche politische Position zum länger laufenden Thema.
-
-## 9. Nutzerweg 3 – direkter Einstieg über einen Beitrag
-
-Jeder Beitrag muss ohne vorherigen Besuch der Start- oder Themenseite verständlich sein.
-
-Dabei wird zwischen Erst- und Folgebeitrag unterschieden:
-
-- **Erstbeitrag:** erklärt den Grundkontext ausführlicher.
-- **Folgebeitrag:** fokussiert auf die neue Entwicklung und enthält nur den unmittelbar nötigen Rückblick.
-- **Themenseite:** enthält den vollständigen Sachzusammenhang und Verlauf.
-
-Ein Folgebeitrag soll den Nutzer mit einem kurzen Kontextblock orientieren und einen klaren Übergang zur vollständigen Themenseite bieten.
-
-Nicht alle Beziehungen eines Beitrags werden gleich prominent dargestellt. Im Beitrag erscheint nur der für das Verständnis unmittelbar nötige Zusammenhang; der vollständige Verlauf bleibt auf der Themenseite.
-
-## 10. Nutzerweg 4 – Einstieg über Push
-
-Push dient als gezielter Einstieg in eine konkrete neue Entwicklung.
-
-Grundregeln:
-
-- Push enthält Thema bzw. Sachverhalt und die neue Entwicklung knapp,
-- ein Tipp öffnet direkt den betroffenen Beitrag bzw. die relevante Aktualisierung,
-- der Zielinhalt zeigt sofort „Was ist neu?“,
-- bei Folgebeiträgen folgt ein kurzer Kontextblock,
-- von dort führt ein klarer Weg zur vollständigen Themenseite.
-
-Nicht jede fachliche Aktualisierung erzeugt automatisch einen Push. Beiträge bzw. Ereignisse benötigen eine eigene Benachrichtigungsrelevanz, die getrennt vom Marketing-/Verbreitungsranking geführt wird.
-
-Wesentliche Aktualisierungen bestehender Beiträge müssen so adressierbar sein, dass ein Push direkt zur relevanten Aktualisierung führen kann.
-
-## 11. Startseite, Listenansicht und Detailansicht
+## 6. Startseite
 
 Die Startseite dient primär der Orientierung und Auswahl. Sie besteht aus drei festen inhaltlichen Blöcken:
 
@@ -336,20 +128,11 @@ Die Startseite dient primär der Orientierung und Auswahl. Sie besteht aus drei 
 2. **Anstehende Sitzungen**
    - die nächsten tatsächlich bevorstehenden Sitzungen,
    - unabhängig davon, ob sich an ihren Datensätzen zuletzt etwas geändert hat.
-3. **Geänderte Themen**
-   - Themen, deren aktueller Sachstand sich zuletzt relevant verändert hat.
+3. **Aktuelle bzw. geänderte Themen und Vorgänge**
+   - Themen, deren Wissensrahmen sich fachlich verändert hat,
+   - Vorgänge, deren Sachstand sich fachlich verändert hat.
 
-Der Besuchskontext „seit dem letzten Besuch“ wird nicht als eigener vierter Block geführt, sondern innerhalb der drei bestehenden Blöcke angezeigt. Bei Wiederholungsbesuchern können z. B. Hinweise erscheinen wie „2 neu seit deinem letzten Besuch“ oder „1 Thema seit deinem letzten Besuch aktualisiert“. Bei Erstbesuchern entfallen diese Hinweise.
-
-Die Startseite bleibt dadurch strukturell stabil; nur die Hervorhebung innerhalb der Blöcke passt sich an den Besuchskontext an.
-
-Wählt der Nutzer einen Block bzw. ein Element daraus, wechselt er in die jeweilige Listenansicht:
-
-- Aktuelle Meldungen → Beitragsliste,
-- Sitzungen → Sitzungsliste,
-- Themen → Themenliste.
-
-Die Listenansichten übernehmen die Grundidee des Demonstrators, werden aber für das Echtsystem weiter optimiert, insbesondere hinsichtlich Kennzeichnung von Neuigkeit, Aktualisierung, Bedeutung und Sachkontext.
+Der Besuchskontext „seit dem letzten Besuch“ wird nicht als eigener vierter Block geführt, sondern innerhalb dieser Blöcke angezeigt.
 
 Als übergreifendes UX-Modell gilt:
 
@@ -357,7 +140,192 @@ Als übergreifendes UX-Modell gilt:
 > **Listenansicht = Überblick und Vergleich**  
 > **Detailseite = Verständnis und Vertiefung**
 
-## 12. Listenansichten – Meldungen
+## 7. Meldung als Einstiegsknoten
+
+Ein Beitrag soll nicht nur Nachrichtentext sein, sondern als Einstieg in den gesamten Sachzusammenhang funktionieren.
+
+Als Grundhierarchie gilt:
+
+1. Überschrift,
+2. Kurzfassung,
+3. Was ist neu?, soweit erforderlich,
+4. Sachinformation,
+5. Quellen,
+6. Unsere Einordnung,
+7. Mehr wissen?,
+8. Zusammenhang / zugehörige Vorgänge, Themen, Sitzungen und Bezüge.
+
+## 8. Aktualisierungen von Meldungen
+
+Bei aktualisierten Beiträgen soll der neue Informationswert unmittelbar erkennbar sein.
+
+> **Neu seit 17. September:** Die veröffentlichte Beschlussvorlage enthält jetzt konkrete Angaben zu Schallschutzkosten und einer Park-Alternative.
+
+Nutzer sollen nicht selbst alte und neue Textfassungen vergleichen müssen.
+
+### 8.1 Technische Änderung, redaktionelle Aktualisierung, fachliche Neuigkeit
+
+FIB unterscheidet drei Ebenen:
+
+- **technische Änderung** – z. B. Tippfehler, Linkkorrektur oder interne Metadatenänderung; erzeugt keine öffentliche Neuigkeit,
+- **redaktionelle Aktualisierung** – z. B. Präzisierung oder zusätzliche Quelle ohne neuen Sachstand; wird historisiert, aber normalerweise nicht als „neu“ hervorgehoben,
+- **fachliche Aktualisierung** – z. B. neue Vorlage, neuer Beschluss, neue Kostenangabe oder geänderter Planungsstand; kann öffentlich als neue Entwicklung erscheinen.
+
+Für „Neu seit letztem Besuch“, Sortierung und Push ist daher nicht das technische Änderungsdatum maßgeblich, sondern die fachlich relevante Aktualisierung.
+
+### 8.2 Aktualisierung oder neuer Beitrag
+
+Verbindliche Grundregel:
+
+> **Ein Beitrag steht für ein eigenständiges berichtenswertes Ereignis. Neue Informationen zum selben Ereignis aktualisieren den bestehenden Beitrag. Ein neues eigenständiges Ereignis mit ausreichendem Nachrichtenwert erzeugt einen neuen Beitrag.**
+
+Die Entscheidung erfolgt zweistufig:
+
+1. Ist es ein neues Ereignis?
+2. Hat dieses Ereignis eigenen Nachrichtenwert für FIB?
+
+Mehrere Beiträge zu demselben konkreten länger laufenden Sachverhalt werden über einen Vorgang miteinander verbunden.
+
+## 9. Gemeinsame Themen-/Vorgangsliste
+
+Die öffentliche Themenliste zeigt Themen und Vorgänge gemeinsam. Sie soll Orientierung darüber geben, **was Feldkirchen länger beschäftigt**, ohne die interne Objektlogik in den Vordergrund zu stellen.
+
+### 9.1 Gemeinsame Grunddarstellung
+
+Jeder Listeneintrag enthält grundsätzlich:
+
+- Titel,
+- sehr kurze Beschreibung,
+- Datum der letzten fachlich relevanten Änderung,
+- gegebenenfalls einen knappen Hinweis auf einen übergeordneten Zusammenhang.
+
+Wenn ein Vorgang einem Thema zugeordnet ist, kann angezeigt werden:
+
+> **Gehört zu:** Regionale Mobilität und Verkehrsverflechtungen Feldkirchens
+
+Eine harte Trennung in zwei Listenblöcke „Themen“ und „Vorgänge“ erfolgt nicht.
+
+Ein Filter „Themen | Vorgänge“ ist technisch möglich, wird im MVP aber nicht als notwendiger Standard vorausgesetzt.
+
+### 9.2 Sortierung
+
+Standardmäßig orientiert sich die Liste an der letzten **fachlich relevanten Änderung**. Technische Änderungen beeinflussen die Reihenfolge nicht.
+
+Abgeschlossene oder länger unveränderte Vorgänge können weiter unten erscheinen, ohne dass Themen selbst einen Status „aktiv / ruhend / abgeschlossen“ erhalten.
+
+### 9.3 Hierarchie und Navigation
+
+Die gemeinsame Liste darf Hierarchien sichtbar machen, ohne sie starr darzustellen:
+
+- Vorgang → zugehöriges Thema bzw. zugehörige Themen,
+- Thema → wichtige zugehörige Vorgänge.
+
+Ein Vorgang kann mehreren Themen zugeordnet sein. Ein Thema umfasst in der Regel mehrere Vorgänge.
+
+## 10. Themendetailseite
+
+Die Themenseite dient dem **Verständnis eines übergeordneten Zusammenhangs** und ist keine bloße Chronologie.
+
+Sie beantwortet insbesondere:
+
+- Was ist die Leitfrage?
+- Warum ist sie für Feldkirchen relevant?
+- Welche Perspektiven gehören zum Thema?
+- Welche Vorgänge prägen den lokalen Stand und welche Rolle spielen sie?
+- Was wissen wir derzeit?
+- Was ist noch offen?
+- Welcher externe Kontext hilft beim Verständnis?
+
+### 10.1 Grundstruktur
+
+1. **Kopfbereich**
+   - Thementitel,
+   - Leitfrage,
+   - kurzer Feldkirchen-Bezug,
+   - fachlicher Stand / zuletzt aktualisiert.
+2. **Warum ist das für Feldkirchen relevant?**
+   - kurzer erklärender Abschnitt ohne Chronologie.
+3. **Was prägt das Thema derzeit?**
+   - wichtige Vorgänge mit kurzer Beschreibung,
+   - fachlicher Rolle bzw. Gewichtung,
+   - aktuellem Vorgangsstand,
+   - letzter relevanter Entwicklung,
+   - Link zum Vorgang.
+4. **Perspektiven des Themas**
+   - themenspezifische, nicht global fest vorgegebene Perspektiven.
+5. **Was wissen wir derzeit?**
+   - kompakte Synthese des aktuellen Wissensstands.
+6. **Was ist noch offen?**
+   - belegte Wissenslücken und offene Fragen.
+7. **Hintergrund und Kontext**
+   - nur erklärungsrelevanter rechtlicher, technischer, regionaler, gesellschaftlicher oder fachlicher Kontext.
+8. **Mehr wissen?**
+   - vertiefende Fragen aus Perspektiven, Wissenslücken, Begriffen, möglichen Folgen und Handlungsmöglichkeiten.
+9. **Unsere Einordnung**
+   - klar von der Sachinformation getrennt.
+10. **Neueste Entwicklungen**
+   - kompakte Liste jüngster zugehöriger Meldungen.
+
+### 10.2 Gewichtung von Vorgängen im Thema
+
+Nicht alle Beziehungen eines Vorgangs zu einem Thema haben dieselbe Bedeutung. Die in `docs/Themen-und-Vorgangslogik.md` definierte Wirkungsrolle beeinflusst Reihenfolge und Hervorhebung.
+
+Ein prägender Treiber darf nicht gleichrangig mit einer bloßen Betroffenheit oder einem einzelnen Indikator erscheinen.
+
+Die fachlichen Rollen können intern verwendet werden, ohne dass ihre technischen Bezeichnungen zwingend als öffentliche Labels erscheinen müssen. Öffentlich entscheidend ist eine verständliche Gewichtung und Gruppierung.
+
+### 10.3 Chronologie zum Thema
+
+Die Themenseite selbst bleibt primär erklärend. Zusätzlich wird ein Zugang **„Alle Entwicklungen zum Thema“** vorgesehen.
+
+Diese chronologische Sicht wird aus den zugehörigen Vorgängen und Meldungen erzeugt und ermöglicht die Rückverfolgung aller relevanten Ereignisse, ohne die Themenseite selbst in eine Chronologie zu verwandeln.
+
+Einzelne themenrelevante Meldungen dürfen direkt einem Thema zugeordnet sein, auch wenn daraus noch kein eigener Vorgang entstanden ist.
+
+## 11. Vorgangsdetailseite
+
+Die Vorgangsseite dient dem **Nachvollziehen eines konkreten Sachverhalts und seiner Entwicklung**.
+
+Ein Vorgang ist ein eigenständiges redaktionelles Objekt. Er ist mehr als eine bloße Beitragsliste, weil er einen eigenen aktuellen Sachstand besitzt.
+
+### 11.1 Grundstruktur
+
+1. **Titel + Kurzbeschreibung**
+   - Worum geht es konkret?
+2. **Aktueller Stand**
+   - Wo steht der Vorgang heute?
+3. **Letzte relevante Entwicklung**
+   - Was hat sich zuletzt fachlich geändert?
+4. **Bisheriger Verlauf**
+   - chronologische Folge der zugehörigen Beiträge/Ereignisse.
+5. **Wichtige Entscheidungen**
+   - Beschlüsse, Variantenentscheidungen, Freigaben, Ablehnungen oder andere wesentliche Entscheidungspunkte.
+6. **Offene Punkte / nächste belegte Schritte**
+   - nur aus belastbaren Quellen abgeleitete Angaben.
+7. **Zuständigkeiten und Beteiligte**
+   - relevante Behörden, Träger, Betreiber, Initiativen oder andere Akteure.
+8. **Zugehörige Themen**
+   - Verbindung zu einem oder mehreren Themen; fachliche Wirkungsrolle intern strukturiert.
+9. **Mehr wissen?**
+   - Hintergrundfragen zum konkreten Vorgang.
+10. **Unsere Einordnung**
+   - klar getrennt von der Sachinformation.
+
+### 11.2 Verlauf aus Meldungen
+
+Der Abschnitt **„Bisheriger Verlauf“** wird aus den verknüpften Meldungen/Ereignissen erzeugt und nicht als zweite, manuell gepflegte Chronologie geführt.
+
+Der Vorgang enthält zusätzlich den jeweils aktuellen Sachstand. Damit gilt:
+
+> **Meldungen dokumentieren Ereignisse; der Vorgang verdichtet daraus den aktuellen Stand und Verlauf eines konkreten Sachverhalts.**
+
+### 11.3 Status
+
+Eine Statuslogik wie **aktiv / ruhend / abgeschlossen** gehört zum Vorgang, nicht zum Thema.
+
+Statusänderungen und insbesondere der Abschluss eines Vorgangs werden redaktionell bestätigt.
+
+## 12. Meldungsliste
 
 Die Meldungsliste dient Auswahl und Einordnung, nicht der vollständigen Erklärung.
 
@@ -367,12 +335,10 @@ Pro Eintrag werden grundsätzlich gezeigt:
 - sehr kurze Zusammenfassung,
 - fachliches Ursprungs-/Ereignisdatum,
 - bei fachlich relevanter späterer Änderung zusätzlich das Aktualisierungsdatum,
-- zugehöriges Thema bzw. Sachkontext, sofern vorhanden,
-- bei Folgebeiträgen ein knapper Hinweis auf den laufenden Vorgang.
+- zugehöriger Vorgang oder Sachkontext, sofern vorhanden,
+- zugehöriges Thema, sofern dies dem Verständnis hilft.
 
-Die interne Relevanzbewertung wird nicht als öffentlicher Wert oder Label angezeigt. Sie kann intern Sortierung, Hervorhebung oder Verbreitungsentscheidungen unterstützen.
-
-Für Metadaten werden keine unnötigen dekorativen Icons verwendet. Datum und Aktualisierungsstatus werden sprachlich bzw. typografisch klar dargestellt.
+Die interne Relevanzbewertung wird nicht als öffentlicher Wert oder Label angezeigt.
 
 ### 12.1 Datumsdarstellung und Sortierung
 
@@ -382,77 +348,31 @@ Verbindliche Darstellungsregel bei aktualisierten Beiträgen:
 
 > **17.09.2026 · aktualisiert 29.09.2026**
 
-Bei einem nicht aktualisierten Beitrag wird nur das Ursprungs-/Ereignisdatum angezeigt.
+Für die Standard-Sortierung der Meldungsliste ist das Datum der **letzten fachlich relevanten Neuigkeit** maßgeblich. Technische oder rein redaktionelle Änderungen verändern diese Sortierung nicht.
 
-Eine Aktualisierung ersetzt das Ursprungsdatum nicht.
-
-Für die Standard-Sortierung der Meldungsliste ist dagegen das Datum der **letzten fachlich relevanten Neuigkeit** maßgeblich. Dadurch können ein neuer Beitrag und ein wesentlich aktualisierter älterer Beitrag gleichrangig nach Aktualität einsortiert werden. Technische oder rein redaktionelle Änderungen verändern diese Sortierung nicht.
-
-Bei aktualisierten Beiträgen soll bereits die Kurzfassung möglichst den neuen Informationswert erkennen lassen.
-
-## 13. Themenliste und Statuspflege – vorläufig
-
-Die in diesem Abschnitt bisher entwickelte Listen- und Statuslogik ist **vorläufig** und wird nach Abschluss der Themenlogik erneut geprüft. Insbesondere darf die Themenliste nicht auf einer Gleichsetzung von Thema und länger laufendem Vorgang beruhen.
-
-
-
-Die Themenliste bleibt bewusst knapp. Pro Thema werden grundsätzlich angezeigt:
-
-- Titel,
-- sehr kurze Zusammenfassung des aktuellen Gesamtstands,
-- Datum der letzten fachlich relevanten Änderung,
-- Status.
-
-Beispiel:
-
-> **Hundewiese**  
-> Standortfrage weiter offen; neue Vorlage konkretisiert Schallschutz und Kosten.  
-> **zuletzt geändert 29.09.2026 · aktiv**
-
-Die Themenliste beantwortet damit primär die Frage „Wo steht der Sachverhalt?“ und nicht „Was ist zuletzt passiert?“.
-
-### 13.1 Statuswerte
-
-Für Themen gelten zunächst die öffentlichen Statuswerte:
-
-- **aktiv**,
-- **ruhend**,
-- **abgeschlossen**.
-
-Der Status wird vom System bzw. der KI vorgeschlagen, aber vor Veröffentlichung durch die Redaktion ausdrücklich bestätigt.
-
-Für **ruhend** gilt als prüfbares Kriterium:
-
-> Ein Thema ist Kandidat für „ruhend“, wenn seit 90 Tagen keine fachlich relevante Entwicklung eingetreten ist und kein konkret belegter nächster Schritt absehbar ist.
-
-Ein Thema bleibt trotz längerer Pause aktiv, wenn ein belegter nächster Schritt besteht, z. B. angekündigte Prüfung, Gutachten, Sitzung, Ausschreibung oder Umsetzungsphase.
-
-Wird ein Vorgang ausdrücklich auf unbestimmte Zeit zurückgestellt, kann er auch vor Ablauf der 90 Tage als ruhend bestätigt werden.
-
-Nach 90 Tagen ohne fachliche relevante Änderung erzeugt das System einen Prüfhinweis für die Redaktion, ändert den veröffentlichten Status aber nicht automatisch.
-
-### 13.2 Explizit zu bestätigende Felder
+## 13. Explizit zu bestätigende Felder
 
 Bestimmte fachlich besonders wirksame Angaben müssen von der Redaktion ausdrücklich bestätigt werden, auch wenn sie den KI-Vorschlag unverändert übernimmt.
 
 Als Ausgangspunkt gelten insbesondere:
 
-- Status des Themas,
-- aktueller Stand,
+- Vorgangsstatus,
+- aktueller Stand eines Vorgangs,
 - offene Punkte,
 - nächste Schritte,
 - wichtige Entscheidungen,
-- Zuordnung Beitrag ↔ Thema/Vorgang,
+- Zuordnung Beitrag ↔ Vorgang,
+- Zuordnung Vorgang ↔ Thema,
+- Wirkungsrolle eines Vorgangs innerhalb eines Themas,
+- Themendefinition bzw. wesentliche Änderung der Themendefinition,
 - Entscheidung „neues Ereignis oder Aktualisierung“,
 - fachliche Aktualisierungsrelevanz,
 - „Unsere Einordnung“,
 - Abschluss eines Vorgangs.
 
-Andere Felder können im normalen Gesamtfreigabeprozess als mitgeprüft gelten.
-
 Welche Felder eine explizite Bestätigung erfordern, soll als **schlanke Admin-Stammdatenpflege** geführt werden. Im MVP ist dafür ausschließlich die Eigenschaft **„explizite Bestätigung erforderlich: ja/nein“** konfigurierbar.
 
-Nicht Bestandteil des MVP ist eine frei konfigurierbare Prüfregel-Engine mit komplexen Bedingungen, Abhängigkeiten oder feldspezifischen Workflows. Ziel ist begrenzte betriebliche Flexibilität ohne unnötige Überkonfiguration.
+Nicht Bestandteil des MVP ist eine frei konfigurierbare Prüfregel-Engine mit komplexen Bedingungen, Abhängigkeiten oder feldspezifischen Workflows.
 
 ## 14. Sitzungsliste
 
@@ -464,32 +384,22 @@ Pro Eintrag werden grundsätzlich angezeigt:
 - Datum und Uhrzeit,
 - **TOPs:** wenige für FIB relevante Tagesordnungspunkte; die verkürzte Auswahl endet mit „…“.
 
-**Ort und Verfahrensstatus werden in der Listenansicht nicht angezeigt.** Diese Informationen gehören auf die Sitzungsdetailseite.
+Ort und Verfahrensstatus werden in der Listenansicht nicht angezeigt.
 
-Bevorstehende Sitzungen werden strikt nach Sitzungstermin sortiert. Änderungen an Unterlagen beeinflussen die Reihenfolge nicht.
+Bevorstehende Sitzungen werden strikt nach Sitzungstermin sortiert.
 
-Eine Sitzung bleibt nach ihrer Durchführung fachlich offen, solange die Genehmigung der Niederschrift noch nicht öffentlich belegt ist.
+Eine Sitzung gilt in FIB als abgeschlossen, sobald die Genehmigung ihrer Niederschrift öffentlich belegt ist.
 
-Verbindliche Regel:
+Dabei werden getrennt geführt:
 
-> **Eine Sitzung gilt in FIB als abgeschlossen, sobald die Genehmigung ihrer Niederschrift öffentlich belegt ist.**
+- **Niederschrift genehmigt**,
+- **Niederschrift öffentlich einsehbar**.
 
-Dabei werden zwei Sachverhalte getrennt geführt:
-
-- **Niederschrift genehmigt** – z. B. nachgewiesen über den entsprechenden TOP einer späteren Sitzung,
-- **Niederschrift öffentlich einsehbar** – nur wenn ein öffentlich zugängliches Dokument bzw. ein belastbarer Veröffentlichungsnachweis vorliegt.
-
-Ist die Niederschrift genehmigt, aber öffentlich nicht auffindbar, wird dies auf der Sitzungsdetailseite deutlich und wertungsfrei angezeigt, z. B. **„Niederschrift genehmigt · öffentlich nicht auffindbar“**.
-
-Liegt eine öffentlich lesbare Niederschrift vor, wird sie TOP-bezogen ausgewertet. Die dort dokumentierten Beschlüsse bzw. Ergebnisse werden den zugehörigen Tagesordnungspunkten strukturiert zugeordnet und redaktionell freigegeben.
-
-Der **Beschlusstext wird dabei nicht gekürzt**, sondern vollständig übernommen, soweit er in der Niederschrift öffentlich zugänglich ist.
-
-Beschlüsse und Ergebnisse aus der Niederschrift werden **nur in der Sitzungsdetailansicht** angezeigt. Die Sitzungsliste bleibt bei der knappen Auswahl relevanter TOPs.
+Ist die Niederschrift genehmigt, aber öffentlich nicht auffindbar, wird dies wertungsfrei angezeigt, z. B. **„Niederschrift genehmigt · öffentlich nicht auffindbar“**.
 
 ## 15. Sitzungsdetailseite
 
-Die Sitzungsdetailseite ist **TOP-zentriert** aufgebaut.
+Die Sitzungsdetailseite ist TOP-zentriert aufgebaut.
 
 ### 15.1 Titelblock
 
@@ -500,47 +410,27 @@ Der Titelblock enthält:
 - Ort,
 - bei vergangenen Sitzungen den Status der Niederschrift.
 
-Der Niederschriftsstatus ist Teil des Titelbereichs bzw. steht unmittelbar darunter.
-
-Mögliche sachliche Zustände sind insbesondere:
-
-- Niederschrift noch nicht genehmigt,
-- Niederschrift genehmigt · öffentlich verfügbar,
-- Niederschrift genehmigt · öffentlich nicht auffindbar.
-
-Vor der Sitzung wird kein Niederschriftsstatus angezeigt.
-
 ### 15.2 TOPs
 
-Auf der Detailseite werden **alle öffentlichen TOPs aus dem RIS** aufgeführt, nicht nur die für FIB intern als besonders relevant ausgewählten.
+Auf der Detailseite werden alle öffentlichen TOPs aus dem RIS aufgeführt.
 
 Zu jedem TOP können unmittelbar angezeigt bzw. verknüpft werden:
 
 - TOP-Nummer und Bezeichnung,
 - Beschlussvorlage und weitere amtliche Unterlagen,
-- verknüpftes FIB-Thema als direkter Link,
-- verknüpfte FIB-Beiträge,
+- verknüpfte FIB-Themen oder Vorgänge,
+- verknüpfte FIB-Meldungen,
 - Presseberichte zum TOP,
 - nach Vorliegen einer lesbaren Niederschrift der vollständige Beschlusstext,
 - Abstimmungsergebnis, sofern in der Niederschrift angegeben.
 
-Verknüpfungen werden möglichst direkt am betreffenden TOP angezeigt und nicht zusätzlich in separaten Sammelblöcken wiederholt.
-
-### 15.3 Presseberichte
-
 Amtliche Unterlagen und journalistische Berichterstattung werden klar getrennt dargestellt.
-
-Presseberichte werden möglichst dem konkreten TOP zugeordnet. Bezieht sich ein Bericht auf die Sitzung insgesamt und lässt sich keinem einzelnen TOP sinnvoll zuordnen, erscheint er auf Sitzungsebene unter **„Berichterstattung zur Sitzung“**.
-
-Damit bleibt jederzeit erkennbar, welche Information aus amtlichen Primärquellen und welche aus journalistischer Berichterstattung stammt.
 
 ## 16. Meldungsdetailseite
 
 Die Meldungsdetailseite unterscheidet zwischen Erstbeitrag, Folgebeitrag und aktualisiertem bestehenden Beitrag.
 
 ### 16.1 Erstbeitrag
-
-Ein Erstbeitrag benötigt keinen eigenen Block „Was ist neu?“, weil der gesamte Beitrag neu ist.
 
 Grundstruktur:
 
@@ -550,112 +440,126 @@ Grundstruktur:
 4. kurzer Grundkontext „Worum geht es?“,
 5. Sachinformation,
 6. Quellen,
-7. „Unsere Einordnung“,
-8. „Mehr wissen?“,
-9. Zusammenhang zu Thema, Sitzung und weiteren relevanten Inhalten.
+7. Unsere Einordnung,
+8. Mehr wissen?,
+9. Zusammenhang zu Vorgang, Thema, Sitzung und weiteren relevanten Inhalten.
 
 ### 16.2 Folgebeitrag
-
-Ein Folgebeitrag fokussiert auf die neue Entwicklung.
 
 Grundstruktur:
 
 1. Titel,
 2. Datum,
 3. Kurzfassung,
-4. **Was ist neu?** – 1 bis 3 Sätze zur konkreten neuen Entwicklung,
+4. **Was ist neu?** – 1 bis 3 Sätze,
 5. **Bisheriger Stand** – nur so viel Kontext wie zum Verständnis nötig,
 6. Sachinformation,
 7. Quellen,
-8. „Unsere Einordnung“,
-9. „Mehr wissen?“,
+8. Unsere Einordnung,
+9. Mehr wissen?,
 10. Zusammenhang.
-
-Der Leser soll einen Folgebeitrag ohne vorheriges Öffnen älterer Beiträge verstehen können.
 
 ### 16.3 Aktualisierter bestehender Beitrag
 
 Bei einer fachlich relevanten Aktualisierung wird unmittelbar unter Kurzfassung und Datumszeile der neue Informationswert hervorgehoben.
 
-Beispiel:
-
-> **17.09.2026 · aktualisiert 29.09.2026**  
-> **Neu seit 29.09.2026:** Die inzwischen veröffentlichte Unterlage enthält zusätzlich …
-
-Danach wird der Beitrag in seinem **aktuellen Gesamtstand** dargestellt.
+Danach wird der Beitrag in seinem aktuellen Gesamtstand dargestellt.
 
 ### 16.4 Mehrere Aktualisierungen
 
-Bei mehrfach fortgeschriebenen Beiträgen wird nur die **neueste wesentliche Aktualisierung** prominent angezeigt.
+Bei mehrfach fortgeschriebenen Beiträgen wird nur die neueste wesentliche Aktualisierung prominent angezeigt.
 
-Frühere fachliche Aktualisierungen bleiben über eine zurückhaltende Funktion wie **„Frühere Aktualisierungen anzeigen“** nachvollziehbar.
-
-Die Aktualisierungshistorie zeigt primär:
-
-- Datum,
-- kurze Beschreibung der fachlichen Änderung.
-
-Sie zeigt nicht standardmäßig vollständige frühere Textfassungen.
-
-Für interne Nachvollziehbarkeit, Audit und Wiederherstellung können vollständige Versionen dennoch gespeichert werden.
+Frühere fachliche Aktualisierungen bleiben über **„Frühere Aktualisierungen anzeigen“** nachvollziehbar.
 
 Verbindlicher Grundsatz:
 
 > **Der aktuelle Beitrag zeigt den heutigen Wissensstand; die Aktualisierungshistorie erklärt, wie sich dieser Wissensstand verändert hat.**
 
-## 17. UX-Grundsätze
+## 17. Push und direkte Einstiege
+
+Push dient als gezielter Einstieg in eine konkrete neue Entwicklung.
+
+Grundregeln:
+
+- Push enthält Sachverhalt bzw. Thema und neue Entwicklung knapp,
+- ein Tipp öffnet direkt die betroffene Meldung bzw. Aktualisierung,
+- der Zielinhalt zeigt sofort „Was ist neu?“,
+- bei Folgebeiträgen folgt ein kurzer Kontextblock,
+- von dort führt ein klarer Weg zum zugehörigen Vorgang und gegebenenfalls zum übergeordneten Thema.
+
+Nicht jede fachliche Aktualisierung erzeugt automatisch einen Push.
+
+## 18. UX-Grundsätze
 
 - mobile Nutzung ist ein Primärfall,
 - direkte Einstiege müssen ohne vorherige Navigation verständlich sein,
 - aktueller Stand ist wichtiger als reine Chronologie,
 - neue Information muss bei Aktualisierungen sofort erkennbar sein,
 - Zusammenhänge sollen sichtbar, aber nicht überladen dargestellt werden,
-- „Mehr wissen?“ vertieft optional und darf den Grundbeitrag nicht unnötig verlängern,
+- interne Datenmodell-Begriffe werden öffentlich nur verwendet, wenn sie dem Verständnis helfen,
+- „Mehr wissen?“ vertieft optional und darf den Grundinhalt nicht unnötig verlängern,
 - Sachinformation und politische Einordnung bleiben visuell klar getrennt,
 - Navigation soll wenige, verständliche Hauptzugänge verwenden,
 - die UI soll neugierig machen, ohne Informationen künstlich zu verstecken,
 - Barrierearmut und verständliche Sprache werden bei der Detailkonzeption berücksichtigt.
 
-## 18. Datenmodell-Auswirkungen
+## 19. Datenmodell-Auswirkungen für G3
 
-Bereits aus den bisherigen UX-Entscheidungen ergeben sich voraussichtlich Anforderungen an:
+Aus den bisherigen UX-Entscheidungen ergeben sich mindestens Anforderungen an:
 
-- stabile IDs und URLs für Beiträge, Themen und Sitzungen,
-- strukturierten aktuellen Stand eines Themas,
-- strukturierte Aktualisierungsereignisse,
-- eigenständige Ereignisse innerhalb eines Themas/Vorgangs,
+- stabile IDs und URLs für Meldungen, Vorgänge, Themen und Sitzungen,
+- eigenständige Entitäten für Beitrag/Meldung, Vorgang und Thema,
 - Beziehung Ereignis → Beitrag,
+- Beziehung Beitrag → Vorgang,
+- n:m-Beziehung Vorgang ↔ Thema,
+- optionale direkte Beziehung Beitrag ↔ Thema für einzelne themenrelevante Ereignisse ohne eigenen Vorgang,
+- fachliche Wirkungsrolle und Gewichtung einer Vorgang-/Themenbeziehung,
+- strukturierten aktuellen Stand eines Vorgangs,
+- Vorgangsstatus einschließlich Historisierung,
+- versionierte Themendefinitionen,
+- strukturierte Perspektiven/Kontextdimensionen eines Themas,
+- Wissenslücken und offene Fragen,
+- strukturierte Aktualisierungsereignisse,
 - Unterscheidung zwischen technischer Änderung, redaktioneller Aktualisierung und fachlicher Neuigkeit,
 - Kennzeichnung, ob eine Änderung für „Neu seit letztem Besuch“ bzw. Push relevant ist,
-- offene Punkte,
 - relevante Entscheidungen,
 - explizite Beziehungen zwischen Inhalten,
+- redaktionelle Pflichtbestätigungen,
 - Lesestatus bzw. gerätebezogene Information für „Neu seit letztem Besuch“,
 - Such- und Filtermetadaten.
 
-Diese Punkte werden in G3 fachlich präzisiert und in ein logisches Datenmodell überführt.
+Die konkrete Modellierung erfolgt in G3.
 
-## 19. Nächste G2-Arbeit
+## 20. Noch offene G2-Punkte
 
-Die vier zentralen Nutzerwege sind fachlich durchgearbeitet.
+Die Kernlogik für Navigation, Meldungen, gemeinsame Themen-/Vorgangsliste sowie Meldungs-, Themen-, Vorgangs- und Sitzungsdetailseiten ist fachlich festgelegt.
 
-Als nächstes werden daraus die konkrete **Startseitenlogik und Navigationsstruktur** abgeleitet. Anschließend folgen Detailkonzeption von Suche/Filter, Sitzungen, „Mehr wissen?“ und den PWA-spezifischen Bedienelementen.
+Vor Abschluss von G2 sind noch zu konkretisieren bzw. zu prüfen:
+
+1. **Suche und Filter** – Umfang, Filterlogik und mobile Bedienung.
+2. **Mehr wissen?** – Einbindung auf den verschiedenen Detailseiten, Fragenlogik und Übergang zu Quellen/Antworten.
+3. **PWA-spezifische UX** – Installation, „Neu seit letztem Besuch“, Push-Einstellungen und mögliche Badge-Anzeige.
+4. **Teilen / Drucken / Social Preview** – konsistente Bedienelemente und Direktlink-Verhalten.
+5. **Transparenz / Über FIB / Disclaimer** – endgültige Platzierung und Interaktion im Echtsystem.
+6. **Barrierearmut und responsive Detailkonzeption** – konkrete Anforderungen für mobile und Desktop-Darstellung.
+7. **G2-Abschlussprüfung** – Widerspruchsfreiheit der Nutzerwege und vollständige Übergabe der Datenmodell-Anforderungen an G3.
 
 ## Änderungshistorie
 
 | Version | Datum | Änderung |
 |---|---|---|
+| 2.4 | 30.09.2026 | G2 konsolidiert: Hauptnavigation auf Meldungen/Themen/Sitzungen/Suchen geändert; Themen und Vorgänge in gemeinsamer öffentlicher Themenliste zusammengeführt; Vorgang als eigenständiges redaktionelles Objekt definiert; Themen- und Vorgangsdetailseite festgelegt; Themenstatuslogik bereinigt und auf Vorgänge verlagert; Datenmodell-Auswirkungen und offene G2-Punkte aktualisiert. |
 | 2.3 | 29.09.2026 | Iterative Themendefinition ergänzt; redaktionelle Schärfung dient zugleich zur Kalibrierung der KI-Themenerkennung. |
 | 2.2 | 29.09.2026 | Themen-Erkennung als indikatorenbasierte, bewusst sensitive Vorschlagslogik präzisiert; Erklärungsgewinn, gemeinsame Probleme/Ziele und weitere Zusammenhangssignale ergänzt. |
 | 2.1 | 29.09.2026 | Themenbegriff korrigiert: Themen entstehen bottom-up aus Zusammenhängen mehrerer Ereignisse/Beiträge/Vorgänge; neue Themenlogik mit Erkennen, Abgrenzen, Kontextbestimmung und redaktioneller Bestätigung als vorgelagerter G2-Schritt festgelegt. |
 | 2.0 | 29.09.2026 | Meldungsdetailseite mit Erst-/Folgebeitrag, Hervorhebung fachlicher Aktualisierungen und kompakter Aktualisierungshistorie festgelegt. |
 | 1.9 | 29.09.2026 | Sitzungsdetailseite festgelegt: alle öffentlichen RIS-TOPs, Niederschriftsstatus im Titelbereich, TOP-nahe Verknüpfungen sowie getrennte Presseberichterstattung. |
 | 1.8 | 29.09.2026 | Niederschriftenlogik präzisiert: Genehmigung und öffentliche Verfügbarkeit getrennt; wertungsfreier Transparenzhinweis; vollständige Beschlüsse TOP-bezogen nur in der Detailansicht. |
-| 1.7 | 29.09.2026 | Bezeichnung in der Sitzungsliste auf „TOPs“ festgelegt; verkürzte TOP-Auswahl endet mit „…“. |
-| 1.6 | 29.09.2026 | Sitzungsliste bewusst reduziert; Ort und Verfahrensstatus aus der Listenansicht entfernt; Sitzungsabschluss an freigegebene Niederschrift gebunden. |
-| 1.5 | 29.09.2026 | Themenliste, Statuslogik inkl. 90-Tage-Prüfung und schlanke konfigurierbare Pflichtbestätigung für ausgewählte Felder festgelegt. |
-| 1.4 | 29.09.2026 | Meldungsliste konkretisiert; Datumslogik mit getrenntem Ursprungs- und Aktualisierungsdatum sowie kompakter Anzeige festgelegt. |
+| 1.7 | 29.09.2026 | Bezeichnung in der Sitzungsliste auf „TOPs“ festgelegt. |
+| 1.6 | 29.09.2026 | Sitzungsliste bewusst reduziert; Ort und Verfahrensstatus aus der Listenansicht entfernt. |
+| 1.5 | 29.09.2026 | Frühere Themenlisten- und Statuslogik eingeführt; durch Version 2.4 hinsichtlich Thema/Vorgang grundlegend konsolidiert. |
+| 1.4 | 29.09.2026 | Meldungsliste konkretisiert; Datumslogik mit getrenntem Ursprungs- und Aktualisierungsdatum festgelegt. |
 | 1.3 | 29.09.2026 | Startseitenlogik mit drei festen Inhaltsblöcken sowie Zusammenspiel von Start-, Listen- und Detailansicht festgelegt. |
-| 1.2 | 29.09.2026 | Nutzerwege 2–4 ergänzt: Themenseite als Sachstandsseite, Erst-/Folgebeitragslogik und Push-Einstieg; Datenmodell-Auswirkungen erweitert. |
-| 1.1 | 29.09.2026 | Aktualisierungslogik und verbindliche Ereignisregel „bestehenden Beitrag aktualisieren oder neuen Beitrag anlegen“ ergänzt; Datenmodell-Auswirkungen präzisiert. |
-| 1.0 | 29.09.2026 | G2-Primärquelle mit Leitidee, Nutzeraufgaben, Grundstruktur, Beitragshierarchie und ersten Datenmodell-Auswirkungen angelegt. |
+| 1.2 | 29.09.2026 | Nutzerwege 2–4 ergänzt. |
+| 1.1 | 29.09.2026 | Aktualisierungslogik und Ereignisregel ergänzt. |
+| 1.0 | 29.09.2026 | Initiale UX- und Informationsarchitektur angelegt. |
