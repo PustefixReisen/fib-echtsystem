@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 1.7 | 30.09.2026 | Josef Walter – erstellt mit KI-Unterstützung |
+| 1.8 | 30.09.2026 | Josef Walter – erstellt mit KI-Unterstützung |
 
 ## Statusmodell
 
@@ -24,14 +24,14 @@ Es gelten die zentralen Status aus `PustefixReisen/pustivo/docs/governance/Dokum
 |---|---|---|
 | Projektbasis / Repository | **Abgeschlossen** | separates Repository und initiale Dokumentationsstruktur vorhanden |
 | G1 Produktumfang / MVP | **Abgeschlossen** | MVP, unmittelbare Ausbaustufe, spätere Erweiterungen, Nicht-Ziele und Aufwandstreiber verbindlich festgelegt |
-| G2 UX / Informationsarchitektur / Fachfunktionen | **In Arbeit** | UX v2.5 konsolidiert; Suche, Mehr wissen, PWA, Teilen, Transparenz und WCAG-Ziel dokumentiert; visuelles Identitäts-/Bildkonzept und Abschlussprüfung verbleiben |
-| Dokumentationsübernahme Demonstrator → Echtsystem | **Teilweise umgesetzt** | alle identifizierten fachlich erforderlichen Demonstrator-Dokumente übernommen oder in kanonische Echtsystem-Quellen integriert; formale Abschluss-/Widerspruchsprüfung steht noch aus |
+| G2 UX / Informationsarchitektur / Fachfunktionen | **In Arbeit** | UX v2.5 konsolidiert; Suche, Mehr wissen, PWA, Teilen, Transparenz und WCAG-Ziel dokumentiert; visuelles Identitäts-/Bildkonzept und G2-Abschlussprüfung verbleiben |
+| Dokumentationsübernahme Demonstrator → Echtsystem | **Abgeschlossen** | alle identifizierten weiterhin erforderlichen Grundlagen übernommen oder integriert; Querverweis-, Terminologie- und Konsistenzprüfung durchgeführt |
 | G3 Datenanforderungen / Datenmodell | **Geplant** | aus Fach- und UX-Konzept ableiten; eigenständige Entitäten für Meldung/Vorgang/Thema, n:m-Beziehungen, Wirkungsrollen, Versionierung, Rechercheaufträge, Such-/PWA-/Mehr-wissen-Daten berücksichtigen |
 | G4 Schutzbedarf / Datenschutz / Offline | **Geplant** | Schutzklassen und Betriebsanforderungen festlegen |
 | G5 Zielarchitektur / Stack / Hosting / Deployment | **Geplant** | technische Zielarchitektur entscheiden; modellunabhängige KI-Regelschicht und Modelltests berücksichtigen |
 | G6 Rollen / Rechte / Workflow | **Geplant** | konkretes Berechtigungs- und Freigabemodell festlegen |
 | G7 Betrieb | **Geplant** | Backup, Restore, Monitoring und Kostenkontrolle definieren |
-| G8 Governance / Repository / Dokumentation | **Teilweise umgesetzt** | Echtsystem als Dokumentationshoheit etabliert; Demonstrator-Übernahme durchgeführt; zentrale Standards und Abschlussaudit weiterführen |
+| G8 Governance / Repository / Dokumentation | **Teilweise umgesetzt** | Echtsystem als Dokumentationshoheit etabliert; Demonstrator-Übernahme abgeschlossen; zentrale Standards und späterer Gründungsaudit weiterführen |
 | G9 Migration | **Geplant** | Demonstratordaten prüfen, transformieren und validieren |
 | G10 Go-live-Abnahme | **Geplant** | messbare Abnahmekriterien festlegen |
 | Gründungsaudit | **Geplant** | Vollständigkeit und Widerspruchsfreiheit prüfen |
@@ -39,7 +39,7 @@ Es gelten die zentralen Status aus `PustefixReisen/pustivo/docs/governance/Dokum
 
 ## Nächster konkreter Schritt
 
-**G2 visuelles Identitäts- und Bildkonzept festlegen; anschließend G2 und Dokumentationsübernahme gemeinsam auf Widerspruchsfreiheit prüfen.**
+**G2 – visuelles Identitäts- und Bildkonzept festlegen. Danach G2 abschließend auf Widerspruchsfreiheit und Vollständigkeit prüfen und für G3 freigeben.**
 
 ## Fachlich/UX bereits geklärt
 
@@ -58,7 +58,7 @@ Es gelten die zentralen Status aus `PustefixReisen/pustivo/docs/governance/Dokum
 - Mobile First und **WCAG 2.2 AA** sind technisches Ziel.
 - Barrierefreiheit ergänzt die bestehende bürgernahe FIB-Sprache und ersetzt sie nicht.
 
-## Dokumentationsübernahme – aktueller Stand
+## Dokumentationsübernahme – abgeschlossen
 
 Übernommen bzw. konsolidiert sind:
 
@@ -75,14 +75,9 @@ Es gelten die zentralen Status aus `PustefixReisen/pustivo/docs/governance/Dokum
 11. Grüne Werte/politische Ziele → `docs/Gruene-Werte-und-politische-Ziele.md`
 12. wissenschaftlich-politische/bürgernahe Sprachregeln → `docs/Sprachleitfaden.md`
 
-Die Zuordnung steht vollständig in `docs/Dokumentationsuebernahme-Demonstrator.md`.
+Die vollständige Zuordnung und Abschlussprüfung stehen in `docs/Dokumentationsuebernahme-Demonstrator.md`.
 
-Vor formellem Abschluss der Übernahme erfolgen noch:
-
-- Querverweisprüfung zwischen den neuen Primärquellen,
-- Prüfung auf veraltete Begriffe wie „Presseschau“ in Echtsystem-Dokumenten,
-- Widerspruchsprüfung gegen Fachkonzept, Themen-/Vorgangslogik und UX,
-- Aktualisierung der Dokumentationslandkarte bei gefundenen Restpunkten.
+Der Demonstrator bleibt historische, fachliche und visuelle Referenz; laufende Dokumentation wird ausschließlich im Echtsystem fortgeschrieben.
 
 ## Modellunabhängigkeit der KI
 
@@ -101,7 +96,8 @@ Für die spätere technische Umsetzung ist vorzusehen:
 
 | Version | Datum | Änderung |
 |---|---|---|
-| 1.7 | 30.09.2026 | Demonstrator-Dokumentation weitgehend vollständig ins Echtsystem überführt; UX v2.5 konsolidiert; Werte- und Sprachgrundlagen übernommen; nächster Schritt auf visuelles Konzept plus gemeinsame Abschlussprüfung gesetzt. |
+| 1.8 | 30.09.2026 | Dokumentationsübernahme nach Querverweis-, Terminologie- und Konsistenzprüfung als abgeschlossen markiert; nächster Schritt auf visuelles Identitäts-/Bildkonzept und G2-Abschluss gesetzt. |
+| 1.7 | 30.09.2026 | Demonstrator-Dokumentation weitgehend vollständig ins Echtsystem überführt; UX v2.5 konsolidiert; Werte- und Sprachgrundlagen übernommen. |
 | 1.6 | 30.09.2026 | Fachkonzept und KI-Leitfaden als kanonische Grundlagen markiert; G2-Status aktualisiert. |
 | 1.5 | 30.09.2026 | Dokumentationsübernahme als eigener Arbeitsschritt aufgenommen. |
 | 1.4 | 30.09.2026 | G2 nach UX-Konsolidierung aktualisiert. |
