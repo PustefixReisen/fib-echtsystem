@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 1.5 | 30.09.2026 | Josef Walter – erstellt mit KI-Unterstützung |
+| 1.6 | 30.09.2026 | Josef Walter – erstellt mit KI-Unterstützung |
 
 ## Statusmodell
 
@@ -24,14 +24,14 @@ Es gelten die zentralen Status aus `PustefixReisen/pustivo/docs/governance/Dokum
 |---|---|---|
 | Projektbasis / Repository | **Abgeschlossen** | separates Repository und initiale Dokumentationsstruktur vorhanden |
 | G1 Produktumfang / MVP | **Abgeschlossen** | MVP, unmittelbare Ausbaustufe, spätere Erweiterungen, Nicht-Ziele und Aufwandstreiber verbindlich festgelegt |
-| G2 UX / Informationsarchitektur / Fachfunktionen | **In Arbeit** | Kernnavigation, Meldungslogik, gemeinsame Themen-/Vorgangsliste sowie Meldungs-, Themen-, Vorgangs- und Sitzungsdetailseiten konsolidiert; verbleibende Querschnitts-UX abschließen |
-| Dokumentationsübernahme Demonstrator → Echtsystem | **In Arbeit** | benötigte Demonstrator-Grundlagen einmalig in kanonische Echtsystem-Dokumente überführen, aktualisieren und danach nur noch im Echtsystem fortschreiben |
+| G2 UX / Informationsarchitektur / Fachfunktionen | **In Arbeit** | Kernstruktur sowie Suche/Filter, Mehr-wissen-Logik, PWA-UX, Teilen/Drucken, Transparenz und Barrierearmut fachlich geklärt; visuelles Identitäts-/Bildkonzept und G2-Abschlussprüfung verbleiben |
+| Dokumentationsübernahme Demonstrator → Echtsystem | **In Arbeit** | Management Approach, Fachkonzept und KI-Leitfaden übernommen; weitere relevante Demonstrator-Grundlagen konsolidieren |
 | G3 Datenanforderungen / Datenmodell | **Geplant** | aus Fach- und UX-Konzept ableiten; eigenständige Entitäten für Meldung/Vorgang/Thema, n:m-Beziehungen, Wirkungsrollen, Versionierung und Rechercheaufträge ausdrücklich berücksichtigen |
 | G4 Schutzbedarf / Datenschutz / Offline | **Geplant** | Schutzklassen und Betriebsanforderungen festlegen |
 | G5 Zielarchitektur / Stack / Hosting / Deployment | **Geplant** | technische Zielarchitektur nach Anforderungen entscheiden; modellunabhängige KI-Regelschicht und Modelltests berücksichtigen |
 | G6 Rollen / Rechte / Workflow | **Geplant** | konkretes Berechtigungs- und Freigabemodell festlegen |
 | G7 Betrieb | **Geplant** | Backup, Restore, Monitoring und Kostenkontrolle definieren |
-| G8 Governance / Repository / Dokumentation | **Teilweise umgesetzt** | Dokumentationshoheit des Echtsystems festgelegt; zentrale Standards vollständig klassifizieren und Demonstrator-Altbestand konsolidieren |
+| G8 Governance / Repository / Dokumentation | **Teilweise umgesetzt** | Dokumentationshoheit des Echtsystems festgelegt; zentrale Standards weiter klassifizieren und Demonstrator-Altbestand konsolidieren |
 | G9 Migration | **Geplant** | Demonstratordaten prüfen, transformieren und validieren |
 | G10 Go-live-Abnahme | **Geplant** | messbare Abnahmekriterien festlegen |
 | Gründungsaudit | **Geplant** | Vollständigkeit und Widerspruchsfreiheit prüfen |
@@ -39,9 +39,9 @@ Es gelten die zentralen Status aus `PustefixReisen/pustivo/docs/governance/Dokum
 
 ## Nächster konkreter Schritt
 
-**Dokumentationsübernahme und G2 parallel konsolidieren**
+**Dokumentationsübernahme vervollständigen und G2 abschließen**
 
-Die fachliche und öffentliche Grundstruktur ist inzwischen konsolidiert:
+Die fachliche und öffentliche Grundstruktur ist inzwischen weitgehend konsolidiert:
 
 - öffentliche Hauptnavigation: **Meldungen | Themen | Sitzungen | Suchen**,
 - „Aktuell“ ist ausschließlich eine zeitliche Auswahl/Hervorhebung,
@@ -49,38 +49,41 @@ Die fachliche und öffentliche Grundstruktur ist inzwischen konsolidiert:
 - Vorgang und Thema bleiben intern eigenständige Objekttypen,
 - Vorgänge besitzen einen eigenen aktuellen Sachstand und Verlauf,
 - Themen erklären übergeordnete Zusammenhänge und gewichten Vorgänge nach ihrer Wirkungsrolle,
-- Meldungs-, Themen-, Vorgangs- und Sitzungsdetailseiten sind fachlich festgelegt.
+- Meldungs-, Themen-, Vorgangs- und Sitzungsdetailseiten sind fachlich festgelegt,
+- Suche und Filter sind als gemeinsame strukturierte Suche mit wenigen öffentlichen Filtern festgelegt,
+- „Mehr wissen?“ unterscheidet Ereignis-, Vorgangs- und Themenvertiefung,
+- PWA-UX umfasst lokalen Neuigkeitsstatus, optionale Push-Abonnements und ergänzende Badge-Unterstützung,
+- Teilen/Drucken/Social Preview sowie Transparenz/Disclaimer sind fachlich geklärt,
+- Barrierearmut wird von Anfang an berücksichtigt; WCAG 2.2 AA ist technisches Ziel und ergänzt die bestehende bürgernahe Sprachlogik.
 
-Vor Abschluss von G2 bleiben insbesondere:
+Für G2 verbleiben damit insbesondere:
 
-1. Suche und Filter,
-2. „Mehr wissen?“ in den verschiedenen Detailseiten,
-3. PWA-spezifische UX einschließlich „Neu seit letztem Besuch“, Push-Einstellungen und möglicher Badge-Anzeige,
-4. Teilen / Drucken / Social Preview,
-5. Transparenz / Über FIB / Disclaimer,
-6. visuelles Identitäts- und Bildkonzept,
-7. Barrierearmut und responsive Detailkonzeption,
-8. abschließende Widerspruchs- und Vollständigkeitsprüfung von G2.
+1. visuelles Identitäts- und Bildkonzept einschließlich Logo-/Wortmarkenfrage und FIB-Bildpool,
+2. Konsolidierung der heute getroffenen Querschnittsentscheidungen in `docs/UX-und-Informationsarchitektur.md`,
+3. abschließende Widerspruchs- und Vollständigkeitsprüfung von G2.
 
-Parallel werden die im Echtsystem weiterhin benötigten Demonstrator-Dokumente nicht mehr dort fortgeschrieben, sondern in `fib-echtsystem` übernommen und auf den aktuellen Stand gebracht. Priorität haben:
+Parallel werden die im Echtsystem weiterhin benötigten Demonstrator-Dokumente in `fib-echtsystem` übernommen und aktualisiert. Bereits abgeschlossen:
 
-1. Management Approach,
-2. inhaltliches Fachkonzept,
-3. KI-Leitfaden / modellunabhängige Qualitätsregeln,
+1. Management Approach → `docs/FIB_Management-Approach.md`
+2. inhaltliches Fachkonzept → `docs/Fachkonzept.md`
+3. KI-Leitfaden / modellunabhängige Qualitätsregeln → `docs/KI-Leitfaden.md`
+
+Als nächste Übernahmepakete folgen:
+
 4. Quellenmonitor / Recherchelogik,
-5. Mehr-wissen-Konzept,
-6. Frontend-/Darstellungsregeln, soweit noch nicht in der UX-Dokumentation enthalten,
-7. Marketing / Kommunikation,
+5. Mehr-wissen-Konzept – auf verbleibende Detailregeln prüfen; zentrale Regeln sind bereits überführt,
+6. Frontend-/Darstellungsregeln – nur noch nicht durch UX abgedeckte Regeln übernehmen,
+7. Marketing / Kommunikation einschließlich Reichweite, Bindung und analogem Raum,
 8. SEO / Auffindbarkeit,
-9. KI-Kosten- und Betriebsmodell.
-
-Bei der Übernahme werden keine veralteten Demonstrator-Annahmen konserviert. Insbesondere müssen Management Approach und Fachkonzept die aktuelle Trennung **Beitrag – Vorgang – Thema** und die daraus entstehenden redaktionellen Ebenen abbilden.
+9. KI-Kosten- und Betriebsmodell – auf die spätere Zielarchitektur zuschneiden.
 
 Nach Abschluss der Dokumentationsübernahme und der verbleibenden G2-Punkte kann G3 beginnen. Jede verbleibende UX- oder Fachentscheidung wird weiterhin ausdrücklich auf Auswirkungen auf das spätere Datenmodell geprüft.
 
 ## Modellunabhängigkeit der KI
 
-Die fachlichen FIB-Regeln werden in der Projektdokumentation und nicht in einem einzelnen Modell oder Chat verankert. Für die spätere technische Umsetzung ist vorzusehen:
+Die fachlichen FIB-Regeln werden in der Projektdokumentation und nicht in einem einzelnen Modell oder Chat verankert. `docs/KI-Leitfaden.md` ist hierfür die fachliche Primärquelle.
+
+Für die spätere technische Umsetzung ist vorzusehen:
 
 - zentrale modellunabhängige Regel-/Prompt-Schicht,
 - strukturierte Ein- und Ausgaben für fachliche KI-Aufgaben,
@@ -93,6 +96,7 @@ Die konkrete technische Umsetzung wird in G5 festgelegt; die dafür nötigen fac
 
 | Version | Datum | Änderung |
 |---|---|---|
+| 1.6 | 30.09.2026 | Fachkonzept und KI-Leitfaden als übernommene kanonische Echtsystem-Grundlagen markiert; G2-Status an bereits geklärte Suche-, Mehr-wissen-, PWA-, Teilen-, Transparenz- und Barrierefreiheitsentscheidungen angepasst; nächste Übernahmepakete konkretisiert. |
 | 1.5 | 30.09.2026 | Dokumentationsübernahme vom Demonstrator ins Echtsystem als eigener laufender Arbeitsschritt aufgenommen; Prioritäten und Repository-Grenze festgelegt; visuelles Identitäts- und Bildkonzept in offene G2-Punkte ergänzt. |
 | 1.4 | 30.09.2026 | G2 nach UX-Konsolidierung aktualisiert; gemeinsame Themen-/Vorgangsliste, neue Navigation und Vorgangsdetailseite berücksichtigt; offene Querschnitts-UX als nächster Schritt festgelegt; Modellunabhängigkeit der KI als spätere technische Anforderung ergänzt. |
 | 1.3 | 30.09.2026 | Themen-/Vorgangslogik konsolidiert; öffentliche Themendarstellung als nächster G2-Schritt festgelegt; G3 um Themenversionierung und Rechercheaufträge konkretisiert. |
