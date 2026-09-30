@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 1.6 | 30.09.2026 | Josef Walter – erstellt mit KI-Unterstützung |
+| 1.7 | 30.09.2026 | Josef Walter – erstellt mit KI-Unterstützung |
 
 ## 1. Zweck
 
@@ -52,7 +52,7 @@ Für FIB gelten insbesondere:
 | Marketing / Kommunikation | `docs/Marketing-und-Kommunikation.md` | vorhanden |
 | SEO / Auffindbarkeit | `docs/SEO-und-Auffindbarkeit.md` | vorhanden |
 | KI-Betrieb / Kosten | `docs/KI-Betrieb-und-Kosten.md` | vorhanden |
-| Übernahme Demonstrator-Dokumentation | `docs/Dokumentationsuebernahme-Demonstrator.md` | Abschlussprüfung offen |
+| Übernahme Demonstrator-Dokumentation | `docs/Dokumentationsuebernahme-Demonstrator.md` | abgeschlossen |
 | Architektur | noch anzulegen | offen |
 | Datenmodell | noch anzulegen | offen |
 | Sicherheit / Datenschutz | noch anzulegen | offen |
@@ -73,13 +73,13 @@ Daraus folgt:
 - Nach der Übernahme bleibt die Demonstrator-Fassung historischer Stand.
 - Widersprüche werden zugunsten der kanonischen Echtsystem-Dokumentation aufgelöst.
 
-Die detaillierte Zuordnung steht in `docs/Dokumentationsuebernahme-Demonstrator.md`.
+Die detaillierte Zuordnung und Abschlussprüfung stehen in `docs/Dokumentationsuebernahme-Demonstrator.md`.
 
 ## 6. Stand der Übernahme
 
-Die inhaltliche Übernahme der identifizierten erforderlichen Dokumentationsgrundlagen ist durchgeführt.
+Die Dokumentationsübernahme ist **abgeschlossen**.
 
-Ins Echtsystem überführt wurden insbesondere:
+Ins Echtsystem überführt bzw. integriert wurden insbesondere:
 
 - Management Approach,
 - Fachkonzept,
@@ -96,11 +96,9 @@ Ins Echtsystem überführt wurden insbesondere:
 
 Nicht als eigene Echtsystem-Dokumente übernommen wurden Demonstrator-Dokumente, deren Funktion bereits durch eine kanonische Echtsystem-Quelle erfüllt wird, sowie demonstratorspezifische technische Provisorien.
 
-Vor dem formalen Status **Abgeschlossen** stehen noch:
+Die Querverweis-, Terminologie- und Konsistenzprüfung wurde durchgeführt. Historische Nennungen alter Begriffe in Dateinamen, Repository-Namen und Änderungshistorien bleiben als Herkunftsnachweis zulässig.
 
-1. Querverweis- und Terminologieprüfung,
-2. Widerspruchs- und Vollständigkeitsprüfung,
-3. Klärung, ob aus dem noch offenen visuellen Identitäts-/Bildkonzept ein eigenes dauerhaftes Bild-/Rechtedokument entsteht.
+Das noch offene visuelle Identitäts- und Bildkonzept ist eine **neue G2-Entscheidung**. Falls dafür ein eigenes dauerhaftes Bild-/Rechtedokument benötigt wird, wird es als Echtsystem-Dokument neu angelegt und ist keine offene Alt-Dokumentationsübernahme.
 
 ## 7. Pflegepflicht
 
@@ -127,7 +125,8 @@ Für dauerhaft gepflegte Dokumente gilt grundsätzlich:
 
 | Version | Datum | Änderung |
 |---|---|---|
-| 1.6 | 30.09.2026 | Frontendregeln in UX v2.5 integriert; Werte- und Sprachgrundlagen ins Echtsystem übernommen; Übernahmestatus auf inhaltlich durchgeführt mit offener Abschlussprüfung gesetzt. |
+| 1.7 | 30.09.2026 | Dokumentationsübernahme nach Querverweis-, Terminologie- und Konsistenzprüfung als abgeschlossen markiert; visuelles Konzept als neue G2-Entscheidung abgegrenzt. |
+| 1.6 | 30.09.2026 | Frontendregeln in UX v2.5 integriert; Werte- und Sprachgrundlagen ins Echtsystem übernommen. |
 | 1.5 | 30.09.2026 | Recherche, Mehr wissen, KI-Qualität, Marketing, SEO und KI-Betrieb übernommen; Übernahmematrix aufgenommen. |
 | 1.4 | 30.09.2026 | Fachkonzept und KI-Leitfaden als kanonische Primärquellen aufgenommen. |
 | 1.3 | 30.09.2026 | Management Approach als kanonische Echtsystem-Fassung aufgenommen. |
