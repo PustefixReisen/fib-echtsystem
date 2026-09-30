@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 1.3 | 30.09.2026 | Josef Walter – erstellt mit KI-Unterstützung |
+| 1.4 | 30.09.2026 | Josef Walter – erstellt mit KI-Unterstützung |
 
 ## 1. Zweck
 
@@ -46,9 +46,9 @@ Weitere zentrale Governance-Dokumente werden während der Projektgründung gepr�
 | Dokumentationslandkarte | `docs/Dokumentation.md` | vorhanden |
 | Projektgründung / Gründungsentscheidungen | `docs/Projektgruendung.md` | in Arbeit |
 | Roadmap / nächster Schritt | `docs/Roadmap.md` | vorhanden |
-| Fachkonzept | aus Demonstrator-Grundlagen zu überführen und auf Echtsystem-Stand zu konsolidieren | offen |
+| Fachkonzept | `docs/Fachkonzept.md` | vorhanden |
 | Management Approach / redaktionelles Betriebsmodell | `docs/FIB_Management-Approach.md` | vorhanden |
-| KI-Leitfaden / modellunabhängige Fachregeln | aus Demonstrator-Grundlagen zu überführen und auf Echtsystem-Stand zu konsolidieren | offen |
+| KI-Leitfaden / modellunabhängige Fachregeln | `docs/KI-Leitfaden.md` | vorhanden |
 | Themen- und Vorgangslogik | `docs/Themen-und-Vorgangslogik.md` | vorhanden |
 | UX / Informationsarchitektur / Benutzerführung | `docs/UX-und-Informationsarchitektur.md` | in Arbeit |
 | Architektur | noch anzulegen | offen |
@@ -82,17 +82,17 @@ Daraus folgt:
 - Nach der Übernahme bleibt das Demonstrator-Dokument als historischer Entwicklungsstand unverändert erhalten.
 - Widersprüche zwischen Demonstrator und Echtsystem werden zugunsten der kanonischen Echtsystem-Dokumentation aufgelöst.
 
-Besonders zu übernehmen bzw. zu konsolidieren sind derzeit mindestens:
+### 5.1 Übernahmestatus
 
-- Management Approach – **übernommen und auf Echtsystem-Stand konsolidiert**,
-- inhaltliches Fachkonzept,
-- KI-Leitfaden und modellunabhängige Qualitätsregeln,
-- Quellenmonitor und Recherchelogik,
-- Mehr-wissen-Konzept,
-- Frontend-/Darstellungsregeln, soweit sie nicht bereits in der UX-Dokumentation aufgegangen sind,
-- Marketing-/Kommunikationskonzept einschließlich Reichweite, Bindung und analogem Raum,
-- SEO/Auffindbarkeit,
-- KI-Kosten- und Betriebsregeln, soweit sie für das Echtsystem weiter gelten.
+- Management Approach – **übernommen und konsolidiert** in `docs/FIB_Management-Approach.md`
+- inhaltliches Fachkonzept – **übernommen und konsolidiert** in `docs/Fachkonzept.md`
+- KI-Leitfaden und modellunabhängige Qualitätsregeln – **übernommen und konsolidiert** in `docs/KI-Leitfaden.md`
+- Quellenmonitor und Recherchelogik – **noch zu konsolidieren**
+- Mehr-wissen-Konzept – **noch zu konsolidieren**; zentrale neue Regeln bereits in Fachkonzept, KI-Leitfaden und UX enthalten
+- Frontend-/Darstellungsregeln – **noch zu prüfen**; wesentliche UX-Regeln bereits in `docs/UX-und-Informationsarchitektur.md`
+- Marketing-/Kommunikationskonzept einschließlich Reichweite, Bindung und analogem Raum – **noch zu konsolidieren**
+- SEO/Auffindbarkeit – **noch zu konsolidieren**
+- KI-Kosten- und Betriebsregeln – **noch zu prüfen und auf Zielarchitektur anzupassen**
 
 Die Übernahme ist keine 1:1-Kopie. Veraltete Demonstrator-Annahmen werden dabei entfernt oder an die aktuelle Logik angepasst, insbesondere die Trennung von **Meldung, Vorgang und Thema** sowie die daraus folgenden redaktionellen Ebenen.
 
@@ -121,6 +121,7 @@ Für dauerhaft gepflegte Dokumente gilt grundsätzlich:
 
 | Version | Datum | Änderung |
 |---|---|---|
+| 1.4 | 30.09.2026 | `docs/Fachkonzept.md` und `docs/KI-Leitfaden.md` als kanonische Echtsystem-Primärquellen aufgenommen; Übernahmestatus der Demonstrator-Dokumente aktualisiert. |
 | 1.3 | 30.09.2026 | `docs/FIB_Management-Approach.md` als kanonische Echtsystem-Fassung aufgenommen; Übernahmestatus aktualisiert; Terminologie auf Meldung/Vorgang/Thema ausgerichtet. |
 | 1.2 | 30.09.2026 | Dokumentationshoheit des Echtsystems festgelegt; Demonstrator als eingefrorene Referenz definiert; Übernahme und Konsolidierung der weiterhin benötigten Demonstrator-Dokumente als verbindlicher Übergabeschritt aufgenommen. |
 | 1.1 | 29.09.2026 | `docs/UX-und-Informationsarchitektur.md` als verbindliche Primärquelle für G2 aufgenommen. |
