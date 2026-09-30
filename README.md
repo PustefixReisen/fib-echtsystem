@@ -4,38 +4,26 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 1.0 | 29.09.2026 | Josef Walter – erstellt mit KI-Unterstützung |
+| 1.1 | 30.09.2026 | Josef Walter – erstellt mit KI-Unterstützung |
 
 ## Zweck
 
 Dieses Repository enthält das neu aufzubauende Echtsystem von **„Feldkirchen im Blick (FIB)”**.
 
-Der bisherige Demonstrator ist abgeschlossen und dient ausschließlich als fachliche, visuelle und historische Referenz. Er wird nicht als technische Produktivbasis weiterentwickelt.
+Der bisherige Demonstrator ist abgeschlossen und dient ausschließlich als historische, fachliche und visuelle Referenz. Er wird weder technisch noch dokumentarisch als Produktivbasis weiterentwickelt.
 
-Maßgeblicher Übergabestand:
-
-- Repository: `PustefixReisen/presseschau-feldkirchen-demo`
-- Dokument: `docs/FIB_Uebergabe_Echtsystem.md`
+Die laufende Dokumentationshoheit liegt vollständig in diesem Repository.
 
 ## Aktuelle Phase
 
 Das Projekt befindet sich in der **Projektgründungsphase**.
 
-Vor Beginn der Programmierung werden insbesondere verbindlich geklärt:
+- G1 Produktumfang/MVP: abgeschlossen
+- G2 UX/Informationsarchitektur/Fachfunktionen: in Arbeit, fachlich weitgehend konsolidiert
+- Dokumentationsübernahme Demonstrator → Echtsystem: inhaltlich durchgeführt, Abschlussprüfung offen
+- G3 Datenmodell und folgende Gründungspakete: noch ausstehend
 
-- Produktumfang und MVP,
-- Nutzeraufgaben und UX-/Informationsarchitektur,
-- Nachschärfung von Fachfunktionen und Benutzerführung,
-- daraus abgeleitete Datenanforderungen,
-- Schutzbedarf, Datenschutz und Betrieb,
-- Zielarchitektur und Technologie-Stack,
-- Rollen, Rechte und Freigabeworkflow,
-- Hosting, Deployment, Backup/Restore und Monitoring,
-- Governance-, Repository- und Dokumentationsstruktur,
-- Migration vom Demonstrator,
-- Roadmap und Go-live-Abnahmekriterien.
-
-Die fachliche Parität zum dokumentierten Demonstrator ist Mindestanforderung, aber nicht das vollständige Zielbild. UI, Benutzerführung und Fachfunktionen dürfen und sollen für das Echtsystem weiterentwickelt werden.
+Vor Beginn der technischen Umsetzung werden insbesondere Datenmodell, Schutzbedarf, Zielarchitektur, Rollen/Rechte, Betrieb, Migration und Go-live-Kriterien verbindlich geklärt. Danach folgt ein Gründungsaudit.
 
 ## Leitprinzipien
 
@@ -43,36 +31,49 @@ Die fachliche Parität zum dokumentierten Demonstrator ist Mindestanforderung, a
 - persistenter Datenbestand statt Demonstrator-JSON,
 - fachliche Regeln möglichst als technische Geschäftsregeln absichern,
 - KI modellunabhängig einsetzen,
+- **Meldung → Vorgang → Thema** als zentrale Wissensstruktur,
+- Sitzung als Beratungs- und Entscheidungskontext,
 - Sachinformation und „Unsere Einordnung“ klar trennen,
-- „Mehr wissen?“ als Vertiefungsebene,
+- „Mehr wissen?“ als kontextgebundene Vertiefung,
 - echtes Redaktionssystem mit Freigabeprozess,
 - organisationsgebundene Produktivkonten,
 - mindestens zwei technische Administratoren,
-- PWA, Web Push, SEO, Erfolgsmessung und Marketing als Bestandteile des Zielsystems,
-- digitaler und analoger Raum als gemeinsame Verbreitungslogik.
+- PWA, Web Push, SEO, Erfolgsmessung und Kommunikation als Bestandteile des Zielsystems,
+- digitaler und analoger Raum als gemeinsame Verbreitungslogik,
+- Mobile First und WCAG 2.2 AA als technisches Ziel.
 
 ## Dokumentation
 
-Die Dokumentationslandkarte liegt in:
+Zentrale Einstiegspunkte:
 
-`docs/Dokumentation.md`
+- Dokumentationslandkarte: `docs/Dokumentation.md`
+- Projektgründung: `docs/Projektgruendung.md`
+- Roadmap: `docs/Roadmap.md`
+- Fachkonzept: `docs/Fachkonzept.md`
+- Management Approach: `docs/FIB_Management-Approach.md`
+- KI-Leitfaden: `docs/KI-Leitfaden.md`
+- UX/Informationsarchitektur: `docs/UX-und-Informationsarchitektur.md`
+- Übernahmematrix Demonstrator: `docs/Dokumentationsuebernahme-Demonstrator.md`
 
-Die laufende Projektgründung wird dokumentiert in:
+Weitere verbindliche Primärquellen sind in `docs/Dokumentation.md` aufgeführt.
 
-`docs/Projektgruendung.md`
+Zentrale projektübergreifende Governance-Regeln liegen in `PustefixReisen/pustivo` und werden hier nur referenziert bzw. projektspezifisch ergänzt.
 
-Die strategische Steuerung erfolgt über:
+## Verhältnis zum Demonstrator
 
-`docs/Roadmap.md`
+Repository des abgeschlossenen Demonstrators:
 
-Zentrale projektübergreifende Governance-Regeln liegen im Repository `PustefixReisen/pustivo` und werden hier nur referenziert bzw. projektspezifisch ergänzt.
+`PustefixReisen/presseschau-feldkirchen-demo`
+
+Seine Dokumente sind **keine laufenden Primärquellen** mehr. Er bleibt Referenz für historische Entscheidungen, Beispiele, Testfälle, visuelle Erfahrungen und zu migrierende Daten.
 
 ## Technischer Stand
 
-Noch keine Programmierung. Architektur, Datenmodell und Stack werden erst nach Abschluss der Projektgründungsphase verbindlich festgelegt.
+Noch keine Produktivprogrammierung. Architektur, Datenmodell und Stack werden erst nach Abschluss der jeweiligen Gründungspakete verbindlich festgelegt.
 
 ## Änderungshistorie
 
 | Version | Datum | Änderung |
 |---|---|---|
+| 1.1 | 30.09.2026 | Dokumentationshoheit des Echtsystems, aktuelle Projektphase, neue Wissensstruktur und zentrale Dokumente aufgenommen; Übergabedokument als alleinige Ausgangsreferenz abgelöst. |
 | 1.0 | 29.09.2026 | Projektbasis für das neue FIB-Echtsystem angelegt. |
