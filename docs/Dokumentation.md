@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 1.2 | 30.09.2026 | Josef Walter – erstellt mit KI-Unterstützung |
+| 1.3 | 30.09.2026 | Josef Walter – erstellt mit KI-Unterstützung |
 
 ## 1. Zweck
 
@@ -47,7 +47,7 @@ Weitere zentrale Governance-Dokumente werden während der Projektgründung gepr�
 | Projektgründung / Gründungsentscheidungen | `docs/Projektgruendung.md` | in Arbeit |
 | Roadmap / nächster Schritt | `docs/Roadmap.md` | vorhanden |
 | Fachkonzept | aus Demonstrator-Grundlagen zu überführen und auf Echtsystem-Stand zu konsolidieren | offen |
-| Management Approach / redaktionelles Betriebsmodell | aus Demonstrator-Grundlagen zu überführen und auf Echtsystem-Stand zu konsolidieren | offen |
+| Management Approach / redaktionelles Betriebsmodell | `docs/FIB_Management-Approach.md` | vorhanden |
 | KI-Leitfaden / modellunabhängige Fachregeln | aus Demonstrator-Grundlagen zu überführen und auf Echtsystem-Stand zu konsolidieren | offen |
 | Themen- und Vorgangslogik | `docs/Themen-und-Vorgangslogik.md` | vorhanden |
 | UX / Informationsarchitektur / Benutzerführung | `docs/UX-und-Informationsarchitektur.md` | in Arbeit |
@@ -84,7 +84,7 @@ Daraus folgt:
 
 Besonders zu übernehmen bzw. zu konsolidieren sind derzeit mindestens:
 
-- Management Approach,
+- Management Approach – **übernommen und auf Echtsystem-Stand konsolidiert**,
 - inhaltliches Fachkonzept,
 - KI-Leitfaden und modellunabhängige Qualitätsregeln,
 - Quellenmonitor und Recherchelogik,
@@ -94,7 +94,7 @@ Besonders zu übernehmen bzw. zu konsolidieren sind derzeit mindestens:
 - SEO/Auffindbarkeit,
 - KI-Kosten- und Betriebsregeln, soweit sie für das Echtsystem weiter gelten.
 
-Die Übernahme ist keine 1:1-Kopie. Veraltete Demonstrator-Annahmen werden dabei entfernt oder an die aktuelle Logik angepasst, insbesondere die Trennung von **Beitrag, Vorgang und Thema** sowie die daraus folgenden redaktionellen Ebenen.
+Die Übernahme ist keine 1:1-Kopie. Veraltete Demonstrator-Annahmen werden dabei entfernt oder an die aktuelle Logik angepasst, insbesondere die Trennung von **Meldung, Vorgang und Thema** sowie die daraus folgenden redaktionellen Ebenen.
 
 ## 6. Pflegepflicht
 
@@ -121,6 +121,7 @@ Für dauerhaft gepflegte Dokumente gilt grundsätzlich:
 
 | Version | Datum | Änderung |
 |---|---|---|
+| 1.3 | 30.09.2026 | `docs/FIB_Management-Approach.md` als kanonische Echtsystem-Fassung aufgenommen; Übernahmestatus aktualisiert; Terminologie auf Meldung/Vorgang/Thema ausgerichtet. |
 | 1.2 | 30.09.2026 | Dokumentationshoheit des Echtsystems festgelegt; Demonstrator als eingefrorene Referenz definiert; Übernahme und Konsolidierung der weiterhin benötigten Demonstrator-Dokumente als verbindlicher Übergabeschritt aufgenommen. |
 | 1.1 | 29.09.2026 | `docs/UX-und-Informationsarchitektur.md` als verbindliche Primärquelle für G2 aufgenommen. |
 | 1.0 | 29.09.2026 | Dokumentationslandkarte für das FIB-Echtsystem angelegt. |
