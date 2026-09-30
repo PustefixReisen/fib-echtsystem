@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 1.3 | 30.09.2026 | Josef Walter – erstellt mit KI-Unterstützung |
+| 1.4 | 30.09.2026 | Josef Walter – erstellt mit KI-Unterstützung |
 
 ## Statusmodell
 
@@ -24,10 +24,10 @@ Es gelten die zentralen Status aus `PustefixReisen/pustivo/docs/governance/Dokum
 |---|---|---|
 | Projektbasis / Repository | **Abgeschlossen** | separates Repository und initiale Dokumentationsstruktur vorhanden |
 | G1 Produktumfang / MVP | **Abgeschlossen** | MVP, unmittelbare Ausbaustufe, spätere Erweiterungen, Nicht-Ziele und Aufwandstreiber verbindlich festgelegt |
-| G2 UX / Informationsarchitektur / Fachfunktionen | **In Arbeit** | Themen-/Vorgangslogik konsolidiert; als nächstes öffentliche Themendarstellung an realen Fällen testen und anschließend verbleibende UX-/Fachfunktionen abschließen |
-| G3 Datenanforderungen / Datenmodell | **Geplant** | aus Fach- und UX-Konzept ableiten; Themen/Vorgänge, Versionierung und Rechercheaufträge ausdrücklich berücksichtigen |
+| G2 UX / Informationsarchitektur / Fachfunktionen | **In Arbeit** | Kernnavigation, Meldungslogik, gemeinsame Themen-/Vorgangsliste sowie Meldungs-, Themen-, Vorgangs- und Sitzungsdetailseiten konsolidiert; verbleibende Querschnitts-UX abschließen |
+| G3 Datenanforderungen / Datenmodell | **Geplant** | aus Fach- und UX-Konzept ableiten; eigenständige Entitäten für Meldung/Vorgang/Thema, n:m-Beziehungen, Wirkungsrollen, Versionierung und Rechercheaufträge ausdrücklich berücksichtigen |
 | G4 Schutzbedarf / Datenschutz / Offline | **Geplant** | Schutzklassen und Betriebsanforderungen festlegen |
-| G5 Zielarchitektur / Stack / Hosting / Deployment | **Geplant** | technische Zielarchitektur nach Anforderungen entscheiden |
+| G5 Zielarchitektur / Stack / Hosting / Deployment | **Geplant** | technische Zielarchitektur nach Anforderungen entscheiden; modellunabhängige KI-Regelschicht und Modelltests berücksichtigen |
 | G6 Rollen / Rechte / Workflow | **Geplant** | konkretes Berechtigungs- und Freigabemodell festlegen |
 | G7 Betrieb | **Geplant** | Backup, Restore, Monitoring und Kostenkontrolle definieren |
 | G8 Governance / Repository / Dokumentation | **Teilweise umgesetzt** | Basis vorhanden; zentrale Standards vollständig klassifizieren |
@@ -38,29 +38,46 @@ Es gelten die zentralen Status aus `PustefixReisen/pustivo/docs/governance/Dokum
 
 ## Nächster konkreter Schritt
 
-**G2 – öffentliche Themendarstellung auf Basis der neuen Themen-/Vorgangslogik**
+**G2 – verbleibende Querschnitts-UX abschließen**
 
-Die fachliche Trennung von Beitrag, Vorgang und Thema sowie der iterative Themenkreislauf sind in `docs/Themen-und-Vorgangslogik.md` konsolidiert.
+Die fachliche und öffentliche Grundstruktur ist inzwischen konsolidiert:
 
-Als nächstes wird anhand realer FIB-Fälle geprüft, wie ein bestätigtes Thema öffentlich dargestellt wird, ohne Thema und chronologischen Vorgang wieder gleichzusetzen.
+- öffentliche Hauptnavigation: **Meldungen | Themen | Sitzungen | Suchen**,
+- „Aktuell“ ist ausschließlich eine zeitliche Auswahl/Hervorhebung,
+- Themen und Vorgänge werden öffentlich in einer gemeinsamen Themenliste geführt,
+- Vorgang und Thema bleiben intern eigenständige Objekttypen,
+- Vorgänge besitzen einen eigenen aktuellen Sachstand und Verlauf,
+- Themen erklären übergeordnete Zusammenhänge und gewichten Vorgänge nach ihrer Wirkungsrolle,
+- Meldungs-, Themen-, Vorgangs- und Sitzungsdetailseiten sind fachlich festgelegt.
 
-Die Themenseite soll insbesondere vermitteln:
+Vor Abschluss von G2 bleiben insbesondere:
 
-- Leitfrage und lokalen Bezug,
-- relevante Perspektiven und Kontextdimensionen,
-- zugehörige konkrete Vorgänge,
-- erklärungsrelevanten externen Kontext,
-- belegten Wissensstand und Wissenslücken,
-- wesentliche neue Entwicklungen, die die Themendefinition verändert haben.
+1. Suche und Filter,
+2. „Mehr wissen?“ in den verschiedenen Detailseiten,
+3. PWA-spezifische UX einschließlich „Neu seit letztem Besuch“, Push-Einstellungen und möglicher Badge-Anzeige,
+4. Teilen / Drucken / Social Preview,
+5. Transparenz / Über FIB / Disclaimer,
+6. Barrierearmut und responsive Detailkonzeption,
+7. abschließende Widerspruchs- und Vollständigkeitsprüfung von G2.
 
-Erst nach diesem Test wird die Themenliste/Themendetailseite verbindlich festgelegt und die noch vorläufige alte Themenstatuslogik in der UX-Dokumentation bereinigt. Anschließend werden die verbleibenden G2-Funktionen abgeschlossen und G3 begonnen.
+Danach kann G3 beginnen. Jede verbleibende UX- oder Fachentscheidung wird weiterhin ausdrücklich auf Auswirkungen auf das spätere Datenmodell geprüft.
 
-Jede relevante UX- oder Fachentscheidung wird weiterhin ausdrücklich auf Auswirkungen auf das spätere Datenmodell geprüft.
+## Modellunabhängigkeit der KI
+
+Die fachlichen FIB-Regeln werden in der Projektdokumentation und nicht in einem einzelnen Modell oder Chat verankert. Für die spätere technische Umsetzung ist vorzusehen:
+
+- zentrale modellunabhängige Regel-/Prompt-Schicht,
+- strukturierte Ein- und Ausgaben für fachliche KI-Aufgaben,
+- Regressionstests mit festen FIB-Referenzfällen,
+- Modellwechsel nur nach Qualitätsprüfung gegen diese Referenzfälle.
+
+Die konkrete technische Umsetzung wird in G5 festgelegt; die dafür nötigen fachlichen Strukturen werden bereits in G3 berücksichtigt.
 
 ## Änderungshistorie
 
 | Version | Datum | Änderung |
 |---|---|---|
+| 1.4 | 30.09.2026 | G2 nach UX-Konsolidierung aktualisiert; gemeinsame Themen-/Vorgangsliste, neue Navigation und Vorgangsdetailseite berücksichtigt; offene Querschnitts-UX als nächster Schritt festgelegt; Modellunabhängigkeit der KI als spätere technische Anforderung ergänzt. |
 | 1.3 | 30.09.2026 | Themen-/Vorgangslogik konsolidiert; öffentliche Themendarstellung als nächster G2-Schritt festgelegt; G3 um Themenversionierung und Rechercheaufträge konkretisiert. |
 | 1.2 | 29.09.2026 | G1 als abgeschlossen markiert; G2 UX/Informationsarchitektur/Fachfunktionen begonnen. |
 | 1.1 | 29.09.2026 | G1-Kernentscheidungen zur KI-gestützten Inhaltserstellung, Web Push, freien Live-Fragen und Offline-Fähigkeit dokumentiert. |
