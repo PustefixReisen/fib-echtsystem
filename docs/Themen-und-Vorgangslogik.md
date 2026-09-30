@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 1.0 | 30.09.2026 | Josef Walter – erstellt mit KI-Unterstützung |
+| 1.1 | 30.09.2026 | Josef Walter – erstellt mit KI-Unterstützung |
 
 ## 1. Zweck und Geltung
 
@@ -108,6 +108,32 @@ Die KI prüft dabei mindestens:
 4. Trägt der Aspekt zur Leitfrage bei oder weitet er das Thema unnötig aus?
 5. Welche Wissenslücken bleiben bestehen?
 
+### 5.1 Rolle eines Vorgangs oder Ereignisses innerhalb eines Themas
+
+Eine Zuordnung zu einem Thema beschreibt nicht nur **dass** ein Vorgang oder Ereignis relevant ist, sondern auch **welche fachliche Rolle** er für das Thema spielt.
+
+Die KI soll deshalb bei der Zuordnung mindestens unterscheiden können zwischen:
+
+- **Treiber / prägender Vorgang** – verändert die Entwicklung oder Rahmenbedingungen des Themas wesentlich; Beispiel: ein großes Infrastruktur- oder Entwicklungsprojekt, das Verkehrsströme, Flächennutzung oder Handlungsmöglichkeiten nachhaltig verändert.
+- **Umsetzung / Gestaltungsbeitrag** – setzt eine im Thema erkennbare Zielrichtung oder Strategie konkret um; Beispiel: Aufbau oder Ausbau eines Radwegenetzes innerhalb einer Mobilitätsstrategie.
+- **Betroffenheit / Auswirkung** – zeigt, wie Feldkirchen oder ein Teilbereich von einer extern oder anderweitig getriebenen Entwicklung betroffen ist, ohne selbst deren Haupttreiber zu sein.
+- **Rahmenbedingung / Kontext** – erklärt rechtliche, technische, räumliche, finanzielle oder gesellschaftliche Bedingungen, die für das Thema relevant sind.
+- **Indikator / Beobachtung** – liefert ein Signal über eine Entwicklung, ohne selbst deren Ursache oder wesentliche Umsetzung zu sein.
+
+Diese Rollen sind keine starre abschließende Taxonomie. Ein Vorgang kann mehrere Rollen gleichzeitig haben; eine Rolle kann sich im Zeitverlauf ändern.
+
+Für die Themenanalyse gilt:
+
+> **Ähnliche Sachgebiete bedeuten nicht automatisch gleiche thematische Bedeutung. Entscheidend ist die Wirkungsrolle im Zusammenhang der Leitfrage.**
+
+Beispiel Mobilität:
+
+- der Ausbau des Autobahnkreuzes München-Ost kann als **Treiber / prägender Vorgang** erhebliche Auswirkungen auf Verkehrsströme, Flächen, Lärm, regionale Verkehrsführung und kommunale Handlungsspielräume haben;
+- der Ausbau eines Radwegenetzes kann als **Umsetzung / Gestaltungsbeitrag** die lokalen und regionalen Mobilitätsmöglichkeiten verändern;
+- eine einzelne Sperrung oder Umleitung kann vor allem **Betroffenheit / Auswirkung** eines übergeordneten Infrastrukturvorgangs zeigen.
+
+Damit soll verhindert werden, dass auf einer Themenseite alle verknüpften Ereignisse und Vorgänge gleichrangig erscheinen. Die thematische Darstellung muss erkennen lassen, **was das Thema prägt, was eine Reaktion oder Umsetzung darstellt und wo lediglich Auswirkungen sichtbar werden**.
+
 ## 6. Iterative Themendefinition
 
 Nach Auswahl eines Themenkandidaten formuliert die KI einen ersten Thementext und eine interne Themendefinition.
@@ -147,7 +173,8 @@ Die KI soll aus folgenden Entscheidungen lernen:
 - verworfene Themenkandidaten,
 - vom Redakteur ergänzte fehlende Aspekte,
 - nachträglich entdeckte relevante Vorgänge,
-- bewusste Abgrenzungen zwischen Thema und Vorgang.
+- bewusste Abgrenzungen zwischen Thema und Vorgang,
+- redaktionell korrigierte Rollen eines Vorgangs innerhalb eines Themas.
 
 Ziel ist keine autonome Themenhoheit der KI, sondern eine zunehmend FIB-spezifische Vorschlagslogik unter redaktioneller Kontrolle.
 
@@ -192,13 +219,15 @@ Für das Datenmodell sind mindestens vorzusehen:
 
 - eigenständige Entitäten für Ereignis/Beitrag, Vorgang und Thema,
 - n:m-Beziehungen zwischen Vorgängen und Themen,
+- **fachliche Rolle einer Vorgang-/Ereignisbeziehung innerhalb eines Themas**,
+- Möglichkeit mehrerer Rollen pro Beziehung bzw. einer späteren Rollenänderung,
 - versionierte Themendefinitionen,
 - redaktioneller Bestätigungsstatus für Themendefinitionen,
 - strukturierte Perspektiven/Kontextdimensionen eines Themas,
 - redaktionell ergänzte Aspekte und Prüfaufträge,
 - Rechercheaufträge mit Status und Ergebnis,
 - Herkunft einer Perspektive: KI erkannt / Redaktion ergänzt / Recherche bestätigt,
-- nachvollziehbare Zuordnungs- und Abgrenzungsentscheidungen,
+- nachvollziehbare Zuordnungs-, Rollen- und Abgrenzungsentscheidungen,
 - Kalibrierungsfeedback aus bestätigten, veränderten und verworfenen Vorschlägen.
 
 Die konkrete Modellierung erfolgt in G3.
@@ -213,6 +242,7 @@ Die Themenseite muss insbesondere beantworten:
 - Warum ist sie für Feldkirchen relevant?
 - Welche Perspektiven gehören zum Thema?
 - Welche konkreten Vorgänge prägen den lokalen Stand?
+- Welche Rolle spielen diese Vorgänge im Thema: Treiber, Umsetzung, Betroffenheit, Kontext oder Indikator?
 - Welcher externe Kontext hilft beim Verständnis?
 - Was wissen wir, was ist offen und wo bestehen Wissenslücken?
 - Welche neuen Entwicklungen haben die Themendefinition zuletzt verändert?
