@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 1.1 | 30.09.2026 | Josef Walter – erstellt mit KI-Unterstützung |
+| 1.2 | 30.09.2026 | Josef Walter – erstellt mit KI-Unterstützung |
 
 ## 1. Zweck
 
@@ -12,22 +12,24 @@ Dieses Dokument dokumentiert die einmalige Übernahme der für das Echtsystem we
 
 > **Der Demonstrator bleibt historische Referenz. Die laufende Dokumentationshoheit liegt ausschließlich im Repository `PustefixReisen/fib-echtsystem`.**
 
+**Status der Übernahme: abgeschlossen.**
+
 ## 2. Klassifikationslogik
 
-Jede bisherige Grundlage wird einer von vier Klassen zugeordnet:
+Jede bisherige Grundlage wurde einer von vier Klassen zugeordnet:
 
 1. **übernehmen und aktualisieren**,
 2. **in bestehende Echtsystem-Dokumentation integrieren**,
 3. **nur historisch referenzieren**,
 4. **entfallen**.
 
-Eine 1:1-Kopie erfolgt nur, wenn Inhalt und Struktur weiterhin passen. Veraltete Terminologie, Demonstrator-Provisorien und überholte Fachlogik werden nicht konserviert.
+Eine 1:1-Kopie erfolgte nur dort, wo Inhalt und Struktur weiterhin passten. Veraltete Terminologie, Demonstrator-Provisorien und überholte Fachlogik wurden nicht konserviert.
 
 ## 3. Übernahmematrix
 
 | Bisherige Grundlage | Echtsystem-Ziel | Status | Hinweis |
 |---|---|---|---|
-| `FIB_Management-Approach.md` | `docs/FIB_Management-Approach.md` | **übernommen / aktualisiert** | Presseschau-Begriff bereinigt; Meldung/Vorgang/Thema/Sitzung aktualisiert |
+| `FIB_Management-Approach.md` | `docs/FIB_Management-Approach.md` | **übernommen / aktualisiert** | Meldung/Vorgang/Thema/Sitzung und Aufnahmelogik aktualisiert |
 | `FIB-Inhaltliches-Konzept.md` + fachliche ODT | `docs/Fachkonzept.md` | **übernommen / aktualisiert** | aktuelle Wissensstruktur und Aufnahmegrundsätze maßgeblich |
 | `KI-Leitfaden_Homepage-Presseschau` | `docs/KI-Leitfaden.md` | **übernommen / aktualisiert** | Demonstratorpfade und Testlauf-Provisorien entfernt |
 | `FIB_Modellunabhaengigkeit_und_Qualitaetspruefung.md` | `docs/KI-Qualitaet-und-Modellunabhaengigkeit.md` | **übernommen / aktualisiert** | eigener Qualitäts- und Regressionstestbereich |
@@ -40,58 +42,63 @@ Eine 1:1-Kopie erfolgt nur, wenn Inhalt und Struktur weiterhin passen. Veraltete
 | `FIB_Frontend_und_Darstellung.md` | `docs/UX-und-Informationsarchitektur.md` v2.5 | **integriert** | gültige Frontendregeln konsolidiert; alte Navigation/Archiv-/Demo-Technik verworfen |
 | `FIB_Uebergabe_Echtsystem.md` | Projektgründung, Roadmap, diese Matrix | **historisch referenziert / integriert** | aktueller Echtsystem-Stand ersetzt Übergabeannahmen |
 | Demonstrator-`Dokumentation.md` | `docs/Dokumentation.md` | **nicht übernommen** | eigenes Echtsystem-Dokument vorhanden |
-| `Gruene_Werte_und_politische_Ziele.md` | `docs/Gruene-Werte-und-politische-Ziele.md` | **übernommen / aktualisiert** | Presseschau-Terminologie entfernt; politischer Bezugsrahmen bleibt eigenständige Quelle |
+| `Gruene_Werte_und_politische_Ziele.md` | `docs/Gruene-Werte-und-politische-Ziele.md` | **übernommen / aktualisiert** | politischer Bezugsrahmen bleibt eigenständige Quelle |
 | `Merkblatt_Wissenschaftlich-Politische_Sprache.md` | `docs/Sprachleitfaden.md` | **übernommen / aktualisiert** | mit bürgernaher Sprache und Barrierefreiheitsabgrenzung konsolidiert |
 
 ## 4. Visuelle Referenzen und Bilder
 
-Die vorhandenen im bisherigen Projekt-/Bibliotheksbestand erzeugten FIB-Bilder werden **nicht als fachliche Dokumente kopiert**.
+Die vorhandenen FIB-Bilder wurden nicht als fachliche Dokumente kopiert. Sie bleiben Referenzmaterial für den offenen G2-Punkt **Visuelles Identitäts- und Bildkonzept**.
 
-Sie bleiben Referenzmaterial für den noch offenen G2-Punkt **Visuelles Identitäts- und Bildkonzept**. Dort wird entschieden:
+Dort wird entschieden:
 
 - welche Motive als Standardmotive übernommen werden,
-- welche Rechte-/Provenienzinformationen dauerhaft gespeichert werden müssen,
+- welche Rechte-/Provenienzinformationen dauerhaft gespeichert werden,
 - wie Logo/Wortmarke und Fallback-Bildpool aussehen,
 - welche Bilder nur Entwicklungsreferenz bleiben.
+
+Falls daraus ein eigenes dauerhaftes Bild-/Rechtedokument erforderlich wird, wird dieses im Echtsystem neu angelegt. Das ist eine neue G2-Entscheidung und keine offene Alt-Dokumentationsübernahme.
 
 ## 5. Frontend-/Darstellungsdokument
 
 `FIB_Frontend_und_Darstellung.md` lebt nicht als zweite Datei weiter. Die weiterhin gültigen Anforderungen sind in `docs/UX-und-Informationsarchitektur.md` v2.5 integriert, insbesondere:
 
-- mobile-first und responsive Darstellung,
+- Mobile First und responsive Darstellung,
 - semantische/barrierearme UI,
 - Bilder/Alttexte/Rechte,
 - Dialog- und Navigationsprinzipien,
-- strukturierte Suche statt Rekonstruktion aus gerendertem Text,
+- strukturierte Suche,
 - Quellen-, Aktualisierungs- und Vertiefungsdarstellung.
 
 Nicht übernommen wurden demonstratorspezifische JavaScript-/GitHub-Pages-Provisorien, alte Navigation und überholte Archivlogik.
 
-## 6. Noch offene Abschlussarbeiten
+## 6. Abschlussprüfung
 
-Die inhaltliche Übernahme der identifizierten erforderlichen Grundlagen ist erfolgt.
+Die Abschlussprüfung ergab:
 
-Vor Status **Abgeschlossen** stehen noch:
-
-1. Querverweisprüfung zwischen allen kanonischen Echtsystem-Dokumenten,
-2. Suche nach veralteter Terminologie wie „Presseschau“ in der laufenden Echtsystem-Dokumentation,
-3. Widerspruchsprüfung insbesondere zwischen Fachkonzept, Themen-/Vorgangslogik, KI-Leitfaden und UX,
-4. Prüfung, ob bei der visuellen Konzeption noch ein eigenständiges Bild-/Rechtedokument erforderlich wird,
-5. Aktualisierung der Dokumentationslandkarte und Roadmap nach Abschlussprüfung.
+- alle identifizierten weiterhin erforderlichen Grundlagen besitzen eine kanonische Echtsystem-Heimat,
+- README und Projektgründung wurden auf die Dokumentationshoheit des Echtsystems umgestellt,
+- der KI-Leitfaden verweist ausschließlich auf die neuen kanonischen Echtsystem-Quellen,
+- die alte Bezeichnung „Presseschau“ ist keine aktuelle Produkt- oder Inhaltsbezeichnung mehr; historische Nennungen in Dateinamen, Repository-Namen oder Änderungshistorien bleiben zulässig,
+- die aktuelle Wissensstruktur **Ereignis → Meldung → Vorgang → Thema** ist in Fachkonzept, Management Approach, KI-Leitfaden, UX und Projektgründung konsistent verankert,
+- Sitzung bleibt querliegender Beratungs- und Entscheidungskontext,
+- die alte Frontend-Dokumentation wurde in die UX-Primärquelle integriert statt dupliziert.
 
 ## 7. Abschlusskriterium
 
-Die Dokumentationsübernahme ist abgeschlossen, wenn:
+Die Kriterien sind erfüllt:
 
-1. alle erforderlichen Grundlagen klassifiziert sind,
-2. alle weiterhin benötigten Inhalte in einer kanonischen Echtsystem-Quelle liegen,
-3. die Dokumentationslandkarte diese Quellen ausweist,
-4. keine laufende Weiterentwicklung mehr im Demonstrator dokumentiert wird,
-5. Widerspruchs- und Vollständigkeitsprüfung abgeschlossen sind.
+1. alle erforderlichen Grundlagen sind klassifiziert,
+2. alle weiterhin benötigten Inhalte liegen in kanonischen Echtsystem-Quellen,
+3. die Dokumentationslandkarte weist diese Quellen aus,
+4. laufende Weiterentwicklung erfolgt nicht mehr im Demonstrator,
+5. Querverweis-, Terminologie- und Widerspruchsprüfung wurden durchgeführt.
+
+Die Dokumentationsübernahme ist damit **abgeschlossen**.
 
 ## Änderungshistorie
 
 | Version | Datum | Änderung |
 |---|---|---|
-| 1.1 | 30.09.2026 | Quellenmonitor, Mehr wissen, KI-Qualität, Marketing, SEO, KI-Betrieb, Frontend/UX sowie Werte- und Sprachgrundlagen als übernommen markiert; visuelle Referenzen und verbleibende Abschlussprüfung ergänzt. |
+| 1.2 | 30.09.2026 | Querverweis-, Terminologie- und Konsistenzprüfung abgeschlossen; README, Projektgründung und KI-Leitfaden bereinigt; Dokumentationsübernahme formal abgeschlossen. |
+| 1.1 | 30.09.2026 | Quellenmonitor, Mehr wissen, KI-Qualität, Marketing, SEO, KI-Betrieb, Frontend/UX sowie Werte- und Sprachgrundlagen als übernommen markiert. |
 | 1.0 | 30.09.2026 | Übernahmematrix für den bekannten Demonstrator-Dokumentbestand angelegt. |
