@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 1.5 | 30.09.2026 | Josef Walter – erstellt mit KI-Unterstützung |
+| 1.6 | 30.09.2026 | Josef Walter – erstellt mit KI-Unterstützung |
 
 ## 1. Zweck
 
@@ -43,14 +43,16 @@ Für FIB gelten insbesondere:
 | Management Approach | `docs/FIB_Management-Approach.md` | vorhanden |
 | KI-Arbeitsregeln | `docs/KI-Leitfaden.md` | vorhanden |
 | KI-Qualität / Modellunabhängigkeit | `docs/KI-Qualitaet-und-Modellunabhaengigkeit.md` | vorhanden |
+| Grüne Werte / politische Ziele | `docs/Gruene-Werte-und-politische-Ziele.md` | vorhanden |
+| Sprachregeln | `docs/Sprachleitfaden.md` | vorhanden |
 | Themen- und Vorgangslogik | `docs/Themen-und-Vorgangslogik.md` | vorhanden |
 | Recherche / Quellenmonitor | `docs/Recherche-und-Quellenmonitor.md` | vorhanden |
 | „Mehr wissen?“ | `docs/Mehr-wissen.md` | vorhanden |
-| UX / Informationsarchitektur / Benutzerführung | `docs/UX-und-Informationsarchitektur.md` | in Arbeit |
+| UX / Informationsarchitektur / Benutzerführung | `docs/UX-und-Informationsarchitektur.md` | in Arbeit – fachlich weitgehend konsolidiert |
 | Marketing / Kommunikation | `docs/Marketing-und-Kommunikation.md` | vorhanden |
 | SEO / Auffindbarkeit | `docs/SEO-und-Auffindbarkeit.md` | vorhanden |
 | KI-Betrieb / Kosten | `docs/KI-Betrieb-und-Kosten.md` | vorhanden |
-| Übernahme Demonstrator-Dokumentation | `docs/Dokumentationsuebernahme-Demonstrator.md` | in Arbeit |
+| Übernahme Demonstrator-Dokumentation | `docs/Dokumentationsuebernahme-Demonstrator.md` | Abschlussprüfung offen |
 | Architektur | noch anzulegen | offen |
 | Datenmodell | noch anzulegen | offen |
 | Sicherheit / Datenschutz | noch anzulegen | offen |
@@ -67,22 +69,38 @@ Für FIB gelten insbesondere:
 Daraus folgt:
 
 - Demonstrator-Dokumente werden nicht mehr als laufende Primärdokumentation fortgeschrieben.
-- Relevante Inhalte werden einmalig übernommen, bereinigt und aktualisiert.
+- Relevante Inhalte wurden einmalig übernommen, bereinigt und aktualisiert.
 - Nach der Übernahme bleibt die Demonstrator-Fassung historischer Stand.
 - Widersprüche werden zugunsten der kanonischen Echtsystem-Dokumentation aufgelöst.
 
-Die detaillierte Übernahmematrix steht in `docs/Dokumentationsuebernahme-Demonstrator.md`.
+Die detaillierte Zuordnung steht in `docs/Dokumentationsuebernahme-Demonstrator.md`.
 
-## 6. Noch offene Übernahmepunkte
+## 6. Stand der Übernahme
 
-Nach der aktuellen Übernahmerunde bleiben insbesondere:
+Die inhaltliche Übernahme der identifizierten erforderlichen Dokumentationsgrundlagen ist durchgeführt.
 
-1. die noch relevanten Regeln aus `FIB_Frontend_und_Darstellung.md` in `docs/UX-und-Informationsarchitektur.md` zu integrieren,
-2. die außerhalb des Demo-`docs`-Ordners liegenden fachlichen Grundlagen eindeutig zu überführen bzw. zu referenzieren, insbesondere:
-   - `Gruene_Werte_und_politische_Ziele.md`,
-   - `Merkblatt_Wissenschaftlich-Politische_Sprache`,
-   - gegebenenfalls Bild-/Rechte- und weitere tatsächlich verwendete redaktionelle Grundlagen,
-3. danach eine Widerspruchs- und Vollständigkeitsprüfung durchzuführen.
+Ins Echtsystem überführt wurden insbesondere:
+
+- Management Approach,
+- Fachkonzept,
+- KI-Leitfaden,
+- KI-Qualität und Modellunabhängigkeit,
+- Quellenmonitor und Recherchelogik,
+- Mehr-wissen-Konzept,
+- Frontend-/Darstellungsregeln in die UX-Primärquelle,
+- Marketing und Kommunikation,
+- SEO und Auffindbarkeit,
+- KI-Betrieb und Kosten,
+- grüne Werte und politische Ziele,
+- wissenschaftlich-politische und bürgernahe Sprachregeln.
+
+Nicht als eigene Echtsystem-Dokumente übernommen wurden Demonstrator-Dokumente, deren Funktion bereits durch eine kanonische Echtsystem-Quelle erfüllt wird, sowie demonstratorspezifische technische Provisorien.
+
+Vor dem formalen Status **Abgeschlossen** stehen noch:
+
+1. Querverweis- und Terminologieprüfung,
+2. Widerspruchs- und Vollständigkeitsprüfung,
+3. Klärung, ob aus dem noch offenen visuellen Identitäts-/Bildkonzept ein eigenes dauerhaftes Bild-/Rechtedokument entsteht.
 
 ## 7. Pflegepflicht
 
@@ -109,9 +127,10 @@ Für dauerhaft gepflegte Dokumente gilt grundsätzlich:
 
 | Version | Datum | Änderung |
 |---|---|---|
-| 1.5 | 30.09.2026 | Übernahme der Demonstrator-Dokumente zu Recherche, Mehr wissen, KI-Qualität, Marketing, SEO und KI-Betrieb dokumentiert; Übernahmematrix als eigene Quelle aufgenommen; verbleibende Punkte auf UX-Integration und externe fachliche Grundlagen eingegrenzt. |
-| 1.4 | 30.09.2026 | `docs/Fachkonzept.md` und `docs/KI-Leitfaden.md` als kanonische Echtsystem-Primärquellen aufgenommen. |
-| 1.3 | 30.09.2026 | `docs/FIB_Management-Approach.md` als kanonische Echtsystem-Fassung aufgenommen. |
+| 1.6 | 30.09.2026 | Frontendregeln in UX v2.5 integriert; Werte- und Sprachgrundlagen ins Echtsystem übernommen; Übernahmestatus auf inhaltlich durchgeführt mit offener Abschlussprüfung gesetzt. |
+| 1.5 | 30.09.2026 | Recherche, Mehr wissen, KI-Qualität, Marketing, SEO und KI-Betrieb übernommen; Übernahmematrix aufgenommen. |
+| 1.4 | 30.09.2026 | Fachkonzept und KI-Leitfaden als kanonische Primärquellen aufgenommen. |
+| 1.3 | 30.09.2026 | Management Approach als kanonische Echtsystem-Fassung aufgenommen. |
 | 1.2 | 30.09.2026 | Dokumentationshoheit des Echtsystems festgelegt; Demonstrator als eingefrorene Referenz definiert. |
-| 1.1 | 29.09.2026 | `docs/UX-und-Informationsarchitektur.md` als verbindliche Primärquelle für G2 aufgenommen. |
-| 1.0 | 29.09.2026 | Dokumentationslandkarte für das FIB-Echtsystem angelegt. |
+| 1.1 | 29.09.2026 | UX- und Informationsarchitektur als verbindliche Primärquelle aufgenommen. |
+| 1.0 | 29.09.2026 | Dokumentationslandkarte angelegt. |
