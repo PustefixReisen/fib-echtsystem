@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 1.0 | 30.09.2026 | Josef Walter – erstellt mit KI-Unterstützung |
+| 1.1 | 30.09.2026 | Josef Walter – erstellt mit KI-Unterstützung |
 
 ## 1. Zweck und Verbindlichkeit
 
@@ -14,234 +14,138 @@ Die Ausführung darf nicht von Erinnerungen eines bestimmten Chats oder von Eige
 
 Verbindliche Primärquellen sind insbesondere:
 
-- `docs/Fachkonzept.md`
-- `docs/Themen-und-Vorgangslogik.md`
-- `docs/UX-und-Informationsarchitektur.md`
-- `docs/FIB_Management-Approach.md`
-- die für FIB freigegebenen Dokumente zu grünen Werten, politischen Zielen und wissenschaftlich-politischer Sprache, solange sie noch nicht in kanonische Echtsystem-Fassungen überführt wurden.
+- Fachlichkeit und Aufnahmegrundsätze: `docs/Fachkonzept.md`
+- Themen-/Vorgangslogik: `docs/Themen-und-Vorgangslogik.md`
+- Recherche und Quellenmonitor: `docs/Recherche-und-Quellenmonitor.md`
+- „Mehr wissen?“: `docs/Mehr-wissen.md`
+- politische Bezugsmaßstäbe: `docs/Gruene-Werte-und-politische-Ziele.md`
+- Sprachregeln: `docs/Sprachleitfaden.md`
+- KI-Qualität und Modellunabhängigkeit: `docs/KI-Qualitaet-und-Modellunabhaengigkeit.md`
+- öffentliche UX: `docs/UX-und-Informationsarchitektur.md`
 
-Bei Widersprüchen gilt das Prinzip **„Ein Sachverhalt – eine verbindliche Quelle“** gemäß zentraler Governance in `PustefixReisen/pustivo`.
+Der Management Approach `docs/FIB_Management-Approach.md` fasst Regeln verständlich zusammen, ist aber keine abweichende zweite Detailquelle.
+
+Bei Widersprüchen gilt das zentrale Governance-Prinzip **„Ein Sachverhalt – eine verbindliche Quelle“**.
 
 ## 2. Operativer Grundsatz
 
-Die KI unterstützt den vollständigen redaktionellen Prozess von Recherche bis Veröffentlichungsvorschlag. Die menschliche Redaktion bleibt für fachliche Freigabe, politische Verantwortung und Veröffentlichungsentscheidung zuständig.
+Die KI unterstützt den redaktionellen Prozess von der Fundstelle bis zum Veröffentlichungsvorschlag. Die menschliche Redaktion bleibt für fachliche Freigabe, politische Verantwortung und Veröffentlichungsentscheidung zuständig.
 
-Die KI übernimmt insbesondere:
+Die KI unterstützt insbesondere:
 
 - Quellenbeobachtung und Recherche,
 - Erkennung neuer oder geänderter Fundstellen,
-- Faktenprüfung und Quellenzuordnung,
-- Erkennung eines neuen Ereignisses oder einer Aktualisierung,
-- Erstellung und Fortschreibung von Meldungen,
-- Zuordnung zu Vorgängen,
-- Erkennung und Pflege von Themenkandidaten,
-- Analyse von Wirkungsrollen,
-- Auswertung öffentlicher Sitzungen und TOPs,
-- Vorschläge für „Mehr wissen?“,
+- Fakten- und Quellenprüfung,
+- Entscheidungsvorschlag „neues Ereignis oder Aktualisierung“,
+- Entwurf und Fortschreibung von Meldungen,
+- Vorgangszuordnung und Vorgangsfortschreibung,
+- Themenkandidaten, Leitfragen, Perspektiven und Wirkungsrollen,
+- Auswertung von Sitzungen und TOPs,
+- „Mehr wissen?“-Fragen und vorbereitete Antworten,
 - Entwürfe für „Unsere Einordnung“,
 - Qualitäts- und Konsistenzprüfungen.
 
-Die KI veröffentlicht keine redaktionell freigabepflichtigen Inhalte autonom.
+Die KI veröffentlicht keine freigabepflichtigen Inhalte autonom.
 
 ## 3. Modellunabhängigkeit
 
-Die FIB-Logik muss unabhängig vom verwendeten Modell reproduzierbar sein.
+Die FIB-Logik gehört dem System und nicht einem einzelnen Modell.
 
-Daraus folgen vier verbindliche Prinzipien:
+Verbindliche Reihenfolge:
 
-1. **Regeln außerhalb des Modells:** Fachliche Regeln werden in Projekt- und Regeldokumenten gepflegt, nicht ausschließlich in einem providerspezifischen Prompt.
-2. **Strukturierte Aufgaben:** Wo fachlich sinnvoll, werden Ein- und Ausgaben strukturiert verarbeitet, z. B. Ereignis, Vorgang, Thema, Wirkungsrolle, Rechercheauftrag, Freigabestatus.
-3. **Nachvollziehbare Begründung:** Zuordnungen, neue Themenkandidaten, Rollen und relevante Ableitungen müssen für die Redaktion mit Quellen und fachlichen Gründen nachvollziehbar sein.
-4. **Regressionstests:** Ein Modellwechsel oder eine wesentliche Änderung der KI-Anbindung wird gegen feste FIB-Referenzfälle geprüft.
+> **Geschäftsregel → explizite KI-Regel → Modellurteil**
 
-Mindestens folgende Referenzfälle sind vorzusehen:
+Daraus folgt:
 
-- Hundewiese: konkreter Vorgang, nicht allein deshalb Thema, weil er länger läuft.
-- Kiesgrund: bedeutender Vorgang muss auch dann entdeckt werden können, wenn er noch kein etablierter Suchbegriff ist.
-- Ausbau Autobahnkreuz München-Ost: möglicher prägender Treiber im Mobilitätsthema.
-- Radwegenetz: möglicher Gestaltungsbeitrag.
-- einzelne Sperrung/Umleitung: typischerweise Betroffenheit oder Auswirkung, nicht automatisch prägender Vorgang.
+- deterministische Regeln möglichst technisch absichern,
+- semantische KI-Aufgaben ausdrücklich dokumentieren,
+- Ein- und Ausgaben soweit sinnvoll strukturieren,
+- fachliche Entscheidungen mit Quellen und Gründen nachvollziehbar machen,
+- Modellwechsel gegen den festgelegten Regressionstestkorpus prüfen.
 
-## 4. Sprachliche Funktionen
+Die detaillierte Qualitäts- und Testlogik steht in `docs/KI-Qualitaet-und-Modellunabhaengigkeit.md`.
 
-FIB unterscheidet drei sprachliche Funktionen. Sie dürfen nicht vermischt werden.
+## 4. Sprache
 
-### 4.1 Benutzerführung – bürgernahe Sprache
+FIB unterscheidet drei Funktionen:
 
-Navigation, Hinweise, Übergänge, Erklärungen und Bedientexte folgen den bereits vereinbarten Regeln zur bürgernahen Sprache:
+1. **Benutzerführung:** bürgernah, konkret, verständlich und orientierend.
+2. **Sachinformation:** sachlich, präzise, quellengebunden; Tatsachen, Positionen und Bewertungen werden getrennt.
+3. **„Unsere Einordnung“:** klar als grüne politische Perspektive gekennzeichnet, argumentativ und nachvollziehbar.
 
-- allgemein verständlich,
-- konkret statt abstrakt,
-- möglichst aktive Verben,
-- Fachbegriffe nur soweit nötig und dann erklärt,
-- Kernaussage zuerst,
-- freundlich und direkt, ohne Werbesprache oder künstliche Vertraulichkeit.
+Barrierefreiheit ist keine konkurrierende Sprachregel. Maßgeblich ist `docs/Sprachleitfaden.md`.
 
-Barrierefreiheit ergänzt diese Regeln um zugängliche Struktur und Darstellung; sie führt keine konkurrierende Sprachregel ein.
-
-### 4.2 Sachinformation – sachlich und quellengebunden
-
-Sachinformationen werden eigenständig formuliert und müssen:
-
-- Tatsachen, Einschätzungen und politische Bewertungen trennen,
-- den belegten Sachstand verständlich verdichten,
-- Unsicherheiten und unterschiedliche Darstellungen sichtbar machen,
-- Fachbegriffe nur sachlich begründet verwenden,
-- keine parteipolitische Wertung in die Sachinformation einbauen,
-- keine journalistische Dramatisierung oder Werbesprache verwenden.
-
-Die öffentliche Aussage darf nicht stärker, spezifischer oder eindeutiger sein als ihre Quellenbasis.
-
-### 4.3 „Unsere Einordnung“ – klar gekennzeichnete politische Perspektive
-
-„Unsere Einordnung“ ist als grüne politische Bewertung erkennbar und wird von der Sachinformation getrennt.
-
-Sie soll:
-
-- sachlich begründen, warum ein Vorgang politisch relevant ist,
-- Zielkonflikte und berechtigte andere Interessen sichtbar lassen,
-- kommunale Handlungsmöglichkeiten benennen,
-- dokumentierte lokale Positionen von allgemeineren grünen Werten oder abgeleiteten Vorschlägen unterscheiden,
-- keine unbelegten Motive unterstellen,
-- Personen oder Gruppen nicht abwerten,
-- deutlich, aber gesichtswahrend formulieren.
-
-Eine übergeordnete grüne Position darf nicht als bereits bestehende Position der GRÜNEN Feldkirchen dargestellt werden, wenn dafür kein lokaler Beleg vorliegt.
-
-## 5. Recherchegrundsatz
+## 5. Recherche und Quellen
 
 Die Sachrecherche ist offen, breit und quellenkritisch. Die politische Herkunft von FIB begrenzt nicht die Auswahl sachlich geeigneter Quellen.
 
-Geeignete Quellen sind insbesondere:
+Quellenrollen werden unterschieden, insbesondere:
 
-- Gemeinde und Ratsinformationssystem,
-- Landkreis, Behörden, öffentliche Einrichtungen,
-- kommunale Unternehmen und Vorhabenträger,
-- regionale und lokale Presse,
-- Parteien und Wählervereinigungen,
-- Vereine, Verbände, Initiativen und Bürgerinitiativen,
-- Fach-, Rechts- und Wissenschaftsquellen,
-- dokumentierte Praxisbeispiele anderer Kommunen.
+- amtliche Quelle,
+- journalistische Quelle,
+- politische Positionsquelle,
+- Verein/Verband/Initiative,
+- Fach-/Rechts-/Wissenschaftsquelle,
+- Praxisbeispiel,
+- interne redaktionelle Quelle.
+
+Nicht öffentlich belegbare Informationen aus internen Quellen dürfen nicht ungeprüft als öffentliche Tatsachen erscheinen.
 
 Aus dem Nichtfinden einer Information darf nicht auf ihr Nichtvorhandensein geschlossen werden.
 
-## 6. Quellenrollen und Verifikation
+Die operative Beobachtungs- und Entdeckungslogik steht in `docs/Recherche-und-Quellenmonitor.md`.
 
-Quellen werden nach ihrer Funktion behandelt.
+## 6. Feldkirchen-Bezug und Aufnahmeprüfung
 
-### 6.1 Amtliche Quellen
-
-Amtliche Unterlagen sind bevorzugte Primärquellen für:
-
-- Tagesordnung und Sitzungstermin,
-- Beschlussvorlage,
-- Beschluss oder Ergebnis,
-- Niederschrift,
-- Planungs- und Verfahrensstand,
-- amtlich veröffentlichte Daten.
-
-Das Veröffentlichungsdatum eines Dokuments ist nicht automatisch das Ereignis-, Beratungs- oder Entscheidungsdatum.
-
-### 6.2 Presse
-
-Journalistische Berichterstattung kann Tatsachen, Kontext, Reaktionen und öffentliche Debatten erschließen. Wo eine amtliche Primärquelle vorhanden ist, soll sie für formale Entscheidungsstände bevorzugt werden.
-
-### 6.3 Parteien und Wählervereinigungen
-
-Parteiquellen sind grundsätzlich Positionsquellen. Konkrete Anträge, Initiativen, Änderungsvorschläge und Reaktionen auf tatsächliche örtliche Vorgänge sind relevant. Überprüfbare Tatsachen werden möglichst unabhängig oder amtlich verifiziert.
-
-### 6.4 Vereine, Verbände und Initiativen
-
-Relevant sind Aktivitäten mit kommunaler Bedeutung, z. B. Projekte, Infrastruktur, Beteiligung, Natur- und Verkehrsfragen, Förderungen oder Stellungnahmen zu konkreten Vorhaben.
-
-Reguläres Vereinsleben erzeugt nicht automatisch FIB-Inhalte.
-
-### 6.5 Bürgerinitiativen
-
-Bei substanziellen Aktivitäten, Vorwürfen, Forderungen oder Verfahrensschritten wird gezielt nach öffentlichen Reaktionen und Gegenpositionen gesucht.
-
-Das Anliegen einer Bürgerinitiative ist nicht automatisch ein Thema. Zunächst ist zu prüfen, ob ein **Vorgang** vorliegt und ob darüber hinaus ein übergeordnetes Thema mit eigenem Erklärungsgewinn besteht.
-
-## 7. Entdeckungslogik
-
-FIB verbindet zwei Recherchewege.
-
-### 7.1 Themen- und vorgangsbezogene Recherche
-
-Bekannte Themen und Vorgänge erzeugen gezielte Suchachsen, Quellenbeobachtung und Rechercheaufträge.
-
-### 7.2 Themenunabhängige Entdeckung
-
-Zusätzlich werden relevante lokale und regionale Quellen unabhängig von bereits bekannten Themenbegriffen ausgewertet.
-
-Dazu gehören insbesondere:
-
-- vollständige Prüfung definierter Pflichtquellen,
-- ortsbezogene Recherche,
-- periodische rückblickende Recherche,
-- Analyse von Sammelartikeln und Übersichten,
-- Prüfung bekannter Bereichs-, Nachrichten- und Dokumentseiten auf neue oder geänderte Inhalte.
-
-Der Fall „Kiesgrund“ ist Referenzfall für diese Regel.
-
-## 8. Beitrag / Meldung erkennen
-
-Ein Beitrag steht für ein eigenständiges berichtenswertes Ereignis.
-
-Entscheidungsschritte:
-
-1. **Ist es ein neues Ereignis?**
-   - Nein → bestehenden Beitrag aktualisieren.
-   - Ja → Schritt 2.
-2. **Hat das Ereignis eigenen Nachrichtenwert für FIB?**
-   - Ja → neuen Beitrag vorschlagen.
-   - Nein → gegebenenfalls Vorgang, Sitzung oder Themenstand fortschreiben.
-
-Eine zusätzliche Quelle zum selben Ereignis erzeugt keinen neuen Beitrag, wenn sie keinen neuen relevanten Sachstand enthält.
-
-## 9. Feldkirchen-Bezug und Aufnahmeprüfung
-
-Vor Aufnahme einer Fundstelle prüft die KI:
+Vor Aufnahme einer Fundstelle wird geprüft:
 
 1. Gibt es einen direkten Feldkirchen-Bezug?
-2. Falls nein: Gibt es einen konkreten regionalen, infrastrukturellen, rechtlichen, fachlichen oder zukünftigen Erklärungsbezug?
-3. Welche lokale Fragestellung wird dadurch verständlicher?
+2. Falls nein: Gibt es einen konkreten regionalen, infrastrukturellen, rechtlichen, fachlichen oder möglichen zukünftigen Bezug?
+3. Welche Feldkirchner Fragestellung wird dadurch verständlicher?
 4. Ist der Zusammenhang belastbar oder nur thematische Ähnlichkeit?
 
-Externe Inhalte ohne konkreten Erkenntnis- oder Handlungsbezug werden nicht aufgenommen.
+Externe Inhalte ohne konkreten Erkenntnis-, Handlungs- oder Lernbezug werden nicht aufgenommen.
 
-## 10. Vorgänge
+## 7. Ereignis und Meldung
 
-Ein Vorgang bündelt mehrere Ereignisse desselben konkreten Sachverhalts.
+Eine Meldung steht für ein **eigenständiges berichtenswertes Ereignis**.
 
-Bei jeder neuen Meldung prüft die KI:
+Entscheidung:
 
-- gehört sie zu einem bestehenden Vorgang,
-- verändert sie dessen aktuellen Sachstand,
-- entstehen neue Entscheidungen, offene Punkte oder nächste belegte Schritte,
-- ändern sich Zuständigkeiten oder beteiligte Akteure,
-- muss ein neuer Vorgang vorgeschlagen werden.
+1. Ist es ein neues Ereignis?
+   - nein → bestehende Meldung aktualisieren,
+   - ja → Schritt 2.
+2. Hat es eigenen Nachrichtenwert für FIB?
+   - ja → neue Meldung vorschlagen,
+   - nein → gegebenenfalls nur Vorgang, Thema oder Sitzung fortschreiben.
 
-Die KI schlägt Fortschreibungen vor; redaktionell relevante Änderungen werden bestätigt.
+Eine zusätzliche Quelle allein erzeugt keine neue Meldung.
 
-Chronologie, aktueller Stand sowie Status wie aktiv, ruhend oder abgeschlossen gehören grundsätzlich auf Vorgangsebene.
+Ereignis-/Ursprungsdatum und fachliches Aktualisierungsdatum werden getrennt behandelt. Technische Änderungen erzeugen keine fachliche Neuigkeit.
 
-## 11. Themen
+## 8. Vorgänge
 
-Die verbindliche Detailregel steht in `docs/Themen-und-Vorgangslogik.md`.
+Ein Vorgang bündelt Ereignisse desselben konkreten Sachverhalts und besitzt einen eigenen aktuellen Stand.
 
-Kurzfassung:
+Bei neuer Information wird geprüft:
 
-- Themen entstehen bottom-up aus mehreren unterschiedlichen Vorgängen, Ereignissen, Perspektiven oder Rahmenbedingungen.
-- Ein Thema benötigt eine übergeordnete Leitfrage und Erklärungsgewinn.
-- Die KI arbeitet bei der Kandidatenerkennung bewusst sensitiv.
-- Redaktionelle Ergänzungen oder fehlende Aspekte erzeugen Prüf- und Rechercheaufträge.
-- Eine bestätigte Themendefinition bleibt veränderbar, wird aber nicht autonom von der KI umgeschrieben.
-- Änderungen werden versioniert und redaktionell bestätigt.
+- Zugehörigkeit zu bestehendem oder neuem Vorgang,
+- Änderung des aktuellen Stands,
+- wichtige Entscheidungen,
+- offene Punkte,
+- nächste belegte Schritte,
+- Zuständigkeiten/Akteure,
+- Beziehungen zu Themen.
 
-### 11.1 Wirkungsrollen
+Chronologie und Status wie aktiv, ruhend oder abgeschlossen gehören grundsätzlich auf Vorgangsebene.
 
-Bei jeder Beziehung eines Vorgangs oder Ereignisses zu einem Thema prüft die KI dessen fachliche Rolle, insbesondere:
+## 9. Themen
+
+Ein Thema ist eine übergeordnete Fragestellung mit zusätzlichem Erklärungsgewinn. Ein länger laufender Vorgang ist nicht allein deshalb ein Thema.
+
+Themen werden bottom-up und mit hoher Sensitivität vorgeschlagen. Redaktionelle Ergänzungen gelten zunächst als Prüf- und Rechercheauftrag.
+
+Bei Beziehungen eines Vorgangs zu einem Thema wird dessen Wirkungsrolle geprüft, insbesondere:
 
 - Treiber / prägender Vorgang,
 - Umsetzung / Gestaltungsbeitrag,
@@ -249,200 +153,149 @@ Bei jeder Beziehung eines Vorgangs oder Ereignisses zu einem Thema prüft die KI
 - Rahmenbedingung / Kontext,
 - Indikator / Beobachtung.
 
-Ähnliche Sachgebiete bedeuten nicht automatisch gleiche Bedeutung für das Thema.
+Eine bestätigte Themendefinition wird nicht autonom verändert. Wesentliche Änderungen werden versioniert und redaktionell bestätigt.
 
-## 12. Sitzungen und TOPs
+Detailregeln: `docs/Themen-und-Vorgangslogik.md`.
 
-Für einen Recherchezeitraum werden alle relevanten öffentlich dokumentierten Sitzungen ermittelt und die öffentlichen Tagesordnungen vollständig geprüft.
+## 10. Sitzungen und TOPs
 
-Verbindliche Regeln:
+Für relevante öffentliche Gremien werden Sitzungen und Tagesordnungen vollständig geprüft.
 
-- Vorlage ist nicht gleich Beschluss.
-- Ein Ergebnis wird nur behauptet, wenn ein belastbarer öffentlicher Nachweis vorliegt.
-- Die konkrete Sitzungsseite ist die bevorzugte Quelle für TOP und Beratungsbezug.
-- Direkte Vorlagenlinks werden nur verwendet, wenn sie erreichbar sind und eindeutig zum bezeichneten Dokument führen.
-- Niederschriftsgenehmigung und öffentliche Verfügbarkeit werden getrennt geführt.
-- Wenn eine lesbare Niederschrift vorliegt, werden Beschlüsse TOP-bezogen ausgewertet und redaktionell bestätigt.
+Verbindlich:
 
-## 13. „Mehr wissen?“
+- Vorlage ist nicht Beschluss,
+- Ergebnis nur bei belastbarem öffentlichem Nachweis,
+- konkrete Sitzungsseite ist bevorzugte Quelle für Beratungsbezug,
+- Vorlagenlinks nur bei eindeutiger Zuordnung und erreichbarem Ziel,
+- Genehmigung und öffentliche Verfügbarkeit der Niederschrift getrennt führen,
+- Beschlüsse aus lesbaren Niederschriften TOP-bezogen auswerten.
 
-Die KI erzeugt kontextgebundene Vertiefungsfragen mit echtem Erkenntniswert.
+Veröffentlichungs-/Freigabedatum eines Dokuments darf nicht ohne geeigneten Beleg als Beratungs- oder Entscheidungsdatum verwendet werden.
 
-### Meldung
+## 11. „Mehr wissen?“
 
-Schwerpunkt: konkretes Ereignis verstehen.
+„Mehr wissen?“ ist kontextgebundene Vertiefung, kein allgemeiner Chat.
 
-### Vorgang
+- Meldung: Ereignis verstehen,
+- Vorgang: Entwicklung verstehen,
+- Thema: Zusammenhänge verstehen.
 
-Schwerpunkt: Verlauf, Entscheidungen, Zuständigkeiten und offene Punkte verstehen.
+Fragen müssen gegenüber dem sichtbaren Inhalt einen neuen Erkenntnishorizont eröffnen. Antworten sind quellengebunden und kennzeichnen Unsicherheit.
 
-### Thema
+Bei fachlichen Änderungen wird geprüft, ob Fragen, Antworten oder Quellen aktualisiert werden müssen.
 
-Schwerpunkt: Zusammenhänge, Perspektiven, Rahmenbedingungen, Wissenslücken und mögliche zukünftige Bedeutung verstehen.
+Im MVP werden Fragen und Antworten vorbereitet, gespeichert und redaktionell geprüft; freie Besucher-Livefragen sind spätere Ausbaustufe.
 
-Antworten sind quellengebunden. Mehrere geeignete Quellen sollen genutzt werden, wenn sie das Verständnis verbessern.
+Detailregeln: `docs/Mehr-wissen.md`.
 
-Bei neuen Entwicklungen prüft die KI:
+## 12. „Unsere Einordnung“
 
-- entstehen neue sinnvolle Fragen,
-- sind alte Fragen überholt,
-- müssen Antworten aktualisiert werden,
-- sind neue Quellen verfügbar.
+Die interne Arbeitslogik umfasst:
 
-## 14. „Unsere Einordnung“
+1. **Sachproblem / analytischer Befund** – Folgen, Zielkonflikte, Unsicherheiten und offene Fragen,
+2. **politische Konsequenz** – Handlungs- oder Prüfbedarf und kommunale Gestaltungsmöglichkeiten,
+3. **grüner Blickwinkel** – Bewertung anhand belegbarer Werte, Ziele und Positionen.
 
-Die interne Arbeitslogik umfasst drei Ebenen:
+Die politischen Maßstäbe stehen in `docs/Gruene-Werte-und-politische-Ziele.md`.
 
-1. **Sachproblem / analytischer Befund** – Folgen, Zielkonflikte, Unsicherheiten, offene Fragen.
-2. **Politische Konsequenz** – Handlungsbedarf, Prüfbedarf oder kommunale Gestaltungsmöglichkeiten.
-3. **Grüner Blickwinkel** – Bewertung anhand belegbarer grüner Werte, Ziele und Positionen.
+Dabei gilt:
 
-Die drei Ebenen müssen im veröffentlichten Text nicht als Überschriften erscheinen.
+- dokumentierte lokale Positionen korrekt als solche kennzeichnen,
+- Positionen höherer Ebenen nicht als lokale Position ausgeben,
+- redaktionelle Ableitungen als Ableitungen behandeln,
+- keine unbelegten Motive unterstellen,
+- Personen oder Gruppen nicht abwerten,
+- Zielkonflikte und relevante Gegenargumente nicht verschweigen.
 
-Die KI prüft nur sachlich einschlägige Analyseachsen und erfindet keine Wirkungen, Zuständigkeiten oder Voraussetzungen.
+## 13. Tatsachennähe und Fakten-Rückprüfung
 
-Bei größeren Vorgängen wird zusätzlich geprüft, ob wichtige räumliche, planerische, organisatorische oder Ursache-Wirkungs-Zusammenhänge fehlen.
+Arbeitsfolge:
 
-## 15. Interne redaktionelle Wissensbasis
-
-Interne, nicht öffentliche Quellen dürfen Recherche, Hypothesenbildung, Prüfaufträge und politische Einordnung unterstützen.
-
-Nicht öffentlich belegbare Tatsachen aus internen Quellen dürfen nicht als öffentliche Sachinformation ausgegeben werden.
-
-Bei internen grünen Unterlagen wird unterschieden zwischen:
-
-- beschlossener/veröffentlichter lokaler Position,
-- formalem Positionskandidaten,
-- internem Entwurf oder Arbeitsstand,
-- allgemeiner Fach- oder Hintergrundquelle.
-
-Die konkrete technische Ablage interner Quellen wird im Echtsystem neu festgelegt; alte Demonstrator-Pfade sind nicht verbindlich für die Zielarchitektur.
-
-## 16. Faktenbasis und Rückprüfung
-
-Öffentliche Sachinformationen entstehen in getrennten Schritten:
-
-1. **Recherche**
-2. **Faktenbasis** – belegte Tatsachen, zugeschriebene Aussagen, Unsicherheiten, Gegenpositionen
-3. **Redaktioneller Entwurf**
-4. **Fakten-Rückprüfung**
-5. **Freigabe / Ausgabe**
+> **Recherche → Faktenbasis → redaktioneller Entwurf → Fakten-Rückprüfung → Freigabevorschlag**
 
 Vor Freigabe wird der Text in seine wesentlichen Tatsachenbehauptungen zerlegt. Jede Behauptung muss durch die dokumentierte Fakten- und Quellenbasis gedeckt sein.
 
-Besondere Aufmerksamkeit gilt:
+Besonders fehleranfällig sind:
 
 - Namen und Funktionen,
-- Zahlen und Geldbeträgen,
+- Zahlen und Geldbeträge,
 - Daten,
 - Zuständigkeiten,
-- Abstimmungsergebnissen,
-- Entscheidungsständen,
-- Ursachen und Wirkungen,
-- rechtlichen Bewertungen,
-- Formulierungen wie „beschlossen“, „genehmigt“, „abgelehnt“, „wegen“, „deshalb“, „erstmals“.
+- Abstimmungsergebnisse,
+- Entscheidungsstände,
+- Ursache-Wirkungs-Aussagen,
+- rechtliche Bewertungen,
+- Wörter wie „beschlossen“, „genehmigt“, „abgelehnt“, „wegen“ oder „deshalb“.
 
-## 17. Aktualisierungen
+Nicht ausreichend belegte Aussagen werden belegt, abgeschwächt, zugeschrieben oder entfernt.
 
-Die KI unterscheidet:
+## 14. Persistenz und Wiederverwendung
 
-- technische Änderung,
-- redaktionelle Aktualisierung,
-- fachlich relevante Aktualisierung.
+Verifizierte Rechercheergebnisse und freigegebene redaktionelle Inhalte werden strukturiert und persistent gespeichert.
 
-Nur fachlich relevante Änderungen dürfen Sortierung, „Neu seit letztem Besuch“, Push oder fachliches Aktualisierungsdatum auslösen.
+Neue Läufe arbeiten inkrementell. Bereits verifizierte Inhalte werden nur bei sachlichem Anlass erneut geprüft, insbesondere bei:
 
-Bei fachlicher Aktualisierung eines bestehenden Beitrags wird der neue Informationswert ausdrücklich formuliert. Frühere wesentliche Aktualisierungen bleiben nachvollziehbar.
+- neuer Quelle,
+- geändertem Dokument,
+- neuem Sachstand,
+- Widerspruch,
+- fachlicher Aktualisierung,
+- Regeländerung.
 
-## 18. Strukturierte KI-Ausgaben
+Die technische Ausgabe ist nicht selbst die fachliche Datenhaltung.
 
-Für die spätere technische Umsetzung sollen KI-Aufgaben möglichst strukturierte Ergebnisse liefern.
+## 15. Redaktionelle Bestätigung
 
-Beispiele für strukturierte Felder:
+Fachlich besonders wirksame Vorschläge werden ausdrücklich redaktionell bestätigt. Dazu gehören insbesondere:
 
-- Fundstelle / Quelle,
-- Ereignisdatum,
-- Quellenrolle,
-- Feldkirchen-Bezug,
-- Ereignis oder Aktualisierung,
-- Beitragsentwurf,
-- Vorgangszuordnung,
-- aktueller Vorgangsstand,
-- Themenkandidat,
-- Leitfrage,
+- Meldung ↔ Vorgang,
+- Vorgang ↔ Thema,
 - Wirkungsrolle,
-- Rechercheauftrag,
-- Wissenslücke,
-- Freigabebedarf,
-- Quellenbelege.
-
-Freitext bleibt dort zulässig, wo redaktionelle Darstellung oder Begründung erforderlich ist.
-
-## 19. Explizite redaktionelle Bestätigung
-
-Mindestens folgende Entscheidungen sind Kandidaten für eine ausdrückliche redaktionelle Bestätigung:
-
 - neues Ereignis oder Aktualisierung,
-- Meldung ↔ Vorgang ↔ Thema,
-- neuer Vorgang,
-- aktueller Vorgangsstand,
-- offene Punkte und nächste belegte Schritte,
-- Abschluss eines Vorgangs,
-- neuer Themenkandidat / bestätigte Themendefinition,
-- wesentliche Änderung einer Themendefinition,
-- Wirkungsrolle,
 - fachliche Aktualisierungsrelevanz,
-- „Unsere Einordnung“.
+- Vorgangsstatus und aktueller Stand,
+- wichtige Entscheidungen,
+- offene Punkte und nächste belegte Schritte,
+- Themendefinition und wesentliche Änderungen,
+- „Unsere Einordnung“,
+- Abschluss eines Vorgangs.
 
-Welche Felder im MVP tatsächlich einzeln bestätigt werden müssen, wird über schlanke Admin-Stammdaten konfiguriert; keine komplexe Regel-Engine ist Voraussetzung.
+Die konkrete Workflow- und Rechteausgestaltung folgt in G6.
 
-## 20. Qualitätsprüfung vor Freigabe
+## 16. Mindestprüfung vor Veröffentlichung
 
-Vor Veröffentlichung prüft die KI mindestens:
+Vor Veröffentlichung wird mindestens geprüft:
 
-- Ist der Feldkirchen-Bezug ausreichend belegt?
-- Ist das richtige Ereignisdatum gewählt?
-- Handelt es sich um neues Ereignis oder Aktualisierung?
-- Sind Quellenrollen korrekt unterschieden?
-- Sind Tatsachen und Positionen sauber getrennt?
-- Ist eine Meldung dem richtigen Vorgang zugeordnet?
-- Ist ein vermeintliches Thema tatsächlich mehr als ein einzelner Vorgang?
-- Wurde die Wirkungsrolle plausibel bestimmt?
-- Sind Sitzung, TOP, Vorlage und Beschluss korrekt unterschieden?
-- Sind Unsicherheiten und Wissenslücken sichtbar?
-- Ist die Sachinformation vollständig genug, aber nicht spekulativ?
-- Ist „Unsere Einordnung“ klar getrennt und fachlich hergeleitet?
-- Wurden fremde Inhalte nicht unzulässig reproduziert?
-- Sind relevante Quellen konkret und erreichbar?
-- Sind dauerhafte Entscheidungen in der kanonischen Echtsystem-Dokumentation abgebildet?
+- Feldkirchen-/Kontextbezug,
+- korrekte Ereignis- und Datumslogik,
+- Quellen- und Aussageabdeckung,
+- Vorlage versus Beschluss,
+- korrekte Meldungs-/Vorgangs-/Themenzuordnung,
+- Unsicherheiten und Quellenlücken,
+- Trennung von Sachinformation und Einordnung,
+- Herkunft politischer Positionen,
+- sprachliche Funktion,
+- Aktualität betroffener „Mehr wissen?“-Inhalte,
+- Rechte bei Bildern und fremden Inhalten,
+- redaktioneller Freigabestatus.
 
-## 21. Regression und Modellwechsel
+Fremde Texte, Fotos, Grafiken oder Screenshots werden nur im rechtlich zulässigen und erforderlichen Umfang genutzt; Originalquellen werden verlinkt.
 
-Ein Modellwechsel wird nicht allein nach allgemeiner Modellqualität entschieden.
+## 17. Abgrenzung zu Technik und Betrieb
 
-Zu prüfen sind mindestens:
+Dieser Leitfaden beschreibt **fachliche KI-Arbeitsregeln**.
 
-- korrekte Ereignis-/Aktualisierungsentscheidung,
-- Zuordnung zu Vorgängen,
-- Unterscheidung Vorgang/Thema,
-- Themenentdeckung bei unbekannten Begriffen,
-- Wirkungsrollen,
-- Quellen- und Faktennähe,
-- Umgang mit Unsicherheit,
-- Qualität von „Mehr wissen?“,
-- Trennung von Sachinformation und politischer Einordnung,
-- Einhaltung der FIB-Sprachregeln.
+Nicht hier verbindlich geregelt werden:
 
-Abweichungen werden dokumentiert. Ein Modell wird erst produktiv eingesetzt, wenn die festgelegten Referenzfälle ausreichend zuverlässig bestanden werden.
-
-## 22. Verhältnis zum Demonstrator
-
-Die frühere Demonstrator-Dokumentation bleibt historische Referenz. Dieser Leitfaden ist die kanonische Fassung für das Echtsystem.
-
-Demonstrator-spezifische Regeln wie manuelle Update-Kommandos, feste Bibliothekspfade oder die statische HTML-Erzeugung sind keine verbindlichen Regeln des Echtsystems, sofern sie nicht ausdrücklich in die neue Architektur übernommen werden.
+- Datenbankschema → G3,
+- Datenschutz/Sicherheit → G4,
+- Provider/Modell/technische KI-Abstraktion → G5,
+- Rollen-/Freigabetechnik → G6,
+- Monitoring/Kostenbetrieb → G7 und `docs/KI-Betrieb-und-Kosten.md`.
 
 ## Änderungshistorie
 
 | Version | Datum | Änderung |
 |---|---|---|
-| 1.0 | 30.09.2026 | KI-Regeln aus Demonstrator- und Bibliotheksfassungen in das Echtsystem überführt; Terminologie auf FIB/Meldung/Vorgang/Thema aktualisiert; Themen-/Vorgangslogik, Wirkungsrollen, Mehr-wissen-Logik, strukturierte KI-Ausgaben, redaktionelle Bestätigung und modellunabhängige Regressionstests konsolidiert; Demonstrator-spezifische Betriebsdetails entfernt. |
+| 1.1 | 30.09.2026 | Nach Dokumentationsübernahme auf kanonische Echtsystem-Primärquellen umgestellt; Detailzuständigkeiten bereinigt; Regeln für Meldung/Vorgang/Thema, Mehr wissen, Fakten-Rückprüfung und redaktionelle Bestätigung konsolidiert. |
+| 1.0 | 30.09.2026 | KI-Leitfaden aus Demonstrator-Grundlagen als Echtsystem-Fassung angelegt. |
