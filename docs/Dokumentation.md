@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 1.7 | 30.09.2026 | Josef Walter – erstellt mit KI-Unterstützung |
+| 1.8 | 01.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
 
 ## 1. Zweck
 
@@ -49,6 +49,7 @@ Für FIB gelten insbesondere:
 | Recherche / Quellenmonitor | `docs/Recherche-und-Quellenmonitor.md` | vorhanden |
 | „Mehr wissen?“ | `docs/Mehr-wissen.md` | vorhanden |
 | UX / Informationsarchitektur / Benutzerführung | `docs/UX-und-Informationsarchitektur.md` | in Arbeit – fachlich weitgehend konsolidiert |
+| Visuelle Identität / Logo / Bildsprache / UI-Stil | `docs/Visuelle-Identitaet-und-Bildkonzept.md` | in Arbeit – Grundrichtung festgelegt |
 | Marketing / Kommunikation | `docs/Marketing-und-Kommunikation.md` | vorhanden |
 | SEO / Auffindbarkeit | `docs/SEO-und-Auffindbarkeit.md` | vorhanden |
 | KI-Betrieb / Kosten | `docs/KI-Betrieb-und-Kosten.md` | vorhanden |
@@ -62,7 +63,29 @@ Für FIB gelten insbesondere:
 | Architekturentscheidungen | `docs/decisions/` | bei Bedarf |
 | Arbeitsregeln für KI-/Entwicklungsarbeit | `AGENTS.md` | vorhanden |
 
-## 5. Dokumentationshoheit gegenüber dem Demonstrator
+## 5. Abgrenzung UX und visuelle Identität
+
+`docs/UX-und-Informationsarchitektur.md` ist die Primärquelle für:
+
+- Informationsarchitektur,
+- Navigation und Funktionslogik,
+- Seitenstruktur,
+- responsive und barrierearme Bedienung.
+
+`docs/Visuelle-Identitaet-und-Bildkonzept.md` ist die Primärquelle für:
+
+- visuelle Grundhaltung,
+- Logo und Bildmarke,
+- Banner,
+- Farbrollen,
+- Bildsprache,
+- PWA-Icon,
+- Icon-Stil,
+- konkrete gestalterische Anwendung der UX-Struktur.
+
+Visuelle Mockups dürfen die fachliche UX-Struktur nicht eigenständig verändern.
+
+## 6. Dokumentationshoheit gegenüber dem Demonstrator
 
 > **Der Demonstrator ist historische, fachliche und visuelle Referenz. Die weitere fachliche, redaktionelle, UX-bezogene und technische Entwicklung von FIB wird ausschließlich im Repository `PustefixReisen/fib-echtsystem` dokumentiert.**
 
@@ -75,7 +98,7 @@ Daraus folgt:
 
 Die detaillierte Zuordnung und Abschlussprüfung stehen in `docs/Dokumentationsuebernahme-Demonstrator.md`.
 
-## 6. Stand der Übernahme
+## 7. Stand der Übernahme
 
 Die Dokumentationsübernahme ist **abgeschlossen**.
 
@@ -98,9 +121,9 @@ Nicht als eigene Echtsystem-Dokumente übernommen wurden Demonstrator-Dokumente,
 
 Die Querverweis-, Terminologie- und Konsistenzprüfung wurde durchgeführt. Historische Nennungen alter Begriffe in Dateinamen, Repository-Namen und Änderungshistorien bleiben als Herkunftsnachweis zulässig.
 
-Das noch offene visuelle Identitäts- und Bildkonzept ist eine **neue G2-Entscheidung**. Falls dafür ein eigenes dauerhaftes Bild-/Rechtedokument benötigt wird, wird es als Echtsystem-Dokument neu angelegt und ist keine offene Alt-Dokumentationsübernahme.
+Das visuelle Identitäts- und Bildkonzept ist eine **neue G2-Primärquelle des Echtsystems** und keine übernommene Demonstrator-Dokumentation.
 
-## 7. Pflegepflicht
+## 8. Pflegepflicht
 
 Bei jeder verbindlichen fachlichen, technischen, architektonischen, Sicherheits-, Datenmodell-, Prozess- oder Designentscheidung wird geprüft:
 
@@ -112,7 +135,7 @@ Bei jeder verbindlichen fachlichen, technischen, architektonischen, Sicherheits-
 
 Bei vorhandenem GitHub-Zugriff erfolgt die Dokumentationspflege unmittelbar im Projekt.
 
-## 8. Dokumentationsstruktur
+## 9. Dokumentationsstruktur
 
 Für dauerhaft gepflegte Dokumente gilt grundsätzlich:
 
@@ -125,6 +148,7 @@ Für dauerhaft gepflegte Dokumente gilt grundsätzlich:
 
 | Version | Datum | Änderung |
 |---|---|---|
+| 1.8 | 01.10.2026 | `Visuelle-Identitaet-und-Bildkonzept.md` als eigene Primärquelle aufgenommen; Abgrenzung zu UX dokumentiert. |
 | 1.7 | 30.09.2026 | Dokumentationsübernahme nach Querverweis-, Terminologie- und Konsistenzprüfung als abgeschlossen markiert; visuelles Konzept als neue G2-Entscheidung abgegrenzt. |
 | 1.6 | 30.09.2026 | Frontendregeln in UX v2.5 integriert; Werte- und Sprachgrundlagen ins Echtsystem übernommen. |
 | 1.5 | 30.09.2026 | Recherche, Mehr wissen, KI-Qualität, Marketing, SEO und KI-Betrieb übernommen; Übernahmematrix aufgenommen. |
