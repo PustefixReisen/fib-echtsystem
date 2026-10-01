@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 2.0 | 01.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
+| 2.1 | 01.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
 
 ## Statusmodell
 
@@ -24,7 +24,7 @@ Es gelten die zentralen Status aus `PustefixReisen/pustivo/docs/governance/Dokum
 |---|---|---|
 | Projektbasis / Repository | **Abgeschlossen** | separates Repository und initiale Dokumentationsstruktur vorhanden |
 | G1 Produktumfang / MVP | **Abgeschlossen** | MVP, unmittelbare Ausbaustufe, spätere Erweiterungen, Nicht-Ziele und Aufwandstreiber verbindlich festgelegt |
-| G2 UX / Informationsarchitektur / Fachfunktionen | **In Arbeit** | UX v2.6 und visuelle Identität konsolidiert; öffentliche Navigation, GRÜNEN-Rücksprung und gestalterische Grundrichtung geklärt; Bannertext liegt als Arbeitsfassung vor; nach dessen Freigabe folgt nur noch die G2-Abschlussprüfung |
+| G2 UX / Informationsarchitektur / Fachfunktionen | **In Arbeit** | UX und visuelle Identität sind weitgehend finalisiert; Logo, Bannerlogik, Claim, Navigation, GRÜNEN-Rücksprung und responsive Grundregeln sind festgelegt; Assetbestand wird bereinigt, danach folgt die G2-Abschlussprüfung |
 | Dokumentationsübernahme Demonstrator → Echtsystem | **Abgeschlossen** | alle identifizierten weiterhin erforderlichen Grundlagen übernommen oder integriert; Querverweis-, Terminologie- und Konsistenzprüfung durchgeführt |
 | G3 Datenanforderungen / Datenmodell | **Geplant** | aus Fach- und UX-Konzept ableiten; eigenständige Entitäten für Meldung/Vorgang/Thema, n:m-Beziehungen, Wirkungsrollen, Versionierung, Rechercheaufträge, Such-/PWA-/Mehr-wissen-Daten berücksichtigen |
 | G4 Schutzbedarf / Datenschutz / Offline | **Geplant** | Schutzklassen und Betriebsanforderungen festlegen |
@@ -39,7 +39,7 @@ Es gelten die zentralen Status aus `PustefixReisen/pustivo/docs/governance/Dokum
 
 ## Nächster konkreter Schritt
 
-**G2 – Banner-/Landingpage-Text inhaltlich freigeben; danach abschließende Widerspruchs- und Vollständigkeitsprüfung und Übergang zu G3.**
+**G2 abschließen:** Markenassets und Dokumentation konsolidieren, anschließend Widerspruchs- und Vollständigkeitsprüfung durchführen. Danach Übergang zu **G3 – Datenanforderungen / Datenmodell**.
 
 ## Fachlich/UX bereits geklärt
 
@@ -55,29 +55,74 @@ Es gelten die zentralen Status aus `PustefixReisen/pustivo/docs/governance/Dokum
 - „Mehr wissen?“ unterscheidet Ereignis-, Vorgangs- und Themenvertiefung.
 - PWA umfasst lokalen Neuigkeitsstatus, optionale Push-Abonnements und ergänzende Badge-Unterstützung.
 - Teilen, Drucken, Social Preview und zielgenaue Update-Links sind fachlich geklärt.
-- Transparenz/Über FIB/Disclaimer sind geklärt.
+- Transparenz, „Über Feldkirchen im Blick“ und Disclaimer sind geklärt.
 - Mobile First und **WCAG 2.2 AA** sind technisches Ziel.
 - Barrierefreiheit ergänzt die bestehende bürgernahe FIB-Sprache und ersetzt sie nicht.
-- visuelle Grundhaltung: **klar, ruhig, bürgernah, sachlich, lokal verankert, modern und erkennbar grün geprägt**.
-- Sonnenblumenblätter sind der gestalterische rote Faden.
-- Logo basiert auf Rathaus, Kirche, Maibaum und abstrahierten Sonnenblumenblättern; horizontale Variante bevorzugt.
-- Banner ist tonal/monochrom reduziert und verwendet Rathaus + Kirche, aber keinen Maibaum.
-- Blau ist funktionale Akzentfarbe, keine dominante Marken-/Bannerfarbe.
-- „Neues“ nutzt die Halbkreis-Strahlen; „Im Blick“ das Auge.
-- FIB bietet einen klaren Rücksprung **„Zur Website der GRÜNEN in Feldkirchen“** und bleibt unabhängig vom Einstieg dieselbe Anwendung.
-- visuelle Positionierung gegenüber Kommunikations-/Service-Apps und Beteiligungsplattformen ist dokumentiert: FIB verbindet aktuelle lokale Information mit Wissensstruktur und Zusammenhangserklärung.
 
-## Banner-/Landingpage – Arbeitsfassung
+## Visuelle Identität – geklärt
 
-Zur Freigabe vorgeschlagen:
+Verbindliche Primärquelle: `docs/Visuelle-Identitaet-und-Bildkonzept.md`.
 
-> **Was in Feldkirchen passiert – und was dahintersteckt.**
->
-> FIB bündelt relevante Informationen, erklärt Zusammenhänge und macht Entwicklungen nachvollziehbar.
->
-> **Informieren · Verstehen · Mitgestalten**
+Festgelegt sind insbesondere:
 
-Die Arbeitsfassung ist in `docs/Visuelle-Identitaet-und-Bildkonzept.md` dokumentiert und wird erst nach ausdrücklicher inhaltlicher Freigabe verbindlich.
+- visuelle Grundhaltung: **klar, ruhig, bürgernah, sachlich, lokal verankert, modern und erkennbar grün geprägt**;
+- drei gelbe Sonnenblumenblätter als wiederkehrender grafischer roter Faden;
+- Bildmarke mit Rathaus Feldkirchen, Kirche, Bäumen/Bodenlinie und Sonnenblumenblättern; **kein Maibaum** in der finalen Bildmarke;
+- Rathausdarstellung mit charakteristischem Pultdach, Ziegelfassade und vier Fahnenmasten;
+- Primärlogo horizontal, Kompaktlogo, monochrome Variante und PWA/Icon-Anwendung;
+- finaler Claim **„Mehr Überblick. Besser verstehen.“**;
+- ausführlicher Tablet-/Desktop-Erklärungstext und kompakte Mobile-Fassung;
+- Tablet/Desktop: responsiver Zwei-Spalten-Banner mit echtem Text links und separater Illustration rechts;
+- Smartphone/PWA: echte Textbestandteile mit hellem halbtransparentem Overlay über der tiefer positionierten Illustration;
+- finale Bannerillustration als eigenes Produktionsasset;
+- Blau nur als funktionale Akzentfarbe, nicht als dominante Markenfläche;
+- Hauptnavigation mit **Neues** als fünf gelben strahlen-/blattartigen Formen im Bogen, **Im Blick** als Auge, **Sitzungen** als Gremium und **Suche** als Lupe;
+- kompakte Leiste **„Zur Website der GRÜNEN in Feldkirchen“** direkt unter dem mobilen Banner bei direktem Einstieg; bei Einbettung in die GRÜNEN-Homepage entfällt sie;
+- zusammengesetzte Bannerbilder dienen nur noch als Styleguide-/Mockup-Referenzen; produktiv werden Text und Illustration getrennt aufgebaut.
+
+## Markenassets – aktueller Stand
+
+Ablage: `assets/brand/`.
+
+Bereits vorhanden bzw. freigegeben:
+
+- Logo-Rasterreferenzen in `logo/`,
+- finale Bannerillustration in `banner/`,
+- produktive Navigations-SVGs in `icons/`,
+- PWA-Rasterreferenz in `pwa/`,
+- Styleguide-/Responsive-/Bannerreferenzen in `reference/`,
+- Sonnenblumen-Grundelement in `elements/`.
+
+Noch vor bzw. während der technischen Umsetzung zu erzeugen:
+
+- echte vektorielle Logo-Master ohne gestalterische Neuinterpretation,
+- produktive PWA-Exports 192×192, 512×512 und maskable,
+- Social-Preview-Asset 1200×630,
+- ggf. optimierte WebP-/SVG-Varianten der Bannerillustration.
+
+Die verbindliche Assetübersicht steht in `assets/brand/README.md`.
+
+## Claim, Botschaften und Mission
+
+Finaler Claim:
+
+> **Mehr Überblick. Besser verstehen.**
+
+Ausführlicher Erklärungstext:
+
+> **Relevante Informationen aus Rathaus, Presse und weiteren Quellen – verständlich zusammengeführt und in ihren Zusammenhängen erklärt.**
+
+Mobile Kurzfassung:
+
+> **Aktuelles aus Rathaus, Presse und weiteren Quellen – verständlich zusammengeführt.**
+
+Der Dreiklang
+
+> **Informieren · Verstehen · Nachfragen**
+
+bleibt als sekundäres Kommunikationselement verfügbar, ist aber kein Pflichtbestandteil des Banners.
+
+Marketing- und Kommunikationsdetails stehen in `docs/Marketing-und-Kommunikation.md`.
 
 ## Dokumentationsübernahme – abgeschlossen
 
@@ -121,6 +166,7 @@ Für die spätere technische Umsetzung ist vorzusehen:
 
 | Version | Datum | Änderung |
 |---|---|---|
+| 2.1 | 01.10.2026 | G2 an finalisierte visuelle Identität angepasst: finaler Claim und Bannertexte, responsive Split-/Mobile-Overlay-Logik, finale Bannerillustration, Logo ohne Maibaum, aktuelle Navigationsicons und Assetstruktur übernommen; veraltete Banner-Arbeitsfassung entfernt. |
 | 2.0 | 01.10.2026 | UX-Navigation auf „Neues | Im Blick | Sitzungen | Suche“ konsolidiert; Bannertext als Arbeitsfassung aufgenommen; G2-Offenpunkt auf Textfreigabe plus Abschlussprüfung reduziert. |
 | 1.9 | 01.10.2026 | Visuelle Identität als eigene kanonische G2-Quelle dokumentiert; Stilrichtung, Logo/Banner, Navigation, PWA, Rücksprung zur GRÜNEN-Website und Plattformabgrenzung in Roadmap übernommen. |
 | 1.8 | 30.09.2026 | Dokumentationsübernahme nach Querverweis-, Terminologie- und Konsistenzprüfung als abgeschlossen markiert; nächster Schritt auf visuelles Identitäts-/Bildkonzept und G2-Abschluss gesetzt. |
