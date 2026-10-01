@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 2.0 | 01.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
+| 2.1 | 01.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
 
 ## 1. Zweck und Verbindlichkeit
 
@@ -79,12 +79,61 @@ Das Bannerbild entfällt auf dem Handy **nicht**, sondern wird nur deutlich verk
 
 ### 4.2 Tablet / Desktop
 
-Flacher **Split-Banner**:
+Der Tablet-/Desktop-Banner wird **nicht als ein einziges vollflächiges Bild** umgesetzt, sondern als echter responsiver **Zwei-Spalten-Banner**.
 
-- links Wortmarke, Claim und kurzer Erklärungstext,
-- rechts die Illustration,
-- Illustration räumlich klar begrenzt und nicht über die ganze Breite gezogen,
-- deutlich geringere Höhe als bei einer vollflächigen Hero-Illustration.
+**Linke Spalte:**
+
+- Wortmarke „Feldkirchen im Blick“,
+- Claim „Mehr Überblick. Besser verstehen.“,
+- kurzer Erklärungstext.
+
+**Rechte Spalte:**
+
+- ausschließlich die freigegebene Bannerillustration,
+- keine Wortmarke und kein Text innerhalb der Grafik,
+- Illustration räumlich klar begrenzt.
+
+Verbindliche responsive Regeln:
+
+- Gesamtcontainer mit definierter Maximalbreite; Richtwert **1280 px**,
+- zentrierte Darstellung mit `margin-inline: auto`,
+- unterhalb der Maximalbreite flüssige Breite bis `width: 100%`,
+- oberhalb der Maximalbreite **keine weitere proportionale Vergrößerung**,
+- zusätzlicher Platz auf sehr breiten Bildschirmen bleibt als ruhiger Seitenraum erhalten,
+- Tablet-Richtwert für die Spaltenaufteilung etwa **48 % Text / 52 % Illustration**,
+- Desktop-Richtwert etwa **45 % Text / 55 % Illustration**,
+- die Illustration nutzt `object-fit: contain` bzw. ein gleichwertiges Verhalten und wird nicht verzerrt,
+- die Bannerhöhe ergibt sich aus dem Inhalt und bleibt bewusst flach,
+- keine feste Pixelhöhe, die auf unterschiedlichen Text- oder Schriftgrößen zu Überlauf führt,
+- auf schmalen Bildschirmen erfolgt der Wechsel zur separaten Mobile-/PWA-Variante.
+
+Technische Referenz:
+
+```css
+.fib-hero {
+  width: 100%;
+  max-width: 1280px;
+  margin-inline: auto;
+  display: grid;
+  grid-template-columns: minmax(0, 45fr) minmax(0, 55fr);
+  align-items: center;
+}
+
+.fib-hero__visual img {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+
+@media (max-width: 900px) {
+  .fib-hero {
+    grid-template-columns: minmax(0, 48fr) minmax(0, 52fr);
+  }
+}
+```
+
+Die konkreten Breakpoints werden bei der Frontend-Implementierung anhand der tatsächlichen Inhaltsbreite und Lesbarkeit validiert; maßgeblich ist das Verhalten, nicht ein einzelner Gerätewert.
 
 ### 4.3 Bildsprache des Banners
 
@@ -216,14 +265,14 @@ Wird Feldkirchen im Blick **bereits von der Website der GRÜNEN Feldkirchen aus 
 
 ### Tablet
 
-- flacher Split-Banner,
+- echter responsiver Zwei-Spalten-Banner,
 - zwei- bzw. mehrspaltige Inhaltsbereiche wo sinnvoll,
 - Hauptnavigation gut sichtbar,
 - Sekundärnavigation als Menü oder dezente Kopfzeile.
 
 ### Desktop
 
-- flacher Split-Banner,
+- echter responsiver Zwei-Spalten-Banner mit begrenzter Maximalbreite,
 - größere Breite für mehrere Inhaltsblöcke nebeneinander,
 - organisatorische Navigation oben rechts,
 - bei Einbettung in die GRÜNEN-Homepage kein zusätzlicher Rücksprung-Link.
@@ -264,6 +313,8 @@ Unterordner:
 
 SVG ist grundsätzlich das Masterformat für Logo, Banner und Icons. Rasterformate werden daraus reproduzierbar exportiert.
 
+Für den Desktop-/Tablet-Banner sind Text und Illustration **getrennte technische Bestandteile**. Ein zusammengesetztes Rasterbild darf als Styleguide-/Mockup-Referenz erhalten bleiben, ist aber **nicht die bevorzugte Produktionsform** für die Web-App.
+
 PWA-Rastergrößen umfassen mindestens 192×192 und 512×512 px sowie maskable Varianten. Social Preview: 1200×630 px.
 
 ## 16. Öffentlicher Name
@@ -274,6 +325,7 @@ PWA-Rastergrößen umfassen mindestens 192×192 und 512×512 px sowie maskable V
 
 | Version | Datum | Änderung |
 |---|---|---|
+| 2.1 | 01.10.2026 | Tablet-/Desktop-Banner technisch als echter responsiver Zwei-Spalten-Banner festgelegt: Text links, Illustration rechts, maximale Containerbreite, keine unbegrenzte Skalierung auf breiten Bildschirmen, getrennte Produktionsbestandteile. |
 | 2.0 | 01.10.2026 | Visuelles System finalisiert: Rathausdarstellung mit Pultdach und vier Fahnenmasten, Kirche und Sonnenblumenblätter; Maibaum aus finaler Bildmarke entfernt; zwei responsive Bannerformen, wolken-/abstrakter Hintergrund ohne Bergwirkung, finaler Claim, sekundärer Dreiklang, Farbrollen, Navigation, GRÜNEN-Rücksprung und Produktionsasset-Struktur verbindlich festgelegt. |
 | 1.1 | 01.10.2026 | Banner-/Landingpage-Text als Arbeitsfassung ergänzt. |
 | 1.0 | 01.10.2026 | Eigenständige visuelle Primärquelle angelegt. |
