@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 1.9 | 01.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
+| 2.0 | 01.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
 
 ## Statusmodell
 
@@ -24,7 +24,7 @@ Es gelten die zentralen Status aus `PustefixReisen/pustivo/docs/governance/Dokum
 |---|---|---|
 | Projektbasis / Repository | **Abgeschlossen** | separates Repository und initiale Dokumentationsstruktur vorhanden |
 | G1 Produktumfang / MVP | **Abgeschlossen** | MVP, unmittelbare Ausbaustufe, spätere Erweiterungen, Nicht-Ziele und Aufwandstreiber verbindlich festgelegt |
-| G2 UX / Informationsarchitektur / Fachfunktionen | **In Arbeit** | UX v2.5 konsolidiert; visuelle Identität als eigene Primärquelle angelegt; Stilrichtung, Logo-/Bannerlogik, Bildsprache, PWA-Icon, Navigation und GRÜNEN-Rücksprung festgelegt; Bannertext, Produktionsdetails und G2-Abschlussprüfung verbleiben |
+| G2 UX / Informationsarchitektur / Fachfunktionen | **In Arbeit** | UX v2.6 und visuelle Identität konsolidiert; öffentliche Navigation, GRÜNEN-Rücksprung und gestalterische Grundrichtung geklärt; Bannertext liegt als Arbeitsfassung vor; nach dessen Freigabe folgt nur noch die G2-Abschlussprüfung |
 | Dokumentationsübernahme Demonstrator → Echtsystem | **Abgeschlossen** | alle identifizierten weiterhin erforderlichen Grundlagen übernommen oder integriert; Querverweis-, Terminologie- und Konsistenzprüfung durchgeführt |
 | G3 Datenanforderungen / Datenmodell | **Geplant** | aus Fach- und UX-Konzept ableiten; eigenständige Entitäten für Meldung/Vorgang/Thema, n:m-Beziehungen, Wirkungsrollen, Versionierung, Rechercheaufträge, Such-/PWA-/Mehr-wissen-Daten berücksichtigen |
 | G4 Schutzbedarf / Datenschutz / Offline | **Geplant** | Schutzklassen und Betriebsanforderungen festlegen |
@@ -39,14 +39,15 @@ Es gelten die zentralen Status aus `PustefixReisen/pustivo/docs/governance/Dokum
 
 ## Nächster konkreter Schritt
 
-**G2 – visuelles Identitäts- und Bildkonzept abschließen: Banner-/Landingpage-Text aus dem Management Approach ableiten, finale Produktionsdetails festlegen und anschließend G2 auf Widerspruchsfreiheit und Vollständigkeit prüfen.**
+**G2 – Banner-/Landingpage-Text inhaltlich freigeben; danach abschließende Widerspruchs- und Vollständigkeitsprüfung und Übergang zu G3.**
 
 ## Fachlich/UX bereits geklärt
 
-- Hauptnavigation: **Meldungen | Themen | Sitzungen | Suchen**; für die öffentliche mobile Darstellung werden verständlichere Bezeichnungen/Icons gemäß UX und visueller Identität verwendet.
+- öffentliche Hauptnavigation: **Neues | Im Blick | Sitzungen | Suche**.
+- interne Fachobjekte bleiben **Meldung | Vorgang | Thema | Sitzung**.
 - „Aktuell“ ist ausschließlich zeitliche Hervorhebung.
 - Meldung, Vorgang und Thema sind fachlich getrennte Objekttypen.
-- Themen und Vorgänge erscheinen öffentlich in einer gemeinsamen Themenliste.
+- Themen und Vorgänge erscheinen öffentlich gemeinsam unter **„Im Blick“**.
 - Vorgänge besitzen eigenen aktuellen Stand, Verlauf und Status.
 - Themen erklären übergeordnete Zusammenhänge und gewichten Vorgänge nach Wirkungsrolle.
 - Meldungs-, Vorgangs-, Themen- und Sitzungsdetailseiten sind festgelegt.
@@ -65,6 +66,18 @@ Es gelten die zentralen Status aus `PustefixReisen/pustivo/docs/governance/Dokum
 - „Neues“ nutzt die Halbkreis-Strahlen; „Im Blick“ das Auge.
 - FIB bietet einen klaren Rücksprung **„Zur Website der GRÜNEN in Feldkirchen“** und bleibt unabhängig vom Einstieg dieselbe Anwendung.
 - visuelle Positionierung gegenüber Kommunikations-/Service-Apps und Beteiligungsplattformen ist dokumentiert: FIB verbindet aktuelle lokale Information mit Wissensstruktur und Zusammenhangserklärung.
+
+## Banner-/Landingpage – Arbeitsfassung
+
+Zur Freigabe vorgeschlagen:
+
+> **Was in Feldkirchen passiert – und was dahintersteckt.**
+>
+> FIB bündelt relevante Informationen, erklärt Zusammenhänge und macht Entwicklungen nachvollziehbar.
+>
+> **Informieren · Verstehen · Mitgestalten**
+
+Die Arbeitsfassung ist in `docs/Visuelle-Identitaet-und-Bildkonzept.md` dokumentiert und wird erst nach ausdrücklicher inhaltlicher Freigabe verbindlich.
 
 ## Dokumentationsübernahme – abgeschlossen
 
@@ -108,6 +121,7 @@ Für die spätere technische Umsetzung ist vorzusehen:
 
 | Version | Datum | Änderung |
 |---|---|---|
+| 2.0 | 01.10.2026 | UX-Navigation auf „Neues | Im Blick | Sitzungen | Suche“ konsolidiert; Bannertext als Arbeitsfassung aufgenommen; G2-Offenpunkt auf Textfreigabe plus Abschlussprüfung reduziert. |
 | 1.9 | 01.10.2026 | Visuelle Identität als eigene kanonische G2-Quelle dokumentiert; Stilrichtung, Logo/Banner, Navigation, PWA, Rücksprung zur GRÜNEN-Website und Plattformabgrenzung in Roadmap übernommen. |
 | 1.8 | 30.09.2026 | Dokumentationsübernahme nach Querverweis-, Terminologie- und Konsistenzprüfung als abgeschlossen markiert; nächster Schritt auf visuelles Identitäts-/Bildkonzept und G2-Abschluss gesetzt. |
 | 1.7 | 30.09.2026 | Demonstrator-Dokumentation weitgehend vollständig ins Echtsystem überführt; UX v2.5 konsolidiert; Werte- und Sprachgrundlagen übernommen. |
