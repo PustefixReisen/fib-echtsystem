@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 1.0 | 01.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
+| 1.1 | 01.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
 
 ## 1. Zweck und Verbindlichkeit
 
@@ -111,9 +111,23 @@ Der Bannertext hat eine besondere Funktion: Er erklärt Erstbesuchern in sehr ku
 - was sie dort finden,
 - welches Anliegen das Angebot verfolgt.
 
-Die genaue Textfassung ist noch zu schärfen. Sie soll aus bereits im Management Approach festgelegten Claims und Programmbeschreibungen abgeleitet werden und keine neue, konkurrierende Produktbeschreibung erzeugen.
+Die Textlogik wird aus Management Approach und Marketing-Konzept abgeleitet und erzeugt keine neue Produktdefinition.
 
-Bis zur finalen Fassung gilt: **Gestaltung festgelegt, Wortlaut noch offen.**
+**Arbeitsfassung zur inhaltlichen Freigabe:**
+
+> **Was in Feldkirchen passiert – und was dahintersteckt.**
+>
+> FIB bündelt relevante Informationen, erklärt Zusammenhänge und macht Entwicklungen nachvollziehbar.
+>
+> **Informieren · Verstehen · Mitgestalten**
+
+Die drei Ebenen haben unterschiedliche Aufgaben:
+
+1. **Leitsatz:** weckt Interesse und grenzt FIB von einer bloßen Meldungssammlung ab.
+2. **Erklärungssatz:** erklärt beim Erstbesuch knapp die Funktion des Angebots.
+3. **Dreiklang:** beschreibt das Anliegen, ohne eine zusätzliche Funktionsnavigation zu erzeugen.
+
+Der Wortlaut bleibt bis zur ausdrücklichen Freigabe **Arbeitsfassung**.
 
 ## 6. Farben
 
@@ -316,18 +330,20 @@ Dies unterscheidet FIB sowohl von generischen White-Label-Kommunikationsapps als
 
 ## 14. Noch offene Detailentscheidungen
 
-Vor dem endgültigen Abschluss des visuellen G2-Moduls sind noch zu konkretisieren:
+Für den **konzeptionellen G2-Abschluss** ist nur noch der Banner-/Landingpage-Text ausdrücklich freizugeben und anschließend die Dokumentation abschließend auf Widerspruchsfreiheit zu prüfen.
 
-1. finaler Banner-/Landingpage-Text aus Management Approach ableiten,
-2. produktionsfähige Logo-Dateien und exakte Geometrien erstellen,
-3. produktive Farbwerte gegen Barrierefreiheit und GRÜNEN-CI prüfen,
-4. finale Webschrift festlegen,
-5. finale Icon-Geometrien für „Neues“, „Im Blick“, „Sitzungen“ und „Suche“ festlegen,
-6. Bildrechte/Provenienz und Ablagekonzept technisch definieren,
-7. Responsive Anwendung der Beispiele gegen UX v2.5 prüfen.
+Die folgenden Punkte werden in der späteren technischen/gestalterischen Umsetzung konkretisiert und blockieren G2 nicht:
+
+- produktionsfähige Logo-Dateien und exakte Geometrien,
+- produktive Farbwerte mit Barrierefreiheitsprüfung und CI-Abgleich,
+- finale Webschrift,
+- finale SVG-/Icon-Geometrien,
+- Bildrechte/Provenienz und technische Ablage,
+- maskable/monochrome PWA-Assets.
 
 ## Änderungshistorie
 
 | Version | Datum | Änderung |
 |---|---|---|
+| 1.1 | 01.10.2026 | Banner-/Landingpage-Text als aus Management Approach und Marketing-Konzept abgeleitete Arbeitsfassung ergänzt; konzeptionelle G2-Offenpunkte von späteren Produktionsdetails getrennt. |
 | 1.0 | 01.10.2026 | Eigenständige visuelle Primärquelle angelegt; Stilgrundsätze, Logo, Banner, Sonnenblumenblätter als roter Faden, Farben, Bildsprache, PWA-Icon, Navigation, Rücksprung zur GRÜNEN-Website, Beispielanwendungen und Positionierung gegenüber anderen Plattformtypen dokumentiert. |
