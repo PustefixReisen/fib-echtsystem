@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 2.1 | 01.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
+| 2.2 | 01.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
 
 ## Statusmodell
 
@@ -24,9 +24,9 @@ Es gelten die zentralen Status aus `PustefixReisen/pustivo/docs/governance/Dokum
 |---|---|---|
 | Projektbasis / Repository | **Abgeschlossen** | separates Repository und initiale Dokumentationsstruktur vorhanden |
 | G1 Produktumfang / MVP | **Abgeschlossen** | MVP, unmittelbare Ausbaustufe, spätere Erweiterungen, Nicht-Ziele und Aufwandstreiber verbindlich festgelegt |
-| G2 UX / Informationsarchitektur / Fachfunktionen | **In Arbeit** | UX und visuelle Identität sind weitgehend finalisiert; Logo, Bannerlogik, Claim, Navigation, GRÜNEN-Rücksprung und responsive Grundregeln sind festgelegt; Assetbestand wird bereinigt, danach folgt die G2-Abschlussprüfung |
+| G2 UX / Informationsarchitektur / Fachfunktionen | **Abgeschlossen** | UX, öffentliche Navigation, Screenlogik, visuelle Identität, Claim, responsive Bannerlogik, GRÜNEN-Rücksprung und Assetstruktur sind konsolidiert; Abschlussprüfung durchgeführt |
 | Dokumentationsübernahme Demonstrator → Echtsystem | **Abgeschlossen** | alle identifizierten weiterhin erforderlichen Grundlagen übernommen oder integriert; Querverweis-, Terminologie- und Konsistenzprüfung durchgeführt |
-| G3 Datenanforderungen / Datenmodell | **Geplant** | aus Fach- und UX-Konzept ableiten; eigenständige Entitäten für Meldung/Vorgang/Thema, n:m-Beziehungen, Wirkungsrollen, Versionierung, Rechercheaufträge, Such-/PWA-/Mehr-wissen-Daten berücksichtigen |
+| G3 Datenanforderungen / Datenmodell | **In Arbeit** | aus Fach- und UX-Konzept ableiten; eigenständige Entitäten für Meldung/Vorgang/Thema, n:m-Beziehungen, Wirkungsrollen, Versionierung, Rechercheaufträge, Such-/PWA-/Mehr-wissen-Daten berücksichtigen |
 | G4 Schutzbedarf / Datenschutz / Offline | **Geplant** | Schutzklassen und Betriebsanforderungen festlegen |
 | G5 Zielarchitektur / Stack / Hosting / Deployment | **Geplant** | technische Zielarchitektur entscheiden; modellunabhängige KI-Regelschicht und Modelltests berücksichtigen |
 | G6 Rollen / Rechte / Workflow | **Geplant** | konkretes Berechtigungs- und Freigabemodell festlegen |
@@ -39,7 +39,7 @@ Es gelten die zentralen Status aus `PustefixReisen/pustivo/docs/governance/Dokum
 
 ## Nächster konkreter Schritt
 
-**G2 abschließen:** Markenassets und Dokumentation konsolidieren, anschließend Widerspruchs- und Vollständigkeitsprüfung durchführen. Danach Übergang zu **G3 – Datenanforderungen / Datenmodell**.
+**G3 – Datenanforderungen / Datenmodell:** Fachobjekte, Beziehungen, Versionierung, Aktualisierungsereignisse, Recherche-/Freigabedaten, Suche, PWA/Push und „Mehr wissen?“ in ein belastbares logisches Datenmodell überführen.
 
 ## Fachlich/UX bereits geklärt
 
@@ -93,12 +93,14 @@ Bereits vorhanden bzw. freigegeben:
 - Styleguide-/Responsive-/Bannerreferenzen in `reference/`,
 - Sonnenblumen-Grundelement in `elements/`.
 
-Noch vor bzw. während der technischen Umsetzung zu erzeugen:
+Noch während der technischen Umsetzung zu erzeugen:
 
 - echte vektorielle Logo-Master ohne gestalterische Neuinterpretation,
 - produktive PWA-Exports 192×192, 512×512 und maskable,
 - Social-Preview-Asset 1200×630,
 - ggf. optimierte WebP-/SVG-Varianten der Bannerillustration.
+
+Diese Produktionsdetails blockieren G2 nicht.
 
 Die verbindliche Assetübersicht steht in `assets/brand/README.md`.
 
@@ -166,6 +168,7 @@ Für die spätere technische Umsetzung ist vorzusehen:
 
 | Version | Datum | Änderung |
 |---|---|---|
+| 2.2 | 01.10.2026 | G2 nach abschließender Widerspruchs- und Vollständigkeitsprüfung abgeschlossen; G3 als nächste aktive Phase gesetzt. |
 | 2.1 | 01.10.2026 | G2 an finalisierte visuelle Identität angepasst: finaler Claim und Bannertexte, responsive Split-/Mobile-Overlay-Logik, finale Bannerillustration, Logo ohne Maibaum, aktuelle Navigationsicons und Assetstruktur übernommen; veraltete Banner-Arbeitsfassung entfernt. |
 | 2.0 | 01.10.2026 | UX-Navigation auf „Neues | Im Blick | Sitzungen | Suche“ konsolidiert; Bannertext als Arbeitsfassung aufgenommen; G2-Offenpunkt auf Textfreigabe plus Abschlussprüfung reduziert. |
 | 1.9 | 01.10.2026 | Visuelle Identität als eigene kanonische G2-Quelle dokumentiert; Stilrichtung, Logo/Banner, Navigation, PWA, Rücksprung zur GRÜNEN-Website und Plattformabgrenzung in Roadmap übernommen. |
