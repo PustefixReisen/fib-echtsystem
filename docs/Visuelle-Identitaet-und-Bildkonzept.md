@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 2.1 | 01.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
+| 2.2 | 01.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
 
 ## 1. Zweck und Verbindlichkeit
 
@@ -64,18 +64,40 @@ Auf der **Startseite** wird das vollständige Bildlogo nicht zusätzlich neben d
 
 ## 4. Banner / Hero
 
-Es gibt zwei verbindliche responsive Varianten.
+Es gibt zwei verbindliche responsive Darstellungsweisen. In beiden Fällen bleiben Text und Illustration technisch getrennte Bestandteile; zusammengesetzte Rasterbilder dienen nur als Styleguide-/Mockup-Referenz.
 
 ### 4.1 Handy / PWA
 
-Kompakter Banner mit:
+Das Smartphone ist voraussichtlich das wichtigste Nutzungsgerät für Feldkirchen im Blick. Der Banner muss deshalb auf kleinem Raum gleichzeitig Markenidentität, Nutzenversprechen und lokale Wiedererkennbarkeit vermitteln.
 
-- Wortmarke „Feldkirchen im Blick“,
-- kleiner, platzsparender Illustration,
-- Rathaus, Kirche und Sonnenblumenblättern,
-- geringer Bauhöhe.
+Verbindliche mobile Gestaltung:
 
-Das Bannerbild entfällt auf dem Handy **nicht**, sondern wird nur deutlich verkleinert.
+- die Bannerillustration bleibt sichtbar und wird nicht vollständig entfernt,
+- sie wird proportional an die verfügbare Breite angepasst,
+- die Illustration wird etwas tiefer im Banner positioniert, damit die Wortmarke **„Feldkirchen im Blick“** möglichst frei und ruhig steht,
+- Wortmarke, Claim und kurze Erklärung liegen als echter HTML-/UI-Text über der Illustration,
+- zur Sicherung der Lesbarkeit liegt der Text auf einer sehr hellen, halbtransparenten Off-White-Fläche bzw. einem gleichwertigen lesefreundlichen Overlay,
+- das Overlay soll die Illustration nicht unnötig verdecken; die Bildwirkung bleibt erkennbar,
+- der Banner bleibt insgesamt kompakt und darf den ersten mobilen Bildschirm nicht dominieren,
+- eine grün/monochrome Illustration ist nur eine Reserveoption, falls die Lesbarkeit mit der farbigen Illustration trotz Overlay nicht ausreichend erreichbar ist.
+
+Mobile Textfassung:
+
+**Wortmarke**
+
+> Feldkirchen im Blick
+
+**Claim**
+
+> Mehr Überblick. Besser verstehen.
+
+**Kurzbeschreibung**
+
+> Aktuelles aus Rathaus, Presse und weiteren Quellen – verständlich zusammengeführt.
+
+Die längere Erklärung mit dem Zusatz „… und in ihren Zusammenhängen erklärt“ bleibt für Tablet/Desktop, „Über Feldkirchen im Blick“ und andere ausführlichere Kontexte verfügbar.
+
+Der mobile Banner enthält keinen zusätzlichen Call-to-Action-Button. Seine Aufgabe ist: **Marke erkennen → Nutzen verstehen → neugierig werden**.
 
 ### 4.2 Tablet / Desktop
 
@@ -105,7 +127,7 @@ Verbindliche responsive Regeln:
 - die Illustration nutzt `object-fit: contain` bzw. ein gleichwertiges Verhalten und wird nicht verzerrt,
 - die Bannerhöhe ergibt sich aus dem Inhalt und bleibt bewusst flach,
 - keine feste Pixelhöhe, die auf unterschiedlichen Text- oder Schriftgrößen zu Überlauf führt,
-- auf schmalen Bildschirmen erfolgt der Wechsel zur separaten Mobile-/PWA-Variante.
+- auf schmalen Bildschirmen erfolgt der Wechsel zur mobilen Overlay-Variante.
 
 Technische Referenz:
 
@@ -153,9 +175,13 @@ Finaler Claim:
 
 > **Mehr Überblick. Besser verstehen.**
 
-Erklärungstext:
+Ausführlicher Erklärungstext für Tablet/Desktop und ausführlichere Kontexte:
 
 > **Relevante Informationen aus Rathaus, Presse und weiteren Quellen – verständlich zusammengeführt und in ihren Zusammenhängen erklärt.**
+
+Mobile Kurzfassung:
+
+> **Aktuelles aus Rathaus, Presse und weiteren Quellen – verständlich zusammengeführt.**
 
 Der Claim darf im Banner stärker hervorgehoben werden. Dafür kann das funktionale Akzentblau verwendet werden, solange die Gesamtwirkung ruhig bleibt und Blau keine dominante Markenfläche bildet.
 
@@ -240,26 +266,38 @@ Die organisatorische Navigation kann als dezente Textnavigation im oberen rechte
 
 ## 11. Link zur GRÜNEN-Homepage
 
-Beim direkten Einstieg in Feldkirchen im Blick – z. B. PWA, Direktlink, QR-Code oder Suchmaschine – erscheint deutlich, aber untergeordnet:
+Beim direkten Einstieg in Feldkirchen im Blick – z. B. PWA, Direktlink, QR-Code oder Suchmaschine – erscheint deutlich, aber untergeordnet eine **eigenständige kompakte Leiste direkt unter dem Banner**:
 
-> **← Zur Website der GRÜNEN in Feldkirchen**
+> **Zur Website der GRÜNEN in Feldkirchen**
+
+Die Leiste gehört nicht zum Banner selbst und nicht zur inhaltlichen Hauptnavigation.
 
 Gestaltung:
 
+- kompakte Bauhöhe,
 - ruhiger grüner Hintergrund,
 - Sonnenblumenlogo der GRÜNEN darf enthalten sein,
 - weiße bzw. ausreichend kontrastierende Schrift,
+- klar als externe/übergeordnete Navigation erkennbar,
 - keine konkurrierende zweite Hauptnavigation.
 
-Wird Feldkirchen im Blick **bereits von der Website der GRÜNEN Feldkirchen aus aufgerufen bzw. dort eingebunden**, entfällt dieser Rücksprung, weil die übergeordnete Website-Navigation bereits sichtbar ist.
+Die Position direkt zwischen Banner und erstem Inhaltsblock ist verbindlich für den direkten mobilen Einstieg. So bleibt die Reihenfolge verständlich:
+
+**Marke und Nutzen → Verbindung zur GRÜNEN-Homepage → aktuelle Inhalte.**
+
+Wird Feldkirchen im Blick **bereits von der Website der GRÜNEN Feldkirchen aus aufgerufen bzw. dort eingebunden**, entfällt diese Leiste vollständig, weil die übergeordnete Website-Navigation bereits sichtbar ist.
 
 ## 12. Responsive Screenprinzipien
 
 ### Smartphone
 
 - einspaltig,
-- kompakter Banner mit kleiner Illustration,
-- Rücksprung zur GRÜNEN-Homepage nur bei direktem Einstieg,
+- kompakter Banner mit farbiger Illustration als Hintergrund-/Bildbestandteil,
+- Wortmarke, Claim und mobile Kurzbeschreibung als echter Text über der Illustration,
+- heller halbtransparenter Hintergrund/Overlay für den Text,
+- Illustration etwas tiefer positioniert, damit die Wortmarke frei steht,
+- kompakte GRÜNEN-Leiste direkt unter dem Banner nur bei direktem Einstieg,
+- danach unmittelbar die aktuellen Inhalte,
 - Hauptnavigation dauerhaft am unteren Bildschirmrand,
 - Sekundärnavigation im Menü.
 
@@ -311,9 +349,11 @@ Unterordner:
 - `social/`
 - `reference/`
 
-SVG ist grundsätzlich das Masterformat für Logo, Banner und Icons. Rasterformate werden daraus reproduzierbar exportiert.
+SVG ist grundsätzlich das Masterformat für Logo, Bannerillustration und Icons. Rasterformate werden daraus reproduzierbar exportiert.
 
 Für den Desktop-/Tablet-Banner sind Text und Illustration **getrennte technische Bestandteile**. Ein zusammengesetztes Rasterbild darf als Styleguide-/Mockup-Referenz erhalten bleiben, ist aber **nicht die bevorzugte Produktionsform** für die Web-App.
+
+Auch mobil bleiben Text und Illustration technisch getrennt: Die Wortmarke, der Claim und die Kurzbeschreibung werden als HTML-/UI-Text über die Illustration gelegt. Ein vollständig zusammengesetztes Mobile-Bannerbild ist nur Referenz, nicht die bevorzugte Produktionsform.
 
 PWA-Rastergrößen umfassen mindestens 192×192 und 512×512 px sowie maskable Varianten. Social Preview: 1200×630 px.
 
@@ -325,6 +365,7 @@ PWA-Rastergrößen umfassen mindestens 192×192 und 512×512 px sowie maskable V
 
 | Version | Datum | Änderung |
 |---|---|---|
+| 2.2 | 01.10.2026 | Mobile Bannerlogik finalisiert: Illustration bleibt erhalten, Text liegt als echter UI-Text mit hellem halbtransparentem Overlay darüber; mobile Kurzbeschreibung festgelegt; kompakte GRÜNEN-Leiste eigenständig direkt unter dem Banner positioniert und bei eingebettetem Aufruf ausgeblendet. |
 | 2.1 | 01.10.2026 | Tablet-/Desktop-Banner technisch als echter responsiver Zwei-Spalten-Banner festgelegt: Text links, Illustration rechts, maximale Containerbreite, keine unbegrenzte Skalierung auf breiten Bildschirmen, getrennte Produktionsbestandteile. |
 | 2.0 | 01.10.2026 | Visuelles System finalisiert: Rathausdarstellung mit Pultdach und vier Fahnenmasten, Kirche und Sonnenblumenblätter; Maibaum aus finaler Bildmarke entfernt; zwei responsive Bannerformen, wolken-/abstrakter Hintergrund ohne Bergwirkung, finaler Claim, sekundärer Dreiklang, Farbrollen, Navigation, GRÜNEN-Rücksprung und Produktionsasset-Struktur verbindlich festgelegt. |
 | 1.1 | 01.10.2026 | Banner-/Landingpage-Text als Arbeitsfassung ergänzt. |
