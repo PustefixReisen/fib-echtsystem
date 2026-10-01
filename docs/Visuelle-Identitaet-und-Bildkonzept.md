@@ -1,349 +1,279 @@
-# Visuelle Identität und Bildkonzept – Feldkirchen im Blick (FIB)
+# Visuelle Identität und Bildkonzept – Feldkirchen im Blick
 
 ## Dokumentstand
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 1.1 | 01.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
+| 2.0 | 01.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
 
 ## 1. Zweck und Verbindlichkeit
 
-Dieses Dokument ist die verbindliche Primärquelle für die visuelle Identität von **Feldkirchen im Blick (FIB)**.
+Dieses Dokument ist die verbindliche Primärquelle für die visuelle Identität von **Feldkirchen im Blick**. Es ergänzt `docs/UX-und-Informationsarchitektur.md` und `docs/Marketing-und-Kommunikation.md`.
 
-Es konkretisiert die gestalterischen Entscheidungen aus G2 und ergänzt `docs/UX-und-Informationsarchitektur.md`. UX-Struktur und Benutzerführung bleiben dort verbindlich; dieses Dokument regelt insbesondere:
-
-- visuelle Grundhaltung,
-- Logo und Bildmarke,
-- Banner und Markenflächen,
-- Farbrollen,
-- Bildsprache,
-- PWA-Icon,
-- Navigationsicons und wiederkehrende grafische Elemente,
-- Einbettung in die Website der GRÜNEN Feldkirchen,
-- Beispielanwendungen,
-- gestalterische Abgrenzung zu anderen kommunalen Informations- und Beteiligungsangeboten.
-
-Die gestalterische Grundlage orientiert sich am Corporate Design von BÜNDNIS 90/DIE GRÜNEN, ohne FIB zu einer bloßen Kopie allgemeiner Parteivorlagen zu machen. FIB erhält eine eigenständige, lokal verankerte Produktidentität.
+Die produktionsfähigen Masterassets liegen unter `assets/brand/`. Das dortige `README.md` definiert Dateinamen, Formate und Exportgrößen.
 
 ## 2. Visuelle Grundhaltung
 
-FIB soll visuell wirken als:
+Feldkirchen im Blick wirkt:
 
-- **klar und ruhig** – keine überladene oder plakativ-kampagnenhafte Oberfläche,
-- **bürgernah** – freundlich, verständlich und zugänglich,
-- **sachlich** – Informationsprodukt statt Werbefläche,
-- **lokal verankert** – Feldkirchen soll unmittelbar wiedererkennbar sein,
-- **modern** – zeitgemäße PWA-/Web-App-Gestaltung,
-- **vertrauenswürdig** – hohe Lesbarkeit, klare Hierarchien, nachvollziehbare Herkunft,
-- **anschlussfähig an die GRÜNEN** – erkennbarer gestalterischer Bezug, aber eigenständige FIB-Marke.
+- klar und ruhig,
+- bürgernah und zugänglich,
+- sachlich statt kampagnenhaft,
+- lokal verankert,
+- modern und PWA-tauglich,
+- transparent und vertrauenswürdig,
+- erkennbar an die GRÜNEN angeschlossen, aber als eigenständiges Informationsprodukt.
 
-Die Oberfläche soll eher wie ein hochwertiges lokales Informationsangebot als wie ein Verwaltungsportal, Ratsinformationssystem oder klassisches Kampagnenmedium wirken.
+Große dunkle Flächen, aggressive Kontraste, überladene Illustrationen und dekorative Effekte ohne Informationswert werden vermieden.
 
-## 3. Gestalterische Leitidee
+## 3. Logo-System
 
-Die FIB-Gestaltung verbindet drei Ebenen:
+### 3.1 Bildmarke
 
-1. **Feldkirchen als konkreter Ort** – Rathaus, Kirche, lokale Fotos und Ortsbezüge.
-2. **FIB als Wissens- und Informationsprodukt** – ruhige Flächen, klare Karten, verständliche Typografie und Navigation.
-3. **Herkunft aus dem grünen Umfeld** – Grün, Sonnenblumengelb und abstrahierte Sonnenblumenblätter als wiederkehrendes Element.
+Die finale Bildmarke verbindet:
 
-Die Sonnenblumenblätter sind der **grafische rote Faden** des Systems. Sie erscheinen nicht als dekorative Vollblume auf jeder Fläche, sondern reduziert und flexibel:
+- das **Rathaus Feldkirchen** links,
+- die **Kirche** rechts,
+- Bäume und eine sehr reduzierte Boden-/Wasserlinie,
+- drei gelbe abstrahierte Sonnenblumenblätter.
 
-- im Logo,
-- im Banner,
-- bei „Neues“,
-- als kleine Trenner oder Akzente,
-- in ausgewählten PWA-/Social-Anwendungen.
+Der Maibaum ist **nicht** Bestandteil der finalen Bildmarke.
 
-## 4. Logo
+### 3.2 Rathausdarstellung
 
-### 4.1 Grundform
+Das Rathaus orientiert sich an der tatsächlichen Architektur und wird in allen Markenassets konsistent dargestellt:
 
-Das Logo zeigt abstrahiert typische Feldkirchner Elemente:
-
-- **Rathaus links**,
-- **Kirche rechts**,
-- dazwischen bzw. ergänzend der **Maibaum** in blau-weißer Streifung,
-- abstrahierte Sonnenblumenblätter als grüner Markenbezug.
-
-Das Rathaus soll sich an der tatsächlichen Architektur orientieren:
-
+- dominanter linker Gebäudeteil,
 - höher als breit,
-- markantes Pultdach,
-- Galerie-/Arkadenwirkung im unteren Bereich,
-- vertikale Fassadengliederung,
-- drei Fahnenmasten können in größeren Darstellungen angedeutet werden, sind aber kein zwingender Bestandteil der Kleinform.
+- charakteristisches **Pultdach**,
+- Ziegelfassade ohne weiße Einfassung an Dach oder Gebäudekante,
+- Gebäudekante nur durch eine feine Haarlinie gekennzeichnet,
+- große vertikale Fensterzone,
+- Galerie-/Arkadenwirkung im Erdgeschoss,
+- **vier Fahnenmasten**, die über das Gebäude hinausragen und dadurch klar als vorgelagerte Masten erkennbar bleiben,
+- ruhige, leicht seitliche Perspektive, keine Froschperspektive.
 
-Die Perspektive ist ruhig und weitgehend frontal bzw. leicht seitlich, **nicht aus Froschperspektive**.
+### 3.3 Varianten
 
-### 4.2 Varianten
+- **Primärlogo horizontal:** Bildmarke links, Wortmarke rechts; bevorzugte Standardform außerhalb des Startseitenbanners.
+- **Kompaktlogo:** Bildmarke oberhalb der Wortmarke für quadratischere Flächen.
+- **Monochrom:** einfarbige Sonderanwendung.
+- **Bildmarke/Icon-only:** PWA, Favicon und sehr kleine Anwendungen.
 
-Vorzusehen sind mindestens:
+Auf der **Startseite** wird das vollständige Bildlogo nicht zusätzlich neben dem Banner wiederholt. Der Banner übernimmt dort die Markenfunktion. Das Bildlogo wird vor allem dort eingesetzt, wo kein Banner erscheint.
 
-- **Primärlogo horizontal**: Bildmarke links, Schriftzug „Feldkirchen im Blick“ rechts; bevorzugte flexible Standardform.
-- **Kompaktlogo gestapelt**: für quadratischere Flächen.
-- **Monochrome Variante**: für eingeschränkte Darstellungen, Druck und Sonderfälle.
-- **Icon-only**: vereinfachte Bildmarke für PWA, Favicon und sehr kleine Anwendungen.
+## 4. Banner / Hero
 
-Die horizontale Variante wird bevorzugt, weil sie in Headern, Social-Previews, Website-Einbettungen und Desktop-Anwendungen besonders flexibel nutzbar ist.
+Es gibt zwei verbindliche responsive Varianten.
 
-## 5. Banner / Markenfläche
+### 4.1 Handy / PWA
 
-Das Banner ist eine **monochrome bzw. tonal reduzierte Feldkirchen-Silhouette** auf hellem Hintergrund.
+Kompakter Banner mit:
 
-Enthalten:
+- Wortmarke „Feldkirchen im Blick“,
+- kleiner, platzsparender Illustration,
+- Rathaus, Kirche und Sonnenblumenblättern,
+- geringer Bauhöhe.
 
-- Rathaus links bzw. links der Mitte,
-- Kirche rechts,
-- Bäume und Landschaft nur stark vereinfacht,
-- kein Maibaum im Banner,
-- Sonnenblumenblätter als Akzent.
+Das Bannerbild entfällt auf dem Handy **nicht**, sondern wird nur deutlich verkleinert.
 
-Das Rathaus darf im Banner nicht zu niedrig erscheinen; seine charakteristische Höhe und vertikale Wirkung müssen gegenüber der Kirche erkennbar bleiben, ohne sie zu überragen.
+### 4.2 Tablet / Desktop
 
-Das Banner soll hell, freundlich und offen wirken. Große dunkle oder stark gesättigte Flächen sind zu vermeiden.
+Flacher **Split-Banner**:
 
-### 5.1 Text im Banner
+- links Wortmarke, Claim und kurzer Erklärungstext,
+- rechts die Illustration,
+- Illustration räumlich klar begrenzt und nicht über die ganze Breite gezogen,
+- deutlich geringere Höhe als bei einer vollflächigen Hero-Illustration.
 
-Der Bannertext hat eine besondere Funktion: Er erklärt Erstbesuchern in sehr kurzer Form,
+### 4.3 Bildsprache des Banners
 
-- was FIB ist,
-- was sie dort finden,
-- welches Anliegen das Angebot verfolgt.
+Das Banner darf keine Landschaft suggerieren, die für Feldkirchen untypisch ist. Insbesondere entstehen **keine Bergsilhouetten**.
 
-Die Textlogik wird aus Management Approach und Marketing-Konzept abgeleitet und erzeugt keine neue Produktdefinition.
+Hintergründe bestehen nur aus:
 
-**Arbeitsfassung zur inhaltlichen Freigabe:**
+- hellen abstrakten Formen,
+- weichen Wolken-/Himmelformen,
+- reduzierten horizontalen Flächen.
 
-> **Was in Feldkirchen passiert – und was dahintersteckt.**
->
-> FIB bündelt relevante Informationen, erklärt Zusammenhänge und macht Entwicklungen nachvollziehbar.
->
-> **Informieren · Verstehen · Mitgestalten**
+Der Maibaum erscheint nicht im Banner.
 
-Die drei Ebenen haben unterschiedliche Aufgaben:
+## 5. Claim und Bannertext
 
-1. **Leitsatz:** weckt Interesse und grenzt FIB von einer bloßen Meldungssammlung ab.
-2. **Erklärungssatz:** erklärt beim Erstbesuch knapp die Funktion des Angebots.
-3. **Dreiklang:** beschreibt das Anliegen, ohne eine zusätzliche Funktionsnavigation zu erzeugen.
+Finaler Claim:
 
-Der Wortlaut bleibt bis zur ausdrücklichen Freigabe **Arbeitsfassung**.
+> **Mehr Überblick. Besser verstehen.**
 
-## 6. Farben
+Erklärungstext:
 
-Die Grundfläche ist ein **warmes, sehr helles Weiß/Creme** statt kaltem Reinweiß.
+> **Relevante Informationen aus Rathaus, Presse und weiteren Quellen – verständlich zusammengeführt und in ihren Zusammenhängen erklärt.**
 
-Farbrollen:
+Der Claim darf im Banner stärker hervorgehoben werden. Dafür kann das funktionale Akzentblau verwendet werden, solange die Gesamtwirkung ruhig bleibt und Blau keine dominante Markenfläche bildet.
 
-- **Primärgrün** – Marke, aktive Navigation, wichtige Schaltflächen, Headlines.
-- **Mint-/Hellgrün** – ruhige Hintergrundflächen, ausgewählte Status- und Kartenflächen.
-- **Sonnenblumengelb** – Akzent, „Neues“, Sonnenblumenblätter, positive Hervorhebung.
-- **Maibaum-Blau** – funktionale Akzentfarbe und lokaler Verweis; keine große Marken- oder Bannerfläche.
-- **Ziegelrot** – punktueller lokaler Architekturakzent, insbesondere Rathaus; nicht als dominante UI-Farbe.
-- **warmes Weiß/Creme** – Hauptflächen und Lesebereiche.
+Der Dreiklang
 
-### 6.1 Rolle von Blau
+> **Informieren · Verstehen · Nachfragen**
 
-Blau wird **sparsam und funktional** eingesetzt, etwa für:
+bleibt als sekundäres Kommunikationselement verfügbar, ist aber **kein Pflichtbestandteil des Banners**. Er kann z. B. in Kommunikationsmaterial, Styleguide, „Über Feldkirchen im Blick“ oder einzelnen Kampagnenflächen verwendet werden.
 
-- Links,
-- Informationszustände,
-- kleinere Icons,
-- Fokus-/Interaktionselemente,
-- Maibaumdarstellung.
+## 6. Sonnenblumenblätter
 
-Große blaue Schrift- oder Bannerflächen sind zu vermeiden. Insbesondere darf Blau nicht so gesättigt sein, dass es grell oder violett wirkt und mit Grün/Gelb konkurriert.
+Die drei gelben Sonnenblumenblätter sind der **grafische rote Faden**.
 
-## 7. Typografie
+Sie werden eingesetzt:
 
-Die Typografie soll modern, gut lesbar und ruhig sein.
+- in der Bildmarke,
+- im Banner,
+- im PWA-Icon,
+- als Grundlage für das Navigationssymbol **„Neues“**,
+- als kleine Abschnitts- oder Kommunikationsakzente.
 
-Vorrang haben:
+Sie werden nicht inflationär verwendet. Die Blätter stehen für Offenheit, positive Entwicklung und die erkennbare Verbindung zu BÜNDNIS 90/DIE GRÜNEN.
 
-- klare Sans-Serif-Schriften,
-- deutliche Hierarchie,
+## 7. Farben
+
+Verbindliche Rollen:
+
+| Rolle | Richtwert | Verwendung |
+|---|---|---|
+| Primärgrün | `#0F6B4F` | Marke, aktive Navigation, wichtige Buttons |
+| Dunkelgrün | `#064E40` | Wortmarke, starke Headlines |
+| Mintgrün | `#BFE3D1` | ruhige Flächen, Hintergründe |
+| Akzentblau | `#7ECBF0` / dunklere lesbare Textvariante | Links, Fokus, Information, ausgewählte Hervorhebung |
+| Ziegelrot | `#C86A3F` | Rathaus / lokale Architekturreferenz |
+| Sonnenblumengelb | `#FFD84D` | Blätter, „Neues“, gezielte Akzente |
+| Warmes Off-White | `#FAF8F3` | Haupt- und Leseflächen |
+
+Blau ist **keine dominante Markenfarbe**. Es wird gezielt für Links, Interaktion, Informationszustände und einzelne kommunikative Hervorhebungen eingesetzt.
+
+## 8. Typografie
+
+Gestalterische Referenzschrift ist **Inter** bzw. eine technisch gleichwertige, gut lesbare Sans-Serif-Familie.
+
+Verbindliche Prinzipien:
+
+- hohe mobile Lesbarkeit,
+- klare Hierarchie,
 - großzügige Zeilenabstände,
-- ausreichend große mobile Schriftgrade,
-- keine kampagnenhafte Versal-/Schrägtypografie in normalen App-Inhalten.
+- normaler Fließtext ohne kampagnenhafte Versal-/Schrägtypografie,
+- technische Einbindung nur mit geklärter Lizenz bzw. geeigneter Webfont-/Systemfont-Strategie.
 
-Die exakte produktive Schriftfamilie wird später technisch festgelegt. Sie muss Web/PWA-tauglich, lizenzierbar, performant und barrierearm sein.
+Schriftdateien selbst gehören nicht in die Markenasset-Ablage.
 
-## 8. Bildsprache
+## 9. Navigation und Icons
 
-FIB verwendet vorzugsweise **echte lokale Fotos aus Feldkirchen**.
+Hauptnavigation:
 
-Geeignete Motivgruppen:
+- **Neues** – gelbe Strahlen/Blätter über einem angedeuteten Halbkreis; keine volle Sonne,
+- **Im Blick** – Auge,
+- **Sitzungen** – Personengruppe/Gremium,
+- **Suche** – Lupe.
 
-- Rathaus und Gemeindezentrum,
-- Kirche und Maibaum,
-- Ortsbild und Mobilität,
-- Natur und Naherholung,
-- Infrastruktur,
-- Alltag und öffentliche Räume,
-- konkrete Orte, auf die sich Meldungen oder Vorgänge beziehen.
+Die Icons sind als eigenständige SVG-Master unter `assets/brand/icons/` abgelegt. Information darf nie ausschließlich über Farbe vermittelt werden; Icon und Textlabel gehören in der Navigation zusammen.
 
-Die Fotos sollen:
+## 10. Sekundärnavigation
 
-- natürlich wirken,
-- nicht unnötig inszeniert sein,
-- lokale Wiedererkennbarkeit bieten,
-- sachlich zum Inhalt passen,
-- keine falsche inhaltliche Nähe suggerieren.
+Inhaltliche Hauptnavigation und organisatorische Navigation bleiben getrennt.
 
-Für Meldungen gilt: Wenn ein reales inhaltlich passendes Foto vorhanden ist, hat es Vorrang vor einem allgemeinen FIB-Standardmotiv.
+### Smartphone
 
-## 9. PWA-Icon
+Organisatorische Punkte erscheinen im Menü, insbesondere:
 
-Das PWA-Icon verwendet die vereinfachte Bildmarke ohne Text.
+- Über Feldkirchen im Blick,
+- Newsletter,
+- Kontakt,
+- Benachrichtigungen/Einstellungen,
+- Datenschutz / Impressum soweit erforderlich.
 
-Kennzeichen:
+### Tablet / Desktop
 
-- Rathaus, Kirche und ggf. Maibaum nur so weit reduziert, dass sie auch bei kleinen Größen erkennbar bleiben,
-- Sonnenblumenblätter als wiederkehrender Akzent,
-- ruhiger heller oder grüner Hintergrund,
-- keine kleinteiligen Fassadendetails,
-- gute Erkennbarkeit bei 128 × 128 px und kleiner.
+Die organisatorische Navigation kann als dezente Textnavigation im oberen rechten Bereich erscheinen.
 
-Für die finale Umsetzung sind mindestens Standard-, maskable- und monochrome Varianten vorzusehen.
+## 11. Link zur GRÜNEN-Homepage
 
-## 10. Navigation und Icons
-
-Die öffentliche Navigation folgt der fachlichen UX-Logik. Die visuelle Icon-Sprache ist reduziert und eindeutig.
-
-### 10.1 „Neues“
-
-Icon: **Strahlen eines Halbkreises** – keine volle Sonne.
-
-Bedeutung: neue bzw. aktuelle Entwicklungen. Das Symbol greift zugleich die Sonnenblumenblätter bzw. deren Strahlencharakter auf.
-
-### 10.2 „Im Blick“
-
-Icon: **Auge**.
-
-Bedeutung: Zusammenhänge verstehen. Dieser Einstieg bündelt öffentlich Themen und Vorgänge, ohne die interne Fachlogik in der Hauptnavigation erklären zu müssen.
-
-### 10.3 „Sitzungen“
-
-Icon: klarer Sitzungs-/Gremienbezug, vorzugsweise Personen-/Gremiensymbol oder Kalender in der technisch final getesteten Variante.
-
-### 10.4 „Suche“
-
-Icon: Lupe.
-
-### 10.5 Grundsatz
-
-Icons sollen ihre Funktion direkt erklären. Abstrakte Zeichen, die eher für Dokumente, Kartenstandorte oder Ankündigungen stehen, werden vermieden, wenn sie die tatsächliche FIB-Funktion nicht ausreichend treffen.
-
-## 11. Navigation zur Website der GRÜNEN Feldkirchen
-
-FIB ist dieselbe Anwendung unabhängig vom Einstieg:
-
-- direkt als installierte PWA bzw. über einen direkten FIB-Aufruf,
-- aus der Website der GRÜNEN Feldkirchen heraus.
-
-Innerhalb von FIB muss deshalb jederzeit ein klarer Weg zurück zur übergeordneten Website der GRÜNEN Feldkirchen vorhanden sein.
-
-Vorgesehene Gestaltung:
+Beim direkten Einstieg in Feldkirchen im Blick – z. B. PWA, Direktlink, QR-Code oder Suchmaschine – erscheint deutlich, aber untergeordnet:
 
 > **← Zur Website der GRÜNEN in Feldkirchen**
 
-Der Rücksprung sitzt unmittelbar unter dem FIB-Banner bzw. Header und ist deutlich erkennbar, aber visuell dem eigentlichen FIB-Inhalt untergeordnet.
+Gestaltung:
 
-Technisch ist es ein normaler externer bzw. übergeordneter Website-Link; FIB selbst bleibt dieselbe Anwendung und erhält keine gesonderte „eingebettete“ Produktvariante.
+- ruhiger grüner Hintergrund,
+- Sonnenblumenlogo der GRÜNEN darf enthalten sein,
+- weiße bzw. ausreichend kontrastierende Schrift,
+- keine konkurrierende zweite Hauptnavigation.
 
-## 12. Beispielanwendungen
+Wird Feldkirchen im Blick **bereits von der Website der GRÜNEN Feldkirchen aus aufgerufen bzw. dort eingebunden**, entfällt dieser Rücksprung, weil die übergeordnete Website-Navigation bereits sichtbar ist.
 
-Die visuelle Identität muss mindestens an folgenden konkreten Anwendungstypen geprüft werden:
+## 12. Responsive Screenprinzipien
 
-### 12.1 Startseite
+### Smartphone
 
-- FIB-Banner / Logo,
-- Rücksprung zur GRÜNEN-Website,
-- aktuelle Meldungen/Entwicklungen,
-- anstehende Sitzungen,
-- geänderte Themen/Vorgänge,
-- untere mobile Navigation.
+- einspaltig,
+- kompakter Banner mit kleiner Illustration,
+- Rücksprung zur GRÜNEN-Homepage nur bei direktem Einstieg,
+- Hauptnavigation dauerhaft am unteren Bildschirmrand,
+- Sekundärnavigation im Menü.
 
-### 12.2 Listenansicht
+### Tablet
 
-- kompakte Einträge,
-- Foto/Thumbnail soweit sinnvoll,
-- Titel und Kurztext,
-- Datum/Aktualisierungsstatus,
-- dezente Kategorie- oder Kontextkennzeichnung,
-- klare Filter- und Sortiermöglichkeiten.
+- flacher Split-Banner,
+- zwei- bzw. mehrspaltige Inhaltsbereiche wo sinnvoll,
+- Hauptnavigation gut sichtbar,
+- Sekundärnavigation als Menü oder dezente Kopfzeile.
 
-### 12.3 Detailansicht
+### Desktop
 
-- klare inhaltliche Hierarchie,
-- Bild nur wenn inhaltlich passend,
-- Titel, Kurzfassung und Datumslogik,
-- Sachinformation,
-- Quellen,
-- Bezüge,
-- „Mehr wissen?“,
-- „Unsere Einordnung“ klar getrennt,
-- Info-/Transparenzzugang.
+- flacher Split-Banner,
+- größere Breite für mehrere Inhaltsblöcke nebeneinander,
+- organisatorische Navigation oben rechts,
+- bei Einbettung in die GRÜNEN-Homepage kein zusätzlicher Rücksprung-Link.
 
-Die Beispielmockups dienen der Anwendung des Designsystems. Sie sind keine neue fachliche Informationsarchitektur und dürfen die Festlegungen aus `docs/UX-und-Informationsarchitektur.md` nicht überschreiben.
+## 13. Beispielansichten
 
-## 13. Positionierung gegenüber vergleichbaren Plattformtypen
+Die Styleguide-Referenzen zeigen exemplarisch:
 
-Die Vergleichsbetrachtung dient **nicht als Produkt-Ranking**, sondern zur Klärung der eigenen Produktidentität.
+- Startseite,
+- Listenansicht,
+- Detailansicht,
+- mobile PWA,
+- Tablet,
+- Desktop / Einbettung in die GRÜNEN-Homepage.
 
-### 13.1 Gegenüber klassischen kommunalen Kommunikations-/Service-Apps
+Mockups konkretisieren das Design, überschreiben aber nicht die fachlichen UX-Regeln aus `docs/UX-und-Informationsarchitektur.md`.
 
-Solche Angebote konzentrieren sich typischerweise stark auf:
+## 14. Bildsprache für Inhalte
 
-- schnelle Nachrichten,
-- Push-Kommunikation,
-- Services,
-- Rückmeldungen oder Umfragen.
+Reale, inhaltlich passende Feldkirchen-Fotos haben Vorrang vor allgemeinen Standardmotiven.
 
-FIB übernimmt davon die Vorteile einer mobilen, aktuellen und leicht zugänglichen Kommunikation, setzt aber einen anderen Schwerpunkt:
+Geeignete Motive umfassen Rathaus/Gemeindezentrum, Kirche, Ortsbild, Mobilität, Natur, Infrastruktur und konkrete Orte eines Vorgangs. Bilder müssen sachlich passen, lokale Wiedererkennbarkeit bieten und dürfen keine falsche inhaltliche Nähe erzeugen.
 
-> **Nicht nur mitteilen, was passiert, sondern erklären, wie ein Sachverhalt zusammenhängt und sich entwickelt.**
+## 15. Produktionsassets
 
-Das Design unterstützt dies durch Wissenshierarchie, ruhige Darstellung und die Verbindung von Meldung, Vorgang und Thema.
+Verbindlicher Ablageort:
 
-### 13.2 Gegenüber Beteiligungsplattformen
+`assets/brand/`
 
-Beteiligungsplattformen sind typischerweise stärker auf formale Prozesse, Vorschläge, Abstimmungen, Beteiligungsphasen oder Gremien ausgerichtet.
+Unterordner:
 
-FIB kann auf Beteiligungsmöglichkeiten aufmerksam machen und Beteiligung erklären, ist aber keine allgemeine Beteiligungsplattform.
+- `logo/`
+- `banner/`
+- `icons/`
+- `pwa/`
+- `social/`
+- `reference/`
 
-Sein Kern bleibt:
+SVG ist grundsätzlich das Masterformat für Logo, Banner und Icons. Rasterformate werden daraus reproduzierbar exportiert.
 
-> **lokales Geschehen erschließen, aktuellen Wissensstand verständlich machen und Zusammenhänge sichtbar machen.**
+PWA-Rastergrößen umfassen mindestens 192×192 und 512×512 px sowie maskable Varianten. Social Preview: 1200×630 px.
 
-### 13.3 Eigene visuelle Nische
+## 16. Öffentlicher Name
 
-FIB verbindet dadurch:
-
-- die Zugänglichkeit einer modernen lokalen App,
-- die inhaltliche Tiefe eines Wissensangebots,
-- konkrete lokale Identität,
-- transparente politische Herkunft,
-- und eine ruhige redaktionelle Gestaltung.
-
-Dies unterscheidet FIB sowohl von generischen White-Label-Kommunikationsapps als auch von komplexeren Prozess-/Beteiligungsplattformen.
-
-## 14. Noch offene Detailentscheidungen
-
-Für den **konzeptionellen G2-Abschluss** ist nur noch der Banner-/Landingpage-Text ausdrücklich freizugeben und anschließend die Dokumentation abschließend auf Widerspruchsfreiheit zu prüfen.
-
-Die folgenden Punkte werden in der späteren technischen/gestalterischen Umsetzung konkretisiert und blockieren G2 nicht:
-
-- produktionsfähige Logo-Dateien und exakte Geometrien,
-- produktive Farbwerte mit Barrierefreiheitsprüfung und CI-Abgleich,
-- finale Webschrift,
-- finale SVG-/Icon-Geometrien,
-- Bildrechte/Provenienz und technische Ablage,
-- maskable/monochrome PWA-Assets.
+Öffentlich wird grundsätzlich **„Feldkirchen im Blick“** ausgeschrieben. Die Abkürzung **FIB** ist intern. Auf der Seite **„Über Feldkirchen im Blick“** kann sie einmal als Kurzform eingeführt und dort verwendet werden.
 
 ## Änderungshistorie
 
 | Version | Datum | Änderung |
 |---|---|---|
-| 1.1 | 01.10.2026 | Banner-/Landingpage-Text als aus Management Approach und Marketing-Konzept abgeleitete Arbeitsfassung ergänzt; konzeptionelle G2-Offenpunkte von späteren Produktionsdetails getrennt. |
-| 1.0 | 01.10.2026 | Eigenständige visuelle Primärquelle angelegt; Stilgrundsätze, Logo, Banner, Sonnenblumenblätter als roter Faden, Farben, Bildsprache, PWA-Icon, Navigation, Rücksprung zur GRÜNEN-Website, Beispielanwendungen und Positionierung gegenüber anderen Plattformtypen dokumentiert. |
+| 2.0 | 01.10.2026 | Visuelles System finalisiert: Rathausdarstellung mit Pultdach und vier Fahnenmasten, Kirche und Sonnenblumenblätter; Maibaum aus finaler Bildmarke entfernt; zwei responsive Bannerformen, wolken-/abstrakter Hintergrund ohne Bergwirkung, finaler Claim, sekundärer Dreiklang, Farbrollen, Navigation, GRÜNEN-Rücksprung und Produktionsasset-Struktur verbindlich festgelegt. |
+| 1.1 | 01.10.2026 | Banner-/Landingpage-Text als Arbeitsfassung ergänzt. |
+| 1.0 | 01.10.2026 | Eigenständige visuelle Primärquelle angelegt. |
