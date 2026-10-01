@@ -4,13 +4,13 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 2.2 | 01.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
+| 2.3 | 01.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
 
 ## 1. Zweck und Verbindlichkeit
 
 Dieses Dokument ist die verbindliche Primärquelle für die visuelle Identität von **Feldkirchen im Blick**. Es ergänzt `docs/UX-und-Informationsarchitektur.md` und `docs/Marketing-und-Kommunikation.md`.
 
-Die produktionsfähigen Masterassets liegen unter `assets/brand/`. Das dortige `README.md` definiert Dateinamen, Formate und Exportgrößen.
+Die produktionsfähigen bzw. freigegebenen Markenassets liegen unter `assets/brand/`. Das dortige `README.md` definiert Dateinamen, Status und noch offene technische Exporte.
 
 ## 2. Visuelle Grundhaltung
 
@@ -200,7 +200,7 @@ Sie werden eingesetzt:
 - in der Bildmarke,
 - im Banner,
 - im PWA-Icon,
-- als Grundlage für das Navigationssymbol **„Neues“**,
+- als gestalterische Grundlage für das Navigationssymbol **„Neues“**,
 - als kleine Abschnitts- oder Kommunikationsakzente.
 
 Sie werden nicht inflationär verwendet. Die Blätter stehen für Offenheit, positive Entwicklung und die erkennbare Verbindung zu BÜNDNIS 90/DIE GRÜNEN.
@@ -239,7 +239,7 @@ Schriftdateien selbst gehören nicht in die Markenasset-Ablage.
 
 Hauptnavigation:
 
-- **Neues** – gelbe Strahlen/Blätter über einem angedeuteten Halbkreis; keine volle Sonne,
+- **Neues** – fünf gelbe strahlen-/blattartige Formen im Bogen, ohne Text und ohne Hintergrund; keine volle Sonne und kein zusätzlicher Halbkreis,
 - **Im Blick** – Auge,
 - **Sitzungen** – Personengruppe/Gremium,
 - **Suche** – Lupe.
@@ -346,16 +346,19 @@ Unterordner:
 - `banner/`
 - `icons/`
 - `pwa/`
+- `elements/`
 - `social/`
 - `reference/`
 
-SVG ist grundsätzlich das Masterformat für Logo, Bannerillustration und Icons. Rasterformate werden daraus reproduzierbar exportiert.
+Für Icons ist SVG bereits das produktive Masterformat. Für Logo und Bannerillustration ist SVG das **Ziel-Masterformat**; aktuell freigegebene Rasterreferenzen bleiben bis zur verlustfreien Vektorisierung verbindlich. Eine Vektorisierung darf die Gestaltung nicht neu interpretieren.
 
 Für den Desktop-/Tablet-Banner sind Text und Illustration **getrennte technische Bestandteile**. Ein zusammengesetztes Rasterbild darf als Styleguide-/Mockup-Referenz erhalten bleiben, ist aber **nicht die bevorzugte Produktionsform** für die Web-App.
 
 Auch mobil bleiben Text und Illustration technisch getrennt: Die Wortmarke, der Claim und die Kurzbeschreibung werden als HTML-/UI-Text über die Illustration gelegt. Ein vollständig zusammengesetztes Mobile-Bannerbild ist nur Referenz, nicht die bevorzugte Produktionsform.
 
 PWA-Rastergrößen umfassen mindestens 192×192 und 512×512 px sowie maskable Varianten. Social Preview: 1200×630 px.
+
+Die konkrete Assetübersicht und der technische Status stehen in `assets/brand/README.md`.
 
 ## 16. Öffentlicher Name
 
@@ -365,6 +368,7 @@ PWA-Rastergrößen umfassen mindestens 192×192 und 512×512 px sowie maskable V
 
 | Version | Datum | Änderung |
 |---|---|---|
+| 2.3 | 01.10.2026 | Navigationssymbol „Neues“ auf fünf gelbe strahlen-/blattartige Formen ohne Halbkreis finalisiert; Produktionsasset-Status präzisiert: SVG bereits für Icons, für Logo/Banner Ziel-Masterformat bei weiterhin verbindlichen Rasterreferenzen. |
 | 2.2 | 01.10.2026 | Mobile Bannerlogik finalisiert: Illustration bleibt erhalten, Text liegt als echter UI-Text mit hellem halbtransparentem Overlay darüber; mobile Kurzbeschreibung festgelegt; kompakte GRÜNEN-Leiste eigenständig direkt unter dem Banner positioniert und bei eingebettetem Aufruf ausgeblendet. |
 | 2.1 | 01.10.2026 | Tablet-/Desktop-Banner technisch als echter responsiver Zwei-Spalten-Banner festgelegt: Text links, Illustration rechts, maximale Containerbreite, keine unbegrenzte Skalierung auf breiten Bildschirmen, getrennte Produktionsbestandteile. |
 | 2.0 | 01.10.2026 | Visuelles System finalisiert: Rathausdarstellung mit Pultdach und vier Fahnenmasten, Kirche und Sonnenblumenblätter; Maibaum aus finaler Bildmarke entfernt; zwei responsive Bannerformen, wolken-/abstrakter Hintergrund ohne Bergwirkung, finaler Claim, sekundärer Dreiklang, Farbrollen, Navigation, GRÜNEN-Rücksprung und Produktionsasset-Struktur verbindlich festgelegt. |
