@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 2.2 | 01.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
+| 2.3 | 01.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
 
 ## Statusmodell
 
@@ -28,11 +28,11 @@ Es gelten die zentralen Status aus `PustefixReisen/pustivo/docs/governance/Dokum
 | Dokumentationsübernahme Demonstrator → Echtsystem | **Abgeschlossen** | alle identifizierten weiterhin erforderlichen Grundlagen übernommen oder integriert; Querverweis-, Terminologie- und Konsistenzprüfung durchgeführt |
 | G3 Datenanforderungen / Datenmodell | **In Arbeit** | aus Fach- und UX-Konzept ableiten; eigenständige Entitäten für Meldung/Vorgang/Thema, n:m-Beziehungen, Wirkungsrollen, Versionierung, Rechercheaufträge, Such-/PWA-/Mehr-wissen-Daten berücksichtigen |
 | G4 Schutzbedarf / Datenschutz / Offline | **Geplant** | Schutzklassen und Betriebsanforderungen festlegen |
-| G5 Zielarchitektur / Stack / Hosting / Deployment | **Geplant** | technische Zielarchitektur entscheiden; modellunabhängige KI-Regelschicht und Modelltests berücksichtigen |
+| G5 Zielarchitektur / Stack / Hosting / Deployment | **Geplant** | Zielarchitektur muss produktionsreife Entwicklung auf Entwickler-Infrastruktur und späteren Umzug auf GRÜNEN-Webserver plus eigenes Supabase-Projekt ohne persönliche Bindungen unterstützen; kein Supabase-Self-Hosting |
 | G6 Rollen / Rechte / Workflow | **Geplant** | konkretes Berechtigungs- und Freigabemodell festlegen |
 | G7 Betrieb | **Geplant** | Backup, Restore, Monitoring und Kostenkontrolle definieren |
 | G8 Governance / Repository / Dokumentation | **Teilweise umgesetzt** | Echtsystem als Dokumentationshoheit etabliert; Demonstrator-Übernahme abgeschlossen; zentrale Standards und späterer Gründungsaudit weiterführen |
-| G9 Migration | **Geplant** | Demonstratordaten prüfen, transformieren und validieren |
+| G9 Migration | **Geplant** | Übergang auf GRÜNEN-Infrastruktur nach `docs/Migrationsstrategie.md`; wiederholbares Migrations-Runbook statt separatem Migrations-Probelauf |
 | G10 Go-live-Abnahme | **Geplant** | messbare Abnahmekriterien festlegen |
 | Gründungsaudit | **Geplant** | Vollständigkeit und Widerspruchsfreiheit prüfen |
 | Technische Umsetzung | **Geplant** | beginnt erst nach abgeschlossenem Gründungsaudit |
@@ -126,6 +126,21 @@ bleibt als sekundäres Kommunikationselement verfügbar, ist aber kein Pflichtbe
 
 Marketing- und Kommunikationsdetails stehen in `docs/Marketing-und-Kommunikation.md`.
 
+## Migrationsgrundsatz – Entwickler → GRÜNEN-Infrastruktur
+
+Verbindliche Primärquelle: `docs/Migrationsstrategie.md`.
+
+Festgelegt ist:
+
+- FIB wird zunächst vollständig produktionsreif auf der Infrastruktur des Entwicklers aufgebaut und erprobt;
+- Zielbetrieb ist ein GRÜNEN-Webserver plus eigenes Supabase-Projekt unter Organisationsverantwortung;
+- Supabase-Self-Hosting ist ausgeschlossen;
+- Architektur und Deployment dürfen keine persönliche Bindung an Domains, Projekt-IDs, Accounts oder Secrets enthalten;
+- Datenbanklogik, Edge Functions und relevante Konfiguration werden reproduzierbar im Repository bzw. in einem Runbook abgebildet;
+- ein separater zusätzlicher Migrations-Probelauf ist nicht erforderlich;
+- die eigentliche Migration in die noch wegwerfbare GRÜNEN-Zielumgebung darf vor Go-live bei Bedarf verworfen und wiederholt werden;
+- G9 erstellt hierfür ein vollständiges Migrations-Runbook und eine Abnahmecheckliste.
+
 ## Dokumentationsübernahme – abgeschlossen
 
 Übernommen bzw. konsolidiert sind:
@@ -147,9 +162,10 @@ Die vollständige Zuordnung und Abschlussprüfung stehen in `docs/Dokumentations
 
 Der Demonstrator bleibt historische, fachliche und visuelle Referenz; laufende Dokumentation wird ausschließlich im Echtsystem fortgeschrieben.
 
-## Neue Echtsystem-Dokumentation aus G2
+## Neue Echtsystem-Dokumentation
 
 - Visuelle Identität / Logo / Bildsprache / UI-Stil → `docs/Visuelle-Identitaet-und-Bildkonzept.md`
+- Migration Entwickler-Infrastruktur → GRÜNEN-Infrastruktur → `docs/Migrationsstrategie.md`
 
 ## Modellunabhängigkeit der KI
 
@@ -168,6 +184,7 @@ Für die spätere technische Umsetzung ist vorzusehen:
 
 | Version | Datum | Änderung |
 |---|---|---|
+| 2.3 | 01.10.2026 | Migrationsgrundsatz verbindlich ergänzt: produktionsreife Entwicklung auf Entwickler-Infrastruktur, späterer Umzug auf GRÜNEN-Webserver plus eigenes Supabase-Projekt, kein Self-Hosting, reproduzierbare Migration mit Runbook statt separatem Probelauf. |
 | 2.2 | 01.10.2026 | G2 nach abschließender Widerspruchs- und Vollständigkeitsprüfung abgeschlossen; G3 als nächste aktive Phase gesetzt. |
 | 2.1 | 01.10.2026 | G2 an finalisierte visuelle Identität angepasst: finaler Claim und Bannertexte, responsive Split-/Mobile-Overlay-Logik, finale Bannerillustration, Logo ohne Maibaum, aktuelle Navigationsicons und Assetstruktur übernommen; veraltete Banner-Arbeitsfassung entfernt. |
 | 2.0 | 01.10.2026 | UX-Navigation auf „Neues | Im Blick | Sitzungen | Suche“ konsolidiert; Bannertext als Arbeitsfassung aufgenommen; G2-Offenpunkt auf Textfreigabe plus Abschlussprüfung reduziert. |
