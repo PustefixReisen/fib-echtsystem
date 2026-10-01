@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 1.8 | 01.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
+| 1.9 | 01.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
 
 ## 1. Zweck
 
@@ -48,11 +48,12 @@ Für FIB gelten insbesondere:
 | Themen- und Vorgangslogik | `docs/Themen-und-Vorgangslogik.md` | vorhanden |
 | Recherche / Quellenmonitor | `docs/Recherche-und-Quellenmonitor.md` | vorhanden |
 | „Mehr wissen?“ | `docs/Mehr-wissen.md` | vorhanden |
-| UX / Informationsarchitektur / Benutzerführung | `docs/UX-und-Informationsarchitektur.md` | in Arbeit – fachlich weitgehend konsolidiert |
-| Visuelle Identität / Logo / Bildsprache / UI-Stil | `docs/Visuelle-Identitaet-und-Bildkonzept.md` | in Arbeit – Grundrichtung festgelegt |
+| UX / Informationsarchitektur / Benutzerführung | `docs/UX-und-Informationsarchitektur.md` | vorhanden |
+| Visuelle Identität / Logo / Bildsprache / UI-Stil | `docs/Visuelle-Identitaet-und-Bildkonzept.md` | vorhanden |
 | Marketing / Kommunikation | `docs/Marketing-und-Kommunikation.md` | vorhanden |
 | SEO / Auffindbarkeit | `docs/SEO-und-Auffindbarkeit.md` | vorhanden |
 | KI-Betrieb / Kosten | `docs/KI-Betrieb-und-Kosten.md` | vorhanden |
+| Migrationsstrategie Entwickler → GRÜNEN-Infrastruktur | `docs/Migrationsstrategie.md` | vorhanden |
 | Übernahme Demonstrator-Dokumentation | `docs/Dokumentationsuebernahme-Demonstrator.md` | abgeschlossen |
 | Architektur | noch anzulegen | offen |
 | Datenmodell | noch anzulegen | offen |
@@ -148,6 +149,7 @@ Für dauerhaft gepflegte Dokumente gilt grundsätzlich:
 
 | Version | Datum | Änderung |
 |---|---|---|
+| 1.9 | 01.10.2026 | `Migrationsstrategie.md` als Primärquelle für den späteren Übergang von Entwickler- auf GRÜNEN-Infrastruktur aufgenommen; G2-Dokumentstatus auf vorhanden konsolidiert. |
 | 1.8 | 01.10.2026 | `Visuelle-Identitaet-und-Bildkonzept.md` als eigene Primärquelle aufgenommen; Abgrenzung zu UX dokumentiert. |
 | 1.7 | 30.09.2026 | Dokumentationsübernahme nach Querverweis-, Terminologie- und Konsistenzprüfung als abgeschlossen markiert; visuelles Konzept als neue G2-Entscheidung abgegrenzt. |
 | 1.6 | 30.09.2026 | Frontendregeln in UX v2.5 integriert; Werte- und Sprachgrundlagen ins Echtsystem übernommen. |
