@@ -1,14 +1,14 @@
-# Marketing und Kommunikation – Feldkirchen im Blick (FIB)
+# Marketing und Kommunikation – Feldkirchen im Blick
 
 ## Dokumentstand
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 1.1 | 01.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
+| 1.2 | 01.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
 
 ## 1. Zweck
 
-Dieses Dokument ist die verbindliche Primärquelle für Verbreitung, Reichweite und Nutzerbindung von Feldkirchen im Blick.
+Dieses Dokument ist die verbindliche Primärquelle für Verbreitung, Reichweite, Bindung und öffentliche Kommunikationsbotschaften von **Feldkirchen im Blick**.
 
 Grundprinzip:
 
@@ -54,72 +54,67 @@ Ziel ist nicht maximale Reichweite, sondern **relevante Reichweite und freiwilli
 
 ## 4. Kommunikationskern, Claim und Botschaften
 
-### 4.1 Inhaltlicher Kommunikationskern
+### 4.1 Kommunikationskern
 
-Feldkirchen im Blick bündelt relevante Informationen aus Rathaus, Presse und weiteren Quellen, führt verstreute Informationen zusammen, stellt Zusammenhänge her und bietet Quellen, Hintergründe und Vertiefungsmöglichkeiten.
+Feldkirchen im Blick führt relevante Informationen aus Rathaus, Presse und weiteren Quellen zusammen, macht Entwicklungen nachvollziehbar, stellt Zusammenhänge her und bietet Quellen, Hintergründe und Vertiefungsmöglichkeiten.
 
-Die Kommunikation darf nicht den Eindruck erwecken, Feldkirchen im Blick sei eine neutrale öffentliche Stelle oder ein investigatives Medium. Der Absender BÜNDNIS 90/DIE GRÜNEN Feldkirchen bleibt transparent.
+Das Angebot erhebt **keinen investigativen Anspruch**. Formulierungen wie „was dahintersteckt“ werden deshalb nicht als Hauptclaim verwendet, weil sie ein Aufdeckungsversprechen nahelegen können, das Feldkirchen im Blick nicht geben will.
 
-### 4.2 Bisherige Kernbotschaften aus dem Demonstrator
+Der Absender BÜNDNIS 90/DIE GRÜNEN Feldkirchen bleibt transparent. Sachinformation und politische Einordnung werden sichtbar getrennt.
 
-Die folgenden Formulierungen wurden im Demonstrator bereits entwickelt und werden als Kommunikationsfundus in das Echtsystem übernommen. **Claim und endgültige Kernbotschaften werden im nächsten Schritt gemeinsam finalisiert.**
+### 4.2 Finaler Claim
 
-1. **Was in Feldkirchen passiert – gesammelt aus Presse, Rathaus und weiteren Quellen.**  
-   Verständlich zusammengefasst, mit Quellen, Hintergründen und weiterführenden Informationen.
+> **Mehr Überblick. Besser verstehen.**
 
-2. **Nicht alles steht an einem Ort. Jetzt schon.**  
-   Feldkirchen im Blick sammelt relevante Informationen aus Presse, Rathaus, Internetseiten und weiteren Quellen – und ergänzt Hintergründe, Zusammenhänge und weiterführende Fragen.
+Der Claim ergänzt den Produktnamen, ohne „Feldkirchen“ oder „Blick“ zu wiederholen. Er beschreibt den tatsächlichen Nutzen: verstreute Informationen zusammenzuführen und verständlicher zu machen.
 
-3. **Was man sonst leicht verpasst.**  
-   Meldungen aus Presse, Rathaus und anderen Quellen gebündelt an einem Ort. Dazu Hintergründe, Quellen und mehr zum Weiterdenken.
+### 4.3 Kurzer Erklärungstext
 
-4. **Mehr Überblick über Feldkirchen.**  
-   Aktuelle Informationen aus verschiedenen Quellen – verständlich zusammengeführt und um Hintergründe und weiterführende Informationen ergänzt.
+> **Relevante Informationen aus Rathaus, Presse und weiteren Quellen – verständlich zusammengeführt und in ihren Zusammenhängen erklärt.**
 
-5. **Was neu ist. Was man sonst leicht verpasst. Was dahintersteckt.**  
-   Feldkirchen im Blick sammelt relevante Informationen aus Presse, Rathaus und weiteren Quellen und ergänzt Hintergründe, Zusammenhänge und weiterführende Fragen.
+Dieser Satz eignet sich insbesondere für Landingpage/Banner, Postkarte, Kärtchen und kurze Produktbeschreibungen.
 
-### 4.3 Prüfung vor der Finalisierung
+### 4.4 Sekundärer Dreiklang
 
-Die Formulierung **„was dahintersteckt“** wird nicht als endgültiger Claim übernommen. Sie kann einen investigativen Anspruch nahelegen, den Feldkirchen im Blick nicht erheben will. Der tatsächliche Mehrwert liegt vor allem darin,
+> **Informieren · Verstehen · Nachfragen**
 
-- verstreute Informationen zusammenzuführen,
-- aktuelle Entwicklungen nachvollziehbar zu machen,
-- Quellen sichtbar zu machen,
-- länger laufende Vorgänge zu verfolgen,
-- und Zusammenhänge zwischen Meldungen, Vorgängen und Themen herzustellen.
+Der Dreiklang wird als ergänzendes Kommunikationselement in der Hinterhand behalten. Er ist **kein Pflichtbestandteil des Banners**.
 
-Bei der Finalisierung werden Claim und Botschaften deshalb auf diesen tatsächlichen Leistungsumfang zugespitzt.
+Geeignete Einsatzorte:
 
-### 4.4 Bisherige analoge Kurztexte
+- „Über Feldkirchen im Blick“,
+- Styleguide,
+- Postkarte/Kärtchen,
+- ausgewählte Kommunikationsflächen,
+- gegebenenfalls Social-/Newsletter-Kommunikation.
 
-**Postkarte – bisheriger Demonstrator-Stand**
+„Nachfragen“ passt zum Prinzip „Mehr wissen?“ und vermeidet das missverständliche Versprechen einer unmittelbaren Beteiligungsplattform.
 
-> **Feldkirchen im Blick**  
-> **Was neu ist. Was man sonst leicht verpasst. Was dahintersteckt.**
->
-> Presse · Rathaus · weitere Quellen  
-> verständlich gebündelt und vertieft
+### 4.5 Unterstützende Botschaften
 
-Rückseite sinngemäß:
+Je nach Medium können folgende Botschaften verwendet werden:
 
-> Informationen zu Feldkirchen sind oft auf viele Stellen verteilt: in Presseberichten, Gemeinderatsunterlagen, Mitteilungen der Gemeinde, Internetseiten, bei Vereinen oder Initiativen. **Feldkirchen im Blick führt diese Informationen zusammen.** Dazu kommen Hintergründe, Quellen, Zusammenhänge und weiterführende Fragen.
+- **Was man sonst leicht verpasst.**
+- **Relevante Informationen gebündelt an einem Ort.**
+- **Zusammenhänge sichtbar machen.**
+- **Aktuelle Entwicklungen nachvollziehbar machen.**
+- **Quellen, Hintergründe und Vertiefung für alle, die genauer wissen wollen, was passiert.**
 
-**Kärtchen – bisheriger Demonstrator-Stand**
+Die frühere Formulierung **„Nicht alles steht an einem Ort. Jetzt schon.“** wird nicht als zentrale Botschaft verwendet, weil sie Vollständigkeit suggerieren kann.
 
-> **Feldkirchen im Blick**  
-> **Was man sonst leicht verpasst.**
->
-> Presse · Rathaus · weitere Quellen
+## 5. Mission-Text / Wofür ist Feldkirchen im Blick da?
 
-Rückseite:
+Kurzfassung:
 
-> **Alles an einem Ort.**  
-> Aktuelle Meldungen, Hintergründe und Quellen zu Feldkirchen.
+> **Feldkirchen im Blick hilft dabei, lokale Entwicklungen leichter zu verstehen und gezielt nachzufragen.**
 
-Diese Texte bleiben bis zur Claim-/Botschaften-Finalisierung historische Arbeitsgrundlage und werden anschließend konsistent angepasst.
+Ausführlicher:
 
-## 5. Verbreitungssteuerung
+> **Feldkirchen im Blick führt verstreute Informationen zu lokalen Entwicklungen zusammen, macht Quellen und Zusammenhänge sichtbar und ermöglicht Vertiefung. So sollen Bürgerinnen und Bürger aktuelle Entwicklungen leichter nachvollziehen und sich bei Interesse gezielt weiter informieren oder nachfragen können.**
+
+Diese Kommunikationsfassung ergänzt das ausführlichere Zielbild im Management Approach und ersetzt es nicht.
+
+## 6. Verbreitungssteuerung
 
 Für interne Zwecke kann eine Verbreitungs-/Marketingstufe geführt werden, z. B.:
 
@@ -128,9 +123,9 @@ Für interne Zwecke kann eine Verbreitungs-/Marketingstufe geführt werden, z. B
 - aktiv verbreiten,
 - Aufmacher.
 
-Diese Stufe ist **keine öffentliche Relevanzbewertung** und darf nicht mit fachlicher Relevanz oder politischer Bewertung verwechselt werden.
+Diese Stufe ist keine öffentliche Relevanzbewertung und darf nicht mit fachlicher Relevanz oder politischer Bewertung verwechselt werden.
 
-## 6. Kanäle
+## 7. Kanäle
 
 ### Homepage
 
@@ -160,22 +155,32 @@ Nur soweit mit vertretbarem Zusatzaufwand automatisierbar. Kein separater manuel
 
 Feldkirchen im Blick dient als digitaler Vertiefungskanal. Thematische QR-Codes und ein dauerhafter QR-Code zur Anwendung sind geeignete Brücken zwischen analogem und digitalem Raum.
 
-## 7. Visuelle Familie
+## 8. Analoge Kurzformate
 
-Landing Page, PWA, Social Preview, Postkarte und Kärtchen bilden eine gemeinsame visuelle Familie.
+Postkarte und Kärtchen werden auf den finalen Claim und Erklärungstext umgestellt.
+
+Empfohlene Vorderseite:
+
+> **Feldkirchen im Blick**  
+> **Mehr Überblick. Besser verstehen.**
+>
+> Relevante Informationen aus Rathaus, Presse und weiteren Quellen – verständlich zusammengeführt.
+
+Optional kann der Dreiklang ergänzt werden:
+
+> **Informieren · Verstehen · Nachfragen**
+
+Rückseite bzw. ausführlicher Text:
+
+> Informationen zu Feldkirchen sind oft auf viele Stellen verteilt: in Presseberichten, Gemeinderatsunterlagen, Mitteilungen der Gemeinde, Internetseiten oder bei örtlichen Akteuren. **Feldkirchen im Blick führt relevante Informationen zusammen, macht Quellen sichtbar und erklärt Zusammenhänge.**
+
+## 9. Visuelle Familie
+
+Landingpage, PWA, Social Preview, Postkarte und Kärtchen bilden eine gemeinsame visuelle Familie.
 
 Verbindliche visuelle Primärquelle: `docs/Visuelle-Identitaet-und-Bildkonzept.md`.
 
-Grundidee:
-
-- typische Feldkirchner Bauwerke und Ortsmotive,
-- ruhige, helle Gestaltung,
-- stilisiert statt plakativ-kampagnenhaft,
-- Sonnenblumenblätter als wiederkehrender roter Faden,
-- dauerhaft wiederverwendbar,
-- echte lokale Fotos bei inhaltlich passenden Meldungen.
-
-## 8. Automatisierung
+## 10. Automatisierung
 
 Das Redaktionssystem soll möglichst direkt erzeugen können:
 
@@ -187,7 +192,7 @@ Das Redaktionssystem soll möglichst direkt erzeugen können:
 - stabile Direktlinks,
 - Social-Preview-Metadaten.
 
-## 9. Erfolgsmessung
+## 11. Erfolgsmessung
 
 Schlanke Messung mit Fokus auf Nutzen:
 
@@ -203,7 +208,7 @@ Leitfrage:
 
 > **Erreichen wir mit vertretbarem Aufwand Menschen, für die Feldkirchen im Blick relevant ist – und kommen Interessierte freiwillig wieder?**
 
-## 10. Abgrenzung
+## 12. Abgrenzung
 
 - SEO: `docs/SEO-und-Auffindbarkeit.md`
 - UX/PWA/Teilen: `docs/UX-und-Informationsarchitektur.md`
@@ -214,5 +219,6 @@ Leitfrage:
 
 | Version | Datum | Änderung |
 |---|---|---|
-| 1.1 | 01.10.2026 | Im Demonstrator bereits entwickelte Kernbotschaften und analoge Kurztexte wieder aufgenommen; Kommunikationskern präzisiert; „was dahintersteckt“ wegen möglicher investigativer Konnotation ausdrücklich zur Finalisierung gestellt; öffentliche Verwendung des ausgeschriebenen Produktnamens festgehalten. |
-| 1.0 | 30.09.2026 | Demonstrator-Konzept übernommen, Begriffe aktualisiert und Reichweite/Bindung einschließlich analogem Raum als Echtsystem-Regeln konsolidiert. |
+| 1.2 | 01.10.2026 | Claim „Mehr Überblick. Besser verstehen.“ finalisiert; kurzer Erklärungstext, sekundärer Dreiklang „Informieren · Verstehen · Nachfragen“, Mission-Kurztext und unterstützende Botschaften festgelegt; frühere investigative bzw. Vollständigkeit suggerierende Formulierungen zurückgestuft. |
+| 1.1 | 01.10.2026 | Im Demonstrator entwickelte Kernbotschaften und analoge Kurztexte wieder aufgenommen. |
+| 1.0 | 30.09.2026 | Demonstrator-Konzept übernommen und Reichweite/Bindung konsolidiert. |
