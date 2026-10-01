@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 1.0 | 30.09.2026 | Josef Walter – erstellt mit KI-Unterstützung |
+| 1.1 | 01.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
 
 ## 1. Zweck dieses Dokuments
 
@@ -155,14 +155,16 @@ Die Sitzung verläuft quer dazu als Beratungs- und Entscheidungskontext.
 
 Nicht jedes Ereignis muss einen Vorgang erzeugen. Nicht jeder Vorgang gehört zwingend zu einem bestätigten Thema. Ein Vorgang kann mehreren Themen zugeordnet sein. Umgekehrt umfasst ein Thema in der Regel mehrere Vorgänge.
 
-Öffentlich werden **Themen und Vorgänge gemeinsam im Bereich „Themen“** dargestellt. Die fachliche Unterscheidung bleibt intern erhalten, wird für Besucher aber nur dort hervorgehoben, wo sie zum Verständnis beiträgt.
+Öffentlich werden Themen und Vorgänge gemeinsam unter **„Im Blick“** dargestellt. Die fachliche Unterscheidung bleibt intern erhalten, wird für Besucher aber nur dort hervorgehoben, wo sie zum Verständnis beiträgt.
 
-Die öffentliche Hauptnavigation lautet:
+Die öffentliche Hauptnavigation verwendet bewusst nutzernahe Begriffe:
 
-- **Meldungen**
-- **Themen**
-- **Sitzungen**
-- **Suchen**
+- **Neues** – Meldungen und neue Entwicklungen,
+- **Im Blick** – Themen und Vorgänge,
+- **Sitzungen**,
+- **Suche**.
+
+Die internen Fachbegriffe **Meldung**, **Vorgang** und **Thema** bleiben davon unberührt.
 
 „Aktuell“ bezeichnet keine eigene Inhaltskategorie, sondern eine zeitliche Auswahl bzw. Hervorhebung, insbesondere auf der Startseite.
 
@@ -382,14 +384,14 @@ Dieser Management Approach ist die verständliche Management-Zusammenfassung. Ve
 
 - `docs/Themen-und-Vorgangslogik.md` – fachliche Definition und Pflege von Meldung/Vorgang/Thema,
 - `docs/UX-und-Informationsarchitektur.md` – öffentliche Benutzerführung und Darstellung,
+- `docs/Visuelle-Identitaet-und-Bildkonzept.md` – visuelle Identität, Logo, Banner, Navigation und Bildsprache,
 - `docs/Projektgruendung.md` – Gründungsentscheidungen und Rahmenbedingungen,
 - `docs/Roadmap.md` – aktueller Arbeitsstand und nächste Schritte,
 - `docs/Dokumentation.md` – Dokumentationslandkarte und verbindliche Quellen.
-
-Weitere Fach-, KI-, Recherche-, Betriebs- und Architekturdokumente werden aus dem Demonstrator übernommen bzw. neu konsolidiert, soweit sie für das Echtsystem benötigt werden.
 
 ## Änderungshistorie
 
 | Version | Datum | Änderung |
 |---|---|---|
+| 1.1 | 01.10.2026 | Öffentliche Navigationsbegriffe auf „Neues | Im Blick | Sitzungen | Suche“ aktualisiert; interne Fachbegriffe abgegrenzt; visuelle Identität als Detailquelle ergänzt. |
 | 1.0 | 30.09.2026 | Management Approach aus dem Demonstrator in das Echtsystem überführt und auf den aktuellen Stand konsolidiert; Presseschau-Begriff entfernt; Wissensstruktur Meldung/Vorgang/Thema/Sitzung einschließlich Aufnahmelogik ergänzt; verständliche Formulierung für ausgewogene Sachinformation statt Fachbegriff „politischer Bias“. |
