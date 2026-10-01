@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 2.6 | 01.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
+| 2.7 | 01.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
 
 ## 1. Zweck
 
@@ -48,7 +48,7 @@ FIB unterstützt insbesondere:
 8. künftig relevante Änderungen nicht verpassen,
 9. gezielt suchen.
 
-## 4. Einstiegswege
+## 4. Einstiegswege und Rücksprung zur GRÜNEN-Homepage
 
 Mögliche Einstiege:
 
@@ -66,11 +66,15 @@ Daraus folgt:
 
 Die Startseite darf nicht vorausgesetzt werden. Meldungen, Vorgänge, Themen und Sitzungen erhalten stabile Identitäten und eigenständige URLs.
 
-FIB bleibt unabhängig vom Einstiegsweg dieselbe Anwendung. Unterhalb des FIB-Headers steht deshalb ein klarer Rücksprung zur übergeordneten Website:
+FIB bleibt unabhängig vom Einstiegsweg dieselbe Anwendung.
 
-> **← Zur Website der GRÜNEN in Feldkirchen**
+Beim **direkten Einstieg** – insbesondere PWA, Direktlink, QR-Code oder Suchmaschine – erscheint auf der Startseite unmittelbar **unter dem Banner** eine kompakte, visuell untergeordnete Leiste:
 
-Dieser Link ist präsent, aber der eigentlichen FIB-Navigation visuell untergeordnet.
+> **Zur Website der GRÜNEN in Feldkirchen**
+
+Die Leiste gehört weder zum Banner noch zur FIB-Hauptnavigation. Sie kann das Sonnenblumenlogo der GRÜNEN enthalten und verwendet einen ruhigen grünen Hintergrund mit ausreichend kontrastierender Schrift.
+
+Wird FIB **bereits innerhalb bzw. aus der Website der GRÜNEN Feldkirchen aufgerufen**, entfällt diese Leiste, weil die übergeordnete Website-Navigation bereits vorhanden ist.
 
 ## 5. Hauptnavigation
 
@@ -89,7 +93,7 @@ Diese Begriffe sind bewusst nutzerorientierte Navigationsbezeichnungen. Die inte
 
 Enthält die vollständige Liste veröffentlichter Meldungen. „Neues“ bezeichnet den öffentlichen Einstieg in die Meldungsebene und bedeutet nicht, dass nur heute oder erst kürzlich veröffentlichte Inhalte auffindbar sind.
 
-Icon: **Strahlen eines Halbkreises**, keine volle Sonne.
+Icon: **fünf gelbe strahlen-/blattartige Formen im Bogen**, ohne Text und ohne Hintergrund; keine volle Sonne und kein zusätzlicher Halbkreis.
 
 ### 5.2 Im Blick
 
@@ -110,9 +114,13 @@ Zeigt transparent, was ansteht, welche Unterlagen vorliegen, was beraten bzw. be
 
 Tagesordnung, Vorlage, Beratung, Beschluss und Niederschrift bleiben unterscheidbar.
 
+Icon: **Personengruppe/Gremium**.
+
 ### 5.4 Suche
 
 Eine zentrale Suche erschließt die öffentlichen Inhalte über Text und strukturierte Beziehungen.
+
+Icon: **Lupe**.
 
 ## 6. Startseite
 
@@ -129,6 +137,35 @@ Die Begriffe dürfen in der konkreten UI geringfügig verkürzt werden, solange 
 > **Startseite = Orientierung und Auswahl**  
 > **Listenansicht = Überblick und Vergleich**  
 > **Detailseite = Verständnis und Vertiefung**
+
+### 6.1 Banner auf Smartphone/PWA
+
+Das Smartphone ist das voraussichtlich wichtigste Nutzungsgerät.
+
+Der mobile Banner enthält:
+
+- Wortmarke **„Feldkirchen im Blick“**,
+- Claim **„Mehr Überblick. Besser verstehen.“**,
+- Kurzbeschreibung **„Aktuelles aus Rathaus, Presse und weiteren Quellen – verständlich zusammengeführt.“**,
+- die freigegebene Bannerillustration als Hintergrund-/Bildbestandteil.
+
+Text und Illustration bleiben technisch getrennt. Der Text liegt auf einer sehr hellen halbtransparenten Fläche über der etwas tiefer positionierten Illustration. Das Bild bleibt sichtbar; der Banner soll den ersten mobilen Bildschirm nicht dominieren.
+
+Die kompakte GRÜNEN-Leiste folgt bei direktem Einstieg unmittelbar unter dem Banner.
+
+### 6.2 Banner auf Tablet/Desktop
+
+Der Banner wird als echter responsiver Zwei-Spalten-Banner aufgebaut:
+
+- links Wortmarke, Claim und ausführlicher Erklärungstext,
+- rechts die freigegebene Illustration.
+
+Der Container besitzt eine begrenzte Maximalbreite; Richtwert **1280 px**. Auf sehr breiten Bildschirmen wird nicht unbegrenzt vergrößert. Zusätzlicher Raum bleibt seitlich frei.
+
+Richtwerte:
+
+- Tablet ca. **48 % Text / 52 % Illustration**,
+- Desktop ca. **45 % Text / 55 % Illustration**.
 
 ## 7. Meldungsliste
 
@@ -403,7 +440,7 @@ Vorschau enthält:
 
 - Titel,
 - kurze Zusammenfassung,
-- FIB als Absender,
+- Feldkirchen im Blick als Absender,
 - geeignetes Inhaltsbild oder neutrales FIB-Motiv.
 
 Vorgangs-/Themenvorschauen dürfen aktuellen Stand stärker betonen; Meldungsvorschauen das konkrete Ereignis.
@@ -412,11 +449,11 @@ Vorgangs-/Themenvorschauen dürfen aktuellen Stand stärker betonen; Meldungsvor
 
 Druckansicht enthält wesentliche Sachinformation, Datum/Aktualisierungsstand, Quellen, Einordnung und notwendigen Kontext – ohne Navigation, Push/PWA-Steuerung oder dekorative UI.
 
-## 18. Transparenz / Über FIB / Disclaimer
+## 18. Transparenz / Über Feldkirchen im Blick / Disclaimer
 
 Jede Meldung, jeder Vorgang, jedes Thema und jede Sitzung erhält einen kleinen, inhaltlich erreichbaren Transparenzzugang, bevorzugt als **i-Icon** wie im Demonstrator.
 
-Eine zentrale Seite **„Über FIB“** erläutert:
+Eine zentrale Seite **„Über Feldkirchen im Blick“** erläutert:
 
 - Zweck,
 - Verantwortlichkeit,
@@ -429,7 +466,7 @@ Eine zentrale Seite **„Über FIB“** erläutert:
 
 Kurzprinzip:
 
-> FIB bereitet öffentliche Informationen mit KI-Unterstützung auf. Veröffentlichungen werden redaktionell geprüft; Fehler oder Lücken sind trotzdem möglich. Maßgeblich bleiben die verlinkten Originalquellen.
+> Feldkirchen im Blick bereitet öffentliche Informationen mit KI-Unterstützung auf. Veröffentlichungen werden redaktionell geprüft; Fehler oder Lücken sind trotzdem möglich. Maßgeblich bleiben die verlinkten Originalquellen.
 
 KI-Transparenz erfolgt auf Systemebene, nicht mit einem KI-Hinweis an jedem Absatz.
 
@@ -459,8 +496,8 @@ Verbindlich sind insbesondere:
 - lokale Feldkirchen-Motive,
 - Sonnenblumenblätter als wiederkehrender grafischer roter Faden,
 - Primärgrün und Sonnenblumengelb; Blau nur als zurückhaltender funktionaler Akzent,
-- FIB-Logo mit abstrahiertem Rathaus, Kirche und Maibaum,
-- Navigation „Neues“ mit Halbkreis-Strahlen und „Im Blick“ mit Auge.
+- FIB-Bildmarke mit abstrahiertem Rathaus, Kirche, Bäumen/Bodenlinie und drei Sonnenblumenblättern; **kein Maibaum**,
+- Navigation „Neues“ mit fünf gelben Strahlen/Blättern im Bogen und „Im Blick“ mit Auge.
 
 ## 20. Responsive und barrierearme UX
 
@@ -514,7 +551,7 @@ Strukturierte Dialoge und modale Inhalte müssen auf kleinen Bildschirmen innerh
 
 Browser-Zurück soll bei tiefen Interaktionen möglichst nachvollziehbar zum vorherigen FIB-Zustand zurückführen. Demonstrator-spezifische JavaScript-History-Tricks werden nicht ungeprüft übernommen; das UX-Prinzip bleibt jedoch erhalten.
 
-Der explizite Rücksprung **„Zur Website der GRÜNEN in Feldkirchen“** ist davon getrennt: Er verlässt FIB bewusst und führt zur übergeordneten Website.
+Der explizite Link **„Zur Website der GRÜNEN in Feldkirchen“** ist davon getrennt: Er verlässt FIB bewusst und führt zur übergeordneten Website. Seine Sichtbarkeit richtet sich nach dem Einstiegskontext gemäß Abschnitt 4.
 
 ## 22. Bezugsobjekte
 
@@ -568,23 +605,21 @@ Mindestens erforderlich:
 - gespeicherte „Mehr wissen?“-Fragen/Antworten und Quellenrollen,
 - Share-/SEO-/Social-Metadaten.
 
-## 25. Noch offene G2-Punkte
+## 25. G2-Abschluss
 
-Die fachlichen UX-Grundregeln sowie die gestalterische Grundrichtung sind konsolidiert.
+Die fachlichen UX-Grundregeln, Navigation, responsive Bannerlogik, visuelle Grundrichtung, Claim, Rücksprung zur GRÜNEN-Homepage und wesentlichen Screenprinzipien sind konsolidiert und widerspruchsfrei dokumentiert.
 
-Vor G2-Abschluss verbleibt nur noch:
+Konzeptionelle G2-Offenpunkte bestehen nicht mehr.
 
-1. **Banner-/Landingpage-Text inhaltlich freigeben**,
-2. abschließende **Widerspruchs- und Vollständigkeitsprüfung** nach dieser Freigabe.
+Produktionsdetails wie exakte SVG-Vektorisierung der Logos, finale Webfont-Implementierung, optimierte Bannerformate, maskable App-Icons oder konkrete CSS-Feinwerte werden in der späteren technischen Umsetzung verifiziert und blockieren den G2-Abschluss nicht.
 
-Produktionsdetails wie exakte Logo-Geometrien, finale Webfont-Implementierung, SVG-Optimierung, maskable App-Icons oder konkrete CSS-Werte werden in der späteren Umsetzung verifiziert und blockieren den konzeptionellen G2-Abschluss nicht.
-
-Danach kann G3 beginnen.
+**G2 ist damit abgeschlossen. G3 – Datenanforderungen / Datenmodell – kann beginnen.**
 
 ## Änderungshistorie
 
 | Version | Datum | Änderung |
 |---|---|---|
+| 2.7 | 01.10.2026 | G2 finalisiert: mobile und Desktop-Bannerlogik integriert, kontextabhängige GRÜNEN-Leiste korrigiert, „Neues“-Icon auf fünf gelbe Strahlen/Blätter umgestellt, Maibaum aus finaler Bildmarke entfernt und G2 nach Widerspruchsprüfung abgeschlossen. |
 | 2.6 | 01.10.2026 | Öffentliche Navigation auf „Neues | Im Blick | Sitzungen | Suche“ konsolidiert; interne Fachbegriffe davon abgegrenzt; Rücksprung zur GRÜNEN-Website als UX-Regel ergänzt; visuelle Identität als Primärquelle eingebunden; offene G2-Punkte auf Bannertext und Abschlussprüfung reduziert. |
 | 2.5 | 30.09.2026 | Demonstrator-Frontendregeln in kanonische UX-Quelle integriert; Suche/Filter, Mehr wissen, PWA, Teilen/Druck/Social Preview, Transparenz, Bildregeln und WCAG-2.2-AA-Ziel dokumentiert; Sprachregel abgegrenzt; offene G2-Punkte auf visuelles Konzept und Abschlussprüfung reduziert. |
 | 2.4 | 30.09.2026 | Navigation auf Meldungen/Themen/Sitzungen/Suchen geändert; Themen und Vorgänge gemeinsam dargestellt; Vorgangsdetail und Themenlogik konsolidiert. |
