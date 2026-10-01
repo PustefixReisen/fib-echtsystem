@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 2.5 | 30.09.2026 | Josef Walter – erstellt mit KI-Unterstützung |
+| 2.6 | 01.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
 
 ## 1. Zweck
 
@@ -16,6 +16,7 @@ Ergänzende Primärquellen:
 - „Mehr wissen?“: `docs/Mehr-wissen.md`
 - Fachlichkeit: `docs/Fachkonzept.md`
 - SEO: `docs/SEO-und-Auffindbarkeit.md`
+- visuelle Identität: `docs/Visuelle-Identitaet-und-Bildkonzept.md`
 
 Der Demonstrator ist Referenz, aber kein unveränderlicher UI-Blueprint. Das frühere Demonstrator-Dokument `FIB_Frontend_und_Darstellung.md` wird nicht als zweite Primärquelle fortgeführt; weiterhin gültige Regeln sind hier integriert.
 
@@ -51,7 +52,8 @@ FIB unterstützt insbesondere:
 
 Mögliche Einstiege:
 
-- direkter FIB-Aufruf,
+- direkter FIB-Aufruf bzw. installierte PWA,
+- Aufruf aus der Website der GRÜNEN Feldkirchen,
 - Suchmaschine,
 - geteilter Direktlink,
 - QR-Code,
@@ -64,31 +66,43 @@ Daraus folgt:
 
 Die Startseite darf nicht vorausgesetzt werden. Meldungen, Vorgänge, Themen und Sitzungen erhalten stabile Identitäten und eigenständige URLs.
 
+FIB bleibt unabhängig vom Einstiegsweg dieselbe Anwendung. Unterhalb des FIB-Headers steht deshalb ein klarer Rücksprung zur übergeordneten Website:
+
+> **← Zur Website der GRÜNEN in Feldkirchen**
+
+Dieser Link ist präsent, aber der eigentlichen FIB-Navigation visuell untergeordnet.
+
 ## 5. Hauptnavigation
 
 Verbindliche öffentliche Hauptnavigation:
 
-- **Meldungen**
-- **Themen**
+- **Neues**
+- **Im Blick**
 - **Sitzungen**
-- **Suchen**
+- **Suche**
+
+Diese Begriffe sind bewusst nutzerorientierte Navigationsbezeichnungen. Die internen fachlichen Objekttypen bleiben **Meldung**, **Vorgang**, **Thema** und **Sitzung**.
 
 **„Aktuell“** ist kein eigener Hauptbereich, sondern eine zeitliche Hervorhebung.
 
-### 5.1 Meldungen
+### 5.1 Neues
 
-Enthält die vollständige Liste veröffentlichter Meldungen, nicht nur aktuelle.
+Enthält die vollständige Liste veröffentlichter Meldungen. „Neues“ bezeichnet den öffentlichen Einstieg in die Meldungsebene und bedeutet nicht, dass nur heute oder erst kürzlich veröffentlichte Inhalte auffindbar sind.
 
-### 5.2 Themen
+Icon: **Strahlen eines Halbkreises**, keine volle Sonne.
+
+### 5.2 Im Blick
 
 Zeigt eine gemeinsame Liste aus:
 
 - übergeordneten Themen,
 - konkreten länger laufenden Vorgängen.
 
-Die interne Unterscheidung bleibt verbindlich, wird öffentlich aber nicht überbetont. Dezente Labels sind möglich, wenn sie helfen.
+Die Bezeichnung „Im Blick“ beschreibt die Nutzerfunktion: **Zusammenhänge und länger laufende Entwicklungen verstehen**. Die interne Unterscheidung zwischen Thema und Vorgang bleibt verbindlich, wird öffentlich aber nicht überbetont. Dezente Labels sind möglich, wenn sie helfen.
 
 Ein Vorgang darf auch ohne übergeordnetes Thema erscheinen.
+
+Icon: **Auge**.
 
 ### 5.3 Sitzungen
 
@@ -96,17 +110,19 @@ Zeigt transparent, was ansteht, welche Unterlagen vorliegen, was beraten bzw. be
 
 Tagesordnung, Vorlage, Beratung, Beschluss und Niederschrift bleiben unterscheidbar.
 
-### 5.4 Suchen
+### 5.4 Suche
 
 Eine zentrale Suche erschließt die öffentlichen Inhalte über Text und strukturierte Beziehungen.
 
 ## 6. Startseite
 
-Drei feste Blöcke:
+Drei feste Inhaltsblöcke:
 
-1. **Aktuelle Meldungen** – neue und fachlich relevant aktualisierte Meldungen.
+1. **Neue Entwicklungen** – neue und fachlich relevant aktualisierte Meldungen.
 2. **Anstehende Sitzungen** – nächste tatsächlich bevorstehende Sitzungen.
-3. **Aktuelle bzw. geänderte Themen und Vorgänge** – fachlich veränderte Wissensstände.
+3. **Im Blick** – fachlich relevante Themen und Vorgänge mit neuem bzw. geändertem Wissensstand.
+
+Die Begriffe dürfen in der konkreten UI geringfügig verkürzt werden, solange die fachliche Logik unverändert bleibt.
 
 „Seit letztem Besuch“ wird innerhalb dieser Blöcke angezeigt, nicht als vierter Block.
 
@@ -188,7 +204,7 @@ Unter Datumszeile und Kurzfassung wird die neue fachliche Information prominent 
 
 ## 10. Gemeinsame Themen-/Vorgangsliste
 
-Die Liste zeigt Themen und Vorgänge gemeinsam und beantwortet: **Was beschäftigt Feldkirchen länger?**
+Die unter **„Im Blick“** erreichbare Liste zeigt Themen und Vorgänge gemeinsam und beantwortet: **Was beschäftigt Feldkirchen länger – und wie hängen Entwicklungen zusammen?**
 
 Jeder Eintrag enthält grundsätzlich:
 
@@ -421,6 +437,8 @@ Ein Footer ist nicht der einzige Transparenzzugang, weil er auf langen mobilen L
 
 ## 19. Bilder und visuelle Identität
 
+Die verbindliche gestalterische Primärquelle ist `docs/Visuelle-Identitaet-und-Bildkonzept.md`.
+
 ### 19.1 Inhaltliche Bilder
 
 - nur mit geklärten Nutzungsrechten,
@@ -430,20 +448,19 @@ Ein Footer ist nicht der einzige Transparenzzugang, weil er auf langen mobilen L
 
 ### 19.2 Dekorative Standardmotive
 
-Für Inhalte ohne eigenes Bild soll ein kleiner Pool dauerhaft nutzbarer, monochrom-grüner Feldkirchen-Motive entstehen. Dekorative Motive erhalten keinen unnötigen Screenreader-Text.
+Für Inhalte ohne eigenes Bild kann ein kleiner Pool dauerhaft nutzbarer Feldkirchen-Motive verwendet werden. Die visuelle Primärquelle legt Stil, Motivgruppen und Rollen fest. Dekorative Motive erhalten keinen unnötigen Screenreader-Text.
 
-### 19.3 Offener G2-Punkt
+### 19.3 Gestalterische Grundrichtung
 
-Das verbindliche visuelle Identitäts- und Bildkonzept bleibt noch festzulegen:
+Verbindlich sind insbesondere:
 
-- Logo oder typografische Wortmarke,
-- Auswahl und Rollen mehrerer Standardmotive,
-- Regeln Inhaltsfoto vs. Standardmotiv vs. kein Bild,
-- Zuschnitt/Kontrast/mobile Nutzung,
-- Social-Preview-Regeln,
-- Rechte/Provenienz.
-
-Ein Logo besteht derzeit noch nicht.
+- heller, warmer Grund,
+- ruhige und sachliche Oberfläche,
+- lokale Feldkirchen-Motive,
+- Sonnenblumenblätter als wiederkehrender grafischer roter Faden,
+- Primärgrün und Sonnenblumengelb; Blau nur als zurückhaltender funktionaler Akzent,
+- FIB-Logo mit abstrahiertem Rathaus, Kirche und Maibaum,
+- Navigation „Neues“ mit Halbkreis-Strahlen und „Im Blick“ mit Auge.
 
 ## 20. Responsive und barrierearme UX
 
@@ -496,6 +513,8 @@ Nicht standardmäßig verstecken:
 Strukturierte Dialoge und modale Inhalte müssen auf kleinen Bildschirmen innerhalb des Viewports scrollbar bleiben; Schließen bleibt erreichbar.
 
 Browser-Zurück soll bei tiefen Interaktionen möglichst nachvollziehbar zum vorherigen FIB-Zustand zurückführen. Demonstrator-spezifische JavaScript-History-Tricks werden nicht ungeprüft übernommen; das UX-Prinzip bleibt jedoch erhalten.
+
+Der explizite Rücksprung **„Zur Website der GRÜNEN in Feldkirchen“** ist davon getrennt: Er verlässt FIB bewusst und führt zur übergeordneten Website.
 
 ## 22. Bezugsobjekte
 
@@ -551,12 +570,14 @@ Mindestens erforderlich:
 
 ## 25. Noch offene G2-Punkte
 
-Nach dieser Konsolidierung sind die fachlichen UX-Grundregeln für Suche, „Mehr wissen?“, PWA, Teilen, Transparenz und Barrierearmut festgelegt.
+Die fachlichen UX-Grundregeln sowie die gestalterische Grundrichtung sind konsolidiert.
 
-Vor G2-Abschluss bleiben:
+Vor G2-Abschluss verbleibt nur noch:
 
-1. **Visuelles Identitäts- und Bildkonzept**,
-2. abschließende **Widerspruchs- und Vollständigkeitsprüfung** der gesamten G2-Dokumentation.
+1. **Banner-/Landingpage-Text inhaltlich freigeben**,
+2. abschließende **Widerspruchs- und Vollständigkeitsprüfung** nach dieser Freigabe.
+
+Produktionsdetails wie exakte Logo-Geometrien, finale Webfont-Implementierung, SVG-Optimierung, maskable App-Icons oder konkrete CSS-Werte werden in der späteren Umsetzung verifiziert und blockieren den konzeptionellen G2-Abschluss nicht.
 
 Danach kann G3 beginnen.
 
@@ -564,6 +585,7 @@ Danach kann G3 beginnen.
 
 | Version | Datum | Änderung |
 |---|---|---|
+| 2.6 | 01.10.2026 | Öffentliche Navigation auf „Neues | Im Blick | Sitzungen | Suche“ konsolidiert; interne Fachbegriffe davon abgegrenzt; Rücksprung zur GRÜNEN-Website als UX-Regel ergänzt; visuelle Identität als Primärquelle eingebunden; offene G2-Punkte auf Bannertext und Abschlussprüfung reduziert. |
 | 2.5 | 30.09.2026 | Demonstrator-Frontendregeln in kanonische UX-Quelle integriert; Suche/Filter, Mehr wissen, PWA, Teilen/Druck/Social Preview, Transparenz, Bildregeln und WCAG-2.2-AA-Ziel dokumentiert; Sprachregel abgegrenzt; offene G2-Punkte auf visuelles Konzept und Abschlussprüfung reduziert. |
 | 2.4 | 30.09.2026 | Navigation auf Meldungen/Themen/Sitzungen/Suchen geändert; Themen und Vorgänge gemeinsam dargestellt; Vorgangsdetail und Themenlogik konsolidiert. |
 | 2.3 | 29.09.2026 | Iterative Themendefinition ergänzt. |
