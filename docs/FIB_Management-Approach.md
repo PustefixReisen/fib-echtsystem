@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 1.1 | 01.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
+| 1.2 | 01.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
 
 ## 1. Zweck dieses Dokuments
 
@@ -329,7 +329,27 @@ FIB macht nachvollziehbar:
 
 Transparenz soll direkt am Inhalt erreichbar sein und nicht nur in einem schwer auffindbaren Footer.
 
-## 13. Reichweite, Bindung und analoger Raum
+## 13. Kommunikation: Claim und Botschaften
+
+Feldkirchen im Blick soll nach außen **nicht mit der Abkürzung FIB** auftreten. Öffentlich wird grundsätzlich der vollständige Name verwendet; die Abkürzung kann auf der Seite „Über Feldkirchen im Blick“ einmal eingeführt werden.
+
+Der Kommunikationskern lautet:
+
+> **Feldkirchen im Blick führt verstreute relevante Informationen zusammen, macht Entwicklungen nachvollziehbar und stellt Zusammenhänge her.**
+
+Dabei stehen drei Leistungen im Vordergrund:
+
+- **finden und bündeln** – relevante Informationen aus Rathaus, Presse und weiteren Quellen zusammenführen,
+- **verstehen** – Quellen, Hintergründe, Verläufe und Zusammenhänge verständlich machen,
+- **anschlussfähig machen** – Vertiefung, Beteiligungsmöglichkeiten und kommunale Gestaltung sichtbar machen.
+
+Im Demonstrator wurden mehrere Kernbotschaften entwickelt, unter anderem „Was man sonst leicht verpasst“, „Mehr Überblick über Feldkirchen“ und „Nicht alles steht an einem Ort. Jetzt schon.“ Diese Formulierungen werden im Marketingdokument als Kommunikationsfundus erhalten und nun gemeinsam finalisiert.
+
+Die Formulierung **„was dahintersteckt“** ist noch kein finaler Claim. Sie kann einen investigativen Anspruch nahelegen. Feldkirchen im Blick verspricht nicht, Verborgenes aufzudecken, sondern verstreutes Wissen zu verbinden und Zusammenhänge verständlich zu machen.
+
+Verbindliche Detailquelle: `docs/Marketing-und-Kommunikation.md`.
+
+## 14. Reichweite, Bindung und analoger Raum
 
 Erfolg wird nicht nur über Seitenaufrufe bewertet.
 
@@ -359,7 +379,7 @@ Bindung zeigt sich beispielsweise darin, dass Menschen:
 
 Die Erfolgsmessung soll datensparsam sein und quantitative sowie qualitative Hinweise kombinieren. Ziel ist nicht maximale Reichweite um jeden Preis, sondern die Frage, ob FIB für Feldkirchen tatsächlich **Orientierung, Verständnis und Anschlussfähigkeit** schafft.
 
-## 14. Betrieb und dauerhafte Tragfähigkeit
+## 15. Betrieb und dauerhafte Tragfähigkeit
 
 FIB soll so aufgebaut sein, dass es dauerhaft durch den Ortsverband betrieben werden kann und nicht von einer einzelnen Person oder einem einzelnen KI-Anbieter abhängig ist.
 
@@ -378,13 +398,14 @@ Für das Echtsystem gilt der Grundsatz:
 
 > **So einfach wie möglich, aber so tragfähig wie nötig.**
 
-## 15. Verbindliche Detaildokumente
+## 16. Verbindliche Detaildokumente
 
 Dieser Management Approach ist die verständliche Management-Zusammenfassung. Verbindliche Details stehen insbesondere in:
 
 - `docs/Themen-und-Vorgangslogik.md` – fachliche Definition und Pflege von Meldung/Vorgang/Thema,
 - `docs/UX-und-Informationsarchitektur.md` – öffentliche Benutzerführung und Darstellung,
 - `docs/Visuelle-Identitaet-und-Bildkonzept.md` – visuelle Identität, Logo, Banner, Navigation und Bildsprache,
+- `docs/Marketing-und-Kommunikation.md` – Claim, Botschaften, Verbreitung, Reichweite und Nutzerbindung,
 - `docs/Projektgruendung.md` – Gründungsentscheidungen und Rahmenbedingungen,
 - `docs/Roadmap.md` – aktueller Arbeitsstand und nächste Schritte,
 - `docs/Dokumentation.md` – Dokumentationslandkarte und verbindliche Quellen.
@@ -393,5 +414,6 @@ Dieser Management Approach ist die verständliche Management-Zusammenfassung. Ve
 
 | Version | Datum | Änderung |
 |---|---|---|
+| 1.2 | 01.10.2026 | Prägnantes Kapitel zu Kommunikationskern, Claim und Botschaften aus dem Demonstrator wieder aufgenommen; öffentlicher Verzicht auf die Abkürzung FIB und Prüfung von „was dahintersteckt“ dokumentiert; Marketingdokument als verbindliche Detailquelle ergänzt. |
 | 1.1 | 01.10.2026 | Öffentliche Navigationsbegriffe auf „Neues | Im Blick | Sitzungen | Suche“ aktualisiert; interne Fachbegriffe abgegrenzt; visuelle Identität als Detailquelle ergänzt. |
 | 1.0 | 30.09.2026 | Management Approach aus dem Demonstrator in das Echtsystem überführt und auf den aktuellen Stand konsolidiert; Presseschau-Begriff entfernt; Wissensstruktur Meldung/Vorgang/Thema/Sitzung einschließlich Aufnahmelogik ergänzt; verständliche Formulierung für ausgewogene Sachinformation statt Fachbegriff „politischer Bias“. |
