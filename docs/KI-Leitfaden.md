@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 1.1 | 30.09.2026 | Josef Walter – erstellt mit KI-Unterstützung |
+| 1.2 | 02.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
 
 ## 1. Zweck und Verbindlichkeit
 
@@ -15,6 +15,7 @@ Die Ausführung darf nicht von Erinnerungen eines bestimmten Chats oder von Eige
 Verbindliche Primärquellen sind insbesondere:
 
 - Fachlichkeit und Aufnahmegrundsätze: `docs/Fachkonzept.md`
+- Begriffe und Abgrenzungen: `docs/Begriffe.md`
 - Themen-/Vorgangslogik: `docs/Themen-und-Vorgangslogik.md`
 - Recherche und Quellenmonitor: `docs/Recherche-und-Quellenmonitor.md`
 - „Mehr wissen?“: `docs/Mehr-wissen.md`
@@ -39,7 +40,7 @@ Die KI unterstützt insbesondere:
 - Entscheidungsvorschlag „neues Ereignis oder Aktualisierung“,
 - Entwurf und Fortschreibung von Meldungen,
 - Vorgangszuordnung und Vorgangsfortschreibung,
-- Themenkandidaten, Leitfragen, Perspektiven und Wirkungsrollen,
+- Themenkandidaten, Leitfragen, Perspektiven und Bedeutung von Vorgängen für ein Thema,
 - Auswertung von Sitzungen und TOPs,
 - „Mehr wissen?“-Fragen und vorbereitete Antworten,
 - Entwürfe für „Unsere Einordnung“,
@@ -145,17 +146,19 @@ Ein Thema ist eine übergeordnete Fragestellung mit zusätzlichem Erklärungsgew
 
 Themen werden bottom-up und mit hoher Sensitivität vorgeschlagen. Redaktionelle Ergänzungen gelten zunächst als Prüf- und Rechercheauftrag.
 
-Bei Beziehungen eines Vorgangs zu einem Thema wird dessen Wirkungsrolle geprüft, insbesondere:
+Bei der Beziehung eines Vorgangs zu einem Thema schlägt die KI dessen **Bedeutung für das Thema** vor:
 
-- Treiber / prägender Vorgang,
-- Umsetzung / Gestaltungsbeitrag,
-- Betroffenheit / Auswirkung,
-- Rahmenbedingung / Kontext,
-- Indikator / Beobachtung.
+- prägend,
+- relevant,
+- ergänzend.
+
+Diese Einstufung muss durch die Redaktion verpflichtend geprüft und bestätigt oder geändert werden.
+
+Die fachliche Erklärung der Relevanz erfolgt über sachliche Perspektiven und die darunter beschriebenen Wirkungen. Eine separate Wirkungsrollen-Taxonomie wird nicht mehr geführt.
 
 Eine bestätigte Themendefinition wird nicht autonom verändert. Wesentliche Änderungen werden versioniert und redaktionell bestätigt.
 
-Detailregeln: `docs/Themen-und-Vorgangslogik.md`.
+Detailregeln: `docs/Themen-und-Vorgangslogik.md` und `docs/Datenmodell.md`.
 
 ## 10. Sitzungen und TOPs
 
@@ -248,9 +251,9 @@ Die technische Ausgabe ist nicht selbst die fachliche Datenhaltung.
 
 Fachlich besonders wirksame Vorschläge werden ausdrücklich redaktionell bestätigt. Dazu gehören insbesondere:
 
-- Meldung ↔ Vorgang,
+- Ereignis ↔ Vorgang,
 - Vorgang ↔ Thema,
-- Wirkungsrolle,
+- Bedeutung eines Vorgangs für ein Thema,
 - neues Ereignis oder Aktualisierung,
 - fachliche Aktualisierungsrelevanz,
 - Vorgangsstatus und aktueller Stand,
@@ -270,7 +273,7 @@ Vor Veröffentlichung wird mindestens geprüft:
 - korrekte Ereignis- und Datumslogik,
 - Quellen- und Aussageabdeckung,
 - Vorlage versus Beschluss,
-- korrekte Meldungs-/Vorgangs-/Themenzuordnung,
+- korrekte Ereignis-/Vorgangs-/Themenzuordnung,
 - Unsicherheiten und Quellenlücken,
 - Trennung von Sachinformation und Einordnung,
 - Herkunft politischer Positionen,
@@ -287,7 +290,7 @@ Dieser Leitfaden beschreibt **fachliche KI-Arbeitsregeln**.
 
 Nicht hier verbindlich geregelt werden:
 
-- Datenbankschema → G3,
+- logisches Datenmodell → `docs/Datenmodell.md`,
 - Datenschutz/Sicherheit → G4,
 - Provider/Modell/technische KI-Abstraktion → G5,
 - Rollen-/Freigabetechnik → G6,
@@ -297,5 +300,6 @@ Nicht hier verbindlich geregelt werden:
 
 | Version | Datum | Änderung |
 |---|---|---|
+| 1.2 | 02.10.2026 | Themenlogik auf „Bedeutung für das Thema“ umgestellt; Wirkungsrollen-Taxonomie entfernt; Begriffsregister und Datenmodell als ergänzende Primärquellen referenziert. |
 | 1.1 | 30.09.2026 | Nach Dokumentationsübernahme auf kanonische Echtsystem-Primärquellen umgestellt; Detailzuständigkeiten bereinigt; Regeln für Meldung/Vorgang/Thema, Mehr wissen, Fakten-Rückprüfung und redaktionelle Bestätigung konsolidiert. |
 | 1.0 | 30.09.2026 | KI-Leitfaden aus Demonstrator-Grundlagen als Echtsystem-Fassung angelegt. |
