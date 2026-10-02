@@ -2,7 +2,7 @@
 
 ## Dokumentstand
 
-**Stand:** 02.10.2026, 15:17 Uhr  
+**Stand:** 02.10.2026, 15:28 Uhr  
 **Verantwortlich:** Josef Walter – erstellt mit KI-Unterstützung
 
 Dieses Dokument wird im Normalfall über das **Stand-Datum einschließlich Uhrzeit** fortgeschrieben. Eine neue Versionsnummer wird nur eingeführt, wenn sich die Struktur oder das Grundkonzept des Dokuments wesentlich ändert.
@@ -107,6 +107,12 @@ Nicht zu verwechseln mit Bewertung. Wirkung beschreibt, was geschieht oder vorau
 Ein Bestandteil des grünen politischen Referenzrahmens, der einen politischen Maßstab mit Beschreibung und Prüfkriterien bereitstellt, anhand dessen konkrete Wirkungen eingeordnet werden können.
 
 Ein Zielbereich besitzt keine feste Rangstufe gegenüber anderen Zielbereichen. Seine Bedeutung für die Einordnung entsteht erst im konkreten Vorgang und in Bezug auf konkrete Wirkungen.
+
+### `Prüfkriterium`
+
+Ein strukturierter, möglichst neutral formulierter und beobachtbarer oder prüfbarer Aspekt eines Zielbereichs, anhand dessen eine konkrete Wirkung dem Zielbereich nachvollziehbar zugeordnet werden kann.
+
+Ein Prüfkriterium beschreibt, **was geprüft wird**, nicht bereits, **wie die Wirkung politisch bewertet werden muss**. Seine Herkunft aus dem Referenzbestand und sein Gültigkeitsstand sollen nachvollziehbar bleiben.
 
 ### `Wirkungsrichtung`
 
