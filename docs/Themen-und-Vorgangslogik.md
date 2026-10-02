@@ -4,19 +4,19 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 1.1 | 30.09.2026 | Josef Walter – erstellt mit KI-Unterstützung |
+| 1.2 | 02.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
 
 ## 1. Zweck und Geltung
 
 Dieses Dokument ist die verbindliche fachliche Primärquelle für die Erkennung, Abgrenzung, redaktionelle Entwicklung und laufende Pflege von **Themen** und **Vorgängen** im FIB-Echtsystem.
 
-Es konkretisiert die in `docs/UX-und-Informationsarchitektur.md` begonnene Themenlogik. Die dort noch enthaltenen älteren, als vorläufig gekennzeichneten Annahmen, die Thema und länger laufenden Vorgang gleichsetzen, sind durch dieses Dokument überholt und werden bei der nächsten Konsolidierung der UX-Dokumentation bereinigt.
+Die konkrete logische Datenmodellierung steht in `docs/Datenmodell.md`.
 
 ## 2. Begriffe
 
-### 2.1 Ereignis / Beitrag
+### 2.1 Ereignis / Meldung
 
-Ein Beitrag steht für ein eigenständiges berichtenswertes Ereignis. Neue Informationen zum selben Ereignis aktualisieren den Beitrag; ein neues eigenständiges Ereignis mit ausreichendem Nachrichtenwert erzeugt in der Regel einen neuen Beitrag.
+Ereignis und Meldung sind getrennte fachliche Objekte. Ein Ereignis ist ein relevantes Geschehen oder eine relevante Entwicklung; eine Meldung ist die redaktionelle FIB-Darstellung eines berichtenswerten Ereignisses. Die verbindliche Abgrenzung steht in `docs/Datenmodell.md` und `docs/Begriffe.md`.
 
 ### 2.2 Vorgang / Sachverhalt
 
@@ -35,7 +35,7 @@ Ein Vorgang kann beginnen, fortgeschrieben, zurückgestellt, wieder aufgenommen 
 
 Ein Thema ist eine übergeordnete Fragestellung, die mehrere unterschiedliche Vorgänge, Ereignisse, Perspektiven oder Rahmenbedingungen zusammenführt und dadurch einen zusätzlichen Erklärungsgewinn erzeugt.
 
-Ein Thema ist keine feste Kategorie und keine bloße Sammlung ähnlich benannter Beiträge.
+Ein Thema ist keine feste Kategorie und keine bloße Sammlung ähnlich benannter Meldungen.
 
 Beispiele können sein:
 
@@ -48,7 +48,7 @@ Ein Vorgang kann mehreren Themen zugeordnet sein. Umgekehrt umfasst ein Thema in
 
 ## 3. Themen entstehen bottom-up
 
-Themen werden nicht von oben vorgegeben. Die KI untersucht den Bestand aus Ereignissen, Beiträgen und Vorgängen auf mögliche übergeordnete Zusammenhänge.
+Themen werden nicht von oben vorgegeben. Die KI untersucht den Bestand aus Ereignissen, Meldungen und Vorgängen auf mögliche übergeordnete Zusammenhänge.
 
 Mögliche Indikatoren sind insbesondere:
 
@@ -76,11 +76,11 @@ Ein KI-generierter Themenkandidat soll mindestens enthalten:
 
 - vorgeschlagenen Thementitel,
 - erkannte gemeinsame Fragestellung,
-- auslösende Vorgänge und Beiträge,
+- auslösende Vorgänge und Meldungen,
 - erkannte Muster, Gemeinsamkeiten und Zielkonflikte,
 - Begründung, warum der Zusammenhang über einen Einzelvorgang hinausgeht,
 - möglichen Erklärungsgewinn,
-- vorgeschlagene Kontextdimensionen,
+- vorgeschlagene Perspektiven bzw. Kontextdimensionen,
 - mögliche externe Beispiele oder Rahmenbedingungen,
 - Unsicherheiten und Gegenargumente.
 
@@ -108,31 +108,29 @@ Die KI prüft dabei mindestens:
 4. Trägt der Aspekt zur Leitfrage bei oder weitet er das Thema unnötig aus?
 5. Welche Wissenslücken bleiben bestehen?
 
-### 5.1 Rolle eines Vorgangs oder Ereignisses innerhalb eines Themas
+### 5.1 Bedeutung eines Vorgangs für ein Thema
 
-Eine Zuordnung zu einem Thema beschreibt nicht nur **dass** ein Vorgang oder Ereignis relevant ist, sondern auch **welche fachliche Rolle** er für das Thema spielt.
+Eine Zuordnung zu einem Thema beschreibt nicht nur, **dass** ein Vorgang relevant ist, sondern auch, **wie stark** er das Verständnis oder die Entwicklung des Themas prägt.
 
-Die KI soll deshalb bei der Zuordnung mindestens unterscheiden können zwischen:
+Dafür wird die **Bedeutung für das Thema** verwendet:
 
-- **Treiber / prägender Vorgang** – verändert die Entwicklung oder Rahmenbedingungen des Themas wesentlich; Beispiel: ein großes Infrastruktur- oder Entwicklungsprojekt, das Verkehrsströme, Flächennutzung oder Handlungsmöglichkeiten nachhaltig verändert.
-- **Umsetzung / Gestaltungsbeitrag** – setzt eine im Thema erkennbare Zielrichtung oder Strategie konkret um; Beispiel: Aufbau oder Ausbau eines Radwegenetzes innerhalb einer Mobilitätsstrategie.
-- **Betroffenheit / Auswirkung** – zeigt, wie Feldkirchen oder ein Teilbereich von einer extern oder anderweitig getriebenen Entwicklung betroffen ist, ohne selbst deren Haupttreiber zu sein.
-- **Rahmenbedingung / Kontext** – erklärt rechtliche, technische, räumliche, finanzielle oder gesellschaftliche Bedingungen, die für das Thema relevant sind.
-- **Indikator / Beobachtung** – liefert ein Signal über eine Entwicklung, ohne selbst deren Ursache oder wesentliche Umsetzung zu sein.
+- **prägend** – ohne diesen Vorgang lässt sich das Thema derzeit kaum sinnvoll erklären,
+- **relevant** – der Vorgang trägt wesentlich zum Verständnis bei,
+- **ergänzend** – der Vorgang liefert zusätzlichen Kontext, ist aber nicht zentral.
 
-Diese Rollen sind keine starre abschließende Taxonomie. Ein Vorgang kann mehrere Rollen gleichzeitig haben; eine Rolle kann sich im Zeitverlauf ändern.
+Die KI schlägt die Einstufung vor. Die Redaktion muss sie verpflichtend prüfen und bestätigen oder ändern. Erst danach ist die Einstufung fachlich wirksam.
 
-Für die Themenanalyse gilt:
+Die Bedeutung ist keine automatisch berechnete Kennzahl. Zahl der Meldungen, Quellen oder Perspektiven kann ein Hinweis sein, bestimmt die Einstufung aber nicht.
 
-> **Ähnliche Sachgebiete bedeuten nicht automatisch gleiche thematische Bedeutung. Entscheidend ist die Wirkungsrolle im Zusammenhang der Leitfrage.**
+Die frühere Rollen-Taxonomie **Treiber / Gestaltungsbeitrag / Betroffenheit / Rahmenbedingung / Indikator** wird nicht mehr als eigenes strukturiertes Merkmal geführt. Ihre fachliche Aussage wird durch die konkreten Perspektiven und Wirkungen besser und ohne Redundanz beschrieben.
 
-Beispiel Mobilität:
+### 5.2 Perspektiven und Wirkungen
 
-- der Ausbau des Autobahnkreuzes München-Ost kann als **Treiber / prägender Vorgang** erhebliche Auswirkungen auf Verkehrsströme, Flächen, Lärm, regionale Verkehrsführung und kommunale Handlungsspielräume haben;
-- der Ausbau eines Radwegenetzes kann als **Umsetzung / Gestaltungsbeitrag** die lokalen und regionalen Mobilitätsmöglichkeiten verändern;
-- eine einzelne Sperrung oder Umleitung kann vor allem **Betroffenheit / Auswirkung** eines übergeordneten Infrastrukturvorgangs zeigen.
+Ein Thema wird durch sachliche **Perspektiven** strukturiert. Eine Perspektive bezeichnet einen fachlichen Betrachtungsaspekt, z. B. Lärm, Verkehrssicherheit, Flächenverbrauch, Erreichbarkeit oder kommunalen Handlungsspielraum.
 
-Damit soll verhindert werden, dass auf einer Themenseite alle verknüpften Ereignisse und Vorgänge gleichrangig erscheinen. Die thematische Darstellung muss erkennen lassen, **was das Thema prägt, was eine Reaktion oder Umsetzung darstellt und wo lediglich Auswirkungen sichtbar werden**.
+Unter einer Perspektive werden die sachlich belegbaren oder begründet erwartbaren **Wirkungen** relevanter Vorgänge beschrieben.
+
+Perspektive und Wirkung sind keine politische Bewertung. Die politische Bewertung gehört ausschließlich in die getrennte Ebene **„Unsere Einordnung“**.
 
 ## 6. Iterative Themendefinition
 
@@ -146,7 +144,8 @@ Die interne Themendefinition enthält mindestens:
 - einbezogene Perspektiven bzw. Dimensionen,
 - ausdrückliche Abgrenzung,
 - relevante übergeordnete Kontexte,
-- zugehörige bzw. auslösende Vorgänge und Beiträge,
+- zugehörige bzw. auslösende Vorgänge und Meldungen,
+- Bedeutung der Vorgänge für das Thema,
 - Unsicherheiten und offene Abgrenzungsfragen.
 
 Der Arbeitsprozess ist iterativ:
@@ -174,7 +173,8 @@ Die KI soll aus folgenden Entscheidungen lernen:
 - vom Redakteur ergänzte fehlende Aspekte,
 - nachträglich entdeckte relevante Vorgänge,
 - bewusste Abgrenzungen zwischen Thema und Vorgang,
-- redaktionell korrigierte Rollen eines Vorgangs innerhalb eines Themas.
+- redaktionell korrigierte Einstufungen der Bedeutung eines Vorgangs für ein Thema,
+- redaktionell ergänzte oder korrigierte Perspektiven.
 
 Ziel ist keine autonome Themenhoheit der KI, sondern eine zunehmend FIB-spezifische Vorschlagslogik unter redaktioneller Kontrolle.
 
@@ -217,34 +217,38 @@ Der Fall zeigt mehrere Anforderungen zugleich:
 
 Für das Datenmodell sind mindestens vorzusehen:
 
-- eigenständige Entitäten für Ereignis/Beitrag, Vorgang und Thema,
+- eigenständige Entitäten für Ereignis, Meldung, Vorgang und Thema,
 - n:m-Beziehungen zwischen Vorgängen und Themen,
-- **fachliche Rolle einer Vorgang-/Ereignisbeziehung innerhalb eines Themas**,
-- Möglichkeit mehrerer Rollen pro Beziehung bzw. einer späteren Rollenänderung,
+- redaktionell bestätigte **Bedeutung für das Thema** mit den Stufen prägend / relevant / ergänzend,
+- strukturierte Perspektiven eines Themas,
+- sachliche Wirkungen relevanter Vorgänge innerhalb dieser Perspektiven,
 - versionierte Themendefinitionen,
 - redaktioneller Bestätigungsstatus für Themendefinitionen,
-- strukturierte Perspektiven/Kontextdimensionen eines Themas,
 - redaktionell ergänzte Aspekte und Prüfaufträge,
 - Rechercheaufträge mit Status und Ergebnis,
 - Herkunft einer Perspektive: KI erkannt / Redaktion ergänzt / Recherche bestätigt,
-- nachvollziehbare Zuordnungs-, Rollen- und Abgrenzungsentscheidungen,
+- nachvollziehbare Zuordnungs-, Bedeutungs- und Abgrenzungsentscheidungen,
 - Kalibrierungsfeedback aus bestätigten, veränderten und verworfenen Vorschlägen.
 
-Die konkrete Modellierung erfolgt in G3.
+Die konkrete Modellierung erfolgt in `docs/Datenmodell.md`.
 
-## 11. Nächster G2-Schritt
+## 11. Öffentliche Themendarstellung
 
-Als nächstes wird geprüft, **wie ein bestätigtes Thema öffentlich dargestellt wird**, ohne wieder in die alte Logik „Thema = chronologischer Vorgang“ zurückzufallen.
-
-Die Themenseite muss insbesondere beantworten:
+Eine Themenseite muss insbesondere beantworten:
 
 - Was ist die Leitfrage?
 - Warum ist sie für Feldkirchen relevant?
 - Welche Perspektiven gehören zum Thema?
 - Welche konkreten Vorgänge prägen den lokalen Stand?
-- Welche Rolle spielen diese Vorgänge im Thema: Treiber, Umsetzung, Betroffenheit, Kontext oder Indikator?
+- Welche Bedeutung haben diese Vorgänge für das Thema?
+- Welche sachlichen Wirkungen sind unter den relevanten Perspektiven erkennbar?
 - Welcher externe Kontext hilft beim Verständnis?
 - Was wissen wir, was ist offen und wo bestehen Wissenslücken?
 - Welche neuen Entwicklungen haben die Themendefinition zuletzt verändert?
 
-Die konkrete UX der Themenseite wird anhand realer Themenfälle getestet, bevor sie verbindlich festgelegt wird.
+## Änderungshistorie
+
+| Version | Datum | Änderung |
+|---|---|---|
+| 1.2 | 02.10.2026 | Wirkungsrollen-Taxonomie durch „Bedeutung für das Thema“ ersetzt; verpflichtende redaktionelle Bestätigung festgelegt; Perspektiven und sachliche Wirkungen von politischer Bewertung abgegrenzt. |
+| 1.1 | 30.09.2026 | Themen-/Vorgangslogik konsolidiert und Wirkungsrollen eingeführt. |
