@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 2.0 | 01.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
+| 2.1 | 02.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
 
 ## 1. Zweck
 
@@ -40,6 +40,7 @@ Für FIB gelten insbesondere:
 | Projektgründung / Gründungsentscheidungen | `docs/Projektgruendung.md` | in Arbeit |
 | Roadmap / nächster Schritt | `docs/Roadmap.md` | vorhanden |
 | Fachkonzept | `docs/Fachkonzept.md` | vorhanden |
+| Begriffe / fachliches Glossar | `docs/Begriffe.md` | vorhanden |
 | Management Approach | `docs/FIB_Management-Approach.md` | vorhanden |
 | KI-Arbeitsregeln | `docs/KI-Leitfaden.md` | vorhanden |
 | KI-Qualität / Modellunabhängigkeit | `docs/KI-Qualitaet-und-Modellunabhaengigkeit.md` | vorhanden |
@@ -124,6 +125,8 @@ Die Querverweis-, Terminologie- und Konsistenzprüfung wurde durchgeführt. Hist
 
 Das visuelle Identitäts- und Bildkonzept ist eine **neue G2-Primärquelle des Echtsystems** und keine übernommene Demonstrator-Dokumentation.
 
+Das Begriffsregister `docs/Begriffe.md` ist eine **neue G3-Primärquelle** für die einheitliche Bedeutung und Abgrenzung zentraler FIB-Begriffe. Es wird grundsätzlich über das Stand-Datum fortgeschrieben; eine neue Versionsnummer ist nur bei strukturellen oder konzeptionellen Änderungen erforderlich.
+
 ## 8. Pflegepflicht
 
 Bei jeder verbindlichen fachlichen, technischen, architektonischen, Sicherheits-, Datenmodell-, Prozess- oder Designentscheidung wird geprüft:
@@ -145,10 +148,13 @@ Für dauerhaft gepflegte Dokumente gilt grundsätzlich:
 3. Inhalt
 4. Änderungshistorie als letzter inhaltlicher Abschnitt
 
+Für laufend ergänzte Register oder Glossare kann statt einer fortlaufenden Versionsnummer primär ein Stand-Datum verwendet werden. Eine neue Versionsnummer ist dort nur bei strukturellen oder konzeptionellen Änderungen erforderlich.
+
 ## Änderungshistorie
 
 | Version | Datum | Änderung |
 |---|---|---|
+| 2.1 | 02.10.2026 | `docs/Begriffe.md` als verbindliches Begriffsregister aufgenommen; Stand-Datum statt fortlaufender Versionsnummer für laufend ergänzte Register/Glossare zugelassen. |
 | 2.0 | 01.10.2026 | `docs/Datenmodell.md` als G3-Primärquelle für fachliche Datenanforderungen und logisches Datenmodell aufgenommen. |
 | 1.9 | 01.10.2026 | `Migrationsstrategie.md` als Primärquelle für den späteren Übergang von Entwickler- auf GRÜNEN-Infrastruktur aufgenommen; G2-Dokumentstatus auf vorhanden konsolidiert. |
 | 1.8 | 01.10.2026 | `Visuelle-Identitaet-und-Bildkonzept.md` als eigene Primärquelle aufgenommen; Abgrenzung zu UX dokumentiert. |
@@ -159,4 +165,4 @@ Für dauerhaft gepflegte Dokumente gilt grundsätzlich:
 | 1.3 | 30.09.2026 | Management Approach als kanonische Echtsystem-Fassung aufgenommen. |
 | 1.2 | 30.09.2026 | Dokumentationshoheit des Echtsystems festgelegt; Demonstrator als eingefrorene Referenz definiert. |
 | 1.1 | 29.09.2026 | UX- und Informationsarchitektur als verbindliche Primärquelle aufgenommen. |
-| 1.0 | 29.09.2026 | Dokumentationslandkarte angelegt. |
+| 1.0 | 29.09.2026 | Initiale Dokumentationslandkarte angelegt. |
