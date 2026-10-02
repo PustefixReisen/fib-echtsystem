@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 0.2 | 02.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
+| 0.3 | 02.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
 
 ## 1. Zweck und Geltung
 
@@ -30,7 +30,7 @@ Die fachliche Grundstruktur lautet:
 
 > **Ereignis → Meldung → Vorgang → Thema**
 
-Diese Struktur ist keine starre Hierarchie. Insbesondere können Vorgänge mehreren Themen zugeordnet sein, Meldungen direkt themenrelevant sein und Sitzungen quer zu mehreren Ebenen liegen.
+Diese Struktur ist keine starre Hierarchie. Insbesondere können Vorgänge mehreren Themen zugeordnet sein, Ereignisse mehrere Vorgänge berühren und Sitzungen quer zu mehreren Ebenen liegen.
 
 ### 3.1 Ereignis
 
@@ -95,13 +95,41 @@ Beispiel:
 
 Damit bleiben Ereignisfolge und redaktionelle Veröffentlichung voneinander unterscheidbar.
 
-### 3.4 Noch zu klärende Kernbeziehungen
+### 3.4 Beziehung Ereignis ↔ Vorgang
+
+Die fachliche Zuordnung zu einem konkreten länger laufenden Sachverhalt erfolgt über das **Ereignis**, nicht über eine parallele eigenständige Meldung-Vorgang-Beziehung.
+
+Verbindliche Entscheidung:
+
+> **Ein Ereignis kann keinem, einem oder mehreren Vorgängen zugeordnet sein. Ein Vorgang umfasst mindestens ein fachlich zugeordnetes Ereignis.**
+
+Damit gilt fachlich:
+
+- **Ereignis → Vorgang:** `0..n`
+- **Vorgang → Ereignis:** `1..n`
+
+Der Normalfall ist die Zuordnung eines Ereignisses zu genau einem Vorgang. Mehrfachzuordnungen sind zulässig, wenn dasselbe Ereignis mehrere konkrete Sachverhalte tatsächlich berührt. Bloße thematische Ähnlichkeit reicht dafür nicht aus.
+
+Meldungen erhalten keine zusätzliche unabhängige Vorgangszuordnung. Ihre Zugehörigkeit zu einem Vorgang wird über das zugrunde liegende Ereignis abgeleitet:
+
+`Meldung → Ereignis → Vorgang`
+
+Dadurch werden widersprüchliche Doppelzuordnungen vermieden.
+
+Beispiel „Hundewiese“:
+
+- Ereignis A: neue Beschlussvorlage veröffentlicht → Vorgang „Hundewiese“ → Meldung A.
+- Ereignis B: Beratung/Beschluss im Gemeinderat → Vorgang „Hundewiese“ → Meldung B.
+- Ereignis C: kleiner weiterer Planungsschritt → Vorgang „Hundewiese“ → keine eigene Meldung.
+
+Damit erzählt der Vorgang die Entwicklung des konkreten Sachverhalts, Ereignisse bilden die fachlichen Schritte ab, und Meldungen sind die veröffentlichten redaktionellen Darstellungen der berichtenswerten Ereignisse.
+
+### 3.5 Noch zu klärende Kernbeziehungen
 
 Als nächster Modellierungsschritt werden die Kardinalitäten und fachlichen Regeln geklärt für:
 
-- Ereignis/Meldung ↔ Vorgang,
 - Vorgang ↔ Thema,
-- direkte Meldung/Ereignis ↔ Thema,
+- direkte Ereignis ↔ Thema-Beziehungen,
 - Sitzung/TOP ↔ Ereignis/Meldung/Vorgang/Thema.
 
 Dabei wird ausdrücklich geprüft, welche Beziehungen zwingend, optional, einfach oder n:m sind und welche Beziehungen eigene fachliche Attribute benötigen, z. B. Wirkungsrollen.
@@ -142,17 +170,17 @@ Diese Begriffe werden nicht als bereits abschließend modelliert betrachtet. Ihr
 
 ## 5. Offene G3-Fragen
 
-1. Gehört ein Ereignis bzw. eine Meldung immer genau zu einem Vorgang oder kann es ohne Vorgang bestehen?
-2. Können mehrere Vorgänge dasselbe Ereignis fachlich berühren?
-3. Wie werden direkte Beziehungen von Meldungen/Ereignissen zu Themen modelliert?
-4. Welche Beziehungen benötigen eigene Attribute wie Wirkungsrolle, Gewichtung, Gültigkeitszeitraum oder redaktionelle Bestätigung?
-5. Welche Status gehören zu Ereignis, Meldung, Vorgang, Thema und Sitzung?
-6. Welche Änderungen werden versioniert, welche nur protokolliert?
-7. Welche Daten gehören zur fachlichen Persistenz und welche nur zum technischen Betrieb?
+1. Welche Kardinalität und fachlichen Attribute gelten für Vorgang ↔ Thema?
+2. Wie werden direkte Beziehungen von Ereignissen zu Themen modelliert, wenn kein Vorgang dazwischen liegt?
+3. Welche Beziehungen benötigen eigene Attribute wie Wirkungsrolle, Gewichtung, Gültigkeitszeitraum oder redaktionelle Bestätigung?
+4. Welche Status gehören zu Ereignis, Meldung, Vorgang, Thema und Sitzung?
+5. Welche Änderungen werden versioniert, welche nur protokolliert?
+6. Welche Daten gehören zur fachlichen Persistenz und welche nur zum technischen Betrieb?
 
 ## Änderungshistorie
 
 | Version | Datum | Änderung |
 |---|---|---|
+| 0.3 | 02.10.2026 | Beziehung Ereignis ↔ Vorgang verbindlich festgelegt: Ereignis `0..n` Vorgänge, Vorgang `1..n` Ereignisse; Meldung-Vorgang-Zuordnung wird über das Ereignis abgeleitet. |
 | 0.2 | 02.10.2026 | Kardinalität Ereignis ↔ Meldung verbindlich festgelegt: ein Ereignis hat 0..1 Meldungen, eine Meldung gehört genau zu einem Ereignis. |
 | 0.1 | 01.10.2026 | G3-Primärdokument angelegt; Trennung von Ereignis und Meldung verbindlich festgelegt; weitere Modellbereiche und nächste Klärungsschritte aufgenommen. |
