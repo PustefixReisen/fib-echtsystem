@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 1.2 | 02.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
+| 1.3 | 02.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
 
 ## 1. Zweck und Verbindlichkeit
 
@@ -210,6 +210,25 @@ Dabei gilt:
 - Personen oder Gruppen nicht abwerten,
 - Zielkonflikte und relevante Gegenargumente nicht verschweigen.
 
+### 12.1 Strukturierte Redaktion und sprachliche Fassung
+
+Für KI-formulierte Einordnungen ist der `strukturierte Redaktionsstand` die fachliche Quelle. Der Redakteur arbeitet primär mit strukturierten, schlagwortartigen Angaben wie `Wirkung`, `Perspektive`, `Zielbereich`, Wirkungsrichtung, Bedeutung/Tragweite, `Verlässlichkeit`, politischem Gewicht, `Gestaltungsoption`, `Begründung` und `Abwägung`.
+
+Die KI übernimmt daraus die Formulierungsarbeit. Der redaktionell bearbeitete Endtext bleibt zulässig, darf aber den strukturierten fachlichen Stand nicht unbemerkt verändern.
+
+Wenn eine manuelle Textänderung eine fachliche Aussage, Gewichtung, Bewertung oder Abwägung verändert, muss die KI die Abweichung anzeigen. Die Redaktion entscheidet dann, ob der strukturierte Stand entsprechend geändert oder die Textabweichung zurückgenommen wird.
+
+Bei späterer Neugenerierung gilt:
+
+- Ausgangspunkt ist ausschließlich der aktuelle strukturierte Redaktionsstand,
+- die neue Fassung wird mit der vorherigen freigegebenen Fassung verglichen,
+- fachlich unveränderte Kernaussagen dürfen nicht ohne Grund ihre Bedeutung oder Gewichtung verändern,
+- neue oder geänderte Kernaussagen müssen auf konkrete Änderungen im strukturierten Stand zurückführbar sein,
+- rein sprachliche Änderungen außerhalb der fachlich geänderten Bereiche dürfen keine neue politische Aussage erzeugen,
+- die Redaktion soll erkennen können, welche Textänderung durch welche strukturierte Änderung ausgelöst wurde.
+
+Der Redaktionsprozess ist iterativ. Frühere strukturierte Angaben können geändert und Abwägungs- sowie Formulierungsvorschläge anschließend neu erzeugt werden.
+
 ## 13. Tatsachennähe und Fakten-Rückprüfung
 
 Arbeitsfolge:
@@ -245,6 +264,8 @@ Neue Läufe arbeiten inkrementell. Bereits verifizierte Inhalte werden nur bei s
 - fachlicher Aktualisierung,
 - Regeländerung.
 
+Der strukturierte Redaktionsstand und die dazugehörigen Textfassungen werden versioniert so gespeichert, dass ihre Zuordnung und fachlichen Änderungen nachvollziehbar bleiben.
+
 Die technische Ausgabe ist nicht selbst die fachliche Datenhaltung.
 
 ## 15. Redaktionelle Bestätigung
@@ -260,6 +281,8 @@ Fachlich besonders wirksame Vorschläge werden ausdrücklich redaktionell bestä
 - wichtige Entscheidungen,
 - offene Punkte und nächste belegte Schritte,
 - Themendefinition und wesentliche Änderungen,
+- strukturierte Bewertung, Gewichtung und Abwägung für „Unsere Einordnung“,
+- fachlich relevante Abweichungen zwischen strukturiertem Stand und manuell verändertem Endtext,
 - „Unsere Einordnung“,
 - Abschluss eines Vorgangs.
 
@@ -277,6 +300,7 @@ Vor Veröffentlichung wird mindestens geprüft:
 - Unsicherheiten und Quellenlücken,
 - Trennung von Sachinformation und Einordnung,
 - Herkunft politischer Positionen,
+- Konsistenz zwischen strukturiertem Redaktionsstand und Textfassung,
 - sprachliche Funktion,
 - Aktualität betroffener „Mehr wissen?“-Inhalte,
 - Rechte bei Bildern und fremden Inhalten,
@@ -300,6 +324,7 @@ Nicht hier verbindlich geregelt werden:
 
 | Version | Datum | Änderung |
 |---|---|---|
+| 1.3 | 02.10.2026 | Strukturierter Redaktionsstand als fachliche Quelle für KI-formulierte Einordnungen verankert; Konsistenzprüfung zwischen Struktur und Text sowie versionsübergreifende Änderungsbegrenzung ergänzt. |
 | 1.2 | 02.10.2026 | Themenlogik auf „Bedeutung für das Thema“ umgestellt; Wirkungsrollen-Taxonomie entfernt; Begriffsregister und Datenmodell als ergänzende Primärquellen referenziert. |
 | 1.1 | 30.09.2026 | Nach Dokumentationsübernahme auf kanonische Echtsystem-Primärquellen umgestellt; Detailzuständigkeiten bereinigt; Regeln für Meldung/Vorgang/Thema, Mehr wissen, Fakten-Rückprüfung und redaktionelle Bestätigung konsolidiert. |
 | 1.0 | 30.09.2026 | KI-Leitfaden aus Demonstrator-Grundlagen als Echtsystem-Fassung angelegt. |
