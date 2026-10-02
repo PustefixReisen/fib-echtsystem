@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 1.2 | 02.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
+| 1.3 | 02.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
 
 ## 1. Funktion
 
@@ -65,6 +65,45 @@ Die folgenden 16 Zielbereiche werden als Prüfrahmen geführt:
 14. **Regionale Wirtschaft, lokale Wertschöpfung und zukunftsfähige Daseinsvorsorge** – Wirkungen auf Betriebe, Arbeit, Versorgung, Beschaffung und regionale Wertschöpfung prüfen.
 15. **Digitale Souveränität und gemeinwohlorientierte Digitalisierung** – Zugang, Datenschutz, Sicherheit, offene Standards, Interoperabilität, Lebenszykluskosten und Anbieterabhängigkeiten beachten.
 16. **Wohnortnahe Gesundheitsversorgung, Pflege und selbstbestimmtes Altern** – wohnortnahe, bedarfsgerechte Angebote, Barrierefreiheit, Erreichbarkeit und Einfügung in die Ortsentwicklung berücksichtigen.
+
+### 4.1 Struktur der Zielbereiche und Prüfkriterien
+
+Jeder Zielbereich wird schrittweise in ein einheitliches Raster überführt:
+
+- Name,
+- Kurzbeschreibung,
+- strukturierte Prüfkriterien,
+- erforderlichenfalls Abgrenzung bzw. typische Fehlinterpretationen.
+
+Prüfkriterien sind strukturierte Bestandteile des Referenzsystems. Sie benennen beobachtbare oder prüfbare Aspekte, anhand derer eine konkrete Wirkung einem Zielbereich zugeordnet und ihre Wirkungsrichtung nachvollziehbar begründet werden kann.
+
+Prüfkriterien sollen möglichst neutral formuliert sein. Sie sagen, **was geprüft wird**, nicht bereits, **wie das Ergebnis politisch zu bewerten ist**.
+
+Beispiel:
+
+- nicht: „Radverkehr fördern“,
+- sondern z. B.: Verkehrssicherheit, Durchgängigkeit einer Radverkehrsverbindung, Erreichbarkeit, Flächenverteilung.
+
+Ein Prüfkriterium kann bei mehreren Zielbereichen einschlägig sein, wenn der fachliche Zusammenhang dies erfordert. Doppelungen werden nur vermieden, wenn dadurch kein relevanter Bedeutungsunterschied verloren geht.
+
+### 4.2 Ermittlung und Herkunft von Prüfkriterien
+
+Prüfkriterien werden nicht frei oder allein aus allgemeinem KI-Wissen festgelegt. Ihre Ermittlung erfolgt systematisch:
+
+1. Ausgangspunkt ist die vorhandene Kurzbeschreibung des jeweiligen Zielbereichs.
+2. Daraus werden beobachtbare und prüfbare Aspekte herausgearbeitet.
+3. Diese Aspekte werden mit den vorhandenen grünen Referenzquellen abgeglichen, zunächst mit dokumentierten lokalen Positionen, danach mit kommunalpolitischen und gegebenenfalls höheren grünen Ebenen.
+4. Politische Formulierungen werden in möglichst neutrale Prüfaspekte übersetzt, ohne die spätere Bewertung vorwegzunehmen.
+5. Die vorgeschlagenen Prüfkriterien werden an realen FIB-Fällen getestet und bei Bedarf ergänzt, präzisiert, zusammengeführt oder entfernt.
+
+Für ein Prüfkriterium soll nachvollziehbar bleiben:
+
+- welchem Zielbereich es zugeordnet ist,
+- aus welcher Referenz bzw. welchem Zusammenhang es abgeleitet wurde,
+- warum es als neutrales Prüfkriterium formuliert wurde,
+- seit welchem Referenzstand es gilt.
+
+Neue Referenzinformationen können dazu führen, dass Prüfkriterien ergänzt, präzisiert oder als nicht mehr passend gekennzeichnet werden. Änderungen werden erst nach Admin-Freigabe fachlich wirksam.
 
 ## 5. Fallbezogene Gewichtung und mehrere Zielbereiche
 
@@ -136,6 +175,7 @@ Reine sprachliche Änderungen verändern den fachlichen Stand nicht.
 
 | Version | Datum | Änderung |
 |---|---|---|
+| 1.3 | 02.10.2026 | Prüfkriterien als strukturierte Bestandteile des Referenzsystems festgelegt; einheitliches Zielbereichsraster sowie Herkunfts-, Ableitungs- und Testlogik für Prüfkriterien ergänzt. |
 | 1.2 | 02.10.2026 | KI-gestützte regelmäßige Pflege des Referenzsystems ergänzt; KI- und Redaktionsvorschläge benötigen Admin-Freigabe; Admin als fachlich-technisch verantwortliche Rolle festgelegt; historische Referenzstände bleiben nachvollziehbar. |
 | 1.1 | 02.10.2026 | Keine feste Rangfolge der Zielbereiche; politisches Gewicht als fallbezogene, KI-vorgeschlagene und redaktionell bestätigte Größe festgelegt; Kriterien für Gewichtung ergänzt. |
 | 1.0 | 30.09.2026 | Bestehendes Register aus der Demonstrator-/Bibliotheksphase ins Echtsystem überführt, Presseschau-Terminologie entfernt und als eigenständige kanonische Projektgrundlage gefasst. |
