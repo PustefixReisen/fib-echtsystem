@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 1.0 | 30.09.2026 | Josef Walter – erstellt mit KI-Unterstützung |
+| 1.1 | 02.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
 
 ## 1. Ziel
 
@@ -31,7 +31,8 @@ Soweit möglich außerhalb des Modells technisch absichern, insbesondere:
 - Versions- und Änderungslogik,
 - Objektbeziehungen und Aliase,
 - technische Linkprüfungen,
-- Sichtbarkeits- und Veröffentlichungsregeln.
+- Sichtbarkeits- und Veröffentlichungsregeln,
+- Redaktionsworkflow, Formularstruktur, Fragemuster und Antwortoptionen.
 
 ### 2.2 Explizite KI-Regeln
 
@@ -40,7 +41,9 @@ Semantische Aufgaben werden durch dokumentierte, modellübergreifend formulierte
 - Relevanzprüfung für Feldkirchen,
 - Ereignis versus Aktualisierung,
 - Vorgangszuordnung,
-- Themenkandidaten und Wirkungsrollen,
+- Themenkandidaten,
+- Erkennung und Trennung von Wirkungen,
+- Zuordnung zu Zielbereichen und Prüfkriterien,
 - Auswahl von Hintergrundquellen,
 - „Mehr wissen?“-Fragen,
 - sprachliche Regeln,
@@ -56,7 +59,8 @@ Beispiele:
 - gleicher oder unterschiedlicher Vorgang,
 - konkrete Relevanz eines externen Beispiels,
 - Auswahl wesentlicher Aspekte umfangreicher Unterlagen,
-- verständliche Verdichtung komplexer Sachverhalte.
+- verständliche Verdichtung komplexer Sachverhalte,
+- fallbezogene Abwägung mehrerer Wirkungen und Zielkonflikte.
 
 ## 3. Grundsatz für neue Funktionen
 
@@ -77,9 +81,9 @@ Mindestens folgende FIB-Referenzfälle werden dauerhaft gepflegt:
 
 - Hundewiese: Vorgang, nicht automatisch Thema,
 - Kiesgrund: unbekannter bedeutender Vorgang muss durch themenunabhängige Entdeckung auffindbar sein,
-- Autobahnkreuz München-Ost: möglicher prägender Treiber,
-- Radwegenetz: Gestaltungsbeitrag,
-- einzelne Sperrung/Umleitung: Betroffenheit/Auswirkung,
+- Autobahnkreuz München-Ost: komplexer Vorgang mit mehreren Wirkungen und Zielkonflikten,
+- Radwegenetz: Gestaltungsoptionen und mehrere Zielbereiche,
+- einzelne Sperrung/Umleitung: begrenzte Wirkung ohne automatische Übergewichtung,
 - RIS-Vorlage mit späterem Beschluss,
 - externer Inhalt mit mittelbarer Relevanz,
 - Aliasfall Straße/Infrastruktur,
@@ -100,10 +104,14 @@ Modellvergleiche prüfen mindestens:
 6. Trennung Sachinformation / Position / Einordnung,
 7. Feldkirchen-Bezug und Kontextverständnis,
 8. Ereignis-/Vorgangs-/Themenlogik,
-9. Wirkungsrollen,
-10. Datums- und Sitzungslogik,
-11. Fragequalität und Nicht-Redundanz bei „Mehr wissen?“,
-12. Verständlichkeit und Regeltreue.
+9. Erkennung und Trennung von Wirkungen,
+10. Zuordnung zu Zielbereichen und Prüfkriterien,
+11. Datums- und Sitzungslogik,
+12. Fragequalität und Nicht-Redundanz bei „Mehr wissen?“,
+13. Verständlichkeit und Regeltreue,
+14. Konsistenz strukturierter Abwägungen,
+15. technische Eignung für strukturierte Ein-/Ausgaben,
+16. tatsächliche Kosten für die jeweilige FIB-Aufgabe.
 
 Kritische fachliche Fehler dürfen nicht durch gute Durchschnittswerte verdeckt werden.
 
@@ -122,7 +130,54 @@ Wo praktikabel, werden Ergebnisse ohne sichtbare Modellbezeichnung redaktionell 
 
 Ein Modell gilt nicht allein wegen sprachlich ansprechender Texte als geeignet. Maßgeblich ist die reproduzierbare Erfüllung der FIB-Regeln.
 
-## 7. Qualitäts- und Architekturprüfung
+### 6.1 Qualität und Kosten gemeinsam bewerten
+
+Der Modellvergleich dient nicht der Suche nach einem einzigen allgemein „besten“ Modell. Bewertet wird je FIB-Aufgabentyp, welches Modell die erforderliche Qualität mit vertretbaren realen Kosten erreicht.
+
+Dazu werden für jeden relevanten Aufgabentyp mindestens gemeinsam betrachtet:
+
+- erreichte fachliche Qualität,
+- Fehler- und Unsicherheitsverhalten,
+- Reproduzierbarkeit und Konsistenz,
+- Eignung für strukturierte Ausgaben,
+- Geschwindigkeit, soweit betrieblich relevant,
+- Input-/Output-Volumen,
+- zusätzliche Recherche-/Toolkosten,
+- beobachtete Gesamtkosten pro typischem FIB-Fall.
+
+Ein günstigeres Modell kann für eine Routineaufgabe bevorzugt werden, wenn es die festgelegte Mindestqualität zuverlässig erfüllt. Ein leistungsstärkeres Modell wird dort eingesetzt, wo die Qualitätsanforderung dies rechtfertigt.
+
+### 6.2 Vergleich nach FIB-Aufgaben statt nach Modellnamen
+
+Modelle werden auf konkrete FIB-Aufgaben abgebildet, zum Beispiel:
+
+- Dokumentinformationen extrahieren,
+- Wirkungen erkennen und trennen,
+- Zielbereiche vorschlagen,
+- Prüfkriterien auswählen,
+- Tragweite oder Verlässlichkeit einschätzen,
+- Gestaltungsoptionen vorschlagen,
+- komplexe Abwägungen erstellen,
+- Einordnungstexte aus strukturiertem Stand formulieren,
+- Konsistenz- und Plausibilitätsprüfungen durchführen.
+
+Dadurch kann dasselbe Modell für einzelne Aufgaben geeignet und für andere ungeeignet sein.
+
+## 7. KI-Leistungsklassen und Routing-Grundsatz
+
+FIB verwendet fachlich definierte KI-Leistungsklassen statt fest verdrahteter Modellnamen. Die Klassen beschreiben die für einen Aufgabentyp erforderliche Leistungsstufe, nicht einen bestimmten Anbieter.
+
+Arbeitstitel:
+
+- **Klasse A – Routine**: stark strukturierte, relativ klar begrenzte Aufgaben,
+- **Klasse B – Analyse**: anspruchsvollere semantische Analyse mit mehreren Abhängigkeiten,
+- **Klasse C – komplexe Bewertung**: besonders anspruchsvolle Abwägungs-, Konsistenz- oder Konfliktfälle.
+
+Die konkrete Zuordnung eines Providers und Modells zu einer Leistungsklasse erfolgt konfigurierbar und basiert auf dem aktuellen Modellvergleich.
+
+Ein Anbieter- oder Modellwechsel soll daher nach Möglichkeit nur die Routing-Konfiguration ändern, nicht den fachlichen Workflow.
+
+## 8. Qualitäts- und Architekturprüfung
 
 Bei Audits wird geprüft:
 
@@ -131,9 +186,11 @@ Bei Audits wird geprüft:
 - ob Regeln in Datenmodell oder Workflow verschoben werden können,
 - ob KI-Regeln ausreichend konkret sind,
 - ob für kritische Regeln Testfälle existieren,
-- ob Entscheidungen strukturiert nachvollziehbar bleiben.
+- ob Entscheidungen strukturiert nachvollziehbar bleiben,
+- ob die zugeordnete KI-Leistungsklasse noch angemessen ist,
+- ob ein günstigeres Modell die geforderte Qualität inzwischen ebenfalls zuverlässig erreicht.
 
-## 8. Modellwechsel
+## 9. Modellwechsel
 
 Ein produktiver Modell- oder Anbieterwechsel erfolgt erst nach erfolgreichem Vergleich gegen den aktuellen Testkorpus.
 
@@ -145,19 +202,24 @@ Die Auswahl berücksichtigt neben Qualität auch:
 - tatsächliche Kosten,
 - Anbieterabhängigkeit.
 
-## 9. Dokumentationspflicht
+Ein Modellwechsel darf nicht dazu führen, dass FIB-Formulare, Prozesslogik oder fachliche Regeln an ein bestimmtes Modell angepasst werden müssen.
+
+## 10. Dokumentationspflicht
 
 Wird festgestellt, dass eine zentrale FIB-Regel nur durch implizites Modellverhalten funktioniert, wird dies als Qualitäts- und Architekturrisiko dokumentiert und nach Möglichkeit in eine explizite Regel, Datenstruktur, Validierung oder einen Regressionstest überführt.
 
-## 10. Abgrenzung
+Ergebnisse von Modellvergleichen sollen so dokumentiert werden, dass erkennbar bleibt, warum ein Modell für eine bestimmte FIB-Aufgabe bzw. Leistungsklasse freigegeben wurde.
+
+## 11. Abgrenzung
 
 - operative KI-Arbeitsregeln: `docs/KI-Leitfaden.md`
 - Fachlichkeit: `docs/Fachkonzept.md`
-- Kosten/Betrieb: `docs/KI-Betrieb-und-Kosten.md`
+- Kosten/Betrieb und Routing-Matrix: `docs/KI-Betrieb-und-Kosten.md`
 - technische Umsetzung der KI-Schicht: G5
 
 ## Änderungshistorie
 
 | Version | Datum | Änderung |
 |---|---|---|
+| 1.1 | 02.10.2026 | Modellvergleich auf konkrete FIB-Aufgaben ausgerichtet; Qualität und reale Kosten gemeinsam als Auswahlkriterium festgelegt; KI-Leistungsklassen als modellunabhängige Grundlage für das spätere Routing ergänzt. |
 | 1.0 | 30.09.2026 | Demonstrator-Dokument `FIB_Modellunabhaengigkeit_und_Qualitaetspruefung.md` auf aktuelle Echtsystem-Logik und Referenzfälle konsolidiert. |
