@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 1.0 | 30.09.2026 | Josef Walter – erstellt mit KI-Unterstützung |
+| 1.1 | 02.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
 
 ## 1. Zweck und Geltung
 
@@ -12,6 +12,8 @@ Dieses Dokument ist die verbindliche fachliche Primärquelle für Zweck, fachlic
 
 Detailregeln werden dort verbindlich geführt, wo dafür bereits eine speziellere Primärquelle besteht:
 
+- Begriffe und Abgrenzungen: `docs/Begriffe.md`
+- Datenmodell: `docs/Datenmodell.md`
 - Themen- und Vorgangslogik: `docs/Themen-und-Vorgangslogik.md`
 - öffentliche Benutzerführung und Darstellung: `docs/UX-und-Informationsarchitektur.md`
 - KI-Arbeitsregeln: `docs/KI-Leitfaden.md`
@@ -70,20 +72,20 @@ FIB unterscheidet fachlich vier zentrale Inhaltsobjekte sowie zwei ergänzende W
 
 ### 4.1 Meldung / Beitrag – Was ist neu?
 
-Eine Meldung steht für ein **eigenständiges berichtenswertes Ereignis**.
+Eine Meldung ist die redaktionelle FIB-Darstellung eines **eigenständigen berichtenswerten Ereignisses**. Ereignis und Meldung sind getrennte fachliche Objekte; die verbindliche Abgrenzung steht in `docs/Datenmodell.md` und `docs/Begriffe.md`.
 
-Ein neuer Beitrag entsteht, wenn:
+Eine neue Meldung entsteht, wenn:
 
 1. ein neues Ereignis vorliegt und
 2. dieses Ereignis eigenen Nachrichtenwert für FIB besitzt.
 
-Neue Informationen zum selben Ereignis aktualisieren den bestehenden Beitrag. Eine zusätzliche Quelle allein erzeugt keinen neuen Beitrag, wenn sie keinen neuen relevanten Sachstand enthält.
+Neue Informationen zum selben Ereignis aktualisieren die bestehende Meldung. Eine zusätzliche Quelle allein erzeugt keine neue Meldung, wenn sie keinen neuen relevanten Sachstand enthält.
 
 Eine Meldung muss mindestens einen direkten oder begründeten mittelbaren Feldkirchen-Bezug besitzen.
 
 ### 4.2 Vorgang – Wie entwickelt sich ein konkreter Sachverhalt?
 
-Ein Vorgang bündelt mehrere Ereignisse bzw. Meldungen, die zum **selben konkreten Sachverhalt** gehören.
+Ein Vorgang bündelt mehrere Ereignisse, die zum **selben konkreten Sachverhalt** gehören. Zugehörige Meldungen werden über ihre Ereignisse abgeleitet.
 
 Ein Vorgang besitzt einen eigenen redaktionellen Kontext, insbesondere:
 
@@ -93,7 +95,7 @@ Ein Vorgang besitzt einen eigenen redaktionellen Kontext, insbesondere:
 - offene Punkte,
 - nächste belegte Schritte,
 - Zuständigkeiten und beteiligte Akteure,
-- zugehörige Meldungen,
+- zugehörige Ereignisse und daraus abgeleitete Meldungen,
 - Beziehungen zu einem oder mehreren Themen.
 
 Ein Vorgang kann beginnen, fortgeschrieben, zurückgestellt, wieder aufgenommen und abgeschlossen werden. Status und Chronologie gehören grundsätzlich auf diese Ebene.
@@ -106,7 +108,7 @@ Ein Thema ist eine **übergeordnete Fragestellung**, die mehrere unterschiedlich
 
 Ein einzelner länger laufender Vorgang ist nicht allein deshalb ein Thema.
 
-Themen werden bottom-up aus dem FIB-Bestand erkannt und redaktionell bestätigt. Sie können sich durch neue Vorgänge, Quellen oder Perspektiven weiterentwickeln. Die ausführliche Erkennungs-, Abgrenzungs-, Rollen- und Kalibrierungslogik steht verbindlich in `docs/Themen-und-Vorgangslogik.md`.
+Themen werden bottom-up aus dem FIB-Bestand erkannt und redaktionell bestätigt. Sie können sich durch neue Vorgänge, Quellen oder Perspektiven weiterentwickeln. Die ausführliche Erkennungs-, Abgrenzungs-, Bedeutungs-, Perspektiven- und Kalibrierungslogik steht verbindlich in `docs/Themen-und-Vorgangslogik.md`.
 
 ### 4.4 Sitzung – Was wird beraten und entschieden?
 
@@ -154,14 +156,18 @@ Die fachliche Grundbeziehung lautet:
 
 > **Ereignis → Meldung → Vorgang → Thema**
 
-Die Beziehung ist nicht strikt hierarchisch:
+Sie ist keine starre Hierarchie. Die konkrete Beziehungslogik steht in `docs/Datenmodell.md`.
 
+Insbesondere:
+
+- ein Ereignis kann keinem, einem oder mehreren Vorgängen zugeordnet sein,
+- die Vorgangszugehörigkeit einer Meldung wird über ihr Ereignis abgeleitet,
 - ein Vorgang kann mehreren Themen zugeordnet sein,
 - ein Thema umfasst in der Regel mehrere Vorgänge,
-- einzelne Meldungen können direkt themenrelevant sein, ohne bereits einen eigenen Vorgang zu bilden,
-- Sitzungen können Meldungen, Vorgänge und Themen gleichzeitig berühren.
+- einzelne Ereignisse können direkt themenrelevant sein, ohne bereits einen eigenen Vorgang zu bilden; die konkrete Modellierung wird in G3 geklärt,
+- Sitzungen können Ereignisse, Meldungen, Vorgänge und Themen gleichzeitig berühren.
 
-Bei einer Themenbeziehung ist nicht nur zu speichern, **dass** ein Vorgang relevant ist, sondern auch, **welche Rolle** er im Thema spielt. Die verbindliche Rollenlogik steht in `docs/Themen-und-Vorgangslogik.md`.
+Bei einer Vorgang-Thema-Beziehung wird die **Bedeutung für das Thema** mit `prägend`, `relevant` oder `ergänzend` geführt. Die KI schlägt die Einstufung vor; die Redaktion bestätigt oder ändert sie verpflichtend. Perspektiven und sachliche Wirkungen erklären, warum der Vorgang für das Thema relevant ist.
 
 ## 6. Quellen- und Recherchegrundsätze
 
@@ -242,12 +248,12 @@ KI unterstützt Recherche, Zuordnung, Analyse, Entwurf, Themenbildung, Vorgangsf
 
 Veröffentlichungsrelevante Inhalte werden redaktionell geprüft. Besonders wirksame fachliche Entscheidungen können eine ausdrückliche Bestätigung erfordern, darunter insbesondere:
 
-- Zuordnung Meldung ↔ Vorgang ↔ Thema,
+- Zuordnung Ereignis ↔ Vorgang ↔ Thema,
+- Bedeutung eines Vorgangs für ein Thema,
 - Entscheidung „neues Ereignis oder Aktualisierung“,
 - fachliche Aktualisierungsrelevanz,
 - aktueller Vorgangsstand,
 - offene Punkte und nächste belegte Schritte,
-- Wirkungsrolle eines Vorgangs im Thema,
 - Themendefinition und deren wesentliche Änderung,
 - „Unsere Einordnung“,
 - Abschluss eines Vorgangs.
@@ -279,4 +285,5 @@ Die Detailregeln stehen in `docs/KI-Leitfaden.md`; die technische Umsetzung wird
 
 | Version | Datum | Änderung |
 |---|---|---|
+| 1.1 | 02.10.2026 | Wissensbeziehungen an G3 angepasst: Ereignis und Meldung getrennt, Vorgangszuordnung über Ereignis, Wirkungsrollen durch redaktionell bestätigte „Bedeutung für das Thema“ sowie Perspektiven/Wirkungen ersetzt; Begriffsregister und Datenmodell referenziert. |
 | 1.0 | 30.09.2026 | Fachliche Grundlagen aus Demonstrator und Bibliotheksdokumentation ins Echtsystem überführt; Terminologie auf FIB/Meldung/Vorgang/Thema aktualisiert; aktuelle Wissens-, Aufnahme-, Sitzungs-, Recherche-, Such- und Freigabelogik konsolidiert. |
