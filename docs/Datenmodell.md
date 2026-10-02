@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 0.5 | 02.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
+| 0.6 | 02.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
 
 ## 1. Zweck und Geltung
 
@@ -24,6 +24,7 @@ Ziel ist ein robustes und langfristig tragfähiges Modell, das für einen kleine
 - Das Modell unterstützt KI-gestützte Arbeit, bleibt aber modellunabhängig.
 - Redaktionelle Bestätigung bleibt für veröffentlichungsrelevante und fachlich wirksame Entscheidungen vorgesehen.
 - Für KI-formulierte Einordnungen ist der strukturierte Redaktionsstand die fachliche Quelle; die Textfassung ist eine daraus abgeleitete Darstellung.
+- Fachlich-politische Qualität wird nicht nur über Einzelwerte, sondern auch über Plausibilitätsprüfungen zwischen mehreren strukturierten Angaben abgesichert.
 
 ## 3. Wissenskern
 
@@ -165,7 +166,7 @@ Verbindliche Entscheidung:
 
 > **Der `strukturierte Redaktionsstand` ist die fachliche Quelle. Die `Textfassung` ist eine daraus erzeugte sprachliche Darstellung.**
 
-Der `strukturierte Redaktionsstand` umfasst die jeweils bestätigten bzw. redaktionell bearbeiteten fachlichen Angaben, insbesondere `Wirkungen`, `Perspektiven`, Zuordnungen zu `Zielbereichen`, Wirkungsrichtungen, Bedeutung/Tragweite, `Verlässlichkeit`, politisches Gewicht, `Gestaltungsoptionen`, `Begründungen` und `Abwägung`.
+Der `strukturierte Redaktionsstand` umfasst die jeweils bestätigten bzw. redaktionell bearbeiteten fachlichen Angaben, insbesondere `Wirkungen`, `Perspektiven`, Zuordnungen zu `Zielbereichen`, `Wirkungsrichtungen`, `Bedeutung der Wirkung`, `Verlässlichkeit`, `politisches Gewicht`, `Gestaltungsoptionen`, `Begründungen` und `Abwägung`.
 
 Für jede veröffentlichte oder freigabefähige `Textfassung` muss nachvollziehbar sein, auf welchem versionierten `strukturierten Redaktionsstand` sie beruht.
 
@@ -182,15 +183,48 @@ Es gelten folgende Konsistenzregeln:
 
 Der Redaktionsprozess ist bewusst iterativ: Der Redakteur kann zu früheren strukturierten Angaben zurückkehren, sie ändern und anschließend einen neuen Abwägungs- oder Formulierungsvorschlag erzeugen. Die Historie der fachlich wirksamen Änderungen bleibt nachvollziehbar.
 
-### 3.8 Noch zu klärende Kernbeziehungen
+### 3.8 Bestätigung und Plausibilitätsprüfung
+
+Für den strukturierten Redaktionsprozess werden drei Sicherungsebenen unterschieden:
+
+1. **Pflichtbestätigung** – für Angaben, die die fachliche oder politische Kernaussage unmittelbar prägen.
+2. **sichtbarer KI-Vorschlag** – für Angaben, die die KI vorschlagen darf und die vom Redakteur sichtbar geprüft und bei Bedarf geändert werden können, ohne dass zwingend eine eigene Bestätigungsaktion erforderlich ist.
+3. **Plausibilitätsprüfung über mehrere Felder** – zur Erkennung auffälliger oder widersprüchlicher Kombinationen im strukturierten Stand.
+
+Zur Pflichtbestätigung gehören grundsätzlich insbesondere:
+
+- `Wirkung`,
+- `Zielbereich`,
+- `Wirkungsrichtung`,
+- `Bedeutung der Wirkung`,
+- `politisches Gewicht`,
+- relevante `Gestaltungsoptionen`,
+- die strukturierte `Abwägung`.
+
+`Verlässlichkeit` kann grundsätzlich als sichtbarer KI-Vorschlag geführt werden. Eine ausdrückliche Prüfung wird erforderlich, wenn ihre Kombination mit anderen Angaben fachlich auffällig ist oder die Abwägung wesentlich beeinflusst.
+
+Beispiele für Plausibilitätsprüfungen:
+
+- `Verlässlichkeit = gering` und zugleich `politisches Gewicht = hoch` → gezielter Prüfhinweis.
+- `Wirkungsrichtung = beeinträchtigt`, aber positive Gesamtbewertung derselben Wirkung ohne erkennbare Begründung → Inkonsistenzhinweis.
+- Eine bestätigte `Wirkung` wurde geändert, die `Abwägung` blieb aber unverändert → erneute Prüfung der Abwägung erforderlich.
+- Eine `Gestaltungsoption` erzeugt erwartete neue `Wirkungen`, diese fehlen aber in der Abwägung → Prüfhinweis.
+- Eine manuell geänderte `Textfassung` verschiebt eine Bewertung oder Gewichtung, ohne dass sich der strukturierte Redaktionsstand geändert hat → Konsistenzwarnung.
+
+Plausibilitätsprüfungen sind keine automatische politische Entscheidung. Sie markieren Konstellationen, bei denen die Redaktion die fachliche Herleitung gezielt prüfen muss.
+
+Die sprachliche Fassung der `Abwägung` wird von der KI erzeugt. Pflichtbestätigt wird die strukturierte Abwägung, nicht jeder einzelne Satz der daraus formulierten Textfassung.
+
+### 3.9 Noch zu klärende Kernbeziehungen
 
 Als nächste Modellierungsschritte werden geklärt:
 
 - direkte `Ereignis ↔ Thema`-Beziehungen,
 - `Sitzung/TOP ↔ Ereignis/Meldung/Vorgang/Thema`,
 - `Perspektiven` und `Wirkungen` innerhalb eines `Themas`,
-- Modellierung von `Bewertung`, `Begründung`, `Gestaltungsoption`, `Verlässlichkeit`, politischem Gewicht und politischem Referenzsystem,
-- genaue Versionierungs- und Vergleichslogik zwischen strukturiertem Redaktionsstand und Textfassung.
+- Modellierung von `Bewertung`, `Begründung`, `Gestaltungsoption`, `Verlässlichkeit`, `politischem Gewicht` und politischem Referenzsystem,
+- genaue Versionierungs- und Vergleichslogik zwischen strukturiertem Redaktionsstand und Textfassung,
+- konkrete fachliche Plausibilitätsregeln für den Redaktionsprozess.
 
 ## 4. Weitere Modellbereiche – noch nicht abschließend geklärt
 
@@ -230,18 +264,18 @@ Diese Begriffe werden nicht als bereits abschließend modelliert betrachtet. Ihr
 
 1. Wie werden `Perspektiven` und `Wirkungen` fachlich strukturiert, ohne unnötige eigene Hauptobjekte zu schaffen?
 2. Wie werden `Bewertungen` und ihre `Begründungen` mit dem grünen Referenzsystem verknüpft?
-3. Wie werden `Gestaltungsoptionen`, `Verlässlichkeit`, politisches Gewicht und `Abwägung` strukturiert?
-4. Wie werden direkte Beziehungen von `Ereignissen` zu `Themen` modelliert, wenn kein `Vorgang` dazwischen liegt?
-5. Welche Status gehören zu `Ereignis`, `Meldung`, `Vorgang`, `Thema` und `Sitzung`?
-6. Welche Änderungen werden versioniert, welche nur protokolliert?
-7. Wie wird technisch und fachlich geprüft, dass eine neue `Textfassung` nur dort ihre Kernaussage ändert, wo sich der `strukturierte Redaktionsstand` geändert hat?
-8. Welche Daten gehören zur fachlichen Persistenz und welche nur zum technischen Betrieb?
+3. Wie werden direkte Beziehungen von `Ereignissen` zu `Themen` modelliert, wenn kein `Vorgang` dazwischen liegt?
+4. Welche Status gehören zu `Ereignis`, `Meldung`, `Vorgang`, `Thema` und `Sitzung`?
+5. Welche Änderungen werden versioniert, welche nur protokolliert?
+6. Welche Daten gehören zur fachlichen Persistenz und welche nur zum technischen Betrieb?
+7. Welche Plausibilitätsregeln sind verbindlich und welche nur unterstützende Hinweise?
 
 ## Änderungshistorie
 
 | Version | Datum | Änderung |
 |---|---|---|
-| 0.5 | 02.10.2026 | `Strukturierter Redaktionsstand` als fachliche Quelle und `Textfassung` als abgeleitete Darstellung festgelegt; Konsistenz- und Versionsregeln für manuelle Textänderungen und spätere KI-Neugenerierung ergänzt. |
+| 0.6 | 02.10.2026 | Bestätigungslogik und feldübergreifende Plausibilitätsprüfung für den strukturierten Redaktionsprozess festgelegt; strukturierte Abwägung als fachlich zu bestätigender Stand von der KI-formulierten Textfassung getrennt. |
+| 0.5 | 02.10.2026 | `strukturierter Redaktionsstand` als fachliche Quelle und `Textfassung` als daraus erzeugte Darstellung festgelegt; Konsistenz-, Versions- und Änderungsregeln zwischen beiden Ebenen ergänzt. |
 | 0.4 | 02.10.2026 | Vorgang↔Thema konkretisiert: Wirkungsrollen-Taxonomie entfällt; „Bedeutung für das Thema“ mit prägend/relevant/ergänzend und verpflichtender redaktioneller Bestätigung eingeführt; Begriffe Perspektive, Wirkung, Bewertung, Begründung und politischer Bezug als nächster Modellierungsbereich abgegrenzt. |
 | 0.3 | 02.10.2026 | Beziehung Ereignis ↔ Vorgang verbindlich festgelegt: Ereignis `0..n` Vorgänge, Vorgang `1..n` Ereignisse; Meldung-Vorgang-Zuordnung wird über das Ereignis abgeleitet. |
 | 0.2 | 02.10.2026 | Kardinalität Ereignis ↔ Meldung verbindlich festgelegt: ein Ereignis hat 0..1 Meldungen, eine Meldung gehört genau zu einem Ereignis. |
