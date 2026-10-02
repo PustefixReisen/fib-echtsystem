@@ -2,7 +2,7 @@
 
 ## Dokumentstand
 
-**Stand:** 02.10.2026, 15:35 Uhr  
+**Stand:** 02.10.2026, 19:08 Uhr  
 **Verantwortlich:** Josef Walter – erstellt mit KI-Unterstützung
 
 Dieses Dokument wird im Normalfall über das **Stand-Datum einschließlich Uhrzeit** fortgeschrieben. Eine neue Versionsnummer wird nur eingeführt, wenn sich die Struktur oder das Grundkonzept des Dokuments wesentlich ändert.
@@ -25,12 +25,15 @@ Für die Pflege gilt:
 - Besteht Unsicherheit, ob ein Ausdruck bereits ein eigener Fachbegriff oder nur eine vorläufige Formulierung ist, wird vor der Aufnahme nachgefragt bzw. die Begriffsklärung im Dialog fortgeführt.
 - Eine Aufnahme ins Begriffsregister ersetzt nicht die fachliche Regelung im jeweils zuständigen Primärdokument.
 - Beispiele werden nur ergänzt, wenn sie das Verständnis oder die Abgrenzung eines Begriffs tatsächlich erleichtern.
+- Zu jedem Fachbegriff wird soweit sinnvoll das in der App verwendete Benutzer-Label dokumentiert. Das Benutzer-Label darf vom internen Fachbegriff abweichen, wenn dadurch die Bedienung verständlicher wird. Bei kontextbezogenen Eingaben kann statt eines statischen Labels eine konkrete Frage verwendet werden.
 
 Für fachliche Regeln und Kardinalitäten bleiben die jeweiligen Primärdokumente maßgeblich, insbesondere `docs/Datenmodell.md` und `docs/Themen-und-Vorgangslogik.md`.
 
 ## 2. Wissenskern
 
 ### `Ereignis`
+
+**Benutzer-Label in der App:** Ereignis
 
 Ein fachlich relevantes Geschehen oder eine relevante Entwicklung in der Wirklichkeit.
 
@@ -40,6 +43,8 @@ Nicht zu verwechseln mit Meldung. Das Ereignis beschreibt, was passiert; die Mel
 
 ### `Meldung`
 
+**Benutzer-Label in der App:** Meldung
+
 Die redaktionelle FIB-Darstellung eines eigenständigen berichtenswerten Ereignisses.
 
 Eine Meldung gehört genau zu einem Ereignis. Nicht jedes Ereignis muss eine Meldung erzeugen.
@@ -48,6 +53,8 @@ Beispiel: Die Veröffentlichung einer neuen Beschlussvorlage kann als Meldung ve
 
 ### `Vorgang`
 
+**Benutzer-Label in der App:** Vorgang
+
 Ein konkreter länger laufender Sachverhalt, der mehrere Ereignisse bündeln kann und einen eigenen aktuellen Stand, Verlauf, Status, offene Punkte und nächste belegte Schritte besitzt.
 
 Beispiel: „Hundewiese“ ist ein Vorgang, zu dem Veröffentlichung einer Vorlage, Beratung und spätere Beschlussfassung verschiedene Ereignisse sein können.
@@ -55,6 +62,8 @@ Beispiel: „Hundewiese“ ist ein Vorgang, zu dem Veröffentlichung einer Vorla
 Nicht zu verwechseln mit Thema. Ein Vorgang ist konkret; ein Thema ist eine übergeordnete Fragestellung.
 
 ### `Thema`
+
+**Benutzer-Label in der App:** Thema
 
 Eine übergeordnete Fragestellung, die mehrere Vorgänge, Ereignisse, Perspektiven oder Rahmenbedingungen verbindet und dadurch zusätzlichen Erklärungsgewinn schafft.
 
@@ -65,6 +74,8 @@ Beispiel: Ein Thema zur Mobilitätsentwicklung kann mehrere konkrete Vorgänge w
 ## 3. Beziehung Vorgang ↔ Thema
 
 ### `Bedeutung für das Thema`
+
+**Benutzer-Label in der App:** Wie wichtig ist dieser Vorgang für das Thema?
 
 Redaktionell bestätigte Einstufung, wie stark ein Vorgang das Verständnis oder die Entwicklung eines Themas prägt.
 
@@ -82,6 +93,8 @@ Nicht zu verwechseln mit Wirkung. Die Bedeutung für das Thema beschreibt die St
 
 ### `Wirkungsrolle` – nicht mehr verwendet
 
+**Benutzer-Label in der App:** keines; Begriff wird nicht mehr verwendet
+
 Die frühere Taxonomie „Treiber / Gestaltungsbeitrag / Betroffenheit / Rahmenbedingung / Indikator“ wird nicht mehr als eigenes strukturiertes FIB-Merkmal verwendet.
 
 Die dahinterliegenden fachlichen Aussagen werden über Bedeutung für das Thema, Perspektiven und konkrete Wirkungen abgebildet.
@@ -89,6 +102,8 @@ Die dahinterliegenden fachlichen Aussagen werden über Bedeutung für das Thema,
 ## 4. Perspektive, Wirkung und politische Einordnung
 
 ### `Perspektive`
+
+**Benutzer-Label in der App:** Perspektive
 
 Ein sachlicher Betrachtungsaspekt innerhalb eines Themas, unter dem relevante Vorgänge und ihre Folgen untersucht werden.
 
@@ -107,6 +122,8 @@ Nicht zu verwechseln mit Akteursperspektive oder politischer Bewertung. „Lärm
 
 ### `Wirkung`
 
+**Benutzer-Label in der App:** Auswirkung
+
 Eine sachlich belegbare oder begründet erwartbare Folge eines Vorgangs unter einer bestimmten Perspektive.
 
 Beispiel: „zusätzliche Flächeninanspruchnahme“ oder „durchgängige sichere Radverbindung“ sind getrennte Wirkungen und sollten auch getrennt erfasst werden.
@@ -117,6 +134,8 @@ Nicht zu verwechseln mit Bewertung. Wirkung beschreibt, was geschieht oder vorau
 
 ### `Zielbereich`
 
+**Benutzer-Label in der App:** Zielbereich
+
 Ein Bestandteil des grünen politischen Referenzrahmens, der einen politischen Maßstab mit Beschreibung und Prüfkriterien bereitstellt, anhand dessen konkrete Wirkungen eingeordnet werden können.
 
 Beispiel: „Nachhaltige Mobilität und Verkehrssicherheit“ oder „Flächensparen und nachhaltige Ortsentwicklung“.
@@ -124,6 +143,8 @@ Beispiel: „Nachhaltige Mobilität und Verkehrssicherheit“ oder „Flächensp
 Ein Zielbereich besitzt keine feste Rangstufe gegenüber anderen Zielbereichen. Seine Bedeutung für die Einordnung entsteht erst im konkreten Vorgang und in Bezug auf konkrete Wirkungen.
 
 ### `Prüfkriterium`
+
+**Benutzer-Label in der App:** Prüfkriterium
 
 Ein strukturierter, möglichst neutral formulierter und beobachtbarer oder prüfbarer Aspekt eines Zielbereichs, anhand dessen eine konkrete Wirkung dem Zielbereich nachvollziehbar zugeordnet werden kann.
 
@@ -133,6 +154,9 @@ Ein Prüfkriterium beschreibt, **was geprüft wird**, nicht bereits, **wie die W
 
 ### `Wirkungsrichtung`
 
+**Benutzer-Label in der App:** Wirkung auf das Ziel  
+**Kontextbezogene Frage:** Wie wirkt sich diese Auswirkung auf das Ziel aus?
+
 Die fallbezogene Aussage, ob eine konkrete Wirkung einen zugeordneten Zielbereich unterstützt, beeinträchtigt oder ob die Richtung noch unklar ist.
 
 Beispiel: Zusätzliche Flächeninanspruchnahme kann den Zielbereich Flächensparen beeinträchtigen; eine durchgängige sichere Radverbindung kann den Zielbereich nachhaltige Mobilität unterstützen.
@@ -141,19 +165,28 @@ Die Wirkungsrichtung wird von der KI vorgeschlagen und redaktionell geprüft. Si
 
 ### `Bedeutung der Wirkung`
 
+**Benutzer-Label in der App:** Tragweite der Auswirkung  
+**Kontextbezogene Frage:** Wie groß bzw. weitreichend ist diese Auswirkung?
+
 Die sachliche Tragweite einer Wirkung im konkreten Fall.
 
 Sie beschreibt nicht, wie stark die Wirkung politisch gewichtet wird. Eine sachlich kleine Wirkung kann politisch stark gewichtet werden und umgekehrt.
 
 ### `Verlässlichkeit`
 
+**Benutzer-Label in der App:** Verlässlichkeit der Einschätzung  
+**Kontextbezogene Frage:** Wie gut ist diese Einschätzung belegt?
+
 Einschätzung, wie belastbar die Aussage ist, dass eine angenommene oder beschriebene Wirkung tatsächlich zutrifft oder eintreten wird.
 
 Beispiel: Ein bereits planfestgestellter Flächenbedarf kann eine hohe Verlässlichkeit haben; ein nur vermuteter Verlagerungseffekt des Verkehrs eine geringere.
 
-Die Verlässlichkeit kann insbesondere von Quellenlage, Datenqualität, Planungsstand, Abhängigkeiten und Unsicherheiten beeinflusst werden. Im UI kann dafür eine verständlichere Bezeichnung wie „Verlässlichkeit der Aussage“ verwendet werden.
+Die Verlässlichkeit kann insbesondere von Quellenlage, Datenqualität, Planungsstand, Abhängigkeiten und Unsicherheiten beeinflusst werden.
 
 ### `Politisches Gewicht`
+
+**Benutzer-Label in der App:** Gewicht in der Abwägung  
+**Kontextbezogene Frage:** Wie stark soll diese Auswirkung in der Abwägung zählen?
 
 Fallbezogene Einschätzung, wie stark eine konkrete Wirkung in der grünen Abwägung berücksichtigt wird.
 
@@ -163,6 +196,8 @@ Beispiel: Eine räumlich kleine, aber irreversible Beeinträchtigung kann ein ho
 
 ### `Bewertung`
 
+**Benutzer-Label in der App:** Politische Bewertung
+
 Die politische Beurteilung einer Wirkung im Rahmen von „Unsere Einordnung“.
 
 Die strukturierte Bewertungssicht in FIB ist die von BÜNDNIS 90/DIE GRÜNEN Feldkirchen. Positionen anderer Akteure können als Sachinformation dokumentiert werden, bilden aber kein paralleles FIB-Bewertungssystem.
@@ -171,11 +206,15 @@ Die Bewertung kann durch Wirkungsrichtung, politisches Gewicht und Begründung s
 
 ### `Begründung`
 
+**Benutzer-Label in der App:** Begründung
+
 Die nachvollziehbare Herleitung, warum eine Wirkung politisch so bewertet und gewichtet wird.
 
 Die Begründung soll, soweit für das Verständnis erforderlich, den politischen Maßstab offenlegen und darf nicht nur ein unbegründetes Werturteil wiederholen.
 
 ### `Gestaltungsoption`
+
+**Benutzer-Label in der App:** Gestaltungsoption
 
 Eine fallbezogene Möglichkeit, einen konkreten Vorgang anders auszugestalten, negative Wirkungen zu vermeiden oder zu mindern oder zusätzliche positive Wirkungen zu erzeugen.
 
@@ -185,6 +224,8 @@ Gestaltungsoptionen werden nicht als fertiger Maßnahmenvorrat im politischen Re
 
 ### `Abwägung`
 
+**Benutzer-Label in der App:** Abwägung
+
 Strukturierte Zusammenschau der für einen konkreten Vorgang relevanten Wirkungen, Zielbereiche, Wirkungsrichtungen, Bedeutungen, Verlässlichkeiten, politischen Gewichte, Gestaltungsoptionen und Zielkonflikte.
 
 Beispiel: Zusätzlicher Flächenverbrauch kann gegen Verbesserungen für Radverkehr oder Biotopvernetzung abgewogen werden, ohne die unterschiedlichen Wirkungen rechnerisch gegeneinander aufzurechnen.
@@ -192,6 +233,8 @@ Beispiel: Zusätzlicher Flächenverbrauch kann gegen Verbesserungen für Radverk
 Die Abwägung ist keine rechnerische Addition von Plus- und Minuspunkten. Die KI erstellt einen nachvollziehbaren Vorschlag; die strukturierte Abwägung wird redaktionell bestätigt und bildet die Grundlage für die sprachliche Einordnung.
 
 ### `Politischer Bezug`
+
+**Benutzer-Label in der App:** Politischer Bezug
 
 Ein grüner Wert, ein politisches Ziel oder eine dokumentierte grüne Position, auf die sich die Begründung einer Bewertung stützt.
 
@@ -207,6 +250,8 @@ Die konkrete Modellierung dieses Referenzsystems wird in G3 gesondert festgelegt
 
 ### `Strukturierter Redaktionsstand`
 
+**Benutzer-Label in der App:** Bearbeitungsstand
+
 Die fachlich maßgebliche, versionierte Gesamtheit der redaktionell bestätigten oder bearbeiteten strukturierten Angaben, aus denen insbesondere „Unsere Einordnung“ erzeugt wird.
 
 Er ist die fachliche Quelle gegenüber der späteren sprachlichen Textfassung.
@@ -215,17 +260,23 @@ Beispiel: Ändert der Redakteur nur das politische Gewicht einer Wirkung, darf e
 
 ### `Textfassung`
 
+**Benutzer-Label in der App:** Textfassung
+
 Die sprachliche Darstellung, die aus einem bestimmten strukturierten Redaktionsstand erzeugt und anschließend redaktionell nachbearbeitet werden kann.
 
 Eine Textänderung darf eine fachliche Änderung nicht verdeckt einführen. Fachliche Abweichungen müssen in den strukturierten Redaktionsstand zurückgeführt oder zurückgenommen werden.
 
 ### `Plausibilitätsprüfung`
 
+**Benutzer-Label in der App:** Prüfhinweis
+
 Prüfung mehrerer strukturierter Angaben in ihrem Zusammenhang, um auffällige oder widersprüchliche Kombinationen zu erkennen.
 
 Beispiel: geringe Verlässlichkeit einer Wirkung bei gleichzeitig hohem politischem Gewicht. Eine Plausibilitätsprüfung erzeugt einen Prüfhinweis, ersetzt aber nicht die redaktionelle Entscheidung.
 
 ### `Pflichtbestätigung`
+
+**Benutzer-Label in der App:** Bestätigung erforderlich
 
 Explizite redaktionelle Bestätigung einer strukturierten Angabe, wenn diese die fachliche oder politische Kernaussage unmittelbar prägt.
 
@@ -234,6 +285,8 @@ Nicht jedes KI-vorgeschlagene Feld benötigt eine eigene Pflichtbestätigung; un
 ## 6. Rollen
 
 ### `Admin`
+
+**Benutzer-Label in der App:** Admin
 
 Die fachlich und technisch verantwortliche Rolle im FIB-System.
 
@@ -245,11 +298,15 @@ Die detaillierte Rechteausgestaltung wird im Gründungspaket G6 festgelegt.
 
 ### `Akteur`
 
+**Benutzer-Label in der App:** Akteur
+
 Eine Organisation, Institution, Gruppe oder gegebenenfalls Person, die für einen Sachverhalt relevant ist, z. B. Gemeinde, Landkreis, Autobahn GmbH, Bürgerinitiative, Verein oder Partei.
 
 Akteure können insbesondere zuständig, beteiligt, betroffen, Quelle einer Aussage oder Träger einer dokumentierten Position sein.
 
 ### `Dokumentierte Position`
+
+**Benutzer-Label in der App:** Dokumentierte Position
 
 Eine einem Akteur belegbar zuordenbare Aussage, Forderung, Bewertung oder Zielsetzung.
 
