@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 1.1 | 02.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
+| 1.2 | 02.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
 
 ## 1. Funktion
 
@@ -96,14 +96,31 @@ Die historische Ausgangsbasis aus dem Demonstrator umfasste u. a. lokale Veröff
 
 Konkrete aktuelle Quellen werden bei Nutzung jeweils mit Ebene, Datum und Referenz gespeichert; das Register selbst darf nicht veralten, ohne dass dies erkennbar wird.
 
-## 7. Pflege
+## 7. Pflege und Verantwortlichkeit
 
-Das Register wird aktualisiert, wenn sich politische Maßstäbe tatsächlich ändern oder präzisieren, insbesondere durch:
+Das Referenzsystem wird nicht nur anlassbezogen manuell, sondern auch KI-gestützt fortlaufend gepflegt.
+
+Die KI prüft in einem noch festzulegenden regelmäßigen Turnus geeignete Quellen auf neue oder geänderte Referenzinformationen, insbesondere:
 
 - neue oder geänderte lokale Positionen,
 - neue lokale Anträge, Programme, Stellungnahmen oder dokumentierte Abstimmungen,
 - relevante Änderungen auf Kreis-, Landes- oder Bundesebene,
-- neue eindeutig klassifizierte interne Quellen.
+- neue eindeutig klassifizierte interne Quellen,
+- Präzisierungen, die bestehende Zielbereiche, Prüfkriterien oder dokumentierte Referenzen betreffen.
+
+Die KI ändert das Referenzsystem nicht autonom. Sie erstellt begründete Änderungs- oder Ergänzungsvorschläge mit Quelle, Ebene, Datum und Hinweis darauf, welcher Teil des Referenzsystems betroffen wäre.
+
+Redakteure dürfen zusätzliche Referenzinformationen, Quellen, Ergänzungswünsche oder Korrekturhinweise einbringen. Diese Eingaben gelten zunächst als Vorschläge und verändern den freigegebenen Referenzstand nicht unmittelbar.
+
+Verantwortlich für das Referenzsystem ist immer der **Admin**. Die Admin-Rolle in FIB ist ausdrücklich keine rein technische Rolle, sondern verbindet technische und fachliche Verantwortung. Der Admin prüft KI- und Redaktionsvorschläge und entscheidet über Übernahme, Anpassung oder Ablehnung.
+
+Für Änderungen gilt:
+
+- jede fachlich wirksame Änderung wird mit Quelle und Begründung nachvollziehbar dokumentiert,
+- ein neuer Referenzstand wird erst nach Admin-Freigabe wirksam,
+- historische Einordnungen bleiben an den damals gültigen Referenzstand gebunden,
+- Änderungen des Referenzsystems lösen keine automatische rückwirkende Neubewertung bereits veröffentlichter Einordnungen aus,
+- bei späterer Fortschreibung eines betroffenen Vorgangs kann das System auf einen geänderten Referenzstand hinweisen und eine erneute Prüfung vorschlagen.
 
 Reine sprachliche Änderungen verändern den fachlichen Stand nicht.
 
@@ -113,10 +130,12 @@ Reine sprachliche Änderungen verändern den fachlichen Stand nicht.
 - Sachinformation und Fachlichkeit: `docs/Fachkonzept.md`
 - sprachliche Ausgestaltung: `docs/Sprachleitfaden.md`
 - logische Modellierung von Wirkung, Gewichtung und Abwägung: `docs/Datenmodell.md`
+- detaillierte Rollen- und Rechteausgestaltung: Gründungspaket G6
 
 ## Änderungshistorie
 
 | Version | Datum | Änderung |
 |---|---|---|
+| 1.2 | 02.10.2026 | KI-gestützte regelmäßige Pflege des Referenzsystems ergänzt; KI- und Redaktionsvorschläge benötigen Admin-Freigabe; Admin als fachlich-technisch verantwortliche Rolle festgelegt; historische Referenzstände bleiben nachvollziehbar. |
 | 1.1 | 02.10.2026 | Keine feste Rangfolge der Zielbereiche; politisches Gewicht als fallbezogene, KI-vorgeschlagene und redaktionell bestätigte Größe festgelegt; Kriterien für Gewichtung ergänzt. |
 | 1.0 | 30.09.2026 | Bestehendes Register aus der Demonstrator-/Bibliotheksphase ins Echtsystem überführt, Presseschau-Terminologie entfernt und als eigenständige kanonische Projektgrundlage gefasst. |
