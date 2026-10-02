@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 1.0 | 30.09.2026 | Josef Walter – erstellt mit KI-Unterstützung |
+| 1.1 | 02.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
 
 ## 1. Funktion
 
@@ -31,6 +31,9 @@ Anwendungsfolge:
 - Interne Entwürfe oder Arbeitsstände dürfen nicht als beschlossene Position dargestellt werden.
 - Das Fehlen einer dokumentierten lokalen Position ist weder Zustimmung noch Ablehnung.
 - Historische Einordnungen werden durch spätere Änderungen des Registers nicht automatisch rückwirkend verändert.
+- Zwischen den Zielbereichen besteht keine feste Rangfolge.
+- Das politische Gewicht wird nicht als feste Eigenschaft eines Zielbereichs gespeichert, sondern fallbezogen für eine konkrete Wirkung im konkreten Vorgang bestimmt.
+- Die KI darf das politische Gewicht begründet vorschlagen; fachlich wirksam wird es erst nach redaktioneller Bestätigung.
 
 ## 3. Herkunft politischer Aussagen
 
@@ -63,9 +66,21 @@ Die folgenden 16 Zielbereiche werden als Prüfrahmen geführt:
 15. **Digitale Souveränität und gemeinwohlorientierte Digitalisierung** – Zugang, Datenschutz, Sicherheit, offene Standards, Interoperabilität, Lebenszykluskosten und Anbieterabhängigkeiten beachten.
 16. **Wohnortnahe Gesundheitsversorgung, Pflege und selbstbestimmtes Altern** – wohnortnahe, bedarfsgerechte Angebote, Barrierefreiheit, Erreichbarkeit und Einfügung in die Ortsentwicklung berücksichtigen.
 
-## 5. Mehrere Zielbereiche
+## 5. Fallbezogene Gewichtung und mehrere Zielbereiche
 
 Bei komplexen Vorgängen werden mehrere einschlägige Ziele gemeinsam betrachtet. Veröffentlicht wird jedoch keine vollständige Prüfliste, sondern eine verständliche Synthese der tatsächlich entscheidenden Zielkonflikte und Konsequenzen.
+
+Das politische Gewicht einer konkreten Wirkung wird fallbezogen bestimmt. Für einen KI-Vorschlag können insbesondere berücksichtigt werden:
+
+- Tragweite der Wirkung,
+- Dauerhaftigkeit und Reversibilität,
+- Zahl und Art der Betroffenen,
+- Verlässlichkeit der Wirkungsaussage,
+- vorhandene Alternativen und Gestaltungsoptionen,
+- dokumentierte lokale grüne Positionen,
+- einschlägige Zielbereiche und deren Prüfkriterien.
+
+Diese Kriterien erzeugen keine automatische Rangfolge oder rechnerische Gesamtbewertung. Die Redaktion bestätigt oder ändert den Vorschlag und verantwortet die Abwägung.
 
 ## 6. Quellenbasis
 
@@ -97,9 +112,11 @@ Reine sprachliche Änderungen verändern den fachlichen Stand nicht.
 - operative Anwendung: `docs/KI-Leitfaden.md`
 - Sachinformation und Fachlichkeit: `docs/Fachkonzept.md`
 - sprachliche Ausgestaltung: `docs/Sprachleitfaden.md`
+- logische Modellierung von Wirkung, Gewichtung und Abwägung: `docs/Datenmodell.md`
 
 ## Änderungshistorie
 
 | Version | Datum | Änderung |
 |---|---|---|
+| 1.1 | 02.10.2026 | Keine feste Rangfolge der Zielbereiche; politisches Gewicht als fallbezogene, KI-vorgeschlagene und redaktionell bestätigte Größe festgelegt; Kriterien für Gewichtung ergänzt. |
 | 1.0 | 30.09.2026 | Bestehendes Register aus der Demonstrator-/Bibliotheksphase ins Echtsystem überführt, Presseschau-Terminologie entfernt und als eigenständige kanonische Projektgrundlage gefasst. |
