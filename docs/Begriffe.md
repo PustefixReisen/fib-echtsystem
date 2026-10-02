@@ -2,7 +2,7 @@
 
 ## Dokumentstand
 
-**Stand:** 02.10.2026, 15:28 Uhr  
+**Stand:** 02.10.2026, 15:35 Uhr  
 **Verantwortlich:** Josef Walter – erstellt mit KI-Unterstützung
 
 Dieses Dokument wird im Normalfall über das **Stand-Datum einschließlich Uhrzeit** fortgeschrieben. Eine neue Versionsnummer wird nur eingeführt, wenn sich die Struktur oder das Grundkonzept des Dokuments wesentlich ändert.
@@ -24,6 +24,7 @@ Für die Pflege gilt:
 - Neue fachlich relevante Begriffe, die im Projektchat oder in der Projektdokumentation entstehen und eine eigenständige Bedeutung für Modell, Redaktion, Recherche, Bewertung oder Betrieb haben, werden automatisch in dieses Register aufgenommen.
 - Besteht Unsicherheit, ob ein Ausdruck bereits ein eigener Fachbegriff oder nur eine vorläufige Formulierung ist, wird vor der Aufnahme nachgefragt bzw. die Begriffsklärung im Dialog fortgeführt.
 - Eine Aufnahme ins Begriffsregister ersetzt nicht die fachliche Regelung im jeweils zuständigen Primärdokument.
+- Beispiele werden nur ergänzt, wenn sie das Verständnis oder die Abgrenzung eines Begriffs tatsächlich erleichtern.
 
 Für fachliche Regeln und Kardinalitäten bleiben die jeweiligen Primärdokumente maßgeblich, insbesondere `docs/Datenmodell.md` und `docs/Themen-und-Vorgangslogik.md`.
 
@@ -33,6 +34,8 @@ Für fachliche Regeln und Kardinalitäten bleiben die jeweiligen Primärdokument
 
 Ein fachlich relevantes Geschehen oder eine relevante Entwicklung in der Wirklichkeit.
 
+Beispiel: Eine neue Beschlussvorlage zur Hundewiese wird veröffentlicht oder der Gemeinderat fasst dazu später einen Beschluss.
+
 Nicht zu verwechseln mit Meldung. Das Ereignis beschreibt, was passiert; die Meldung beschreibt, was FIB darüber veröffentlicht.
 
 ### `Meldung`
@@ -41,9 +44,13 @@ Die redaktionelle FIB-Darstellung eines eigenständigen berichtenswerten Ereigni
 
 Eine Meldung gehört genau zu einem Ereignis. Nicht jedes Ereignis muss eine Meldung erzeugen.
 
+Beispiel: Die Veröffentlichung einer neuen Beschlussvorlage kann als Meldung veröffentlicht werden; ein kleiner interner Planungsschritt desselben Vorgangs muss dagegen keine eigene Meldung erhalten.
+
 ### `Vorgang`
 
 Ein konkreter länger laufender Sachverhalt, der mehrere Ereignisse bündeln kann und einen eigenen aktuellen Stand, Verlauf, Status, offene Punkte und nächste belegte Schritte besitzt.
+
+Beispiel: „Hundewiese“ ist ein Vorgang, zu dem Veröffentlichung einer Vorlage, Beratung und spätere Beschlussfassung verschiedene Ereignisse sein können.
 
 Nicht zu verwechseln mit Thema. Ein Vorgang ist konkret; ein Thema ist eine übergeordnete Fragestellung.
 
@@ -52,6 +59,8 @@ Nicht zu verwechseln mit Thema. Ein Vorgang ist konkret; ein Thema ist eine übe
 Eine übergeordnete Fragestellung, die mehrere Vorgänge, Ereignisse, Perspektiven oder Rahmenbedingungen verbindet und dadurch zusätzlichen Erklärungsgewinn schafft.
 
 Themen entstehen bottom-up aus dem vorhandenen Wissen und werden redaktionell bestätigt.
+
+Beispiel: Ein Thema zur Mobilitätsentwicklung kann mehrere konkrete Vorgänge wie Radwegenetz, Parkraum oder Ausbau des Autobahnkreuzes München Ost verbinden.
 
 ## 3. Beziehung Vorgang ↔ Thema
 
@@ -64,6 +73,8 @@ Stufen:
 - prägend – ohne diesen Vorgang lässt sich das Thema derzeit kaum sinnvoll erklären,
 - relevant – der Vorgang trägt wesentlich zum Verständnis bei,
 - ergänzend – der Vorgang liefert zusätzlichen Kontext, ist aber nicht zentral.
+
+Beispiel: Ein Großprojekt wie der Ausbau des Autobahnkreuzes München Ost kann für ein Mobilitätsthema prägend sein; eine einzelne vorübergehende Umleitung eher ergänzend.
 
 Die KI schlägt die Bedeutung für das Thema vor; die Redaktion muss sie verpflichtend prüfen und bestätigen oder ändern.
 
@@ -98,6 +109,8 @@ Nicht zu verwechseln mit Akteursperspektive oder politischer Bewertung. „Lärm
 
 Eine sachlich belegbare oder begründet erwartbare Folge eines Vorgangs unter einer bestimmten Perspektive.
 
+Beispiel: „zusätzliche Flächeninanspruchnahme“ oder „durchgängige sichere Radverbindung“ sind getrennte Wirkungen und sollten auch getrennt erfasst werden.
+
 Wirkungen gehören zur Sachinformation. Sie können positiv, negativ, gemischt, unklar oder von Bedingungen abhängig sein; diese Beschreibung ist noch keine politische Bewertung.
 
 Nicht zu verwechseln mit Bewertung. Wirkung beschreibt, was geschieht oder voraussichtlich geschieht; Bewertung beschreibt, wie die GRÜNEN Feldkirchen diese Wirkung politisch einordnen.
@@ -106,17 +119,23 @@ Nicht zu verwechseln mit Bewertung. Wirkung beschreibt, was geschieht oder vorau
 
 Ein Bestandteil des grünen politischen Referenzrahmens, der einen politischen Maßstab mit Beschreibung und Prüfkriterien bereitstellt, anhand dessen konkrete Wirkungen eingeordnet werden können.
 
+Beispiel: „Nachhaltige Mobilität und Verkehrssicherheit“ oder „Flächensparen und nachhaltige Ortsentwicklung“.
+
 Ein Zielbereich besitzt keine feste Rangstufe gegenüber anderen Zielbereichen. Seine Bedeutung für die Einordnung entsteht erst im konkreten Vorgang und in Bezug auf konkrete Wirkungen.
 
 ### `Prüfkriterium`
 
 Ein strukturierter, möglichst neutral formulierter und beobachtbarer oder prüfbarer Aspekt eines Zielbereichs, anhand dessen eine konkrete Wirkung dem Zielbereich nachvollziehbar zugeordnet werden kann.
 
+Beispiel: Im Zielbereich „Nachhaltige Mobilität und Verkehrssicherheit“ können Verkehrssicherheit, Erreichbarkeit oder Durchgängigkeit einer Radverkehrsverbindung Prüfkriterien sein.
+
 Ein Prüfkriterium beschreibt, **was geprüft wird**, nicht bereits, **wie die Wirkung politisch bewertet werden muss**. Seine Herkunft aus dem Referenzbestand und sein Gültigkeitsstand sollen nachvollziehbar bleiben.
 
 ### `Wirkungsrichtung`
 
 Die fallbezogene Aussage, ob eine konkrete Wirkung einen zugeordneten Zielbereich unterstützt, beeinträchtigt oder ob die Richtung noch unklar ist.
+
+Beispiel: Zusätzliche Flächeninanspruchnahme kann den Zielbereich Flächensparen beeinträchtigen; eine durchgängige sichere Radverbindung kann den Zielbereich nachhaltige Mobilität unterstützen.
 
 Die Wirkungsrichtung wird von der KI vorgeschlagen und redaktionell geprüft. Sie ist keine feste Eigenschaft der Wirkung unabhängig vom Zielbereich.
 
@@ -130,6 +149,8 @@ Sie beschreibt nicht, wie stark die Wirkung politisch gewichtet wird. Eine sachl
 
 Einschätzung, wie belastbar die Aussage ist, dass eine angenommene oder beschriebene Wirkung tatsächlich zutrifft oder eintreten wird.
 
+Beispiel: Ein bereits planfestgestellter Flächenbedarf kann eine hohe Verlässlichkeit haben; ein nur vermuteter Verlagerungseffekt des Verkehrs eine geringere.
+
 Die Verlässlichkeit kann insbesondere von Quellenlage, Datenqualität, Planungsstand, Abhängigkeiten und Unsicherheiten beeinflusst werden. Im UI kann dafür eine verständlichere Bezeichnung wie „Verlässlichkeit der Aussage“ verwendet werden.
 
 ### `Politisches Gewicht`
@@ -137,6 +158,8 @@ Die Verlässlichkeit kann insbesondere von Quellenlage, Datenqualität, Planungs
 Fallbezogene Einschätzung, wie stark eine konkrete Wirkung in der grünen Abwägung berücksichtigt wird.
 
 Das politische Gewicht ist keine feste Eigenschaft eines Zielbereichs. Es wird für die konkrete Wirkung im konkreten Vorgang bestimmt. Die KI darf es anhand dokumentierter Kriterien und Referenzen vorschlagen; fachlich wirksam wird es nach redaktioneller Bestätigung.
+
+Beispiel: Eine räumlich kleine, aber irreversible Beeinträchtigung kann ein hohes politisches Gewicht erhalten, obwohl ihre quantitative Bedeutung begrenzt ist.
 
 ### `Bewertung`
 
@@ -156,11 +179,15 @@ Die Begründung soll, soweit für das Verständnis erforderlich, den politischen
 
 Eine fallbezogene Möglichkeit, einen konkreten Vorgang anders auszugestalten, negative Wirkungen zu vermeiden oder zu mindern oder zusätzliche positive Wirkungen zu erzeugen.
 
+Beispiel: Bei einer ohnehin vorgesehenen Straßenmaßnahme können ein begleitender Radweg oder ein Linienbiotop zusätzliche Gestaltungsoptionen sein.
+
 Gestaltungsoptionen werden nicht als fertiger Maßnahmenvorrat im politischen Referenzsystem hinterlegt. Sie werden im konkreten Fall durch KI, Redaktion, externe Akteure oder Quellen eingebracht und über ihre erwarteten Wirkungen bewertet.
 
 ### `Abwägung`
 
 Strukturierte Zusammenschau der für einen konkreten Vorgang relevanten Wirkungen, Zielbereiche, Wirkungsrichtungen, Bedeutungen, Verlässlichkeiten, politischen Gewichte, Gestaltungsoptionen und Zielkonflikte.
+
+Beispiel: Zusätzlicher Flächenverbrauch kann gegen Verbesserungen für Radverkehr oder Biotopvernetzung abgewogen werden, ohne die unterschiedlichen Wirkungen rechnerisch gegeneinander aufzurechnen.
 
 Die Abwägung ist keine rechnerische Addition von Plus- und Minuspunkten. Die KI erstellt einen nachvollziehbaren Vorschlag; die strukturierte Abwägung wird redaktionell bestätigt und bildet die Grundlage für die sprachliche Einordnung.
 
@@ -183,6 +210,8 @@ Die konkrete Modellierung dieses Referenzsystems wird in G3 gesondert festgelegt
 Die fachlich maßgebliche, versionierte Gesamtheit der redaktionell bestätigten oder bearbeiteten strukturierten Angaben, aus denen insbesondere „Unsere Einordnung“ erzeugt wird.
 
 Er ist die fachliche Quelle gegenüber der späteren sprachlichen Textfassung.
+
+Beispiel: Ändert der Redakteur nur das politische Gewicht einer Wirkung, darf eine neu erzeugte Textfassung nicht zugleich andere unveränderte Kernaussagen verschieben.
 
 ### `Textfassung`
 
@@ -223,6 +252,8 @@ Akteure können insbesondere zuständig, beteiligt, betroffen, Quelle einer Auss
 ### `Dokumentierte Position`
 
 Eine einem Akteur belegbar zuordenbare Aussage, Forderung, Bewertung oder Zielsetzung.
+
+Beispiel: Ein beschlossener Antrag des Ortsverbands oder eine öffentlich dokumentierte Stellungnahme kann eine dokumentierte Position sein; eine erst im Redaktionsprozess entwickelte Gestaltungsoption dagegen nicht automatisch.
 
 Positionen anderer Akteure gehören zur Sachinformation und werden als solche zugeschrieben. Sie werden nicht mit der strukturierten grünen Bewertung in „Unsere Einordnung“ vermischt.
 
