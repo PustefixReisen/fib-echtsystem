@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 0.1 | 01.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
+| 0.2 | 02.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
 
 ## 1. Zweck und Geltung
 
@@ -68,11 +68,37 @@ Diese Trennung erlaubt insbesondere die saubere Unterscheidung zwischen:
 2. **Welche neuen Informationen liegen dazu vor?** → Quellen/Fundstellen und Aktualisierung
 3. **Was veröffentlicht FIB dazu?** → Meldung
 
-### 3.3 Noch zu klärende Kernbeziehungen
+### 3.3 Beziehung Ereignis ↔ Meldung
+
+Verbindliche Kardinalität:
+
+> **Ein Ereignis kann keine oder genau eine Meldung haben. Eine Meldung gehört immer genau zu einem Ereignis.**
+
+Damit gilt fachlich:
+
+- **Ereignis → Meldung:** `0..1`
+- **Meldung → Ereignis:** `1`
+
+Begründung:
+
+- Ein erkanntes Ereignis kann fachlich relevant sein, ohne genügend eigenen Nachrichtenwert für eine öffentliche Meldung zu besitzen.
+- Wird ein Ereignis als berichtenswert bestätigt, erhält es genau eine Meldung.
+- Zusätzliche Quellen oder neue Informationen zum selben Ereignis erzeugen keine zweite Meldung, sondern können die bestehende Meldung aktualisieren.
+- Erst ein neues eigenständiges Ereignis kann eine weitere Meldung erzeugen.
+- Ein zunächst nicht berichtetes Ereignis kann später aufgrund neuer Erkenntnisse doch eine Meldung erhalten.
+
+Beispiel:
+
+- Veröffentlichung einer neuen Beschlussvorlage zur Hundewiese → Ereignis A → Meldung A.
+- Später gefundener Pressebericht zur selben Vorlage → kein neues Ereignis; gegebenenfalls Aktualisierung von Meldung A.
+- Spätere Beratung und Beschlussfassung im Gemeinderat → Ereignis B → Meldung B.
+
+Damit bleiben Ereignisfolge und redaktionelle Veröffentlichung voneinander unterscheidbar.
+
+### 3.4 Noch zu klärende Kernbeziehungen
 
 Als nächster Modellierungsschritt werden die Kardinalitäten und fachlichen Regeln geklärt für:
 
-- Ereignis ↔ Meldung,
 - Ereignis/Meldung ↔ Vorgang,
 - Vorgang ↔ Thema,
 - direkte Meldung/Ereignis ↔ Thema,
@@ -116,17 +142,17 @@ Diese Begriffe werden nicht als bereits abschließend modelliert betrachtet. Ihr
 
 ## 5. Offene G3-Fragen
 
-1. Welche Kardinalität gilt zwischen Ereignis und Meldung?
-2. Gehört eine Meldung immer genau zu einem Vorgang oder kann sie ohne Vorgang bestehen?
-3. Können mehrere Vorgänge dasselbe Ereignis fachlich berühren?
-4. Wie werden direkte Beziehungen von Meldungen/Ereignissen zu Themen modelliert?
-5. Welche Beziehungen benötigen eigene Attribute wie Wirkungsrolle, Gewichtung, Gültigkeitszeitraum oder redaktionelle Bestätigung?
-6. Welche Status gehören zu Ereignis, Meldung, Vorgang, Thema und Sitzung?
-7. Welche Änderungen werden versioniert, welche nur protokolliert?
-8. Welche Daten gehören zur fachlichen Persistenz und welche nur zum technischen Betrieb?
+1. Gehört ein Ereignis bzw. eine Meldung immer genau zu einem Vorgang oder kann es ohne Vorgang bestehen?
+2. Können mehrere Vorgänge dasselbe Ereignis fachlich berühren?
+3. Wie werden direkte Beziehungen von Meldungen/Ereignissen zu Themen modelliert?
+4. Welche Beziehungen benötigen eigene Attribute wie Wirkungsrolle, Gewichtung, Gültigkeitszeitraum oder redaktionelle Bestätigung?
+5. Welche Status gehören zu Ereignis, Meldung, Vorgang, Thema und Sitzung?
+6. Welche Änderungen werden versioniert, welche nur protokolliert?
+7. Welche Daten gehören zur fachlichen Persistenz und welche nur zum technischen Betrieb?
 
 ## Änderungshistorie
 
 | Version | Datum | Änderung |
 |---|---|---|
+| 0.2 | 02.10.2026 | Kardinalität Ereignis ↔ Meldung verbindlich festgelegt: ein Ereignis hat 0..1 Meldungen, eine Meldung gehört genau zu einem Ereignis. |
 | 0.1 | 01.10.2026 | G3-Primärdokument angelegt; Trennung von Ereignis und Meldung verbindlich festgelegt; weitere Modellbereiche und nächste Klärungsschritte aufgenommen. |
