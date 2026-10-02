@@ -2,7 +2,7 @@
 
 ## Dokumentstand
 
-**Stand:** 02.10.2026, 14:58 Uhr  
+**Stand:** 02.10.2026, 15:06 Uhr  
 **Verantwortlich:** Josef Walter – erstellt mit KI-Unterstützung
 
 Dieses Dokument wird im Normalfall über das **Stand-Datum einschließlich Uhrzeit** fortgeschrieben. Eine neue Versionsnummer wird nur eingeführt, wenn sich die Struktur oder das Grundkonzept des Dokuments wesentlich ändert.
@@ -102,19 +102,61 @@ Wirkungen gehören zur Sachinformation. Sie können positiv, negativ, gemischt, 
 
 Nicht zu verwechseln mit Bewertung. Wirkung beschreibt, was geschieht oder voraussichtlich geschieht; Bewertung beschreibt, wie die GRÜNEN Feldkirchen diese Wirkung politisch einordnen.
 
+### `Zielbereich`
+
+Ein Bestandteil des grünen politischen Referenzrahmens, der einen politischen Maßstab mit Beschreibung und Prüfkriterien bereitstellt, anhand dessen konkrete Wirkungen eingeordnet werden können.
+
+Ein Zielbereich besitzt keine feste Rangstufe gegenüber anderen Zielbereichen. Seine Bedeutung für die Einordnung entsteht erst im konkreten Vorgang und in Bezug auf konkrete Wirkungen.
+
+### `Wirkungsrichtung`
+
+Die fallbezogene Aussage, ob eine konkrete Wirkung einen zugeordneten Zielbereich unterstützt, beeinträchtigt oder ob die Richtung noch unklar ist.
+
+Die Wirkungsrichtung wird von der KI vorgeschlagen und redaktionell geprüft. Sie ist keine feste Eigenschaft der Wirkung unabhängig vom Zielbereich.
+
+### `Bedeutung der Wirkung`
+
+Die sachliche Tragweite einer Wirkung im konkreten Fall.
+
+Sie beschreibt nicht, wie stark die Wirkung politisch gewichtet wird. Eine sachlich kleine Wirkung kann politisch stark gewichtet werden und umgekehrt.
+
+### `Verlässlichkeit`
+
+Einschätzung, wie belastbar die Aussage ist, dass eine angenommene oder beschriebene Wirkung tatsächlich zutrifft oder eintreten wird.
+
+Die Verlässlichkeit kann insbesondere von Quellenlage, Datenqualität, Planungsstand, Abhängigkeiten und Unsicherheiten beeinflusst werden. Im UI kann dafür eine verständlichere Bezeichnung wie „Verlässlichkeit der Aussage“ verwendet werden.
+
+### `Politisches Gewicht`
+
+Fallbezogene Einschätzung, wie stark eine konkrete Wirkung in der grünen Abwägung berücksichtigt wird.
+
+Das politische Gewicht ist keine feste Eigenschaft eines Zielbereichs. Es wird für die konkrete Wirkung im konkreten Vorgang bestimmt. Die KI darf es anhand dokumentierter Kriterien und Referenzen vorschlagen; fachlich wirksam wird es nach redaktioneller Bestätigung.
+
 ### `Bewertung`
 
 Die politische Beurteilung einer Wirkung im Rahmen von „Unsere Einordnung“.
 
 Die strukturierte Bewertungssicht in FIB ist die von BÜNDNIS 90/DIE GRÜNEN Feldkirchen. Positionen anderer Akteure können als Sachinformation dokumentiert werden, bilden aber kein paralleles FIB-Bewertungssystem.
 
-Eine Bewertung kann neben ihrer Richtung auch die politische Bedeutung bzw. Gewichtung einer Wirkung berücksichtigen.
+Die Bewertung kann durch Wirkungsrichtung, politisches Gewicht und Begründung strukturiert werden. Ob dafür zusätzlich ein eigenes Bewertungsfeld erforderlich ist, wird im weiteren G3-Modell noch abschließend geklärt.
 
 ### `Begründung`
 
 Die nachvollziehbare Herleitung, warum eine Wirkung politisch so bewertet und gewichtet wird.
 
 Die Begründung soll, soweit für das Verständnis erforderlich, den politischen Maßstab offenlegen und darf nicht nur ein unbegründetes Werturteil wiederholen.
+
+### `Gestaltungsoption`
+
+Eine fallbezogene Möglichkeit, einen konkreten Vorgang anders auszugestalten, negative Wirkungen zu vermeiden oder zu mindern oder zusätzliche positive Wirkungen zu erzeugen.
+
+Gestaltungsoptionen werden nicht als fertiger Maßnahmenvorrat im politischen Referenzsystem hinterlegt. Sie werden im konkreten Fall durch KI, Redaktion, externe Akteure oder Quellen eingebracht und über ihre erwarteten Wirkungen bewertet.
+
+### `Abwägung`
+
+Strukturierte Zusammenschau der für einen konkreten Vorgang relevanten Wirkungen, Zielbereiche, Wirkungsrichtungen, Bedeutungen, Verlässlichkeiten, politischen Gewichte, Gestaltungsoptionen und Zielkonflikte.
+
+Die Abwägung ist keine rechnerische Addition von Plus- und Minuspunkten. Die KI erstellt einen nachvollziehbaren Vorschlag; die strukturierte Abwägung wird redaktionell bestätigt und bildet die Grundlage für die sprachliche Einordnung.
 
 ### `Politischer Bezug`
 
@@ -128,7 +170,33 @@ Der politische Bezug kann insbesondere aus folgenden Ebenen stammen:
 
 Die konkrete Modellierung dieses Referenzsystems wird in G3 gesondert festgelegt.
 
-## 5. Akteur und Position
+## 5. Redaktion und Konsistenz
+
+### `Strukturierter Redaktionsstand`
+
+Die fachlich maßgebliche, versionierte Gesamtheit der redaktionell bestätigten oder bearbeiteten strukturierten Angaben, aus denen insbesondere „Unsere Einordnung“ erzeugt wird.
+
+Er ist die fachliche Quelle gegenüber der späteren sprachlichen Textfassung.
+
+### `Textfassung`
+
+Die sprachliche Darstellung, die aus einem bestimmten strukturierten Redaktionsstand erzeugt und anschließend redaktionell nachbearbeitet werden kann.
+
+Eine Textänderung darf eine fachliche Änderung nicht verdeckt einführen. Fachliche Abweichungen müssen in den strukturierten Redaktionsstand zurückgeführt oder zurückgenommen werden.
+
+### `Plausibilitätsprüfung`
+
+Prüfung mehrerer strukturierter Angaben in ihrem Zusammenhang, um auffällige oder widersprüchliche Kombinationen zu erkennen.
+
+Beispiel: geringe Verlässlichkeit einer Wirkung bei gleichzeitig hohem politischem Gewicht. Eine Plausibilitätsprüfung erzeugt einen Prüfhinweis, ersetzt aber nicht die redaktionelle Entscheidung.
+
+### `Pflichtbestätigung`
+
+Explizite redaktionelle Bestätigung einer strukturierten Angabe, wenn diese die fachliche oder politische Kernaussage unmittelbar prägt.
+
+Nicht jedes KI-vorgeschlagene Feld benötigt eine eigene Pflichtbestätigung; unterstützende Angaben können sichtbar vorgeschlagen und durch Plausibilitätsprüfungen abgesichert werden.
+
+## 6. Akteur und Position
 
 ### `Akteur`
 
@@ -142,7 +210,7 @@ Eine einem Akteur belegbar zuordenbare Aussage, Forderung, Bewertung oder Zielse
 
 Positionen anderer Akteure gehören zur Sachinformation und werden als solche zugeschrieben. Sie werden nicht mit der strukturierten grünen Bewertung in „Unsere Einordnung“ vermischt.
 
-## 6. Noch zu ergänzende Begriffe
+## 7. Noch zu ergänzende Begriffe
 
 Dieses Register wird im Verlauf von G3 und den folgenden Gründungspaketen erweitert, insbesondere um:
 
@@ -155,5 +223,4 @@ Dieses Register wird im Verlauf von G3 und den folgenden Gründungspaketen erwei
 - Version / Historisierung,
 - Rechercheauftrag,
 - Wissenslücke,
-- Freigabestatus,
-- Pflichtbestätigung.
+- Freigabestatus.
