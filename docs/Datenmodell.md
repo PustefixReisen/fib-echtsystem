@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 0.3 | 02.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
+| 0.4 | 02.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
 
 ## 1. Zweck und Geltung
 
@@ -124,15 +124,46 @@ Beispiel „Hundewiese“:
 
 Damit erzählt der Vorgang die Entwicklung des konkreten Sachverhalts, Ereignisse bilden die fachlichen Schritte ab, und Meldungen sind die veröffentlichten redaktionellen Darstellungen der berichtenswerten Ereignisse.
 
-### 3.5 Noch zu klärende Kernbeziehungen
+### 3.5 Beziehung Vorgang ↔ Thema
 
-Als nächster Modellierungsschritt werden die Kardinalitäten und fachlichen Regeln geklärt für:
+Ein Vorgang kann keinem, einem oder mehreren Themen zugeordnet sein. Ein Thema umfasst in der Regel mehrere Vorgänge. Die Beziehung ist damit grundsätzlich n:m.
 
-- Vorgang ↔ Thema,
+Verbindliche Entscheidung:
+
+> **Die bisher vorgesehene Wirkungsrolle entfällt als eigenes strukturiertes Merkmal. An ihre Stelle tritt die redaktionell bestätigte „Bedeutung für das Thema“.**
+
+Die Bedeutung beschreibt, wie stark ein Vorgang das Verständnis oder die Entwicklung eines Themas prägt. Es gelten zunächst drei Stufen:
+
+- **prägend** – ohne diesen Vorgang lässt sich das Thema derzeit kaum sinnvoll erklären,
+- **relevant** – der Vorgang trägt wesentlich zum Verständnis bei,
+- **ergänzend** – der Vorgang liefert zusätzlichen Kontext, ist aber nicht zentral.
+
+Die Einstufung wird von der KI vorgeschlagen und muss durch die Redaktion verpflichtend geprüft, bestätigt oder geändert werden, bevor sie fachlich wirksam wird.
+
+Die Bedeutung wird nicht automatisch aus der Zahl der Meldungen, Perspektiven oder Quellen berechnet. Die KI kann ihren Vorschlag u. a. aus Tragweite, Dauer, Auswirkungen, Einfluss auf andere Vorgänge, Aktualität und Bedeutung für die Leitfrage ableiten; die redaktionelle Entscheidung bleibt maßgeblich.
+
+Die fachliche Erklärung, **warum** ein Vorgang für ein Thema relevant ist, erfolgt über Perspektiven und die darunter beschriebenen Wirkungen. Dadurch wird auf eine parallele Rollen-Taxonomie wie „Treiber / Betroffenheit / Rahmenbedingung / Gestaltungsbeitrag / Indikator“ verzichtet.
+
+### 3.6 Perspektive, Wirkung und Bewertung – Arbeitsstand
+
+Für die weitere Modellierung werden folgende Begriffe getrennt:
+
+- **Perspektive** – fachlicher Betrachtungsaspekt innerhalb eines Themas, z. B. Lärm, Verkehrssicherheit, Flächenverbrauch oder kommunaler Handlungsspielraum.
+- **Wirkung** – sachlich belegbare oder begründet erwartbare Folge eines Vorgangs unter einer Perspektive.
+- **Bewertung** – politische Beurteilung einer Wirkung im Rahmen von „Unsere Einordnung“.
+- **Begründung** – nachvollziehbare Herleitung der Bewertung.
+- **politischer Bezug** – grüner Wert, politisches Ziel oder dokumentierte grüne Position, auf die sich die Begründung stützt.
+
+Diese Begriffe werden im Glossar verbindlich abgegrenzt. Die konkrete Datenmodellierung von Wirkung, Bewertung, Begründung und politischem Bezug wird als nächster G3-Schritt anhand des grünen Referenzsystems geklärt.
+
+### 3.7 Noch zu klärende Kernbeziehungen
+
+Als nächste Modellierungsschritte werden geklärt:
+
 - direkte Ereignis ↔ Thema-Beziehungen,
-- Sitzung/TOP ↔ Ereignis/Meldung/Vorgang/Thema.
-
-Dabei wird ausdrücklich geprüft, welche Beziehungen zwingend, optional, einfach oder n:m sind und welche Beziehungen eigene fachliche Attribute benötigen, z. B. Wirkungsrollen.
+- Sitzung/TOP ↔ Ereignis/Meldung/Vorgang/Thema,
+- Perspektiven und Wirkungen innerhalb eines Themas,
+- Modellierung von Bewertung, Begründung und politischem Referenzsystem.
 
 ## 4. Weitere Modellbereiche – noch nicht abschließend geklärt
 
@@ -170,9 +201,9 @@ Diese Begriffe werden nicht als bereits abschließend modelliert betrachtet. Ihr
 
 ## 5. Offene G3-Fragen
 
-1. Welche Kardinalität und fachlichen Attribute gelten für Vorgang ↔ Thema?
-2. Wie werden direkte Beziehungen von Ereignissen zu Themen modelliert, wenn kein Vorgang dazwischen liegt?
-3. Welche Beziehungen benötigen eigene Attribute wie Wirkungsrolle, Gewichtung, Gültigkeitszeitraum oder redaktionelle Bestätigung?
+1. Wie werden Perspektiven und Wirkungen fachlich strukturiert, ohne unnötige eigene Hauptobjekte zu schaffen?
+2. Wie werden Bewertungen und ihre Begründungen mit dem grünen Referenzsystem verknüpft?
+3. Wie werden direkte Beziehungen von Ereignissen zu Themen modelliert, wenn kein Vorgang dazwischen liegt?
 4. Welche Status gehören zu Ereignis, Meldung, Vorgang, Thema und Sitzung?
 5. Welche Änderungen werden versioniert, welche nur protokolliert?
 6. Welche Daten gehören zur fachlichen Persistenz und welche nur zum technischen Betrieb?
@@ -181,6 +212,7 @@ Diese Begriffe werden nicht als bereits abschließend modelliert betrachtet. Ihr
 
 | Version | Datum | Änderung |
 |---|---|---|
+| 0.4 | 02.10.2026 | Vorgang↔Thema konkretisiert: Wirkungsrollen-Taxonomie entfällt; „Bedeutung für das Thema“ mit prägend/relevant/ergänzend und verpflichtender redaktioneller Bestätigung eingeführt; Begriffe Perspektive, Wirkung, Bewertung, Begründung und politischer Bezug als nächster Modellierungsbereich abgegrenzt. |
 | 0.3 | 02.10.2026 | Beziehung Ereignis ↔ Vorgang verbindlich festgelegt: Ereignis `0..n` Vorgänge, Vorgang `1..n` Ereignisse; Meldung-Vorgang-Zuordnung wird über das Ereignis abgeleitet. |
 | 0.2 | 02.10.2026 | Kardinalität Ereignis ↔ Meldung verbindlich festgelegt: ein Ereignis hat 0..1 Meldungen, eine Meldung gehört genau zu einem Ereignis. |
 | 0.1 | 01.10.2026 | G3-Primärdokument angelegt; Trennung von Ereignis und Meldung verbindlich festgelegt; weitere Modellbereiche und nächste Klärungsschritte aufgenommen. |
