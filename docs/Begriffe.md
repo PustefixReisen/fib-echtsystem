@@ -2,7 +2,7 @@
 
 ## Dokumentstand
 
-**Stand:** 02.10.2026, 15:06 Uhr  
+**Stand:** 02.10.2026, 15:17 Uhr  
 **Verantwortlich:** Josef Walter – erstellt mit KI-Unterstützung
 
 Dieses Dokument wird im Normalfall über das **Stand-Datum einschließlich Uhrzeit** fortgeschrieben. Eine neue Versionsnummer wird nur eingeführt, wenn sich die Struktur oder das Grundkonzept des Dokuments wesentlich ändert.
@@ -196,7 +196,17 @@ Explizite redaktionelle Bestätigung einer strukturierten Angabe, wenn diese die
 
 Nicht jedes KI-vorgeschlagene Feld benötigt eine eigene Pflichtbestätigung; unterstützende Angaben können sichtbar vorgeschlagen und durch Plausibilitätsprüfungen abgesichert werden.
 
-## 6. Akteur und Position
+## 6. Rollen
+
+### `Admin`
+
+Die fachlich und technisch verantwortliche Rolle im FIB-System.
+
+Der Admin ist nicht nur für technische Administration zuständig, sondern verantwortet insbesondere auch den freigegebenen Stand des politischen Referenzsystems. KI- oder redaktionell vorgeschlagene Änderungen am Referenzsystem werden erst durch Admin-Freigabe fachlich wirksam.
+
+Die detaillierte Rechteausgestaltung wird im Gründungspaket G6 festgelegt.
+
+## 7. Akteur und Position
 
 ### `Akteur`
 
@@ -210,7 +220,7 @@ Eine einem Akteur belegbar zuordenbare Aussage, Forderung, Bewertung oder Zielse
 
 Positionen anderer Akteure gehören zur Sachinformation und werden als solche zugeschrieben. Sie werden nicht mit der strukturierten grünen Bewertung in „Unsere Einordnung“ vermischt.
 
-## 7. Noch zu ergänzende Begriffe
+## 8. Noch zu ergänzende Begriffe
 
 Dieses Register wird im Verlauf von G3 und den folgenden Gründungspaketen erweitert, insbesondere um:
 
