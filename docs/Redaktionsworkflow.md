@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 0.3 | 03.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
+| 0.4 | 03.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
 
 ## 1. Zweck und Geltung
 
@@ -51,6 +51,7 @@ Die Begründung muss nicht ständig vollständig sichtbar sein, aber unmittelbar
 - schlägt Wirkungen, Zielbereiche, Prüfkriterien, Einordnungen und Gestaltungsoptionen vor,
 - schlägt Themenkandidaten, passende Vorgänge und weitere relevante Ereignisse vor,
 - prüft bei neuen Wirkungen auf mögliche inhaltliche Dubletten zu bereits vorhandenen Wirkungen desselben Ereignisses,
+- ordnet vorhandene Wirkungen im Themenworkflow automatisch einer oder mehreren bestätigten Perspektiven zu,
 - begründet ihre Vorschläge,
 - formuliert aus bestätigten strukturierten Angaben Abwägung und Textfassung.
 
@@ -61,7 +62,8 @@ Die Begründung muss nicht ständig vollständig sichtbar sein, aber unmittelbar
 - kann eigene Wirkungen, Zielbereiche, Prüfkriterien und Gestaltungsoptionen ergänzen,
 - kann Vorgänge und einzelne weitere relevante Ereignisse für ein Thema auswählen,
 - verantwortet den strukturierten Stand des konkreten Vorgangs bzw. Themas,
-- ändert eine bereits bestehende Wirkung nur in dem Bearbeitungskontext, in dem diese Wirkung fachlich angelegt wurde.
+- ändert eine bereits bestehende Wirkung nur in dem Bearbeitungskontext, in dem diese Wirkung fachlich angelegt wurde,
+- korrigiert bei Bedarf die KI-Zuordnung einer Wirkung zu einer oder mehreren Themenperspektiven.
 
 ### Admin
 
@@ -185,6 +187,32 @@ Auch innerhalb eines Vorgangs können unterschiedliche oder scheinbar widersprü
 
 Keine Wirkung wird allein wegen eines solchen Konflikts automatisch gelöscht, überschrieben oder umgedeutet.
 
+### 5.6 Wirkungen den Perspektiven zuordnen
+
+Sobald ein Ereignis Bestandteil des Themas ist, gehören seine vorhandenen verbindlichen Wirkungen automatisch zur Themenanalyse. Die Redaktion trifft keine zusätzliche Auswahlentscheidung darüber, ob eine vorhandene Wirkung berücksichtigt wird.
+
+Damit gilt:
+
+> **Ereignis im Thema + vorhandene Wirkung = Wirkung wird im Thema behandelt.**
+
+Die KI ordnet jede vorhandene Wirkung automatisch einer oder mehreren bereits bestätigten Perspektiven des Themas zu. Im eindeutigen Normalfall entsteht daraus kein eigener Pflichtdialog. Die Zuordnung bleibt für die Redaktion sichtbar und korrigierbar.
+
+Eine gezielte redaktionelle Klärung ist insbesondere erforderlich, wenn:
+
+- eine Wirkung plausibel mehreren Perspektiven zugeordnet werden kann,
+- die KI bei der Zuordnung unsicher ist,
+- die vorgeschlagene Zuordnung auffällig von bereits bestätigten Zuordnungen abweicht,
+- keine vorhandene Perspektive fachlich passt und deshalb eine neue Perspektive geprüft werden muss,
+- die Redaktion die automatische Zuordnung korrigiert.
+
+Für einen Klärungsfall kann die App beispielsweise fragen:
+
+> **Unter welcher Perspektive soll diese Auswirkung betrachtet werden?**
+
+Die vorhandenen Perspektiven werden als Auswahl angeboten; Mehrfachzuordnung ist möglich.
+
+Die genaue Darstellung, Schwellenwerte für Unsicherheit und die Frage, wann eine Zuordnung nur sichtbar oder ausdrücklich zu bestätigen ist, bleiben Gegenstand des späteren UI- und Implementierungsfeinschliffs. Fachlich verbindlich sind dagegen die automatische Einbeziehung vorhandener Wirkungen und die grundsätzlich KI-gestützte Perspektivzuordnung mit redaktioneller Korrekturmöglichkeit.
+
 ## 6. Auswahl von Prüfkriterien
 
 Nach Auswahl eines Zielbereichs zeigt die App **alle aktuell vorhandenen Prüfkriterien dieses Zielbereichs unmittelbar an**.
@@ -278,6 +306,7 @@ Bei Themen zeigt er insbesondere:
 - zusätzlich ausgewählte weitere relevante Ereignisse,
 - erschlossene Meldungen und vorhandene Einordnungen,
 - verwendete Wirkungen mit Herkunftskontext,
+- Zuordnung der Wirkungen zu den Themenperspektiven,
 - erkannte mögliche Wirkungsdubletten oder Wirkungskonflikte,
 - offene Recherche- oder Abgrenzungsfragen.
 
@@ -300,6 +329,8 @@ Verbindlich sind die fachlichen Prinzipien:
 - Meldungen als über Ereignisse erschlossener Analysekontext,
 - Herkunftstrennung und Anti-Doppelzählung bei der Themenanalyse,
 - Wirkungen bleiben in ihrem Herkunftskontext änderbar,
+- alle vorhandenen Wirkungen eines im Thema enthaltenen Ereignisses gehen automatisch in die Themenanalyse ein,
+- KI ordnet diese Wirkungen grundsätzlich automatisch einer oder mehreren Themenperspektiven zu; nur Auffälligkeiten oder Unsicherheiten benötigen gezielte redaktionelle Klärung,
 - mögliche Wirkungsdubletten werden KI-gestützt erkannt und redaktionell als gleich oder verschieden eingeordnet,
 - gleichbedeutende Wirkungen werden in der Themenanalyse nicht mehrfach gewichtet,
 - widersprüchliche Wirkungen innerhalb eines Vorgangs erzeugen einen Prüfhinweis statt automatischer Bereinigung.
@@ -311,7 +342,8 @@ Noch experimentell sind insbesondere:
 - konkrete Navigation zwischen Bearbeitungsschritten,
 - visuelle Hervorhebung von KI-Vorschlägen,
 - Umfang und Darstellung von Quellenbegründungen,
-- konkrete Darstellung der Vorauswahl „Weitere relevante Ereignisse“.
+- konkrete Darstellung der Vorauswahl „Weitere relevante Ereignisse“,
+- konkrete Darstellung und Bestätigungslogik der automatischen Perspektivzuordnung von Wirkungen.
 
 Diese Punkte werden an realen FIB-Vorgängen und Themen prototypisch getestet.
 
@@ -319,6 +351,7 @@ Diese Punkte werden an realen FIB-Vorgängen und Themen prototypisch getestet.
 
 | Version | Datum | Änderung |
 |---|---|---|
+| 0.4 | 03.10.2026 | Themenworkflow verschlankt: vorhandene Wirkungen eines enthaltenen Ereignisses werden automatisch berücksichtigt; keine erneute Auswahl der Wirkung. KI ordnet Wirkungen automatisch einer oder mehreren bestätigten Perspektiven zu; gezielte redaktionelle Klärung nur bei Mehrdeutigkeit, Unsicherheit, Abweichung, fehlender Perspektive oder manueller Korrektur. UI-Feinschliff bewusst für Implementierung offen gehalten. |
 | 0.3 | 03.10.2026 | Wirkungslogik konkretisiert: Wirkung am Ereignis mit Herkunftskontext; Änderung nur im Herkunftskontext; keine konkurrierenden Fassungen im Themenworkflow; KI-Plausibilitätsprüfung auf gleichbedeutende Wirkungen mit benutzerfreundlicher Frage „Meinen diese beiden Auswirkungen im Wesentlichen dasselbe?“; Anti-Doppelgewichtung und Konflikthinweise für widersprüchliche Wirkungen ergänzt. |
 | 0.2 | 03.10.2026 | Themenworkflow ergänzt: Vorgangsauswahl mit automatischer Mitnahme der Ereignisse, KI-Vorauswahl „Weitere relevante Ereignisse“, manuelle Ereignissuche, Meldungstext und „Unsere Einordnung“ als über Ereignisse erschlossener Analysekontext sowie Herkunfts-/Anti-Doppelzählungsregel. |
 | 0.1 | 02.10.2026 | Primärquelle für KI-gestützten Redaktionsworkflow angelegt; Prozesstransparenz, kontextbezogene Fragen, vollständige Anzeige vorhandener Prüfkriterien, KI-Vorauswahl und Ergänzung neuer Prüfkriterien festgelegt. |
