@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 0.6 | 02.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
+| 0.7 | 03.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
 
 ## 1. Zweck und Geltung
 
@@ -25,6 +25,7 @@ Ziel ist ein robustes und langfristig tragfähiges Modell, das für einen kleine
 - Redaktionelle Bestätigung bleibt für veröffentlichungsrelevante und fachlich wirksame Entscheidungen vorgesehen.
 - Für KI-formulierte Einordnungen ist der strukturierte Redaktionsstand die fachliche Quelle; die Textfassung ist eine daraus abgeleitete Darstellung.
 - Fachlich-politische Qualität wird nicht nur über Einzelwerte, sondern auch über Plausibilitätsprüfungen zwischen mehreren strukturierten Angaben abgesichert.
+- Herkunft einer Quelle, konkrete Fundstelle bzw. Datei, technischer Speicherort und öffentliche Sichtbarkeit werden getrennt modelliert.
 
 ## 3. Wissenskern
 
@@ -146,6 +147,10 @@ Die Bedeutung wird nicht automatisch aus der Zahl der `Meldungen`, `Perspektiven
 
 Die fachliche Erklärung, **warum** ein `Vorgang` für ein `Thema` relevant ist, erfolgt über `Perspektiven` und die darunter beschriebenen `Wirkungen`. Dadurch wird auf eine parallele Rollen-Taxonomie wie „Treiber / Betroffenheit / Rahmenbedingung / Gestaltungsbeitrag / Indikator“ verzichtet.
 
+`Ereignisse` erhalten keine zusätzliche eigenständige Themenzuordnung. Ein Themenbezug wird über die fachlich zugeordneten `Vorgänge` abgeleitet:
+
+`Ereignis → Vorgang → Thema`
+
 ### 3.6 `Perspektive`, `Wirkung` und `Bewertung` – Arbeitsstand
 
 Für die weitere Modellierung werden folgende Begriffe getrennt:
@@ -219,16 +224,13 @@ Die sprachliche Fassung der `Abwägung` wird von der KI erzeugt. Pflichtbestäti
 
 Als nächste Modellierungsschritte werden geklärt:
 
-- direkte `Ereignis ↔ Thema`-Beziehungen,
 - `Sitzung/TOP ↔ Ereignis/Meldung/Vorgang/Thema`,
 - `Perspektiven` und `Wirkungen` innerhalb eines `Themas`,
 - Modellierung von `Bewertung`, `Begründung`, `Gestaltungsoption`, `Verlässlichkeit`, `politischem Gewicht` und politischem Referenzsystem,
 - genaue Versionierungs- und Vergleichslogik zwischen strukturiertem Redaktionsstand und Textfassung,
 - konkrete fachliche Plausibilitätsregeln für den Redaktionsprozess.
 
-## 4. Weitere Modellbereiche – noch nicht abschließend geklärt
-
-Die folgenden Bereiche sind datenmodellrelevant, werden aber schrittweise und fachlich verständlich ausgearbeitet:
+## 4. Weitere Modellbereiche
 
 ### 4.1 Entscheidungskontext
 
@@ -242,10 +244,39 @@ Die folgenden Bereiche sind datenmodellrelevant, werden aber schrittweise und fa
 
 ### 4.2 Wissensbasis und Quellen
 
-- Quelle
-- Fundstelle
-- Quellenrolle
-- Belegbeziehung zu Aussagen bzw. FIB-Inhalten
+Für Quellen und Fundstellen gilt folgende fachliche Trennung:
+
+- `Quelle` – Herkunft bzw. Träger der Information, z. B. Gemeinde, Autobahn GmbH, Pressemedium, Bürgerinitiative oder GRÜNE Feldkirchen.
+- `Fundstelle` – konkrete Seite, Dokument, Datei oder sonstige Einheit, in der die relevante Information enthalten ist.
+- `Quellenrolle` – fachliche Funktion der Quelle, z. B. amtliche Quelle, journalistische Quelle oder politische Positionsquelle.
+- `Bereitstellung` – Art, wie die Fundstelle technisch in FIB verfügbar ist, z. B. externe URL oder in FIB gespeicherte Datei.
+- `Sichtbarkeit` – Regel, ob eine gespeicherte Fundstelle öffentlich über FIB zugänglich oder nur redaktionell sichtbar ist.
+- Belegbeziehung – Verknüpfung einer Fundstelle mit Aussagen, Ereignissen oder anderen FIB-Inhalten, die sie fachlich stützt.
+
+Verbindliche Entscheidung:
+
+> **Ursprüngliche Internetverfügbarkeit und öffentliche Bereitstellung über FIB sind getrennte Eigenschaften.**
+
+Eine redaktionell eingebrachte Datei kann daher öffentlich als Quelle bereitgestellt werden, obwohl sie zuvor nicht frei im Internet verfügbar war, sofern eine entsprechende redaktionelle Freigabe und Berechtigung zur Veröffentlichung vorliegt.
+
+Mindestens zu unterstützen sind:
+
+1. externe öffentlich erreichbare Fundstelle per URL,
+2. redaktionell hochgeladene Datei mit öffentlicher Bereitstellung über FIB,
+3. redaktionell hochgeladene Datei nur für interne/redaktionelle Nutzung,
+4. dokumentierte Quelle ohne öffentliche URL oder Datei.
+
+Für hochgeladene Dateien sind mindestens nachvollziehbar zu speichern:
+
+- Herkunft/Quelle,
+- Dokumenttitel bzw. Bezeichnung,
+- Dateityp,
+- Speicherreferenz,
+- Sichtbarkeit,
+- Freigabestatus für öffentliche Bereitstellung,
+- gegebenenfalls ursprüngliche URL,
+- relevante Metadaten wie Datum/Stand,
+- fachliche Verknüpfungen zu Ereignissen, Vorgängen oder belegten Aussagen.
 
 ### 4.3 Redaktion, Historisierung und Vertiefung
 
@@ -258,22 +289,23 @@ Die folgenden Bereiche sind datenmodellrelevant, werden aber schrittweise und fa
 - Quellen einer Antwort
 - Wissenslücke / offene Wissensfrage
 
-Diese Begriffe werden nicht als bereits abschließend modelliert betrachtet. Ihre genaue Bedeutung, Notwendigkeit und Abgrenzung wird im weiteren G3-Verlauf einzeln geprüft.
+Die noch nicht abschließend modellierten Begriffe werden im weiteren G3-Verlauf einzeln geprüft.
 
 ## 5. Offene G3-Fragen
 
 1. Wie werden `Perspektiven` und `Wirkungen` fachlich strukturiert, ohne unnötige eigene Hauptobjekte zu schaffen?
 2. Wie werden `Bewertungen` und ihre `Begründungen` mit dem grünen Referenzsystem verknüpft?
-3. Wie werden direkte Beziehungen von `Ereignissen` zu `Themen` modelliert, wenn kein `Vorgang` dazwischen liegt?
-4. Welche Status gehören zu `Ereignis`, `Meldung`, `Vorgang`, `Thema` und `Sitzung`?
-5. Welche Änderungen werden versioniert, welche nur protokolliert?
-6. Welche Daten gehören zur fachlichen Persistenz und welche nur zum technischen Betrieb?
-7. Welche Plausibilitätsregeln sind verbindlich und welche nur unterstützende Hinweise?
+3. Welche Status gehören zu `Ereignis`, `Meldung`, `Vorgang`, `Thema` und `Sitzung`?
+4. Welche Änderungen werden versioniert, welche nur protokolliert?
+5. Welche Daten gehören zur fachlichen Persistenz und welche nur zum technischen Betrieb?
+6. Welche Plausibilitätsregeln sind verbindlich und welche nur unterstützende Hinweise?
+7. Welche zusätzlichen Rechte- und Freigabestatus werden für öffentlich über FIB bereitgestellte Dateien benötigt?
 
 ## Änderungshistorie
 
 | Version | Datum | Änderung |
 |---|---|---|
+| 0.7 | 03.10.2026 | Quellenmodell konkretisiert: Herkunft, Fundstelle, Bereitstellung und Sichtbarkeit getrennt; öffentliche FIB-Bereitstellung redaktionell hochgeladener Dateien auch ohne ursprüngliche Internetverfügbarkeit ermöglicht; direkte Ereignis-Thema-Beziehung als parallele Zuordnung verworfen. |
 | 0.6 | 02.10.2026 | Bestätigungslogik und feldübergreifende Plausibilitätsprüfung für den strukturierten Redaktionsprozess festgelegt; strukturierte Abwägung als fachlich zu bestätigender Stand von der KI-formulierten Textfassung getrennt. |
 | 0.5 | 02.10.2026 | `strukturierter Redaktionsstand` als fachliche Quelle und `Textfassung` als daraus erzeugte Darstellung festgelegt; Konsistenz-, Versions- und Änderungsregeln zwischen beiden Ebenen ergänzt. |
 | 0.4 | 02.10.2026 | Vorgang↔Thema konkretisiert: Wirkungsrollen-Taxonomie entfällt; „Bedeutung für das Thema“ mit prägend/relevant/ergänzend und verpflichtender redaktioneller Bestätigung eingeführt; Begriffe Perspektive, Wirkung, Bewertung, Begründung und politischer Bezug als nächster Modellierungsbereich abgegrenzt. |
