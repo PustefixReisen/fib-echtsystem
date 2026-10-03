@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 1.1 | 02.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
+| 1.2 | 03.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
 
 ## 1. Zweck
 
@@ -34,46 +34,69 @@ Die konkrete Organisations- und Rechtegestaltung wird in G5–G7 festgelegt.
 2. gespeicherte vorbereitete „Mehr wissen?“-Antwort: keine Kosten pro Abruf,
 3. spätere freie Live-Frage: Modell- und ggf. Recherchekosten.
 
-### Redaktion
+### Redaktion und Recherche: Hybridprinzip
 
-Kosten entstehen insbesondere für:
+FIB unterscheidet drei Arten von KI-Einsatz:
 
-- Analyse neuer Fundstellen,
-- Entwürfe und Überarbeitungen,
-- Vorgangs-/Themenzuordnung,
+1. **verpflichtende Entdeckungs-/Eingangs-KI** für Aufgaben, die ohne semantische KI nicht zuverlässig automatisiert werden können,
+2. **bedarfsgesteuerte Recherche-KI** für konkrete Wissenslücken oder offene Recherchefragen,
+3. **optionale Redaktions-KI** für Komfort, Zeitersparnis und Formulierungshilfe.
+
+Verpflichtende KI-Kosten entstehen insbesondere für:
+
+- aktive Entdeckung bislang unbekannter relevanter Quellen,
+- semantische Analyse neuer oder geänderter Fundstellen,
+- Erkennung möglicher relevanter Ereignisse,
+- Vorschlag „neues Ereignis oder Aktualisierung“,
+- erste Einordnung zu bestehendem oder möglichem neuem Vorgang, soweit dies für den Ereigniskandidaten erforderlich ist.
+
+Bedarfsgesteuerte oder optionale KI-Kosten können entstehen für:
+
+- gezielte Rechercheaufträge bei Wissenslücken,
 - Erkennung und Strukturierung von Wirkungen,
 - Zuordnung zu Zielbereichen und Prüfkriterien,
 - „Mehr wissen?“-Generierung,
 - strukturierte Abwägung und „Unsere Einordnung“,
-- Qualitätsprüfung und gezielte Recherche.
+- Qualitätsprüfung und semantische Plausibilitätsprüfung,
+- Textentwürfe und Überarbeitungen.
 
-Formularstruktur, Fragemuster, Antwortoptionen, Prozessschritte und Zustandslogik gehören zur Anwendung selbst und verursachen keine KI-Kosten.
+Formularstruktur, Fragemuster, Antwortoptionen, Prozessschritte, Zustandslogik, technische Validierungen und die Anzeige des strukturierten Redaktionsstands gehören zur Anwendung selbst und verursachen keine KI-Kosten.
 
-### Recherche
+## 4. Kostenprinzip
 
-Bekannte Quellen werden soweit möglich direkt technisch erfasst. Kostenpflichtige KI-Websuche wird nur eingesetzt, wenn der eigene Quellenbestand nicht ausreicht oder zusätzliche Fach-/Rechts-/Wissenschafts-/Praxisquellen benötigt werden.
+Kosteneffizienz bedeutet bei FIB nicht, für eine notwendige KI-Aufgabe möglichst das billigste Modell einzusetzen.
 
-## 4. Kostenbegrenzungsprinzip
+Verbindliche Reihenfolge:
+
+1. **Prüfen, ob KI für den Arbeitsschritt überhaupt erforderlich ist.**
+2. Wenn nein: Aufgabe technisch oder redaktionell ohne KI erledigen.
+3. Wenn ja: erforderliche Ergebnisqualität festlegen.
+4. Nur Modelle einsetzen, die diese Qualitätsanforderung im FIB-Test nachweislich erfüllen.
+5. Erst unter den geeigneten Modellen Kosten und weitere Betriebskriterien optimieren.
+
+Für die qualitätskritische Eingangskette – Quellenentdeckung, Fundstellenanalyse und Ereigniserkennung – steht die Ergebnisqualität an erster Stelle, weil FIB von der Vollständigkeit und Verlässlichkeit dieses Inputs abhängig ist.
+
+## 5. Kostenbegrenzungsprinzip
 
 Zielarchitektur:
 
-1. bekannte Quellen direkt abrufen,
+1. bekannte Quellen direkt und möglichst ohne KI abrufen,
 2. Inhalte persistent speichern,
 3. Änderungen technisch erkennen,
-4. KI nur auf neue oder fachlich relevante Änderungen anwenden,
-5. strukturierte Zwischenergebnisse persistent speichern und wiederverwenden,
-6. vorbereitete Vertiefungsfragen und Antworten vorab erzeugen und speichern,
-7. Antworten mit Informationsstand und Quellen versehen,
-8. nur bei fachlichem Anlass neu erzeugen,
-9. für jede FIB-Aufgabe nur die tatsächlich nötigen Kontextdaten an das Modell übergeben,
-10. günstige geeignete Modelle für Routineaufgaben verwenden,
-11. leistungsstärkere Modelle nur bei Qualitätsbedarf einsetzen,
-12. Live-KI auf spätere freie Fragen und ausdrücklich angeforderte Redaktionstätigkeit begrenzen,
+4. bei unveränderten bekannten Quellen keine KI aufrufen,
+5. nur neue oder fachlich relevante Änderungen semantisch analysieren,
+6. neue Quellen in geeigneten Intervallen aktiv KI-gestützt suchen,
+7. strukturierte Zwischenergebnisse persistent speichern und wiederverwenden,
+8. vorbereitete Vertiefungsfragen und Antworten vorab erzeugen und speichern, soweit sie im jeweiligen Ausbaustand eingesetzt werden,
+9. Antworten mit Informationsstand und Quellen versehen,
+10. nur bei fachlichem Anlass neu erzeugen,
+11. für jede FIB-Aufgabe nur die tatsächlich nötigen Kontextdaten an das Modell übergeben,
+12. optionale KI-Unterstützung nur dort auslösen, wo sie redaktionell benötigt oder bewusst angefordert wird,
 13. Budgets und Rate Limits technisch erzwingen.
 
-Damit sollen Besucherzahlen weitgehend von KI-Kosten entkoppelt und redaktionelle KI-Kosten kontrollierbar gehalten werden.
+Damit sollen Besucherzahlen weitgehend von KI-Kosten entkoppelt und die zwingenden API-Kosten auf die semantisch erforderlichen Eingangsfunktionen konzentriert werden.
 
-## 5. Persistente KI-Ergebnisse
+## 6. Persistente KI-Ergebnisse
 
 Gespeicherte KI-Ergebnisse erhalten mindestens:
 
@@ -88,12 +111,13 @@ Gespeicherte KI-Ergebnisse erhalten mindestens:
 
 Eine erneute Prüfung wird ausgelöst, wenn sich relevante Quellen, Meldungen, Vorgänge, Themen oder Regeln ändern oder eine sachverhaltsabhängige Gültigkeit überschritten wird.
 
-## 6. Kostenprotokollierung
+## 7. Kostenprotokollierung
 
 Für KI-Aufrufe sollen intern mindestens erfasst werden:
 
 - Zeitpunkt,
 - FIB-Funktionsart,
+- Kategorie verpflichtend / bedarfsgesteuert / optional,
 - KI-Leistungsklasse,
 - Provider und Modell,
 - Ein-/Ausgabevolumen bzw. verfügbare Nutzungsmetriken,
@@ -104,9 +128,37 @@ Für KI-Aufrufe sollen intern mindestens erfasst werden:
 
 Personenbezogene Inhalte werden nicht unnötig in Kosten-/Telemetriedaten übernommen.
 
-Die Kosten sollen nicht nur monatlich, sondern soweit sinnvoll auch pro FIB-Funktion und Vorgang auswertbar sein.
+Die Kosten sollen nicht nur monatlich, sondern soweit sinnvoll auch pro FIB-Funktion, Vorgang und KI-Kategorie auswertbar sein.
 
-## 7. Budgetsteuerung
+## 8. Vorläufiger monatlicher Planungsrahmen
+
+Bis reale Betriebsdaten aus Pilot und Echtsystem vorliegen, wird für die Entwicklungs- und Managementplanung mit einem bewusst gerundeten Kostenkorridor gearbeitet.
+
+### 8.1 Annahmen
+
+Der Planungsrahmen setzt voraus:
+
+- bekannte Quellen werden technisch überwacht und nur bei Änderungen an KI übergeben,
+- die aktive Quellenentdeckung läuft periodisch und nicht permanent,
+- Analyseergebnisse werden persistent wiederverwendet,
+- die verpflichtenden Eingangsfunktionen werden mit ausreichend qualifizierten Modellen ausgeführt,
+- optionale Redaktions-KI wird nur bei tatsächlichem Bedarf eingesetzt,
+- keine Besucher-Live-KI im MVP.
+
+### 8.2 Planungswerte
+
+| Kostenbereich | vorläufiger Normalbetrieb pro Monat |
+|---|---:|
+| verpflichtende Quellenentdeckung und Eingangsanalyse | **ca. 3–8 €** |
+| bedarfsgesteuerte/optionale Redaktions-KI | **ca. 0–5 € zusätzlich** |
+| erwarteter Gesamtkorridor | **ca. 3–13 €** |
+| vorläufiger Planungs-/Warnrahmen | **15 € / Monat** |
+
+Diese Werte sind **keine Preiszusage und kein festes Budget**. Sie sind eine Entwicklungsannahme auf Basis des derzeit erwarteten kleinen kommunalen Recherchevolumens und der aktuellen API-Preisgrößen. Vor Go-live werden sie mit dem FIB-Testkorpus und anschließend mit realen Betriebsdaten neu kalibriert.
+
+Der wirtschaftliche Erfolg der Hybridarchitektur wird daran gemessen, ob die verpflichtende KI zuverlässig hohe Eingangsqualität liefert, während vermeidbare KI-Aufrufe tatsächlich unterbleiben.
+
+## 9. Budgetsteuerung
 
 Vorzusehen sind:
 
@@ -114,12 +166,20 @@ Vorzusehen sind:
 - Warnschwellen,
 - harte Kosten-/Nutzungslimits, soweit technisch möglich,
 - optionale Kostenrahmen pro Vorgang oder FIB-Funktion,
-- getrennte Auswertung nach Redaktion, Vorabgenerierung und späteren Besucher-Livefragen,
+- getrennte Auswertung nach verpflichtender Eingangsanalyse, bedarfsgesteuerter Recherche, optionaler Redaktionsassistenz und späteren Besucher-Livefragen,
 - Erkennung ungewöhnlicher Nutzung oder Fehlerloops.
 
-## 8. Anbieter-/Modellvergleich
+Der vorläufige Planungs-/Warnrahmen aus Abschnitt 8 wird vor Go-live durch einen auf Pilotmessungen gestützten Wert ersetzt.
 
-Die wirtschaftliche Entscheidung erfolgt nie nur über den Preis und nie nur über maximale Ergebnisqualität.
+## 10. Anbieter-/Modellvergleich
+
+Die wirtschaftliche Entscheidung erfolgt nie nur über den Preis und nie nur über maximale Ergebnisqualität ohne Bezug zur konkreten Aufgabe.
+
+Verbindlich ist:
+
+- zuerst Qualitätsanforderung je FIB-Aufgabe bestimmen,
+- nur Modelle berücksichtigen, die diese Anforderung zuverlässig erfüllen,
+- danach unter den geeigneten Modellen Kosten und Betriebsmerkmale vergleichen.
 
 Gemeinsam bewertet werden:
 
@@ -135,7 +195,7 @@ Gemeinsam bewertet werden:
 
 Die Qualitäts- und Testregeln stehen in `docs/KI-Qualitaet-und-Modellunabhaengigkeit.md`.
 
-## 9. KI-Leistungsklassen
+## 11. KI-Leistungsklassen
 
 FIB ordnet KI-Aufgaben zunächst fachlich einer Leistungsklasse zu, nicht direkt einem konkreten Modell.
 
@@ -147,10 +207,11 @@ Arbeitstitel:
 
 Die Klassen werden in `docs/KI-Qualitaet-und-Modellunabhaengigkeit.md` fachlich beschrieben. Welche konkreten Modelle diese Klassen erfüllen, wird durch Modelltests bestimmt und kann sich mit neuen Modellen, Preisen oder Erfahrungen ändern.
 
-## 10. Routing-Matrix im laufenden Betrieb
+## 12. Routing-Matrix im laufenden Betrieb
 
 Der produktive Betrieb verwendet eine konfigurierbare Routing-Matrix. Sie ordnet einer FIB-Aufgabe mindestens zu:
 
+- ob KI verpflichtend, bedarfsgesteuert oder optional ist,
 - erforderliche KI-Leistungsklasse,
 - Standard-Provider und Standardmodell,
 - zulässige Reasoning-/Leistungsstufe, soweit der Anbieter dies unterstützt,
@@ -161,11 +222,11 @@ Der produktive Betrieb verwendet eine konfigurierbare Routing-Matrix. Sie ordnet
 
 Beispielhafte Logik:
 
-> **FIB-Aufgabe → KI-Leistungsklasse → Routing-Konfiguration → konkreter Provider / konkretes Modell**
+> **FIB-Aufgabe → KI-Bedarf → Qualitätsanforderung/KI-Leistungsklasse → Routing-Konfiguration → konkreter Provider / konkretes Modell**
 
 Die Routing-Matrix ist Konfiguration und darf nicht als fest im Anwendungscode verdrahtete Zuordnung einzelner FIB-Aufgaben zu konkreten Modellnamen umgesetzt werden.
 
-### 10.1 Hochstufung und Fallback
+### 12.1 Hochstufung und Fallback
 
 Eine Aufgabe kann an eine höhere Leistungsklasse weitergegeben werden, wenn beispielsweise:
 
@@ -174,38 +235,40 @@ Eine Aufgabe kann an eine höhere Leistungsklasse weitergegeben werden, wenn bei
 - strukturierte Ergebnisse widersprüchlich oder unvollständig sind,
 - Quellenlage oder Zielkonflikte die für die Klasse vorgesehene Komplexität überschreiten.
 
-Eine Hochstufung soll gezielt erfolgen und nicht dazu führen, dass vorsorglich alle Aufgaben mit dem teuersten Modell bearbeitet werden.
+Eine Hochstufung soll gezielt erfolgen und nicht dazu führen, dass vorsorglich alle Aufgaben mit dem leistungsstärksten Modell bearbeitet werden.
 
 Ein Fallback kann außerdem einen anderen Provider bzw. ein anderes freigegebenes Modell derselben Klasse nutzen, wenn das Standardmodell technisch nicht verfügbar ist oder betriebliche Regeln dies verlangen.
 
-### 10.2 Pflege der Routing-Matrix
+### 12.2 Pflege der Routing-Matrix
 
 Die Routing-Matrix wird nach neuen Modelltests, Preisänderungen, Qualitätsbeobachtungen oder Betriebserfahrungen angepasst.
 
 Änderungen an der Routing-Matrix dürfen den fachlichen Redaktionsworkflow nicht verändern. Ein Modell- oder Providerwechsel soll aus Sicht des Redakteurs möglichst transparent bleiben.
 
-## 11. Preisangaben
+## 13. Preisangaben
 
 Konkrete Anbieterpreise sind zeitabhängig und werden **nicht als dauerhafte fachliche Regel** in diesem Dokument festgeschrieben.
 
 Vor jeder Anbieterentscheidung wird eine aktuelle Preisaufnahme aus offiziellen Anbieterquellen erstellt und mit den FIB-Nutzungsprofilen gerechnet.
 
-Die historischen Preisbeispiele des Demonstrators bleiben ausschließlich Referenzstand vom September 2026.
+Für die Planungsrechnung vom 03.10.2026 wurden die aktuellen offiziellen API-Preisgrößen als Plausibilitätsgrundlage herangezogen. Der Planungsrahmen wird bewusst in Euro gerundet und ist nicht an einen einzelnen Anbieter oder ein einzelnes Modell gebunden.
 
-## 12. Nutzungsprofile für Vergleiche
+## 14. Nutzungsprofile für Vergleiche
 
 Für Kostenvergleiche werden reproduzierbare FIB-Profile genutzt, mindestens:
 
-- freie Besucherfrage mit externer Recherche,
+- aktive Entdeckung neuer Quellen,
+- automatische Analyse einer neu erkannten oder geänderten Fundstelle,
+- Ereigniserkennung einschließlich Ereignis/Update-Vorschlag,
+- gezielte Recherche bei einer Wissenslücke,
 - redaktionelle Überarbeitung ohne externe Recherche,
 - Vorabgenerierung mehrerer „Mehr wissen?“-Antworten,
-- automatische Analyse einer neu erkannten Fundstelle,
 - Wirkungserkennung und Zuordnung zu Zielbereich/Prüfkriterien,
 - komplexe strukturierte Abwägung.
 
 Für jedes Profil werden Qualität und reale Kosten gemeinsam ausgewertet. Die Profile werden nach realen Betriebsdaten fortgeschrieben.
 
-## 13. Abgrenzung
+## 15. Abgrenzung
 
 - KI-Qualität und Leistungsklassen: `docs/KI-Qualitaet-und-Modellunabhaengigkeit.md`
 - operative KI-Regeln: `docs/KI-Leitfaden.md`
@@ -218,5 +281,6 @@ Für jedes Profil werden Qualität und reale Kosten gemeinsam ausgewertet. Die P
 
 | Version | Datum | Änderung |
 |---|---|---|
+| 1.2 | 03.10.2026 | Hybridprinzip verbindlich eingeführt: verpflichtende Entdeckungs-/Eingangs-KI, bedarfsgesteuerte Recherche-KI und optionale Redaktions-KI; Kostenprinzip auf „KI nur wo nötig, dann Qualität vor Preis“ umgestellt; vorläufigen monatlichen Planungsrahmen 3–13 € und Warnrahmen 15 € ergänzt. |
 | 1.1 | 02.10.2026 | KI-Leistungsklassen und konfigurierbare Routing-Matrix für den laufenden Betrieb ergänzt; Modellvergleich explizit auf Qualitäts-Kosten-Verhältnis je FIB-Aufgabe ausgerichtet; Hochstufungs-, Fallback- und Kostenprotokollierungsregeln präzisiert. |
 | 1.0 | 30.09.2026 | Demonstrator-Kostenmodell übernommen; zeitabhängige Preislisten aus der kanonischen Echtsystem-Regel entfernt und Betriebs-/Kostenprinzipien dauerhaft formuliert. |
