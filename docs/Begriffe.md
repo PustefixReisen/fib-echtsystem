@@ -2,7 +2,7 @@
 
 ## Dokumentstand
 
-**Stand:** 03.10.2026, 12:45 Uhr  
+**Stand:** 03.10.2026, 13:25 Uhr  
 **Verantwortlich:** Josef Walter – erstellt mit KI-Unterstützung
 
 Dieses Dokument wird im Normalfall über das **Stand-Datum einschließlich Uhrzeit** fortgeschrieben. Eine neue Versionsnummer wird nur eingeführt, wenn sich die Struktur oder das Grundkonzept des Dokuments wesentlich ändert.
@@ -67,29 +67,30 @@ Nicht zu verwechseln mit Thema. Ein Vorgang ist konkret; ein Thema ist eine übe
 
 Eine übergeordnete Fragestellung, die mehrere Vorgänge, Ereignisse, Perspektiven oder Rahmenbedingungen verbindet und dadurch zusätzlichen Erklärungsgewinn schafft.
 
-Themen entstehen bottom-up aus dem vorhandenen Wissen und werden redaktionell bestätigt.
+Themen können durch KI als Kandidaten vorgeschlagen oder redaktionell neu angelegt werden. Eine redaktionelle Neuanlage wird vor dem Speichern auf gleiche oder ähnliche vorhandene Themen geprüft.
 
 Beispiel: Ein Thema zur Mobilitätsentwicklung kann mehrere konkrete Vorgänge wie Radwegenetz, Parkraum oder Ausbau des Autobahnkreuzes München Ost verbinden.
 
-## 3. Beziehung Vorgang ↔ Thema
+## 3. Beziehung Themenbestandteil ↔ Thema
 
 ### `Bedeutung für das Thema`
 
-**Benutzer-Label in der App:** Wie wichtig ist dieser Vorgang für das Thema?
+**Benutzer-Label in der App:** Wie wichtig ist dieser Bestandteil für das Thema?  
+**Kontextbezogene Frage:** Wie wichtig ist dieser Vorgang / dieses Ereignis für das Thema?
 
-Redaktionell bestätigte Einstufung, wie stark ein Vorgang das Verständnis oder die Entwicklung eines Themas prägt.
+Redaktionell bestätigte Einstufung, wie stark ein ausgewählter Vorgang oder ein direkt in das Thema aufgenommenes einzelnes Ereignis das Verständnis oder die Entwicklung eines Themas prägt.
 
 Stufen:
 
-- prägend – ohne diesen Vorgang lässt sich das Thema derzeit kaum sinnvoll erklären,
-- relevant – der Vorgang trägt wesentlich zum Verständnis bei,
-- ergänzend – der Vorgang liefert zusätzlichen Kontext, ist aber nicht zentral.
+- prägend – ohne diesen Themenbestandteil lässt sich das Thema derzeit kaum sinnvoll erklären,
+- relevant – der Themenbestandteil trägt wesentlich zum Verständnis bei,
+- ergänzend – der Themenbestandteil liefert zusätzlichen Kontext, ist aber nicht zentral.
 
-Beispiel: Ein Großprojekt wie der Ausbau des Autobahnkreuzes München Ost kann für ein Mobilitätsthema prägend sein; eine einzelne vorübergehende Umleitung eher ergänzend.
+Beispiel: Ein Großprojekt wie der Ausbau des Autobahnkreuzes München Ost kann für ein Mobilitätsthema prägend sein; ein einzelnes zusätzlich aufgenommenes Ereignis kann ergänzend sein.
 
 Die KI schlägt die Bedeutung für das Thema vor; die Redaktion muss sie verpflichtend prüfen und bestätigen oder ändern.
 
-Nicht zu verwechseln mit Wirkung. Die Bedeutung für das Thema beschreibt die Stellung eines Vorgangs im Thema insgesamt; eine Wirkung beschreibt eine konkrete sachliche Folge unter einer Perspektive.
+Nicht zu verwechseln mit Wirkung. Die Bedeutung für das Thema beschreibt die Stellung eines Vorgangs oder Ereignisses im Thema insgesamt; eine Wirkung beschreibt eine konkrete sachliche Folge unter einer Perspektive.
 
 ### `Wirkungsrolle` – nicht mehr verwendet
 
@@ -124,7 +125,7 @@ Nicht zu verwechseln mit Akteursperspektive oder politischer Bewertung. „Lärm
 
 **Benutzer-Label in der App:** Auswirkung
 
-Eine sachlich belegbare oder begründet erwartbare Folge eines Vorgangs unter einer bestimmten Perspektive.
+Eine sachlich belegbare oder begründet erwartbare Folge eines Vorgangs oder eines direkt in ein Thema aufgenommenen Ereignisses unter einer bestimmten Perspektive.
 
 Beispiel: „zusätzliche Flächeninanspruchnahme“ oder „durchgängige sichere Radverbindung“ sind getrennte Wirkungen und sollten auch getrennt erfasst werden.
 
