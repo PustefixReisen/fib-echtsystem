@@ -123,6 +123,14 @@ Der Normalfall ist die Zuordnung eines `Ereignisses` zu genau einem `Vorgang`. M
 
 Dadurch werden widersprüchliche Doppelzuordnungen vermieden.
 
+Beispiel „Hundewiese“:
+
+- `Ereignis A`: neue Beschlussvorlage veröffentlicht → `Vorgang` „Hundewiese“ → `Meldung A`.
+- `Ereignis B`: Beratung/Beschluss im Gemeinderat → `Vorgang` „Hundewiese“ → `Meldung B`.
+- `Ereignis C`: kleiner weiterer Planungsschritt → `Vorgang` „Hundewiese“ → keine eigene `Meldung`.
+
+Damit erzählt der `Vorgang` die Entwicklung des konkreten Sachverhalts, `Ereignisse` bilden die fachlichen Schritte ab, und `Meldungen` sind die veröffentlichten redaktionellen Darstellungen der berichtenswerten `Ereignisse`.
+
 ### 3.5 Beziehungen `Vorgang ↔ Thema` und `Ereignis ↔ Thema`
 
 Ein `Vorgang` kann keinem, einem oder mehreren `Themen` zugeordnet sein. Ein `Thema` umfasst in der Regel mehrere `Vorgänge`. Die Beziehung ist damit grundsätzlich n:m.
@@ -214,6 +222,12 @@ Damit gilt:
 - Eine bereits bestehende Wirkung bleibt fachlich ihrem Herkunftskontext zugeordnet.
 - Eine Wirkung darf nur in diesem Herkunftskontext fachlich geändert werden.
 - Andere Bearbeitungskontexte dürfen die Wirkung verwenden und analysieren, aber nicht stillschweigend verändern oder durch eine konkurrierende Fassung derselben Aussage ersetzen.
+
+Beispiel:
+
+`Ereignis E1 → Wirkung W1 → Herkunftskontext Vorgang V1`
+
+Ein späteres Thema T1 kann W1 in seiner Analyse berücksichtigen. Soll W1 fachlich geändert werden, muss die Änderung im Vorgang V1 erfolgen.
 
 #### 3.7.2 Mehrere und widersprüchliche Wirkungen
 
@@ -360,7 +374,13 @@ Es gelten folgende Konsistenzregeln:
 - Eine manuelle sprachliche Änderung der `Textfassung` ändert nicht automatisch den `strukturierten Redaktionsstand`.
 - Ändert eine manuelle Textbearbeitung eine fachliche Aussage, Gewichtung, Bewertung, Begründung oder Abwägung, muss die Abweichung erkannt und in den strukturierten Angaben nachvollzogen oder ausdrücklich zurückgenommen werden.
 - Bei einer späteren Neugenerierung wird die neue `Textfassung` aus dem aktuellen strukturierten Stand erzeugt.
+- Dabei muss ein inhaltlicher Vergleich zur vorherigen freigegebenen `Textfassung` erfolgen.
 - Unveränderte strukturierte Kernaussagen dürfen durch die Neugenerierung nicht ohne fachlichen Grund ihre Bedeutung, Gewichtung oder politische Aussage verändern.
+- Inhaltliche Änderungen der neuen `Textfassung` sollen grundsätzlich auf tatsächlich geänderte strukturierte Angaben zurückführbar sein.
+- Sprachliche Änderungen außerhalb der geänderten fachlichen Bereiche sind zulässig, dürfen aber keine neue oder veränderte Kernaussage erzeugen.
+- Der Redakteur muss erkennen können, welche Textänderungen aus welcher strukturierten Änderung entstanden sind.
+
+Der Redaktionsprozess ist bewusst iterativ: Der Redakteur kann zu früheren strukturierten Angaben zurückkehren, sie ändern und anschließend einen neuen Abwägungs- oder Formulierungsvorschlag erzeugen. Die Historie der fachlich wirksamen Änderungen bleibt nachvollziehbar.
 
 ### 3.9 Bestätigung und Plausibilitätsprüfung
 
@@ -382,7 +402,19 @@ Zur Pflichtbestätigung gehören grundsätzlich insbesondere:
 
 `Verlässlichkeit` kann grundsätzlich als sichtbarer KI-Vorschlag geführt werden. Eine ausdrückliche Prüfung wird erforderlich, wenn ihre Kombination mit anderen Angaben fachlich auffällig ist oder die Abwägung wesentlich beeinflusst.
 
+Beispiele für Plausibilitätsprüfungen:
+
+- `Verlässlichkeit = gering` und zugleich `politisches Gewicht = hoch` → gezielter Prüfhinweis.
+- `Wirkungsrichtung = behindert die Zielerreichung`, aber positive Gesamtbewertung derselben Wirkung ohne erkennbare Begründung → Inkonsistenzhinweis.
+- Eine bestätigte `Wirkung` wurde geändert, die `Abwägung` blieb aber unverändert → erneute Prüfung der Abwägung erforderlich.
+- Eine `Gestaltungsoption` erzeugt erwartete neue `Wirkungen`, diese fehlen aber in der Abwägung → Prüfhinweis.
+- Eine manuell geänderte `Textfassung` verschiebt eine Bewertung oder Gewichtung, ohne dass sich der strukturierte Redaktionsstand geändert hat → Konsistenzwarnung.
+- Zwei Wirkungen desselben Ereignisses sind semantisch möglicherweise gleichbedeutend → redaktionelle Dublettenprüfung.
+- Mehrere Wirkungen innerhalb eines Vorgangs widersprechen sich auffällig → Konflikthinweis mit Prüfung auf tatsächlichen Wirkungskonflikt, zeitliche Veränderung, unterschiedliche Bedingungen, unsichere Erkenntnislage oder Inkonsistenz.
+
 Plausibilitätsprüfungen sind keine automatische politische Entscheidung. Sie markieren Konstellationen, bei denen die Redaktion die fachliche Herleitung gezielt prüfen muss.
+
+Die sprachliche Fassung der `Abwägung` wird von der KI erzeugt. Pflichtbestätigt wird die strukturierte Abwägung, nicht jeder einzelne Satz der daraus formulierten Textfassung.
 
 ### 3.10 Noch zu klärende Kernbeziehungen
 
@@ -469,14 +501,14 @@ Die noch nicht abschließend modellierten Begriffe werden im weiteren G3-Verlauf
 |---|---|---|
 | 1.3 | 03.10.2026 | Politischen Bezug und Begründungslogik konkretisiert: Zielbereich ist der allgemeine politische Maßstab; konkrete dokumentierte grüne Position wird bei einschlägigem Vorliegen zusätzlich verwendet, ist aber keine Voraussetzung für eine Bewertung. Begründungen werden fachlich getrennt für Wirkungsrichtung, sachliche Tragweite und politisches Gewicht geführt; die spätere UI-Darstellung bleibt offen. |
 | 1.2 | 03.10.2026 | Feste fachliche Wertemengen für Wirkungsrichtung, Bedeutung der Wirkung, Verlässlichkeit und politisches Gewicht festgelegt; Wirkungsrichtung als Unterstützung/Behinderung der Zielerreichung präzisiert und `unklar` von `offen` beim politischen Gewicht abgegrenzt. |
-| 1.1 | 03.10.2026 | Persistente Wirkung-Perspektive-Zuordnung festgelegt. |
-| 1.0 | 03.10.2026 | Wirkungsmodell konkretisiert. |
-| 0.9 | 03.10.2026 | Themenmodell ergänzt. |
-| 0.8 | 03.10.2026 | Themenmodell korrigiert. |
-| 0.7 | 03.10.2026 | Quellenmodell konkretisiert. |
-| 0.6 | 02.10.2026 | Bestätigungslogik und Plausibilitätsprüfung festgelegt. |
-| 0.5 | 02.10.2026 | Strukturierter Redaktionsstand und Textfassung getrennt. |
-| 0.4 | 02.10.2026 | Bedeutung für das Thema eingeführt. |
-| 0.3 | 02.10.2026 | Beziehung Ereignis ↔ Vorgang festgelegt. |
-| 0.2 | 02.10.2026 | Kardinalität Ereignis ↔ Meldung festgelegt. |
-| 0.1 | 01.10.2026 | G3-Primärdokument angelegt. |
+| 1.1 | 03.10.2026 | Persistente Wirkung-Perspektive-Zuordnung festgelegt: vorhandene Wirkungen eines im Thema enthaltenen Ereignisses werden automatisch berücksichtigt; Zuordnungen zu einer oder mehreren Themenperspektiven werden gespeichert und nur bei fachlichem Änderungsanlass, Plausibilitätskonflikt oder ausdrücklicher redaktioneller Neubewertung erneut geprüft. |
+| 1.0 | 03.10.2026 | Wirkungsmodell konkretisiert: Wirkungen fachlich am Ereignis verankert; Herkunftskontext Vorgang/Thema bestimmt Änderungszuständigkeit; mehrere eigenständige Wirkungen je Ereignis zulässig; semantisch gleichbedeutende Wirkungen werden als Analyse-Dubletten erkannt und nicht mehrfach gewichtet; widersprüchliche Wirkungen erzeugen Prüfhinweise statt automatischer Bereinigung. |
+| 0.9 | 03.10.2026 | Themenmodell ergänzt: direkt aufgenommene Einzelereignisse erhalten wie Vorgänge die Bedeutung für das Thema mit prägend/relevant/ergänzend; Themen können durch KI-Vorschlag oder redaktionelle Anlage entstehen; bei redaktioneller Neuanlage ist eine Ähnlichkeits-/Dublettprüfung gegen den Themenbestand verpflichtend. |
+| 0.8 | 03.10.2026 | Themenmodell korrigiert: Vorgänge als bevorzugte Themenauswahl mit automatischer Mitnahme ihrer Ereignisse; direkte Ereignis-Thema-Beziehung für zusätzliche „Weitere relevante Ereignisse“ zugelassen; Meldungstext und vorhandene „Unsere Einordnung“ werden über Ereignisse als Analysekontext erschlossen; Herkunfts- und Anti-Doppelzählungsregel ergänzt. |
+| 0.7 | 03.10.2026 | Quellenmodell konkretisiert: Herkunft, Fundstelle, Bereitstellung und Sichtbarkeit getrennt; öffentliche FIB-Bereitstellung redaktionell hochgeladener Dateien auch ohne ursprüngliche Internetverfügbarkeit ermöglicht; direkte Ereignis-Thema-Beziehung als parallele Zuordnung verworfen. |
+| 0.6 | 02.10.2026 | Bestätigungslogik und feldübergreifende Plausibilitätsprüfung für den strukturierten Redaktionsprozess festgelegt; strukturierte Abwägung als fachlich zu bestätigender Stand von der KI-formulierten Textfassung getrennt. |
+| 0.5 | 02.10.2026 | `strukturierter Redaktionsstand` als fachliche Quelle und `Textfassung` als daraus erzeugte Darstellung festgelegt; Konsistenz-, Versions- und Änderungsregeln zwischen beiden Ebenen ergänzt. |
+| 0.4 | 02.10.2026 | Vorgang↔Thema konkretisiert: Wirkungsrollen-Taxonomie entfällt; „Bedeutung für das Thema“ mit prägend/relevant/ergänzend und verpflichtender redaktioneller Bestätigung eingeführt; Begriffe Perspektive, Wirkung, Bewertung, Begründung und politischer Bezug als nächster Modellierungsbereich abgegrenzt. |
+| 0.3 | 02.10.2026 | Beziehung Ereignis ↔ Vorgang verbindlich festgelegt: Ereignis `0..n` Vorgänge, Vorgang `1..n` Ereignisse; Meldung-Vorgang-Zuordnung wird über das Ereignis abgeleitet. |
+| 0.2 | 02.10.2026 | Kardinalität Ereignis ↔ Meldung verbindlich festgelegt: ein Ereignis hat 0..1 Meldungen, eine Meldung gehört genau zu einem Ereignis. |
+| 0.1 | 01.10.2026 | G3-Primärdokument angelegt; Trennung von Ereignis und Meldung verbindlich festgelegt; weitere Modellbereiche und nächste Klärungsschritte aufgenommen. |
