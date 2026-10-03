@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 1.1 | 02.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
+| 1.2 | 03.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
 
 ## 1. Zweck und Geltung
 
@@ -15,6 +15,7 @@ Detailregeln werden dort verbindlich geführt, wo dafür bereits eine spezieller
 - Begriffe und Abgrenzungen: `docs/Begriffe.md`
 - Datenmodell: `docs/Datenmodell.md`
 - Themen- und Vorgangslogik: `docs/Themen-und-Vorgangslogik.md`
+- Recherche, Suchraum und Quellenmonitor: `docs/Recherche-und-Quellenmonitor.md`
 - öffentliche Benutzerführung und Darstellung: `docs/UX-und-Informationsarchitektur.md`
 - KI-Arbeitsregeln: `docs/KI-Leitfaden.md`
 - Management-Zusammenfassung: `docs/FIB_Management-Approach.md`
@@ -59,6 +60,8 @@ Entwicklungen außerhalb Feldkirchens werden aufgenommen, wenn sie für Feldkirc
 - fachlichen Lern- oder Innovationswert für eine konkrete Feldkirchner Fragestellung.
 
 Bloße thematische Ähnlichkeit genügt nicht.
+
+Die operative Suchraumlogik – einschließlich gestaffeltem Suchraum, dynamischem Suchkontext aus Themen/Vorgängen, sechsmonatigem Rückblick bei neuem oder wesentlich geschärftem Suchkontext sowie 30-%-Warnschwelle für ausschließlich mittelbar relevante veröffentlichte Beiträge – wird verbindlich in `docs/Recherche-und-Quellenmonitor.md` geführt.
 
 ### 3.3 Kontext
 
@@ -136,7 +139,7 @@ Eine Sitzung gilt in FIB als abgeschlossen, sobald die Genehmigung ihrer Nieders
 - bei einem Vorgang: Entwicklung, Entscheidungen und offene Punkte verstehen,
 - bei einem Thema: Zusammenhänge, Rahmenbedingungen und Perspektiven verstehen.
 
-Antworten werden quellengebunden erstellt. Freie Live-Fragen sind nicht Voraussetzung des MVP; vorbereitete Fragen und Antworten werden KI-gestützt erzeugt und redaktionell geprüft.
+Antworten werden quellengebunden erstellt. Fehlende Beleglage wird nicht durch scheinbar sicheres allgemeines Modellwissen ersetzt. Freie Live-Fragen sind nicht Voraussetzung des MVP; vorbereitete Fragen und Antworten werden KI-gestützt erzeugt und redaktionell geprüft.
 
 ### 4.6 Unsere Einordnung
 
@@ -164,10 +167,12 @@ Insbesondere:
 - die Vorgangszugehörigkeit einer Meldung wird über ihr Ereignis abgeleitet,
 - ein Vorgang kann mehreren Themen zugeordnet sein,
 - ein Thema umfasst in der Regel mehrere Vorgänge,
-- einzelne Ereignisse können direkt themenrelevant sein, ohne bereits einen eigenen Vorgang zu bilden; die konkrete Modellierung wird in G3 geklärt,
+- einzelne Ereignisse können direkt themenrelevant sein, ohne bereits einen eigenen Vorgang zu bilden,
 - Sitzungen können Ereignisse, Meldungen, Vorgänge und Themen gleichzeitig berühren.
 
 Bei einer Vorgang-Thema-Beziehung wird die **Bedeutung für das Thema** mit `prägend`, `relevant` oder `ergänzend` geführt. Die KI schlägt die Einstufung vor; die Redaktion bestätigt oder ändert sie verpflichtend. Perspektiven und sachliche Wirkungen erklären, warum der Vorgang für das Thema relevant ist.
+
+Eine separate Wirkungsrollen-Taxonomie wird nicht mehr geführt.
 
 ## 6. Quellen- und Recherchegrundsätze
 
@@ -197,6 +202,8 @@ FIB kombiniert:
 
 Neue Sachverhalte dürfen nicht unsichtbar bleiben, nur weil der passende Themenbegriff noch nicht bekannt ist. „Kiesgrund“ dient dafür als Referenz- und Regressionstest.
 
+Bestätigte Themen und Vorgänge erzeugen zugleich einen dynamischen Suchkontext; dessen operative Regeln stehen in `docs/Recherche-und-Quellenmonitor.md`.
+
 ### 6.3 Nichtfinden ist kein Gegenbeweis
 
 Aus dem Nichtfinden einer Information darf nicht auf ihr Nichtvorhandensein geschlossen werden. Nicht belegte Annahmen bleiben Recherche- oder Dokumentationslücken.
@@ -217,16 +224,16 @@ Vorgänge und Themen erhalten ebenfalls einen fachlichen Änderungsstand; techni
 
 ## 8. Öffentliche Zugänge
 
-Die öffentliche Hauptnavigation lautet:
+Die verbindliche öffentliche Hauptnavigation lautet:
 
-- **Meldungen**
-- **Themen**
+- **Neues**
+- **Im Blick**
 - **Sitzungen**
-- **Suchen**
+- **Suche**
 
 „Aktuell“ ist kein eigener Inhaltsbereich, sondern eine zeitliche Auswahl bzw. Hervorhebung, insbesondere auf der Startseite.
 
-Unter „Themen“ werden Themen und Vorgänge in einer gemeinsamen Liste angezeigt. Die fachliche Unterscheidung bleibt intern bestehen und wird öffentlich nur dort hervorgehoben, wo sie das Verständnis verbessert.
+Unter **„Im Blick“** werden Themen und Vorgänge in einer gemeinsamen Liste angezeigt. Die fachliche Unterscheidung bleibt intern bestehen und wird öffentlich nur dort hervorgehoben, wo sie das Verständnis verbessert.
 
 ## 9. Suche und Auffindbarkeit
 
@@ -249,7 +256,7 @@ KI unterstützt Recherche, Zuordnung, Analyse, Entwurf, Themenbildung, Vorgangsf
 Veröffentlichungsrelevante Inhalte werden redaktionell geprüft. Besonders wirksame fachliche Entscheidungen können eine ausdrückliche Bestätigung erfordern, darunter insbesondere:
 
 - Zuordnung Ereignis ↔ Vorgang ↔ Thema,
-- Bedeutung eines Vorgangs für ein Thema,
+- Bedeutung eines Vorgangs oder direkt ergänzten Ereignisses für ein Thema,
 - Entscheidung „neues Ereignis oder Aktualisierung“,
 - fachliche Aktualisierungsrelevanz,
 - aktueller Vorgangsstand,
@@ -285,5 +292,6 @@ Die Detailregeln stehen in `docs/KI-Leitfaden.md`; die technische Umsetzung wird
 
 | Version | Datum | Änderung |
 |---|---|---|
+| 1.2 | 03.10.2026 | G2.5-Transfer: Rechercheprimärquelle und operative Suchraumlogik ausdrücklich verankert, Quellenpflicht bei „Mehr wissen?“ gespiegelt, öffentliche Navigation auf „Neues | Im Blick | Sitzungen | Suche“ synchronisiert und Wirkungsrolle endgültig durch „Bedeutung für das Thema“ ersetzt. |
 | 1.1 | 02.10.2026 | Wissensbeziehungen an G3 angepasst: Ereignis und Meldung getrennt, Vorgangszuordnung über Ereignis, Wirkungsrollen durch redaktionell bestätigte „Bedeutung für das Thema“ sowie Perspektiven/Wirkungen ersetzt; Begriffsregister und Datenmodell referenziert. |
 | 1.0 | 30.09.2026 | Fachliche Grundlagen aus Demonstrator und Bibliotheksdokumentation ins Echtsystem überführt; Terminologie auf FIB/Meldung/Vorgang/Thema aktualisiert; aktuelle Wissens-, Aufnahme-, Sitzungs-, Recherche-, Such- und Freigabelogik konsolidiert. |
