@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 1.2 | 02.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
+| 1.3 | 03.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
 
 ## 1. Zweck und Geltung
 
@@ -44,7 +44,7 @@ Beispiele können sein:
 - Klimaanpassung im Lebensumfeld,
 - Ortsentwicklung.
 
-Ein Vorgang kann mehreren Themen zugeordnet sein. Umgekehrt umfasst ein Thema in der Regel mehrere Vorgänge.
+Ein Vorgang kann mehreren Themen zugeordnet sein. Umgekehrt umfasst ein Thema in der Regel mehrere Vorgänge und kann zusätzlich einzelne relevante Ereignisse enthalten, die über keinen ausgewählten Vorgang in das Thema gelangen.
 
 ## 3. Themen entstehen bottom-up
 
@@ -76,7 +76,8 @@ Ein KI-generierter Themenkandidat soll mindestens enthalten:
 
 - vorgeschlagenen Thementitel,
 - erkannte gemeinsame Fragestellung,
-- auslösende Vorgänge und Meldungen,
+- auslösende Vorgänge und Ereignisse,
+- zu den Ereignissen gehörende Meldungen, soweit vorhanden,
 - erkannte Muster, Gemeinsamkeiten und Zielkonflikte,
 - Begründung, warum der Zusammenhang über einen Einzelvorgang hinausgeht,
 - möglichen Erklärungsgewinn,
@@ -95,7 +96,9 @@ Die Redaktion kann einen Themenkandidaten nicht nur bestätigen oder verwerfen, 
 - Aspekte unterschiedlich gewichten,
 - die Leitfrage verändern,
 - die Abgrenzung schärfen,
-- unbekannte oder bislang nicht erfasste Vorgänge nennen,
+- Vorgänge auswählen oder abwählen,
+- einzelne weitere relevante Ereignisse ergänzen oder verwerfen,
+- unbekannte oder bislang nicht erfasste Vorgänge oder Ereignisse nennen,
 - gezielte Rechercheaufträge auslösen.
 
 Ein vom Redakteur ergänzter Aspekt wird nicht automatisch als Tatsache oder Bestandteil des veröffentlichten Themas übernommen. Er wird zunächst als **Prüf- und Rechercheauftrag** behandelt.
@@ -103,12 +106,61 @@ Ein vom Redakteur ergänzter Aspekt wird nicht automatisch als Tatsache oder Bes
 Die KI prüft dabei mindestens:
 
 1. Gibt es einen konkreten Feldkirchen-Bezug?
-2. Welche lokalen Quellen, Vorgänge oder Daten sind vorhanden?
+2. Welche lokalen Quellen, Vorgänge, Ereignisse oder Daten sind vorhanden?
 3. Welcher übergeordnete Kontext ist tatsächlich erklärungsrelevant?
 4. Trägt der Aspekt zur Leitfrage bei oder weitet er das Thema unnötig aus?
 5. Welche Wissenslücken bleiben bestehen?
 
-### 5.1 Bedeutung eines Vorgangs für ein Thema
+### 5.1 Auswahlbasis eines Themas
+
+Für die redaktionelle Zusammenstellung eines Themas werden zwei fachliche Auswahlwege kombiniert:
+
+1. **Vorgang auswählen** – der Vorgang wird als Ganzes in das Thema aufgenommen; alle fachlich zugehörigen Ereignisse werden automatisch mitgeführt.
+2. **Weitere relevante Ereignisse auswählen** – einzelne Ereignisse können zusätzlich aufgenommen werden, wenn sie nicht bereits über einen ausgewählten Vorgang im Thema enthalten sind.
+
+Die Vorgangsauswahl ist der bevorzugte Weg, wenn ein geeigneter Vorgang vorhanden ist. Sie vereinfacht die Redaktion und stellt sicher, dass die zum Sachverhalt gehörenden Ereignisse nicht einzeln nachgeführt werden müssen.
+
+Einzelne Ereignisse bleiben trotzdem als direkter zusätzlicher Themenbezug möglich. Dadurch können auch relevante Entwicklungen in ein Thema aufgenommen werden, die keinem Vorgang zugeordnet sind oder deren Vorgang bewusst nicht als Ganzes Bestandteil des Themas sein soll.
+
+Meldungen werden **nicht als eigener dritter Auswahlweg** geführt. Hat ein ausgewähltes Ereignis eine Meldung, wird diese über die Ereignisbeziehung für die Themenanalyse erschlossen.
+
+### 5.2 Weitere relevante Ereignisse
+
+Die Redaktion soll nicht alle im FIB-Bestand vorhandenen, noch nicht zugeordneten Ereignisse ungefiltert angezeigt bekommen.
+
+Stattdessen erzeugt die KI eine Vorauswahl unter der Bezeichnung:
+
+> **Weitere relevante Ereignisse**
+
+Vorgeschlagen werden nur Ereignisse, die nach der Themenleitfrage, den Perspektiven, Orten/Bezugsobjekten, Wirkungen, Akteuren, zeitlichen Zusammenhängen oder einer möglichen zukünftigen Bedeutung plausibel relevant sein können und noch nicht über einen ausgewählten Vorgang im Thema enthalten sind.
+
+Die Redaktion kann jeden Vorschlag übernehmen oder verwerfen. Zusätzlich muss jederzeit eine Suche im gesamten Ereignisbestand möglich sein, damit ein von der KI nicht vorgeschlagenes Ereignis manuell ergänzt werden kann.
+
+Damit gilt:
+
+`ausgewählte Vorgänge → ihre Ereignisse automatisch enthalten`
+
+`+ KI-Vorauswahl „Weitere relevante Ereignisse“`
+
+`+ manuelle Ereignissuche als Sicherheitsnetz`
+
+### 5.3 Analysegegenstände eines ausgewählten Vorgangs oder Ereignisses
+
+Für die Themenanalyse wird nicht nur die formale Zuordnung ausgewertet. Relevanter Analysekontext sind insbesondere:
+
+- das Ereignis selbst und die zugrunde liegenden Quellen/Fundstellen,
+- bei einem ausgewählten Vorgang dessen aktueller Vorgangstext bzw. Sachstand als redaktionelle Verdichtung,
+- bei einem Ereignis mit Meldung der Meldungstext,
+- eine vorhandene veröffentlichte bzw. redaktionell bestätigte **„Unsere Einordnung“** der Meldung,
+- weitere bestätigte strukturierte Angaben, soweit sie für die Themenfrage relevant sind.
+
+Dabei gilt eine strikte Herkunfts- und Anti-Doppelzählungsregel:
+
+> **Redaktionelle Verdichtungen und Einordnungen sind Analysekontext, aber keine zusätzlichen unabhängigen Tatsachenbelege für bereits durch Ereignis und Quellen belegte Sachverhalte.**
+
+Dasselbe Faktum darf daher nicht stärker gewichtet werden, nur weil es zugleich in Quelle, Ereignisbeschreibung, Meldungstext und Vorgangstext vorkommt. „Unsere Einordnung“ wird als bereits dokumentierte politische Bewertung berücksichtigt und nicht mit neutraler Sachinformation vermischt.
+
+### 5.4 Bedeutung eines Vorgangs für ein Thema
 
 Eine Zuordnung zu einem Thema beschreibt nicht nur, **dass** ein Vorgang relevant ist, sondern auch, **wie stark** er das Verständnis oder die Entwicklung des Themas prägt.
 
@@ -124,11 +176,11 @@ Die Bedeutung ist keine automatisch berechnete Kennzahl. Zahl der Meldungen, Que
 
 Die frühere Rollen-Taxonomie **Treiber / Gestaltungsbeitrag / Betroffenheit / Rahmenbedingung / Indikator** wird nicht mehr als eigenes strukturiertes Merkmal geführt. Ihre fachliche Aussage wird durch die konkreten Perspektiven und Wirkungen besser und ohne Redundanz beschrieben.
 
-### 5.2 Perspektiven und Wirkungen
+### 5.5 Perspektiven und Wirkungen
 
 Ein Thema wird durch sachliche **Perspektiven** strukturiert. Eine Perspektive bezeichnet einen fachlichen Betrachtungsaspekt, z. B. Lärm, Verkehrssicherheit, Flächenverbrauch, Erreichbarkeit oder kommunalen Handlungsspielraum.
 
-Unter einer Perspektive werden die sachlich belegbaren oder begründet erwartbaren **Wirkungen** relevanter Vorgänge beschrieben.
+Unter einer Perspektive werden die sachlich belegbaren oder begründet erwartbaren **Wirkungen** relevanter Vorgänge und Ereignisse beschrieben.
 
 Perspektive und Wirkung sind keine politische Bewertung. Die politische Bewertung gehört ausschließlich in die getrennte Ebene **„Unsere Einordnung“**.
 
@@ -144,20 +196,22 @@ Die interne Themendefinition enthält mindestens:
 - einbezogene Perspektiven bzw. Dimensionen,
 - ausdrückliche Abgrenzung,
 - relevante übergeordnete Kontexte,
-- zugehörige bzw. auslösende Vorgänge und Meldungen,
+- ausgewählte Vorgänge,
+- zusätzlich ausgewählte weitere relevante Ereignisse,
+- die aus den Ereignissen erschlossenen Meldungen, soweit für die Analyse relevant,
 - Bedeutung der Vorgänge für das Thema,
 - Unsicherheiten und offene Abgrenzungsfragen.
 
 Der Arbeitsprozess ist iterativ:
 
-> **Themenkandidat → Entwurf → redaktionelle Ergänzung/Korrektur → gezielte Recherche → Kontextschärfung → bestätigte Themendefinition → laufende Weiterentwicklung**
+> **Themenkandidat → Auswahl von Vorgängen und weiteren relevanten Ereignissen → Entwurf → redaktionelle Ergänzung/Korrektur → gezielte Recherche → Kontextschärfung → bestätigte Themendefinition → laufende Weiterentwicklung**
 
 Eine bestätigte Themendefinition ist **kein eingefrorener Endzustand**. Sie kann auch später ausgeschärft werden, wenn:
 
 - neue Vorgänge entstehen,
-- neue Quellen oder Erkenntnisse auftauchen,
+- neue Ereignisse oder Quellen auftauchen,
 - die KI eine bislang fehlende Perspektive erkennt,
-- die Redaktion einen bislang nicht erkannten Aspekt oder Vorgang ergänzt.
+- die Redaktion einen bislang nicht erkannten Aspekt, Vorgang oder ein Ereignis ergänzt.
 
 Änderungen an einer bestätigten Themendefinition werden versioniert und erneut redaktionell bestätigt. Die KI ändert eine veröffentlichte Themendefinition nicht selbstständig.
 
@@ -171,7 +225,8 @@ Die KI soll aus folgenden Entscheidungen lernen:
 - veränderte Themenkandidaten,
 - verworfene Themenkandidaten,
 - vom Redakteur ergänzte fehlende Aspekte,
-- nachträglich entdeckte relevante Vorgänge,
+- nachträglich entdeckte relevante Vorgänge oder Ereignisse,
+- übernommene und verworfene Vorschläge unter „Weitere relevante Ereignisse“,
 - bewusste Abgrenzungen zwischen Thema und Vorgang,
 - redaktionell korrigierte Einstufungen der Bedeutung eines Vorgangs für ein Thema,
 - redaktionell ergänzte oder korrigierte Perspektiven.
@@ -207,7 +262,7 @@ Der Redakteur hat im Test zum Themenkandidaten Wohnen auf den bislang im FIB-Bes
 
 Der Fall zeigt mehrere Anforderungen zugleich:
 
-- Redakteure müssen fehlende Vorgänge ergänzen können.
+- Redakteure müssen fehlende Vorgänge und Ereignisse ergänzen können.
 - Daraus muss unmittelbar eine gezielte KI-Recherche entstehen können.
 - Ein neu gefundener großer Vorgang kann eine bereits bestätigte Themendefinition verändern.
 - Ein Vorgang kann gleichzeitig für mehrere Themen relevant sein, insbesondere Wohnen und Ortsentwicklung.
@@ -219,9 +274,13 @@ Für das Datenmodell sind mindestens vorzusehen:
 
 - eigenständige Entitäten für Ereignis, Meldung, Vorgang und Thema,
 - n:m-Beziehungen zwischen Vorgängen und Themen,
-- redaktionell bestätigte **Bedeutung für das Thema** mit den Stufen prägend / relevant / ergänzend,
+- zusätzliche direkte Ereignis-Thema-Beziehungen für einzeln aufgenommene Ereignisse, die nicht bereits über einen ausgewählten Vorgang enthalten sind,
+- Kennzeichnung, ob ein Ereignis im Thema über einen Vorgang oder als direkt ergänztes Ereignis enthalten ist,
+- redaktionell bestätigte **Bedeutung für das Thema** mit den Stufen prägend / relevant / ergänzend für Vorgänge,
+- automatische Erschließung zugehöriger Meldungstexte und vorhandener „Unsere Einordnung“ über die Ereignisbeziehung,
+- Herkunftskennzeichnung der Analyseinhalte, damit Quellen, Ereignisse, Meldungstexte, Vorgangstexte und politische Einordnung nicht als unabhängige Belege doppelt gewertet werden,
 - strukturierte Perspektiven eines Themas,
-- sachliche Wirkungen relevanter Vorgänge innerhalb dieser Perspektiven,
+- sachliche Wirkungen relevanter Vorgänge und Ereignisse innerhalb dieser Perspektiven,
 - versionierte Themendefinitionen,
 - redaktioneller Bestätigungsstatus für Themendefinitionen,
 - redaktionell ergänzte Aspekte und Prüfaufträge,
@@ -240,7 +299,8 @@ Eine Themenseite muss insbesondere beantworten:
 - Warum ist sie für Feldkirchen relevant?
 - Welche Perspektiven gehören zum Thema?
 - Welche konkreten Vorgänge prägen den lokalen Stand?
-- Welche Bedeutung haben diese Vorgänge für das Thema?
+- Welche weiteren relevanten Ereignisse ergänzen das Thema außerhalb dieser Vorgänge?
+- Welche Bedeutung haben die Vorgänge für das Thema?
 - Welche sachlichen Wirkungen sind unter den relevanten Perspektiven erkennbar?
 - Welcher externe Kontext hilft beim Verständnis?
 - Was wissen wir, was ist offen und wo bestehen Wissenslücken?
@@ -250,5 +310,6 @@ Eine Themenseite muss insbesondere beantworten:
 
 | Version | Datum | Änderung |
 |---|---|---|
+| 1.3 | 03.10.2026 | Themenauswahl auf Vorgänge plus zusätzliche „Weitere relevante Ereignisse“ erweitert; Vorgangsauswahl übernimmt zugehörige Ereignisse automatisch; Meldungen werden über Ereignisse samt Meldungstext und vorhandener „Unsere Einordnung“ als Analysekontext erschlossen; KI-Vorauswahl und manuelle Ereignissuche sowie Anti-Doppelzählungsregel festgelegt. |
 | 1.2 | 02.10.2026 | Wirkungsrollen-Taxonomie durch „Bedeutung für das Thema“ ersetzt; verpflichtende redaktionelle Bestätigung festgelegt; Perspektiven und sachliche Wirkungen von politischer Bewertung abgegrenzt. |
 | 1.1 | 30.09.2026 | Themen-/Vorgangslogik konsolidiert und Wirkungsrollen eingeführt. |
