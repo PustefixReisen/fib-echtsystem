@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 2.2 | 03.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
+| 2.3 | 03.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
 
 ## 1. Zweck
 
@@ -39,8 +39,8 @@ Für FIB gelten insbesondere:
 | Dokumentationslandkarte | `docs/Dokumentation.md` | vorhanden |
 | Projektgründung / Gründungsentscheidungen | `docs/Projektgruendung.md` | in Arbeit |
 | Roadmap / nächster Schritt | `docs/Roadmap.md` | vorhanden |
-| G2.5 Transfer-Audit | `docs/Transfer-Audit-Demonstrator-Echtsystem.md` | in Arbeit |
-| Regressionstestkorpus | `docs/Regressionstests-Demonstratortransfer.md` | vorhanden / wird mit Umsetzung konkretisiert |
+| G2.5 Transfer-Audit | `docs/Transfer-Audit-Demonstrator-Echtsystem.md` | abgeschlossen |
+| Regressionstestkorpus | `docs/Regressionstests-Demonstratortransfer.md` | vorhanden / wird technisch weiter konkretisiert |
 | Fachkonzept | `docs/Fachkonzept.md` | vorhanden |
 | Begriffe / fachliches Glossar | `docs/Begriffe.md` | vorhanden |
 | Management Approach | `docs/FIB_Management-Approach.md` | vorhanden |
@@ -57,7 +57,7 @@ Für FIB gelten insbesondere:
 | SEO / Auffindbarkeit | `docs/SEO-und-Auffindbarkeit.md` | vorhanden |
 | KI-Betrieb / Kosten | `docs/KI-Betrieb-und-Kosten.md` | vorhanden |
 | Migrationsstrategie Entwickler → GRÜNEN-Infrastruktur | `docs/Migrationsstrategie.md` | vorhanden |
-| Übernahme Demonstrator-Dokumentation | `docs/Dokumentationsuebernahme-Demonstrator.md` | unter G2.5 erneut geprüft |
+| Übernahme Demonstrator-Dokumentation | `docs/Dokumentationsuebernahme-Demonstrator.md` | abgeschlossen / unter G2.5 erneut verifiziert |
 | Architektur | noch anzulegen | offen |
 | Datenmodell | `docs/Datenmodell.md` | in Arbeit |
 | Sicherheit / Datenschutz | noch anzulegen | offen |
@@ -102,20 +102,20 @@ Daraus folgt:
 - Bibliotheks-, ODT-, Export- oder sonstige Kopien sind keine gleichwertige Primärquelle. Ein neueres Dateidatum allein begründet keine Dokumentationshoheit.
 - Frühere FIB-Chats dienen im G2.5-Audit als **Lückenfinder**, nicht als kanonische Wahrheit. Wiedergewonnene Erkenntnisse werden erst nach fachlicher Prüfung in eine kanonische Echtsystem-Quelle oder einen Regressionstest überführt.
 
-Die detaillierte Zuordnung der ursprünglichen Dokumentationsübernahme steht in `docs/Dokumentationsuebernahme-Demonstrator.md`. Die Vollständigkeits- und Transferprüfung wird unter G2.5 geführt.
+Die detaillierte Zuordnung der ursprünglichen Dokumentationsübernahme steht in `docs/Dokumentationsuebernahme-Demonstrator.md`. Die abschließende Transferprüfung steht in `docs/Transfer-Audit-Demonstrator-Echtsystem.md`.
 
 ## 7. Stand der Übernahme
 
-Die ursprüngliche Dokumentationsübernahme ist **weitgehend erfolgt, aber durch G2.5 noch nicht endgültig abgeschlossen**.
+Die Dokumentationsübernahme ist nach erneuter G2.5-Prüfung **abgeschlossen**.
 
-Der erneute Transfer-Audit wurde notwendig, weil sich gezeigt hat, dass:
+Der erneute Transfer-Audit wurde notwendig, weil sich gezeigt hatte, dass:
 
 - einzelne Demonstrator-Regeln zwar dokumentiert waren, im Echtsystem aber nicht an der operativ zuständigen Stelle standen,
 - eine Bibliotheks-/ODT-Fassung gegenüber dem kanonischen GitHub-Stand inhaltlich zurücklag,
 - weitere Detailerkenntnisse nur in Betriebs-/Fehlerfällen oder früheren Chats auffindbar waren,
 - ältere Begriffe nach späteren G3-Entscheidungen noch in einzelnen Echtsystem-Dokumenten fortwirkten.
 
-Ins Echtsystem überführt bzw. integriert wurden insbesondere:
+Diese fachlichen Transferlücken wurden unter G2.5 geschlossen. Ins Echtsystem überführt bzw. nachgepflegt sind insbesondere:
 
 - Management Approach,
 - Fachkonzept,
@@ -123,16 +123,18 @@ Ins Echtsystem überführt bzw. integriert wurden insbesondere:
 - KI-Qualität und Modellunabhängigkeit,
 - Quellenmonitor und Recherchelogik,
 - Mehr-wissen-Konzept,
-- Frontend-/Darstellungsregeln in die UX-Primärquelle,
+- Frontend-/Darstellungsregeln in der UX-Primärquelle,
 - Marketing und Kommunikation,
 - SEO und Auffindbarkeit,
 - KI-Betrieb und Kosten,
 - grüne Werte und politische Ziele,
-- wissenschaftlich-politische und bürgernahe Sprachregeln.
+- wissenschaftlich-politische und bürgernahe Sprachregeln,
+- erweiterter Suchraum, Rückblickslogik und 30-%-Warnschwelle,
+- Persistenzschutz,
+- Quellenpflicht bei „Mehr wissen?“,
+- aktuelle Bedeutung-für-das-Thema-Logik.
 
-G2.5 prüft zusätzlich Demonstrator-Datenbestand, sichtbares Verhalten, Betriebs-/Update-/Fehlerprotokolle, Spezial-/Übergabedokumente sowie relevante frühere Chats.
-
-Erst nach bestandenem Transfer-Gate wird der Gesamtstatus der Demonstrator-Übernahme wieder auf **abgeschlossen** gesetzt.
+Die aus dem Audit verbliebenen technischen Folgeaufträge sind regulär nach G3/G5/G10 übergeben und keine offenen Transferlücken mehr.
 
 Das visuelle Identitäts- und Bildkonzept ist eine **neue G2-Primärquelle des Echtsystems** und keine übernommene Demonstrator-Dokumentation.
 
@@ -165,6 +167,7 @@ Für laufend ergänzte Register oder Glossare kann statt einer fortlaufenden Ver
 
 | Version | Datum | Änderung |
 |---|---|---|
+| 2.3 | 03.10.2026 | G2.5 nach bestandenem Transfer-Gate als abgeschlossen markiert; Dokumentationsübernahme erneut als abgeschlossen bestätigt; fachliche Nachpflege und Übergabe technischer Folgeaufträge dokumentiert. |
 | 2.2 | 03.10.2026 | G2.5-Transfer-Audit in Dokumentationslandkarte aufgenommen; ursprünglichen Abschlussstatus der Demonstrator-Übernahme zurückgenommen; GitHub-Dokumentationshoheit gegenüber ODT/Exportkopien präzisiert; frühere Chats als Lückenfinder geregelt; Regressionstestkorpus als Projektquelle aufgenommen. |
 | 2.1 | 02.10.2026 | `docs/Begriffe.md` als verbindliches Begriffsregister aufgenommen; Stand-Datum statt fortlaufender Versionsnummer für laufend ergänzte Register/Glossare zugelassen. |
 | 2.0 | 01.10.2026 | `docs/Datenmodell.md` als G3-Primärquelle für fachliche Datenanforderungen und logisches Datenmodell aufgenommen. |
