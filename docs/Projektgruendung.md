@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 1.3 | 30.09.2026 | Josef Walter – erstellt mit KI-Unterstützung |
+| 1.4 | 03.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
 
 ## 1. Zweck
 
@@ -14,14 +14,18 @@ Dieses Dokument führt die verbindlichen Entscheidungen der Projektgründungspha
 
 Der Demonstrator ist abgeschlossen und dient nur noch als historische, fachliche und visuelle Referenz.
 
-Die für das Echtsystem weiterhin erforderlichen fachlichen und organisatorischen Grundlagen werden nicht mehr im Demonstrator fortgeschrieben, sondern in kanonische Dokumente dieses Repositories übernommen und aktualisiert.
+Die für das Echtsystem weiterhin erforderlichen fachlichen und organisatorischen Grundlagen werden ausschließlich in den kanonischen Dokumenten dieses Repositories fortgeschrieben.
 
-Verbindliche Übersicht:
+Verbindliche Übersichten:
 
 - `docs/Dokumentation.md`
 - `docs/Dokumentationsuebernahme-Demonstrator.md`
+- `docs/Transfer-Audit-Demonstrator-Echtsystem.md`
+- `docs/Regressionstests-Demonstratortransfer.md`
 
 Der historische Übergabestand im Demonstrator bleibt Referenz, ist aber keine laufende Primärquelle des Echtsystems mehr.
+
+Der G2.5-Transfer-Audit hat die ursprüngliche Dokumentationsübernahme gegen Demonstrator-Dokumente, Daten-/Fehlererkenntnisse, Spezialdokumente und relevante frühere Chats als Lückenfinder erneut geprüft. Das Transfer-Gate ist bestanden; fachliche Transferlücken gelten als geschlossen.
 
 ## 3. Grundsatz zur Weiterentwicklung
 
@@ -33,7 +37,7 @@ Das Echtsystem entwickelt insbesondere weiter:
 - UX und Informationsarchitektur,
 - Suche und Vertiefung,
 - Redaktionsworkflow,
-- Quellenbeobachtung und KI-gestützte Aufbereitung,
+- Quellenbeobachtung und KI-gestützte Quellenentdeckung/Aufbereitung,
 - technische Persistenz und Betrieb.
 
 UX- und Fachentscheidungen werden darauf geprüft, welche Anforderungen daraus für Datenmodell, Geschäftsregeln, Redaktion und Migration entstehen.
@@ -42,7 +46,7 @@ UX- und Fachentscheidungen werden darauf geprüft, welche Anforderungen daraus f
 
 - separates Echtsystem-Repository,
 - persistente PostgreSQL-Datenhaltung statt Demonstrator-JSON,
-- Supabase als bevorzugte Backend-/Datenbank-Basis; konkrete Produktivarchitektur noch offen,
+- Supabase als bevorzugte Backend-/Datenbank-Basis; konkrete Produktivarchitektur wird in G5 festgelegt,
 - Redaktions-Web-App mit Freigabeprozess,
 - öffentliche Website ohne notwendiges Benutzerkonto,
 - PWA,
@@ -52,10 +56,12 @@ UX- und Fachentscheidungen werden darauf geprüft, welche Anforderungen daraus f
 - organisationsgebundene Produktivkonten,
 - mindestens zwei technische Administratoren,
 - fachliche Regeln möglichst technisch absichern,
-- Wissensstruktur **Ereignis → Meldung → Vorgang → Thema**,
+- Wissensstruktur **Ereignis → Meldung → Vorgang → Thema** als vereinfachtes Lesemodell; konkrete Beziehungen/Kardinalitäten in `docs/Datenmodell.md`,
 - Sitzung als querliegender Beratungs- und Entscheidungskontext,
 - Sachinformation und „Unsere Einordnung“ klar trennen,
-- „Mehr wissen?“ als kontextgebundene Vertiefung,
+- `Bedeutung für das Thema` (`prägend | relevant | ergänzend`) statt früherer Wirkungsrollen-Taxonomie,
+- Perspektiven und Wirkungen zur sachlichen Erklärung von Themenbezügen,
+- „Mehr wissen?“ als quellengebundene kontextbezogene Vertiefung,
 - SEO, Erfolgsmessung und Kommunikation als Bestandteile des Zielsystems,
 - Dashboard „small and simple“,
 - digitaler und analoger Raum als gemeinsame Verbreitungslogik,
@@ -88,6 +94,8 @@ Zielprozess:
 Der Quellenmonitor muss zum Go-live mindestens:
 
 - bekannte Pflichtquellen sowie definierte Orts- und Themenquellen automatisch überwachen,
+- aktiv neue relevante Quellen entdecken,
+- den gestaffelten und thematisch erweiterten Suchraum berücksichtigen,
 - neue und geänderte Fundstellen persistent erkennen,
 - Fundstellen deduplizieren,
 - relevante Zusammenhänge und vorhandene FIB-Objekte berücksichtigen,
@@ -113,7 +121,7 @@ Dieser Grundsatz gilt analog für:
 
 #### MVP – erster produktiver Go-live
 
-- Meldungen,
+- Ereignisse als fachliche Basis und Meldungen als öffentliche Darstellung berichtenswerter Ereignisse,
 - Vorgänge,
 - Themen,
 - Sitzungen und TOPs,
@@ -123,20 +131,21 @@ Dieser Grundsatz gilt analog für:
 - Aktualisierungs- und Versionshistorie,
 - stabile öffentliche URLs und Direktlinks,
 - responsive, mobil optimierte und barrierearme Oberfläche,
-- öffentliche Hauptnavigation `Meldungen | Themen | Sitzungen | Suchen`,
+- öffentliche Hauptnavigation **`Neues | Im Blick | Sitzungen | Suche`**,
 - zentrale Suche und grundlegende Filter,
 - Redaktionssystem,
 - Benutzerkonten, Rollen und Freigabeworkflow für die Redaktion,
-- automatische Quellenbeobachtung und Fundstellenerkennung,
+- automatische Quellenbeobachtung und KI-gestützte Quellenentdeckung,
 - KI-gestützte Relevanzprüfung, Ereigniserkennung und Zuordnung,
 - automatische Entwurfserstellung für Meldungen und Aktualisierungen,
 - KI-gestützte Vorgangs- und Themenfortschreibung,
+- `Bedeutung für das Thema` mit verpflichtender redaktioneller Bestätigung,
 - KI-Vorschläge für „Unsere Einordnung“ mit zwingender redaktioneller Freigabe,
-- vorbereitete „Mehr wissen?“-Fragen und gespeicherte Antworten,
+- vorbereitete „Mehr wissen?“-Fragen und gespeicherte, quellengebundene Antworten,
 - strukturierte Trennung von Sachinformation und „Unsere Einordnung“,
 - Bilder und Bildmetadaten,
 - PWA-Grundfunktion,
-- „Neu seit letztem Besuch“ ohne Benutzerkonto,
+- „Neu seit letztem Besuch“ ohne Benutzerkonto; neue Meldungen und fachlich relevante Aktualisierungen zählen,
 - Web Push nach Opt-in,
 - Teilen, Social Preview und Drucken/PDF,
 - Info-/Transparenzfunktion je öffentlicher Detailseite und zentrale Seite „Über FIB“,
@@ -145,7 +154,7 @@ Dieser Grundsatz gilt analog für:
 - Marketing-/Verbreitungssteuerung,
 - kompaktes internes Dashboard für Betrieb, Nutzung und Kosten,
 - modellunabhängige KI-Abstraktionsschicht,
-- Regressionstests für kritische FIB-Regeln,
+- Regressionstests für kritische FIB-Regeln einschließlich des Demonstrator-Transferkorpus,
 - konfigurierbare Kostenlimits,
 - Datenschutz-Grundkonzept,
 - produktives Logging in erforderlichem und datensparsamem Umfang,
@@ -195,8 +204,8 @@ Das MVP soll nicht:
 ### 5.5 Wichtigste Aufwandstreiber
 
 1. automatische, qualitativ belastbare Entwurfserstellung aus heterogenen Quellen,
-2. Erkennung „neues Ereignis versus Aktualisierung“ und Meldung ↔ Vorgang,
-3. Vorgangs- und Themenfortschreibung sowie n:m-Beziehungen/Wirkungsrollen,
+2. Erkennung „neues Ereignis versus Aktualisierung“ und Ereignis-/Vorgangszuordnung,
+3. Vorgangs- und Themenfortschreibung sowie n:m-Beziehungen, `Bedeutung für das Thema`, Perspektiven und Wirkungen,
 4. klare Trennung und redaktionelle Verantwortung von Sachinformation und politischer Einordnung,
 5. UX/Informationsarchitektur mit Auswirkungen auf das Datenmodell,
 6. Redaktionsworkflow mit Rollen und Rechten,
@@ -224,11 +233,11 @@ G1 ist abgeschlossen.
 
 ## 6. G2 – UX, Informationsarchitektur und Fachfunktionen
 
-G2 ist in Arbeit und fachlich weitgehend konsolidiert.
+G2 ist **abgeschlossen**.
 
-Bereits festgelegt sind insbesondere:
+Verbindlich festgelegt sind insbesondere:
 
-- Hauptnavigation,
+- öffentliche Hauptnavigation **Neues | Im Blick | Sitzungen | Suche**,
 - Startseite,
 - Meldungs-/Aktualisierungslogik,
 - gemeinsame öffentliche Themen-/Vorgangsliste,
@@ -238,25 +247,41 @@ Bereits festgelegt sind insbesondere:
 - PWA / Neu seit letztem Besuch / Push,
 - Teilen, Drucken und Social Preview,
 - Transparenz / Über FIB / Disclaimer,
+- visuelle Identität und responsive Bannerlogik,
 - Mobile First und WCAG 2.2 AA.
 
-Offen bleiben:
+Primärquellen: `docs/UX-und-Informationsarchitektur.md` und `docs/Visuelle-Identitaet-und-Bildkonzept.md`.
 
-1. visuelles Identitäts- und Bildkonzept,
-2. abschließende Widerspruchs- und Vollständigkeitsprüfung.
+## 6.1 G2.5 – Transfer-Audit Demonstrator → Echtsystem
 
-Primärquelle: `docs/UX-und-Informationsarchitektur.md`.
+G2.5 ist **abgeschlossen**. Das Transfer-Gate wurde am 03.10.2026 fachlich bestanden.
+
+Geprüft wurden:
+
+- Demonstrator-Dokumentation,
+- Datenbestand und sichtbares Verhalten,
+- Betriebs-/Update-/Fehlererkenntnisse,
+- Spezial- und Übergabedokumente,
+- relevante frühere FIB-Chats als Lückenfinder.
+
+Gefundene fachliche Lücken wurden in die zuständigen Echtsystem-Primärquellen übernommen. Wesentliche Referenzfälle sind in `docs/Regressionstests-Demonstratortransfer.md` dokumentiert.
+
+Verbleibende Folgeaufträge sind regulär den späteren Phasen zugeordnet:
+
+- G3: konkrete Persistenz-/Rücknahme-/Archivierungslogik,
+- G5: Cache-/Versionierungs-/Invalidierungsstrategie,
+- G3–G10: technische Automatisierung der Transfer-Regressionstests.
 
 ## 7. Weitere Gründungspakete
 
 ### G3 – Fachliche Datenanforderungen und logisches Datenmodell
-Entitäten, Beziehungen, Status, Historisierung, Quellen, Bezugsobjekte, Medien, Suche, Mehr-wissen-Daten und Migration.
+**In Arbeit.** Entitäten, Beziehungen, Status, Historisierung, Quellen, Bezugsobjekte, Medien, Suche, Mehr-wissen-Daten und Migration. Nächster Transfer-Folgeauftrag ist die konkrete Persistenz-/Rücknahme-/Archivierungslogik; Referenzfall bleibt der Ausbau Autobahnkreuz München Ost.
 
 ### G4 – Schutzbedarf, Datenschutz und Offline-Modell
 Datenarten, Sensitivität, Authentifizierung, Logging, Verschlüsselung, lokale Speicherung und Offline-Fähigkeit.
 
 ### G5 – Zielarchitektur und Technologie-Stack
-Frontend-/Backend-Aufteilung, Framework, Programmiersprache, Supabase-Rolle, KI-Anbindung, Hosting, Routing und Deployment.
+Frontend-/Backend-Aufteilung, Framework, Programmiersprache, Supabase-Rolle, KI-Anbindung, Hosting, Routing, Deployment und Cache-/Invalidierungsstrategie.
 
 ### G6 – Rollen, Rechte und Freigabeworkflow
 Rollenmodell, Statusmodell, Freigaben, Veröffentlichung und technische Administration.
@@ -271,15 +296,19 @@ Zentrale Standards, Dokumentationsstruktur, Audit und Issues.
 Datenqualitätscheck, Transformation, Validierung und Übernahme der Demonstratordaten.
 
 ### G10 – Go-live-Abnahme
-Fachliche Parität, UX-/Funktionsabnahme, Sicherheitsprüfung, Restore-Test, Rollenprüfung, PWA/SEO, Migration und Redaktions-Probelauf.
+Fachliche Parität, Transfer-Regressionstests, UX-/Funktionsabnahme, Sicherheitsprüfung, Restore-Test, Rollenprüfung, PWA/SEO, Migration und Redaktions-Probelauf.
 
 ## 8. Dokumentationsübernahme Demonstrator → Echtsystem
 
-Die identifizierten erforderlichen fachlichen Dokumentationen wurden in kanonische Echtsystem-Dokumente übernommen oder integriert.
+Die erforderlichen fachlichen Dokumentationen wurden in kanonische Echtsystem-Dokumente übernommen oder integriert und unter G2.5 erneut auf Vollständigkeit und Konsistenz geprüft.
 
-Verbindliche Matrix: `docs/Dokumentationsuebernahme-Demonstrator.md`.
+Verbindliche Quellen:
 
-Vor dem formalen Abschluss stehen nur noch Querverweis-, Terminologie-, Widerspruchs- und Vollständigkeitsprüfung sowie die Frage, ob das visuelle Konzept ein eigenes Bild-/Rechtedokument benötigt.
+- `docs/Dokumentationsuebernahme-Demonstrator.md`
+- `docs/Transfer-Audit-Demonstrator-Echtsystem.md`
+- `docs/Regressionstests-Demonstratortransfer.md`
+
+Die Dokumentationsübernahme ist **abgeschlossen**.
 
 ## 9. Hosting- und Eigentumsgrundsatz
 
@@ -287,22 +316,23 @@ Das Repository liegt während der Entwicklung zunächst im persönlichen GitHub-
 
 Vor Produktivbetrieb wird die technische Eigentümerschaft so organisiert, dass keine persönliche Einzelperson einen Single Point of Failure bildet.
 
-Das öffentliche Echtsystem soll auf Infrastruktur der GRÜNEN betrieben werden, soweit dies technisch sinnvoll und mit der Zielarchitektur vereinbar ist. Die Rahmenbedingungen werden in G5 erhoben.
+Das öffentliche Echtsystem soll auf Infrastruktur der GRÜNEN betrieben werden, soweit dies technisch sinnvoll und mit der Zielarchitektur vereinbar ist. Die Rahmenbedingungen werden in G5 verbindlich festgelegt.
 
 ## 10. Reihenfolge
 
 1. G1 Produktumfang und MVP – **abgeschlossen**
-2. G2 UX / Informationsarchitektur / Fachfunktionen – **in Arbeit**
-3. G3 Datenanforderungen / Datenmodell
-4. G4 Schutzbedarf / Datenschutz / Offline
-5. G5 Zielarchitektur / Stack / Hosting / Deployment
-6. G6 Rollen / Rechte / Workflow
-7. G7 Betrieb
-8. G8 Governance / Repository / Dokumentation
-9. G9 Migration
-10. G10 Go-live-Abnahme
-11. Gründungsaudit
-12. technische Umsetzung
+2. G2 UX / Informationsarchitektur / Fachfunktionen – **abgeschlossen**
+3. G2.5 Transfer-Audit Demonstrator → Echtsystem – **abgeschlossen**
+4. G3 Datenanforderungen / Datenmodell – **in Arbeit**
+5. G4 Schutzbedarf / Datenschutz / Offline
+6. G5 Zielarchitektur / Stack / Hosting / Deployment
+7. G6 Rollen / Rechte / Workflow
+8. G7 Betrieb
+9. G8 Governance / Repository / Dokumentation
+10. G9 Migration
+11. G10 Go-live-Abnahme
+12. Gründungsaudit
+13. technische Umsetzung
 
 ## 11. Abschlusskriterium
 
@@ -312,6 +342,7 @@ Die Projektgründungsphase ist abgeschlossen, wenn die wesentlichen Grundentsche
 
 | Version | Datum | Änderung |
 |---|---|---|
+| 1.4 | 03.10.2026 | Projektgründung nach G2-/G2.5-Abschluss konsolidiert: aktuelle Navigation, Ereignis-/Meldungslogik, Bedeutung-für-das-Thema-Modell, Transfer-Audit, Regressionstestkorpus und aktiven G3-Stand übernommen; alte Wirkungsrollen- und G2-Offenstände entfernt. |
 | 1.3 | 30.09.2026 | Dokumentationshoheit des Echtsystems und aktuelle Meldungs-/Vorgangs-/Themenlogik übernommen; alte Presseschau-Terminologie im MVP entfernt; G2-Stand und Dokumentationsübernahme aktualisiert. |
 | 1.2 | 29.09.2026 | G1 abgeschlossen: MVP-/Ausbaustufen-Abgrenzung, Nicht-Ziele und Aufwandstreiber festgelegt. |
 | 1.1 | 29.09.2026 | G1-Kernentscheidungen ergänzt. |
