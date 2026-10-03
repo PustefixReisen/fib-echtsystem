@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 2.3 | 01.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
+| 2.4 | 03.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
 
 ## Statusmodell
 
@@ -26,20 +26,20 @@ Es gelten die zentralen Status aus `PustefixReisen/pustivo/docs/governance/Dokum
 | G1 Produktumfang / MVP | **Abgeschlossen** | MVP, unmittelbare Ausbaustufe, spätere Erweiterungen, Nicht-Ziele und Aufwandstreiber verbindlich festgelegt |
 | G2 UX / Informationsarchitektur / Fachfunktionen | **Abgeschlossen** | UX, öffentliche Navigation, Screenlogik, visuelle Identität, Claim, responsive Bannerlogik, GRÜNEN-Rücksprung und Assetstruktur sind konsolidiert; Abschlussprüfung durchgeführt |
 | Dokumentationsübernahme Demonstrator → Echtsystem | **Abgeschlossen** | alle identifizierten weiterhin erforderlichen Grundlagen übernommen oder integriert; Querverweis-, Terminologie- und Konsistenzprüfung durchgeführt |
-| G3 Datenanforderungen / Datenmodell | **In Arbeit** | aus Fach- und UX-Konzept ableiten; eigenständige Entitäten für Meldung/Vorgang/Thema, n:m-Beziehungen, Wirkungsrollen, Versionierung, Rechercheaufträge, Such-/PWA-/Mehr-wissen-Daten berücksichtigen |
+| G3 Datenanforderungen / Datenmodell | **In Arbeit** | Fachobjekte und strukturierter Redaktionsstand werden konkretisiert; Ereignis/Meldung/Vorgang/Thema, Wirkungen, Zielbereiche, Prüfkriterien, Abwägung, Versionierung, Rechercheaufträge sowie Quellenbeobachtung/-entdeckung berücksichtigen |
 | G4 Schutzbedarf / Datenschutz / Offline | **Geplant** | Schutzklassen und Betriebsanforderungen festlegen |
-| G5 Zielarchitektur / Stack / Hosting / Deployment | **Geplant** | Zielarchitektur muss produktionsreife Entwicklung auf Entwickler-Infrastruktur und späteren Umzug auf GRÜNEN-Webserver plus eigenes Supabase-Projekt ohne persönliche Bindungen unterstützen; kein Supabase-Self-Hosting |
-| G6 Rollen / Rechte / Workflow | **Geplant** | konkretes Berechtigungs- und Freigabemodell festlegen |
-| G7 Betrieb | **Geplant** | Backup, Restore, Monitoring und Kostenkontrolle definieren |
+| G5 Zielarchitektur / Stack / Hosting / Deployment | **Geplant** | Hybrid-KI technisch umsetzen: KI-fähiger, aber ohne optionale KI vollständig bedienbarer Redaktionskern; verpflichtende Entdeckungs-/Eingangs-KI; bedarfsgesteuerte Recherche-KI; optionale Redaktions-KI; konfigurierbare Routing-Matrix; produktionsreife Entwicklung auf Entwickler-Infrastruktur und späterer Umzug auf GRÜNEN-Webserver plus eigenes Supabase-Projekt; kein Supabase-Self-Hosting |
+| G6 Rollen / Rechte / Workflow | **Geplant** | konkretes Berechtigungs- und Freigabemodell einschließlich Admin-Verantwortung für Referenzsystem und redaktioneller Pflichtbestätigungen festlegen |
+| G7 Betrieb | **Geplant** | Backup, Restore, Monitoring, KI-Kostenmessung, Routing-Betrieb, Budgets und Warnschwellen definieren |
 | G8 Governance / Repository / Dokumentation | **Teilweise umgesetzt** | Echtsystem als Dokumentationshoheit etabliert; Demonstrator-Übernahme abgeschlossen; zentrale Standards und späterer Gründungsaudit weiterführen |
 | G9 Migration | **Geplant** | Übergang auf GRÜNEN-Infrastruktur nach `docs/Migrationsstrategie.md`; wiederholbares Migrations-Runbook statt separatem Migrations-Probelauf |
-| G10 Go-live-Abnahme | **Geplant** | messbare Abnahmekriterien festlegen |
+| G10 Go-live-Abnahme | **Geplant** | messbare Abnahmekriterien festlegen, einschließlich Qualität der verpflichtenden Quellen-/Ereignisentdeckung und belastbarer Betriebskostenmessung |
 | Gründungsaudit | **Geplant** | Vollständigkeit und Widerspruchsfreiheit prüfen |
 | Technische Umsetzung | **Geplant** | beginnt erst nach abgeschlossenem Gründungsaudit |
 
 ## Nächster konkreter Schritt
 
-**G3 – Datenanforderungen / Datenmodell:** Fachobjekte, Beziehungen, Versionierung, Aktualisierungsereignisse, Recherche-/Freigabedaten, Suche, PWA/Push und „Mehr wissen?“ in ein belastbares logisches Datenmodell überführen.
+**G3 – Datenanforderungen / Datenmodell:** Den strukturierten Redaktionsworkflow am Referenzfall „Ausbau Autobahnkreuz München Ost“ vollständig durchspielen und anschließend gegen Datenmodell, Quellenmonitor und Hybrid-KI-Schnittstellen spiegeln. Dabei festlegen, welche Daten aus verpflichtender Entdeckungs-/Eingangs-KI stammen, welche ohne KI bearbeitet werden können und wo bedarfsgesteuerte bzw. optionale KI ansetzt.
 
 ## Fachlich/UX bereits geklärt
 
@@ -49,7 +49,7 @@ Es gelten die zentralen Status aus `PustefixReisen/pustivo/docs/governance/Dokum
 - Meldung, Vorgang und Thema sind fachlich getrennte Objekttypen.
 - Themen und Vorgänge erscheinen öffentlich gemeinsam unter **„Im Blick“**.
 - Vorgänge besitzen eigenen aktuellen Stand, Verlauf und Status.
-- Themen erklären übergeordnete Zusammenhänge und gewichten Vorgänge nach Wirkungsrolle.
+- Themen erklären übergeordnete Zusammenhänge und gewichten Vorgänge nach **Bedeutung für das Thema**: prägend, relevant oder ergänzend.
 - Meldungs-, Vorgangs-, Themen- und Sitzungsdetailseiten sind festgelegt.
 - zentrale Suche und schlanke Filterlogik sind festgelegt.
 - „Mehr wissen?“ unterscheidet Ereignis-, Vorgangs- und Themenvertiefung.
@@ -58,6 +58,30 @@ Es gelten die zentralen Status aus `PustefixReisen/pustivo/docs/governance/Dokum
 - Transparenz, „Über Feldkirchen im Blick“ und Disclaimer sind geklärt.
 - Mobile First und **WCAG 2.2 AA** sind technisches Ziel.
 - Barrierefreiheit ergänzt die bestehende bürgernahe FIB-Sprache und ersetzt sie nicht.
+- der strukturierte Redaktionsworkflow verwendet feste, modellunabhängige Fragemuster und Antwortoptionen; die fallbezogenen Inhalte werden eingesetzt, nicht das Formular durch KI erfunden.
+- alle vorhandenen Prüfkriterien eines Zielbereichs werden im Redaktionsworkflow sichtbar angeboten; KI-Empfehlungen werden nur vorausgewählt.
+
+## Hybrid-KI – Entwicklungsprinzip
+
+Für das Echtsystem gilt verbindlich:
+
+> **KI wird nur dort eingesetzt, wo sie fachlich erforderlich ist oder einen klaren zusätzlichen Nutzen bringt. Wird KI eingesetzt, hat die erforderliche Ergebnisqualität Vorrang vor dem niedrigsten Preis.**
+
+Die Zielarchitektur unterscheidet:
+
+1. **Verpflichtende Entdeckungs-/Eingangs-KI** – aktive Suche nach neuen Quellen, semantische Analyse neuer oder geänderter Fundstellen, Ereigniserkennung und notwendige Erstzuordnung.
+2. **Bedarfsgesteuerte Recherche-KI** – gezielte Bearbeitung konkreter Wissenslücken, die im Redaktionsworkflow entstehen.
+3. **Optionale Redaktions-KI** – Vorschläge, Vorbefüllung, Plausibilitätsprüfung, Abwägungs- und Textentwürfe; der Redaktionsworkflow bleibt ohne diese Funktionen vollständig nutzbar.
+4. **Modellunabhängiger FIB-Kern** – Datenmodell, Formulare, Fragemuster, Antwortoptionen, Zustandslogik, Validierungen, Versionierung und Freigaben gehören zur Anwendung.
+
+Der Quellenmonitor besteht entsprechend aus:
+
+- **Quellenbeobachtung** bekannter Adressen: technische Änderungsfeststellung ohne KI; KI erst bei neuer/geänderter Fundstelle,
+- **Quellenentdeckung**: aktive KI-gestützte Suche nach bislang unbekannten relevanten Quellen.
+
+Für G5 ist eine konfigurierbare Routing-Matrix vorzusehen. Sie ordnet FIB-Aufgaben nicht fest an Modellnamen, sondern an KI-Bedarf, Qualitätsanforderung/Leistungsklasse, Provider/Modell, Fallback und gegebenenfalls Kostenrahmen.
+
+Vorläufiger Kostenrahmen für die Planung: **ca. 3–13 € KI-API-Kosten pro Monat im Normalbetrieb**, davon **ca. 3–8 €** für die verpflichtende Quellenentdeckung und Eingangsanalyse; **15 € pro Monat** dienen bis zur Pilotmessung als Planungs-/Warnrahmen. Verbindliche Details und spätere Ist-Kalibrierung: `docs/KI-Betrieb-und-Kosten.md`.
 
 ## Visuelle Identität – geklärt
 
@@ -166,6 +190,7 @@ Der Demonstrator bleibt historische, fachliche und visuelle Referenz; laufende D
 
 - Visuelle Identität / Logo / Bildsprache / UI-Stil → `docs/Visuelle-Identitaet-und-Bildkonzept.md`
 - Migration Entwickler-Infrastruktur → GRÜNEN-Infrastruktur → `docs/Migrationsstrategie.md`
+- strukturierter Redaktionsworkflow → `docs/Redaktionsworkflow.md`
 
 ## Modellunabhängigkeit der KI
 
@@ -178,12 +203,15 @@ Für die spätere technische Umsetzung ist vorzusehen:
 - zentrale modellunabhängige Regel-/Prompt-Schicht,
 - strukturierte Ein- und Ausgaben,
 - Regressionstests mit festen FIB-Referenzfällen,
+- Modellvergleich nach FIB-Aufgabe und Qualitätsanforderung,
+- konfigurierbare Routing-Matrix,
 - Modellwechsel nur nach Qualitätsprüfung.
 
 ## Änderungshistorie
 
 | Version | Datum | Änderung |
 |---|---|---|
+| 2.4 | 03.10.2026 | Hybrid-KI als Entwicklungsprinzip aufgenommen: verpflichtende Entdeckungs-/Eingangs-KI, bedarfsgesteuerte Recherche-KI, optionale Redaktions-KI und modellunabhängiger Kern; Quellenmonitor in Quellenbeobachtung und Quellenentdeckung gegliedert; G3/G5/G7/G10 sowie vorläufigen KI-Kostenrahmen angepasst. |
 | 2.3 | 01.10.2026 | Migrationsgrundsatz verbindlich ergänzt: produktionsreife Entwicklung auf Entwickler-Infrastruktur, späterer Umzug auf GRÜNEN-Webserver plus eigenes Supabase-Projekt, kein Self-Hosting, reproduzierbare Migration mit Runbook statt separatem Probelauf. |
 | 2.2 | 01.10.2026 | G2 nach abschließender Widerspruchs- und Vollständigkeitsprüfung abgeschlossen; G3 als nächste aktive Phase gesetzt. |
 | 2.1 | 01.10.2026 | G2 an finalisierte visuelle Identität angepasst: finaler Claim und Bannertexte, responsive Split-/Mobile-Overlay-Logik, finale Bannerillustration, Logo ohne Maibaum, aktuelle Navigationsicons und Assetstruktur übernommen; veraltete Banner-Arbeitsfassung entfernt. |
