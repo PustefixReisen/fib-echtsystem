@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 2.1 | 02.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
+| 2.2 | 03.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
 
 ## 1. Zweck
 
@@ -39,6 +39,8 @@ Für FIB gelten insbesondere:
 | Dokumentationslandkarte | `docs/Dokumentation.md` | vorhanden |
 | Projektgründung / Gründungsentscheidungen | `docs/Projektgruendung.md` | in Arbeit |
 | Roadmap / nächster Schritt | `docs/Roadmap.md` | vorhanden |
+| G2.5 Transfer-Audit | `docs/Transfer-Audit-Demonstrator-Echtsystem.md` | in Arbeit |
+| Regressionstestkorpus | `docs/Regressionstests-Demonstratortransfer.md` | vorhanden / wird mit Umsetzung konkretisiert |
 | Fachkonzept | `docs/Fachkonzept.md` | vorhanden |
 | Begriffe / fachliches Glossar | `docs/Begriffe.md` | vorhanden |
 | Management Approach | `docs/FIB_Management-Approach.md` | vorhanden |
@@ -47,7 +49,7 @@ Für FIB gelten insbesondere:
 | Grüne Werte / politische Ziele | `docs/Gruene-Werte-und-politische-Ziele.md` | vorhanden |
 | Sprachregeln | `docs/Sprachleitfaden.md` | vorhanden |
 | Themen- und Vorgangslogik | `docs/Themen-und-Vorgangslogik.md` | vorhanden |
-| Recherche / Quellenmonitor | `docs/Recherche-und-Quellenmonitor.md` | vorhanden |
+| Recherche / Suchraum / Quellenmonitor | `docs/Recherche-und-Quellenmonitor.md` | vorhanden |
 | „Mehr wissen?“ | `docs/Mehr-wissen.md` | vorhanden |
 | UX / Informationsarchitektur / Benutzerführung | `docs/UX-und-Informationsarchitektur.md` | vorhanden |
 | Visuelle Identität / Logo / Bildsprache / UI-Stil | `docs/Visuelle-Identitaet-und-Bildkonzept.md` | vorhanden |
@@ -55,7 +57,7 @@ Für FIB gelten insbesondere:
 | SEO / Auffindbarkeit | `docs/SEO-und-Auffindbarkeit.md` | vorhanden |
 | KI-Betrieb / Kosten | `docs/KI-Betrieb-und-Kosten.md` | vorhanden |
 | Migrationsstrategie Entwickler → GRÜNEN-Infrastruktur | `docs/Migrationsstrategie.md` | vorhanden |
-| Übernahme Demonstrator-Dokumentation | `docs/Dokumentationsuebernahme-Demonstrator.md` | abgeschlossen |
+| Übernahme Demonstrator-Dokumentation | `docs/Dokumentationsuebernahme-Demonstrator.md` | unter G2.5 erneut geprüft |
 | Architektur | noch anzulegen | offen |
 | Datenmodell | `docs/Datenmodell.md` | in Arbeit |
 | Sicherheit / Datenschutz | noch anzulegen | offen |
@@ -94,15 +96,24 @@ Visuelle Mockups dürfen die fachliche UX-Struktur nicht eigenständig veränder
 Daraus folgt:
 
 - Demonstrator-Dokumente werden nicht mehr als laufende Primärdokumentation fortgeschrieben.
-- Relevante Inhalte wurden einmalig übernommen, bereinigt und aktualisiert.
+- Relevante Inhalte werden im Echtsystem übernommen, bereinigt und aktualisiert.
 - Nach der Übernahme bleibt die Demonstrator-Fassung historischer Stand.
 - Widersprüche werden zugunsten der kanonischen Echtsystem-Dokumentation aufgelöst.
+- Bibliotheks-, ODT-, Export- oder sonstige Kopien sind keine gleichwertige Primärquelle. Ein neueres Dateidatum allein begründet keine Dokumentationshoheit.
+- Frühere FIB-Chats dienen im G2.5-Audit als **Lückenfinder**, nicht als kanonische Wahrheit. Wiedergewonnene Erkenntnisse werden erst nach fachlicher Prüfung in eine kanonische Echtsystem-Quelle oder einen Regressionstest überführt.
 
-Die detaillierte Zuordnung und Abschlussprüfung stehen in `docs/Dokumentationsuebernahme-Demonstrator.md`.
+Die detaillierte Zuordnung der ursprünglichen Dokumentationsübernahme steht in `docs/Dokumentationsuebernahme-Demonstrator.md`. Die Vollständigkeits- und Transferprüfung wird unter G2.5 geführt.
 
 ## 7. Stand der Übernahme
 
-Die Dokumentationsübernahme ist **abgeschlossen**.
+Die ursprüngliche Dokumentationsübernahme ist **weitgehend erfolgt, aber durch G2.5 noch nicht endgültig abgeschlossen**.
+
+Der erneute Transfer-Audit wurde notwendig, weil sich gezeigt hat, dass:
+
+- einzelne Demonstrator-Regeln zwar dokumentiert waren, im Echtsystem aber nicht an der operativ zuständigen Stelle standen,
+- eine Bibliotheks-/ODT-Fassung gegenüber dem kanonischen GitHub-Stand inhaltlich zurücklag,
+- weitere Detailerkenntnisse nur in Betriebs-/Fehlerfällen oder früheren Chats auffindbar waren,
+- ältere Begriffe nach späteren G3-Entscheidungen noch in einzelnen Echtsystem-Dokumenten fortwirkten.
 
 Ins Echtsystem überführt bzw. integriert wurden insbesondere:
 
@@ -119,9 +130,9 @@ Ins Echtsystem überführt bzw. integriert wurden insbesondere:
 - grüne Werte und politische Ziele,
 - wissenschaftlich-politische und bürgernahe Sprachregeln.
 
-Nicht als eigene Echtsystem-Dokumente übernommen wurden Demonstrator-Dokumente, deren Funktion bereits durch eine kanonische Echtsystem-Quelle erfüllt wird, sowie demonstratorspezifische technische Provisorien.
+G2.5 prüft zusätzlich Demonstrator-Datenbestand, sichtbares Verhalten, Betriebs-/Update-/Fehlerprotokolle, Spezial-/Übergabedokumente sowie relevante frühere Chats.
 
-Die Querverweis-, Terminologie- und Konsistenzprüfung wurde durchgeführt. Historische Nennungen alter Begriffe in Dateinamen, Repository-Namen und Änderungshistorien bleiben als Herkunftsnachweis zulässig.
+Erst nach bestandenem Transfer-Gate wird der Gesamtstatus der Demonstrator-Übernahme wieder auf **abgeschlossen** gesetzt.
 
 Das visuelle Identitäts- und Bildkonzept ist eine **neue G2-Primärquelle des Echtsystems** und keine übernommene Demonstrator-Dokumentation.
 
@@ -154,6 +165,7 @@ Für laufend ergänzte Register oder Glossare kann statt einer fortlaufenden Ver
 
 | Version | Datum | Änderung |
 |---|---|---|
+| 2.2 | 03.10.2026 | G2.5-Transfer-Audit in Dokumentationslandkarte aufgenommen; ursprünglichen Abschlussstatus der Demonstrator-Übernahme zurückgenommen; GitHub-Dokumentationshoheit gegenüber ODT/Exportkopien präzisiert; frühere Chats als Lückenfinder geregelt; Regressionstestkorpus als Projektquelle aufgenommen. |
 | 2.1 | 02.10.2026 | `docs/Begriffe.md` als verbindliches Begriffsregister aufgenommen; Stand-Datum statt fortlaufender Versionsnummer für laufend ergänzte Register/Glossare zugelassen. |
 | 2.0 | 01.10.2026 | `docs/Datenmodell.md` als G3-Primärquelle für fachliche Datenanforderungen und logisches Datenmodell aufgenommen. |
 | 1.9 | 01.10.2026 | `Migrationsstrategie.md` als Primärquelle für den späteren Übergang von Entwickler- auf GRÜNEN-Infrastruktur aufgenommen; G2-Dokumentstatus auf vorhanden konsolidiert. |
