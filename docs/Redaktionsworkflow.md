@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 0.2 | 03.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
+| 0.3 | 03.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
 
 ## 1. Zweck und Geltung
 
@@ -50,6 +50,7 @@ Die Begründung muss nicht ständig vollständig sichtbar sein, aber unmittelbar
 - recherchiert und strukturiert,
 - schlägt Wirkungen, Zielbereiche, Prüfkriterien, Einordnungen und Gestaltungsoptionen vor,
 - schlägt Themenkandidaten, passende Vorgänge und weitere relevante Ereignisse vor,
+- prüft bei neuen Wirkungen auf mögliche inhaltliche Dubletten zu bereits vorhandenen Wirkungen desselben Ereignisses,
 - begründet ihre Vorschläge,
 - formuliert aus bestätigten strukturierten Angaben Abwägung und Textfassung.
 
@@ -59,7 +60,8 @@ Die Begründung muss nicht ständig vollständig sichtbar sein, aber unmittelbar
 - kann Vorschläge aufteilen, zusammenführen oder verwerfen,
 - kann eigene Wirkungen, Zielbereiche, Prüfkriterien und Gestaltungsoptionen ergänzen,
 - kann Vorgänge und einzelne weitere relevante Ereignisse für ein Thema auswählen,
-- verantwortet den strukturierten Stand des konkreten Vorgangs bzw. Themas.
+- verantwortet den strukturierten Stand des konkreten Vorgangs bzw. Themas,
+- ändert eine bereits bestehende Wirkung nur in dem Bearbeitungskontext, in dem diese Wirkung fachlich angelegt wurde.
 
 ### Admin
 
@@ -99,11 +101,15 @@ Für die Analyse wird zusätzlich der aktuelle Vorgangstext bzw. Sachstand als r
 
 ### 5.2 Weitere relevante Ereignisse
 
-Zusätzlich zeigt die App eine KI-gestützte Vorauswahl unter der Bezeichnung:
+Zusätzlich zeigt die App eine KI-gestützte Vorauswahl. Im Bearbeitungskontext lautet die Eingabeaufforderung je nach Zahl der ausgewählten Vorgänge:
 
-> **Weitere relevante Ereignisse**
+> **Weitere relevante Ereignisse außerhalb dieses Vorgangs**
 
-Dort erscheinen nur Ereignisse, die plausibel zum Thema passen und nicht bereits über einen ausgewählten Vorgang enthalten sind.
+bzw.
+
+> **Weitere relevante Ereignisse außerhalb der ausgewählten Vorgänge**
+
+Damit wird deutlich, dass diese Ereignisse für das Thema relevant sein können, ohne dem ausgewählten Vorgang bzw. den ausgewählten Vorgängen anzugehören. Die Aufnahme in ein Thema erzeugt oder verändert keine Vorgangszuordnung.
 
 Die Redaktion kann Vorschläge übernehmen oder verwerfen. Zusätzlich muss sie den gesamten Ereignisbestand durchsuchen und ein Ereignis manuell hinzufügen können.
 
@@ -140,6 +146,44 @@ Für die Themenanalyse sind die Ebenen getrennt zu behandeln:
 - „Unsere Einordnung“ → bereits dokumentierte politische Bewertung.
 
 Die KI muss die Herkunft der analysierten Aussage berücksichtigen und darf redaktionelle Ableitungen nicht als zusätzliche unabhängige Tatsachenbelege behandeln.
+
+### 5.5 Wirkungen im Themenworkflow
+
+Wirkungen sind am zugrunde liegenden Ereignis verankert. Zusätzlich wird gespeichert, in welchem fachlichen Bearbeitungskontext eine Wirkung angelegt wurde, insbesondere Vorgang oder Thema.
+
+Für eine bereits vorhandene Wirkung gilt:
+
+> **Eine Wirkung wird nur in ihrem Herkunftskontext geändert. Der Themenworkflow darf eine Wirkung aus einem anderen Kontext verwenden, aber nicht verändern oder durch eine konkurrierende Fassung ersetzen.**
+
+Ein Ereignis kann mehrere Wirkungen besitzen, wenn diese eigenständige sachliche Aussagen darstellen. Unterschiedliche Formulierungen derselben sachlichen Wirkung sollen dagegen nicht als mehrere unabhängige Wirkungen behandelt werden.
+
+Beim Vorschlag oder Anlegen einer weiteren Wirkung prüft die KI deshalb vorhandene Wirkungen desselben Ereignisses auf inhaltliche Gleichheit oder starke Überschneidung.
+
+Wenn eine mögliche Dublette erkannt wird, lautet die redaktionelle Frage:
+
+> **Meinen diese beiden Auswirkungen im Wesentlichen dasselbe?**
+
+Antwortmöglichkeiten:
+
+- **Ja, gleiche Auswirkung**
+- **Nein, unterschiedliche Auswirkungen**
+- **Unsicher**
+
+Bei **Ja, gleiche Auswirkung** werden die Einträge in der Themenanalyse nur einmal als sachliche Wirkung berücksichtigt. Ihre unterschiedlichen Ursprünge bleiben nachvollziehbar. Die zugrunde liegenden Wirkungsdatensätze werden dadurch nicht automatisch geändert oder gelöscht.
+
+Bei **Nein, unterschiedliche Auswirkungen** bleiben beide Wirkungen eigenständig in der Analyse.
+
+Die KI kann zur Entscheidung einen kurzen Hinweis anzeigen, warum sie die Aussagen für möglicherweise gleichbedeutend hält. Die redaktionelle Entscheidung bleibt maßgeblich.
+
+Auch innerhalb eines Vorgangs können unterschiedliche oder scheinbar widersprüchliche Wirkungen aus verschiedenen Ereignissen zusammentreffen. Ein solcher Widerspruch ist nicht automatisch ein Datenfehler. Die KI soll ihn als Prüfhinweis sichtbar machen, damit unterschieden werden kann zwischen:
+
+- tatsächlich gleichzeitig bestehenden unterschiedlichen Wirkungen,
+- unterschiedlichen Bedingungen oder räumlichen Bezügen,
+- zeitlicher Veränderung,
+- unsicherer oder widersprüchlicher Erkenntnislage,
+- tatsächlicher Inkonsistenz mit Korrekturbedarf.
+
+Keine Wirkung wird allein wegen eines solchen Konflikts automatisch gelöscht, überschrieben oder umgedeutet.
 
 ## 6. Auswahl von Prüfkriterien
 
@@ -233,6 +277,8 @@ Bei Themen zeigt er insbesondere:
 - darüber automatisch enthaltene Ereignisse,
 - zusätzlich ausgewählte weitere relevante Ereignisse,
 - erschlossene Meldungen und vorhandene Einordnungen,
+- verwendete Wirkungen mit Herkunftskontext,
+- erkannte mögliche Wirkungsdubletten oder Wirkungskonflikte,
 - offene Recherche- oder Abgrenzungsfragen.
 
 Der Bearbeiter muss von dort zu früheren Angaben zurückkehren können. Änderungen erzeugen anschließend einen neuen Abwägungs-, Themen- bzw. Formulierungsvorschlag aus dem aktuellen strukturierten Stand.
@@ -252,7 +298,11 @@ Verbindlich sind die fachlichen Prinzipien:
 - Themenauswahl über Vorgänge plus weitere relevante Ereignisse,
 - automatische Mitnahme der Ereignisse eines ausgewählten Vorgangs,
 - Meldungen als über Ereignisse erschlossener Analysekontext,
-- Herkunftstrennung und Anti-Doppelzählung bei der Themenanalyse.
+- Herkunftstrennung und Anti-Doppelzählung bei der Themenanalyse,
+- Wirkungen bleiben in ihrem Herkunftskontext änderbar,
+- mögliche Wirkungsdubletten werden KI-gestützt erkannt und redaktionell als gleich oder verschieden eingeordnet,
+- gleichbedeutende Wirkungen werden in der Themenanalyse nicht mehrfach gewichtet,
+- widersprüchliche Wirkungen innerhalb eines Vorgangs erzeugen einen Prüfhinweis statt automatischer Bereinigung.
 
 Noch experimentell sind insbesondere:
 
@@ -269,5 +319,6 @@ Diese Punkte werden an realen FIB-Vorgängen und Themen prototypisch getestet.
 
 | Version | Datum | Änderung |
 |---|---|---|
+| 0.3 | 03.10.2026 | Wirkungslogik konkretisiert: Wirkung am Ereignis mit Herkunftskontext; Änderung nur im Herkunftskontext; keine konkurrierenden Fassungen im Themenworkflow; KI-Plausibilitätsprüfung auf gleichbedeutende Wirkungen mit benutzerfreundlicher Frage „Meinen diese beiden Auswirkungen im Wesentlichen dasselbe?“; Anti-Doppelgewichtung und Konflikthinweise für widersprüchliche Wirkungen ergänzt. |
 | 0.2 | 03.10.2026 | Themenworkflow ergänzt: Vorgangsauswahl mit automatischer Mitnahme der Ereignisse, KI-Vorauswahl „Weitere relevante Ereignisse“, manuelle Ereignissuche, Meldungstext und „Unsere Einordnung“ als über Ereignisse erschlossener Analysekontext sowie Herkunfts-/Anti-Doppelzählungsregel. |
 | 0.1 | 02.10.2026 | Primärquelle für KI-gestützten Redaktionsworkflow angelegt; Prozesstransparenz, kontextbezogene Fragen, vollständige Anzeige vorhandener Prüfkriterien, KI-Vorauswahl und Ergänzung neuer Prüfkriterien festgelegt. |
