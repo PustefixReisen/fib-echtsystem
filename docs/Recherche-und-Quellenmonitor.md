@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 1.2 | 03.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
+| 1.3 | 03.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
 
 ## 1. Zweck und Geltung
 
@@ -127,6 +127,8 @@ Beispiel:
 
 Ein Antrag von BÜNDNIS 90/DIE GRÜNEN Feldkirchen liegt als PDF vor, ist aber nicht anderweitig öffentlich im Internet verfügbar. Die Datei kann in FIB gespeichert, als Quelle analysiert und – bei entsprechender Freigabe – öffentlich auf der FIB-Seite bereitgestellt werden.
 
+Interne oder nicht öffentlich bereitgestellte Quellen dürfen die Recherche steuern und Folgeprüfungen auslösen. Sie dürfen jedoch nicht so dargestellt werden, als seien sie öffentlich zugängliche Belege. Bei jedem vollständigen Recherchelauf wird bei einschlägigen internen Quellen geprüft, ob inzwischen ein öffentlicher Folgevorgang, eine Beschlussvorlage, Entscheidung, Reaktion oder Presseberichterstattung vorliegt.
+
 Ablauf:
 
 `Quelle/Datei einbringen → Metadaten und Sichtbarkeit festlegen → speichern → ggf. KI-Analyse → Aussagen/Ereignis/Vorgangsbezug vorschlagen → redaktionelle Prüfung`
@@ -146,14 +148,73 @@ Das Echtsystem muss mindestens unterstützen:
 - Kennzeichnung, ob ein Recherchekandidat aus Quellenbeobachtung, Quellenentdeckung oder redaktioneller Einbringung stammt,
 - getrennte Speicherung von Herkunft, Fundstelle/Dokument, Speicherort und Sichtbarkeit.
 
-## 9. Orts- und Themenabdeckung
+## 9. Orts-, Themen- und erweiterte Suchraumabdeckung
 
-Die Recherche arbeitet mindestens auf zwei Achsen:
+Die Recherche arbeitet mindestens auf zwei unabhängigen Achsen:
 
 - **Ortsabdeckung:** Feldkirchen, relevante Nachbargemeinden, Landkreis und funktional verbundene Räume,
 - **Themenabdeckung:** Suchbegriffe und Quellenbeziehungen aus laufenden Vorgängen und bestätigten Themen.
 
 Beide Achsen ergänzen sich; keine ersetzt die andere.
+
+### 9.1 Gestaffelter Suchraum
+
+Für die Orts- und Kontextabdeckung gilt:
+
+1. **Kernraum:** Feldkirchen,
+2. **unmittelbarer funktionaler Raum:** insbesondere Aschheim, Kirchheim, Haar, Landkreis München sowie München-Ost und sachlich verbundene regionale Räume,
+3. **erweiterter thematischer Suchraum:** übrige Region München, Bayern, Deutschland und bei begründetem Erkenntniswert auch europäische oder internationale Beispiele.
+
+Je weiter eine Fundstelle räumlich von Feldkirchen entfernt ist, desto konkreter muss ihre fachliche Bedeutung für eine Feldkirchner Fragestellung begründet werden. Bloße thematische Ähnlichkeit reicht nicht.
+
+### 9.2 Erweiterte Relevanz und mögliche zukünftige Bedeutung
+
+Eine Fundstelle außerhalb Feldkirchens kann Recherchekandidat und später FIB-Inhalt werden, wenn sich mindestens einer der folgenden Bezüge nachvollziehbar begründen lässt:
+
+- institutioneller Bezug zu einer in Feldkirchen aktiven Organisation oder Struktur,
+- räumlicher oder infrastruktureller Zusammenhang,
+- regionale Abhängigkeit,
+- Bezug zu einem bestätigten FIB-Thema oder Vorgang,
+- konkreter Pilot-, Vergleichs- oder Lerncharakter,
+- erkennbare mögliche zukünftige Bedeutung für Feldkirchen,
+- wissenschaftlich-technische Entwicklung mit plausiblem kommunalem Übertragungsweg.
+
+Belegte aktuelle Wirkungen, plausible zukünftige Wirkungen und bloße Möglichkeiten werden sprachlich getrennt. Eine nur abstrakt denkbare spätere Bedeutung genügt nicht.
+
+Referenzfall: Ein realer Pilotbetrieb autonomer On-Demand-Fahrzeuge in München kann für FIB relevant sein, wenn seine mögliche Bedeutung für regionale Mobilität und eine Feldkirchner Mobilitätsfragestellung konkret erläutert werden kann.
+
+### 9.3 Dynamischer Suchkontext aus Themen und Vorgängen
+
+Bestätigte Themen und laufende Vorgänge erzeugen einen fortzuschreibenden Suchkontext. Dieser kann insbesondere enthalten:
+
+- Projektnamen und gebräuchliche Varianten,
+- beteiligte Akteure und Institutionen,
+- Orte, Straßen, Trassen und Bezugsobjekte,
+- Technologien und Fachbegriffe,
+- bekannte Quellen und Vorhabenträger,
+- Perspektiven und offene Wissensfragen.
+
+Redaktionelle Ergänzungen zu einem Thema oder Vorgang gelten als Prüf- und Rechercheauftrag und können diesen Suchkontext erweitern. Der Referenzfall „Kiesgrund“ bleibt maßgeblich: Ein redaktionell bekannter, bislang kaum sichtbarer Großvorgang muss gezielte Recherche auslösen können.
+
+### 9.4 Rückblick bei neuem oder wesentlich geschärftem Suchkontext
+
+Wird ein Thema oder Vorgang neu bestätigt oder inhaltlich wesentlich geschärft, erfolgt einmalig eine **rückblickende Recherche über grundsätzlich sechs Monate** vor dem Auslöser. Ziel ist, relevante Entwicklungen zu finden, die vor Einführung des neuen Suchbegriffs oder Zusammenhangs bereits veröffentlicht wurden.
+
+Abweichungen vom Sechs-Monats-Fenster sind zulässig, wenn der Sachverhalt nachweislich erst später begonnen hat oder ein längerer fachlicher Rückblick für das Verständnis erforderlich ist. Die Abweichung wird begründet protokolliert.
+
+Der sechsmonatige Rückblick ist keine laufende tägliche Suchperiode. Im Regelbetrieb wird ab dem letzten erfolgreichen Recherchezeitpunkt inkrementell weitergearbeitet, mit angemessenem zeitlichem Überlappungsfenster zur Absicherung gegen verspätete Indexierung oder Veröffentlichung.
+
+### 9.5 Qualitätskontrolle für erweiterte Relevanz
+
+Beiträge, die ausschließlich mittelbare, vergleichende oder mögliche zukünftige Relevanz besitzen, sollen im veröffentlichten Gesamtbestand bzw. in einem geeigneten rollierenden Betrachtungszeitraum eine Minderheit bleiben. Als **Arbeits- und Warnschwelle** gilt derzeit ungefähr **30 %**.
+
+Die 30-%-Grenze ist:
+
+- **keine starre Aufnahmequote für einzelne Beiträge**,
+- **keine Begrenzung der Recherche selbst**,
+- sondern eine redaktionelle Qualitätskontrolle gegen eine schleichende Regionalisierung oder Verallgemeinerung von FIB.
+
+Wird die Warnschwelle überschritten, wird geprüft, ob die Feldkirchen-Bezüge ausreichend konkret sind, ob Beiträge gebündelt werden können oder ob der Suchraum zu breit eingestellt ist. Sachlich klar relevante Fundstellen werden nicht allein wegen einer Quote verworfen.
 
 ## 10. Presse
 
@@ -164,6 +225,8 @@ Bei formalen Entscheidungsständen werden amtliche Primärquellen bevorzugt. Pre
 ## 11. Bürgerinitiativen, Vereine und politische Akteure
 
 Bei substanziellen Aussagen oder Forderungen wird gezielt nach Reaktionen und Gegenpositionen gesucht.
+
+Öffentliche Beteiligungsaufrufe, Umfragen und Mitwirkungsmöglichkeiten werden als mögliche eigenständige Entwicklung geprüft und nicht allein deshalb ausgesondert, weil noch kein kommunaler Beschluss vorliegt.
 
 Parteiquellen und Stellungnahmen von Interessengruppen werden als Positionsquellen behandelt. Überprüfbare Sachangaben werden möglichst unabhängig oder amtlich verifiziert.
 
@@ -211,6 +274,7 @@ Wo KI fachlich erforderlich ist, hat die geforderte Ergebnisqualität Vorrang vo
 
 | Version | Datum | Änderung |
 |---|---|---|
+| 1.3 | 03.10.2026 | G2.5-Transfer: gestaffelten erweiterten Suchraum, mögliche zukünftige Bedeutung, dynamischen Suchkontext aus Themen/Vorgängen, sechsmonatigen Rückblick, 30-%-Warnschwelle, Folgerecherche aus internen Quellen und Beteiligungsaufrufe als verbindliche Recherchelogik ergänzt. |
 | 1.2 | 03.10.2026 | Redaktionell eingebrachte URLs und Dateien als dritter Quellenweg ergänzt; öffentliche Bereitstellung hochgeladener Quellen unabhängig von ursprünglicher Internetverfügbarkeit geregelt; Herkunft, Dokument, Speicherort und Sichtbarkeit getrennt. |
 | 1.1 | 03.10.2026 | Quellenmonitor verbindlich in Quellenbeobachtung bekannter Quellen und KI-gestützte Entdeckung neuer Quellen gegliedert; KI-Einsatz auf semantisch erforderliche Schritte begrenzt und Qualitätsvorrang bei diesen Eingangsschritten festgelegt. |
 | 1.0 | 30.09.2026 | Demonstrator-Dokumente `FIB-Quellenmonitor.md` und `FIB-Quellenmonitor-Architektur.md` fachlich konsolidiert und auf Echtsystem-Zielbild überführt. |
