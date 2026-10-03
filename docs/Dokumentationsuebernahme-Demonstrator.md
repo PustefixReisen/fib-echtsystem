@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 1.3 | 03.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
+| 1.4 | 03.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
 
 ## 1. Zweck
 
@@ -12,9 +12,9 @@ Dieses Dokument dokumentiert die einmalige Übernahme der für das Echtsystem we
 
 > **Der Demonstrator bleibt historische Referenz. Die laufende Dokumentationshoheit liegt ausschließlich im Repository `PustefixReisen/fib-echtsystem`.**
 
-**Status der ursprünglichen Übernahme: weitgehend erfolgt, unter G2.5 erneut in Vollständigkeitsprüfung.**
+**Status der Übernahme: abgeschlossen; unter G2.5 erneut verifiziert und nachgepflegt.**
 
-Die frühere formale Abschlussfeststellung vom 30.09.2026 war auf den damals bekannten Dokumentbestand bezogen. Der G2.5-Transfer-Audit hat gezeigt, dass zusätzlich Betriebs-/Fehlererkenntnisse, spätere Demonstratorentscheidungen, Versionsdrift und relevante frühere Chats als Lückenfinder berücksichtigt werden müssen.
+Die frühere formale Abschlussfeststellung vom 30.09.2026 war auf den damals bekannten Dokumentbestand bezogen. Der G2.5-Transfer-Audit hat zusätzlich Betriebs-/Fehlererkenntnisse, spätere Demonstratorentscheidungen, Versionsdrift und relevante frühere Chats als Lückenfinder geprüft. Die dabei gefundenen fachlichen Lücken wurden in die kanonischen Echtsystem-Dokumente übernommen.
 
 ## 2. Klassifikationslogik
 
@@ -27,7 +27,7 @@ Jede bisherige Grundlage wurde einer von vier Klassen zugeordnet:
 
 Eine 1:1-Kopie erfolgte nur dort, wo Inhalt und Struktur weiterhin passten. Veraltete Terminologie, Demonstrator-Provisorien und überholte Fachlogik wurden nicht konserviert.
 
-G2.5 ergänzt diese dokumentenbezogene Klassifikation um eine erkenntnisbezogene Prüfung:
+G2.5 hat diese dokumentenbezogene Klassifikation um eine erkenntnisbezogene Prüfung ergänzt:
 
 `Demonstrator-Erkenntnis → fachliche Echtsystem-Regel → Datenmodell/Prozess → Umsetzungsauftrag → Regressionstest`
 
@@ -45,13 +45,13 @@ G2.5 ergänzt diese dokumentenbezogene Klassifikation um eine erkenntnisbezogene
 | `FIB_Marketing-und-Kommunikation.md` | `docs/Marketing-und-Kommunikation.md` | **übernommen / aktualisiert** | digitaler/analoger Raum, Reichweite und Bindung erhalten |
 | `FIB_SEO-und-Auffindbarkeit.md` | `docs/SEO-und-Auffindbarkeit.md` | **übernommen / aktualisiert** | Vorgang zusätzlich als dauerhafter Wissensknoten |
 | `FIB_KI-Kosten_und_Betriebsmodell.md` | `docs/KI-Betrieb-und-Kosten.md` | **übernommen / aktualisiert** | dauerhafte Betriebsregeln von zeitabhängigen Preislisten getrennt |
-| `FIB_Frontend_und_Darstellung.md` | `docs/UX-und-Informationsarchitektur.md` | **integriert / G2.5-Konsistenzprüfung läuft** | gültige Frontendregeln konsolidiert; Restbegriffe nach G3-Änderungen prüfen |
+| `FIB_Frontend_und_Darstellung.md` | `docs/UX-und-Informationsarchitektur.md` | **integriert / unter G2.5 konsolidiert** | aktuelle Ereignis-/Meldungs-/Themenbeziehungen und „Bedeutung für das Thema“ gespiegelt |
 | `FIB_Uebergabe_Echtsystem.md` | Projektgründung, Roadmap, Transfer-Audit | **historisch referenziert / erneut ausgewertet** | aktueller Echtsystem-Stand ersetzt Übergabeannahmen; Transfererkenntnisse bleiben Prüfquelle |
 | Demonstrator-`Dokumentation.md` | `docs/Dokumentation.md` | **nicht übernommen** | eigenes Echtsystem-Dokument vorhanden |
 | `Gruene_Werte_und_politische_Ziele.md` | `docs/Gruene-Werte-und-politische-Ziele.md` | **übernommen / aktualisiert** | politischer Bezugsrahmen bleibt eigenständige Quelle |
 | `Merkblatt_Wissenschaftlich-Politische_Sprache.md` | `docs/Sprachleitfaden.md` | **übernommen / aktualisiert** | mit bürgernaher Sprache und Barrierefreiheitsabgrenzung konsolidiert |
-| Betriebs-/Update-/Fehlererkenntnisse | zuständige Primärdokumente + `docs/Regressionstests-Demonstratortransfer.md` | **G2.5 neu ergänzt** | z. B. Persistenzschutz, Cache-/Deployment-Verlässlichkeit |
-| relevante frühere FIB-Chats | zuständige Primärdokumente + Transfer-Audit | **nur Lückenfinder** | keine kanonische Quelle; erst nach Prüfung übernehmen |
+| Betriebs-/Update-/Fehlererkenntnisse | zuständige Primärdokumente + `docs/Regressionstests-Demonstratortransfer.md` | **unter G2.5 ergänzt** | u. a. Persistenzschutz, Cache-/Deployment-Verlässlichkeit |
+| relevante frühere FIB-Chats | zuständige Primärdokumente + Transfer-Audit | **als Lückenfinder ausgewertet** | keine kanonische Quelle; nur geprüfte Erkenntnisse wurden übernommen |
 
 ## 4. Visuelle Referenzen und Bilder
 
@@ -76,7 +76,7 @@ Nicht übernommen werden demonstratorspezifische JavaScript-/GitHub-Pages-Provis
 
 ## 6. Befund des G2.5-Transfer-Audits
 
-Die erneute Prüfung hat bereits mehrere Punkte gefunden, die nach dem ursprünglichen Abschluss nachgearbeitet werden mussten:
+Die erneute Prüfung hat mehrere Punkte gefunden, die nach dem ursprünglichen Abschluss nachgearbeitet wurden:
 
 - erweiterter Suchraum war im Demonstrator dokumentiert, im Echtsystem aber nicht vollständig operationalisiert,
 - sechsmonatiger Rückblick und 30-%-Warnschwelle fehlten an der operativen Stelle,
@@ -85,26 +85,29 @@ Die erneute Prüfung hat bereits mehrere Punkte gefunden, die nach dem ursprüng
 - ältere Begriffe wie `Wirkungsrolle` wirkten nach der G3-Umstellung auf `Bedeutung für das Thema` noch in einzelnen Dokumenten fort,
 - eine Bibliotheks-/ODT-Fassung war trotz späterem Datum fachlich hinter dem GitHub-Stand zurückgeblieben.
 
-Die Referenzfälle werden in `docs/Regressionstests-Demonstratortransfer.md` geführt.
+Diese Punkte sind fachlich geschlossen. Die Referenzfälle werden in `docs/Regressionstests-Demonstratortransfer.md` geführt; der vollständige Abschlussbefund steht in `docs/Transfer-Audit-Demonstrator-Echtsystem.md`.
 
-## 7. Abschlusskriterium
+## 7. Abschlusskriterium und Ergebnis
 
-Die Dokumentationsübernahme gilt erst dann wieder als vollständig abgeschlossen, wenn das G2.5-Transfer-Gate erfüllt ist:
+Das G2.5-Transfer-Gate wurde am 03.10.2026 fachlich bestanden:
 
 1. relevante Demonstrator-Erkenntnisse einschließlich Betriebs-/Fehlerwissen sind inventarisiert,
-2. jede relevante Erkenntnis ist übernommen, angepasst, bewusst verworfen oder als späterer Umsetzungsauftrag gekennzeichnet,
+2. relevante Erkenntnisse sind übernommen, angepasst, bewusst verworfen oder als späterer Umsetzungsauftrag gekennzeichnet,
 3. fachlich kritische Regeln stehen in der zuständigen kanonischen Echtsystem-Quelle,
-4. Datenmodell und Workflow können die erforderlichen Zustände und Entscheidungen abbilden oder führen sie als klaren G3/G6-Auftrag,
+4. Datenmodell und Workflow bilden die erforderlichen Zustände und Entscheidungen bereits ab oder führen sie als klaren Folgeauftrag,
 5. wesentliche Demonstratorfälle sind als Regressionstests beschrieben,
 6. konkurrierende Dokumentstände erscheinen nicht als gleichwertige Primärquelle,
-7. eine abschließende Widerspruchsprüfung wurde durchgeführt.
+7. die abschließende Widerspruchs- und Terminologieprüfung wurde durchgeführt.
 
-Bis dahin bleibt der Status **teilweise umgesetzt / G2.5 in Arbeit**.
+Die Dokumentationsübernahme ist damit **abgeschlossen**.
+
+Verbleibende Punkte wie konkrete Persistenz-/Archivierungsfelder, Cache-Invalidierung und technische Automatisierung der Regressionstests sind reguläre Folgeaufträge für G3, G5 bzw. G10 und keine offenen Transferlücken.
 
 ## Änderungshistorie
 
 | Version | Datum | Änderung |
 |---|---|---|
+| 1.4 | 03.10.2026 | G2.5-Transfer-Gate nach Nachpflege und Konsistenzprüfung als bestanden dokumentiert; Übernahme wieder als abgeschlossen markiert; UX-Konsistenzprüfung geschlossen und technische Folgeaufträge abgegrenzt. |
 | 1.3 | 03.10.2026 | Frühere Abschlussfeststellung unter G2.5 revidiert; zusätzliche Prüfquellen und G2.5-Befunde aufgenommen; Abschlusskriterium an Transfer-Gate gebunden. |
 | 1.2 | 30.09.2026 | Querverweis-, Terminologie- und Konsistenzprüfung abgeschlossen; README, Projektgründung und KI-Leitfaden bereinigt; Dokumentationsübernahme formal abgeschlossen. |
 | 1.1 | 30.09.2026 | Quellenmonitor, Mehr wissen, KI-Qualität, Marketing, SEO, KI-Betrieb, Frontend/UX sowie Werte- und Sprachgrundlagen als übernommen markiert. |
