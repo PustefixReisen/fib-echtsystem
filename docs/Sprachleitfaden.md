@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 1.0 | 30.09.2026 | Josef Walter – erstellt mit KI-Unterstützung |
+| 1.1 | 04.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
 
 ## 1. Grundidee
 
@@ -108,7 +108,36 @@ Kontraste wie „nicht X, sondern Y“ sind nur geeignet, wenn die Gegenüberste
 
 ## 7. Fachbegriffe und wissenschaftliche Einschränkungen
 
-Fachbegriffe werden verwendet, wenn sie für die Genauigkeit nötig sind, aber verständlich erklärt.
+Fachbegriffe werden verwendet, wenn sie für Genauigkeit oder Quellenbezug nötig sind, aber so erklärt, dass interessierte Laien den Text ohne eigenes Fachwissen verstehen können.
+
+Diese Regel gilt **für jede Fachsprache**, insbesondere für:
+
+- Verwaltungs- und Rechtssprache,
+- Planungs- und Verkehrssprache,
+- technische und IT-bezogene Begriffe,
+- wissenschaftliche Fachbegriffe,
+- finanzielle oder wirtschaftliche Fachausdrücke,
+- sonstige Fachterminologie aus den verwendeten Quellen.
+
+Verbindliche Regel:
+
+> **Taucht ein Fachbegriff in einer Quelle auf und spielt er in der FIB-Aufbereitung eine inhaltliche Rolle, prüft die KI, ob der Begriff für Normalbürger ohne Erläuterung verständlich ist. Ist das nicht sicher anzunehmen, wird er beim ersten relevanten Auftreten kurz und sachlich erklärt.**
+
+Bevorzugt wird eine **knappe unmittelbare Erläuterung im Satz**, häufig in Klammern oder als kurze Apposition. Die Erklärung soll den Lesefluss möglichst wenig unterbrechen.
+
+Beispiel:
+
+> „Die Verwaltung hält das Vorhaben für verfahrensfrei (also grundsätzlich ohne förmliches Baugenehmigungsverfahren möglich).“
+
+Dabei gilt:
+
+- Die Erläuterung erklärt den Begriff, nicht den gesamten fachlichen Hintergrund.
+- Sie darf die Aussage der Quelle nicht erweitern oder in eine eigene fachliche bzw. rechtliche Bewertung umdeuten.
+- Bei Begriffen mit stark kontextabhängiger Bedeutung wird nur die für den konkreten Sachverhalt benötigte Bedeutung erklärt.
+- Wiederholte Erläuterungen im selben Text werden vermieden, sofern der Begriff bereits verständlich eingeführt wurde.
+- Reicht eine kurze Erläuterung nicht aus oder ist der Hintergrund für interessierte Leser zusätzlich relevant, kann eine vertiefende Frage über „Mehr wissen?“ angeboten werden.
+
+Die unmittelbare Verständlichkeit des Haupttexts darf jedoch **nicht davon abhängen**, dass ein Besucher „Mehr wissen?“ öffnet.
 
 Methodische oder fachliche Einschränkungen müssen so früh genannt werden, dass eine Aussage nicht größer verstanden werden kann, als sie belegt ist.
 
@@ -141,7 +170,7 @@ Ein Schluss soll, soweit passend, zu einer nächsten Frage, einem nachvollziehba
 
 ## 11. Kurzregel
 
-> **Fachlich belastbar und im Vordergrund klar formulieren. Einen sichtbaren roten Faden schaffen, die Kernaussage früh zeigen, notwendige Einschränkungen rechtzeitig nennen und politische Bewertung klar von Sachinformation trennen.**
+> **Fachlich belastbar und im Vordergrund klar formulieren. Einen sichtbaren roten Faden schaffen, die Kernaussage früh zeigen, notwendige Einschränkungen rechtzeitig nennen, erklärungsbedürftige Fachbegriffe beim ersten relevanten Auftreten kurz erläutern und politische Bewertung klar von Sachinformation trennen.**
 
 ## 12. Abgrenzung
 
@@ -154,4 +183,5 @@ Ein Schluss soll, soweit passend, zu einer nächsten Frage, einem nachvollziehba
 
 | Version | Datum | Änderung |
 |---|---|---|
+| 1.1 | 04.10.2026 | Allgemeine Verständlichkeitsregel für Fachsprache ergänzt: erklärungsbedürftige Begriffe aus Quellen werden beim ersten relevanten Auftreten kurz und kontextbezogen erläutert; dies gilt fachübergreifend und kann bei zusätzlichem Vertiefungsbedarf durch „Mehr wissen?“ ergänzt werden. |
 | 1.0 | 30.09.2026 | Merkblatt `Wissenschaftlich-Politische-Sprache` als Echtsystem-Sprachleitfaden übernommen, mit bürgernaher Sprache und aktueller FIB-Terminologie konsolidiert. |
