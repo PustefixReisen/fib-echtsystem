@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 0.1 | 03.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
+| 0.2 | 03.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
 
 ## 1. Zweck
 
@@ -31,11 +31,14 @@ G2.5 gilt als abgeschlossen, wenn:
 7. konkurrierende/veraltete Dokumentstände nicht als gleichwertige Primärquelle erscheinen,
 8. eine abschließende Widerspruchs- und Terminologieprüfung erfolgt ist.
 
+**Ergebnis vom 03.10.2026: Transfer-Gate fachlich bestanden.**
+
+Technische Implementierungsaufträge für spätere Phasen bleiben bestehen, sind aber keine offenen Transferlücken mehr.
+
 ## 3. Statuslegende
 
 - **GESCHLOSSEN** – fachliche Regel ist im Echtsystem kanonisch verankert.
 - **GESCHLOSSEN / spätere technische Umsetzung** – fachlich vollständig übertragen; technische Realisierung gehört planmäßig in eine spätere Phase.
-- **OFFEN** – Transfer ist fachlich noch nicht vollständig geklärt oder dokumentiert.
 - **NICHT ÜBERNEHMEN** – bewusst verworfenes Demonstrator-Provisorium.
 
 ## 4. Transfer-Matrix
@@ -58,12 +61,12 @@ G2.5 gilt als abgeschlossen, wenn:
 | TA-014 | Meldung vs. Aktualisierung nach eigenständigem Ereignis | `Datenmodell.md`, `Fachkonzept.md`, `KI-Leitfaden.md`, UX | **GESCHLOSSEN** | Ereignis und Meldung getrennt |
 | TA-015 | fachlich relevante Aktualisierung zählt als „neu“, technische Änderung nicht | `Fachkonzept.md`, UX | **GESCHLOSSEN** | PWA/Push-Grundlage |
 | TA-016 | Persistenzschutz: bestehende Objekte dürfen bei neuem Lauf nicht verschwinden | `KI-Leitfaden.md` | **GESCHLOSSEN / spätere technische Umsetzung** | technische Geschäftsregel; RT-012 |
-| TA-017 | Wirkungsrollen-Taxonomie entfällt; Bedeutung für das Thema + Perspektiven/Wirkungen | `Datenmodell.md`, `Themen-und-Vorgangslogik.md`, `Begriffe.md`, `KI-Leitfaden.md` | **GESCHLOSSEN** | UX-Restbegriffe noch zu bereinigen, siehe O-01 |
+| TA-017 | Wirkungsrollen-Taxonomie entfällt; Bedeutung für das Thema + Perspektiven/Wirkungen | `Datenmodell.md`, `Themen-und-Vorgangslogik.md`, `Begriffe.md`, `KI-Leitfaden.md`, UX | **GESCHLOSSEN** | UX v2.8 synchronisiert |
 | TA-018 | Bedeutung für das Thema: prägend/relevant/ergänzend, redaktionell verpflichtend | `Datenmodell.md`, `Themen-und-Vorgangslogik.md`, `Begriffe.md` | **GESCHLOSSEN** | für Vorgang und direktes Ereignis |
 | TA-019 | „Mehr wissen?“ adaptiv, nicht redundant, keine starre Fragezahl | `Mehr-wissen.md` | **GESCHLOSSEN** | MVP zeigt zunächst ca. 4–6 |
 | TA-020 | „Mehr wissen?“: keine scheinbar gesicherte Antwort nur aus Modellwissen | `Mehr-wissen.md`, `KI-Leitfaden.md` | **GESCHLOSSEN** | RT-011 |
 | TA-021 | Quellenrollen / präzise Fundstellen | `Mehr-wissen.md` | **GESCHLOSSEN** | Sammeldokumente mit konkreter Fundstelle soweit möglich |
-| TA-022 | Bezugsobjekte mit Aliasen und explizit geprüften Beziehungen | UX / Datenmodell-G3 | **GESCHLOSSEN / G3-Umsetzung** | RT-010 |
+| TA-022 | Bezugsobjekte mit Aliasen und explizit geprüften Beziehungen | UX / Datenmodell-G3 | **GESCHLOSSEN / spätere technische Umsetzung** | RT-010 |
 | TA-023 | Suche trennt Kategorie, Schlagwort, Ort und Volltext | UX / spätere technische Umsetzung | **GESCHLOSSEN / spätere technische Umsetzung** | RT-016 |
 | TA-024 | stabile Direktlinks / zielgenaue Updates / Browser-Zurück | UX | **GESCHLOSSEN / spätere technische Umsetzung** | RT-009 |
 | TA-025 | Info-/Disclaimer-Zugang je Inhalt, Footer nicht alleiniger Zugang | UX | **GESCHLOSSEN / spätere technische Umsetzung** | übernommen |
@@ -74,25 +77,21 @@ G2.5 gilt als abgeschlossen, wenn:
 | TA-030 | Modellunabhängigkeit / fester Testkorpus | `KI-Qualitaet-und-Modellunabhaengigkeit.md`, Regressionstests | **GESCHLOSSEN** | Transferfälle werden Testkorpus |
 | TA-031 | produktive Banner-/Navigations-/Mobile-Regeln | UX + visuelle Identität | **GESCHLOSSEN** | aktuelle Echtsystem-Regeln maßgeblich |
 
-## 5. Noch offene G2.5-Punkte
+## 5. Folgeaufträge aus dem Transfer-Audit
 
-### O-01 – UX-Restbegriffe aus alter Wirkungsrollen-Logik
+Diese Punkte sind fachlich übertragen, werden aber planmäßig später konkretisiert:
 
-`docs/UX-und-Informationsarchitektur.md` enthält in älteren Abschnitten noch einzelne Begriffe/Modellannahmen aus der G2-Zeit, insbesondere `Wirkungsrolle`, obwohl G3 inzwischen verbindlich `Bedeutung für das Thema` verwendet. Außerdem sind in den Datenmodell-Auswirkungen noch ältere direkte Meldungsbeziehungen genannt.
+### FA-01 – Datenmodellseitige Persistenz-/Löschlogik (G3)
 
-**Erforderlich:** UX-Datei terminologisch an das aktuelle G3-Modell anpassen, ohne die abgeschlossene G2-Nutzerlogik zu verändern.
+Der fachliche Persistenzschutz ist verbindlich. G3 konkretisiert, welche Status-/Historienfelder Rücknahme, Archivierung, Löschung oder Aufhebung einer Beziehung abbilden.
 
-### O-02 – Datenmodellseitige Persistenz-/Löschlogik konkretisieren
+### FA-02 – Cache-/Deployment-Strategie (G5)
 
-Der fachliche Persistenzschutz ist im KI-Leitfaden geschlossen. In G3 ist noch zu prüfen, welche Status/Historienfelder eine explizite Rücknahme, Archivierung, Löschung oder Aufhebung einer Beziehung abbilden.
+Die Anforderung aus dem Demonstratorfehler ist als RT-014 gesichert. G5 legt Versionierungs-, Cache-Control-, Asset-Hash-/Invalidierungs- und Abnahmeverfahren fest.
 
-**Bewertung:** Kein fachlicher Transferverlust mehr; verbleibender G3-Modellierungsauftrag.
+### FA-03 – technische Regressionstests (G3–G10)
 
-### O-03 – Cache-/Deployment-Strategie
-
-Die Demonstratorerkenntnis ist als Anforderung und Regressionstest gesichert. Konkrete Versionierungs-/Invalidierungsstrategie gehört in G5.
-
-**Bewertung:** Kein G2.5-Fachentscheid erforderlich; späterer technischer Umsetzungsauftrag.
+Die fachlichen Referenzfälle werden schrittweise in automatisierbare Datenmodell-, Workflow-, Integrations-, UI- und Go-live-Tests übersetzt.
 
 ## 6. Regressionstestkorpus
 
@@ -117,16 +116,24 @@ Aktuell enthalten:
 - interne Hintergrundquelle,
 - Suche „Beteiligung“.
 
-## 7. Aktuelle Bewertung
+## 7. Abschlussbewertung
 
-Der G2.5-Audit hat die wesentlichen zuvor erkannten fachlichen Lücken inzwischen in die kanonischen Echtsystem-Dokumente überführt.
+Die im Audit identifizierten fachlichen Transferlücken sind geschlossen. Die abschließende Konsistenzprüfung der zentralen Echtsystem-Dokumente hat insbesondere folgende zuvor widersprüchliche Punkte bereinigt:
 
-**G2.5 ist noch nicht abgeschlossen**, solange O-01 nicht bereinigt und die abschließende Widerspruchsprüfung nicht durchgeführt wurde.
+- Fachkonzept: aktuelle Navigation und Rechercheprimärquelle,
+- Quellenmonitor: erweiterter Suchraum, Rückblick, 30-%-Warnschwelle, dynamischer Suchkontext,
+- KI-Leitfaden: Persistenzschutz, Quellenpflicht, RIS-Link-/Datumsregeln,
+- „Mehr wissen?“: harte Quellenpflicht,
+- UX: Entfernung verbliebener Wirkungsrollen- und alter Direktbeziehungslogik,
+- Dokumentationslandkarte: Dokumentationshoheit und Transferstatus.
 
-O-02 und O-03 sind nach erfolgter fachlicher Sicherung reguläre Folgeaufträge für G3 bzw. G5 und blockieren den fachlichen Abschluss von G2.5 nicht, sofern sie in Roadmap und Regressionstestkorpus erhalten bleiben.
+**G2.5 ist fachlich abgeschlossen.**
+
+Die Folgeaufträge FA-01 bis FA-03 werden in den vorgesehenen späteren Projektphasen umgesetzt und sind keine offenen Demonstrator-Transferlücken mehr.
 
 ## Änderungshistorie
 
 | Version | Datum | Änderung |
 |---|---|---|
+| 0.2 | 03.10.2026 | UX-Restbegriffe bereinigt, abschließende Konsistenzprüfung durchgeführt, Transfer-Gate als bestanden bewertet und G2.5 fachlich abgeschlossen; verbleibende technische Punkte als G3/G5/G10-Folgeaufträge klassifiziert. |
 | 0.1 | 03.10.2026 | Transfer-Matrix im Echtsystem angelegt; bereits geschlossene Regeln und verbleibende Restpunkte nach erster G2.5-Nachpflege dokumentiert. |
