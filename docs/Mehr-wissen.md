@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 1.0 | 30.09.2026 | Josef Walter – erstellt mit KI-Unterstützung |
+| 1.1 | 03.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
 
 ## 1. Leitidee
 
@@ -105,6 +105,23 @@ Wenn politische Positionen Teil des Sachverhalts sind, werden unterschieden:
 - dokumentierte Positionen von Akteuren,
 - ausdrücklich gekennzeichnete FIB-Einordnung.
 
+### 6.1 Quellenpflicht und Umgang mit Wissenslücken
+
+„Mehr wissen?“-Antworten dürfen belastbare Tatsachen, Rechtsstände, technische Reifegrade, Wirkungen oder Übertragbarkeitsaussagen **nicht allein aus allgemeinem Modellwissen** als gesicherten Sachstand darstellen.
+
+Für zusätzliche Tatsachenbehauptungen gilt:
+
+- vorhandene geeignete FIB-Quellen verwenden,
+- bei Bedarf gezielt weitere belastbare Quellen recherchieren,
+- Quellenfunktion und konkreten Beleg nachvollziehbar machen,
+- Unsicherheit oder fehlende Beleglage ausdrücklich benennen.
+
+Wenn für eine sinnvolle Antwort keine hinreichend belastbare Quelle gefunden wird, wird nicht mit scheinbarer Sicherheit aus Modellwissen aufgefüllt. Stattdessen wird die Wissenslücke transparent gemacht oder die Frage bis zur Recherche nicht als vorbereitete öffentliche Antwort freigegeben.
+
+Allgemeines Modellwissen darf zur Suchplanung, Begriffsklärung und Formulierungsunterstützung dienen, ersetzt aber keine erforderliche Quellenbasis.
+
+Referenzfall: Beim autonomen On-Demand-Verkehr müssen Aussagen zu technischer Reife, Rechtsrahmen, Betriebsform und Übertragbarkeit auf Feldkirchen auf geeignete Fach-, Behörden-, Projekt- oder Praxisquellen zurückgeführt werden.
+
 ## 7. Quellenlogik
 
 Quellen werden nach ihrer Funktion für die Antwort ausgewählt, z. B.:
@@ -164,4 +181,5 @@ Die fachliche Logik gehört dem FIB-System und nicht einem bestimmten KI-Modell.
 
 | Version | Datum | Änderung |
 |---|---|---|
+| 1.1 | 03.10.2026 | G2.5-Transfer: harte Quellenpflicht ergänzt; vorbereitete Hintergrundantworten dürfen fehlende Belege nicht durch scheinbar sicheres allgemeines Modellwissen ersetzen. |
 | 1.0 | 30.09.2026 | Demonstrator-Konzept `FIB_Mehr_wissen_Assistent.md` auf die aktuelle Meldungs-/Vorgangs-/Themenlogik und das MVP des Echtsystems überführt. |
