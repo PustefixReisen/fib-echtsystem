@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 0.7 | 03.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
+| 0.8 | 03.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
 
 ## 1. Zweck und Geltung
 
@@ -26,6 +26,7 @@ Ziel ist ein robustes und langfristig tragfähiges Modell, das für einen kleine
 - Für KI-formulierte Einordnungen ist der strukturierte Redaktionsstand die fachliche Quelle; die Textfassung ist eine daraus abgeleitete Darstellung.
 - Fachlich-politische Qualität wird nicht nur über Einzelwerte, sondern auch über Plausibilitätsprüfungen zwischen mehreren strukturierten Angaben abgesichert.
 - Herkunft einer Quelle, konkrete Fundstelle bzw. Datei, technischer Speicherort und öffentliche Sichtbarkeit werden getrennt modelliert.
+- Abgeleitete redaktionelle Texte dürfen bei Analysen nicht als zusätzliche unabhängige Tatsachenbelege für denselben Sachverhalt gezählt werden.
 
 ## 3. Wissenskern
 
@@ -33,7 +34,7 @@ Die fachliche Grundstruktur lautet:
 
 > **Ereignis → Meldung → Vorgang → Thema**
 
-Diese Struktur ist keine starre Hierarchie. Insbesondere können Vorgänge mehreren Themen zugeordnet sein, Ereignisse mehrere Vorgänge berühren und Sitzungen quer zu mehreren Ebenen liegen.
+Diese Struktur ist keine starre Hierarchie. Insbesondere können Vorgänge mehreren Themen zugeordnet sein, Ereignisse mehrere Vorgänge berühren, einzelne Ereignisse zusätzlich direkt einem Thema zugeordnet werden und Sitzungen quer zu mehreren Ebenen liegen.
 
 ### 3.1 `Ereignis`
 
@@ -127,13 +128,44 @@ Beispiel „Hundewiese“:
 
 Damit erzählt der `Vorgang` die Entwicklung des konkreten Sachverhalts, `Ereignisse` bilden die fachlichen Schritte ab, und `Meldungen` sind die veröffentlichten redaktionellen Darstellungen der berichtenswerten `Ereignisse`.
 
-### 3.5 Beziehung `Vorgang ↔ Thema`
+### 3.5 Beziehungen `Vorgang ↔ Thema` und `Ereignis ↔ Thema`
 
 Ein `Vorgang` kann keinem, einem oder mehreren `Themen` zugeordnet sein. Ein `Thema` umfasst in der Regel mehrere `Vorgänge`. Die Beziehung ist damit grundsätzlich n:m.
 
-Verbindliche Entscheidung:
+Verbindliche Entscheidung für die Themenredaktion:
 
-> **Die bisher vorgesehene Wirkungsrolle entfällt als eigenes strukturiertes Merkmal. An ihre Stelle tritt die redaktionell bestätigte `Bedeutung für das Thema`.**
+> **Vorgänge sind der bevorzugte Auswahlweg eines Themas. Mit der Auswahl eines Vorgangs werden dessen zugehörige Ereignisse automatisch in die Themenanalyse einbezogen. Zusätzlich können einzelne weitere relevante Ereignisse direkt einem Thema zugeordnet werden.**
+
+Direkte `Ereignis ↔ Thema`-Beziehungen dienen ausschließlich zusätzlichen Einzelereignissen, die nicht bereits über einen ausgewählten Vorgang im Thema enthalten sind oder bewusst unabhängig von einem Vorgang aufgenommen werden sollen.
+
+Damit gilt fachlich:
+
+- `Vorgang → Thema`: `0..n`
+- `Thema → Vorgang`: `0..n`
+- `Ereignis → Thema`: `0..n` als direkte Zusatzbeziehung
+- ein über einen ausgewählten Vorgang enthaltenes Ereignis benötigt keine redundante zusätzliche direkte Themenzuordnung.
+
+Für die Herkunft im Thema muss erkennbar bleiben, ob ein Ereignis:
+
+1. über einen ausgewählten Vorgang enthalten ist oder
+2. als einzelnes weiteres relevantes Ereignis direkt aufgenommen wurde.
+
+Meldungen werden nicht separat einem Thema zugeordnet. Hat ein im Thema enthaltenes Ereignis eine Meldung, wird diese über die Ereignisbeziehung als Analysekontext erschlossen.
+
+Für einen ausgewählten Vorgang werden als Analysegegenstände berücksichtigt:
+
+- seine zugehörigen Ereignisse,
+- die Quellen/Fundstellen dieser Ereignisse,
+- der aktuelle Vorgangstext bzw. Sachstand als redaktionelle Verdichtung,
+- die über Ereignisse erschlossenen Meldungstexte,
+- vorhandene redaktionell bestätigte bzw. veröffentlichte „Unsere Einordnung“ dieser Meldungen,
+- weitere bestätigte strukturierte Angaben, soweit thematisch relevant.
+
+Dabei gilt:
+
+> **Quelle/Fundstelle und Ereignis bilden die Tatsachenbasis. Meldungs- und Vorgangstexte sind redaktionelle Verdichtungen. „Unsere Einordnung“ ist eine politische Bewertung. Mehrfache textliche Vorkommen desselben Sachverhalts dürfen nicht als voneinander unabhängige Belege oder zusätzliche Gewichtung behandelt werden.**
+
+Die frühere vorgesehene Wirkungsrolle entfällt als eigenes strukturiertes Merkmal. An ihre Stelle tritt für `Vorgang ↔ Thema` die redaktionell bestätigte `Bedeutung für das Thema`.
 
 Die `Bedeutung für das Thema` beschreibt, wie stark ein `Vorgang` das Verständnis oder die Entwicklung eines `Themas` prägt. Es gelten zunächst drei Stufen:
 
@@ -145,18 +177,16 @@ Die Einstufung wird von der KI vorgeschlagen und muss durch die Redaktion verpfl
 
 Die Bedeutung wird nicht automatisch aus der Zahl der `Meldungen`, `Perspektiven` oder Quellen berechnet. Die KI kann ihren Vorschlag u. a. aus Tragweite, Dauer, Auswirkungen, Einfluss auf andere Vorgänge, Aktualität und Bedeutung für die Leitfrage ableiten; die redaktionelle Entscheidung bleibt maßgeblich.
 
-Die fachliche Erklärung, **warum** ein `Vorgang` für ein `Thema` relevant ist, erfolgt über `Perspektiven` und die darunter beschriebenen `Wirkungen`. Dadurch wird auf eine parallele Rollen-Taxonomie wie „Treiber / Betroffenheit / Rahmenbedingung / Gestaltungsbeitrag / Indikator“ verzichtet.
+Die fachliche Erklärung, **warum** ein `Vorgang` für ein `Thema` relevant ist, erfolgt über `Perspektiven` und die darunter beschriebenen `Wirkungen`.
 
-`Ereignisse` erhalten keine zusätzliche eigenständige Themenzuordnung. Ein Themenbezug wird über die fachlich zugeordneten `Vorgänge` abgeleitet:
-
-`Ereignis → Vorgang → Thema`
+Für direkt ergänzte Einzelereignisse wird zunächst keine eigene parallele „Bedeutung für das Thema“-Skala eingeführt. Ihre Aufnahme wird redaktionell bestätigt; ob später eine eigene Gewichtungsstufe für Einzelereignisse benötigt wird, wird anhand realer Fälle geprüft.
 
 ### 3.6 `Perspektive`, `Wirkung` und `Bewertung` – Arbeitsstand
 
 Für die weitere Modellierung werden folgende Begriffe getrennt:
 
 - `Perspektive` – fachlicher Betrachtungsaspekt innerhalb eines `Themas`, z. B. Lärm, Verkehrssicherheit, Flächenverbrauch oder kommunaler Handlungsspielraum.
-- `Wirkung` – sachlich belegbare oder begründet erwartbare Folge eines `Vorgangs` unter einer `Perspektive`.
+- `Wirkung` – sachlich belegbare oder begründet erwartbare Folge eines `Vorgangs` oder eines direkt in ein Thema aufgenommenen `Ereignisses` unter einer `Perspektive`.
 - `Bewertung` – politische Beurteilung einer `Wirkung` im Rahmen von „Unsere Einordnung“.
 - `Begründung` – nachvollziehbare Herleitung der `Bewertung`.
 - `politischer Bezug` – grüner Wert, politisches Ziel oder dokumentierte grüne Position, auf die sich die `Begründung` stützt.
@@ -228,7 +258,8 @@ Als nächste Modellierungsschritte werden geklärt:
 - `Perspektiven` und `Wirkungen` innerhalb eines `Themas`,
 - Modellierung von `Bewertung`, `Begründung`, `Gestaltungsoption`, `Verlässlichkeit`, `politischem Gewicht` und politischem Referenzsystem,
 - genaue Versionierungs- und Vergleichslogik zwischen strukturiertem Redaktionsstand und Textfassung,
-- konkrete fachliche Plausibilitätsregeln für den Redaktionsprozess.
+- konkrete fachliche Plausibilitätsregeln für den Redaktionsprozess,
+- ob direkt ergänzte Einzelereignisse später eine eigene Gewichtungsstufe im Thema benötigen.
 
 ## 4. Weitere Modellbereiche
 
@@ -300,11 +331,13 @@ Die noch nicht abschließend modellierten Begriffe werden im weiteren G3-Verlauf
 5. Welche Daten gehören zur fachlichen Persistenz und welche nur zum technischen Betrieb?
 6. Welche Plausibilitätsregeln sind verbindlich und welche nur unterstützende Hinweise?
 7. Welche zusätzlichen Rechte- und Freigabestatus werden für öffentlich über FIB bereitgestellte Dateien benötigt?
+8. Benötigen direkt ergänzte Einzelereignisse im Thema später eine eigene Bedeutungsskala oder reicht die bestätigte Aufnahmeentscheidung?
 
 ## Änderungshistorie
 
 | Version | Datum | Änderung |
 |---|---|---|
+| 0.8 | 03.10.2026 | Themenmodell korrigiert: Vorgänge als bevorzugte Themenauswahl mit automatischer Mitnahme ihrer Ereignisse; direkte Ereignis-Thema-Beziehung für zusätzliche „Weitere relevante Ereignisse“ zugelassen; Meldungstext und vorhandene „Unsere Einordnung“ werden über Ereignisse als Analysekontext erschlossen; Herkunfts- und Anti-Doppelzählungsregel ergänzt. |
 | 0.7 | 03.10.2026 | Quellenmodell konkretisiert: Herkunft, Fundstelle, Bereitstellung und Sichtbarkeit getrennt; öffentliche FIB-Bereitstellung redaktionell hochgeladener Dateien auch ohne ursprüngliche Internetverfügbarkeit ermöglicht; direkte Ereignis-Thema-Beziehung als parallele Zuordnung verworfen. |
 | 0.6 | 02.10.2026 | Bestätigungslogik und feldübergreifende Plausibilitätsprüfung für den strukturierten Redaktionsprozess festgelegt; strukturierte Abwägung als fachlich zu bestätigender Stand von der KI-formulierten Textfassung getrennt. |
 | 0.5 | 02.10.2026 | `strukturierter Redaktionsstand` als fachliche Quelle und `Textfassung` als daraus erzeugte Darstellung festgelegt; Konsistenz-, Versions- und Änderungsregeln zwischen beiden Ebenen ergänzt. |
