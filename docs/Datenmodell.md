@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 1.0 | 03.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
+| 1.1 | 03.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
 
 ## 1. Zweck und Geltung
 
@@ -29,6 +29,7 @@ Ziel ist ein robustes und langfristig tragfähiges Modell, das für einen kleine
 - Abgeleitete redaktionelle Texte dürfen bei Analysen nicht als zusätzliche unabhängige Tatsachenbelege für denselben Sachverhalt gezählt werden.
 - Wirkungen werden an Ereignissen verankert; ihr fachlicher Herkunftskontext bestimmt, wo sie geändert werden dürfen.
 - Gleichbedeutende Wirkungen dürfen in einer übergeordneten Analyse nicht mehrfach gewichtet werden.
+- Fachlich wirksame Zuordnungen zwischen Wirkungen und Themenperspektiven werden persistent gespeichert und nur bei konkretem Änderungsanlass neu geprüft.
 
 ## 3. Wissenskern
 
@@ -256,6 +257,32 @@ Die redaktionelle Entscheidung unterscheidet mindestens:
 
 Bei als gleich bestätigten Wirkungen bleiben die einzelnen Wirkungsdatensätze und ihre Herkunft erhalten. Für Themenanalyse, Abwägung und Textformulierung werden sie jedoch als eine sachliche Aussage behandelt, damit keine künstliche Mehrfachgewichtung entsteht.
 
+#### 3.7.4 Zuordnung `Wirkung ↔ Perspektive`
+
+Für ein Thema werden die Wirkungen aller enthaltenen Ereignisse automatisch berücksichtigt. Eine vorhandene Wirkung wird deshalb nicht erneut für das Thema ausgewählt oder abgewählt.
+
+Die Zuordnung einer Wirkung zu einer oder mehreren bestätigten Perspektiven des Themas ist eine fachlich persistente Zuordnung. Sie wird beim ersten fachlich wirksamen Zuordnen gespeichert und bei späteren Themenanalysen wiederverwendet.
+
+Damit gilt:
+
+- `Wirkung → Perspektive`: `1..n` innerhalb eines konkreten Themas, sofern die Wirkung im Thema berücksichtigt wird,
+- eine Perspektive kann `0..n` Wirkungen enthalten,
+- eine Wirkung kann mehreren Perspektiven desselben Themas zugeordnet sein,
+- eine bestehende Zuordnung wird nicht bei jedem Analyselauf neu erzeugt,
+- die KI darf eine erstmalige oder zusätzlich erforderlich gewordene Zuordnung vorschlagen,
+- die Redaktion kann die Zuordnung korrigieren,
+- eine erneute Prüfung erfolgt nur bei fachlichem Anlass.
+
+Als fachlicher Anlass gelten insbesondere:
+
+- Änderung der zugrunde liegenden Wirkung,
+- Umbenennung, Zusammenführung oder Entfernung einer Perspektive,
+- neue Perspektive mit möglicher zusätzlicher Relevanz,
+- auffällige oder widersprüchliche Zuordnung in einer Plausibilitätsprüfung,
+- ausdrückliche redaktionelle Neubewertung.
+
+Die konkrete UI- und Bestätigungslogik wird im Redaktionsworkflow festgelegt. Das Datenmodell muss die persistente Zuordnung und ihre nachvollziehbare Änderung unterstützen.
+
 ### 3.8 Strukturierter Redaktionsstand und Textfassung
 
 Für KI-formulierte Inhalte, insbesondere „Unsere Einordnung“, werden fachliche Struktur und sprachliche Darstellung getrennt behandelt.
@@ -320,7 +347,6 @@ Die sprachliche Fassung der `Abwägung` wird von der KI erzeugt. Pflichtbestäti
 Als nächste Modellierungsschritte werden geklärt:
 
 - `Sitzung/TOP ↔ Ereignis/Meldung/Vorgang/Thema`,
-- genaue Nutzung bestätigter Wirkungen unter Themenperspektiven,
 - Modellierung von `Bewertung`, `Begründung`, `Gestaltungsoption`, `Verlässlichkeit`, `politischem Gewicht` und politischem Referenzsystem,
 - genaue Versionierungs- und Vergleichslogik zwischen strukturiertem Redaktionsstand und Textfassung,
 - konkrete fachliche Plausibilitätsregeln für den Redaktionsprozess.
@@ -388,18 +414,18 @@ Die noch nicht abschließend modellierten Begriffe werden im weiteren G3-Verlauf
 
 ## 5. Offene G3-Fragen
 
-1. Wie werden bestätigte Wirkungen unter Perspektiven eines Themas ausgewählt und zusammengeführt, ohne die fachliche Hoheit ihres Herkunftskontexts zu verletzen?
-2. Wie werden `Bewertungen` und ihre `Begründungen` mit dem grünen Referenzsystem verknüpft?
-3. Welche Status gehören zu `Ereignis`, `Meldung`, `Vorgang`, `Thema` und `Sitzung`?
-4. Welche Änderungen werden versioniert, welche nur protokolliert?
-5. Welche Daten gehören zur fachlichen Persistenz und welche nur zum technischen Betrieb?
-6. Welche Plausibilitätsregeln sind verbindlich und welche nur unterstützende Hinweise?
-7. Welche zusätzlichen Rechte- und Freigabestatus werden für öffentlich über FIB bereitgestellte Dateien benötigt?
+1. Wie werden `Bewertungen` und ihre `Begründungen` mit dem grünen Referenzsystem verknüpft?
+2. Welche Status gehören zu `Ereignis`, `Meldung`, `Vorgang`, `Thema` und `Sitzung`?
+3. Welche Änderungen werden versioniert, welche nur protokolliert?
+4. Welche Daten gehören zur fachlichen Persistenz und welche nur zum technischen Betrieb?
+5. Welche Plausibilitätsregeln sind verbindlich und welche nur unterstützende Hinweise?
+6. Welche zusätzlichen Rechte- und Freigabestatus werden für öffentlich über FIB bereitgestellte Dateien benötigt?
 
 ## Änderungshistorie
 
 | Version | Datum | Änderung |
 |---|---|---|
+| 1.1 | 03.10.2026 | Persistente Wirkung-Perspektive-Zuordnung festgelegt: vorhandene Wirkungen eines im Thema enthaltenen Ereignisses werden automatisch berücksichtigt; Zuordnungen zu einer oder mehreren Themenperspektiven werden gespeichert und nur bei fachlichem Änderungsanlass, Plausibilitätskonflikt oder ausdrücklicher redaktioneller Neubewertung erneut geprüft. |
 | 1.0 | 03.10.2026 | Wirkungsmodell konkretisiert: Wirkungen fachlich am Ereignis verankert; Herkunftskontext Vorgang/Thema bestimmt Änderungszuständigkeit; mehrere eigenständige Wirkungen je Ereignis zulässig; semantisch gleichbedeutende Wirkungen werden als Analyse-Dubletten erkannt und nicht mehrfach gewichtet; widersprüchliche Wirkungen erzeugen Prüfhinweise statt automatischer Bereinigung. |
 | 0.9 | 03.10.2026 | Themenmodell ergänzt: direkt aufgenommene Einzelereignisse erhalten wie Vorgänge die Bedeutung für das Thema mit prägend/relevant/ergänzend; Themen können durch KI-Vorschlag oder redaktionelle Anlage entstehen; bei redaktioneller Neuanlage ist eine Ähnlichkeits-/Dublettprüfung gegen den Themenbestand verpflichtend. |
 | 0.8 | 03.10.2026 | Themenmodell korrigiert: Vorgänge als bevorzugte Themenauswahl mit automatischer Mitnahme ihrer Ereignisse; direkte Ereignis-Thema-Beziehung für zusätzliche „Weitere relevante Ereignisse“ zugelassen; Meldungstext und vorhandene „Unsere Einordnung“ werden über Ereignisse als Analysekontext erschlossen; Herkunfts- und Anti-Doppelzählungsregel ergänzt. |
