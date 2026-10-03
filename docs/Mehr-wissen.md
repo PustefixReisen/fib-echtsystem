@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 1.1 | 03.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
+| 1.2 | 04.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
 
 ## 1. Leitidee
 
@@ -76,6 +76,8 @@ Verbindliche Reihenfolge:
 4. konkrete Erkenntnislücke bestimmen,
 5. erst dann die Frage bürgernah formulieren.
 
+Die KI bildet die angebotenen Vertiefungsfragen aus dem bereits gesammelten und ausgewerteten Informationsstand, erkannten Zielkonflikten, Unsicherheiten, offenen Wissensfragen und relevanten Rahmenbedingungen. Die Fragen sollen Besucher dabei unterstützen, eigene Interessen zu vertiefen und sich bei Bedarf selbst weitergehend zu informieren; sie ersetzen kein abschließendes Gesamturteil.
+
 Die Formulierung soll kurz, konkret und neugierig machend sein, ohne suggestiv zu werden.
 
 Wiederkehrende fachliche Frageachsen dürfen sprachlich variieren; ihre Bedeutung darf sich dadurch nicht verändern.
@@ -138,6 +140,38 @@ Mehrere funktional unterschiedliche Quellen sind oft wertvoller als viele gleich
 
 Bei Sammeldokumenten soll die konkrete Fundstelle möglichst mit Titel, Ausgabe/Datum, Überschrift/Abschnitt und Seite angegeben werden.
 
+### 7.1 Rechtliche Vertiefung
+
+Rechtliche Informationen werden in FIB auf zwei Ebenen behandelt:
+
+1. **Rechtlich notwendiger Kontext im Hauptinhalt** – Soweit ein rechtlicher oder verfahrensrechtlicher Zusammenhang erforderlich ist, um einen Ereignis-, Vorgangs- oder Themenstand überhaupt richtig zu verstehen, wird er im jeweiligen Hauptinhalt sachlich erklärt. Dazu gehören beispielsweise ein erforderliches Planfeststellungsverfahren, eine zuständige Behörde oder eine formale Entscheidungsgrundlage, wenn sie unmittelbar zum aktuellen Sachstand gehört.
+2. **Vertiefende rechtliche Fragen in „Mehr wissen?“** – Rechtsfragen, die für das Verständnis nicht zwingend im Haupttext benötigt werden, aber beim tieferen Einstieg in den Sachverhalt relevant werden, sollen bevorzugt als Vertiefungsfragen angeboten werden.
+
+Geeignete Vertiefungsfragen können insbesondere betreffen:
+
+- einschlägige Gesetze, Verordnungen, Satzungen und Verwaltungsvorschriften,
+- Zuständigkeiten und Entscheidungsbefugnisse,
+- typische oder konkret vorgesehene Planungs-, Genehmigungs- und Zulassungsverfahren,
+- Beteiligungs- und Verfahrensrechte,
+- formale oder politische Entscheidungsgrundlagen eines Vorhabens,
+- amtliche Erläuterungen und weiterführende fachliche Kommentierungen.
+
+Verbindliche Abgrenzung:
+
+> **FIB macht rechtliche Bezüge und Rechtsquellen nachvollziehbar, nimmt aber keine eigenständige rechtliche Würdigung vor.**
+
+Daraus folgt:
+
+- keine Aussage, dass ein konkretes Handeln rechtmäßig oder rechtswidrig ist,
+- keine verbindliche Auslegung einer Norm,
+- keine Prognose zu rechtlichen Erfolgsaussichten,
+- keine individuelle Rechtsberatung,
+- keine rechtliche Schlussfolgerung, die die Redaktion fachlich nicht selbst prüfen kann.
+
+Die KI darf Rechtsquellen auffinden, ihren Regelungsgegenstand in einfacher Sprache erläutern und ihren erkennbaren Bezug zum Sachverhalt beschreiben. Sie soll dabei möglichst auf Primärquellen und amtliche Erläuterungen verweisen. Sekundärquellen und fachliche Kommentare können ergänzend zur Verständlichkeit dienen, ersetzen aber bei rechtlich relevanten Aussagen nicht die belastbare Rechtsquelle.
+
+Die Vertiefung bleibt freiwillig: Besucher, die sich nicht für den Rechtsrahmen interessieren, müssen den normalen FIB-Inhalt ohne diese Ebene vollständig verstehen können.
+
 ## 8. Chancen, Innovation und Lerntransfer
 
 Bei Pilotprojekten, technischen Entwicklungen, Beteiligungsformaten oder externen Praxisbeispielen wird geprüft, ob Fragen zu Chancen, Reifegrad, Übertragbarkeit oder Lerntransfer zusätzlichen Erkenntniswert bieten.
@@ -181,5 +215,6 @@ Die fachliche Logik gehört dem FIB-System und nicht einem bestimmten KI-Modell.
 
 | Version | Datum | Änderung |
 |---|---|---|
+| 1.2 | 04.10.2026 | Vertiefungsfragen explizit aus dem ausgewerteten Informationsstand und offenen Erkenntnisfragen abgeleitet; zweistufige rechtliche Einordnung festgelegt: rechtlich notwendiger Kontext im Hauptinhalt, weiterführende Rechtsfragen und Rechtsquellen bevorzugt über „Mehr wissen?“. Rechtliche Würdigung, verbindliche Auslegung und Rechtsberatung durch FIB ausdrücklich ausgeschlossen. |
 | 1.1 | 03.10.2026 | G2.5-Transfer: harte Quellenpflicht ergänzt; vorbereitete Hintergrundantworten dürfen fehlende Belege nicht durch scheinbar sicheres allgemeines Modellwissen ersetzen. |
 | 1.0 | 30.09.2026 | Demonstrator-Konzept `FIB_Mehr_wissen_Assistent.md` auf die aktuelle Meldungs-/Vorgangs-/Themenlogik und das MVP des Echtsystems überführt. |
