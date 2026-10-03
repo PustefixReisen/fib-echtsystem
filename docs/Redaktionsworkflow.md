@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 0.5 | 03.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
+| 0.6 | 03.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
 
 ## 1. Zweck und Geltung
 
@@ -267,18 +267,22 @@ Ein neu erfasstes Prüfkriterium kann zunächst fallbezogen verwendet werden. Zu
 
 ## 8. Benutzernahe Fragen statt abstrakter Feldnamen
 
-Die App verwendet, soweit sinnvoll, kontextbezogene Fragen anstelle interner Fachbegriffe.
+Die App verwendet bei der Bewertung einer Wirkung grundsätzlich die kontextbezogenen Fragen aus dem Begriffsregister. Die internen Fachbegriffe bleiben im Datenmodell erhalten, sollen dem Redakteur aber nicht als abstrakte Feldnamen zugemutet werden.
 
-Beispielhafte Übersetzung:
+Verbindliche Fragen und Antwortwerte:
 
-| Fachbegriff | Benutzernahe Formulierung |
-|---|---|
-| Wirkungsrichtung | Wie wirkt sich diese Wirkung auf das Ziel aus? |
-| Bedeutung der Wirkung | Wie groß bzw. weitreichend ist diese Auswirkung? |
-| Verlässlichkeit | Wie gut ist diese Einschätzung belegt? |
-| politisches Gewicht | Wie stark soll diese Auswirkung in der Abwägung zählen? |
+| Fachbegriff | Kontextbezogene Frage | Antwortwerte |
+|---|---|---|
+| Wirkungsrichtung | Wie wirkt sich diese Auswirkung auf das Ziel aus? | unterstützt die Zielerreichung / behindert die Zielerreichung / keine erkennbare Auswirkung auf die Zielerreichung / unklar |
+| Bedeutung der Wirkung | Wie bedeutend bzw. weitreichend ist diese Auswirkung? | hoch / mittel / gering / unklar |
+| Verlässlichkeit | Wie gut ist diese Einschätzung belegt? | hoch / mittel / gering / unklar |
+| politisches Gewicht | Wie stark soll diese Auswirkung in der Abwägung zählen? | hoch / mittel / gering / offen |
 
-Die endgültigen Benutzer-Labels werden im Begriffsregister geführt.
+Für die Wirkungsrichtung bedeutet „behindert die Zielerreichung“ ausdrücklich, dass die Wirkung der Erreichung des gewählten Zielbereichs entgegenwirkt. Die Stärke dieser Wirkung wird nicht in der Wirkungsrichtung codiert, sondern getrennt über die Bedeutung der Wirkung erfasst.
+
+Bei „politisches Gewicht“ bedeutet **offen**, dass die redaktionelle Abwägungsentscheidung noch nicht getroffen wurde. Dies ist von **unklar** bei sachlicher Tragweite oder Verlässlichkeit zu unterscheiden.
+
+Die KI darf die Werte vorschlagen. Pflichtbestätigungen und Plausibilitätsprüfungen richten sich nach den fachlichen Regeln des Datenmodells.
 
 ## 9. KI-Begründung
 
@@ -344,7 +348,8 @@ Verbindlich sind die fachlichen Prinzipien:
 - einmal festgelegte Wirkung-Perspektive-Zuordnungen werden wiederverwendet und nur bei fachlichem Änderungsanlass erneut geprüft,
 - mögliche Wirkungsdubletten werden KI-gestützt erkannt und redaktionell als gleich oder verschieden eingeordnet,
 - gleichbedeutende Wirkungen werden in der Themenanalyse nicht mehrfach gewichtet,
-- widersprüchliche Wirkungen innerhalb eines Vorgangs erzeugen einen Prüfhinweis statt automatischer Bereinigung.
+- widersprüchliche Wirkungen innerhalb eines Vorgangs erzeugen einen Prüfhinweis statt automatischer Bereinigung,
+- die vier Bewertungsfelder werden mit den in Abschnitt 8 festgelegten kontextbezogenen Fragen und Antwortwerten geführt.
 
 Noch experimentell sind insbesondere:
 
@@ -362,6 +367,7 @@ Diese Punkte werden an realen FIB-Vorgängen und Themen prototypisch getestet.
 
 | Version | Datum | Änderung |
 |---|---|---|
+| 0.6 | 03.10.2026 | Bewertungsdialog konkretisiert: verbindliche kontextbezogene Fragen und feste Antwortwerte für Wirkungsrichtung, Bedeutung der Wirkung, Verlässlichkeit und politisches Gewicht festgelegt; „behindert die Zielerreichung“ präzisiert und Tragweitenfrage auf „Wie bedeutend bzw. weitreichend ist diese Auswirkung?“ geändert. |
 | 0.5 | 03.10.2026 | Wirkung-Perspektive-Zuordnung als persistenter Arbeitsstand konkretisiert: festgelegte Zuordnungen werden wiederverwendet und nur bei fachlichem Änderungsanlass, Plausibilitätskonflikt oder ausdrücklicher redaktioneller Neubewertung erneut geprüft. |
 | 0.4 | 03.10.2026 | Themenworkflow verschlankt: vorhandene Wirkungen eines enthaltenen Ereignisses werden automatisch berücksichtigt; keine erneute Auswahl der Wirkung. KI ordnet Wirkungen automatisch einer oder mehreren bestätigten Perspektiven zu; gezielte redaktionelle Klärung nur bei Mehrdeutigkeit, Unsicherheit, Abweichung, fehlender Perspektive oder manueller Korrektur. UI-Feinschliff bewusst für Implementierung offen gehalten. |
 | 0.3 | 03.10.2026 | Wirkungslogik konkretisiert: Wirkung am Ereignis mit Herkunftskontext; Änderung nur im Herkunftskontext; keine konkurrierenden Fassungen im Themenworkflow; KI-Plausibilitätsprüfung auf gleichbedeutende Wirkungen mit benutzerfreundlicher Frage „Meinen diese beiden Auswirkungen im Wesentlichen dasselbe?“; Anti-Doppelgewichtung und Konflikthinweise für widersprüchliche Wirkungen ergänzt. |
