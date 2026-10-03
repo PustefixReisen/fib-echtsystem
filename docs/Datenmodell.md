@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 1.1 | 03.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
+| 1.2 | 03.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
 
 ## 1. Zweck und Geltung
 
@@ -283,6 +283,46 @@ Als fachlicher Anlass gelten insbesondere:
 
 Die konkrete UI- und Bestätigungslogik wird im Redaktionsworkflow festgelegt. Das Datenmodell muss die persistente Zuordnung und ihre nachvollziehbare Änderung unterstützen.
 
+#### 3.7.5 Strukturierte Bewertungswerte
+
+Für die strukturierte Bewertung einer Wirkung werden vier getrennte Felder mit festen fachlichen Wertemengen verwendet. Die Trennung verhindert, dass Richtung, sachliche Tragweite, Erkenntnissicherheit und politisches Gewicht miteinander vermischt werden.
+
+**Wirkungsrichtung** – Wirkung auf den gewählten Zielbereich:
+
+- unterstützt die Zielerreichung,
+- behindert die Zielerreichung,
+- keine erkennbare Auswirkung auf die Zielerreichung,
+- unklar.
+
+**Bedeutung der Wirkung** – sachliche Tragweite im konkreten Fall:
+
+- hoch,
+- mittel,
+- gering,
+- unklar.
+
+**Verlässlichkeit** – Belastbarkeit der Einschätzung:
+
+- hoch,
+- mittel,
+- gering,
+- unklar.
+
+**Politisches Gewicht** – Bedeutung in der redaktionellen Abwägung:
+
+- hoch,
+- mittel,
+- gering,
+- offen.
+
+Dabei gilt:
+
+- Wirkungsrichtung und Bedeutung der Wirkung sind getrennt; die Richtung enthält keine Intensitätsstufe.
+- `unklar` kennzeichnet eine noch nicht ausreichend geklärte fachliche bzw. sachliche Einschätzung.
+- `offen` beim politischen Gewicht kennzeichnet dagegen eine noch nicht getroffene redaktionelle Abwägungsentscheidung.
+- Die Werte werden nicht mechanisch ineinander übersetzt. Insbesondere bestimmt eine hohe sachliche Tragweite nicht automatisch ein hohes politisches Gewicht und eine geringe Verlässlichkeit nicht automatisch ein geringes politisches Gewicht.
+- Benutzernahe Fragen und Darstellung werden im Redaktionsworkflow und Begriffsregister festgelegt.
+
 ### 3.8 Strukturierter Redaktionsstand und Textfassung
 
 Für KI-formulierte Inhalte, insbesondere „Unsere Einordnung“, werden fachliche Struktur und sprachliche Darstellung getrennt behandelt.
@@ -331,7 +371,7 @@ Zur Pflichtbestätigung gehören grundsätzlich insbesondere:
 Beispiele für Plausibilitätsprüfungen:
 
 - `Verlässlichkeit = gering` und zugleich `politisches Gewicht = hoch` → gezielter Prüfhinweis.
-- `Wirkungsrichtung = beeinträchtigt`, aber positive Gesamtbewertung derselben Wirkung ohne erkennbare Begründung → Inkonsistenzhinweis.
+- `Wirkungsrichtung = behindert die Zielerreichung`, aber positive Gesamtbewertung derselben Wirkung ohne erkennbare Begründung → Inkonsistenzhinweis.
 - Eine bestätigte `Wirkung` wurde geändert, die `Abwägung` blieb aber unverändert → erneute Prüfung der Abwägung erforderlich.
 - Eine `Gestaltungsoption` erzeugt erwartete neue `Wirkungen`, diese fehlen aber in der Abwägung → Prüfhinweis.
 - Eine manuell geänderte `Textfassung` verschiebt eine Bewertung oder Gewichtung, ohne dass sich der strukturierte Redaktionsstand geändert hat → Konsistenzwarnung.
@@ -425,6 +465,7 @@ Die noch nicht abschließend modellierten Begriffe werden im weiteren G3-Verlauf
 
 | Version | Datum | Änderung |
 |---|---|---|
+| 1.2 | 03.10.2026 | Feste fachliche Wertemengen für Wirkungsrichtung, Bedeutung der Wirkung, Verlässlichkeit und politisches Gewicht festgelegt; Wirkungsrichtung als Unterstützung/Behinderung der Zielerreichung präzisiert und `unklar` von `offen` beim politischen Gewicht abgegrenzt. |
 | 1.1 | 03.10.2026 | Persistente Wirkung-Perspektive-Zuordnung festgelegt: vorhandene Wirkungen eines im Thema enthaltenen Ereignisses werden automatisch berücksichtigt; Zuordnungen zu einer oder mehreren Themenperspektiven werden gespeichert und nur bei fachlichem Änderungsanlass, Plausibilitätskonflikt oder ausdrücklicher redaktioneller Neubewertung erneut geprüft. |
 | 1.0 | 03.10.2026 | Wirkungsmodell konkretisiert: Wirkungen fachlich am Ereignis verankert; Herkunftskontext Vorgang/Thema bestimmt Änderungszuständigkeit; mehrere eigenständige Wirkungen je Ereignis zulässig; semantisch gleichbedeutende Wirkungen werden als Analyse-Dubletten erkannt und nicht mehrfach gewichtet; widersprüchliche Wirkungen erzeugen Prüfhinweise statt automatischer Bereinigung. |
 | 0.9 | 03.10.2026 | Themenmodell ergänzt: direkt aufgenommene Einzelereignisse erhalten wie Vorgänge die Bedeutung für das Thema mit prägend/relevant/ergänzend; Themen können durch KI-Vorschlag oder redaktionelle Anlage entstehen; bei redaktioneller Neuanlage ist eine Ähnlichkeits-/Dublettprüfung gegen den Themenbestand verpflichtend. |
