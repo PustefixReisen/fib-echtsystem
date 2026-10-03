@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 1.4 | 03.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
+| 1.5 | 03.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
 
 ## 1. Zweck und Geltung
 
@@ -145,9 +145,15 @@ Meldungen werden **nicht als eigener dritter Auswahlweg** geführt. Hat ein ausg
 
 Die Redaktion soll nicht alle im FIB-Bestand vorhandenen, noch nicht zugeordneten Ereignisse ungefiltert angezeigt bekommen.
 
-Stattdessen erzeugt die KI eine Vorauswahl unter der Bezeichnung:
+Stattdessen erzeugt die KI eine Vorauswahl. Im Bearbeitungskontext lautet die Eingabeaufforderung je nach Zahl der ausgewählten Vorgänge:
 
-> **Weitere relevante Ereignisse**
+> **Weitere relevante Ereignisse außerhalb dieses Vorgangs**
+
+bzw.
+
+> **Weitere relevante Ereignisse außerhalb der ausgewählten Vorgänge**
+
+Damit wird deutlich, dass diese Ereignisse für das Thema relevant sein können, ohne dem ausgewählten Vorgang bzw. den ausgewählten Vorgängen anzugehören. Die Aufnahme in ein Thema erzeugt oder verändert keine Vorgangszuordnung.
 
 Vorgeschlagen werden nur Ereignisse, die nach der Themenleitfrage, den Perspektiven, Orten/Bezugsobjekten, Wirkungen, Akteuren, zeitlichen Zusammenhängen oder einer möglichen zukünftigen Bedeutung plausibel relevant sein können und noch nicht über einen ausgewählten Vorgang im Thema enthalten sind.
 
@@ -157,7 +163,7 @@ Damit gilt:
 
 `ausgewählte Vorgänge → ihre Ereignisse automatisch enthalten`
 
-`+ KI-Vorauswahl „Weitere relevante Ereignisse“`
+`+ KI-Vorauswahl weiterer relevanter Ereignisse außerhalb der ausgewählten Vorgänge`
 
 `+ manuelle Ereignissuche als Sicherheitsnetz`
 
@@ -199,7 +205,24 @@ Die frühere Rollen-Taxonomie **Treiber / Gestaltungsbeitrag / Betroffenheit / R
 
 Ein Thema wird durch sachliche **Perspektiven** strukturiert. Eine Perspektive bezeichnet einen fachlichen Betrachtungsaspekt, z. B. Lärm, Verkehrssicherheit, Flächenverbrauch, Erreichbarkeit oder kommunalen Handlungsspielraum.
 
-Unter einer Perspektive werden die sachlich belegbaren oder begründet erwartbaren **Wirkungen** relevanter Vorgänge und Ereignisse beschrieben.
+Perspektiven werden dem Thema zugeordnet, nicht einzelnen Vorgängen oder Ereignissen. Ein Vorgang oder Ereignis kann anschließend unter mehreren Perspektiven betrachtet werden.
+
+Die KI schlägt Perspektiven aus dem **gesamten bereits bestätigten Themenbestand** vor. Dabei werden sowohl die ausgewählten Vorgänge mit ihren Ereignissen und redaktionellen Verdichtungen als auch direkt ergänzte weitere relevante Ereignisse berücksichtigt. Eine Perspektive darf deshalb nicht nur aus dem zuerst ausgewählten oder besonders prägenden Vorgang abgeleitet werden.
+
+Die Redaktion kann:
+
+- vorgeschlagene Perspektiven übernehmen oder abwählen,
+- eigene Perspektiven ergänzen,
+- ähnliche oder überlappende Perspektiven zusammenführen,
+- bestehende Perspektiven umbenennen oder fachlich schärfen.
+
+Die KI-Vorauswahl unterstützt die Redaktion, ersetzt aber keine redaktionelle Bestätigung. Für eine bestätigte Perspektive muss nachvollziehbar bleiben, aus welchen Vorgängen, Ereignissen, Quellen oder sonstigen Analyseinhalten sie vorgeschlagen bzw. begründet wurde.
+
+Unter jeder bestätigten Perspektive werden anschließend die fachlich relevanten Vorgänge und Ereignisse zusammengeführt und die sachlich belegbaren oder begründet erwartbaren **Wirkungen** beschrieben.
+
+Damit gilt als Arbeitsfolge:
+
+`bestätigter Themenbestand → KI-Perspektivvorschläge → redaktionelle Auswahl/Ergänzung/Zusammenführung → bestätigte Perspektiven → Zuordnung relevanter Vorgänge/Ereignisse → Wirkungen`
 
 Perspektive und Wirkung sind keine politische Bewertung. Die politische Bewertung gehört ausschließlich in die getrennte Ebene **„Unsere Einordnung“**.
 
@@ -223,7 +246,7 @@ Die interne Themendefinition enthält mindestens:
 
 Der Arbeitsprozess ist iterativ:
 
-> **KI-Themenkandidat oder redaktionelle Themenanlage → Ähnlichkeits-/Dublettprüfung → Auswahl von Vorgängen und weiteren relevanten Ereignissen → Entwurf → redaktionelle Ergänzung/Korrektur → gezielte Recherche → Kontextschärfung → bestätigte Themendefinition → laufende Weiterentwicklung**
+> **KI-Themenkandidat oder redaktionelle Themenanlage → Ähnlichkeits-/Dublettprüfung → Auswahl von Vorgängen und weiteren relevanten Ereignissen → Perspektiven → Entwurf → redaktionelle Ergänzung/Korrektur → gezielte Recherche → Kontextschärfung → bestätigte Themendefinition → laufende Weiterentwicklung**
 
 Eine bestätigte Themendefinition ist **kein eingefrorener Endzustand**. Sie kann auch später ausgeschärft werden, wenn:
 
@@ -247,10 +270,10 @@ Die KI soll aus folgenden Entscheidungen lernen:
 - bei der Dublett-/Ähnlichkeitsprüfung bestätigte Zusammenführungen oder Abgrenzungen,
 - vom Redakteur ergänzte fehlende Aspekte,
 - nachträglich entdeckte relevante Vorgänge oder Ereignisse,
-- übernommene und verworfene Vorschläge unter „Weitere relevante Ereignisse“,
+- übernommene und verworfene Vorschläge weiterer relevanter Ereignisse,
 - bewusste Abgrenzungen zwischen Thema und Vorgang,
 - redaktionell korrigierte Einstufungen der Bedeutung eines Vorgangs oder Einzelereignisses für ein Thema,
-- redaktionell ergänzte oder korrigierte Perspektiven.
+- redaktionell ergänzte, verworfene, zusammengeführte oder korrigierte Perspektiven.
 
 Ziel ist keine autonome Themenhoheit der KI, sondern eine zunehmend FIB-spezifische Vorschlagslogik unter redaktioneller Kontrolle.
 
@@ -302,7 +325,8 @@ Für das Datenmodell sind mindestens vorzusehen:
 - protokollierte Ähnlichkeits-/Dublettprüfung bei Neuanlage eines Themas,
 - automatische Erschließung zugehöriger Meldungstexte und vorhandener „Unsere Einordnung“ über die Ereignisbeziehung,
 - Herkunftskennzeichnung der Analyseinhalte, damit Quellen, Ereignisse, Meldungstexte, Vorgangstexte und politische Einordnung nicht als unabhängige Belege doppelt gewertet werden,
-- strukturierte Perspektiven eines Themas,
+- strukturierte und redaktionell bestätigte Perspektiven eines Themas,
+- nachvollziehbare Herkunft bzw. Begründung vorgeschlagener Perspektiven aus dem gesamten Themenbestand,
 - sachliche Wirkungen relevanter Vorgänge und Ereignisse innerhalb dieser Perspektiven,
 - versionierte Themendefinitionen,
 - redaktioneller Bestätigungsstatus für Themendefinitionen,
@@ -333,6 +357,7 @@ Eine Themenseite muss insbesondere beantworten:
 
 | Version | Datum | Änderung |
 |---|---|---|
+| 1.5 | 03.10.2026 | Perspektivenlogik konkretisiert: Perspektiven gehören zum Thema, werden aus dem gesamten bestätigten Themenbestand vorgeschlagen und redaktionell übernommen, ergänzt, abgewählt oder zusammengeführt; Herkunft der Vorschläge bleibt nachvollziehbar. Eingabeaufforderung für weitere relevante Ereignisse auf „außerhalb dieses Vorgangs / der ausgewählten Vorgänge“ präzisiert. |
 | 1.4 | 03.10.2026 | Zwei Wege der Themenentstehung festgelegt: KI-Themenvorschlag und redaktionelle Themenanlage; verpflichtende Ähnlichkeits-/Dublettprüfung bei Neuanlage ergänzt; Bedeutung für das Thema mit prägend/relevant/ergänzend auf direkt ergänzte Einzelereignisse erweitert. |
 | 1.3 | 03.10.2026 | Themenauswahl auf Vorgänge plus zusätzliche „Weitere relevante Ereignisse“ erweitert; Vorgangsauswahl übernimmt zugehörige Ereignisse automatisch; Meldungen werden über Ereignisse samt Meldungstext und vorhandener „Unsere Einordnung“ als Analysekontext erschlossen; KI-Vorauswahl und manuelle Ereignissuche sowie Anti-Doppelzählungsregel festgelegt. |
 | 1.2 | 02.10.2026 | Wirkungsrollen-Taxonomie durch „Bedeutung für das Thema“ ersetzt; verpflichtende redaktionelle Bestätigung festgelegt; Perspektiven und sachliche Wirkungen von politischer Bewertung abgegrenzt. |
