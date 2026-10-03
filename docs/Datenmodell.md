@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 0.8 | 03.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
+| 0.9 | 03.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
 
 ## 1. Zweck und Geltung
 
@@ -165,23 +165,35 @@ Dabei gilt:
 
 > **Quelle/Fundstelle und Ereignis bilden die Tatsachenbasis. Meldungs- und Vorgangstexte sind redaktionelle Verdichtungen. „Unsere Einordnung“ ist eine politische Bewertung. Mehrfache textliche Vorkommen desselben Sachverhalts dürfen nicht als voneinander unabhängige Belege oder zusätzliche Gewichtung behandelt werden.**
 
-Die frühere vorgesehene Wirkungsrolle entfällt als eigenes strukturiertes Merkmal. An ihre Stelle tritt für `Vorgang ↔ Thema` die redaktionell bestätigte `Bedeutung für das Thema`.
+Die frühere vorgesehene Wirkungsrolle entfällt als eigenes strukturiertes Merkmal. An ihre Stelle tritt die redaktionell bestätigte `Bedeutung für das Thema`.
 
-Die `Bedeutung für das Thema` beschreibt, wie stark ein `Vorgang` das Verständnis oder die Entwicklung eines `Themas` prägt. Es gelten zunächst drei Stufen:
+Die `Bedeutung für das Thema` beschreibt, wie stark ein ausgewählter `Vorgang` oder ein direkt ergänztes einzelnes `Ereignis` das Verständnis oder die Entwicklung eines `Themas` prägt. Es gelten drei Stufen:
 
-- `prägend` – ohne diesen `Vorgang` lässt sich das `Thema` derzeit kaum sinnvoll erklären,
-- `relevant` – der `Vorgang` trägt wesentlich zum Verständnis bei,
-- `ergänzend` – der `Vorgang` liefert zusätzlichen Kontext, ist aber nicht zentral.
+- `prägend` – ohne diesen Themenbestandteil lässt sich das Thema derzeit kaum sinnvoll erklären,
+- `relevant` – der Themenbestandteil trägt wesentlich zum Verständnis bei,
+- `ergänzend` – der Themenbestandteil liefert zusätzlichen Kontext, ist aber nicht zentral.
 
-Die Einstufung wird von der KI vorgeschlagen und muss durch die Redaktion verpflichtend geprüft, bestätigt oder geändert werden, bevor sie fachlich wirksam wird.
+Die Einstufung gilt sowohl für `Vorgang ↔ Thema` als auch für direkte `Ereignis ↔ Thema`-Beziehungen. Sie wird von der KI vorgeschlagen und muss durch die Redaktion verpflichtend geprüft, bestätigt oder geändert werden, bevor sie fachlich wirksam wird.
 
 Die Bedeutung wird nicht automatisch aus der Zahl der `Meldungen`, `Perspektiven` oder Quellen berechnet. Die KI kann ihren Vorschlag u. a. aus Tragweite, Dauer, Auswirkungen, Einfluss auf andere Vorgänge, Aktualität und Bedeutung für die Leitfrage ableiten; die redaktionelle Entscheidung bleibt maßgeblich.
 
-Die fachliche Erklärung, **warum** ein `Vorgang` für ein `Thema` relevant ist, erfolgt über `Perspektiven` und die darunter beschriebenen `Wirkungen`.
+Die fachliche Erklärung, **warum** ein Vorgang oder Ereignis für ein Thema relevant ist, erfolgt über `Perspektiven` und die darunter beschriebenen `Wirkungen`.
 
-Für direkt ergänzte Einzelereignisse wird zunächst keine eigene parallele „Bedeutung für das Thema“-Skala eingeführt. Ihre Aufnahme wird redaktionell bestätigt; ob später eine eigene Gewichtungsstufe für Einzelereignisse benötigt wird, wird anhand realer Fälle geprüft.
+### 3.6 Themenentstehung und Dublettprüfung
 
-### 3.6 `Perspektive`, `Wirkung` und `Bewertung` – Arbeitsstand
+Ein Thema kann aus einem KI-generierten Themenkandidaten oder durch direkte redaktionelle Anlage entstehen.
+
+Bei einer redaktionellen Neuanlage muss vor dem fachlich wirksamen Speichern eine Ähnlichkeits-/Dublettprüfung gegen den bestehenden Themenbestand erfolgen. Sie prüft nicht nur den Titel, sondern insbesondere Leitfrage, Abgrenzung, bereits zugeordnete Vorgänge und Ereignisse, Perspektiven und sachlichen Erklärungszweck.
+
+Das Prüfergebnis muss mindestens unterscheiden können:
+
+- kein ähnliches Thema gefunden,
+- ähnliches Thema vorhanden – Zusammenführung oder Abgrenzung prüfen,
+- gleiches Thema wahrscheinlich vorhanden – bewusste redaktionelle Entscheidung erforderlich.
+
+Die Herkunft des Themas (`KI-Vorschlag` oder `redaktionelle Anlage`) sowie das Ergebnis einer erforderlichen Dublettprüfung müssen nachvollziehbar gespeichert werden. Die KI darf eine Empfehlung geben, entscheidet aber nicht autonom über Identität, Zusammenführung oder Abgrenzung von Themen.
+
+### 3.7 `Perspektive`, `Wirkung` und `Bewertung` – Arbeitsstand
 
 Für die weitere Modellierung werden folgende Begriffe getrennt:
 
@@ -193,7 +205,7 @@ Für die weitere Modellierung werden folgende Begriffe getrennt:
 
 Diese Begriffe werden im Begriffsregister verbindlich abgegrenzt. Die konkrete Datenmodellierung von `Wirkung`, `Bewertung`, `Begründung` und `politischem Bezug` wird als nächster G3-Schritt anhand des grünen Referenzsystems geklärt.
 
-### 3.7 Strukturierter Redaktionsstand und Textfassung
+### 3.8 Strukturierter Redaktionsstand und Textfassung
 
 Für KI-formulierte Inhalte, insbesondere „Unsere Einordnung“, werden fachliche Struktur und sprachliche Darstellung getrennt behandelt.
 
@@ -218,7 +230,7 @@ Es gelten folgende Konsistenzregeln:
 
 Der Redaktionsprozess ist bewusst iterativ: Der Redakteur kann zu früheren strukturierten Angaben zurückkehren, sie ändern und anschließend einen neuen Abwägungs- oder Formulierungsvorschlag erzeugen. Die Historie der fachlich wirksamen Änderungen bleibt nachvollziehbar.
 
-### 3.8 Bestätigung und Plausibilitätsprüfung
+### 3.9 Bestätigung und Plausibilitätsprüfung
 
 Für den strukturierten Redaktionsprozess werden drei Sicherungsebenen unterschieden:
 
@@ -250,7 +262,7 @@ Plausibilitätsprüfungen sind keine automatische politische Entscheidung. Sie m
 
 Die sprachliche Fassung der `Abwägung` wird von der KI erzeugt. Pflichtbestätigt wird die strukturierte Abwägung, nicht jeder einzelne Satz der daraus formulierten Textfassung.
 
-### 3.9 Noch zu klärende Kernbeziehungen
+### 3.10 Noch zu klärende Kernbeziehungen
 
 Als nächste Modellierungsschritte werden geklärt:
 
@@ -258,8 +270,7 @@ Als nächste Modellierungsschritte werden geklärt:
 - `Perspektiven` und `Wirkungen` innerhalb eines `Themas`,
 - Modellierung von `Bewertung`, `Begründung`, `Gestaltungsoption`, `Verlässlichkeit`, `politischem Gewicht` und politischem Referenzsystem,
 - genaue Versionierungs- und Vergleichslogik zwischen strukturiertem Redaktionsstand und Textfassung,
-- konkrete fachliche Plausibilitätsregeln für den Redaktionsprozess,
-- ob direkt ergänzte Einzelereignisse später eine eigene Gewichtungsstufe im Thema benötigen.
+- konkrete fachliche Plausibilitätsregeln für den Redaktionsprozess.
 
 ## 4. Weitere Modellbereiche
 
@@ -331,12 +342,12 @@ Die noch nicht abschließend modellierten Begriffe werden im weiteren G3-Verlauf
 5. Welche Daten gehören zur fachlichen Persistenz und welche nur zum technischen Betrieb?
 6. Welche Plausibilitätsregeln sind verbindlich und welche nur unterstützende Hinweise?
 7. Welche zusätzlichen Rechte- und Freigabestatus werden für öffentlich über FIB bereitgestellte Dateien benötigt?
-8. Benötigen direkt ergänzte Einzelereignisse im Thema später eine eigene Bedeutungsskala oder reicht die bestätigte Aufnahmeentscheidung?
 
 ## Änderungshistorie
 
 | Version | Datum | Änderung |
 |---|---|---|
+| 0.9 | 03.10.2026 | Themenmodell ergänzt: direkt aufgenommene Einzelereignisse erhalten wie Vorgänge die Bedeutung für das Thema mit prägend/relevant/ergänzend; Themen können durch KI-Vorschlag oder redaktionelle Anlage entstehen; bei redaktioneller Neuanlage ist eine Ähnlichkeits-/Dublettprüfung gegen den Themenbestand verpflichtend. |
 | 0.8 | 03.10.2026 | Themenmodell korrigiert: Vorgänge als bevorzugte Themenauswahl mit automatischer Mitnahme ihrer Ereignisse; direkte Ereignis-Thema-Beziehung für zusätzliche „Weitere relevante Ereignisse“ zugelassen; Meldungstext und vorhandene „Unsere Einordnung“ werden über Ereignisse als Analysekontext erschlossen; Herkunfts- und Anti-Doppelzählungsregel ergänzt. |
 | 0.7 | 03.10.2026 | Quellenmodell konkretisiert: Herkunft, Fundstelle, Bereitstellung und Sichtbarkeit getrennt; öffentliche FIB-Bereitstellung redaktionell hochgeladener Dateien auch ohne ursprüngliche Internetverfügbarkeit ermöglicht; direkte Ereignis-Thema-Beziehung als parallele Zuordnung verworfen. |
 | 0.6 | 02.10.2026 | Bestätigungslogik und feldübergreifende Plausibilitätsprüfung für den strukturierten Redaktionsprozess festgelegt; strukturierte Abwägung als fachlich zu bestätigender Stand von der KI-formulierten Textfassung getrennt. |
