@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 1.2 | 01.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
+| 1.3 | 03.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
 
 ## 1. Zweck dieses Dokuments
 
@@ -117,13 +117,7 @@ Themen entstehen bottom-up aus dem vorhandenen Wissen und werden redaktionell be
 
 Die Redaktion kann Themenkandidaten ergänzen, einschränken, neu gewichten oder verwerfen. Ergänzte Aspekte werden zunächst geprüft und recherchiert; sie werden nicht allein durch die redaktionelle Nennung zur Tatsache.
 
-Nicht alle Vorgänge haben innerhalb eines Themas dieselbe Bedeutung. FIB unterscheidet fachlich unter anderem:
-
-- prägende Treiber,
-- konkrete Gestaltungs- oder Umsetzungsbeiträge,
-- Auswirkungen bzw. Betroffenheit,
-- Rahmenbedingungen und Kontext,
-- Indikatoren und Beobachtungen.
+Nicht alle Vorgänge haben innerhalb eines Themas dieselbe Bedeutung. FIB unterscheidet fachlich, wie stark ein Vorgang das Verständnis oder die Entwicklung eines Themas prägt: **prägend, relevant oder ergänzend**. Perspektiven und konkrete Wirkungen erklären, warum ein Vorgang für das Thema bedeutsam ist.
 
 Diese Unterscheidung verhindert, dass beispielsweise ein großes Infrastrukturprojekt, ein kommunaler Gestaltungsbeitrag und eine einzelne vorübergehende Auswirkung auf einer Themenseite als gleichrangig erscheinen.
 
@@ -252,14 +246,21 @@ FIB kombiniert insbesondere:
 
 Quellen sollen möglichst konkret nachvollziehbar sein. Wenn eine konkrete Seite, Passage, Vorlage oder Niederschrift gemeint ist, wird nach Möglichkeit genau darauf verwiesen und nicht nur auf eine allgemeine Startseite oder ein gesamtes Dokument.
 
-### 8.1 Zwei Recherchewege
+### 8.1 Zwei Teile des Quellenmonitors
 
-FIB kombiniert:
+Der Quellenmonitor verbindet zwei unterschiedliche Aufgaben:
+
+1. **Bekannte Quellen beobachten.** FIB überwacht bekannte Adressen wie Gemeinde, RIS oder definierte Projektseiten technisch auf neue oder geänderte Inhalte. Solange sich nichts ändert, ist dafür keine KI erforderlich. Erst eine neue oder geänderte Fundstelle wird semantisch durch KI analysiert.
+2. **Neue Quellen entdecken.** FIB sucht zusätzlich aktiv nach bislang unbekannten relevanten Quellen, beispielsweise neuen Projektseiten, Initiativen, Planungsunterlagen, Fachquellen oder Presseangeboten. Diese offene Suche und Relevanzbewertung benötigt KI-Unterstützung.
+
+Neue geeignete Quellen können nach redaktioneller Prüfung in den Bestand bekannter Quellen aufgenommen und anschließend technisch überwacht werden.
+
+### 8.2 Zwei Recherchewege
+
+Innerhalb des Quellenmonitors kombiniert FIB:
 
 1. **themen- und vorgangsbezogene Recherche** zu bereits bekannten Sachzusammenhängen,
 2. **themenunabhängige Entdeckung**, damit neue Vorgänge und Themen nicht übersehen werden.
-
-Zur themenunabhängigen Entdeckung gehören insbesondere die regelmäßige Sichtung definierter Pflichtquellen, ortsbezogene Recherche, periodische Rückblicke und die Auswertung breiter Übersichten auch ohne bekannte FIB-Schlagwörter.
 
 Der Fall „Kiesgrund“ bleibt Referenz- und Regressionstest: Ein relevanter Zukunftsvorgang darf nicht unsichtbar bleiben, nur weil er noch kein etablierter FIB-Begriff war.
 
@@ -267,37 +268,58 @@ Der Fall „Kiesgrund“ bleibt Referenz- und Regressionstest: Ein relevanter Zu
 
 Der Zielprozess im Echtsystem ist:
 
-1. Quellen automatisch beobachten und zusätzlich themenunabhängige Entdeckung durchführen.
-2. Neue oder geänderte Fundstellen erkennen.
-3. Relevanz für Feldkirchen bzw. den bestehenden FIB-Kontext prüfen.
-4. Bestimmen, ob ein neues Ereignis vorliegt und ob daraus eine neue Meldung oder eine Aktualisierung entsteht.
-5. Das Ereignis einem bestehenden Vorgang zuordnen oder einen neuen Vorgang vorschlagen.
-6. Bestehende Themenbezüge prüfen und aus mehreren Vorgängen neue Themenkandidaten erkennen.
-7. Meldungs-, Vorgangs- oder Themenentwurf mit Quellenbezug erstellen.
-8. Redaktion prüft Fakten, Zuordnungen, Gewichtung, fehlende Aspekte und „Unsere Einordnung“.
-9. Falls nötig, werden gezielte Rechercheaufträge ausgelöst.
-10. Redaktion bestätigt die fachlich wirksamen Angaben und gibt die Veröffentlichung frei.
-11. Neue Entwicklungen führen je nach Sachlage zu Aktualisierung, neuer Meldung, Vorgangsfortschreibung oder Ausschärfung eines Themas.
+1. Bekannte Quellen technisch beobachten und zusätzlich aktiv nach neuen Quellen suchen.
+2. Neue oder geänderte Fundstellen erkennen bzw. neue Quellenkandidaten entdecken.
+3. Die dafür erforderliche KI analysiert neue/geänderte Fundstellen und Quellenkandidaten semantisch und schlägt relevante Ereigniskandidaten vor.
+4. Redaktion prüft Relevanz, Quellenlage und Ereigniskandidat.
+5. Bestimmen, ob ein neues Ereignis vorliegt und ob daraus eine neue Meldung oder eine Aktualisierung entsteht.
+6. Das Ereignis einem bestehenden Vorgang zuordnen oder einen neuen Vorgang vorschlagen.
+7. Bestehende Themenbezüge prüfen und aus mehreren Vorgängen neue Themenkandidaten erkennen.
+8. Den strukturierten Redaktionsworkflow bearbeiten; dieser bleibt auch ohne weitere KI-Aufrufe vollständig funktionsfähig.
+9. Falls nötig, gezielte KI-Recherche für konkrete Wissenslücken auslösen.
+10. Optionale KI-Unterstützung kann Vorschläge, Plausibilitätsprüfungen und Textentwürfe liefern.
+11. Redaktion bestätigt die fachlich wirksamen Angaben und gibt die Veröffentlichung frei.
+12. Neue Entwicklungen führen je nach Sachlage zu Aktualisierung, neuer Meldung, Vorgangsfortschreibung oder Ausschärfung eines Themas.
 
-Die Redaktion soll nicht jeden Text neu schreiben müssen. Ihre zentrale Aufgabe ist **prüfen, korrigieren, gewichten, ergänzen und freigeben**.
+Damit wird KI nicht pauschal in jedem Bearbeitungsschritt eingesetzt. Sie wird dort verpflichtend eingesetzt, wo FIB ohne semantische Analyse seine Eingangsfunktion nicht zuverlässig erfüllen könnte, und ansonsten bedarfsgesteuert bzw. optional.
 
-## 10. Rolle der KI
+## 10. Rolle der KI und Hybridarchitektur
 
-KI unterstützt FIB insbesondere bei:
+FIB unterscheidet drei Formen des KI-Einsatzes:
 
-- Quellenanalyse und Relevanzprüfung,
-- Erkennung neuer Ereignisse,
-- Zuordnung zu Vorgängen und Themen,
-- Entwürfen für Meldungen und Sachstände,
-- Erkennung möglicher Themen,
-- Vorschlägen für Wirkungsrollen innerhalb eines Themas,
-- Rechercheaufträgen und Hintergrundrecherche,
-- Fragen und Antworten für „Mehr wissen?“,
-- Erkennung von Änderungen und möglichen Widersprüchen.
+### 10.1 Verpflichtende Entdeckungs- und Eingangs-KI
+
+Sie wird eingesetzt für:
+
+- aktive Entdeckung neuer relevanter Quellen,
+- semantische Analyse neuer oder geänderter Fundstellen,
+- Erkennung möglicher relevanter Ereignisse,
+- Vorschlag neues Ereignis oder Aktualisierung,
+- erste Zuordnung zu bestehendem oder möglichem neuem Vorgang.
+
+Diese Eingangsfunktionen sind qualitätskritisch. Ein übersehenes wichtiges Ereignis kann nicht durch einen später besonders guten Text ausgeglichen werden. Deshalb gilt hier: **Ergebnisqualität vor niedrigstem Preis.**
+
+### 10.2 Bedarfsgesteuerte Recherche-KI
+
+Wenn im Redaktionsworkflow eine konkrete Wissenslücke entsteht, kann gezielt eine Recherchefrage ausgelöst werden. Die KI bearbeitet dann den konkreten Recherchebedarf statt vorsorglich den gesamten Vorgang erneut zu analysieren.
+
+### 10.3 Optionale Redaktions-KI
+
+Für weitere Arbeitsschritte kann KI zugeschaltet werden, sie ist aber keine Voraussetzung für die Funktionsfähigkeit des Redaktionssystems. Beispiele sind:
+
+- Wirkungen vorschlagen,
+- Zielbereiche und Prüfkriterien vorbefüllen,
+- Gestaltungsoptionen finden,
+- semantische Plausibilitätsprüfungen,
+- Abwägungsvorschläge,
+- Meldungs- und Einordnungstexte,
+- „Mehr wissen?“-Fragen und Antworten.
+
+Formularstruktur, Fragemuster, Antwortoptionen, Redaktionszustände, Pflichtbestätigungen und technische Prüfregeln gehören zu FIB selbst und sind nicht von einem KI-Modell abhängig.
+
+Für alle KI-Funktionen gilt: Zuerst wird geprüft, **ob KI überhaupt erforderlich ist**. Wenn KI eingesetzt wird, muss das gewählte Modell die für die konkrete FIB-Aufgabe festgelegte Qualitätsanforderung zuverlässig erfüllen. Erst unter ausreichend qualifizierten Modellen werden Kosten optimiert.
 
 KI veröffentlicht keine politische oder fachlich wirksame redaktionelle Aussage selbstständig.
-
-Die FIB-Regeln werden **modellunabhängig** in der Projektdokumentation und später in einer zentralen Regelschicht des Systems verankert. Ein Modellwechsel darf die fachliche Logik nicht verändern. Referenzfälle und Regressionstests sichern die erwartete Qualität.
 
 ## 11. Qualität und redaktionelle Verantwortung
 
@@ -379,7 +401,7 @@ Bindung zeigt sich beispielsweise darin, dass Menschen:
 
 Die Erfolgsmessung soll datensparsam sein und quantitative sowie qualitative Hinweise kombinieren. Ziel ist nicht maximale Reichweite um jeden Preis, sondern die Frage, ob FIB für Feldkirchen tatsächlich **Orientierung, Verständnis und Anschlussfähigkeit** schafft.
 
-## 15. Betrieb und dauerhafte Tragfähigkeit
+## 15. Betrieb, Kosten und dauerhafte Tragfähigkeit
 
 FIB soll so aufgebaut sein, dass es dauerhaft durch den Ortsverband betrieben werden kann und nicht von einer einzelnen Person oder einem einzelnen KI-Anbieter abhängig ist.
 
@@ -389,10 +411,38 @@ Dazu gehören:
 - nachvollziehbare redaktionelle Arbeitsabläufe,
 - Rollen- und Rechtekonzept,
 - modellunabhängige KI-Anbindung,
-- begrenzbare laufende Kosten,
+- begrenzbare und messbare laufende Kosten,
 - Backup und Wiederherstellbarkeit,
 - technische und redaktionelle Vertretbarkeit,
 - dokumentierte Administration.
+
+### 15.1 Kostenprinzip
+
+Die wichtigste Kostenbremse ist **nicht die Wahl des billigsten Modells**, sondern der gezielte KI-Einsatz:
+
+- bekannte Quellen technisch überwachen, ohne sie ständig erneut von KI lesen zu lassen,
+- KI nur auf neue oder geänderte Fundstellen anwenden,
+- neue Quellen gezielt und periodisch entdecken,
+- Recherche-KI bei konkreten Wissenslücken auslösen,
+- Redaktions-KI nur dort nutzen, wo sie einen tatsächlichen Nutzen bringt,
+- Ergebnisse persistent speichern und wiederverwenden.
+
+Wo KI fachlich erforderlich ist, insbesondere bei Quellenentdeckung und Ereigniserkennung, steht die Ergebnisqualität an erster Stelle.
+
+### 15.2 Vorläufige monatliche KI-Kosten
+
+Bis Pilot- und Echtbetriebsdaten vorliegen, gilt für die Planung folgender bewusst gerundeter Korridor:
+
+| Bereich | vorläufiger Normalbetrieb pro Monat |
+|---|---:|
+| verpflichtende Quellenentdeckung und Eingangsanalyse | **ca. 3–8 €** |
+| bedarfsgesteuerte und optionale Redaktions-KI | **ca. 0–5 € zusätzlich** |
+| erwarteter Gesamtkorridor | **ca. 3–13 €** |
+| vorläufiger Planungs-/Warnrahmen | **15 € / Monat** |
+
+Die Werte sind **keine Preiszusage**. Sie beruhen auf dem derzeit erwarteten kleinen kommunalen Recherchevolumen und den Preisgrößen zum Stand 03.10.2026. Vor Go-live werden sie anhand des FIB-Testkorpus und danach anhand realer Nutzung ersetzt bzw. nachkalibriert.
+
+Das Ziel ist nicht, einen bestimmten Eurobetrag um jeden Preis einzuhalten. Entscheidend ist, dass die qualitätskritische Eingangsanalyse zuverlässig funktioniert und unnötige KI-Aufrufe vermieden werden.
 
 Für das Echtsystem gilt der Grundsatz:
 
@@ -403,6 +453,10 @@ Für das Echtsystem gilt der Grundsatz:
 Dieser Management Approach ist die verständliche Management-Zusammenfassung. Verbindliche Details stehen insbesondere in:
 
 - `docs/Themen-und-Vorgangslogik.md` – fachliche Definition und Pflege von Meldung/Vorgang/Thema,
+- `docs/Recherche-und-Quellenmonitor.md` – Quellenbeobachtung, Quellenentdeckung und Übergang in den Redaktionsprozess,
+- `docs/KI-Qualitaet-und-Modellunabhaengigkeit.md` – Qualitätsanforderungen, Modellvergleich und Leistungsklassen,
+- `docs/KI-Betrieb-und-Kosten.md` – Hybridprinzip, Kostenplanung, Routing und Kostenmessung,
+- `docs/Redaktionsworkflow.md` – strukturierter redaktioneller Bearbeitungsprozess,
 - `docs/UX-und-Informationsarchitektur.md` – öffentliche Benutzerführung und Darstellung,
 - `docs/Visuelle-Identitaet-und-Bildkonzept.md` – visuelle Identität, Logo, Banner, Navigation und Bildsprache,
 - `docs/Marketing-und-Kommunikation.md` – Claim, Botschaften, Verbreitung, Reichweite und Nutzerbindung,
@@ -414,6 +468,7 @@ Dieser Management Approach ist die verständliche Management-Zusammenfassung. Ve
 
 | Version | Datum | Änderung |
 |---|---|---|
+| 1.3 | 03.10.2026 | Hybridarchitektur für KI verständlich ergänzt: Quellenbeobachtung ohne KI bis zur Änderung, KI-gestützte Quellenentdeckung und Eingangsanalyse, bedarfsgesteuerte Recherche-KI und optionale Redaktionsassistenz; Qualitätsvorrang bei erforderlicher KI; vorläufigen monatlichen KI-Kostenkorridor 3–13 € mit 15 € Planungs-/Warnrahmen aufgenommen. |
 | 1.2 | 01.10.2026 | Prägnantes Kapitel zu Kommunikationskern, Claim und Botschaften aus dem Demonstrator wieder aufgenommen; öffentlicher Verzicht auf die Abkürzung FIB und Prüfung von „was dahintersteckt“ dokumentiert; Marketingdokument als verbindliche Detailquelle ergänzt. |
 | 1.1 | 01.10.2026 | Öffentliche Navigationsbegriffe auf „Neues | Im Blick | Sitzungen | Suche“ aktualisiert; interne Fachbegriffe abgegrenzt; visuelle Identität als Detailquelle ergänzt. |
 | 1.0 | 30.09.2026 | Management Approach aus dem Demonstrator in das Echtsystem überführt und auf den aktuellen Stand konsolidiert; Presseschau-Begriff entfernt; Wissensstruktur Meldung/Vorgang/Thema/Sitzung einschließlich Aufnahmelogik ergänzt; verständliche Formulierung für ausgewogene Sachinformation statt Fachbegriff „politischer Bias“. |
