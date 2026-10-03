@@ -2,7 +2,7 @@
 
 ## Dokumentstand
 
-**Stand:** 03.10.2026, 13:25 Uhr  
+**Stand:** 03.10.2026, 19:05 Uhr  
 **Verantwortlich:** Josef Walter – erstellt mit KI-Unterstützung
 
 Dieses Dokument wird im Normalfall über das **Stand-Datum einschließlich Uhrzeit** fortgeschrieben. Eine neue Versionsnummer wird nur eingeführt, wenn sich die Struktur oder das Grundkonzept des Dokuments wesentlich ändert.
@@ -125,11 +125,11 @@ Nicht zu verwechseln mit Akteursperspektive oder politischer Bewertung. „Lärm
 
 **Benutzer-Label in der App:** Auswirkung
 
-Eine sachlich belegbare oder begründet erwartbare Folge eines Vorgangs oder eines direkt in ein Thema aufgenommenen Ereignisses unter einer bestimmten Perspektive.
+Eine sachlich belegbare oder begründet erwartbare Folge, die fachlich an einem Ereignis verankert ist. Eine Wirkung kann in einem Vorgangs- oder Themenkontext angelegt werden; dieser Herkunftskontext bestimmt, wo sie später geändert werden darf.
 
 Beispiel: „zusätzliche Flächeninanspruchnahme“ oder „durchgängige sichere Radverbindung“ sind getrennte Wirkungen und sollten auch getrennt erfasst werden.
 
-Wirkungen gehören zur Sachinformation. Sie können positiv, negativ, gemischt, unklar oder von Bedingungen abhängig sein; diese Beschreibung ist noch keine politische Bewertung.
+Wirkungen gehören zur Sachinformation. Sie können unterschiedliche oder auch widersprüchliche Folgen beschreiben; die politische Bewertung erfolgt getrennt über den Bewertungsprozess.
 
 Nicht zu verwechseln mit Bewertung. Wirkung beschreibt, was geschieht oder voraussichtlich geschieht; Bewertung beschreibt, wie die GRÜNEN Feldkirchen diese Wirkung politisch einordnen.
 
@@ -158,18 +158,32 @@ Ein Prüfkriterium beschreibt, **was geprüft wird**, nicht bereits, **wie die W
 **Benutzer-Label in der App:** Wirkung auf das Ziel  
 **Kontextbezogene Frage:** Wie wirkt sich diese Auswirkung auf das Ziel aus?
 
-Die fallbezogene Aussage, ob eine konkrete Wirkung einen zugeordneten Zielbereich unterstützt, beeinträchtigt oder ob die Richtung noch unklar ist.
+Die fallbezogene Aussage, wie eine konkrete Wirkung die Erreichung eines zugeordneten Zielbereichs beeinflusst.
 
-Beispiel: Zusätzliche Flächeninanspruchnahme kann den Zielbereich Flächensparen beeinträchtigen; eine durchgängige sichere Radverbindung kann den Zielbereich nachhaltige Mobilität unterstützen.
+Antwortwerte in der App:
+
+- unterstützt die Zielerreichung,
+- behindert die Zielerreichung,
+- keine erkennbare Auswirkung auf die Zielerreichung,
+- unklar.
+
+Beispiel: Zusätzliche Flächeninanspruchnahme kann die Erreichung des Ziels Flächensparen behindern; eine durchgängige sichere Radverbindung kann die Erreichung des Ziels nachhaltige Mobilität unterstützen.
 
 Die Wirkungsrichtung wird von der KI vorgeschlagen und redaktionell geprüft. Sie ist keine feste Eigenschaft der Wirkung unabhängig vom Zielbereich.
 
 ### `Bedeutung der Wirkung`
 
 **Benutzer-Label in der App:** Tragweite der Auswirkung  
-**Kontextbezogene Frage:** Wie groß bzw. weitreichend ist diese Auswirkung?
+**Kontextbezogene Frage:** Wie bedeutend bzw. weitreichend ist diese Auswirkung?
 
 Die sachliche Tragweite einer Wirkung im konkreten Fall.
+
+Antwortwerte in der App:
+
+- hoch,
+- mittel,
+- gering,
+- unklar.
 
 Sie beschreibt nicht, wie stark die Wirkung politisch gewichtet wird. Eine sachlich kleine Wirkung kann politisch stark gewichtet werden und umgekehrt.
 
@@ -179,6 +193,13 @@ Sie beschreibt nicht, wie stark die Wirkung politisch gewichtet wird. Eine sachl
 **Kontextbezogene Frage:** Wie gut ist diese Einschätzung belegt?
 
 Einschätzung, wie belastbar die Aussage ist, dass eine angenommene oder beschriebene Wirkung tatsächlich zutrifft oder eintreten wird.
+
+Antwortwerte in der App:
+
+- hoch,
+- mittel,
+- gering,
+- unklar.
 
 Beispiel: Ein bereits planfestgestellter Flächenbedarf kann eine hohe Verlässlichkeit haben; ein nur vermuteter Verlagerungseffekt des Verkehrs eine geringere.
 
@@ -190,6 +211,15 @@ Die Verlässlichkeit kann insbesondere von Quellenlage, Datenqualität, Planungs
 **Kontextbezogene Frage:** Wie stark soll diese Auswirkung in der Abwägung zählen?
 
 Fallbezogene Einschätzung, wie stark eine konkrete Wirkung in der grünen Abwägung berücksichtigt wird.
+
+Antwortwerte in der App:
+
+- hoch,
+- mittel,
+- gering,
+- offen.
+
+„Offen“ bedeutet hier, dass die redaktionelle Abwägungsentscheidung noch nicht getroffen ist; es bezeichnet keine Unsicherheit über die Tatsachenlage.
 
 Das politische Gewicht ist keine feste Eigenschaft eines Zielbereichs. Es wird für die konkrete Wirkung im konkreten Vorgang bestimmt. Die KI darf es anhand dokumentierter Kriterien und Referenzen vorschlagen; fachlich wirksam wird es nach redaktioneller Bestätigung.
 
