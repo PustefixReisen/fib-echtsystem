@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 1.3 | 02.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
+| 1.4 | 03.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
 
 ## 1. Zweck und Verbindlichkeit
 
@@ -40,7 +40,7 @@ Die KI unterstützt insbesondere:
 - Entscheidungsvorschlag „neues Ereignis oder Aktualisierung“,
 - Entwurf und Fortschreibung von Meldungen,
 - Vorgangszuordnung und Vorgangsfortschreibung,
-- Themenkandidaten, Leitfragen, Perspektiven und Bedeutung von Vorgängen für ein Thema,
+- Themenkandidaten, Leitfragen, Perspektiven und Bedeutung von Vorgängen bzw. direkten Ereignissen für ein Thema,
 - Auswertung von Sitzungen und TOPs,
 - „Mehr wissen?“-Fragen und vorbereitete Antworten,
 - Entwürfe für „Unsere Einordnung“,
@@ -90,11 +90,17 @@ Quellenrollen werden unterschieden, insbesondere:
 - Praxisbeispiel,
 - interne redaktionelle Quelle.
 
-Nicht öffentlich belegbare Informationen aus internen Quellen dürfen nicht ungeprüft als öffentliche Tatsachen erscheinen.
+Nicht öffentlich belegbare Informationen aus internen Quellen dürfen nicht ungeprüft als öffentliche Tatsachen erscheinen. Interne Quellen können jedoch gezielte Folgerecherche auslösen.
 
 Aus dem Nichtfinden einer Information darf nicht auf ihr Nichtvorhandensein geschlossen werden.
 
-Die operative Beobachtungs- und Entdeckungslogik steht in `docs/Recherche-und-Quellenmonitor.md`.
+Die operative Beobachtungs- und Entdeckungslogik steht in `docs/Recherche-und-Quellenmonitor.md`. Dort sind insbesondere auch verbindlich geregelt:
+
+- gestaffelter erweiterter Suchraum,
+- dynamischer Suchkontext aus bestätigten Themen und Vorgängen,
+- sechsmonatiger Rückblick bei neuem oder wesentlich geschärftem Suchkontext,
+- 30-%-Arbeits-/Warnschwelle für ausschließlich mittelbar relevante veröffentlichte Beiträge,
+- themenunabhängige Entdeckung.
 
 ## 6. Feldkirchen-Bezug und Aufnahmeprüfung
 
@@ -106,6 +112,8 @@ Vor Aufnahme einer Fundstelle wird geprüft:
 4. Ist der Zusammenhang belastbar oder nur thematische Ähnlichkeit?
 
 Externe Inhalte ohne konkreten Erkenntnis-, Handlungs- oder Lernbezug werden nicht aufgenommen.
+
+Eine mögliche zukünftige Bedeutung muss konkret plausibel begründet werden. Bloß abstrakte Übertragbarkeit genügt nicht.
 
 ## 7. Ereignis und Meldung
 
@@ -146,7 +154,7 @@ Ein Thema ist eine übergeordnete Fragestellung mit zusätzlichem Erklärungsgew
 
 Themen werden bottom-up und mit hoher Sensitivität vorgeschlagen. Redaktionelle Ergänzungen gelten zunächst als Prüf- und Rechercheauftrag.
 
-Bei der Beziehung eines Vorgangs zu einem Thema schlägt die KI dessen **Bedeutung für das Thema** vor:
+Bei der Beziehung eines Vorgangs oder eines direkt ergänzten Ereignisses zu einem Thema schlägt die KI dessen **Bedeutung für das Thema** vor:
 
 - prägend,
 - relevant,
@@ -158,7 +166,9 @@ Die fachliche Erklärung der Relevanz erfolgt über sachliche Perspektiven und d
 
 Eine bestätigte Themendefinition wird nicht autonom verändert. Wesentliche Änderungen werden versioniert und redaktionell bestätigt.
 
-Detailregeln: `docs/Themen-und-Vorgangslogik.md` und `docs/Datenmodell.md`.
+Bestätigte Themen und Vorgänge wirken zugleich auf die Recherche zurück: Sie erzeugen bzw. schärfen den Suchkontext. Wesentliche Schärfungen können den im Recherchekonzept geregelten Rückblick auslösen.
+
+Detailregeln: `docs/Themen-und-Vorgangslogik.md`, `docs/Datenmodell.md` und `docs/Recherche-und-Quellenmonitor.md`.
 
 ## 10. Sitzungen und TOPs
 
@@ -170,10 +180,12 @@ Verbindlich:
 - Ergebnis nur bei belastbarem öffentlichem Nachweis,
 - konkrete Sitzungsseite ist bevorzugte Quelle für Beratungsbezug,
 - Vorlagenlinks nur bei eindeutiger Zuordnung und erreichbarem Ziel,
+- Vorlagenlink und Dokumentziel werden bei fachlich relevanter Aktualisierung erneut geprüft,
+- Linkbezeichnungen müssen das tatsächlich verlinkte Dokument korrekt benennen,
 - Genehmigung und öffentliche Verfügbarkeit der Niederschrift getrennt führen,
 - Beschlüsse aus lesbaren Niederschriften TOP-bezogen auswerten.
 
-Veröffentlichungs-/Freigabedatum eines Dokuments darf nicht ohne geeigneten Beleg als Beratungs- oder Entscheidungsdatum verwendet werden.
+Veröffentlichungs-/Freigabedatum eines Dokuments darf nicht ohne geeigneten Beleg als Beratungs- oder Entscheidungsdatum verwendet werden. Dokumentdatum, öffentliche Freigabe, geplanter Sitzungstermin, veröffentlichte Tagesordnung und tatsächliche Beratung/Entscheidung sind unterschiedliche Datumsarten.
 
 ## 11. „Mehr wissen?“
 
@@ -184,6 +196,8 @@ Veröffentlichungs-/Freigabedatum eines Dokuments darf nicht ohne geeigneten Bel
 - Thema: Zusammenhänge verstehen.
 
 Fragen müssen gegenüber dem sichtbaren Inhalt einen neuen Erkenntnishorizont eröffnen. Antworten sind quellengebunden und kennzeichnen Unsicherheit.
+
+Zusätzliche Tatsachenbehauptungen dürfen nicht allein aus allgemeinem Modellwissen als gesichert ausgegeben werden. Fehlt eine ausreichende Quellenbasis, wird gezielt recherchiert, die Wissenslücke transparent gemacht oder eine vorbereitete Antwort nicht freigegeben.
 
 Bei fachlichen Änderungen wird geprüft, ob Fragen, Antworten oder Quellen aktualisiert werden müssen.
 
@@ -264,6 +278,20 @@ Neue Läufe arbeiten inkrementell. Bereits verifizierte Inhalte werden nur bei s
 - fachlicher Aktualisierung,
 - Regeländerung.
 
+### 14.1 Persistenzschutz
+
+Ein neuer Recherche-, Analyse-, Generierungs- oder Veröffentlichungslauf darf bestehende fachliche Objekte **nicht dadurch verschwinden lassen, dass sie im aktuellen Lauf nicht erneut gefunden oder erzeugt wurden**.
+
+Insbesondere gilt:
+
+- veröffentlichte Meldungen bleiben erhalten,
+- Vorgänge und Themen bleiben mit ihrer Historie erhalten,
+- bereits bestätigte Beziehungen und Quellenbezüge werden nicht stillschweigend entfernt,
+- Nichtfinden in einem späteren Lauf ist kein Löschsignal,
+- Rücknahme, Löschung, Archivierung oder Aufhebung einer fachlichen Beziehung benötigen einen ausdrücklichen fachlichen bzw. redaktionellen Vorgang und müssen nachvollziehbar protokolliert werden.
+
+Dieser Persistenzschutz ist technische Geschäftsregel und darf nicht vom Verhalten eines Sprachmodells abhängen.
+
 Der strukturierte Redaktionsstand und die dazugehörigen Textfassungen werden versioniert so gespeichert, dass ihre Zuordnung und fachlichen Änderungen nachvollziehbar bleiben.
 
 Die technische Ausgabe ist nicht selbst die fachliche Datenhaltung.
@@ -274,7 +302,8 @@ Fachlich besonders wirksame Vorschläge werden ausdrücklich redaktionell bestä
 
 - Ereignis ↔ Vorgang,
 - Vorgang ↔ Thema,
-- Bedeutung eines Vorgangs für ein Thema,
+- direktes Ereignis ↔ Thema,
+- Bedeutung eines Vorgangs bzw. direkten Ereignisses für ein Thema,
 - neues Ereignis oder Aktualisierung,
 - fachliche Aktualisierungsrelevanz,
 - Vorgangsstatus und aktueller Stand,
@@ -324,6 +353,7 @@ Nicht hier verbindlich geregelt werden:
 
 | Version | Datum | Änderung |
 |---|---|---|
+| 1.4 | 03.10.2026 | G2.5-Transfer: erweiterte Recherchelogik referenziert, mögliche zukünftige Bedeutung präzisiert, RIS-Link-/Datumsprüfung ergänzt, Quellenpflicht für „Mehr wissen?“ verschärft, direkte Ereignis-Thema-Beziehung gespiegelt und Persistenzschutz als technische Geschäftsregel aufgenommen. |
 | 1.3 | 02.10.2026 | Strukturierter Redaktionsstand als fachliche Quelle für KI-formulierte Einordnungen verankert; Konsistenzprüfung zwischen Struktur und Text sowie versionsübergreifende Änderungsbegrenzung ergänzt. |
 | 1.2 | 02.10.2026 | Themenlogik auf „Bedeutung für das Thema“ umgestellt; Wirkungsrollen-Taxonomie entfernt; Begriffsregister und Datenmodell als ergänzende Primärquellen referenziert. |
 | 1.1 | 30.09.2026 | Nach Dokumentationsübernahme auf kanonische Echtsystem-Primärquellen umgestellt; Detailzuständigkeiten bereinigt; Regeln für Meldung/Vorgang/Thema, Mehr wissen, Fakten-Rückprüfung und redaktionelle Bestätigung konsolidiert. |
