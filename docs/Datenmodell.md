@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 0.9 | 03.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
+| 1.0 | 03.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
 
 ## 1. Zweck und Geltung
 
@@ -27,6 +27,8 @@ Ziel ist ein robustes und langfristig tragfähiges Modell, das für einen kleine
 - Fachlich-politische Qualität wird nicht nur über Einzelwerte, sondern auch über Plausibilitätsprüfungen zwischen mehreren strukturierten Angaben abgesichert.
 - Herkunft einer Quelle, konkrete Fundstelle bzw. Datei, technischer Speicherort und öffentliche Sichtbarkeit werden getrennt modelliert.
 - Abgeleitete redaktionelle Texte dürfen bei Analysen nicht als zusätzliche unabhängige Tatsachenbelege für denselben Sachverhalt gezählt werden.
+- Wirkungen werden an Ereignissen verankert; ihr fachlicher Herkunftskontext bestimmt, wo sie geändert werden dürfen.
+- Gleichbedeutende Wirkungen dürfen in einer übergeordneten Analyse nicht mehrfach gewichtet werden.
 
 ## 3. Wissenskern
 
@@ -177,7 +179,7 @@ Die Einstufung gilt sowohl für `Vorgang ↔ Thema` als auch für direkte `Ereig
 
 Die Bedeutung wird nicht automatisch aus der Zahl der `Meldungen`, `Perspektiven` oder Quellen berechnet. Die KI kann ihren Vorschlag u. a. aus Tragweite, Dauer, Auswirkungen, Einfluss auf andere Vorgänge, Aktualität und Bedeutung für die Leitfrage ableiten; die redaktionelle Entscheidung bleibt maßgeblich.
 
-Die fachliche Erklärung, **warum** ein Vorgang oder Ereignis für ein Thema relevant ist, erfolgt über `Perspektiven` und die darunter beschriebenen `Wirkungen`.
+Die fachliche Erklärung, **warum** ein Vorgang oder Ereignis für ein Thema relevant ist, erfolgt über `Perspektiven` und die darunter ausgewerteten `Wirkungen`.
 
 ### 3.6 Themenentstehung und Dublettprüfung
 
@@ -193,17 +195,66 @@ Das Prüfergebnis muss mindestens unterscheiden können:
 
 Die Herkunft des Themas (`KI-Vorschlag` oder `redaktionelle Anlage`) sowie das Ergebnis einer erforderlichen Dublettprüfung müssen nachvollziehbar gespeichert werden. Die KI darf eine Empfehlung geben, entscheidet aber nicht autonom über Identität, Zusammenführung oder Abgrenzung von Themen.
 
-### 3.7 `Perspektive`, `Wirkung` und `Bewertung` – Arbeitsstand
+### 3.7 `Perspektive`, `Wirkung` und `Bewertung`
 
 Für die weitere Modellierung werden folgende Begriffe getrennt:
 
 - `Perspektive` – fachlicher Betrachtungsaspekt innerhalb eines `Themas`, z. B. Lärm, Verkehrssicherheit, Flächenverbrauch oder kommunaler Handlungsspielraum.
-- `Wirkung` – sachlich belegbare oder begründet erwartbare Folge eines `Vorgangs` oder eines direkt in ein Thema aufgenommenen `Ereignisses` unter einer `Perspektive`.
+- `Wirkung` – sachlich belegbare oder begründet erwartbare Folge, die fachlich an einem `Ereignis` verankert ist.
 - `Bewertung` – politische Beurteilung einer `Wirkung` im Rahmen von „Unsere Einordnung“.
 - `Begründung` – nachvollziehbare Herleitung der `Bewertung`.
 - `politischer Bezug` – grüner Wert, politisches Ziel oder dokumentierte grüne Position, auf die sich die `Begründung` stützt.
 
-Diese Begriffe werden im Begriffsregister verbindlich abgegrenzt. Die konkrete Datenmodellierung von `Wirkung`, `Bewertung`, `Begründung` und `politischem Bezug` wird als nächster G3-Schritt anhand des grünen Referenzsystems geklärt.
+#### 3.7.1 Verankerung und Herkunft einer Wirkung
+
+Verbindliche Entscheidung:
+
+> **Jede Wirkung ist einem Ereignis zugeordnet. Zusätzlich wird ihr fachlicher Herkunftskontext gespeichert.**
+
+Als Herkunftskontext kommen insbesondere ein konkreter `Vorgang` oder ein `Thema` in Betracht. Der Herkunftskontext bezeichnet den Bearbeitungszusammenhang, in dem die Wirkung fachlich angelegt und bestätigt wurde.
+
+Damit gilt:
+
+- Ein Ereignis kann keine, eine oder mehrere Wirkungen besitzen.
+- Ein Ereignis benötigt weder eine Meldung noch eine Vorgangszuordnung, damit eine Wirkung zu ihm erfasst werden kann.
+- Mehrere Wirkungen desselben Ereignisses sind zulässig, wenn sie eigenständige sachliche Aussagen darstellen.
+- Eine bereits bestehende Wirkung bleibt fachlich ihrem Herkunftskontext zugeordnet.
+- Eine Wirkung darf nur in diesem Herkunftskontext fachlich geändert werden.
+- Andere Bearbeitungskontexte dürfen die Wirkung verwenden und analysieren, aber nicht stillschweigend verändern oder durch eine konkurrierende Fassung derselben Aussage ersetzen.
+
+Beispiel:
+
+`Ereignis E1 → Wirkung W1 → Herkunftskontext Vorgang V1`
+
+Ein späteres Thema T1 kann W1 in seiner Analyse berücksichtigen. Soll W1 fachlich geändert werden, muss die Änderung im Vorgang V1 erfolgen.
+
+#### 3.7.2 Mehrere und widersprüchliche Wirkungen
+
+Ein Vorgang bündelt über seine Ereignisse unterschiedliche Wirkungen. Diese können sich ergänzen, in unterschiedliche Richtungen weisen oder scheinbar widersprechen.
+
+Ein solcher Widerspruch ist nicht automatisch ein Datenfehler. Er kann insbesondere entstehen durch:
+
+- gleichzeitig bestehende unterschiedliche Folgen,
+- unterschiedliche räumliche oder sachliche Bedingungen,
+- zeitliche Veränderungen,
+- unterschiedliche Prognosen oder unsichere Erkenntnislagen,
+- tatsächliche Inkonsistenzen.
+
+Widersprüchliche oder auffällig gegensätzliche Wirkungen müssen in der Vorgangs- bzw. Themenanalyse als Prüfkonstellation erkennbar sein. Eine automatische Löschung, Überschreibung oder Zusammenführung ist nicht zulässig.
+
+#### 3.7.3 Gleichbedeutende Wirkungen und Analyse-Dubletten
+
+Mehrere Wirkungen desselben Ereignisses können in unterschiedlichen Herkunftskontexten entstanden sein. Sind sie sachlich gleichbedeutend und nur unterschiedlich formuliert, dürfen sie in einer übergeordneten Analyse nicht als mehrere unabhängige Wirkungen gewichtet werden.
+
+Die KI führt deshalb bei neuen oder gemeinsam analysierten Wirkungen eine semantische Plausibilitätsprüfung durch. Eine erkannte mögliche Dublette wird der Redaktion zur Entscheidung vorgelegt.
+
+Die redaktionelle Entscheidung unterscheidet mindestens:
+
+- gleiche Auswirkung,
+- unterschiedliche Auswirkungen,
+- unsicher.
+
+Bei als gleich bestätigten Wirkungen bleiben die einzelnen Wirkungsdatensätze und ihre Herkunft erhalten. Für Themenanalyse, Abwägung und Textformulierung werden sie jedoch als eine sachliche Aussage behandelt, damit keine künstliche Mehrfachgewichtung entsteht.
 
 ### 3.8 Strukturierter Redaktionsstand und Textfassung
 
@@ -236,7 +287,7 @@ Für den strukturierten Redaktionsprozess werden drei Sicherungsebenen unterschi
 
 1. **Pflichtbestätigung** – für Angaben, die die fachliche oder politische Kernaussage unmittelbar prägen.
 2. **sichtbarer KI-Vorschlag** – für Angaben, die die KI vorschlagen darf und die vom Redakteur sichtbar geprüft und bei Bedarf geändert werden können, ohne dass zwingend eine eigene Bestätigungsaktion erforderlich ist.
-3. **Plausibilitätsprüfung über mehrere Felder** – zur Erkennung auffälliger oder widersprüchlicher Kombinationen im strukturierten Stand.
+3. **Plausibilitätsprüfung über mehrere Felder oder Wirkungen** – zur Erkennung auffälliger, widersprüchlicher oder semantisch doppelter Kombinationen im strukturierten Stand.
 
 Zur Pflichtbestätigung gehören grundsätzlich insbesondere:
 
@@ -257,6 +308,8 @@ Beispiele für Plausibilitätsprüfungen:
 - Eine bestätigte `Wirkung` wurde geändert, die `Abwägung` blieb aber unverändert → erneute Prüfung der Abwägung erforderlich.
 - Eine `Gestaltungsoption` erzeugt erwartete neue `Wirkungen`, diese fehlen aber in der Abwägung → Prüfhinweis.
 - Eine manuell geänderte `Textfassung` verschiebt eine Bewertung oder Gewichtung, ohne dass sich der strukturierte Redaktionsstand geändert hat → Konsistenzwarnung.
+- Zwei Wirkungen desselben Ereignisses sind semantisch möglicherweise gleichbedeutend → redaktionelle Dublettenprüfung.
+- Mehrere Wirkungen innerhalb eines Vorgangs widersprechen sich auffällig → Konflikthinweis mit Prüfung auf tatsächlichen Wirkungskonflikt, zeitliche Veränderung, unterschiedliche Bedingungen, unsichere Erkenntnislage oder Inkonsistenz.
 
 Plausibilitätsprüfungen sind keine automatische politische Entscheidung. Sie markieren Konstellationen, bei denen die Redaktion die fachliche Herleitung gezielt prüfen muss.
 
@@ -267,7 +320,7 @@ Die sprachliche Fassung der `Abwägung` wird von der KI erzeugt. Pflichtbestäti
 Als nächste Modellierungsschritte werden geklärt:
 
 - `Sitzung/TOP ↔ Ereignis/Meldung/Vorgang/Thema`,
-- `Perspektiven` und `Wirkungen` innerhalb eines `Themas`,
+- genaue Nutzung bestätigter Wirkungen unter Themenperspektiven,
 - Modellierung von `Bewertung`, `Begründung`, `Gestaltungsoption`, `Verlässlichkeit`, `politischem Gewicht` und politischem Referenzsystem,
 - genaue Versionierungs- und Vergleichslogik zwischen strukturiertem Redaktionsstand und Textfassung,
 - konkrete fachliche Plausibilitätsregeln für den Redaktionsprozess.
@@ -335,7 +388,7 @@ Die noch nicht abschließend modellierten Begriffe werden im weiteren G3-Verlauf
 
 ## 5. Offene G3-Fragen
 
-1. Wie werden `Perspektiven` und `Wirkungen` fachlich strukturiert, ohne unnötige eigene Hauptobjekte zu schaffen?
+1. Wie werden bestätigte Wirkungen unter Perspektiven eines Themas ausgewählt und zusammengeführt, ohne die fachliche Hoheit ihres Herkunftskontexts zu verletzen?
 2. Wie werden `Bewertungen` und ihre `Begründungen` mit dem grünen Referenzsystem verknüpft?
 3. Welche Status gehören zu `Ereignis`, `Meldung`, `Vorgang`, `Thema` und `Sitzung`?
 4. Welche Änderungen werden versioniert, welche nur protokolliert?
@@ -347,6 +400,7 @@ Die noch nicht abschließend modellierten Begriffe werden im weiteren G3-Verlauf
 
 | Version | Datum | Änderung |
 |---|---|---|
+| 1.0 | 03.10.2026 | Wirkungsmodell konkretisiert: Wirkungen fachlich am Ereignis verankert; Herkunftskontext Vorgang/Thema bestimmt Änderungszuständigkeit; mehrere eigenständige Wirkungen je Ereignis zulässig; semantisch gleichbedeutende Wirkungen werden als Analyse-Dubletten erkannt und nicht mehrfach gewichtet; widersprüchliche Wirkungen erzeugen Prüfhinweise statt automatischer Bereinigung. |
 | 0.9 | 03.10.2026 | Themenmodell ergänzt: direkt aufgenommene Einzelereignisse erhalten wie Vorgänge die Bedeutung für das Thema mit prägend/relevant/ergänzend; Themen können durch KI-Vorschlag oder redaktionelle Anlage entstehen; bei redaktioneller Neuanlage ist eine Ähnlichkeits-/Dublettprüfung gegen den Themenbestand verpflichtend. |
 | 0.8 | 03.10.2026 | Themenmodell korrigiert: Vorgänge als bevorzugte Themenauswahl mit automatischer Mitnahme ihrer Ereignisse; direkte Ereignis-Thema-Beziehung für zusätzliche „Weitere relevante Ereignisse“ zugelassen; Meldungstext und vorhandene „Unsere Einordnung“ werden über Ereignisse als Analysekontext erschlossen; Herkunfts- und Anti-Doppelzählungsregel ergänzt. |
 | 0.7 | 03.10.2026 | Quellenmodell konkretisiert: Herkunft, Fundstelle, Bereitstellung und Sichtbarkeit getrennt; öffentliche FIB-Bereitstellung redaktionell hochgeladener Dateien auch ohne ursprüngliche Internetverfügbarkeit ermöglicht; direkte Ereignis-Thema-Beziehung als parallele Zuordnung verworfen. |
