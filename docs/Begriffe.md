@@ -2,7 +2,7 @@
 
 ## Dokumentstand
 
-**Stand:** 02.10.2026, 19:08 Uhr  
+**Stand:** 03.10.2026, 10:30 Uhr  
 **Verantwortlich:** Josef Walter – erstellt mit KI-Unterstützung
 
 Dieses Dokument wird im Normalfall über das **Stand-Datum einschließlich Uhrzeit** fortgeschrieben. Eine neue Versionsnummer wird nur eingeführt, wenn sich die Struktur oder das Grundkonzept des Dokuments wesentlich ändert.
@@ -314,7 +314,53 @@ Beispiel: Ein beschlossener Antrag des Ortsverbands oder eine öffentlich dokume
 
 Positionen anderer Akteure gehören zur Sachinformation und werden als solche zugeschrieben. Sie werden nicht mit der strukturierten grünen Bewertung in „Unsere Einordnung“ vermischt.
 
-## 8. Noch zu ergänzende Begriffe
+## 8. Recherche und KI-Betrieb
+
+### `Quellenbeobachtung`
+
+**Benutzer-Label in der App:** Quellenbeobachtung
+
+Technische Überwachung bereits bekannter Quellen und Adressen auf neue oder geänderte Inhalte. Die reine Änderungsfeststellung erfolgt soweit möglich ohne KI. Erst eine neue oder geänderte Fundstelle wird semantisch analysiert.
+
+### `Quellenentdeckung`
+
+**Benutzer-Label in der App:** Neue Quellen finden
+
+Aktive, KI-gestützte Suche nach bislang nicht bekannten Quellen, die für FIB relevant sein könnten. Gefundene Quellenkandidaten werden redaktionell geprüft und können anschließend als bekannte Quellen in die Quellenbeobachtung übernommen werden.
+
+### `Verpflichtende Entdeckungs-/Eingangs-KI`
+
+**Benutzer-Label in der App:** KI-Eingangsanalyse
+
+KI-Einsatz für qualitätskritische Eingangsfunktionen, die im automatisierten FIB-Betrieb ohne semantische KI nicht zuverlässig erfüllt werden können. Dazu gehören insbesondere Quellenentdeckung, semantische Analyse neuer oder geänderter Fundstellen und Ereigniserkennung.
+
+„Verpflichtend“ bedeutet, dass die Funktion für den vorgesehenen automatisierten FIB-Betrieb KI benötigt; es bedeutet nicht, dass das KI-Ergebnis ohne redaktionelle Prüfung fachlich wirksam wird.
+
+### `Bedarfsgesteuerte Recherche-KI`
+
+**Benutzer-Label in der App:** KI-Recherche starten
+
+Gezielter KI-Einsatz für eine konkrete Wissenslücke oder offene Recherchefrage, die im Redaktionsprozess entstanden ist. Statt einen gesamten Vorgang vorsorglich erneut analysieren zu lassen, wird nur der konkrete Recherchebedarf bearbeitet.
+
+### `Optionale Redaktions-KI`
+
+**Benutzer-Label in der App:** KI-Vorschlag erzeugen
+
+Zuschaltbare KI-Unterstützung für Redaktionsschritte, die auch ohne KI vollständig bearbeitet werden können, etwa Wirkungen vorschlagen, Prüfkriterien vorauswählen, Plausibilität prüfen oder Textentwürfe erzeugen.
+
+### `KI-Leistungsklasse`
+
+**Benutzer-Label in der App:** KI-Leistungsklasse
+
+Modellunabhängige Einordnung der für eine FIB-Aufgabe erforderlichen KI-Leistungsstufe. Die Leistungsklasse legt keinen bestimmten Anbieter oder Modellnamen fest.
+
+### `Routing-Matrix`
+
+**Benutzer-Label in der App:** KI-Routing
+
+Konfigurierbare Zuordnung von FIB-Aufgaben zu KI-Bedarf, Qualitätsanforderung bzw. KI-Leistungsklasse, freigegebenem Provider/Modell, Fallback- und gegebenenfalls Kostenregeln. Die Routing-Matrix ermöglicht Modellwechsel, ohne Redaktionsworkflow oder fachliche Regeln umzubauen.
+
+## 9. Noch zu ergänzende Begriffe
 
 Dieses Register wird im Verlauf von G3 und den folgenden Gründungspaketen erweitert, insbesondere um:
 
