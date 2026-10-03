@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 0.4 | 03.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
+| 0.5 | 03.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
 
 ## 1. Zweck und Geltung
 
@@ -197,6 +197,16 @@ Damit gilt:
 
 Die KI ordnet jede vorhandene Wirkung automatisch einer oder mehreren bereits bestätigten Perspektiven des Themas zu. Im eindeutigen Normalfall entsteht daraus kein eigener Pflichtdialog. Die Zuordnung bleibt für die Redaktion sichtbar und korrigierbar.
 
+Eine einmal fachlich wirksame Zuordnung wird gespeichert und bei späteren Themenanalysen wiederverwendet. Sie wird nicht bei jedem Durchlauf erneut erzeugt oder neu entschieden.
+
+Eine erneute Prüfung oder Anpassung erfolgt nur bei einem konkreten Anlass, insbesondere wenn:
+
+- die zugrunde liegende Wirkung fachlich geändert wurde,
+- eine zugeordnete Perspektive umbenannt, zusammengeführt oder entfernt wurde,
+- eine neue Perspektive eine zusätzliche oder veränderte Zuordnung plausibel macht,
+- eine Plausibilitätsprüfung einen Widerspruch oder eine auffällige Zuordnung erkennt,
+- die Redaktion die Zuordnung ausdrücklich neu prüfen oder ändern will.
+
 Eine gezielte redaktionelle Klärung ist insbesondere erforderlich, wenn:
 
 - eine Wirkung plausibel mehreren Perspektiven zugeordnet werden kann,
@@ -211,7 +221,7 @@ Für einen Klärungsfall kann die App beispielsweise fragen:
 
 Die vorhandenen Perspektiven werden als Auswahl angeboten; Mehrfachzuordnung ist möglich.
 
-Die genaue Darstellung, Schwellenwerte für Unsicherheit und die Frage, wann eine Zuordnung nur sichtbar oder ausdrücklich zu bestätigen ist, bleiben Gegenstand des späteren UI- und Implementierungsfeinschliffs. Fachlich verbindlich sind dagegen die automatische Einbeziehung vorhandener Wirkungen und die grundsätzlich KI-gestützte Perspektivzuordnung mit redaktioneller Korrekturmöglichkeit.
+Die genaue Darstellung, Schwellenwerte für Unsicherheit und die Frage, wann eine Zuordnung nur sichtbar oder ausdrücklich zu bestätigen ist, bleiben Gegenstand des späteren UI- und Implementierungsfeinschliffs. Fachlich verbindlich sind dagegen die automatische Einbeziehung vorhandener Wirkungen, die grundsätzlich KI-gestützte Perspektivzuordnung mit redaktioneller Korrekturmöglichkeit sowie die Wiederverwendung einer bereits festgelegten Zuordnung bis zu einem konkreten Änderungsanlass.
 
 ## 6. Auswahl von Prüfkriterien
 
@@ -331,6 +341,7 @@ Verbindlich sind die fachlichen Prinzipien:
 - Wirkungen bleiben in ihrem Herkunftskontext änderbar,
 - alle vorhandenen Wirkungen eines im Thema enthaltenen Ereignisses gehen automatisch in die Themenanalyse ein,
 - KI ordnet diese Wirkungen grundsätzlich automatisch einer oder mehreren Themenperspektiven zu; nur Auffälligkeiten oder Unsicherheiten benötigen gezielte redaktionelle Klärung,
+- einmal festgelegte Wirkung-Perspektive-Zuordnungen werden wiederverwendet und nur bei fachlichem Änderungsanlass erneut geprüft,
 - mögliche Wirkungsdubletten werden KI-gestützt erkannt und redaktionell als gleich oder verschieden eingeordnet,
 - gleichbedeutende Wirkungen werden in der Themenanalyse nicht mehrfach gewichtet,
 - widersprüchliche Wirkungen innerhalb eines Vorgangs erzeugen einen Prüfhinweis statt automatischer Bereinigung.
@@ -351,6 +362,7 @@ Diese Punkte werden an realen FIB-Vorgängen und Themen prototypisch getestet.
 
 | Version | Datum | Änderung |
 |---|---|---|
+| 0.5 | 03.10.2026 | Wirkung-Perspektive-Zuordnung als persistenter Arbeitsstand konkretisiert: festgelegte Zuordnungen werden wiederverwendet und nur bei fachlichem Änderungsanlass, Plausibilitätskonflikt oder ausdrücklicher redaktioneller Neubewertung erneut geprüft. |
 | 0.4 | 03.10.2026 | Themenworkflow verschlankt: vorhandene Wirkungen eines enthaltenen Ereignisses werden automatisch berücksichtigt; keine erneute Auswahl der Wirkung. KI ordnet Wirkungen automatisch einer oder mehreren bestätigten Perspektiven zu; gezielte redaktionelle Klärung nur bei Mehrdeutigkeit, Unsicherheit, Abweichung, fehlender Perspektive oder manueller Korrektur. UI-Feinschliff bewusst für Implementierung offen gehalten. |
 | 0.3 | 03.10.2026 | Wirkungslogik konkretisiert: Wirkung am Ereignis mit Herkunftskontext; Änderung nur im Herkunftskontext; keine konkurrierenden Fassungen im Themenworkflow; KI-Plausibilitätsprüfung auf gleichbedeutende Wirkungen mit benutzerfreundlicher Frage „Meinen diese beiden Auswirkungen im Wesentlichen dasselbe?“; Anti-Doppelgewichtung und Konflikthinweise für widersprüchliche Wirkungen ergänzt. |
 | 0.2 | 03.10.2026 | Themenworkflow ergänzt: Vorgangsauswahl mit automatischer Mitnahme der Ereignisse, KI-Vorauswahl „Weitere relevante Ereignisse“, manuelle Ereignissuche, Meldungstext und „Unsere Einordnung“ als über Ereignisse erschlossener Analysekontext sowie Herkunfts-/Anti-Doppelzählungsregel. |
