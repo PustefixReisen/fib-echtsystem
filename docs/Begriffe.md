@@ -2,7 +2,7 @@
 
 ## Dokumentstand
 
-**Stand:** 03.10.2026, 10:30 Uhr  
+**Stand:** 03.10.2026, 12:45 Uhr  
 **Verantwortlich:** Josef Walter – erstellt mit KI-Unterstützung
 
 Dieses Dokument wird im Normalfall über das **Stand-Datum einschließlich Uhrzeit** fortgeschrieben. Eine neue Versionsnummer wird nur eingeführt, wenn sich die Struktur oder das Grundkonzept des Dokuments wesentlich ändert.
@@ -316,6 +316,38 @@ Positionen anderer Akteure gehören zur Sachinformation und werden als solche zu
 
 ## 8. Recherche und KI-Betrieb
 
+### `Quelle`
+
+**Benutzer-Label in der App:** Quelle
+
+Die Herkunft bzw. der Träger einer Information, zum Beispiel Gemeinde Feldkirchen, Autobahn GmbH, ein Pressemedium, eine Bürgerinitiative oder GRÜNE Feldkirchen.
+
+Nicht zu verwechseln mit Fundstelle. Eine Quelle kann mehrere konkrete Fundstellen bereitstellen.
+
+### `Fundstelle`
+
+**Benutzer-Label in der App:** Fundstelle
+
+Die konkrete Seite, das Dokument, die Datei oder sonstige Einheit, in der eine relevante Information enthalten ist.
+
+Eine Fundstelle kann über eine externe URL erreichbar oder als Datei direkt in FIB gespeichert sein.
+
+### `Bereitstellung`
+
+**Benutzer-Label in der App:** Bereitstellung
+
+Die Art, wie eine Fundstelle technisch verfügbar ist, zum Beispiel als externe URL oder als in FIB gespeicherte Datei.
+
+Die Bereitstellung sagt noch nichts darüber aus, ob Besucher die Fundstelle sehen dürfen.
+
+### `Sichtbarkeit`
+
+**Benutzer-Label in der App:** Sichtbarkeit
+
+Festlegung, ob eine in FIB gespeicherte Fundstelle öffentlich über FIB zugänglich oder nur für die Redaktion sichtbar ist.
+
+Eine Datei kann öffentlich über FIB bereitgestellt werden, obwohl sie ursprünglich nicht frei im Internet verfügbar war, sofern die Veröffentlichung freigegeben und zulässig ist.
+
 ### `Quellenbeobachtung`
 
 **Benutzer-Label in der App:** Quellenbeobachtung
@@ -364,8 +396,6 @@ Konfigurierbare Zuordnung von FIB-Aufgaben zu KI-Bedarf, Qualitätsanforderung b
 
 Dieses Register wird im Verlauf von G3 und den folgenden Gründungspaketen erweitert, insbesondere um:
 
-- Quelle,
-- Fundstelle,
 - Quellenrolle,
 - Sitzung,
 - TOP,
