@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 2.7 | 01.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
+| 2.8 | 03.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
 
 ## 1. Zweck
 
@@ -17,6 +17,7 @@ Ergänzende Primärquellen:
 - Fachlichkeit: `docs/Fachkonzept.md`
 - SEO: `docs/SEO-und-Auffindbarkeit.md`
 - visuelle Identität: `docs/Visuelle-Identitaet-und-Bildkonzept.md`
+- fachliches Datenmodell: `docs/Datenmodell.md`
 
 Der Demonstrator ist Referenz, aber kein unveränderlicher UI-Blueprint. Das frühere Demonstrator-Dokument `FIB_Frontend_und_Darstellung.md` wird nicht als zweite Primärquelle fortgeführt; weiterhin gültige Regeln sind hier integriert.
 
@@ -267,7 +268,7 @@ Grundstruktur:
 1. Titel + Kurzbeschreibung
 2. Aktueller Stand
 3. Letzte relevante Entwicklung
-4. Bisheriger Verlauf – automatisch aus verknüpften Meldungen/Ereignissen
+4. Bisheriger Verlauf – automatisch aus verknüpften Ereignissen und daraus abgeleiteten Meldungen
 5. Wichtige Entscheidungen
 6. Offene Punkte / nächste belegte Schritte
 7. Zuständigkeiten und Beteiligte
@@ -285,7 +286,7 @@ Grundstruktur:
 
 1. **Kopfbereich** – Titel, Leitfrage, Feldkirchen-Bezug, fachlicher Stand.
 2. **Warum ist das für Feldkirchen relevant?**
-3. **Was prägt das Thema derzeit?** – wichtige Vorgänge mit Rolle, Stand und letzter Entwicklung.
+3. **Was prägt das Thema derzeit?** – wichtige Vorgänge und direkt ergänzte Ereignisse mit ihrer **Bedeutung für das Thema**, Stand und letzter Entwicklung.
 4. **Perspektiven des Themas** – themenspezifisch, nicht global starr.
 5. **Was wissen wir derzeit?** – kompakte Synthese.
 6. **Was ist noch offen?** – Wissenslücken/offene Fragen.
@@ -294,9 +295,9 @@ Grundstruktur:
 9. **Unsere Einordnung**
 10. **Neueste Entwicklungen** – kompakte Meldungsliste.
 
-Nicht alle Vorgänge werden gleichrangig dargestellt; ihre Wirkungsrolle beeinflusst Gewichtung.
+Nicht alle Themenbestandteile werden gleichrangig dargestellt; ihre redaktionell bestätigte **Bedeutung für das Thema** (`prägend`, `relevant`, `ergänzend`) beeinflusst die Gewichtung. Perspektiven und Wirkungen erklären sachlich, warum ein Vorgang oder direkt ergänztes Ereignis für das Thema relevant ist. Eine separate Wirkungsrollen-Taxonomie wird nicht verwendet.
 
-Zusätzlich gibt es **„Alle Entwicklungen zum Thema“** als automatisch erzeugte Chronologie aus zugehörigen Vorgängen und direkten Themenmeldungen.
+Zusätzlich gibt es **„Alle Entwicklungen zum Thema“** als automatisch erzeugte Chronologie aus Ereignissen der zugehörigen Vorgänge sowie direkt dem Thema zugeordneten weiteren Ereignissen und den daraus abgeleiteten Meldungen.
 
 ## 13. Sitzungslisten und -details
 
@@ -388,7 +389,7 @@ Rollen:
 
 Zunächst werden etwa 4–6 besonders hilfreiche Fragen sichtbar; weitere können aufgeklappt werden.
 
-Antworten zeigen kurze direkte Antwort, notwendigen Kontext, Quellen und Unsicherheit. Sachliche Vertiefung und „Unsere Einordnung“ bleiben getrennt.
+Antworten zeigen kurze direkte Antwort, notwendigen Kontext, Quellen und Unsicherheit. Sachliche Vertiefung und „Unsere Einordnung“ bleiben getrennt. Fehlende Quellenbasis wird nicht durch scheinbar sicheres allgemeines Modellwissen ersetzt; verbindliche Detailregel in `docs/Mehr-wissen.md`.
 
 Im MVP werden Fragen/Antworten vorbereitet und redaktionell geprüft. Freie Live-Fragen sind spätere Ausbaustufe.
 
@@ -403,7 +404,8 @@ Drei getrennte Funktionen:
 - ohne Anmeldung,
 - geräte-/browsergebunden,
 - lokaler Besuchs-/Lesestatus,
-- nur fachlich relevante Neuigkeiten zählen,
+- neue Meldungen und **fachlich relevante Aktualisierungen** bestehender Meldungen zählen als Neuigkeit,
+- rein technische oder redaktionelle Änderungen zählen nicht,
 - Hinweise innerhalb der bestehenden Startseitenblöcke.
 
 ### 16.2 Push
@@ -415,7 +417,7 @@ Drei getrennte Funktionen:
 
 ### 16.3 Badge
 
-Optional, soweit Plattform/Browser zuverlässig unterstützen. Badge zählt ungesehene fachlich relevante Neuigkeiten, ist aber keine MVP-Kernabhängigkeit.
+Optional, soweit Plattform/Browser zuverlässig unterstützen. Badge zählt ungesehene fachlich relevante Neuigkeiten, ist aber keine MVP-Kernabhängigkeit. Maßgeblich bleibt die FIB-interne Neuigkeitslogik; das Betriebssystem kann statt einer exakten Zahl auch nur einen Punkt oder anderen Hinweis unterstützen.
 
 Einstellungen bleiben einfach: Push an/aus, wichtige Meldungen, ausgewählte Themen/Vorgänge beobachten.
 
@@ -570,9 +572,10 @@ Als Ausgangspunkt gelten insbesondere:
 - offene Punkte,
 - nächste Schritte,
 - wichtige Entscheidungen,
-- Meldung ↔ Vorgang,
+- Ereignis ↔ Vorgang,
 - Vorgang ↔ Thema,
-- Wirkungsrolle,
+- direktes Ereignis ↔ Thema,
+- **Bedeutung für das Thema** bei Vorgang bzw. direkt ergänztem Ereignis,
 - Themendefinition und wesentliche Änderung,
 - neues Ereignis oder Aktualisierung,
 - fachliche Aktualisierungsrelevanz,
@@ -586,14 +589,16 @@ Im MVP wird dafür nur **„explizite Bestätigung erforderlich: ja/nein“** ko
 Mindestens erforderlich:
 
 - stabile IDs/URLs für alle öffentlichen Objekte,
-- eigenständige Entitäten Meldung, Vorgang, Thema, Sitzung/TOP,
-- Meldung → Vorgang,
+- eigenständige Entitäten **Ereignis, Meldung, Vorgang, Thema, Sitzung/TOP**,
+- Ereignis → Meldung `0..1`, Meldung → Ereignis genau `1`,
+- n:m Ereignis ↔ Vorgang; Meldungszugehörigkeit zum Vorgang wird daraus abgeleitet,
 - n:m Vorgang ↔ Thema,
-- optionale direkte Meldung ↔ Thema,
-- Wirkungsrollen,
+- optionale direkte Ereignis ↔ Thema-Beziehung als Zusatzweg,
+- redaktionell bestätigte **Bedeutung für das Thema** (`prägend`, `relevant`, `ergänzend`) für Vorgang ↔ Thema und direktes Ereignis ↔ Thema,
+- keine separate Wirkungsrollen-Taxonomie,
 - aktueller Vorgangsstand und Statushistorie,
 - versionierte Themendefinition,
-- Perspektiven/Kontextdimensionen,
+- Perspektiven und Wirkungen,
 - offene Fragen/Wissenslücken,
 - Aktualisierungsereignisse mit technischer/redaktioneller/fachlicher Art,
 - Relevanz für Neu-seit-letztem-Besuch/Push,
@@ -605,6 +610,8 @@ Mindestens erforderlich:
 - gespeicherte „Mehr wissen?“-Fragen/Antworten und Quellenrollen,
 - Share-/SEO-/Social-Metadaten.
 
+Die fachlichen Kardinalitäten und Modellbegriffe werden verbindlich in `docs/Datenmodell.md` geführt; dieser Abschnitt benennt nur UX-Auswirkungen.
+
 ## 25. G2-Abschluss
 
 Die fachlichen UX-Grundregeln, Navigation, responsive Bannerlogik, visuelle Grundrichtung, Claim, Rücksprung zur GRÜNEN-Homepage und wesentlichen Screenprinzipien sind konsolidiert und widerspruchsfrei dokumentiert.
@@ -613,12 +620,13 @@ Konzeptionelle G2-Offenpunkte bestehen nicht mehr.
 
 Produktionsdetails wie exakte SVG-Vektorisierung der Logos, finale Webfont-Implementierung, optimierte Bannerformate, maskable App-Icons oder konkrete CSS-Feinwerte werden in der späteren technischen Umsetzung verifiziert und blockieren den G2-Abschluss nicht.
 
-**G2 ist damit abgeschlossen. G3 – Datenanforderungen / Datenmodell – kann beginnen.**
+**G2 ist damit abgeschlossen.** Die G2.5-Korrekturen vom 03.10.2026 ändern keine UX-Grundentscheidung, sondern synchronisieren Terminologie und Datenmodellbezüge mit den späteren G3-Entscheidungen.
 
 ## Änderungshistorie
 
 | Version | Datum | Änderung |
 |---|---|---|
+| 2.8 | 03.10.2026 | G2.5-Konsistenzkorrektur: alte Wirkungsrollen- und Meldung-Direktbeziehungen durch aktuelles G3-Modell ersetzt; „Bedeutung für das Thema“, direkte Ereignis-Thema-Beziehung, Ereignis-Meldung-/Ereignis-Vorgang-Logik und präzisierte Neuigkeitsregel für PWA gespiegelt; keine Änderung der abgeschlossenen G2-UX-Grundentscheidungen. |
 | 2.7 | 01.10.2026 | G2 finalisiert: mobile und Desktop-Bannerlogik integriert, kontextabhängige GRÜNEN-Leiste korrigiert, „Neues“-Icon auf fünf gelbe Strahlen/Blätter umgestellt, Maibaum aus finaler Bildmarke entfernt und G2 nach Widerspruchsprüfung abgeschlossen. |
 | 2.6 | 01.10.2026 | Öffentliche Navigation auf „Neues | Im Blick | Sitzungen | Suche“ konsolidiert; interne Fachbegriffe davon abgegrenzt; Rücksprung zur GRÜNEN-Website als UX-Regel ergänzt; visuelle Identität als Primärquelle eingebunden; offene G2-Punkte auf Bannertext und Abschlussprüfung reduziert. |
 | 2.5 | 30.09.2026 | Demonstrator-Frontendregeln in kanonische UX-Quelle integriert; Suche/Filter, Mehr wissen, PWA, Teilen/Druck/Social Preview, Transparenz, Bildregeln und WCAG-2.2-AA-Ziel dokumentiert; Sprachregel abgegrenzt; offene G2-Punkte auf visuelles Konzept und Abschlussprüfung reduziert. |
