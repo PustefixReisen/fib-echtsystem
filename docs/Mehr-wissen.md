@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 1.2 | 04.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
+| 1.3 | 04.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
 
 ## 1. Leitidee
 
@@ -36,7 +36,8 @@ Geeignete Fragen betreffen insbesondere:
 - offene Punkte,
 - nächsten erwartbaren Entscheidungsschritt,
 - Auswirkungen,
-- besonders wichtige Meldungen oder Quellen.
+- besonders wichtige Meldungen oder Quellen,
+- erkennbare mögliche Wechselwirkungen mit anderen Vorgängen.
 
 ### Thema – Zusammenhänge verstehen
 
@@ -47,6 +48,7 @@ Geeignete Fragen betreffen insbesondere:
 - Rahmenbedingungen,
 - Interessen und Zielkonflikte,
 - Wissenslücken,
+- Wechselwirkungen zwischen getrennten Vorgängen,
 - externe Beispiele und Lerntransfer,
 - mögliche zukünftige Bedeutung für Feldkirchen.
 
@@ -170,15 +172,41 @@ Daraus folgt:
 
 Die KI darf Rechtsquellen auffinden, ihren Regelungsgegenstand in einfacher Sprache erläutern und ihren erkennbaren Bezug zum Sachverhalt beschreiben. Sie soll dabei möglichst auf Primärquellen und amtliche Erläuterungen verweisen. Sekundärquellen und fachliche Kommentare können ergänzend zur Verständlichkeit dienen, ersetzen aber bei rechtlich relevanten Aussagen nicht die belastbare Rechtsquelle.
 
+Bei konkreten rechtlichen Aussagen muss ihre Herkunft erkennbar bleiben. FIB unterscheidet mindestens:
+
+- **unmittelbare Rechtsquelle** – Aussage ergibt sich aus Gesetz, Verordnung, Satzung oder Verwaltungsvorschrift,
+- **amtliche Erläuterung** – eine Behörde oder andere zuständige Stelle erläutert die Rechtslage oder das Verfahren,
+- **rechtliche Einschätzung eines beteiligten Akteurs** – beispielsweise die Verwaltung bewertet in einer Beschlussvorlage, welche Norm anwendbar oder welches Verfahren erforderlich sein dürfte.
+
+Eine rechtliche Einschätzung eines Akteurs wird als solche zugeschrieben und nicht stillschweigend zur eigenen Rechtsaussage von FIB gemacht.
+
 Die Vertiefung bleibt freiwillig: Besucher, die sich nicht für den Rechtsrahmen interessieren, müssen den normalen FIB-Inhalt ohne diese Ebene vollständig verstehen können.
 
-## 8. Chancen, Innovation und Lerntransfer
+## 8. Querverweise und mögliche Wechselwirkungen zwischen Vorgängen
+
+Getrennte Vorgänge können sich gegenseitig beeinflussen oder ihre Rahmenbedingungen verändern. Eine solche mögliche Wechselwirkung ist kein Grund, die Vorgänge fachlich zusammenzuführen.
+
+Verbindliche Regel:
+
+> **Wenn eine Entscheidung oder Entwicklung in einem Vorgang die Rahmenbedingungen eines anderen Vorgangs erkennbar verändern könnte, darf FIB darauf als Querverweis oder offene „Mehr wissen?“-Frage hinweisen. Die mögliche Wechselwirkung muss ausdrücklich als offen bzw. bedingt gekennzeichnet werden und darf nicht als bereits eingetretene Wirkung oder gesicherte Kausalität dargestellt werden.**
+
+Dabei gilt:
+
+- Vorgänge bleiben eigenständig, solange sie unterschiedliche konkrete Sachverhalte betreffen,
+- der Zusammenhang muss fachlich plausibel und quellen- oder regelbasiert begründbar sein,
+- Formulierungen wie „könnte“, „kann je nach Ausgestaltung“ oder „würde relevant, wenn …“ sind zu verwenden, wenn die Wirkung noch von einer zukünftigen Entscheidung abhängt,
+- eine vermutete Wechselwirkung darf nicht als Tatsache formuliert werden,
+- wird die bislang offene Wechselwirkung durch eine spätere Entscheidung tatsächlich wirksam, ist der betroffene Vorgang bzw. das betroffene Thema fachlich neu zu prüfen.
+
+Referenzfall Hundehaltung/Hundewiese: Eine künftige Hundehaltungsverordnung kann – abhängig von ihrem räumlichen und sachlichen Geltungsbereich – die Bedeutung von Freilaufflächen verändern. Daraus kann beispielsweise die offene Vertiefungsfrage entstehen: **„Welche Bedeutung könnte eine neue Leinenregelung für die Diskussion um eine Hundewiese oder andere Freilaufflächen haben?“** Eine Aussage, die Hundewiese werde wegen der Verordnung zwingend wichtiger oder notwendig, wäre ohne entsprechenden Nachweis unzulässig.
+
+## 9. Chancen, Innovation und Lerntransfer
 
 Bei Pilotprojekten, technischen Entwicklungen, Beteiligungsformaten oder externen Praxisbeispielen wird geprüft, ob Fragen zu Chancen, Reifegrad, Übertragbarkeit oder Lerntransfer zusätzlichen Erkenntniswert bieten.
 
 Eine mögliche Chance darf nicht als bereits bewährte Lösung dargestellt werden.
 
-## 9. Aktualisierung
+## 10. Aktualisierung
 
 Bei einer fachlich relevanten neuen Entwicklung prüft die KI:
 
@@ -186,11 +214,12 @@ Bei einer fachlich relevanten neuen Entwicklung prüft die KI:
 2. sind bisherige Fragen überholt,
 3. müssen Antworten aktualisiert werden,
 4. sind neue Quellen verfügbar,
-5. ergeben sich Auswirkungen auf Vorgang oder Thema.
+5. ergeben sich Auswirkungen auf Vorgang oder Thema,
+6. entstehen neue oder veränderte Wechselwirkungen zu anderen Vorgängen.
 
 Öffentlich relevante Änderungen werden redaktionell bestätigt.
 
-## 10. MVP und spätere Ausbaustufe
+## 11. MVP und spätere Ausbaustufe
 
 Im MVP werden Fragen und Antworten KI-gestützt vorbereitet, persistent gespeichert und redaktionell geprüft.
 
@@ -198,15 +227,16 @@ Freie Besucherfragen mit Live-KI sind **nicht Bestandteil des MVP**, bleiben abe
 
 Damit bleiben normale Aufrufe bereits vorbereiteter Antworten ohne laufende KI-Kosten.
 
-## 11. Modellunabhängigkeit
+## 12. Modellunabhängigkeit
 
 Fragetyp, Kontext, Quellenrollen, Informationsstand und Ergebnis sollen strukturiert gespeichert werden. Eine reine Browser-Heuristik aus Schlagwörtern ist kein Zielsystem.
 
 Die fachliche Logik gehört dem FIB-System und nicht einem bestimmten KI-Modell.
 
-## 12. Abgrenzung
+## 13. Abgrenzung
 
 - allgemeine Fachlichkeit: `docs/Fachkonzept.md`
+- Themen- und Vorgangsabgrenzung: `docs/Themen-und-Vorgangslogik.md`
 - operative KI-Regeln: `docs/KI-Leitfaden.md`
 - öffentliche Darstellung: `docs/UX-und-Informationsarchitektur.md`
 - Kosten und Live-KI: `docs/KI-Betrieb-und-Kosten.md`
@@ -215,6 +245,7 @@ Die fachliche Logik gehört dem FIB-System und nicht einem bestimmten KI-Modell.
 
 | Version | Datum | Änderung |
 |---|---|---|
+| 1.3 | 04.10.2026 | Rechtsquellen-Herkunft präzisiert: unmittelbare Rechtsquelle, amtliche Erläuterung und rechtliche Einschätzung eines beteiligten Akteurs werden unterschieden. Querverweis-/Wechselwirkungsregel ergänzt: mögliche Auswirkungen eines Vorgangs auf einen anderen dürfen als offene Vertiefungsfrage sichtbar werden, ohne Kausalität oder bereits eingetretene Wirkung zu behaupten; Hundehaltungsverordnung/Hundewiese als Referenzfall aufgenommen. |
 | 1.2 | 04.10.2026 | Vertiefungsfragen explizit aus dem ausgewerteten Informationsstand und offenen Erkenntnisfragen abgeleitet; zweistufige rechtliche Einordnung festgelegt: rechtlich notwendiger Kontext im Hauptinhalt, weiterführende Rechtsfragen und Rechtsquellen bevorzugt über „Mehr wissen?“. Rechtliche Würdigung, verbindliche Auslegung und Rechtsberatung durch FIB ausdrücklich ausgeschlossen. |
 | 1.1 | 03.10.2026 | G2.5-Transfer: harte Quellenpflicht ergänzt; vorbereitete Hintergrundantworten dürfen fehlende Belege nicht durch scheinbar sicheres allgemeines Modellwissen ersetzen. |
 | 1.0 | 30.09.2026 | Demonstrator-Konzept `FIB_Mehr_wissen_Assistent.md` auf die aktuelle Meldungs-/Vorgangs-/Themenlogik und das MVP des Echtsystems überführt. |
