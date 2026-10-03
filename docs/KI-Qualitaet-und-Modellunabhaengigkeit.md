@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 1.1 | 02.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
+| 1.2 | 03.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
 
 ## 1. Ziel
 
@@ -15,6 +15,10 @@ Ziel ist nicht vollständige Modellunabhängigkeit um jeden Preis, sondern eine 
 Leitsatz:
 
 > **Die FIB-Logik gehört dem System – nicht einem bestimmten KI-Modell.**
+
+Für den KI-Einsatz gilt zusätzlich:
+
+> **Kosteneffizienz bedeutet zuerst, KI nur dort einzusetzen, wo sie fachlich erforderlich ist oder einen klaren zusätzlichen Nutzen bringt. Wird KI eingesetzt, hat die erforderliche Ergebnisqualität Vorrang vor dem niedrigsten Preis. Kosten werden erst innerhalb der Lösungen optimiert, die die festgelegte Qualitätsanforderung zuverlässig erfüllen.**
 
 ## 2. Drei Ebenen der Logik
 
@@ -68,8 +72,9 @@ Bei jeder neuen Funktion wird in dieser Reihenfolge geprüft:
 
 1. Kann sie deterministisch als Geschäftsregel umgesetzt werden?
 2. Falls nein: Kann sie als explizite modellübergreifende KI-Regel beschrieben werden?
-3. Welcher Rest bleibt echtes Modellurteil?
-4. Welche strukturierten Daten, Gründe und Testfälle sichern Nachvollziehbarkeit?
+3. Ist KI für diesen Arbeitsschritt überhaupt fachlich erforderlich oder bringt sie einen klaren zusätzlichen Nutzen?
+4. Welcher Rest bleibt echtes Modellurteil?
+5. Welche strukturierten Daten, Gründe und Testfälle sichern Nachvollziehbarkeit?
 
 Bevorzugte Reihenfolge:
 
@@ -132,7 +137,14 @@ Ein Modell gilt nicht allein wegen sprachlich ansprechender Texte als geeignet. 
 
 ### 6.1 Qualität und Kosten gemeinsam bewerten
 
-Der Modellvergleich dient nicht der Suche nach einem einzigen allgemein „besten“ Modell. Bewertet wird je FIB-Aufgabentyp, welches Modell die erforderliche Qualität mit vertretbaren realen Kosten erreicht.
+Der Modellvergleich dient nicht der Suche nach einem einzigen allgemein „besten“ Modell. Bewertet wird je FIB-Aufgabentyp, welche Modelle die festgelegte Qualitätsanforderung zuverlässig erfüllen und welche davon wirtschaftlich sinnvoll betrieben werden können.
+
+Die Reihenfolge ist verbindlich:
+
+1. fachliche Qualitätsanforderung je FIB-Aufgabe festlegen,
+2. Modelle gegen diese Mindestanforderung testen,
+3. ungeeignete Modelle unabhängig vom Preis ausschließen,
+4. erst unter den fachlich geeigneten Modellen Kosten, Geschwindigkeit, Betriebsstabilität und weitere Kriterien vergleichen.
 
 Dazu werden für jeden relevanten Aufgabentyp mindestens gemeinsam betrachtet:
 
@@ -145,12 +157,15 @@ Dazu werden für jeden relevanten Aufgabentyp mindestens gemeinsam betrachtet:
 - zusätzliche Recherche-/Toolkosten,
 - beobachtete Gesamtkosten pro typischem FIB-Fall.
 
-Ein günstigeres Modell kann für eine Routineaufgabe bevorzugt werden, wenn es die festgelegte Mindestqualität zuverlässig erfüllt. Ein leistungsstärkeres Modell wird dort eingesetzt, wo die Qualitätsanforderung dies rechtfertigt.
+Ein günstigeres Modell wird nur dann bevorzugt, wenn es die für die konkrete Aufgabe festgelegte Qualitätsanforderung zuverlässig erfüllt. Bei qualitätskritischen Aufgaben – insbesondere Quellenentdeckung, Ereigniserkennung und Erstbewertung – darf eine Kostenersparnis nicht durch höhere fachliche Ausfall- oder Fehlerrisiken erkauft werden.
 
 ### 6.2 Vergleich nach FIB-Aufgaben statt nach Modellnamen
 
 Modelle werden auf konkrete FIB-Aufgaben abgebildet, zum Beispiel:
 
+- neue Quellen entdecken,
+- neue oder geänderte Fundstellen semantisch analysieren,
+- Ereigniskandidaten erkennen,
 - Dokumentinformationen extrahieren,
 - Wirkungen erkennen und trennen,
 - Zielbereiche vorschlagen,
@@ -188,7 +203,7 @@ Bei Audits wird geprüft:
 - ob für kritische Regeln Testfälle existieren,
 - ob Entscheidungen strukturiert nachvollziehbar bleiben,
 - ob die zugeordnete KI-Leistungsklasse noch angemessen ist,
-- ob ein günstigeres Modell die geforderte Qualität inzwischen ebenfalls zuverlässig erreicht.
+- ob ein wirtschaftlicheres Modell die geforderte Qualität inzwischen ebenfalls zuverlässig erreicht.
 
 ## 9. Modellwechsel
 
@@ -221,5 +236,6 @@ Ergebnisse von Modellvergleichen sollen so dokumentiert werden, dass erkennbar b
 
 | Version | Datum | Änderung |
 |---|---|---|
+| 1.2 | 03.10.2026 | Kostenprinzip präzisiert: KI zunächst vermeiden, wenn sie fachlich nicht erforderlich ist; bei erforderlichem KI-Einsatz gilt die Qualitätsanforderung als Ausschlusskriterium vor der Kostenoptimierung. Quellenentdeckung und Ereigniserkennung als qualitätskritische Aufgaben ergänzt. |
 | 1.1 | 02.10.2026 | Modellvergleich auf konkrete FIB-Aufgaben ausgerichtet; Qualität und reale Kosten gemeinsam als Auswahlkriterium festgelegt; KI-Leistungsklassen als modellunabhängige Grundlage für das spätere Routing ergänzt. |
 | 1.0 | 30.09.2026 | Demonstrator-Dokument `FIB_Modellunabhaengigkeit_und_Qualitaetspruefung.md` auf aktuelle Echtsystem-Logik und Referenzfälle konsolidiert. |
