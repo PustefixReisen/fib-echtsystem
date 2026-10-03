@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 1.3 | 03.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
+| 1.4 | 03.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
 
 ## 1. Zweck und Geltung
 
@@ -48,9 +48,24 @@ Ein Vorgang kann mehreren Themen zugeordnet sein. Umgekehrt umfasst ein Thema in
 
 ## 3. Themen entstehen bottom-up
 
-Themen werden nicht von oben vorgegeben. Die KI untersucht den Bestand aus Ereignissen, Meldungen und Vorgängen auf mögliche übergeordnete Zusammenhänge.
+Themen können auf zwei Wegen entstehen:
 
-Mögliche Indikatoren sind insbesondere:
+1. **KI-Vorschlag** – die KI untersucht den Bestand aus Ereignissen, Meldungen und Vorgängen auf mögliche übergeordnete Zusammenhänge und schlägt daraus Themenkandidaten vor.
+2. **Redaktionelle Anlage** – der Redakteur kann selbst ein neues Thema mit Arbeitstitel, Leitfrage oder Beschreibung anlegen.
+
+Für beide Wege gilt: Vor der Neuanlage muss geprüft werden, ob bereits ein gleiches oder hinreichend ähnliches Thema existiert.
+
+Bei redaktioneller Anlage erfolgt deshalb eine verpflichtende Plausibilitäts- und Dublettprüfung gegen den vorhandenen Themenbestand. Die Prüfung berücksichtigt nicht nur Titelähnlichkeit, sondern insbesondere Leitfrage, Abgrenzung, enthaltene Vorgänge/Ereignisse, Perspektiven und sachlichen Erklärungszweck.
+
+Mögliche Ergebnisse sind:
+
+- **kein ähnliches Thema gefunden** → neues Thema kann angelegt werden,
+- **ähnliches Thema gefunden** → vorhandenes Thema anzeigen und Zusammenführung bzw. Abgrenzung prüfen,
+- **gleiches Thema wahrscheinlich vorhanden** → Neuanlage erst nach bewusster redaktioneller Entscheidung.
+
+Die KI darf auf Ähnlichkeiten hinweisen und eine Empfehlung geben, legt aber nicht autonom fest, ob zwei Themen identisch sind.
+
+Mögliche Indikatoren für KI-Themenvorschläge sind insbesondere:
 
 - dauerhafte oder wiederkehrende kommunale Fragestellung,
 - mehrere voneinander unabhängige Vorgänge,
@@ -86,6 +101,8 @@ Ein KI-generierter Themenkandidat soll mindestens enthalten:
 - Unsicherheiten und Gegenargumente.
 
 Ein Themenkandidat ist kein veröffentlichtes Thema.
+
+Ein redaktionell neu angelegtes Thema durchläuft nach der Dublett-/Ähnlichkeitsprüfung denselben fachlichen Bearbeitungsprozess wie ein KI-generierter Themenkandidat.
 
 ## 5. Redaktionelle Bearbeitung und fehlende Aspekte
 
@@ -160,15 +177,17 @@ Dabei gilt eine strikte Herkunfts- und Anti-Doppelzählungsregel:
 
 Dasselbe Faktum darf daher nicht stärker gewichtet werden, nur weil es zugleich in Quelle, Ereignisbeschreibung, Meldungstext und Vorgangstext vorkommt. „Unsere Einordnung“ wird als bereits dokumentierte politische Bewertung berücksichtigt und nicht mit neutraler Sachinformation vermischt.
 
-### 5.4 Bedeutung eines Vorgangs für ein Thema
+### 5.4 Bedeutung für das Thema
 
-Eine Zuordnung zu einem Thema beschreibt nicht nur, **dass** ein Vorgang relevant ist, sondern auch, **wie stark** er das Verständnis oder die Entwicklung des Themas prägt.
+Eine Aufnahme in ein Thema beschreibt nicht nur, **dass** ein Vorgang oder direkt ergänztes Einzelereignis relevant ist, sondern auch, **wie stark** dieser Themenbestandteil das Verständnis oder die Entwicklung des Themas prägt.
 
 Dafür wird die **Bedeutung für das Thema** verwendet:
 
-- **prägend** – ohne diesen Vorgang lässt sich das Thema derzeit kaum sinnvoll erklären,
-- **relevant** – der Vorgang trägt wesentlich zum Verständnis bei,
-- **ergänzend** – der Vorgang liefert zusätzlichen Kontext, ist aber nicht zentral.
+- **prägend** – ohne diesen Themenbestandteil lässt sich das Thema derzeit kaum sinnvoll erklären,
+- **relevant** – der Themenbestandteil trägt wesentlich zum Verständnis bei,
+- **ergänzend** – der Themenbestandteil liefert zusätzlichen Kontext, ist aber nicht zentral.
+
+Die Einstufung gilt sowohl für ausgewählte Vorgänge als auch für direkt aufgenommene einzelne Ereignisse.
 
 Die KI schlägt die Einstufung vor. Die Redaktion muss sie verpflichtend prüfen und bestätigen oder ändern. Erst danach ist die Einstufung fachlich wirksam.
 
@@ -186,7 +205,7 @@ Perspektive und Wirkung sind keine politische Bewertung. Die politische Bewertun
 
 ## 6. Iterative Themendefinition
 
-Nach Auswahl eines Themenkandidaten formuliert die KI einen ersten Thementext und eine interne Themendefinition.
+Nach Auswahl eines Themenkandidaten oder nach redaktioneller Anlage eines neuen Themas formuliert die KI auf Wunsch einen ersten Thementext und eine interne Themendefinition.
 
 Die interne Themendefinition enthält mindestens:
 
@@ -199,12 +218,12 @@ Die interne Themendefinition enthält mindestens:
 - ausgewählte Vorgänge,
 - zusätzlich ausgewählte weitere relevante Ereignisse,
 - die aus den Ereignissen erschlossenen Meldungen, soweit für die Analyse relevant,
-- Bedeutung der Vorgänge für das Thema,
+- Bedeutung der Vorgänge und direkt ergänzten Einzelereignisse für das Thema,
 - Unsicherheiten und offene Abgrenzungsfragen.
 
 Der Arbeitsprozess ist iterativ:
 
-> **Themenkandidat → Auswahl von Vorgängen und weiteren relevanten Ereignissen → Entwurf → redaktionelle Ergänzung/Korrektur → gezielte Recherche → Kontextschärfung → bestätigte Themendefinition → laufende Weiterentwicklung**
+> **KI-Themenkandidat oder redaktionelle Themenanlage → Ähnlichkeits-/Dublettprüfung → Auswahl von Vorgängen und weiteren relevanten Ereignissen → Entwurf → redaktionelle Ergänzung/Korrektur → gezielte Recherche → Kontextschärfung → bestätigte Themendefinition → laufende Weiterentwicklung**
 
 Eine bestätigte Themendefinition ist **kein eingefrorener Endzustand**. Sie kann auch später ausgeschärft werden, wenn:
 
@@ -224,11 +243,13 @@ Die KI soll aus folgenden Entscheidungen lernen:
 - bestätigte Themenkandidaten,
 - veränderte Themenkandidaten,
 - verworfene Themenkandidaten,
+- redaktionell neu angelegte Themen,
+- bei der Dublett-/Ähnlichkeitsprüfung bestätigte Zusammenführungen oder Abgrenzungen,
 - vom Redakteur ergänzte fehlende Aspekte,
 - nachträglich entdeckte relevante Vorgänge oder Ereignisse,
 - übernommene und verworfene Vorschläge unter „Weitere relevante Ereignisse“,
 - bewusste Abgrenzungen zwischen Thema und Vorgang,
-- redaktionell korrigierte Einstufungen der Bedeutung eines Vorgangs für ein Thema,
+- redaktionell korrigierte Einstufungen der Bedeutung eines Vorgangs oder Einzelereignisses für ein Thema,
 - redaktionell ergänzte oder korrigierte Perspektiven.
 
 Ziel ist keine autonome Themenhoheit der KI, sondern eine zunehmend FIB-spezifische Vorschlagslogik unter redaktioneller Kontrolle.
@@ -276,7 +297,9 @@ Für das Datenmodell sind mindestens vorzusehen:
 - n:m-Beziehungen zwischen Vorgängen und Themen,
 - zusätzliche direkte Ereignis-Thema-Beziehungen für einzeln aufgenommene Ereignisse, die nicht bereits über einen ausgewählten Vorgang enthalten sind,
 - Kennzeichnung, ob ein Ereignis im Thema über einen Vorgang oder als direkt ergänztes Ereignis enthalten ist,
-- redaktionell bestätigte **Bedeutung für das Thema** mit den Stufen prägend / relevant / ergänzend für Vorgänge,
+- redaktionell bestätigte **Bedeutung für das Thema** mit den Stufen prägend / relevant / ergänzend für Vorgänge und direkt ergänzte Einzelereignisse,
+- Herkunft eines Themas: KI-Vorschlag oder redaktionelle Anlage,
+- protokollierte Ähnlichkeits-/Dublettprüfung bei Neuanlage eines Themas,
 - automatische Erschließung zugehöriger Meldungstexte und vorhandener „Unsere Einordnung“ über die Ereignisbeziehung,
 - Herkunftskennzeichnung der Analyseinhalte, damit Quellen, Ereignisse, Meldungstexte, Vorgangstexte und politische Einordnung nicht als unabhängige Belege doppelt gewertet werden,
 - strukturierte Perspektiven eines Themas,
@@ -300,7 +323,7 @@ Eine Themenseite muss insbesondere beantworten:
 - Welche Perspektiven gehören zum Thema?
 - Welche konkreten Vorgänge prägen den lokalen Stand?
 - Welche weiteren relevanten Ereignisse ergänzen das Thema außerhalb dieser Vorgänge?
-- Welche Bedeutung haben die Vorgänge für das Thema?
+- Welche Bedeutung haben diese Vorgänge und Ereignisse für das Thema?
 - Welche sachlichen Wirkungen sind unter den relevanten Perspektiven erkennbar?
 - Welcher externe Kontext hilft beim Verständnis?
 - Was wissen wir, was ist offen und wo bestehen Wissenslücken?
@@ -310,6 +333,7 @@ Eine Themenseite muss insbesondere beantworten:
 
 | Version | Datum | Änderung |
 |---|---|---|
+| 1.4 | 03.10.2026 | Zwei Wege der Themenentstehung festgelegt: KI-Themenvorschlag und redaktionelle Themenanlage; verpflichtende Ähnlichkeits-/Dublettprüfung bei Neuanlage ergänzt; Bedeutung für das Thema mit prägend/relevant/ergänzend auf direkt ergänzte Einzelereignisse erweitert. |
 | 1.3 | 03.10.2026 | Themenauswahl auf Vorgänge plus zusätzliche „Weitere relevante Ereignisse“ erweitert; Vorgangsauswahl übernimmt zugehörige Ereignisse automatisch; Meldungen werden über Ereignisse samt Meldungstext und vorhandener „Unsere Einordnung“ als Analysekontext erschlossen; KI-Vorauswahl und manuelle Ereignissuche sowie Anti-Doppelzählungsregel festgelegt. |
 | 1.2 | 02.10.2026 | Wirkungsrollen-Taxonomie durch „Bedeutung für das Thema“ ersetzt; verpflichtende redaktionelle Bestätigung festgelegt; Perspektiven und sachliche Wirkungen von politischer Bewertung abgegrenzt. |
 | 1.1 | 30.09.2026 | Themen-/Vorgangslogik konsolidiert und Wirkungsrollen eingeführt. |
