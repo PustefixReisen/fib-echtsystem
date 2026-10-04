@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 1.8 | 04.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
+| 1.9 | 04.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
 
 ## 1. Zweck und Geltung
 
@@ -35,6 +35,7 @@ Ziel ist ein robustes und langfristig tragfähiges Modell, das für einen kleine
 - Fachlich einmal wirksame Objekte werden bei geändertem Wissensstand grundsätzlich nicht spurlos gelöscht; fachlich relevante Zustandsänderungen bleiben nachvollziehbar.
 - Historische Nachvollziehbarkeit von Vorgängen und Themen erfolgt über versionierte strukturierte Gesamtstände; einzelne enthaltene Fachbestandteile wie Wirkung, Perspektive, Bewertung oder Begründung erhalten keine eigene parallele Versionshistorie.
 - Öffentlich wird grundsätzlich nur der aktuell freigegebene Stand eines Vorgangs oder Themas gezeigt. Historische Versionen stehen ausschließlich im Redaktionssystem für Vergleich, Nachvollziehbarkeit, Audit und Rekonstruktion früherer Sachstände zur Verfügung.
+- Ein späterer Recherche- oder Aktualisierungslauf darf bestätigte fachliche Objekte nicht allein deshalb entfernen oder entwerten, weil sie in diesem Lauf nicht erneut gefunden wurden.
 
 ## 3. Wissenskern
 
@@ -58,6 +59,24 @@ Beispiele:
 
 Ein `Ereignis` ist damit von seiner redaktionellen Darstellung zu unterscheiden.
 
+#### 3.1.1 Fachlicher Status und Rücknahme eines Ereignisses
+
+Ein Recherchefund oder KI-Kandidat wird nicht allein durch sein Auffinden bereits zum bestätigten `Ereignis`. Erst die fachliche Bestätigung macht ihn zum Bestandteil des Wissenskerns.
+
+Für bestätigte Ereignisse gelten folgende Zustände:
+
+- **bestätigt** – das Ereignis ist als fachlich reales und korrekt abgegrenztes Geschehen bestätigt,
+- **zurückgenommen** – die frühere Annahme eines eigenständigen Ereignisses hat sich als sachlich falsch oder nicht hinreichend belegbar erwiesen,
+- **zusammengeführt** – der Datensatz wurde als Dublette eines anderen bestätigten Ereignisses erkannt und auf dieses fachlich zurückgeführt.
+
+Dabei gilt:
+
+- Ein bestätigtes Ereignis wird nicht allein wegen seines Alters oder fehlender neuer Entwicklung inaktiv oder abgeschlossen. Es ist ein historisch eingetretenes Geschehen und bleibt Bestandteil des Wissensbestands.
+- Sachliche Präzisierungen eines bestätigten Ereignisses aktualisieren dessen aktuellen fachlichen Stand und werden nachvollziehbar protokolliert; sie erzeugen keine eigene Ereignis-Versionskette.
+- `zurückgenommen` wird nur verwendet, wenn die frühere fachliche Annahme selbst nicht aufrechterhalten werden kann. Grund, Datum und redaktionelle Entscheidung müssen nachvollziehbar gespeichert werden.
+- Bei `zusammengeführt` bleibt die frühere Identität nachvollziehbar und verweist auf das fortgeführte Ereignis; Beziehungen werden nicht stillschweigend verloren.
+- Ein späterer Recherchelauf, in dem das Ereignis nicht erneut gefunden wird, verändert seinen Status nicht.
+
 ### 3.2 `Meldung`
 
 Eine `Meldung` ist die redaktionelle FIB-Darstellung eines eigenständigen berichtenswerten `Ereignisses`.
@@ -79,6 +98,24 @@ Diese Trennung erlaubt insbesondere die saubere Unterscheidung zwischen:
 1. **Was ist tatsächlich passiert?** → `Ereignis`
 2. **Welche neuen Informationen liegen dazu vor?** → Quellen/Fundstellen und Aktualisierung
 3. **Was veröffentlicht FIB dazu?** → `Meldung`
+
+#### 3.2.1 Veröffentlichungsstatus und Rücknahme einer Meldung
+
+Eine Meldung besitzt einen vom Ereignis getrennten Veröffentlichungsstatus:
+
+- **Entwurf** – redaktionell in Bearbeitung und nicht öffentlich,
+- **freigegeben** – fachlich/redaktionell zur Veröffentlichung bestätigt, aber noch nicht veröffentlicht,
+- **veröffentlicht** – öffentlich sichtbare aktuelle Meldung,
+- **zurückgezogen** – eine zuvor veröffentlichte Meldung soll nicht mehr als regulär gültige Veröffentlichung erscheinen.
+
+Dabei gilt:
+
+- `aktualisiert` und `korrigiert` sind keine dauerhaften Meldungsstatus. Sie beschreiben nachvollziehbare Änderungen an einer grundsätzlich fortbestehenden Meldung.
+- Eine fachliche oder sprachliche Korrektur einer veröffentlichten Meldung führt deshalb grundsätzlich wieder zu einer veröffentlichten aktuellen Fassung; relevante Änderungen werden mit Aktualisierungsdatum und Änderungsgegenstand nachvollziehbar gemacht.
+- `zurückgezogen` wird nur verwendet, wenn die Meldung als Veröffentlichung nicht fortbestehen soll, beispielsweise wegen eines grundlegenden Fehlers, einer unzulässigen Veröffentlichung oder weil das zugrunde gelegte Ereignis fachlich zurückgenommen wurde.
+- Eine zurückgezogene Meldung wird nicht spurlos gelöscht. Im Redaktionssystem bleiben Inhalt, Rücknahmegrund, Zeitpunkt und frühere Veröffentlichung nachvollziehbar.
+- Ob und in welcher Form öffentlich ein Hinweis auf eine zurückgezogene Meldung bestehen bleibt, wird in der Informationsarchitektur bzw. im Redaktionsworkflow geregelt; die fachliche Historie bleibt unabhängig davon erhalten.
+- Ein späterer Recherchelauf, in dem die Meldung oder ihre Quelle nicht erneut gefunden wird, verändert ihren Veröffentlichungsstatus nicht.
 
 ### 3.3 Beziehung `Ereignis ↔ Meldung`
 
@@ -518,7 +555,7 @@ Plausibilitätsprüfungen sind keine automatische politische Entscheidung. Sie m
 Als nächste Modellierungsschritte werden geklärt:
 
 - `Sitzung/TOP ↔ Ereignis/Meldung/Vorgang/Thema`,
-- Status- und Rücknahmelogik für `Ereignis`, `Meldung` und `Sitzung`,
+- Status- und Lebenszykluslogik für `Sitzung/TOP`,
 - konkrete fachliche Plausibilitätsregeln für den Redaktionsprozess,
 - Persistenz-/Rücknahme-/Archivierungslogik für weitere fachliche Objekte und Beziehungen.
 
@@ -648,7 +685,7 @@ Mehrfachverwendung eines Bildes ist möglich, wenn jede Verwendung eigenständig
 
 ## 5. Offene G3-Fragen
 
-1. Welche Status- und Rücknahmeregeln gehören zu `Ereignis`, `Meldung` und `Sitzung`?
+1. Welche Status- und Lebenszyklusregeln gehören zu `Sitzung` und `TOP`?
 2. Welche Daten gehören zur fachlichen Persistenz und welche nur zum technischen Betrieb?
 3. Welche Plausibilitätsregeln sind verbindlich und welche nur unterstützende Hinweise?
 4. Welche zusätzlichen Rechte- und Freigabestatus werden für öffentlich über FIB bereitgestellte Dateien und Bilder benötigt?
@@ -658,6 +695,7 @@ Mehrfachverwendung eines Bildes ist möglich, wenn jede Verwendung eigenständig
 
 | Version | Datum | Änderung |
 |---|---|---|
+| 1.9 | 04.10.2026 | Status- und Rücknahmelogik für Ereignis und Meldung festgelegt. Recherchekandidaten werden erst nach fachlicher Bestätigung zu Ereignissen; bestätigte Ereignisse bleiben grundsätzlich dauerhaft im Wissensbestand und können nur `zurückgenommen` oder bei Dubletten `zusammengeführt` werden. Meldungen erhalten die Veröffentlichungsstatus `Entwurf / freigegeben / veröffentlicht / zurückgezogen`; `aktualisiert` und `korrigiert` sind nachvollziehbare Änderungen, keine eigenen Dauerstatus. Späteres Nichtfinden in einem Recherchelauf darf bestehende Objekte nicht entfernen oder entwerten. |
 | 1.8 | 04.10.2026 | Lebenszyklusstatus für Vorgang und Thema festgelegt. Vorgang: `aktiv / ruhend / abgeschlossen / archiviert`; Thema: `aktiv / ruhend / archiviert`. `abgeschlossen` bleibt bewusst auf konkrete Vorgänge beschränkt; `archiviert` bedeutet Entfernung aus laufender öffentlicher Navigation bei vollständigem Erhalt im Redaktionssystem; Wiederaktivierung bleibt möglich. |
 | 1.7 | 04.10.2026 | Schwelle für Gesamtversionen konkretisiert: neue Version nur bei fachlich relevanter Änderung des Vorgangs-/Themenstands; typische Auslöser und reine Protokolländerungen abgegrenzt; redaktionelle Bestätigung der Versionierungsentscheidung festgelegt. |
 | 1.6 | 04.10.2026 | Versionierungsgrundsatz festgelegt: Vorgänge und Themen werden als bestätigte strukturierte Gesamtstände versioniert; enthaltene Fachbausteine wie Wirkung, Perspektive, Bewertung und Begründung erhalten keine eigene parallele Versionshistorie. Öffentlich erscheint nur der aktuelle freigegebene Stand; historische Gesamtversionen bleiben ausschließlich im Redaktionssystem für Vergleich, Audit und Rekonstruktion verfügbar. |
