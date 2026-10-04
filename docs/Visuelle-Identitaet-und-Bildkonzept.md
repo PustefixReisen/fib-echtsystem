@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 2.3 | 01.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
+| 2.4 | 04.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
 
 ## 1. Zweck und Verbindlichkeit
 
@@ -68,7 +68,7 @@ Es gibt zwei verbindliche responsive Darstellungsweisen. In beiden Fällen bleib
 
 ### 4.1 Handy / PWA
 
-Das Smartphone ist voraussichtlich das wichtigste Nutzungsgerät für Feldkirchen im Blick. Der Banner muss deshalb auf kleinem Raum gleichzeitig Markenidentität, Nutzenversprechen und lokale Wiedererkennbarkeit vermitteln.
+Das Smartphone ist das voraussichtlich wichtigste Nutzungsgerät für Feldkirchen im Blick. Der Banner muss deshalb auf kleinem Raum gleichzeitig Markenidentität, Nutzenversprechen und lokale Wiedererkennbarkeit vermitteln.
 
 Verbindliche mobile Gestaltung:
 
@@ -328,11 +328,99 @@ Die Styleguide-Referenzen zeigen exemplarisch:
 
 Mockups konkretisieren das Design, überschreiben aber nicht die fachlichen UX-Regeln aus `docs/UX-und-Informationsarchitektur.md`.
 
-## 14. Bildsprache für Inhalte
+## 14. Bildsprache und Verwendungslogik für Inhalte
 
 Reale, inhaltlich passende Feldkirchen-Fotos haben Vorrang vor allgemeinen Standardmotiven.
 
 Geeignete Motive umfassen Rathaus/Gemeindezentrum, Kirche, Ortsbild, Mobilität, Natur, Infrastruktur und konkrete Orte eines Vorgangs. Bilder müssen sachlich passen, lokale Wiedererkennbarkeit bieten und dürfen keine falsche inhaltliche Nähe erzeugen.
+
+### 14.1 Grundregel der Bildauswahl
+
+> **Kein Bild ist besser als ein sachlich falsches, nur ungefähr passendes oder missverständliches Bild.**
+
+Für jede konkrete Verwendung wird erneut geprüft, ob Motiv, Sachverhalt und Veröffentlichungsstand zusammenpassen.
+
+Reihenfolge der Auswahl:
+
+1. konkretes Bild des betreffenden Projekts, Objekts, Orts oder Vorgangs,
+2. anderes eindeutig passendes lokales Bild mit belastbarem Sachbezug,
+3. thematisch passendes Motiv nur dort, wo die Inhaltsebene dies zulässt,
+4. sonst kein Bild.
+
+Rein symbolische oder nur über eine gemeinsame Kategorie passende Bilder werden bei Meldungen nicht eingesetzt.
+
+### 14.2 Meldungen strenger als Themen und Sitzungen
+
+Für **Meldungen** gilt eine hohe Sachbezugsschwelle: Das Bild soll den konkreten Vorgang, Ort, Gegenstand oder ein eindeutig dazugehöriges Objekt zeigen. Ein allgemeines Themenmotiv reicht nicht.
+
+Für **Themen** kann ein Bild auch einen zentralen, repräsentativen Aspekt des Themas zeigen, wenn die Zuordnung transparent und nicht irreführend ist.
+
+Für **Sitzungen** werden Bilder nur eingesetzt, wenn sie einen klaren konkreten Bezug zur Sitzung, zum Gremium, Ort oder einem zentral behandelten Gegenstand haben. Ein dekoratives Bild ohne Erkenntniswert entfällt.
+
+### 14.3 Projekt-/Objektidentität vor allgemeinem Themenbezug
+
+Zeigt ein Bild ein konkretes Projekt, Objekt oder einen konkreten Ort, hat diese Identität Vorrang vor einer allgemeineren thematischen Ähnlichkeit.
+
+Beispiel: Ein Foto eines bestimmten Bauprojekts wird zuerst diesem Projekt/Vorgang bzw. einer dazugehörigen Meldung zugeordnet und nicht lediglich dem allgemeinen Thema „Wohnen“ oder „Ortsentwicklung“.
+
+### 14.4 Bildbibliothek und strukturierte Zuordnungen
+
+Die Bildbibliothek ist die fachliche Quelle für wiederverwendbare Inhaltsbilder. Zu einem Bild können strukturiert hinterlegt werden:
+
+- **Primärzuordnung** – konkretes Projekt, Objekt, Ort, Vorgang, Ereignis oder Meldung, für das bzw. die das Bild besonders eindeutig steht,
+- **weitere geeignete Verwendungen** – zusätzliche Themen, Vorgänge oder Meldungen, für die der Sachbezug ebenfalls belastbar ist,
+- **Nicht verwenden für** – ausdrückliche Ausschlüsse bei Verwechslungsgefahr oder fachlich naheliegender, aber falscher Zuordnung,
+- Schlagworte als Such- und Vorschlagshilfe.
+
+Explizite redaktionelle Zuordnungen und Ausschlüsse haben Vorrang vor automatischen Text-, Ähnlichkeits- oder Schlagwortvorschlägen.
+
+Der Redakteur muss dafür keine internen IDs kennen; normale fachliche Angaben sollen im späteren Workflow in strukturierte Beziehungen übersetzt werden können.
+
+### 14.5 Mehrfachverwendung
+
+Ein Bild darf mehrfach verwendet werden, wenn **jede einzelne Verwendung** den Sachbezugstest besteht und die Nutzungsrechte dies zulassen.
+
+Mehrfachverwendung allein macht ein Bild nicht zu einem generischen Symbolbild. Die Primärzuordnung bleibt nachvollziehbar.
+
+### 14.6 Rechte, Datenschutz und Pflichtmetadaten
+
+Vor öffentlicher Verwendung müssen mindestens geklärt und gespeichert sein:
+
+- Herkunft bzw. Quelle des Bildes,
+- Urheber bzw. erforderlicher Bildnachweis,
+- Nutzungserlaubnis/Lizenz oder sonstige Rechtsgrundlage der Nutzung,
+- öffentliche Freigabe,
+- datenschutzrelevante Prüfung, soweit Personen oder sensible Inhalte erkennbar sind,
+- sachliche Bildunterschrift,
+- motivbezogener Alt-Text.
+
+Soweit fachlich hilfreich werden zusätzlich Aufnahmeort und Aufnahmedatum geführt.
+
+Bildunterschriften sollen sachlich beschreiben, was für den Beitrag relevant ist. Rechte-/Urheberhinweise werden sichtbar am Bild oder in unmittelbar zugeordneten Bildinformationen ausgegeben.
+
+Alt-Texte beschreiben das für die Nutzung relevante Motiv; sie wiederholen nicht bloß die Bildunterschrift und enthalten keine dekorativen Zusatzinformationen ohne Nutzen für Screenreader-Nutzer.
+
+### 14.7 Aktualität und Austausch
+
+Ein historisch richtiges Foto kann durch einen später veränderten Sachstand irreführend werden. Deshalb wird bei relevanten Aktualisierungen geprüft, ob das Bild weiterhin passt.
+
+Ein Bild darf ausgetauscht werden, ohne dadurch das Ereignis- oder Meldungsdatum fachlich zu verändern. Der Austausch eines Bildes ist für sich genommen keine neue sachliche Entwicklung.
+
+### 14.8 Darstellung von Inhaltsbildern
+
+Inhaltsbilder werden proportional dargestellt und nicht ohne fachlichen Grund auf einen festen Ausschnitt gezwungen. Die konkrete responsive Anordnung wird in der Frontend-Umsetzung validiert.
+
+Für mobile Ansichten gilt als Grundprinzip: Bild, Bildunterschrift und Text müssen in nachvollziehbarer Lesereihenfolge erscheinen; Bildnachweis und Alt-Text bleiben erhalten.
+
+### 14.9 „Mehr zum Bild“ / Motivwissen
+
+Der Demonstrator hat ein optionales „Mehr zum Bild“ mit zusätzlichem Motivwissen erprobt. Diese Funktion ist für das Echtsystem **noch nicht als MVP-Pflicht entschieden**.
+
+Bis zur Entscheidung gilt:
+
+- Motivwissen ist vom politischen bzw. sachlichen Inhalt der Meldung getrennt,
+- ein Bild darf auch ohne vertiefendes Motivwissen verwendet werden,
+- eine spätere Übernahme darf nur erfolgen, wenn das Motivwissen einen eigenen Erkenntniswert bietet und quellen-/datenmäßig sauber gepflegt werden kann.
 
 ## 15. Produktionsassets
 
@@ -368,6 +456,7 @@ Die konkrete Assetübersicht und der technische Status stehen in `assets/brand/R
 
 | Version | Datum | Änderung |
 |---|---|---|
+| 2.4 | 04.10.2026 | Zweiter Demonstrator-Transfer-Audit: Inhaltsbildlogik vervollständigt. Verbindliche Auswahlregel „kein Bild ist besser als ein falsches“, strengere Sachbezugsschwelle für Meldungen, Bildbibliothek mit Primär-/weiteren Zuordnungen und Nutzungsausschlüssen, Mehrfachverwendung, Rechte/Datenschutz/Pflichtmetadaten, Alt-Text/Bildunterschrift, Aktualitätsprüfung und proportionale Darstellung aufgenommen; „Mehr zum Bild“ als noch zu entscheidende optionale Funktion inventarisiert. |
 | 2.3 | 01.10.2026 | Navigationssymbol „Neues“ auf fünf gelbe strahlen-/blattartige Formen ohne Halbkreis finalisiert; Produktionsasset-Status präzisiert: SVG bereits für Icons, für Logo/Banner Ziel-Masterformat bei weiterhin verbindlichen Rasterreferenzen. |
 | 2.2 | 01.10.2026 | Mobile Bannerlogik finalisiert: Illustration bleibt erhalten, Text liegt als echter UI-Text mit hellem halbtransparentem Overlay darüber; mobile Kurzbeschreibung festgelegt; kompakte GRÜNEN-Leiste eigenständig direkt unter dem Banner positioniert und bei eingebettetem Aufruf ausgeblendet. |
 | 2.1 | 01.10.2026 | Tablet-/Desktop-Banner technisch als echter responsiver Zwei-Spalten-Banner festgelegt: Text links, Illustration rechts, maximale Containerbreite, keine unbegrenzte Skalierung auf breiten Bildschirmen, getrennte Produktionsbestandteile. |
