@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 1.4 | 04.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
+| 1.5 | 04.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
 
 ## 1. Zweck und Geltung
 
@@ -32,6 +32,7 @@ Ziel ist ein robustes und langfristig tragfähiges Modell, das für einen kleine
 - Fachlich wirksame Zuordnungen zwischen Wirkungen und Themenperspektiven werden persistent gespeichert und nur bei konkretem Änderungsanlass neu geprüft.
 - Offene Fragen/Wissenslücken sind eigenständige fachliche Objekte und werden nicht mit „Mehr wissen?“-Fragen vermischt.
 - Bilder und ihre konkrete Verwendung werden getrennt modelliert, damit Rechte, Metadaten und Verwendungskontext nachvollziehbar bleiben.
+- Fachlich einmal wirksame Objekte werden bei geändertem Wissensstand grundsätzlich nicht spurlos gelöscht; fachlich relevante Zustandsänderungen bleiben nachvollziehbar.
 
 ## 3. Wissenskern
 
@@ -425,7 +426,7 @@ Als nächste Modellierungsschritte werden geklärt:
 - `Sitzung/TOP ↔ Ereignis/Meldung/Vorgang/Thema`,
 - genaue Versionierungs- und Vergleichslogik zwischen strukturiertem Redaktionsstand und Textfassung,
 - konkrete fachliche Plausibilitätsregeln für den Redaktionsprozess,
-- Persistenz-/Rücknahme-/Archivierungslogik für fachliche Objekte und Beziehungen.
+- Persistenz-/Rücknahme-/Archivierungslogik für weitere fachliche Objekte und Beziehungen.
 
 ## 4. Weitere Modellbereiche
 
@@ -460,21 +461,47 @@ Eine `offene Frage` bzw. `Wissenslücke` beschreibt einen noch nicht geklärten,
 
 Sie ist ein eigenständiges fachliches Objekt und wird nicht mit einer `Mehr-wissen?-Frage` gleichgesetzt.
 
+#### 4.3.1 Fachlicher Status
+
+Der fachliche Erkenntnisstand einer offenen Frage wird mit genau einem der folgenden Status geführt:
+
+- **offen** – die Frage ist fachlich noch ungeklärt,
+- **teilweise geklärt** – ein relevanter Teil ist geklärt, wesentliche Teile bleiben offen,
+- **geklärt** – die Frage ist auf Basis des aktuellen Wissensstands beantwortet,
+- **gegenstandslos** – die Frage muss nicht mehr beantwortet werden, weil ihre Voraussetzung entfallen ist oder sich der Sachverhalt so verändert hat, dass sie keine fachliche Bedeutung mehr besitzt.
+
+`gegenstandslos` ist ausdrücklich nicht dasselbe wie `geklärt`: Die Frage wurde nicht beantwortet, sondern hat ihren Gegenstand verloren.
+
+#### 4.3.2 Bearbeitungsstatus
+
+Der fachliche Status wird von der redaktionellen Bearbeitungsentscheidung getrennt. Zusätzlich wird geführt:
+
+- **aktiv** – die Frage soll weiter beobachtet bzw. recherchiert werden,
+- **zurückgestellt** – die Frage bleibt fachlich offen oder teilweise geklärt, wird aber derzeit bewusst nicht aktiv weiterbearbeitet.
+
+Damit verändert `zurückgestellt` nicht den Erkenntnisstand der Frage.
+
+#### 4.3.3 Persistenz und Historie
+
 Mindestens zu speichern sind:
 
 - Fragetext / Gegenstand,
 - fachlicher Bezug zu `Meldung`, `Vorgang` und/oder `Thema`,
 - Herkunft (`KI-Vorschlag`, redaktionell ergänzt, aus Quelle/Verfahren abgeleitet),
-- Status mindestens `offen`, `teilweise geklärt`, `geklärt`, `gegenstandslos`,
+- fachlicher Status,
+- Bearbeitungsstatus,
 - gegebenenfalls Bedingung oder Abhängigkeit,
 - relevante Quellen/Fundstellen,
 - Eröffnungsdatum bzw. fachlicher Stand,
-- Auflösungsdatum und Auflösungsbezug,
+- Datum und kurze Begründung jeder fachlich relevanten Statusänderung,
+- Auflösungsbezug bei `geklärt` oder `gegenstandslos`,
 - Historie wesentlicher Änderungen.
+
+Fachlich relevante Zustandsänderungen werden nicht durch Löschen ersetzt. Insbesondere bleiben geklärte und gegenstandslos gewordene Fragen nachvollziehbar erhalten.
 
 Eine offene Frage kann eine mögliche Wechselwirkung zwischen getrennten Vorgängen betreffen. Solche Beziehungen bleiben als mögliche bzw. bedingte Wechselwirkung gekennzeichnet und werden nicht als bereits eingetretene Wirkung modelliert.
 
-Öffentlich wird grundsätzlich nur der aktuelle offene Stand gezeigt. Geklärte Fragen bleiben fachlich historisiert und können für den Verlauf weiterhin herangezogen werden.
+Öffentlich wird grundsätzlich nur der aktuelle offene bzw. teilweise geklärte Stand gezeigt. Geklärte und gegenstandslos gewordene Fragen bleiben fachlich historisiert und können für den Verlauf weiterhin herangezogen werden.
 
 ### 4.4 „Was bisher passiert ist“
 
@@ -532,12 +559,13 @@ Mehrfachverwendung eines Bildes ist möglich, wenn jede Verwendung eigenständig
 3. Welche Daten gehören zur fachlichen Persistenz und welche nur zum technischen Betrieb?
 4. Welche Plausibilitätsregeln sind verbindlich und welche nur unterstützende Hinweise?
 5. Welche zusätzlichen Rechte- und Freigabestatus werden für öffentlich über FIB bereitgestellte Dateien und Bilder benötigt?
-6. Wie werden Rücknahme, Archivierung und Wiederaufnahme fachlicher Objekte und Beziehungen konkret modelliert?
+6. Wie werden Rücknahme, Archivierung und Wiederaufnahme der übrigen fachlichen Objekte und Beziehungen konkret modelliert?
 
 ## Änderungshistorie
 
 | Version | Datum | Änderung |
 |---|---|---|
+| 1.5 | 04.10.2026 | G3-Lebenszyklus begonnen: Grundsatz gegen spurloses Löschen fachlich wirksamer Zustände ergänzt; offene Fragen/Wissenslücken konkretisiert. Fachlicher Erkenntnisstatus `offen / teilweise geklärt / geklärt / gegenstandslos` wird vom Bearbeitungsstatus `aktiv / zurückgestellt` getrennt; Statusänderungen, Auflösungsbezug und Historisierung verbindlich festgelegt. |
 | 1.4 | 04.10.2026 | Zweiten Demonstrator-Transfer-Audit und zwischenzeitliche G3-Entscheidungen nachgezogen: eigene Begründung der Verlässlichkeit, Abwägung ohne abschließendes Gesamturteil, persistente offene Fragen/Wissenslücken mit Status/Auflösung, Ableitung von „Was bisher passiert ist“ sowie Bild/Bildverwendung mit Rechte-, Metadaten- und Zuordnungslogik ergänzt. |
 | 1.3 | 03.10.2026 | Politischen Bezug und Begründungslogik konkretisiert: Zielbereich ist der allgemeine politische Maßstab; konkrete dokumentierte grüne Position wird bei einschlägigem Vorliegen zusätzlich verwendet, ist aber keine Voraussetzung für eine Bewertung. |
 | 1.2 | 03.10.2026 | Feste fachliche Wertemengen für Wirkungsrichtung, Bedeutung der Wirkung, Verlässlichkeit und politisches Gewicht festgelegt. |
