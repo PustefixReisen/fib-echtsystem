@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 2.7 | 04.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
+| 2.8 | 04.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
 
 ## Statusmodell
 
@@ -25,14 +25,14 @@ Es gelten die zentralen Status aus `PustefixReisen/pustivo/docs/governance/Dokum
 | Projektbasis / Repository | **Abgeschlossen** | separates Repository und initiale Dokumentationsstruktur vorhanden |
 | G1 Produktumfang / MVP | **Abgeschlossen** | MVP, unmittelbare Ausbaustufe, spätere Erweiterungen, Nicht-Ziele und Aufwandstreiber verbindlich festgelegt |
 | G2 UX / Informationsarchitektur / Fachfunktionen | **Abgeschlossen** | UX, öffentliche Navigation, Screenlogik, visuelle Identität, Claim, responsive Bannerlogik, GRÜNEN-Rücksprung und Assetstruktur sind konsolidiert; Abschlussprüfung durchgeführt |
-| G2.5 Transfer-Audit Demonstrator → Echtsystem | **In Arbeit** | erste fachliche Prüfschicht abgeschlossen; zweite Prüfschicht zu sichtbaren Inhaltsbausteinen und Redaktionsfunktionen seit 04.10.2026 offen; erkannte Lücken werden direkt in Primärdokumenten geschlossen |
-| Dokumentationsübernahme Demonstrator → Echtsystem | **In Arbeit** | Hauptdokumente übernommen; Vollständigkeit sichtbarer Inhaltsbausteine und Redaktionsfunktionen wird unter G2.5 erneut geprüft |
-| G3 Datenanforderungen / Datenmodell | **In Arbeit** | Fachobjekte und strukturierter Redaktionsstand sind weit fortgeschritten; Fortsetzung der Modellarbeit nach Schließen der aktuell relevanten G2.5-Transferlücken |
+| G2.5 Transfer-Audit Demonstrator → Echtsystem | **Abgeschlossen** | zwei Prüfschichten abgeschlossen: fachliche Regeln/Recherche/Persistenz sowie sichtbare Inhaltsbausteine/Redaktionsfunktionen; Transfer-Gates bestanden |
+| Dokumentationsübernahme Demonstrator → Echtsystem | **Abgeschlossen** | Hauptdokumente sowie sichtbare Inhaltsbausteine und Redaktionsfunktionen erneut gegengeprüft; erkannte Lücken geschlossen oder als bewusste spätere Produktentscheidung dokumentiert |
+| G3 Datenanforderungen / Datenmodell | **In Arbeit** | Fachobjekte und strukturierter Redaktionsstand sind weit fortgeschritten; nächster Schwerpunkt: Persistenz-/Rücknahme-/Archivierungslogik und weitere G3-Kernbeziehungen |
 | G4 Schutzbedarf / Datenschutz / Offline | **Geplant** | Schutzklassen und Betriebsanforderungen festlegen |
-| G5 Zielarchitektur / Stack / Hosting / Deployment | **Geplant** | Hybrid-KI technisch umsetzen; zusätzlich Cache-/Deployment-Verlässlichkeit aus RT-014 verbindlich berücksichtigen; produktionsreife Entwicklung auf Entwickler-Infrastruktur und späterer Umzug auf GRÜNEN-Webserver plus eigenes Supabase-Projekt; kein Supabase-Self-Hosting |
+| G5 Zielarchitektur / Stack / Hosting / Deployment | **Geplant** | Hybrid-KI technisch umsetzen; zusätzlich Cache-/Deployment-Verlässlichkeit aus RT-014 und sichere Ausgabe dynamischer KI-Inhalte verbindlich berücksichtigen; produktionsreife Entwicklung auf Entwickler-Infrastruktur und späterer Umzug auf GRÜNEN-Webserver plus eigenes Supabase-Projekt; kein Supabase-Self-Hosting |
 | G6 Rollen / Rechte / Workflow | **Geplant** | konkretes Berechtigungs- und Freigabemodell einschließlich Admin-Verantwortung für Referenzsystem und redaktioneller Pflichtbestätigungen festlegen |
 | G7 Betrieb | **Geplant** | Backup, Restore, Monitoring, KI-Kostenmessung, Routing-Betrieb, Budgets und Warnschwellen definieren |
-| G8 Governance / Repository / Dokumentation | **Teilweise umgesetzt** | Echtsystem als Dokumentationshoheit etabliert; G2.5 erneut in Arbeit; zentrale Standards und späterer Gründungsaudit weiterführen |
+| G8 Governance / Repository / Dokumentation | **Teilweise umgesetzt** | Echtsystem als Dokumentationshoheit etabliert; G2.5 abgeschlossen; zentrale Standards und späterer Gründungsaudit weiterführen |
 | G9 Migration | **Geplant** | Übergang auf GRÜNEN-Infrastruktur nach `docs/Migrationsstrategie.md`; wiederholbares Migrations-Runbook statt separatem Migrations-Probelauf |
 | G10 Go-live-Abnahme | **Geplant** | messbare Abnahmekriterien festlegen, einschließlich Qualität der verpflichtenden Quellen-/Ereignisentdeckung, Transfer-Regressionstests und belastbarer Betriebskostenmessung |
 | Gründungsaudit | **Geplant** | Vollständigkeit und Widerspruchsfreiheit prüfen |
@@ -52,13 +52,13 @@ Der Audit berücksichtigt fünf Quellenklassen:
 4. Spezial- und Übergabedokumente,
 5. relevante frühere FIB-Chats als **Lückenfinder**, nicht als kanonische Wahrheit.
 
-Zusätzlich wird seit 04.10.2026 eine zweite Prüfschicht verwendet:
+Zusätzlich wurde am 04.10.2026 eine zweite Prüfschicht abgeschlossen:
 
-> **sichtbare Inhaltsbausteine und redaktionelle Funktionen des Demonstrators → fachliche Bedeutung → Datenhaltung → Redaktionsworkflow → öffentliche Darstellung im Echtsystem**
+> **sichtbare Inhaltsbausteine und redaktionelle Funktionen des Demonstrators → fachliche Bedeutung → Datenhaltung → Redaktionsworkflow → öffentliche Darstellung → bewusste Produktabweichung**
 
-### Zwischenstand
+### Ergebnis
 
-Die erste Prüfschicht hat wesentliche Regeln erfolgreich übertragen, insbesondere:
+Die erste Prüfschicht hat insbesondere abgesichert:
 
 - erweiterter Suchraum und mögliche zukünftige Bedeutung,
 - dynamischer Suchkontext aus Themen und Vorgängen,
@@ -72,14 +72,18 @@ Die erste Prüfschicht hat wesentliche Regeln erfolgreich übertragen, insbesond
 - Ablösung der alten Wirkungsrollen durch **Bedeutung für das Thema** + Perspektiven/Wirkungen,
 - Dokumentationshoheit des Echtsystems gegenüber ODT-/Exportkopien.
 
-Die zweite Prüfschicht hat jedoch zusätzliche Lücken sichtbar gemacht, unter anderem:
+Die zweite Prüfschicht hat zusätzliche Demonstrator-Funktionen nachgezogen, insbesondere:
 
 - Meldungsbaustein **„Was bisher passiert ist“**,
-- **Offene Fragen** auf Meldungsebene und ihre persistente Modellierung,
+- **Offene Fragen** auf Meldungs- und Themenebene samt persistenter Modellierung,
 - explizite Sichtbarkeit relevanter Ereignisse aus Nachbargemeinden in Themen,
+- Trennung von **„Zusammenhänge“** (Vorgang/Thema/Sitzung-TOP) und **„Bezüge“** (konkrete Objekte/Orte),
 - vollständiger Bildaufnahme-/Auswahl-/Freigabeworkflow,
+- Bildbibliothek mit Primärzuordnung, weiteren zulässigen Verwendungen und Nutzungsausschlüssen,
 - konkrete Verwendungslogik von Inhaltsbildern einschließlich Rechte-, Alt-Text- und Nachweislogik,
-- Entscheidung über das Demonstrator-Konzept **„Mehr zum Bild“**.
+- bewusste spätere Produktentscheidung zu **„Mehr zum Bild“** und freien Live-Fragen,
+- sichere Ausgabe dynamischer KI-Antworten als spätere technische Sicherheitsanforderung,
+- Ausbau des Regressionstestkorpus auf 28 Referenzfälle.
 
 Verbindliche Detailquellen:
 
@@ -89,13 +93,13 @@ Verbindliche Detailquellen:
 
 Technische Folgeaufträge bleiben bewusst in späteren Phasen:
 
-- G3: Persistenz-/Rücknahme-/Archivierungslogik konkret modellieren sowie neu erkannte persistente Inhaltsobjekte ergänzen,
-- G5: Cache-/Versionierungs-/Invalidierungsstrategie,
+- G3: Persistenz-/Rücknahme-/Archivierungslogik konkret modellieren,
+- G5: Cache-/Versionierungs-/Invalidierungsstrategie und sichere Rendering-/Sanitizing-Logik,
 - G3–G10: fachliche Referenzfälle schrittweise automatisierbar machen.
 
 ## Nächster konkreter Schritt
 
-**G2.5 – zweite Transfer-Prüfschicht:** Die inventarisierten Lücken IA-001 bis IA-010 aus `docs/Transfer-Audit-Inhaltsbausteine-und-Redaktionsfunktionen.md` in den zuständigen Primärdokumenten schließen und anschließend Demonstrator-Oberfläche sowie Demonstrator-Dokumentation auf weitere sichtbare Inhaltsbausteine prüfen. Danach G2.5 erneut abschließen und G3 fortsetzen.
+**G3 – Datenanforderungen / Datenmodell:** Die Persistenz-/Rücknahme-/Archivierungslogik konkretisieren und die noch offenen G3-Kernbeziehungen weiter modellieren. Der Referenzfall **„Ausbau Autobahnkreuz München Ost“** bleibt dafür ein zentraler Testfall.
 
 ## Fachlich/UX bereits geklärt
 
@@ -108,7 +112,8 @@ Technische Folgeaufträge bleiben bewusst in späteren Phasen:
 - Vorgänge besitzen eigenen aktuellen Stand, Verlauf und Status.
 - Themen erklären übergeordnete Zusammenhänge und gewichten Vorgänge bzw. direkt ergänzte Ereignisse nach **Bedeutung für das Thema**: prägend, relevant oder ergänzend.
 - Perspektiven und Wirkungen erklären die fachliche Relevanz; eine eigene Wirkungsrollen-Taxonomie wird nicht geführt.
-- Meldungs-, Vorgangs-, Themen- und Sitzungsdetailseiten sind grundsätzlich festgelegt; einzelne aus dem Demonstrator übernommene Inhaltsbausteine werden unter G2.5 nachgeschärft.
+- Meldungs-, Vorgangs-, Themen- und Sitzungsdetailseiten sind festgelegt; Demonstrator-Inhaltsbausteine sind nach dem zweiten Transfer-Audit synchronisiert.
+- Meldungen trennen öffentlich **Zusammenhänge** zu Vorgang/Thema/Sitzung-TOP von **Bezügen** zu konkreten Objekten/Orten.
 - zentrale Suche und schlanke Filterlogik sind festgelegt.
 - „Mehr wissen?“ unterscheidet Ereignis-, Vorgangs- und Themenvertiefung und benötigt für Tatsachenbehauptungen eine belastbare Quellenbasis.
 - PWA umfasst lokalen Neuigkeitsstatus, optionale Push-Abonnements und ergänzende Badge-Unterstützung; fachlich relevante Aktualisierungen zählen als Neuigkeit.
@@ -223,7 +228,7 @@ Festgelegt ist:
 - die eigentliche Migration in die noch wegwerfbare GRÜNEN-Zielumgebung darf vor Go-live bei Bedarf verworfen und wiederholt werden;
 - G9 erstellt hierfür ein vollständiges Migrations-Runbook und eine Abnahmecheckliste.
 
-## Dokumentationsübernahme – unter G2.5 erneut in Prüfung
+## Dokumentationsübernahme – unter G2.5 erneut verifiziert und abgeschlossen
 
 Übernommen bzw. konsolidiert sind:
 
@@ -233,14 +238,14 @@ Festgelegt ist:
 4. KI-Modellunabhängigkeit/Qualität → `docs/KI-Qualitaet-und-Modellunabhaengigkeit.md`
 5. Quellenmonitor/Recherche → `docs/Recherche-und-Quellenmonitor.md`
 6. Mehr wissen → `docs/Mehr-wissen.md`
-7. Frontend/Darstellung → in `docs/UX-und-Informationsarchitektur.md` integriert; Vollständigkeit sichtbarer Inhaltsbausteine wird erneut geprüft
+7. Frontend/Darstellung → in `docs/UX-und-Informationsarchitektur.md` integriert und im zweiten Transfer-Audit erneut auf sichtbare Inhaltsbausteine geprüft
 8. Marketing/Kommunikation → `docs/Marketing-und-Kommunikation.md`
 9. SEO/Auffindbarkeit → `docs/SEO-und-Auffindbarkeit.md`
 10. KI-Kosten/Betrieb → `docs/KI-Betrieb-und-Kosten.md`
 11. Grüne Werte/politische Ziele → `docs/Gruene-Werte-und-politische-Ziele.md`
 12. wissenschaftlich-politische/bürgernahe Sprachregeln → `docs/Sprachleitfaden.md`
 
-Zusätzlich bestehen der Transfer-Audit, die zweite Prüfschicht für Inhaltsbausteine/Redaktionsfunktionen und ein Regressionstestkorpus. Frühere FIB-Chats bleiben ausschließlich Lückenfinder. Laufende Dokumentation wird ausschließlich im Echtsystem fortgeschrieben.
+Zusätzlich bestehen beide Transfer-Audits und ein erweiterter Regressionstestkorpus. Frühere FIB-Chats bleiben ausschließlich Lückenfinder. Laufende Dokumentation wird ausschließlich im Echtsystem fortgeschrieben.
 
 ## Neue Echtsystem-Dokumentation
 
@@ -270,6 +275,7 @@ Für die spätere technische Umsetzung ist vorzusehen:
 
 | Version | Datum | Änderung |
 |---|---|---|
+| 2.8 | 04.10.2026 | Zweite Transfer-Prüfschicht abgeschlossen: IA-026 geschlossen, beide Transfer-Gates bestanden, Dokumentationsübernahme wieder auf abgeschlossen gesetzt und G3 als nächsten aktiven Arbeitsschritt festgelegt. |
 | 2.7 | 04.10.2026 | G2.5 nach neu erkannter Lücke bei sichtbaren Inhaltsbausteinen und Redaktionsfunktionen wieder auf „In Arbeit“ gesetzt; zweite Transfer-Prüfschicht und neues Auditdokument verankert; G3-Fortsetzung hinter Abschluss der aktuellen Transfernacharbeit eingeordnet. |
 | 2.6 | 03.10.2026 | G2.5 nach abgeschlossenem Transfer-Audit und bestandenen Transfer-Gate auf abgeschlossen gesetzt; Dokumentationsübernahme erneut als abgeschlossen markiert; G3 wieder als aktiven nächsten Schritt gesetzt; G3/G5/G10-Folgeaufträge aus dem Transfer-Audit verankert. |
 | 2.5 | 03.10.2026 | G2.5 „Transfer-Audit Demonstrator → Echtsystem“ als laufenden Zwischenschritt zwischen G2 und vollständiger Fortsetzung von G3 aufgenommen; bisherige Aussage „Dokumentationsübernahme abgeschlossen“ wegen neu erkannter Versionsdrift und Transferlücken auf „teilweise umgesetzt“ zurückgenommen; Transfer-Gate, fünf Prüfquellen und unmittelbare Regelübernahme verankert. |
