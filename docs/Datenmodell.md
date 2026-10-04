@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 1.5 | 04.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
+| 1.6 | 04.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
 
 ## 1. Zweck und Geltung
 
@@ -33,6 +33,8 @@ Ziel ist ein robustes und langfristig tragfähiges Modell, das für einen kleine
 - Offene Fragen/Wissenslücken sind eigenständige fachliche Objekte und werden nicht mit „Mehr wissen?“-Fragen vermischt.
 - Bilder und ihre konkrete Verwendung werden getrennt modelliert, damit Rechte, Metadaten und Verwendungskontext nachvollziehbar bleiben.
 - Fachlich einmal wirksame Objekte werden bei geändertem Wissensstand grundsätzlich nicht spurlos gelöscht; fachlich relevante Zustandsänderungen bleiben nachvollziehbar.
+- Historische Nachvollziehbarkeit von Vorgängen und Themen erfolgt über versionierte strukturierte Gesamtstände; einzelne enthaltene Fachbestandteile wie Wirkung, Perspektive, Bewertung oder Begründung erhalten keine eigene parallele Versionshistorie.
+- Öffentlich wird grundsätzlich nur der aktuell freigegebene Stand eines Vorgangs oder Themas gezeigt. Historische Versionen stehen ausschließlich im Redaktionssystem für Vergleich, Nachvollziehbarkeit, Audit und Rekonstruktion früherer Sachstände zur Verfügung.
 
 ## 3. Wissenskern
 
@@ -374,17 +376,42 @@ Die Abwägung kann deshalb insbesondere beantworten:
 
 Ein strukturiertes oder sprachliches Feld „Gesamtfazit positiv/negativ“ ist nicht Bestandteil des Modells.
 
-### 3.8 Strukturierter Redaktionsstand und Textfassung
+### 3.8 Strukturierter Redaktionsstand, Gesamtversionen und Textfassung
 
 Für KI-formulierte Inhalte, insbesondere „Unsere Einordnung“, werden fachliche Struktur und sprachliche Darstellung getrennt behandelt.
 
-Verbindliche Entscheidung:
+Verbindliche Entscheidungen:
 
 > **Der `strukturierte Redaktionsstand` ist die fachliche Quelle. Die `Textfassung` ist eine daraus erzeugte sprachliche Darstellung.**
 
-Der `strukturierte Redaktionsstand` umfasst die jeweils bestätigten bzw. redaktionell bearbeiteten fachlichen Angaben, insbesondere `Wirkungen`, `Perspektiven`, Zuordnungen zu `Zielbereichen`, `Wirkungsrichtungen`, `Bedeutung der Wirkung`, `Verlässlichkeit`, `politisches Gewicht`, zugehörige `Begründungen`, `Gestaltungsoptionen`, politische Bezüge und `Abwägung`.
+> **Versioniert wird der bestätigte strukturierte Gesamtstand eines `Vorgangs` bzw. `Themas`, nicht jeder enthaltene Fachbaustein separat.**
 
-Für jede veröffentlichte oder freigabefähige `Textfassung` muss nachvollziehbar sein, auf welchem versionierten `strukturierten Redaktionsstand` sie beruht.
+Der `strukturierte Redaktionsstand` umfasst die jeweils bestätigten bzw. redaktionell bearbeiteten fachlichen Angaben, insbesondere `Wirkungen`, `Perspektiven`, Zuordnungen zu `Zielbereichen`, `Wirkungsrichtungen`, `Bedeutung der Wirkung`, `Verlässlichkeit`, `politisches Gewicht`, zugehörige `Begründungen`, `Gestaltungsoptionen`, politische Bezüge, offene Fragen und `Abwägung`.
+
+Für einen `Vorgang` bzw. ein `Thema` gilt:
+
+- Es gibt genau einen aktuell fachlich freigegebenen strukturierten Stand.
+- Eine fachlich wesentliche Änderung erzeugt einen neuen bestätigten Gesamtstand.
+- Frühere bestätigte Gesamtstände bleiben als historische Versionen im Redaktionssystem erhalten.
+- Einzelne enthaltene Elemente wie `Wirkung`, `Perspektive`, `Bewertung`, `Begründung` oder `Gestaltungsoption` erhalten keine eigene unabhängige Versionskette.
+- Wird beispielsweise eine Wirkung fachlich geändert, wird die aktuelle Wirkung im zuständigen Bearbeitungskontext angepasst; die frühere Fassung ist über den vorherigen Gesamtstand des Vorgangs bzw. Themas rekonstruierbar.
+- Mehrere gleichzeitig fachlich unterschiedliche Wirkungen bleiben mehrere Wirkungen; das ist keine Versionierung derselben Wirkung.
+
+Öffentliche Nutzung:
+
+- Besucher sehen ausschließlich den aktuell freigegebenen Stand eines Vorgangs oder Themas.
+- Historische Versionen werden nicht als parallele öffentliche Fassungen angeboten.
+- Frühere öffentliche Meldungen oder Aktualisierungshinweise können weiterhin auf frühere damalige Sachstände Bezug nehmen; deren Rekonstruktion erfolgt redaktionell über die gespeicherten Gesamtversionen.
+
+Redaktionelle Nutzung historischer Versionen:
+
+- Vergleich `vorher / aktuell`,
+- Nachvollziehen fachlich relevanter Änderungen,
+- Audit und Qualitätssicherung,
+- Prüfung, ob KI-generierte Neufassungen unbeabsichtigte Bedeutungsverschiebungen erzeugt haben,
+- Rekonstruktion des zu einem früheren Zeitpunkt bestätigten Sachstands.
+
+Für jede veröffentlichte oder freigabefähige `Textfassung` muss nachvollziehbar sein, auf welchem versionierten strukturierten Gesamtstand sie beruht.
 
 Es gelten folgende Konsistenzregeln:
 
@@ -424,7 +451,7 @@ Plausibilitätsprüfungen sind keine automatische politische Entscheidung. Sie m
 Als nächste Modellierungsschritte werden geklärt:
 
 - `Sitzung/TOP ↔ Ereignis/Meldung/Vorgang/Thema`,
-- genaue Versionierungs- und Vergleichslogik zwischen strukturiertem Redaktionsstand und Textfassung,
+- welche Änderungen eines Vorgangs/Themas fachlich wesentlich genug sind, um einen neuen strukturierten Gesamtstand zu erzeugen,
 - konkrete fachliche Plausibilitätsregeln für den Redaktionsprozess,
 - Persistenz-/Rücknahme-/Archivierungslogik für weitere fachliche Objekte und Beziehungen.
 
@@ -555,7 +582,7 @@ Mehrfachverwendung eines Bildes ist möglich, wenn jede Verwendung eigenständig
 ## 5. Offene G3-Fragen
 
 1. Welche Status gehören zu `Ereignis`, `Meldung`, `Vorgang`, `Thema` und `Sitzung`?
-2. Welche Änderungen werden versioniert, welche nur protokolliert?
+2. Welche fachlichen Änderungen an Vorgang oder Thema lösen einen neuen strukturierten Gesamtstand aus, welche Änderungen werden nur protokolliert?
 3. Welche Daten gehören zur fachlichen Persistenz und welche nur zum technischen Betrieb?
 4. Welche Plausibilitätsregeln sind verbindlich und welche nur unterstützende Hinweise?
 5. Welche zusätzlichen Rechte- und Freigabestatus werden für öffentlich über FIB bereitgestellte Dateien und Bilder benötigt?
@@ -565,6 +592,7 @@ Mehrfachverwendung eines Bildes ist möglich, wenn jede Verwendung eigenständig
 
 | Version | Datum | Änderung |
 |---|---|---|
+| 1.6 | 04.10.2026 | Versionierungsgrundsatz festgelegt: Vorgänge und Themen werden als bestätigte strukturierte Gesamtstände versioniert; enthaltene Fachbausteine wie Wirkung, Perspektive, Bewertung und Begründung erhalten keine eigene parallele Versionshistorie. Öffentlich erscheint nur der aktuelle freigegebene Stand; historische Gesamtversionen bleiben ausschließlich im Redaktionssystem für Vergleich, Audit und Rekonstruktion verfügbar. |
 | 1.5 | 04.10.2026 | G3-Lebenszyklus begonnen: Grundsatz gegen spurloses Löschen fachlich wirksamer Zustände ergänzt; offene Fragen/Wissenslücken konkretisiert. Fachlicher Erkenntnisstatus `offen / teilweise geklärt / geklärt / gegenstandslos` wird vom Bearbeitungsstatus `aktiv / zurückgestellt` getrennt; Statusänderungen, Auflösungsbezug und Historisierung verbindlich festgelegt. |
 | 1.4 | 04.10.2026 | Zweiten Demonstrator-Transfer-Audit und zwischenzeitliche G3-Entscheidungen nachgezogen: eigene Begründung der Verlässlichkeit, Abwägung ohne abschließendes Gesamturteil, persistente offene Fragen/Wissenslücken mit Status/Auflösung, Ableitung von „Was bisher passiert ist“ sowie Bild/Bildverwendung mit Rechte-, Metadaten- und Zuordnungslogik ergänzt. |
 | 1.3 | 03.10.2026 | Politischen Bezug und Begründungslogik konkretisiert: Zielbereich ist der allgemeine politische Maßstab; konkrete dokumentierte grüne Position wird bei einschlägigem Vorliegen zusätzlich verwendet, ist aber keine Voraussetzung für eine Bewertung. |
