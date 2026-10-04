@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 1.2 | 03.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
+| 1.3 | 04.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
 
 ## 1. Ziel
 
@@ -192,6 +192,54 @@ Die konkrete Zuordnung eines Providers und Modells zu einer Leistungsklasse erfo
 
 Ein Anbieter- oder Modellwechsel soll daher nach Möglichkeit nur die Routing-Konfiguration ändern, nicht den fachlichen Workflow.
 
+### 7.1 Zwei-KI- und Eskalationsprinzip
+
+FIB verfolgt als verbindliches Architekturprinzip eine **arbeitsteilige Nutzung von mindestens zwei freigegebenen KI-Rollen**, sofern die Modelltests den erwarteten Qualitäts- und Kostenvorteil bestätigen.
+
+Die Rollen sind fachlich definiert und nicht an konkrete Anbieter gebunden:
+
+- **Primärmodell / Breitenverarbeitung**: wirtschaftliches Modell für Routine- und Standardanalysen, das die jeweilige Qualitätsanforderung nachweislich erfüllt,
+- **Review-/Qualitätsmodell**: leistungsfähigeres Modell für komplexe, unsichere oder qualitätskritische Fälle.
+
+Nicht jeder Fall wird automatisch von beiden Modellen verarbeitet. Das Primärmodell bearbeitet den Regelfall; eine zweite Modellprüfung wird gezielt ausgelöst.
+
+Typische Eskalationsgründe sind:
+
+- geringe oder explizit gemeldete Sicherheit,
+- mehrere plausible Themen- oder Vorgangszuordnungen,
+- Erkennung eines möglicherweise neuen, bisher nicht abgedeckten Aspekts,
+- widersprüchliche oder unvollständige Quellenlage,
+- besonders hohe fachliche oder kommunalpolitische Tragweite,
+- komplexe Wirkungs- oder Zielkonflikte,
+- auffällige Abweichung zwischen KI-Vorschlag und redaktioneller Bearbeitung,
+- Scheitern technischer oder semantischer Plausibilitätsprüfungen.
+
+Die Eskalation soll nicht bloß ein zweites Sprachmodell „zur Sicherheit“ aufrufen, sondern einen **messbaren zusätzlichen Qualitätsnutzen** erzeugen.
+
+### 7.2 Kontrollstichprobe gegen unerkannte Fehler
+
+Zusätzlich zur ereignisgesteuerten Eskalation wird im Pilot- und frühen Produktivbetrieb eine kleine Stichprobe scheinbar unkritischer Primärmodell-Fälle durch das Review-/Qualitätsmodell gegengeprüft. Als Startwert werden **5 %** vorgesehen; der Anteil wird anhand der gemessenen Fehlerrate angepasst.
+
+Zweck der Stichprobe ist insbesondere, systematische Fehler zu erkennen, die das Primärmodell selbst nicht als unsicher kennzeichnet.
+
+Erfasst werden mindestens:
+
+- ob das Review-Modell einen fachlich relevanten Unterschied erkennt,
+- Art und Schwere des Unterschieds,
+- ob die Eskalationsregeln den Fall eigentlich hätten erkennen müssen,
+- Kosten der zusätzlichen Prüfung,
+- redaktionelle Entscheidung.
+
+Damit wird die Zwei-KI-Strategie fortlaufend empirisch kalibriert.
+
+### 7.3 Ziel des Modellvergleichs
+
+Der Modellvergleich beantwortet daher nicht nur die Frage „Welches Modell ist insgesamt am besten?“, sondern vor allem:
+
+> **Welche FIB-Aufgaben kann das wirtschaftlichere Primärmodell zuverlässig übernehmen, und bei welchen Aufgaben erzeugt das Review-/Qualitätsmodell einen nachweisbaren Qualitätsgewinn?**
+
+Diese Aufgabenteilung ist Bestandteil der FIB-Qualitätsarchitektur und zugleich ein Instrument zur Kostenoptimierung bei unverändert hoher Qualitätsanforderung.
+
 ## 8. Qualitäts- und Architekturprüfung
 
 Bei Audits wird geprüft:
@@ -203,7 +251,10 @@ Bei Audits wird geprüft:
 - ob für kritische Regeln Testfälle existieren,
 - ob Entscheidungen strukturiert nachvollziehbar bleiben,
 - ob die zugeordnete KI-Leistungsklasse noch angemessen ist,
-- ob ein wirtschaftlicheres Modell die geforderte Qualität inzwischen ebenfalls zuverlässig erreicht.
+- ob ein wirtschaftlicheres Modell die geforderte Qualität inzwischen ebenfalls zuverlässig erreicht,
+- wie häufig Fälle eskaliert werden und weshalb,
+- welche zusätzlichen Fehler durch Kontrollstichproben entdeckt werden,
+- ob Primär- und Review-Modell weiterhin die jeweils erwartete Qualitätsfunktion erfüllen.
 
 ## 9. Modellwechsel
 
@@ -219,11 +270,15 @@ Die Auswahl berücksichtigt neben Qualität auch:
 
 Ein Modellwechsel darf nicht dazu führen, dass FIB-Formulare, Prozesslogik oder fachliche Regeln an ein bestimmtes Modell angepasst werden müssen.
 
+Primär- und Review-Modell werden getrennt konfiguriert. Sie dürfen vom selben oder von unterschiedlichen Anbietern stammen; bevorzugt wird eine Konfiguration, die bei gleicher fachlicher Eignung Anbieterabhängigkeit reduziert und europäische bzw. EU-betriebene Lösungen angemessen berücksichtigt.
+
 ## 10. Dokumentationspflicht
 
 Wird festgestellt, dass eine zentrale FIB-Regel nur durch implizites Modellverhalten funktioniert, wird dies als Qualitäts- und Architekturrisiko dokumentiert und nach Möglichkeit in eine explizite Regel, Datenstruktur, Validierung oder einen Regressionstest überführt.
 
 Ergebnisse von Modellvergleichen sollen so dokumentiert werden, dass erkennbar bleibt, warum ein Modell für eine bestimmte FIB-Aufgabe bzw. Leistungsklasse freigegeben wurde.
+
+Für die Zwei-KI-Strategie werden zusätzlich Eskalationsquote, Stichprobenergebnisse, erkannte Qualitätsgewinne und Mehrkosten dokumentiert. Eine dauerhaft höhere Modellstufe ist nur dort gerechtfertigt, wo sie einen relevanten Qualitätsgewinn nachweist.
 
 ## 11. Abgrenzung
 
@@ -236,6 +291,7 @@ Ergebnisse von Modellvergleichen sollen so dokumentiert werden, dass erkennbar b
 
 | Version | Datum | Änderung |
 |---|---|---|
+| 1.3 | 04.10.2026 | Zwei-KI-/Eskalationsprinzip als verbindliche Qualitätsarchitektur ergänzt: wirtschaftliches Primärmodell für Breitenverarbeitung, separates Review-/Qualitätsmodell für komplexe Fälle, definierte Eskalationsgründe und 5-%-Kontrollstichprobe im Pilot/frühen Produktivbetrieb. Modellvergleich auf messbaren Qualitätsgewinn je FIB-Aufgabe ausgerichtet. |
 | 1.2 | 03.10.2026 | Kostenprinzip präzisiert: KI zunächst vermeiden, wenn sie fachlich nicht erforderlich ist; bei erforderlichem KI-Einsatz gilt die Qualitätsanforderung als Ausschlusskriterium vor der Kostenoptimierung. Quellenentdeckung und Ereigniserkennung als qualitätskritische Aufgaben ergänzt. |
 | 1.1 | 02.10.2026 | Modellvergleich auf konkrete FIB-Aufgaben ausgerichtet; Qualität und reale Kosten gemeinsam als Auswahlkriterium festgelegt; KI-Leistungsklassen als modellunabhängige Grundlage für das spätere Routing ergänzt. |
 | 1.0 | 30.09.2026 | Demonstrator-Dokument `FIB_Modellunabhaengigkeit_und_Qualitaetspruefung.md` auf aktuelle Echtsystem-Logik und Referenzfälle konsolidiert. |
