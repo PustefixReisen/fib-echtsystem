@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 1.7 | 04.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
+| 1.8 | 04.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
 
 ## 1. Zweck und Geltung
 
@@ -136,6 +136,23 @@ Beispiel „Hundewiese“:
 
 Damit erzählt der `Vorgang` die Entwicklung des konkreten Sachverhalts, `Ereignisse` bilden die fachlichen Schritte ab, und `Meldungen` sind die veröffentlichten redaktionellen Darstellungen der berichtenswerten `Ereignisse`.
 
+#### 3.4.1 Status eines Vorgangs
+
+Ein `Vorgang` besitzt genau einen fachlichen Lebenszyklusstatus:
+
+- **aktiv** – der Vorgang entwickelt sich weiter oder weitere relevante Ereignisse sind zu erwarten,
+- **ruhend** – derzeit ist keine erkennbare Weiterentwicklung vorhanden, eine spätere Fortsetzung bleibt aber möglich,
+- **abgeschlossen** – der konkrete Sachverhalt ist fachlich beendet, z. B. weil eine Maßnahme umgesetzt, endgültig verworfen oder das Verfahren abgeschlossen wurde,
+- **archiviert** – der Vorgang soll nicht mehr zum laufenden öffentlichen Informationsbestand gehören, bleibt aber im Redaktionssystem vollständig erhalten.
+
+Dabei gilt:
+
+- `ruhend` und `abgeschlossen` bedeuten nicht automatisch, dass der Vorgang öffentlich unsichtbar wird,
+- ein abgeschlossener Vorgang kann weiterhin öffentlich auffindbar sein und mit seinem letzten freigegebenen Stand angezeigt werden,
+- `archiviert` ist primär eine redaktionelle Bestandsentscheidung; archivierte Vorgänge werden aus der normalen öffentlichen Navigation und Suche entfernt,
+- ein archivierter Vorgang kann bei neuem fachlichem Bedarf wieder aktiviert werden,
+- Statusänderungen sind fachlich relevant und werden im strukturierten Gesamtstand berücksichtigt.
+
 ### 3.5 Beziehungen `Vorgang ↔ Thema` und `Ereignis ↔ Thema`
 
 Ein `Vorgang` kann keinem, einem oder mehreren `Themen` zugeordnet sein. Ein `Thema` umfasst in der Regel mehrere `Vorgänge`. Die Beziehung ist damit grundsätzlich n:m.
@@ -186,6 +203,23 @@ Die Einstufung gilt sowohl für `Vorgang ↔ Thema` als auch für direkte `Ereig
 Die Bedeutung wird nicht automatisch aus der Zahl der `Meldungen`, `Perspektiven` oder Quellen berechnet. Die KI kann ihren Vorschlag u. a. aus Tragweite, Dauer, Auswirkungen, Einfluss auf andere Vorgänge, Aktualität und Bedeutung für die Leitfrage ableiten; die redaktionelle Entscheidung bleibt maßgeblich.
 
 Die fachliche Erklärung, **warum** ein Vorgang oder Ereignis für ein Thema relevant ist, erfolgt über `Perspektiven` und die darunter ausgewerteten `Wirkungen`.
+
+#### 3.5.1 Status eines Themas
+
+Ein `Thema` besitzt genau einen fachlichen Lebenszyklusstatus:
+
+- **aktiv** – das Thema wird aktiv beobachtet und fachlich fortgeschrieben,
+- **ruhend** – derzeit gibt es wenig oder keine relevante Entwicklung, das Thema bleibt jedoch fachlich bestehen und kann wieder aktiv werden,
+- **archiviert** – das Thema soll nicht mehr zum laufenden öffentlichen Informationsbestand gehören, bleibt aber im Redaktionssystem vollständig erhalten.
+
+Für Themen wird bewusst kein Status `abgeschlossen` verwendet. Ein Thema ist ein übergeordneter Beobachtungs- und Erklärungszusammenhang und kann in der Regel nicht in demselben Sinn beendet werden wie ein konkreter Vorgang.
+
+Dabei gilt:
+
+- `ruhend` bedeutet nicht automatisch öffentlich unsichtbar,
+- archivierte Themen werden aus der normalen öffentlichen Navigation und Suche entfernt,
+- archivierte Themen können bei neuer fachlicher Relevanz wieder aktiviert werden,
+- Statusänderungen sind fachlich relevant und werden im strukturierten Gesamtstand berücksichtigt.
 
 ### 3.6 Themenentstehung und Dublettprüfung
 
@@ -484,6 +518,7 @@ Plausibilitätsprüfungen sind keine automatische politische Entscheidung. Sie m
 Als nächste Modellierungsschritte werden geklärt:
 
 - `Sitzung/TOP ↔ Ereignis/Meldung/Vorgang/Thema`,
+- Status- und Rücknahmelogik für `Ereignis`, `Meldung` und `Sitzung`,
 - konkrete fachliche Plausibilitätsregeln für den Redaktionsprozess,
 - Persistenz-/Rücknahme-/Archivierungslogik für weitere fachliche Objekte und Beziehungen.
 
@@ -613,7 +648,7 @@ Mehrfachverwendung eines Bildes ist möglich, wenn jede Verwendung eigenständig
 
 ## 5. Offene G3-Fragen
 
-1. Welche Status gehören zu `Ereignis`, `Meldung`, `Vorgang`, `Thema` und `Sitzung`?
+1. Welche Status- und Rücknahmeregeln gehören zu `Ereignis`, `Meldung` und `Sitzung`?
 2. Welche Daten gehören zur fachlichen Persistenz und welche nur zum technischen Betrieb?
 3. Welche Plausibilitätsregeln sind verbindlich und welche nur unterstützende Hinweise?
 4. Welche zusätzlichen Rechte- und Freigabestatus werden für öffentlich über FIB bereitgestellte Dateien und Bilder benötigt?
@@ -623,6 +658,7 @@ Mehrfachverwendung eines Bildes ist möglich, wenn jede Verwendung eigenständig
 
 | Version | Datum | Änderung |
 |---|---|---|
+| 1.8 | 04.10.2026 | Lebenszyklusstatus für Vorgang und Thema festgelegt. Vorgang: `aktiv / ruhend / abgeschlossen / archiviert`; Thema: `aktiv / ruhend / archiviert`. `abgeschlossen` bleibt bewusst auf konkrete Vorgänge beschränkt; `archiviert` bedeutet Entfernung aus laufender öffentlicher Navigation bei vollständigem Erhalt im Redaktionssystem; Wiederaktivierung bleibt möglich. |
 | 1.7 | 04.10.2026 | Schwelle für Gesamtversionen konkretisiert: neue Version nur bei fachlich relevanter Änderung des Vorgangs-/Themenstands; typische Auslöser und reine Protokolländerungen abgegrenzt; redaktionelle Bestätigung der Versionierungsentscheidung festgelegt. |
 | 1.6 | 04.10.2026 | Versionierungsgrundsatz festgelegt: Vorgänge und Themen werden als bestätigte strukturierte Gesamtstände versioniert; enthaltene Fachbausteine wie Wirkung, Perspektive, Bewertung und Begründung erhalten keine eigene parallele Versionshistorie. Öffentlich erscheint nur der aktuelle freigegebene Stand; historische Gesamtversionen bleiben ausschließlich im Redaktionssystem für Vergleich, Audit und Rekonstruktion verfügbar. |
 | 1.5 | 04.10.2026 | G3-Lebenszyklus begonnen: Grundsatz gegen spurloses Löschen fachlich wirksamer Zustände ergänzt; offene Fragen/Wissenslücken konkretisiert. Fachlicher Erkenntnisstatus `offen / teilweise geklärt / geklärt / gegenstandslos` wird vom Bearbeitungsstatus `aktiv / zurückgestellt` getrennt; Statusänderungen, Auflösungsbezug und Historisierung verbindlich festgelegt. |
