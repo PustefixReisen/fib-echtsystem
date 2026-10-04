@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 1.6 | 04.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
+| 1.7 | 04.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
 
 ## 1. Zweck und Geltung
 
@@ -397,6 +397,39 @@ Für einen `Vorgang` bzw. ein `Thema` gilt:
 - Wird beispielsweise eine Wirkung fachlich geändert, wird die aktuelle Wirkung im zuständigen Bearbeitungskontext angepasst; die frühere Fassung ist über den vorherigen Gesamtstand des Vorgangs bzw. Themas rekonstruierbar.
 - Mehrere gleichzeitig fachlich unterschiedliche Wirkungen bleiben mehrere Wirkungen; das ist keine Versionierung derselben Wirkung.
 
+#### 3.8.1 Wann entsteht eine neue Gesamtversion?
+
+Eine neue bestätigte Gesamtversion eines Vorgangs oder Themas entsteht, wenn eine Änderung die fachliche Aussage, den aktuellen Sachstand oder die politische Einordnung **inhaltlich relevant verändert**.
+
+Typische Auslöser sind insbesondere:
+
+- eine Wirkung wird neu aufgenommen, entfällt oder in ihrer fachlichen Aussage wesentlich verändert,
+- eine Perspektive eines Themas wird neu aufgenommen, entfernt, zusammengeführt oder fachlich wesentlich verändert,
+- Wirkungsrichtung, Bedeutung der Wirkung, Verlässlichkeit oder politisches Gewicht ändern sich fachlich relevant,
+- eine Begründung oder strukturierte Abwägung ändert ihre fachliche Aussage,
+- eine Gestaltungsoption wird neu relevant, entfällt oder verändert die Abwägung,
+- eine offene Frage wird neu aufgenommen, wesentlich verändert, teilweise geklärt, geklärt oder gegenstandslos und dies beeinflusst den fachlichen Stand,
+- die Leitfrage, Abgrenzung oder Definition eines Themas ändert sich wesentlich,
+- bei einem Vorgang ändert sich der aktuelle Stand, eine wichtige Entscheidung, ein nächster belegter Schritt oder eine für die Einordnung wesentliche Zuordnung,
+- neue Ereignisse oder Erkenntnisse verändern die bisherige Synthese oder den Zusammenhang so, dass ein Besucher den Sachverhalt danach anders verstehen würde.
+
+Keine neue Gesamtversion entsteht allein durch:
+
+- Rechtschreib-, Zeichensetzungs- oder reine Stilkorrekturen,
+- Formatierungsänderungen,
+- technische Metadatenänderungen ohne fachliche Bedeutung,
+- Austausch eines technisch besseren, inhaltlich identischen Links,
+- reine UI-/Darstellungsänderungen,
+- Änderungen an internen Bearbeitungshinweisen ohne Auswirkung auf den bestätigten fachlichen Stand.
+
+Solche Änderungen werden bei Bedarf protokolliert, verändern aber nicht die fachliche Gesamtversion.
+
+Entscheidungsregel:
+
+> **Würde ein Vergleich von vorherigem und neuem Stand für Redaktion oder Besucher einen fachlich relevanten Unterschied ergeben, entsteht eine neue Gesamtversion. Andernfalls genügt Protokollierung.**
+
+Die KI kann auf einen möglichen Versionierungsanlass hinweisen. Die Entscheidung, ob eine neue fachliche Gesamtversion erzeugt wird, bleibt redaktionell zu bestätigen.
+
 Öffentliche Nutzung:
 
 - Besucher sehen ausschließlich den aktuell freigegebenen Stand eines Vorgangs oder Themas.
@@ -451,7 +484,6 @@ Plausibilitätsprüfungen sind keine automatische politische Entscheidung. Sie m
 Als nächste Modellierungsschritte werden geklärt:
 
 - `Sitzung/TOP ↔ Ereignis/Meldung/Vorgang/Thema`,
-- welche Änderungen eines Vorgangs/Themas fachlich wesentlich genug sind, um einen neuen strukturierten Gesamtstand zu erzeugen,
 - konkrete fachliche Plausibilitätsregeln für den Redaktionsprozess,
 - Persistenz-/Rücknahme-/Archivierungslogik für weitere fachliche Objekte und Beziehungen.
 
@@ -582,16 +614,16 @@ Mehrfachverwendung eines Bildes ist möglich, wenn jede Verwendung eigenständig
 ## 5. Offene G3-Fragen
 
 1. Welche Status gehören zu `Ereignis`, `Meldung`, `Vorgang`, `Thema` und `Sitzung`?
-2. Welche fachlichen Änderungen an Vorgang oder Thema lösen einen neuen strukturierten Gesamtstand aus, welche Änderungen werden nur protokolliert?
-3. Welche Daten gehören zur fachlichen Persistenz und welche nur zum technischen Betrieb?
-4. Welche Plausibilitätsregeln sind verbindlich und welche nur unterstützende Hinweise?
-5. Welche zusätzlichen Rechte- und Freigabestatus werden für öffentlich über FIB bereitgestellte Dateien und Bilder benötigt?
-6. Wie werden Rücknahme, Archivierung und Wiederaufnahme der übrigen fachlichen Objekte und Beziehungen konkret modelliert?
+2. Welche Daten gehören zur fachlichen Persistenz und welche nur zum technischen Betrieb?
+3. Welche Plausibilitätsregeln sind verbindlich und welche nur unterstützende Hinweise?
+4. Welche zusätzlichen Rechte- und Freigabestatus werden für öffentlich über FIB bereitgestellte Dateien und Bilder benötigt?
+5. Wie werden Rücknahme, Archivierung und Wiederaufnahme der übrigen fachlichen Objekte und Beziehungen konkret modelliert?
 
 ## Änderungshistorie
 
 | Version | Datum | Änderung |
 |---|---|---|
+| 1.7 | 04.10.2026 | Schwelle für Gesamtversionen konkretisiert: neue Version nur bei fachlich relevanter Änderung des Vorgangs-/Themenstands; typische Auslöser und reine Protokolländerungen abgegrenzt; redaktionelle Bestätigung der Versionierungsentscheidung festgelegt. |
 | 1.6 | 04.10.2026 | Versionierungsgrundsatz festgelegt: Vorgänge und Themen werden als bestätigte strukturierte Gesamtstände versioniert; enthaltene Fachbausteine wie Wirkung, Perspektive, Bewertung und Begründung erhalten keine eigene parallele Versionshistorie. Öffentlich erscheint nur der aktuelle freigegebene Stand; historische Gesamtversionen bleiben ausschließlich im Redaktionssystem für Vergleich, Audit und Rekonstruktion verfügbar. |
 | 1.5 | 04.10.2026 | G3-Lebenszyklus begonnen: Grundsatz gegen spurloses Löschen fachlich wirksamer Zustände ergänzt; offene Fragen/Wissenslücken konkretisiert. Fachlicher Erkenntnisstatus `offen / teilweise geklärt / geklärt / gegenstandslos` wird vom Bearbeitungsstatus `aktiv / zurückgestellt` getrennt; Statusänderungen, Auflösungsbezug und Historisierung verbindlich festgelegt. |
 | 1.4 | 04.10.2026 | Zweiten Demonstrator-Transfer-Audit und zwischenzeitliche G3-Entscheidungen nachgezogen: eigene Begründung der Verlässlichkeit, Abwägung ohne abschließendes Gesamturteil, persistente offene Fragen/Wissenslücken mit Status/Auflösung, Ableitung von „Was bisher passiert ist“ sowie Bild/Bildverwendung mit Rechte-, Metadaten- und Zuordnungslogik ergänzt. |
