@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 0.2 | 03.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
+| 0.3 | 04.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
 
 ## 1. Zweck
 
@@ -18,6 +18,8 @@ Prüfquellen:
 4. Spezial- und Übergabedokumente,
 5. relevante frühere FIB-Chats als **Lückenfinder**, nicht als kanonische Quelle.
 
+Seit 04.10.2026 wird der Audit um eine zweite Prüfschicht ergänzt: sichtbare Inhaltsbausteine und redaktionelle Funktionen werden systematisch gegen das Echtsystem gespiegelt. Diese Ergänzung steht in `docs/Transfer-Audit-Inhaltsbausteine-und-Redaktionsfunktionen.md`.
+
 ## 2. Transfer-Gate
 
 G2.5 gilt als abgeschlossen, wenn:
@@ -29,17 +31,17 @@ G2.5 gilt als abgeschlossen, wenn:
 5. Datenmodell und Redaktionsworkflow die benötigten Zustände/Entscheidungen abbilden können oder als klarer G3/G6-Auftrag geführt werden,
 6. wesentliche Demonstratorfälle als Regressionstests beschrieben sind,
 7. konkurrierende/veraltete Dokumentstände nicht als gleichwertige Primärquelle erscheinen,
-8. eine abschließende Widerspruchs- und Terminologieprüfung erfolgt ist.
+8. eine abschließende Widerspruchs- und Terminologieprüfung erfolgt ist,
+9. die im Demonstrator sichtbaren Inhaltsbausteine und redaktionellen Funktionen vollständig inventarisiert und gegen Fachlogik, Datenmodell, Workflow und UX geprüft sind.
 
-**Ergebnis vom 03.10.2026: Transfer-Gate fachlich bestanden.**
-
-Technische Implementierungsaufträge für spätere Phasen bleiben bestehen, sind aber keine offenen Transferlücken mehr.
+**Status:** Am 03.10.2026 war das Transfer-Gate nach der ersten Prüfschicht als fachlich bestanden bewertet worden. Am 04.10.2026 wurde es nach einer Gegenprüfung sichtbarer Inhaltsbausteine und Redaktionsfunktionen **wieder geöffnet**. Die frühere Abschlussbewertung war insoweit zu weit gefasst.
 
 ## 3. Statuslegende
 
 - **GESCHLOSSEN** – fachliche Regel ist im Echtsystem kanonisch verankert.
 - **GESCHLOSSEN / spätere technische Umsetzung** – fachlich vollständig übertragen; technische Realisierung gehört planmäßig in eine spätere Phase.
 - **NICHT ÜBERNEHMEN** – bewusst verworfenes Demonstrator-Provisorium.
+- **ERNEUT OFFEN** – erste Prüfschicht war abgeschlossen, zweite Prüfschicht hat eine zusätzliche Transferlücke oder unvollständige Übernahme gezeigt.
 
 ## 4. Transfer-Matrix
 
@@ -76,6 +78,7 @@ Technische Implementierungsaufträge für spätere Phasen bleiben bestehen, sind
 | TA-029 | analoger + digitaler Raum für Reichweite/Bindung | `Marketing-und-Kommunikation.md` | **GESCHLOSSEN** | Multiplikatoren/persönliche Kontakte bleiben Bestandteil |
 | TA-030 | Modellunabhängigkeit / fester Testkorpus | `KI-Qualitaet-und-Modellunabhaengigkeit.md`, Regressionstests | **GESCHLOSSEN** | Transferfälle werden Testkorpus |
 | TA-031 | produktive Banner-/Navigations-/Mobile-Regeln | UX + visuelle Identität | **GESCHLOSSEN** | aktuelle Echtsystem-Regeln maßgeblich |
+| TA-032 | sichtbare Inhaltsbausteine und redaktionelle Funktionen vollständig gespiegelt | `Transfer-Audit-Inhaltsbausteine-und-Redaktionsfunktionen.md` + jeweilige Primärdokumente | **ERNEUT OFFEN** | u. a. offene Fragen bei Meldungen, verlinkter bisheriger Verlauf und Bildworkflow/-logik nachzuarbeiten |
 
 ## 5. Folgeaufträge aus dem Transfer-Audit
 
@@ -92,6 +95,10 @@ Die Anforderung aus dem Demonstratorfehler ist als RT-014 gesichert. G5 legt Ver
 ### FA-03 – technische Regressionstests (G3–G10)
 
 Die fachlichen Referenzfälle werden schrittweise in automatisierbare Datenmodell-, Workflow-, Integrations-, UI- und Go-live-Tests übersetzt.
+
+### FA-04 – Inhaltsbausteine und Redaktionsfunktionen
+
+Die zweite Prüfschicht wird in `docs/Transfer-Audit-Inhaltsbausteine-und-Redaktionsfunktionen.md` geführt. Festgestellte Lücken werden in den jeweils zuständigen Primärdokumenten geschlossen und anschließend als Regressionstest abgesichert.
 
 ## 6. Regressionstestkorpus
 
@@ -116,24 +123,29 @@ Aktuell enthalten:
 - interne Hintergrundquelle,
 - Suche „Beteiligung“.
 
-## 7. Abschlussbewertung
+Die zweite Prüfschicht ergänzt weitere Referenzfälle, insbesondere zu Meldungsverlauf, offenen Fragen, Nachbarereignissen und Bildredaktion.
 
-Die im Audit identifizierten fachlichen Transferlücken sind geschlossen. Die abschließende Konsistenzprüfung der zentralen Echtsystem-Dokumente hat insbesondere folgende zuvor widersprüchliche Punkte bereinigt:
+## 7. Aktuelle Bewertung
 
-- Fachkonzept: aktuelle Navigation und Rechercheprimärquelle,
-- Quellenmonitor: erweiterter Suchraum, Rückblick, 30-%-Warnschwelle, dynamischer Suchkontext,
-- KI-Leitfaden: Persistenzschutz, Quellenpflicht, RIS-Link-/Datumsregeln,
-- „Mehr wissen?“: harte Quellenpflicht,
-- UX: Entfernung verbliebener Wirkungsrollen- und alter Direktbeziehungslogik,
-- Dokumentationslandkarte: Dokumentationshoheit und Transferstatus.
+Die erste Prüfschicht hatte wesentliche fachliche Transferregeln erfolgreich geschlossen. Die erneute Sichtung am 04.10.2026 hat jedoch gezeigt, dass der damalige Abschluss nicht ausreichend auf **sichtbare Inhaltsbausteine und redaktionelle Funktionen** geprüft hatte.
 
-**G2.5 ist fachlich abgeschlossen.**
+Insbesondere wurden folgende Punkte erneut geöffnet:
 
-Die Folgeaufträge FA-01 bis FA-03 werden in den vorgesehenen späteren Projektphasen umgesetzt und sind keine offenen Demonstrator-Transferlücken mehr.
+- eigener Meldungsbaustein „Was bisher passiert ist“,
+- „Offene Fragen“ auf Meldungsebene und ihre persistente Modellierung,
+- explizite Sichtbarkeit relevanter Ereignisse aus Nachbargemeinden in Themen,
+- Bildaufnahme, Bildauswahl, Rechte-/Nachweisprüfung und Bildfreigabe im Redaktionsworkflow,
+- konkrete Verwendungslogik von Inhaltsbildern,
+- optionales Motivwissen/„Mehr zum Bild“ als noch zu treffende Übernahmeentscheidung.
+
+**G2.5 ist deshalb seit 04.10.2026 wieder offen.**
+
+Ein erneuter Abschluss erfolgt erst, wenn die zweite Transfer-Prüfschicht vollständig abgearbeitet, in den Primärdokumenten verankert und in Regressionstests abgesichert ist.
 
 ## Änderungshistorie
 
 | Version | Datum | Änderung |
 |---|---|---|
+| 0.3 | 04.10.2026 | Transfer-Gate aufgrund einer zweiten Prüfschicht für sichtbare Inhaltsbausteine und Redaktionsfunktionen wieder geöffnet; TA-032 und FA-04 ergänzt; frühere Abschlussbewertung präzisiert. |
 | 0.2 | 03.10.2026 | UX-Restbegriffe bereinigt, abschließende Konsistenzprüfung durchgeführt, Transfer-Gate als bestanden bewertet und G2.5 fachlich abgeschlossen; verbleibende technische Punkte als G3/G5/G10-Folgeaufträge klassifiziert. |
 | 0.1 | 03.10.2026 | Transfer-Matrix im Echtsystem angelegt; bereits geschlossene Regeln und verbleibende Restpunkte nach erster G2.5-Nachpflege dokumentiert. |
