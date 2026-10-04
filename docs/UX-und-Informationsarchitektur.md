@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 2.9 | 04.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
+| 3.0 | 04.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
 
 ## 1. Zweck
 
@@ -226,7 +226,8 @@ Je nach Inhalt können folgende Bausteine erscheinen:
 7. **Offene Fragen**
 8. Unsere Einordnung
 9. Mehr wissen?
-10. **Bezüge**
+10. **Zusammenhänge**
+11. **Bezüge**
 
 Nicht jeder optionale Baustein muss bei jeder Meldung erscheinen. Fehlt ein fachlicher Inhalt, wird kein leerer Abschnitt erzeugt.
 
@@ -256,22 +257,37 @@ Eine offene Frage darf auch eine plausible, noch nicht geklärte Wechselwirkung 
 
 Aufgelöste offene Fragen verschwinden nicht spurlos aus der fachlichen Historie; öffentlich wird grundsätzlich nur der aktuelle offene Stand gezeigt, sofern die frühere Frage nicht für den Verlauf erklärungsrelevant bleibt.
 
-### 9.4 „Bezüge“
+### 9.4 „Zusammenhänge“
 
-Der öffentliche Abschnitt **„Bezüge“** bündelt geprüfte strukturierte Beziehungen der Meldung zu wiederkehrenden konkreten Objekten und Orten, z. B. B471/Oberndorfer Straße, A99 oder A94.
+Der Abschnitt **„Zusammenhänge“** zeigt die fachliche Einordnung der Meldung in die FIB-Wissensstruktur. Er enthält nur tatsächlich vorhandene strukturierte Beziehungen, insbesondere:
 
-Er ist von Quellen und allgemeinem Zusammenhang getrennt:
+- **Vorgang** – der konkrete länger laufende Sachverhalt, zu dem das zugrunde liegende Ereignis gehört,
+- **Thema** – übergeordnete Fragestellungen, in denen das Ereignis über einen Vorgang oder als zusätzlich relevantes Ereignis berücksichtigt wird,
+- **Sitzung/TOP** – die konkrete Sitzung bzw. der Tagesordnungspunkt, wenn das Ereignis damit fachlich verknüpft ist.
 
-- Quellen belegen Aussagen,
-- „Bezüge“ erschließen verknüpfte Objekte und weitere FIB-Inhalte.
+Diese Einträge sind als direkte Links zu den jeweiligen FIB-Detailseiten auszugeben. Fehlt eine Beziehung, wird dafür kein Platzhalter gezeigt.
 
-Reine Volltextnennungen erzeugen keinen Eintrag. Bezugsobjekte werden nur aus explizit geprüften Beziehungen erzeugt und können zu passenden Meldungen, Vorgängen und Themen führen.
+`Meldung → Vorgang` und `Meldung → Thema` werden nicht als eigenständige parallele Fachbeziehungen gespeichert, sondern aus den Beziehungen des zugrunde liegenden Ereignisses abgeleitet. Die öffentliche Darstellung darf diese Ableitung für Besucher vereinfachen, ohne das Datenmodell zu verfälschen.
 
-### 9.5 Erstmeldung
+### 9.5 „Bezüge“
 
-Eine Erstmeldung kann in kompakter Form erscheinen. „Was bisher passiert ist“ entfällt, wenn es keinen relevanten Vorlauf gibt. Offene Fragen, Mehr wissen? und Bezüge werden nur angezeigt, wenn entsprechende Inhalte vorhanden sind.
+Der öffentliche Abschnitt **„Bezüge“** ist enger definiert. Er bündelt geprüfte strukturierte Beziehungen der Meldung zu wiederkehrenden konkreten **Bezugsobjekten und Orten**, z. B. B471/Oberndorfer Straße, A99 oder A94.
 
-### 9.6 Folgemeldung
+Damit gilt die Trennung:
+
+- **Zusammenhänge** → Vorgang, Thema, Sitzung/TOP,
+- **Bezüge** → konkrete wiederkehrende Objekte/Orte,
+- **Quellen** → Belege für Aussagen.
+
+Reine Volltextnennungen erzeugen weder einen Zusammenhang noch einen Bezug. Die zugrunde liegende fachliche Beziehung muss jeweils vorhanden bzw. geprüft sein.
+
+Ein Bezugsobjekt kann seinerseits zu weiteren passenden Meldungen, Vorgängen und Themen führen. Dadurch entsteht Navigation über ein konkretes Objekt, ohne dass das Objekt selbst als Vorgang oder Thema behandelt wird.
+
+### 9.6 Erstmeldung
+
+Eine Erstmeldung kann in kompakter Form erscheinen. „Was bisher passiert ist“ entfällt, wenn es keinen relevanten Vorlauf gibt. Offene Fragen, Mehr wissen?, Zusammenhänge und Bezüge werden nur angezeigt, wenn entsprechende Inhalte vorhanden sind.
+
+### 9.7 Folgemeldung
 
 Zusätzlich zum gemeinsamen Aufbau wird die neue Entwicklung prominent dargestellt:
 
@@ -286,9 +302,10 @@ Zusätzlich zum gemeinsamen Aufbau wird die neue Entwicklung prominent dargestel
 9. optional **Offene Fragen**
 10. Unsere Einordnung
 11. Mehr wissen?
-12. Bezüge
+12. Zusammenhänge
+13. Bezüge
 
-### 9.7 Aktualisierte bestehende Meldung
+### 9.8 Aktualisierte bestehende Meldung
 
 Unter Datumszeile und Kurzfassung wird die neue fachliche Information prominent dargestellt, danach der aktuelle Gesamtstand. Frühere fachliche Aktualisierungen bleiben über die Aktualisierungshistorie nachvollziehbar.
 
@@ -459,7 +476,7 @@ Drei getrennte Funktionen:
 - geräte-/browsergebunden,
 - lokaler Besuchs-/Lesestatus,
 - neue Meldungen und **fachlich relevante Aktualisierungen** bestehender Meldungen zählen als Neuigkeit,
-- rein technische oder redaktionelle Änderungen zählen nicht,
+- rein technische oder redaktionelle Änderung zählt nicht,
 - Hinweise innerhalb der bestehenden Startseitenblöcke.
 
 ### 16.2 Push
@@ -684,6 +701,7 @@ Produktionsdetails wie exakte SVG-Vektorisierung der Logos, finale Webfont-Imple
 
 | Version | Datum | Änderung |
 |---|---|---|
+| 3.0 | 04.10.2026 | Zweiten Transfer-Audit abgeschlossen: öffentliche Meldungsbeziehungen in „Zusammenhänge“ (Vorgang/Thema/Sitzung-TOP) und „Bezüge“ (konkrete Objekte/Orte) getrennt; direkte Links zu strukturiert verbundenen FIB-Inhalten festgelegt; IA-026 geschlossen. |
 | 2.9 | 04.10.2026 | Zweiter Demonstrator-Transfer-Audit: Meldungsbausteine „Was bisher passiert ist“, „Offene Fragen“ und „Bezüge“ verbindlich ergänzt; Abgrenzung „Offene Fragen“ zu „Mehr wissen?“ festgelegt; Nachbarereignisse als mögliche sichtbare Themenbestandteile präzisiert; G3-Auswirkungen für Wissenslücken, Verlauf und Bildbibliothek ergänzt. |
 | 2.8 | 03.10.2026 | G2.5-Konsistenzkorrektur: alte Wirkungsrollen- und Meldung-Direktbeziehungen durch aktuelles G3-Modell ersetzt; „Bedeutung für das Thema“, direkte Ereignis-Thema-Beziehung, Ereignis-Meldung-/Ereignis-Vorgang-Logik und präzisierte Neuigkeitsregel für PWA gespiegelt; keine Änderung der abgeschlossenen G2-UX-Grundentscheidungen. |
 | 2.7 | 01.10.2026 | G2 finalisiert: mobile und Desktop-Bannerlogik integriert, kontextabhängige GRÜNEN-Leiste korrigiert, „Neues“-Icon auf fünf gelbe Strahlen/Blätter umgestellt, Maibaum aus finaler Bildmarke entfernt und G2 nach Widerspruchsprüfung abgeschlossen. |
