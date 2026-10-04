@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 0.6 | 03.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
+| 0.7 | 04.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
 
 ## 1. Zweck und Geltung
 
@@ -19,6 +19,7 @@ Ergänzende Primärquellen:
 - politisches Referenzsystem: `docs/Gruene-Werte-und-politische-Ziele.md`
 - Begriffe und Benutzer-Labels: `docs/Begriffe.md`
 - öffentliche UX: `docs/UX-und-Informationsarchitektur.md`
+- visuelle Identität und Bildverwendungslogik: `docs/Visuelle-Identitaet-und-Bildkonzept.md`
 
 ## 2. Grundprinzipien
 
@@ -52,6 +53,8 @@ Die Begründung muss nicht ständig vollständig sichtbar sein, aber unmittelbar
 - schlägt Themenkandidaten, passende Vorgänge und weitere relevante Ereignisse vor,
 - prüft bei neuen Wirkungen auf mögliche inhaltliche Dubletten zu bereits vorhandenen Wirkungen desselben Ereignisses,
 - ordnet vorhandene Wirkungen im Themenworkflow automatisch einer oder mehreren bestätigten Perspektiven zu,
+- kann offene Fragen/Wissenslücken vorschlagen,
+- kann vorhandene Bilder anhand der strukturierten Bildbeziehungen und Ausschlüsse vorschlagen,
 - begründet ihre Vorschläge,
 - formuliert aus bestätigten strukturierten Angaben Abwägung und Textfassung.
 
@@ -61,6 +64,8 @@ Die Begründung muss nicht ständig vollständig sichtbar sein, aber unmittelbar
 - kann Vorschläge aufteilen, zusammenführen oder verwerfen,
 - kann eigene Wirkungen, Zielbereiche, Prüfkriterien und Gestaltungsoptionen ergänzen,
 - kann Vorgänge und einzelne weitere relevante Ereignisse für ein Thema auswählen,
+- bestätigt oder verändert offene Fragen/Wissenslücken,
+- bestätigt die konkrete Bildverwendung und die erforderlichen Bildmetadaten,
 - verantwortet den strukturierten Stand des konkreten Vorgangs bzw. Themas,
 - ändert eine bereits bestehende Wirkung nur in dem Bearbeitungskontext, in dem diese Wirkung fachlich angelegt wurde,
 - korrigiert bei Bedarf die KI-Zuordnung einer Wirkung zu einer oder mehreren Themenperspektiven.
@@ -114,6 +119,8 @@ bzw.
 Damit wird deutlich, dass diese Ereignisse für das Thema relevant sein können, ohne dem ausgewählten Vorgang bzw. den ausgewählten Vorgängen anzugehören. Die Aufnahme in ein Thema erzeugt oder verändert keine Vorgangszuordnung.
 
 Die Redaktion kann Vorschläge übernehmen oder verwerfen. Zusätzlich muss sie den gesamten Ereignisbestand durchsuchen und ein Ereignis manuell hinzufügen können.
+
+Auch konkrete Ereignisse aus **Nachbargemeinden oder dem regionalen Umfeld** können vorgeschlagen werden, wenn ihr Erklärungswert für die Feldkirchner Leitfrage belegt ist. Ort und Feldkirchen-Bezug müssen dabei transparent bleiben; ein auswärtiges Ereignis wird nicht als Feldkirchner Ereignis umetikettiert.
 
 Damit bestehen drei Wege:
 
@@ -326,7 +333,93 @@ Bei Themen zeigt er insbesondere:
 
 Der Bearbeiter muss von dort zu früheren Angaben zurückkehren können. Änderungen erzeugen anschließend einen neuen Abwägungs-, Themen- bzw. Formulierungsvorschlag aus dem aktuellen strukturierten Stand.
 
-## 11. Erprobungsstatus
+## 11. Offene Fragen und Wissenslücken
+
+Offene Fragen sind ein eigener redaktioneller Gegenstand und nicht mit „Mehr wissen?“ gleichzusetzen.
+
+> **Offene Frage / Wissenslücke = am Sachverhalt selbst ist etwas noch nicht geklärt, entschieden, belegt oder bekannt.**
+
+Die KI kann aus Quellenlage, Verfahrensstand, widersprüchlichen Informationen, Wechselwirkungen oder fehlenden Informationen offene Fragen vorschlagen. Die Redaktion kann sie übernehmen, umformulieren, ergänzen, verwerfen oder später als geklärt markieren.
+
+Für eine offene Frage muss erkennbar bleiben:
+
+- auf welchen Inhalt sie sich bezieht (Meldung, Vorgang oder Thema),
+- wodurch sie entstanden ist,
+- ob sie nur eine Beobachtungsfrage oder ein konkreter Rechercheauftrag ist,
+- ihr aktueller Status,
+- wodurch und wann sie gegebenenfalls beantwortet oder gegenstandslos wurde.
+
+Eine offene Frage kann Ausgangspunkt einer „Mehr wissen?“-Frage sein, bleibt aber ein eigenständiges fachliches Objekt.
+
+Bei möglichen Wechselwirkungen zwischen getrennten Vorgängen darf eine offene Frage ausdrücklich auf den anderen Vorgang verweisen. Eine mögliche Wechselwirkung wird nicht als bereits eingetretene Wirkung formuliert.
+
+## 12. Bildredaktion
+
+Die fachliche Bildverwendungslogik steht verbindlich in `docs/Visuelle-Identitaet-und-Bildkonzept.md`. Der Redaktionsworkflow stellt sicher, dass diese Regeln bei jeder konkreten Verwendung eingehalten werden.
+
+### 12.1 Wege ins System
+
+Ein Bild kann insbesondere stammen aus:
+
+- redaktionellem Upload,
+- bereits vorhandener FIB-Bildbibliothek,
+- einem freigegebenen internen Asset,
+- einer zulässigen externen Quelle, wenn Nutzung und technische Übernahme rechtlich geklärt sind.
+
+Ein bloß im Internet auffindbares Bild ist noch kein verwendbares FIB-Bild.
+
+### 12.2 Vorschlag und Auswahl
+
+Bei einer Meldung oder einem anderen Inhalt kann die KI geeignete vorhandene Bilder vorschlagen. Sie berücksichtigt dabei insbesondere:
+
+- Primärzuordnung,
+- weitere ausdrücklich geeignete Verwendungen,
+- Nutzungsausschlüsse,
+- konkreten Projekt-/Objekt-/Ortsbezug,
+- Aktualität,
+- Rechte- und Freigabestatus.
+
+Explizite redaktionelle Zuordnungen oder Ausschlüsse dürfen durch einen KI-Vorschlag nicht überschrieben werden.
+
+Für Meldungen gilt die strengere Sachbezugsschwelle aus dem Bildkonzept. Ist kein belastbar passendes Bild vorhanden, wird **kein Bild** verwendet.
+
+### 12.3 Prüfung vor Veröffentlichung
+
+Vor der Freigabe einer konkreten Bildverwendung prüft bzw. bestätigt die Redaktion mindestens:
+
+1. Passt das Bild tatsächlich zu diesem Inhalt?
+2. Besteht Verwechslungsgefahr mit einem anderen Projekt oder Vorgang?
+3. Sind Nutzungserlaubnis/Lizenz und Urheber-/Rechtehinweis geklärt?
+4. Sind datenschutzrelevante Fragen geklärt?
+5. Ist die Bildunterschrift sachlich richtig?
+6. Ist ein motivbezogener Alt-Text vorhanden?
+7. Ist das Bild angesichts des aktuellen Sachstands noch aktuell und nicht irreführend?
+
+Erst danach wird die konkrete Verwendung freigegeben.
+
+### 12.4 Neue Bilder und Bildbibliothek
+
+Beim Einstellen eines neuen wiederverwendbaren Bildes können erfasst bzw. von der KI vorgeschlagen werden:
+
+- Primärzuordnung,
+- weitere geeignete Verwendungen,
+- „Nicht verwenden für“-Ausschlüsse,
+- Schlagworte,
+- Herkunft/Quelle,
+- Urheber und Rechteangaben,
+- Alt-Text,
+- Bildunterschrift,
+- Aufnahmeort/-datum, soweit bekannt und sinnvoll.
+
+Die Redaktion bestätigt die fachlich wirksamen Zuordnungen und die öffentliche Freigabe.
+
+### 12.5 Austausch und spätere Aktualisierung
+
+Bei einer fachlich relevanten Aktualisierung einer Meldung prüft die Redaktion bzw. die KI unterstützend, ob das bisherige Bild weiter passt.
+
+Ein Bild kann ausgetauscht werden, ohne dadurch automatisch eine fachliche Aktualisierung der Meldung zu erzeugen. Der Bildwechsel bleibt als redaktionelle Änderung nachvollziehbar.
+
+## 13. Erprobungsstatus
 
 Verbindlich sind die fachlichen Prinzipien:
 
@@ -340,6 +433,7 @@ Verbindlich sind die fachlichen Prinzipien:
 - iterative Bearbeitung mit Rücksprung,
 - Themenauswahl über Vorgänge plus weitere relevante Ereignisse,
 - automatische Mitnahme der Ereignisse eines ausgewählten Vorgangs,
+- relevante Nachbar-/Regionalereignisse können mit transparentem Feldkirchen-Bezug in Themen aufgenommen werden,
 - Meldungen als über Ereignisse erschlossener Analysekontext,
 - Herkunftstrennung und Anti-Doppelzählung bei der Themenanalyse,
 - Wirkungen bleiben in ihrem Herkunftskontext änderbar,
@@ -349,7 +443,9 @@ Verbindlich sind die fachlichen Prinzipien:
 - mögliche Wirkungsdubletten werden KI-gestützt erkannt und redaktionell als gleich oder verschieden eingeordnet,
 - gleichbedeutende Wirkungen werden in der Themenanalyse nicht mehrfach gewichtet,
 - widersprüchliche Wirkungen innerhalb eines Vorgangs erzeugen einen Prüfhinweis statt automatischer Bereinigung,
-- die vier Bewertungsfelder werden mit den in Abschnitt 8 festgelegten kontextbezogenen Fragen und Antwortwerten geführt.
+- die vier Bewertungsfelder werden mit den in Abschnitt 8 festgelegten kontextbezogenen Fragen und Antwortwerten geführt,
+- offene Fragen/Wissenslücken sind eigenständige fachliche Objekte und von „Mehr wissen?“ getrennt,
+- Bildvorschlag, Rechte-/Sachbezugskontrolle und redaktionelle Freigabe gehören zum Veröffentlichungsworkflow; es besteht kein Bildzwang.
 
 Noch experimentell sind insbesondere:
 
@@ -359,7 +455,8 @@ Noch experimentell sind insbesondere:
 - visuelle Hervorhebung von KI-Vorschlägen,
 - Umfang und Darstellung von Quellenbegründungen,
 - konkrete Darstellung der Vorauswahl „Weitere relevante Ereignisse“,
-- konkrete Darstellung und Bestätigungslogik der automatischen Perspektivzuordnung von Wirkungen.
+- konkrete Darstellung und Bestätigungslogik der automatischen Perspektivzuordnung von Wirkungen,
+- konkrete UI für Bildbibliothek, Bildvorschläge und Rechte-/Freigabeprüfung.
 
 Diese Punkte werden an realen FIB-Vorgängen und Themen prototypisch getestet.
 
@@ -367,6 +464,7 @@ Diese Punkte werden an realen FIB-Vorgängen und Themen prototypisch getestet.
 
 | Version | Datum | Änderung |
 |---|---|---|
+| 0.7 | 04.10.2026 | Zweiter Demonstrator-Transfer-Audit: offene Fragen/Wissenslücken als eigenständigen Redaktionsgegenstand ergänzt; Nachbar-/Regionalereignisse im Themenworkflow präzisiert; verbindlichen Bildredaktionsworkflow für Upload/Bibliothek, KI-Vorschlag, strukturierte Zuordnungen/Ausschlüsse, Rechte-/Datenschutz-/Alt-Text-Prüfung, Freigabe und Austausch aufgenommen. |
 | 0.6 | 03.10.2026 | Bewertungsdialog konkretisiert: verbindliche kontextbezogene Fragen und feste Antwortwerte für Wirkungsrichtung, Bedeutung der Wirkung, Verlässlichkeit und politisches Gewicht festgelegt; „behindert die Zielerreichung“ präzisiert und Tragweitenfrage auf „Wie bedeutend bzw. weitreichend ist diese Auswirkung?“ geändert. |
 | 0.5 | 03.10.2026 | Wirkung-Perspektive-Zuordnung als persistenter Arbeitsstand konkretisiert: festgelegte Zuordnungen werden wiederverwendet und nur bei fachlichem Änderungsanlass, Plausibilitätskonflikt oder ausdrücklicher redaktioneller Neubewertung erneut geprüft. |
 | 0.4 | 03.10.2026 | Themenworkflow verschlankt: vorhandene Wirkungen eines enthaltenen Ereignisses werden automatisch berücksichtigt; keine erneute Auswahl der Wirkung. KI ordnet Wirkungen automatisch einer oder mehreren bestätigten Perspektiven zu; gezielte redaktionelle Klärung nur bei Mehrdeutigkeit, Unsicherheit, Abweichung, fehlender Perspektive oder manueller Korrektur. UI-Feinschliff bewusst für Implementierung offen gehalten. |
