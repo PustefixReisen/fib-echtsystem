@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 1.2 | 03.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
+| 1.3 | 04.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
 
 ## 1. Zweck
 
@@ -106,6 +106,8 @@ Gespeicherte KI-Ergebnisse erhalten mindestens:
 - bezogenes FIB-Objekt,
 - Provider/Modell,
 - zugeordnete FIB-Aufgabe bzw. KI-Leistungsklasse,
+- KI-Rolle (Primärmodell oder Review-/Qualitätsmodell), soweit zutreffend,
+- Eskalationsgrund oder Kontrollstichprobe, soweit zutreffend,
 - Regel-/Prompt-Version, soweit relevant,
 - redaktionellen Prüfstatus.
 
@@ -119,16 +121,18 @@ Für KI-Aufrufe sollen intern mindestens erfasst werden:
 - FIB-Funktionsart,
 - Kategorie verpflichtend / bedarfsgesteuert / optional,
 - KI-Leistungsklasse,
+- KI-Rolle (Primär- oder Review-/Qualitätsmodell),
 - Provider und Modell,
 - Ein-/Ausgabevolumen bzw. verfügbare Nutzungsmetriken,
 - externe Tool-/Rechercheaufrufe,
 - geschätzte bzw. gemeldete Kosten,
 - Cache-/Wiederverwendungsstatus,
+- Eskalationsgrund oder Kennzeichen Kontrollstichprobe,
 - technische Referenz auf das FIB-Objekt.
 
 Personenbezogene Inhalte werden nicht unnötig in Kosten-/Telemetriedaten übernommen.
 
-Die Kosten sollen nicht nur monatlich, sondern soweit sinnvoll auch pro FIB-Funktion, Vorgang und KI-Kategorie auswertbar sein.
+Die Kosten sollen nicht nur monatlich, sondern soweit sinnvoll auch pro FIB-Funktion, Vorgang, KI-Kategorie und KI-Rolle auswertbar sein.
 
 ## 8. Vorläufiger monatlicher Planungsrahmen
 
@@ -143,7 +147,9 @@ Der Planungsrahmen setzt voraus:
 - Analyseergebnisse werden persistent wiederverwendet,
 - die verpflichtenden Eingangsfunktionen werden mit ausreichend qualifizierten Modellen ausgeführt,
 - optionale Redaktions-KI wird nur bei tatsächlichem Bedarf eingesetzt,
-- keine Besucher-Live-KI im MVP.
+- keine Besucher-Live-KI im MVP,
+- ein wirtschaftliches Primärmodell bearbeitet den Regelfall,
+- ein leistungsfähigeres Review-/Qualitätsmodell wird nur bei definierten Eskalationsgründen oder Kontrollstichproben aufgerufen.
 
 ### 8.2 Planungswerte
 
@@ -158,6 +164,8 @@ Diese Werte sind **keine Preiszusage und kein festes Budget**. Sie sind eine Ent
 
 Der wirtschaftliche Erfolg der Hybridarchitektur wird daran gemessen, ob die verpflichtende KI zuverlässig hohe Eingangsqualität liefert, während vermeidbare KI-Aufrufe tatsächlich unterbleiben.
 
+Der zusätzliche Aufwand der Zwei-KI-Strategie wird separat beobachtet. Entscheidend ist nicht die niedrigste absolute Modellrechnung, sondern das Verhältnis aus **Primärmodellkosten + Eskalationskosten + Stichprobenkosten** zur erreichten fachlichen Qualität.
+
 ## 9. Budgetsteuerung
 
 Vorzusehen sind:
@@ -167,6 +175,7 @@ Vorzusehen sind:
 - harte Kosten-/Nutzungslimits, soweit technisch möglich,
 - optionale Kostenrahmen pro Vorgang oder FIB-Funktion,
 - getrennte Auswertung nach verpflichtender Eingangsanalyse, bedarfsgesteuerter Recherche, optionaler Redaktionsassistenz und späteren Besucher-Livefragen,
+- getrennte Auswertung von Primärmodell-, Eskalations- und Kontrollstichprobenkosten,
 - Erkennung ungewöhnlicher Nutzung oder Fehlerloops.
 
 Der vorläufige Planungs-/Warnrahmen aus Abschnitt 8 wird vor Go-live durch einen auf Pilotmessungen gestützten Wert ersetzt.
@@ -191,7 +200,10 @@ Gemeinsam bewertet werden:
 - technische Integration,
 - Betriebsstabilität,
 - beobachtete reale Kosten am FIB-Testkorpus,
-- erreichbare Qualität je FIB-Aufgabe im Verhältnis zu den dafür entstehenden Kosten.
+- erreichbare Qualität je FIB-Aufgabe im Verhältnis zu den dafür entstehenden Kosten,
+- Eignung als wirtschaftliches Primärmodell,
+- zusätzlicher Qualitätsgewinn als Review-/Qualitätsmodell,
+- notwendige Eskalationsquote und daraus resultierende Gesamtkosten.
 
 Die Qualitäts- und Testregeln stehen in `docs/KI-Qualitaet-und-Modellunabhaengigkeit.md`.
 
@@ -214,6 +226,7 @@ Der produktive Betrieb verwendet eine konfigurierbare Routing-Matrix. Sie ordnet
 - ob KI verpflichtend, bedarfsgesteuert oder optional ist,
 - erforderliche KI-Leistungsklasse,
 - Standard-Provider und Standardmodell,
+- Rolle als Primärmodell bzw. zulässiges Review-/Qualitätsmodell,
 - zulässige Reasoning-/Leistungsstufe, soweit der Anbieter dies unterstützt,
 - Kontext- bzw. Tokenrahmen,
 - Erlaubnis für externe Recherche/Tools,
@@ -222,18 +235,22 @@ Der produktive Betrieb verwendet eine konfigurierbare Routing-Matrix. Sie ordnet
 
 Beispielhafte Logik:
 
-> **FIB-Aufgabe → KI-Bedarf → Qualitätsanforderung/KI-Leistungsklasse → Routing-Konfiguration → konkreter Provider / konkretes Modell**
+> **FIB-Aufgabe → KI-Bedarf → Qualitätsanforderung/KI-Leistungsklasse → Primärmodell → ggf. Eskalation/Review → Redaktion**
 
 Die Routing-Matrix ist Konfiguration und darf nicht als fest im Anwendungscode verdrahtete Zuordnung einzelner FIB-Aufgaben zu konkreten Modellnamen umgesetzt werden.
 
 ### 12.1 Hochstufung und Fallback
 
-Eine Aufgabe kann an eine höhere Leistungsklasse weitergegeben werden, wenn beispielsweise:
+Eine Aufgabe kann an eine höhere Leistungsklasse oder an das Review-/Qualitätsmodell weitergegeben werden, wenn beispielsweise:
 
 - das Standardmodell relevante Unsicherheit meldet,
+- mehrere plausible Themen- oder Vorgangszuordnungen bestehen,
+- ein möglicherweise neuer, bislang nicht abgedeckter Aspekt erkannt wird,
 - Plausibilitätsprüfungen scheitern,
 - strukturierte Ergebnisse widersprüchlich oder unvollständig sind,
-- Quellenlage oder Zielkonflikte die für die Klasse vorgesehene Komplexität überschreiten.
+- Quellenlage oder Zielkonflikte die für die Klasse vorgesehene Komplexität überschreiten,
+- die fachliche oder kommunalpolitische Tragweite besonders hoch ist,
+- eine auffällige Abweichung zwischen KI-Vorschlag und redaktioneller Bearbeitung entsteht.
 
 Eine Hochstufung soll gezielt erfolgen und nicht dazu führen, dass vorsorglich alle Aufgaben mit dem leistungsstärksten Modell bearbeitet werden.
 
@@ -244,6 +261,28 @@ Ein Fallback kann außerdem einen anderen Provider bzw. ein anderes freigegebene
 Die Routing-Matrix wird nach neuen Modelltests, Preisänderungen, Qualitätsbeobachtungen oder Betriebserfahrungen angepasst.
 
 Änderungen an der Routing-Matrix dürfen den fachlichen Redaktionsworkflow nicht verändern. Ein Modell- oder Providerwechsel soll aus Sicht des Redakteurs möglichst transparent bleiben.
+
+### 12.3 Zwei-KI-Betriebsprinzip und Kontrollstichprobe
+
+FIB nutzt für geeignete Aufgaben zwei getrennte KI-Rollen:
+
+1. **Primärmodell** für die kosteneffiziente Breitenverarbeitung,
+2. **Review-/Qualitätsmodell** für definierte komplexe oder unsichere Fälle.
+
+Die Rollen sind konfigurierbar und nicht dauerhaft an konkrete Anbieter gebunden. Primär- und Review-Modell dürfen vom selben oder von unterschiedlichen Providern stammen.
+
+Zusätzlich wird im Pilot- und frühen Produktivbetrieb eine zufällige Kontrollstichprobe von zunächst **5 % der nicht eskalierten Fälle** durch das Review-/Qualitätsmodell gegengeprüft. Der Stichprobenanteil wird anhand der gemessenen Fehler- und Abweichungsraten angepasst.
+
+Für die Steuerung werden mindestens ausgewertet:
+
+- Anteil der regulär eskalierten Fälle,
+- Anteil der Kontrollstichproben,
+- fachlich relevante Abweichungen zwischen Primär- und Review-Ergebnis,
+- durch die Stichprobe entdeckte Fehler, die keine reguläre Eskalation ausgelöst hätten,
+- zusätzliche Kosten pro Qualitätsgewinn,
+- redaktionelle Entscheidung bei abweichenden Ergebnissen.
+
+Ziel ist eine empirisch kalibrierte Routing-Strategie: möglichst viele Fälle wirtschaftlich mit dem Primärmodell bearbeiten, ohne unerkannte Qualitätsverluste zu akzeptieren.
 
 ## 13. Preisangaben
 
@@ -264,7 +303,9 @@ Für Kostenvergleiche werden reproduzierbare FIB-Profile genutzt, mindestens:
 - redaktionelle Überarbeitung ohne externe Recherche,
 - Vorabgenerierung mehrerer „Mehr wissen?“-Antworten,
 - Wirkungserkennung und Zuordnung zu Zielbereich/Prüfkriterien,
-- komplexe strukturierte Abwägung.
+- komplexe strukturierte Abwägung,
+- Eskalation eines unsicheren Primärmodell-Falls,
+- Kontrollstichprobe eines scheinbar unkritischen Primärmodell-Falls.
 
 Für jedes Profil werden Qualität und reale Kosten gemeinsam ausgewertet. Die Profile werden nach realen Betriebsdaten fortgeschrieben.
 
@@ -281,6 +322,7 @@ Für jedes Profil werden Qualität und reale Kosten gemeinsam ausgewertet. Die P
 
 | Version | Datum | Änderung |
 |---|---|---|
+| 1.3 | 04.10.2026 | Zwei-KI-Betriebsprinzip ergänzt: Primärmodell für Breitenverarbeitung, Review-/Qualitätsmodell für Eskalationen, definierte Eskalationsgründe, 5-%-Kontrollstichprobe und getrennte Kosten-/Qualitätsmessung. Routing-Matrix, Telemetrie und Nutzungsprofile entsprechend erweitert. |
 | 1.2 | 03.10.2026 | Hybridprinzip verbindlich eingeführt: verpflichtende Entdeckungs-/Eingangs-KI, bedarfsgesteuerte Recherche-KI und optionale Redaktions-KI; Kostenprinzip auf „KI nur wo nötig, dann Qualität vor Preis“ umgestellt; vorläufigen monatlichen Planungsrahmen 3–13 € und Warnrahmen 15 € ergänzt. |
 | 1.1 | 02.10.2026 | KI-Leistungsklassen und konfigurierbare Routing-Matrix für den laufenden Betrieb ergänzt; Modellvergleich explizit auf Qualitäts-Kosten-Verhältnis je FIB-Aufgabe ausgerichtet; Hochstufungs-, Fallback- und Kostenprotokollierungsregeln präzisiert. |
 | 1.0 | 30.09.2026 | Demonstrator-Kostenmodell übernommen; zeitabhängige Preislisten aus der kanonischen Echtsystem-Regel entfernt und Betriebs-/Kostenprinzipien dauerhaft formuliert. |
