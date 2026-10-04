@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 1.9 | 04.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
+| 2.0 | 04.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
 
 ## 1. Zweck und Geltung
 
@@ -36,6 +36,7 @@ Ziel ist ein robustes und langfristig tragfähiges Modell, das für einen kleine
 - Historische Nachvollziehbarkeit von Vorgängen und Themen erfolgt über versionierte strukturierte Gesamtstände; einzelne enthaltene Fachbestandteile wie Wirkung, Perspektive, Bewertung oder Begründung erhalten keine eigene parallele Versionshistorie.
 - Öffentlich wird grundsätzlich nur der aktuell freigegebene Stand eines Vorgangs oder Themas gezeigt. Historische Versionen stehen ausschließlich im Redaktionssystem für Vergleich, Nachvollziehbarkeit, Audit und Rekonstruktion früherer Sachstände zur Verfügung.
 - Ein späterer Recherche- oder Aktualisierungslauf darf bestätigte fachliche Objekte nicht allein deshalb entfernen oder entwerten, weil sie in diesem Lauf nicht erneut gefunden wurden.
+- Planung, tatsächliches Geschehen und nachträgliche Dokumentation werden getrennt modelliert. Insbesondere sind Tagesordnung, Vorlage, Beratung, Beschluss und Niederschrift nicht dasselbe.
 
 ## 3. Wissenskern
 
@@ -550,26 +551,164 @@ Zur Pflichtbestätigung gehören grundsätzlich insbesondere:
 
 Plausibilitätsprüfungen sind keine automatische politische Entscheidung. Sie markieren Konstellationen, bei denen die Redaktion die fachliche Herleitung gezielt prüfen muss.
 
-### 3.10 Noch zu klärende Kernbeziehungen
+### 3.10 `Sitzung` und `TOP`
+
+Eine `Sitzung` ist ein konkreter Termin eines politischen Gremiums. Ein `TOP` ist ein einzelner Tagesordnungspunkt dieser Sitzung.
+
+Verbindliche Abgrenzung:
+
+> **Ein TOP ist kein Ereignis. Er beschreibt zunächst, dass ein Gegenstand für eine Sitzung vorgesehen ist. Veröffentlichung von Unterlagen, tatsächliche Beratung, Vertagung, Beschluss oder andere Verfahrensschritte sind davon getrennte Ereignisse.**
+
+Damit wird insbesondere verhindert, dass aus einer veröffentlichten Tagesordnung bereits eine tatsächlich erfolgte Beratung oder Entscheidung abgeleitet wird.
+
+#### 3.10.1 Beziehung `Sitzung ↔ TOP`
+
+Es gilt:
+
+- `Sitzung → TOP`: `0..n`
+- `TOP → Sitzung`: genau `1`
+
+Ein TOP gehört damit immer genau zu einer konkreten Sitzung. Eine Sitzung kann bereits bekannt sein, bevor einzelne relevante TOPs veröffentlicht oder in FIB erfasst sind.
+
+Ein TOP benötigt mindestens:
+
+- stabile fachliche Identität innerhalb der Sitzung,
+- offizielle bzw. nachvollziehbare Bezeichnung,
+- gegebenenfalls TOP-Nummer,
+- Bezug zur Sitzung,
+- Öffentlichkeits-/Sichtbarkeitsmerkmal, soweit bekannt,
+- aktuellen Verfahrensstatus,
+- relevante Fundstellen und Unterlagen.
+
+#### 3.10.2 Beziehungen `Sitzung/TOP ↔ Ereignis`
+
+Ereignisse bilden die tatsächlichen fachlich relevanten Schritte rund um Sitzungen und TOPs ab.
+
+Es gilt fachlich:
+
+- `Sitzung → Ereignis`: `0..n`
+- `Ereignis → Sitzung`: `0..n`
+- `TOP → Ereignis`: `0..n`
+- `Ereignis → TOP`: `0..n`
+
+Der Normalfall eines TOP-bezogenen Ereignisses ist die Zuordnung zu genau einem TOP und damit mittelbar zu genau einer Sitzung. Mehrfachzuordnungen bleiben möglich, wenn ein reales Ereignis tatsächlich mehrere TOPs oder Sitzungen berührt.
+
+Sitzungsweite Ereignisse können direkt der Sitzung zugeordnet werden, ohne künstlich einem einzelnen TOP zugeschlagen zu werden. Beispiele sind insbesondere Absage einer Sitzung oder öffentlich belegte Genehmigung der Niederschrift.
+
+Typische TOP-bezogene Ereignisse sind:
+
+- eine Beschlussvorlage oder wesentliche Unterlage wird veröffentlicht,
+- ein TOP wird tatsächlich beraten,
+- ein TOP wird vertagt oder abgesetzt,
+- ein Beschluss wird gefasst,
+- ein Ergebnis wird nachträglich dokumentiert oder korrigiert.
+
+Für Meldungen gilt weiterhin der Grundsatz der Ableitung:
+
+`Meldung → Ereignis → TOP → Sitzung`
+
+Eine zusätzliche eigenständige `Meldung ↔ TOP`- oder `Meldung ↔ Sitzung`-Fachbeziehung wird nicht gespeichert.
+
+Auch `Vorgang` und `Thema` erhalten nicht allein wegen der Sitzungsebene eine zweite parallele autoritative Zuordnung. Die fachlichen Zusammenhänge werden grundsätzlich aus den Ereignisbeziehungen und den bereits modellierten Beziehungen `Ereignis ↔ Vorgang` bzw. `Vorgang/Ereignis ↔ Thema` erschlossen.
+
+Dadurch kann die öffentliche Funktion **„Zusammenhänge“** Sitzung und TOP direkt anzeigen, ohne redundante fachliche Wahrheiten zu erzeugen.
+
+#### 3.10.3 Tagesordnung, Beschlussvorlage, weitere Unterlagen und Niederschrift
+
+Tagesordnung, Beschlussvorlage, weitere Sitzungsunterlagen und Niederschrift werden als `Fundstellen` mit fachlichem Dokumenttyp geführt, nicht als Ersatz für Ereignisse.
+
+Typische Zuordnung:
+
+- `Tagesordnung` → primär zur `Sitzung`,
+- `Beschlussvorlage` und TOP-spezifische Unterlagen → primär zum `TOP`,
+- `Niederschrift` → primär zur `Sitzung`; einzelne Aussagen können zusätzlich TOPs oder Ereignisse belegen.
+
+Die Veröffentlichung einer solchen Fundstelle kann selbst ein Ereignis darstellen, wenn sie fachlich relevant ist. Das Dokument und das Ereignis bleiben trotzdem getrennt.
+
+Verbindlich getrennt zu speichern bzw. zu behandeln sind insbesondere:
+
+- Termin der Sitzung,
+- Veröffentlichungsdatum der Tagesordnung,
+- Veröffentlichungsdatum einer Beschlussvorlage oder anderen Unterlage,
+- Datum der tatsächlichen Beratung bzw. Entscheidung,
+- Veröffentlichungsdatum der Niederschrift,
+- Datum der formalen Genehmigung der Niederschrift, soweit öffentlich belegt.
+
+Keines dieser Daten darf ohne Beleg durch ein anderes ersetzt werden.
+
+Insbesondere gilt:
+
+> **Beschlussvorlage ≠ Beschluss. Tagesordnung ≠ tatsächliche Beratung. Veröffentlichung der Niederschrift ≠ automatisch formale Genehmigung der Niederschrift.**
+
+#### 3.10.4 Lebenszyklusstatus einer Sitzung
+
+Eine Sitzung besitzt genau einen der folgenden fachlichen Status:
+
+- **angekündigt** – die Sitzung ist offiziell terminiert bzw. öffentlich angekündigt,
+- **stattgefunden** – die Sitzung hat stattgefunden; der formale Abschluss ist noch nicht öffentlich belegt,
+- **abgeschlossen** – die Genehmigung der Niederschrift ist öffentlich belegt,
+- **abgesagt** – die angekündigte Sitzung hat nicht stattgefunden.
+
+Dabei gilt:
+
+- Eine bloße Terminänderung erzeugt nicht automatisch eine neue Sitzung; die fachliche Identität bleibt bestehen, solange erkennbar derselbe Sitzungstermin lediglich verlegt wird.
+- Eine Sitzung wechselt nicht allein deshalb auf `abgeschlossen`, weil eine Niederschrift im Internet verfügbar ist. Maßgeblich ist der öffentlich belegte formale Genehmigungsstand.
+- Die Genehmigung der Niederschrift und deren öffentliche Bereitstellung sind getrennte Eigenschaften bzw. Ereignisse.
+- Statusänderungen werden mit Datum und Beleg nachvollziehbar geführt.
+- Eine Sitzung wird nicht aus dem Bestand gelöscht, wenn sie später in einer Quelle nicht mehr auffindbar ist.
+
+#### 3.10.5 Verfahrensstatus eines TOP
+
+Ein TOP besitzt einen Verfahrensstatus, der die tatsächliche Behandlung vom bloßen Planungsstand unterscheidet:
+
+- **angekündigt** – der TOP steht auf einer veröffentlichten bzw. bestätigten Tagesordnung,
+- **behandelt** – die tatsächliche Behandlung in der Sitzung ist belegt,
+- **vertagt** – die Behandlung bzw. Entscheidung wurde auf einen späteren Zeitpunkt verschoben,
+- **abgesetzt / nicht behandelt** – der angekündigte TOP wurde in dieser Sitzung nicht behandelt.
+
+`beschlossen` ist bewusst kein TOP-Status. Ein Beschluss ist ein fachliches Ereignis mit eigenem Ergebnis und Beleg. Ein TOP kann behandelt worden sein, ohne dass ein Beschluss gefasst wurde.
+
+Ebenso sind Änderungen an Nummer, Titel oder Reihenfolge eines TOP keine eigenen Dauerstatus. Sie werden nachvollziehbar protokolliert; frühere offizielle Tagesordnungen bleiben als Fundstellen erhalten.
+
+Öffentlichkeitsstatus (`öffentlich / nichtöffentlich / unbekannt`) ist vom Verfahrensstatus getrennt zu führen.
+
+#### 3.10.6 Persistenz und Historie von Sitzung/TOP
+
+Für Sitzungen und TOPs wird keine parallele Gesamtversionslogik wie für Vorgänge und Themen eingeführt.
+
+Stattdessen gilt:
+
+- die aktuelle fachliche Fassung von Sitzung und TOP wird fortgeschrieben,
+- fachlich relevante Änderungen an Termin, Titel, Nummer, Status oder Beziehungen werden protokolliert,
+- frühere offizielle Tagesordnungen, Vorlagen und Niederschriften bleiben als Fundstellen erhalten,
+- ein aus einer aktualisierten Tagesordnung entfernter TOP wird nicht spurlos gelöscht; sein letzter bestätigter Status und die Änderung bleiben nachvollziehbar,
+- spätere Rechercheläufe dürfen bestehende Sitzungen, TOPs oder Beziehungen nicht allein wegen Nichtauffindens entfernen.
+
+Damit kann FIB sowohl den aktuellen Sitzungsstand zeigen als auch redaktionell rekonstruieren, was zu einem früheren Zeitpunkt angekündigt bzw. belegt war.
+
+### 3.11 Noch zu klärende Kernbeziehungen
 
 Als nächste Modellierungsschritte werden geklärt:
 
-- `Sitzung/TOP ↔ Ereignis/Meldung/Vorgang/Thema`,
-- Status- und Lebenszykluslogik für `Sitzung/TOP`,
 - konkrete fachliche Plausibilitätsregeln für den Redaktionsprozess,
-- Persistenz-/Rücknahme-/Archivierungslogik für weitere fachliche Objekte und Beziehungen.
+- Persistenz-/Rücknahme-/Archivierungslogik für weitere fachliche Objekte und Beziehungen,
+- Abgrenzung fachlicher Persistenzdaten von rein technischen Betriebsdaten.
 
 ## 4. Weitere Modellbereiche
 
 ### 4.1 Entscheidungskontext
 
-- Sitzung
-- TOP
-- Tagesordnung
-- Beschlussvorlage und weitere Unterlagen
-- Beratung / Verfahrensstand
-- Beschluss / Ergebnis
-- Niederschrift
+Der Entscheidungskontext umfasst insbesondere:
+
+- Sitzung,
+- TOP,
+- Tagesordnung,
+- Beschlussvorlage und weitere Unterlagen,
+- Beratung / Verfahrensstand,
+- Beschluss / Ergebnis,
+- Niederschrift.
+
+Die fachlichen Beziehungen und Status von `Sitzung` und `TOP` sind in Abschnitt 3.10 verbindlich modelliert. Tagesordnung, Vorlagen, weitere Unterlagen und Niederschriften werden über das Quellen-/Fundstellenmodell eingebunden; Beratung und Beschluss werden als Ereignisse modelliert.
 
 ### 4.2 Wissensbasis und Quellen
 
@@ -685,16 +824,16 @@ Mehrfachverwendung eines Bildes ist möglich, wenn jede Verwendung eigenständig
 
 ## 5. Offene G3-Fragen
 
-1. Welche Status- und Lebenszyklusregeln gehören zu `Sitzung` und `TOP`?
-2. Welche Daten gehören zur fachlichen Persistenz und welche nur zum technischen Betrieb?
-3. Welche Plausibilitätsregeln sind verbindlich und welche nur unterstützende Hinweise?
-4. Welche zusätzlichen Rechte- und Freigabestatus werden für öffentlich über FIB bereitgestellte Dateien und Bilder benötigt?
-5. Wie werden Rücknahme, Archivierung und Wiederaufnahme der übrigen fachlichen Objekte und Beziehungen konkret modelliert?
+1. Welche Daten gehören zur fachlichen Persistenz und welche nur zum technischen Betrieb?
+2. Welche Plausibilitätsregeln sind verbindlich und welche nur unterstützende Hinweise?
+3. Welche zusätzlichen Rechte- und Freigabestatus werden für öffentlich über FIB bereitgestellte Dateien und Bilder benötigt?
+4. Wie werden Rücknahme, Archivierung und Wiederaufnahme der übrigen fachlichen Objekte und Beziehungen konkret modelliert?
 
 ## Änderungshistorie
 
 | Version | Datum | Änderung |
 |---|---|---|
+| 2.0 | 04.10.2026 | `Sitzung` und `TOP` vollständig in den Wissenskern integriert. TOP als Planungs-/Gliederungsobjekt klar vom Ereignis getrennt; Beziehungen Sitzung↔TOP und Sitzung/TOP↔Ereignis festgelegt; Meldungs-, Vorgangs- und Themenbezüge daraus abgeleitet statt redundant gespeichert. Tagesordnung, Vorlage, Beratung, Beschluss und Niederschrift getrennt; Datumsarten abgegrenzt. Sitzungsstatus `angekündigt / stattgefunden / abgeschlossen / abgesagt` und TOP-Status `angekündigt / behandelt / vertagt / abgesetzt bzw. nicht behandelt` festgelegt. `beschlossen` bleibt Ereignis statt TOP-Status. Abschluss einer Sitzung setzt öffentlich belegte Genehmigung der Niederschrift voraus; Veröffentlichung und Genehmigung bleiben getrennt. Persistenz- und Historienlogik für Sitzungen/TOPs ergänzt. |
 | 1.9 | 04.10.2026 | Status- und Rücknahmelogik für Ereignis und Meldung festgelegt. Recherchekandidaten werden erst nach fachlicher Bestätigung zu Ereignissen; bestätigte Ereignisse bleiben grundsätzlich dauerhaft im Wissensbestand und können nur `zurückgenommen` oder bei Dubletten `zusammengeführt` werden. Meldungen erhalten die Veröffentlichungsstatus `Entwurf / freigegeben / veröffentlicht / zurückgezogen`; `aktualisiert` und `korrigiert` sind nachvollziehbare Änderungen, keine eigenen Dauerstatus. Späteres Nichtfinden in einem Recherchelauf darf bestehende Objekte nicht entfernen oder entwerten. |
 | 1.8 | 04.10.2026 | Lebenszyklusstatus für Vorgang und Thema festgelegt. Vorgang: `aktiv / ruhend / abgeschlossen / archiviert`; Thema: `aktiv / ruhend / archiviert`. `abgeschlossen` bleibt bewusst auf konkrete Vorgänge beschränkt; `archiviert` bedeutet Entfernung aus laufender öffentlicher Navigation bei vollständigem Erhalt im Redaktionssystem; Wiederaktivierung bleibt möglich. |
 | 1.7 | 04.10.2026 | Schwelle für Gesamtversionen konkretisiert: neue Version nur bei fachlich relevanter Änderung des Vorgangs-/Themenstands; typische Auslöser und reine Protokolländerungen abgegrenzt; redaktionelle Bestätigung der Versionierungsentscheidung festgelegt. |
