@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 1.3 | 03.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
+| 1.4 | 04.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
 
 ## 1. Zweck und Geltung
 
@@ -30,6 +30,8 @@ Ziel ist ein robustes und langfristig tragfähiges Modell, das für einen kleine
 - Wirkungen werden an Ereignissen verankert; ihr fachlicher Herkunftskontext bestimmt, wo sie geändert werden dürfen.
 - Gleichbedeutende Wirkungen dürfen in einer übergeordneten Analyse nicht mehrfach gewichtet werden.
 - Fachlich wirksame Zuordnungen zwischen Wirkungen und Themenperspektiven werden persistent gespeichert und nur bei konkretem Änderungsanlass neu geprüft.
+- Offene Fragen/Wissenslücken sind eigenständige fachliche Objekte und werden nicht mit „Mehr wissen?“-Fragen vermischt.
+- Bilder und ihre konkrete Verwendung werden getrennt modelliert, damit Rechte, Metadaten und Verwendungskontext nachvollziehbar bleiben.
 
 ## 3. Wissenskern
 
@@ -285,7 +287,7 @@ Die konkrete UI- und Bestätigungslogik wird im Redaktionsworkflow festgelegt. D
 
 #### 3.7.5 Strukturierte Bewertungswerte
 
-Für die strukturierte Bewertung einer Wirkung werden vier getrennte Felder mit festen fachlichen Wertemengen verwendet. Die Trennung verhindert, dass Richtung, sachliche Tragweite, Erkenntnissicherheit und politisches Gewicht miteinander vermischt werden.
+Für die strukturierte Bewertung einer Wirkung werden vier getrennte Felder mit festen fachlichen Wertemengen verwendet.
 
 **Wirkungsrichtung** – Wirkung auf den gewählten Zielbereich:
 
@@ -320,8 +322,7 @@ Dabei gilt:
 - Wirkungsrichtung und Bedeutung der Wirkung sind getrennt; die Richtung enthält keine Intensitätsstufe.
 - `unklar` kennzeichnet eine noch nicht ausreichend geklärte fachliche bzw. sachliche Einschätzung.
 - `offen` beim politischen Gewicht kennzeichnet dagegen eine noch nicht getroffene redaktionelle Abwägungsentscheidung.
-- Die Werte werden nicht mechanisch ineinander übersetzt. Insbesondere bestimmt eine hohe sachliche Tragweite nicht automatisch ein hohes politisches Gewicht und eine geringe Verlässlichkeit nicht automatisch ein geringes politisches Gewicht.
-- Benutzernahe Fragen und Darstellung werden im Redaktionsworkflow und Begriffsregister festgelegt.
+- Die Werte werden nicht mechanisch ineinander übersetzt.
 
 #### 3.7.6 Politischer Bezug
 
@@ -343,19 +344,34 @@ Damit gilt:
 
 Die Begründung wird fachlich nicht als ein einziger undifferenzierter Textblock modelliert. Sie wird den jeweiligen Bewertungsurteilen zugeordnet.
 
-Verbindlich werden mindestens drei getrennte Begründungen geführt:
+Verbindlich werden vier getrennte Begründungen geführt:
 
 1. **Begründung der Wirkungsrichtung** – warum die konkrete Wirkung die Zielerreichung unterstützt, behindert, nicht erkennbar beeinflusst oder warum die Richtung unklar ist.
 2. **Begründung der Bedeutung der Wirkung** – warum die sachliche Tragweite als hoch, mittel, gering oder unklar eingeschätzt wird.
-3. **Begründung des politischen Gewichts** – warum die Wirkung in der Abwägung hoch, mittel oder gering zählt bzw. warum das Gewicht noch offen ist.
+3. **Begründung der Verlässlichkeit** – warum die Einschätzung als hoch, mittel, gering oder unklar belastbar gilt. Grundlage sind insbesondere Quellenlage, Datenqualität, Planungs-/Verfahrensstand, Prognosecharakter, Abhängigkeiten sowie Widersprüche und Unsicherheiten.
+4. **Begründung des politischen Gewichts** – warum die Wirkung in der Abwägung hoch, mittel oder gering zählt bzw. warum das Gewicht noch offen ist.
 
-Die Begründungen müssen den jeweiligen Wert nachvollziehbar herleiten und dürfen ihn nicht lediglich in anderen Worten wiederholen.
-
-Die Verlässlichkeit bleibt als eigene strukturierte Einschätzung erhalten. Ihre Herleitung kann insbesondere auf Quellenlage, Datenqualität, Planungsstand, Abhängigkeiten und Unsicherheiten verweisen; ob hierfür zusätzlich ein eigenes verpflichtendes Begründungsfeld erforderlich ist, wird gesondert entschieden.
+Die KI kann diese Begründungen aus bestätigten Fakten, Quellen und strukturierten Werten als Vorschlag formulieren. Fachlich wirksam werden sie erst durch die redaktionelle Prüfung bzw. Bestätigung. Die Begründungen müssen den jeweiligen Wert nachvollziehbar herleiten und dürfen ihn nicht lediglich in anderen Worten wiederholen.
 
 Ein einschlägiger konkreter politischer Bezug kann einer oder mehreren Begründungen zugeordnet werden, ist aber nur dann erforderlich, wenn er tatsächlich als Grundlage der jeweiligen Herleitung verwendet wird.
 
-Die spätere Darstellung dieser fachlich getrennten Begründungen in der Redaktionsoberfläche ist damit noch nicht festgelegt. Sie können in der UI getrennt, zusammengefasst oder kontextabhängig präsentiert werden, solange die fachliche Zuordnung im strukturierten Stand erhalten bleibt.
+#### 3.7.8 Strukturierte Abwägung ohne Gesamturteil
+
+Die strukturierte Abwägung führt relevante Wirkungen, Zielkonflikte, Verlässlichkeit, politisches Gewicht, Begründungen und Gestaltungsoptionen zusammen.
+
+Verbindlicher Grundsatz:
+
+> **FIB strukturiert und erläutert die politische Abwägung, leitet daraus aber kein abschließendes Gesamturteil über das Thema oder den Vorgang ab. Das Gesamtfazit bleibt dem Leser überlassen.**
+
+Die Abwägung kann deshalb insbesondere beantworten:
+
+- welche Wirkungen für oder gegen bestimmte Zielerreichungen sprechen,
+- welche Wirkungen besonders weitreichend oder unsicher sind,
+- welche Zielkonflikte bestehen,
+- welche Wirkungen in der Abwägung besonders schwer wiegen,
+- welche Gestaltungsoptionen bestimmte Wirkungen verändern können.
+
+Ein strukturiertes oder sprachliches Feld „Gesamtfazit positiv/negativ“ ist nicht Bestandteil des Modells.
 
 ### 3.8 Strukturierter Redaktionsstand und Textfassung
 
@@ -380,15 +396,13 @@ Es gelten folgende Konsistenzregeln:
 - Sprachliche Änderungen außerhalb der geänderten fachlichen Bereiche sind zulässig, dürfen aber keine neue oder veränderte Kernaussage erzeugen.
 - Der Redakteur muss erkennen können, welche Textänderungen aus welcher strukturierten Änderung entstanden sind.
 
-Der Redaktionsprozess ist bewusst iterativ: Der Redakteur kann zu früheren strukturierten Angaben zurückkehren, sie ändern und anschließend einen neuen Abwägungs- oder Formulierungsvorschlag erzeugen. Die Historie der fachlich wirksamen Änderungen bleibt nachvollziehbar.
-
 ### 3.9 Bestätigung und Plausibilitätsprüfung
 
 Für den strukturierten Redaktionsprozess werden drei Sicherungsebenen unterschieden:
 
 1. **Pflichtbestätigung** – für Angaben, die die fachliche oder politische Kernaussage unmittelbar prägen.
-2. **sichtbarer KI-Vorschlag** – für Angaben, die die KI vorschlagen darf und die vom Redakteur sichtbar geprüft und bei Bedarf geändert werden können, ohne dass zwingend eine eigene Bestätigungsaktion erforderlich ist.
-3. **Plausibilitätsprüfung über mehrere Felder oder Wirkungen** – zur Erkennung auffälliger, widersprüchlicher oder semantisch doppelter Kombinationen im strukturierten Stand.
+2. **sichtbarer KI-Vorschlag** – für Angaben, die die KI vorschlagen darf und die vom Redakteur sichtbar geprüft und bei Bedarf geändert werden können.
+3. **Plausibilitätsprüfung über mehrere Felder oder Wirkungen** – zur Erkennung auffälliger, widersprüchlicher oder semantisch doppelter Kombinationen.
 
 Zur Pflichtbestätigung gehören grundsätzlich insbesondere:
 
@@ -402,28 +416,16 @@ Zur Pflichtbestätigung gehören grundsätzlich insbesondere:
 
 `Verlässlichkeit` kann grundsätzlich als sichtbarer KI-Vorschlag geführt werden. Eine ausdrückliche Prüfung wird erforderlich, wenn ihre Kombination mit anderen Angaben fachlich auffällig ist oder die Abwägung wesentlich beeinflusst.
 
-Beispiele für Plausibilitätsprüfungen:
-
-- `Verlässlichkeit = gering` und zugleich `politisches Gewicht = hoch` → gezielter Prüfhinweis.
-- `Wirkungsrichtung = behindert die Zielerreichung`, aber positive Gesamtbewertung derselben Wirkung ohne erkennbare Begründung → Inkonsistenzhinweis.
-- Eine bestätigte `Wirkung` wurde geändert, die `Abwägung` blieb aber unverändert → erneute Prüfung der Abwägung erforderlich.
-- Eine `Gestaltungsoption` erzeugt erwartete neue `Wirkungen`, diese fehlen aber in der Abwägung → Prüfhinweis.
-- Eine manuell geänderte `Textfassung` verschiebt eine Bewertung oder Gewichtung, ohne dass sich der strukturierte Redaktionsstand geändert hat → Konsistenzwarnung.
-- Zwei Wirkungen desselben Ereignisses sind semantisch möglicherweise gleichbedeutend → redaktionelle Dublettenprüfung.
-- Mehrere Wirkungen innerhalb eines Vorgangs widersprechen sich auffällig → Konflikthinweis mit Prüfung auf tatsächlichen Wirkungskonflikt, zeitliche Veränderung, unterschiedliche Bedingungen, unsichere Erkenntnislage oder Inkonsistenz.
-
 Plausibilitätsprüfungen sind keine automatische politische Entscheidung. Sie markieren Konstellationen, bei denen die Redaktion die fachliche Herleitung gezielt prüfen muss.
-
-Die sprachliche Fassung der `Abwägung` wird von der KI erzeugt. Pflichtbestätigt wird die strukturierte Abwägung, nicht jeder einzelne Satz der daraus formulierten Textfassung.
 
 ### 3.10 Noch zu klärende Kernbeziehungen
 
 Als nächste Modellierungsschritte werden geklärt:
 
 - `Sitzung/TOP ↔ Ereignis/Meldung/Vorgang/Thema`,
-- weitere Konkretisierung von `Bewertung`, `Begründung`, `Gestaltungsoption`, `Verlässlichkeit`, `politischem Gewicht` und politischem Referenzsystem,
 - genaue Versionierungs- und Vergleichslogik zwischen strukturiertem Redaktionsstand und Textfassung,
-- konkrete fachliche Plausibilitätsregeln für den Redaktionsprozess.
+- konkrete fachliche Plausibilitätsregeln für den Redaktionsprozess,
+- Persistenz-/Rücknahme-/Archivierungslogik für fachliche Objekte und Beziehungen.
 
 ## 4. Weitere Modellbereiche
 
@@ -441,39 +443,77 @@ Als nächste Modellierungsschritte werden geklärt:
 
 Für Quellen und Fundstellen gilt folgende fachliche Trennung:
 
-- `Quelle` – Herkunft bzw. Träger der Information, z. B. Gemeinde, Autobahn GmbH, Pressemedium, Bürgerinitiative oder GRÜNE Feldkirchen.
-- `Fundstelle` – konkrete Seite, Dokument, Datei oder sonstige Einheit, in der die relevante Information enthalten ist.
-- `Quellenrolle` – fachliche Funktion der Quelle, z. B. amtliche Quelle, journalistische Quelle oder politische Positionsquelle.
-- `Bereitstellung` – Art, wie die Fundstelle technisch in FIB verfügbar ist, z. B. externe URL oder in FIB gespeicherte Datei.
-- `Sichtbarkeit` – Regel, ob eine gespeicherte Fundstelle öffentlich über FIB zugänglich oder nur redaktionell sichtbar ist.
-- Belegbeziehung – Verknüpfung einer Fundstelle mit Aussagen, Ereignissen oder anderen FIB-Inhalten, die sie fachlich stützt.
+- `Quelle` – Herkunft bzw. Träger der Information,
+- `Fundstelle` – konkrete Seite, Dokument, Datei oder sonstige Einheit,
+- `Quellenrolle` – fachliche Funktion der Quelle,
+- `Bereitstellung` – Art, wie die Fundstelle technisch in FIB verfügbar ist,
+- `Sichtbarkeit` – Regel, ob eine gespeicherte Fundstelle öffentlich oder nur redaktionell sichtbar ist,
+- Belegbeziehung – Verknüpfung einer Fundstelle mit Aussagen, Ereignissen oder anderen FIB-Inhalten.
 
 Verbindliche Entscheidung:
 
 > **Ursprüngliche Internetverfügbarkeit und öffentliche Bereitstellung über FIB sind getrennte Eigenschaften.**
 
-Eine redaktionell eingebrachte Datei kann daher öffentlich als Quelle bereitgestellt werden, obwohl sie zuvor nicht frei im Internet verfügbar war, sofern eine entsprechende redaktionelle Freigabe und Berechtigung zur Veröffentlichung vorliegt.
+### 4.3 Offene Frage / Wissenslücke
 
-Mindestens zu unterstützen sind:
+Eine `offene Frage` bzw. `Wissenslücke` beschreibt einen noch nicht geklärten, noch nicht entschiedenen, noch nicht belastbar belegten oder noch nicht bekannten Aspekt eines Sachverhalts.
 
-1. externe öffentlich erreichbare Fundstelle per URL,
-2. redaktionell hochgeladene Datei mit öffentlicher Bereitstellung über FIB,
-3. redaktionell hochgeladene Datei nur für interne/redaktionelle Nutzung,
-4. dokumentierte Quelle ohne öffentliche URL oder Datei.
+Sie ist ein eigenständiges fachliches Objekt und wird nicht mit einer `Mehr-wissen?-Frage` gleichgesetzt.
 
-Für hochgeladene Dateien sind mindestens nachvollziehbar zu speichern:
+Mindestens zu speichern sind:
 
-- Herkunft/Quelle,
-- Dokumenttitel bzw. Bezeichnung,
-- Dateityp,
-- Speicherreferenz,
-- Sichtbarkeit,
-- Freigabestatus für öffentliche Bereitstellung,
-- gegebenenfalls ursprüngliche URL,
-- relevante Metadaten wie Datum/Stand,
-- fachliche Verknüpfungen zu Ereignissen, Vorgängen oder belegten Aussagen.
+- Fragetext / Gegenstand,
+- fachlicher Bezug zu `Meldung`, `Vorgang` und/oder `Thema`,
+- Herkunft (`KI-Vorschlag`, redaktionell ergänzt, aus Quelle/Verfahren abgeleitet),
+- Status mindestens `offen`, `teilweise geklärt`, `geklärt`, `gegenstandslos`,
+- gegebenenfalls Bedingung oder Abhängigkeit,
+- relevante Quellen/Fundstellen,
+- Eröffnungsdatum bzw. fachlicher Stand,
+- Auflösungsdatum und Auflösungsbezug,
+- Historie wesentlicher Änderungen.
 
-### 4.3 Redaktion, Historisierung und Vertiefung
+Eine offene Frage kann eine mögliche Wechselwirkung zwischen getrennten Vorgängen betreffen. Solche Beziehungen bleiben als mögliche bzw. bedingte Wechselwirkung gekennzeichnet und werden nicht als bereits eingetretene Wirkung modelliert.
+
+Öffentlich wird grundsätzlich nur der aktuelle offene Stand gezeigt. Geklärte Fragen bleiben fachlich historisiert und können für den Verlauf weiterhin herangezogen werden.
+
+### 4.4 „Was bisher passiert ist“
+
+Der öffentliche Meldungsbaustein `Was bisher passiert ist` benötigt keinen unabhängigen zweiten Sachverhaltsbestand. Er wird grundsätzlich aus bestehenden Ereignis-, Meldungs- und Vorgangsbeziehungen abgeleitet.
+
+Falls die Redaktion eine Auswahl oder Reihenfolge fachlich bestätigt, muss diese Auswahl als Darstellungsbeziehung nachvollziehbar gespeichert werden können. Die aktuelle Meldung darf nicht Teil ihres eigenen Rückblicks sein.
+
+### 4.5 Bild und Bildverwendung
+
+`Bild` und `Bildverwendung` werden getrennt behandelt.
+
+`Bild` beschreibt das wiederverwendbare Asset und mindestens:
+
+- Speicherreferenz/Datei,
+- Herkunft,
+- Urheber,
+- Nutzungsrecht/Lizenz und gegebenenfalls Nachweis,
+- Datenschutz-/Persönlichkeitsrechtsstatus soweit erforderlich,
+- motivbezogenen Alt-Text,
+- sachliche Bildunterschrift,
+- gegebenenfalls Aufnahmeort und Aufnahmedatum,
+- Schlagworte/Motivbezug,
+- Freigabestatus.
+
+`Bildverwendung` beschreibt die konkrete Verwendung eines Bildes an einer `Meldung`, einem `Vorgang`, einem `Thema` oder gegebenenfalls einer `Sitzung` und mindestens:
+
+- Zielobjekt,
+- Verwendungsart/Rolle,
+- fachlich bestätigter Sachbezug,
+- Primärzuordnung oder weitere geeignete Verwendung,
+- gegebenenfalls ausdrücklicher Nutzungsausschluss für andere naheliegende Objekte,
+- redaktionelle Freigabe der konkreten Verwendung,
+- Gültigkeit/Aktualität der Zuordnung.
+
+Mehrfachverwendung eines Bildes ist möglich, wenn jede Verwendung eigenständig fachlich passt und rechtlich zulässig ist. Das Datenmodell erzwingt keinen Bildzwang.
+
+`Mehr zum Bild` bleibt als optionale spätere Funktion fachlich offen; hierfür würde zusätzlich ein redaktionell geprüfter Motivtext mit Quellen und Aktualitätsstand benötigt.
+
+### 4.6 Redaktion, Historisierung und Vertiefung
 
 - Rechercheauftrag
 - Aktualisierungsereignis
@@ -482,33 +522,33 @@ Für hochgeladene Dateien sind mindestens nachvollziehbar zu speichern:
 - „Mehr wissen?“-Frage
 - gespeicherte Antwort
 - Quellen einer Antwort
-- Wissenslücke / offene Wissensfrage
-
-Die noch nicht abschließend modellierten Begriffe werden im weiteren G3-Verlauf einzeln geprüft.
+- offene Frage / Wissenslücke
+- Bild / Bildverwendung
 
 ## 5. Offene G3-Fragen
 
-1. Welche zusätzlichen Regeln benötigen Begründungen und politische Bezüge für Historisierung und Wiederverwendung?
-2. Welche Status gehören zu `Ereignis`, `Meldung`, `Vorgang`, `Thema` und `Sitzung`?
-3. Welche Änderungen werden versioniert, welche nur protokolliert?
-4. Welche Daten gehören zur fachlichen Persistenz und welche nur zum technischen Betrieb?
-5. Welche Plausibilitätsregeln sind verbindlich und welche nur unterstützende Hinweise?
-6. Welche zusätzlichen Rechte- und Freigabestatus werden für öffentlich über FIB bereitgestellte Dateien benötigt?
+1. Welche Status gehören zu `Ereignis`, `Meldung`, `Vorgang`, `Thema` und `Sitzung`?
+2. Welche Änderungen werden versioniert, welche nur protokolliert?
+3. Welche Daten gehören zur fachlichen Persistenz und welche nur zum technischen Betrieb?
+4. Welche Plausibilitätsregeln sind verbindlich und welche nur unterstützende Hinweise?
+5. Welche zusätzlichen Rechte- und Freigabestatus werden für öffentlich über FIB bereitgestellte Dateien und Bilder benötigt?
+6. Wie werden Rücknahme, Archivierung und Wiederaufnahme fachlicher Objekte und Beziehungen konkret modelliert?
 
 ## Änderungshistorie
 
 | Version | Datum | Änderung |
 |---|---|---|
-| 1.3 | 03.10.2026 | Politischen Bezug und Begründungslogik konkretisiert: Zielbereich ist der allgemeine politische Maßstab; konkrete dokumentierte grüne Position wird bei einschlägigem Vorliegen zusätzlich verwendet, ist aber keine Voraussetzung für eine Bewertung. Begründungen werden fachlich getrennt für Wirkungsrichtung, sachliche Tragweite und politisches Gewicht geführt; die spätere UI-Darstellung bleibt offen. |
-| 1.2 | 03.10.2026 | Feste fachliche Wertemengen für Wirkungsrichtung, Bedeutung der Wirkung, Verlässlichkeit und politisches Gewicht festgelegt; Wirkungsrichtung als Unterstützung/Behinderung der Zielerreichung präzisiert und `unklar` von `offen` beim politischen Gewicht abgegrenzt. |
-| 1.1 | 03.10.2026 | Persistente Wirkung-Perspektive-Zuordnung festgelegt: vorhandene Wirkungen eines im Thema enthaltenen Ereignisses werden automatisch berücksichtigt; Zuordnungen zu einer oder mehreren Themenperspektiven werden gespeichert und nur bei fachlichem Änderungsanlass, Plausibilitätskonflikt oder ausdrücklicher redaktioneller Neubewertung erneut geprüft. |
-| 1.0 | 03.10.2026 | Wirkungsmodell konkretisiert: Wirkungen fachlich am Ereignis verankert; Herkunftskontext Vorgang/Thema bestimmt Änderungszuständigkeit; mehrere eigenständige Wirkungen je Ereignis zulässig; semantisch gleichbedeutende Wirkungen werden als Analyse-Dubletten erkannt und nicht mehrfach gewichtet; widersprüchliche Wirkungen erzeugen Prüfhinweise statt automatischer Bereinigung. |
-| 0.9 | 03.10.2026 | Themenmodell ergänzt: direkt aufgenommene Einzelereignisse erhalten wie Vorgänge die Bedeutung für das Thema mit prägend/relevant/ergänzend; Themen können durch KI-Vorschlag oder redaktionelle Anlage entstehen; bei redaktioneller Neuanlage ist eine Ähnlichkeits-/Dublettprüfung gegen den Themenbestand verpflichtend. |
-| 0.8 | 03.10.2026 | Themenmodell korrigiert: Vorgänge als bevorzugte Themenauswahl mit automatischer Mitnahme ihrer Ereignisse; direkte Ereignis-Thema-Beziehung für zusätzliche „Weitere relevante Ereignisse“ zugelassen; Meldungstext und vorhandene „Unsere Einordnung“ werden über Ereignisse als Analysekontext erschlossen; Herkunfts- und Anti-Doppelzählungsregel ergänzt. |
-| 0.7 | 03.10.2026 | Quellenmodell konkretisiert: Herkunft, Fundstelle, Bereitstellung und Sichtbarkeit getrennt; öffentliche FIB-Bereitstellung redaktionell hochgeladener Dateien auch ohne ursprüngliche Internetverfügbarkeit ermöglicht; direkte Ereignis-Thema-Beziehung als parallele Zuordnung verworfen. |
-| 0.6 | 02.10.2026 | Bestätigungslogik und feldübergreifende Plausibilitätsprüfung für den strukturierten Redaktionsprozess festgelegt; strukturierte Abwägung als fachlich zu bestätigender Stand von der KI-formulierten Textfassung getrennt. |
-| 0.5 | 02.10.2026 | `strukturierter Redaktionsstand` als fachliche Quelle und `Textfassung` als daraus erzeugte Darstellung festgelegt; Konsistenz-, Versions- und Änderungsregeln zwischen beiden Ebenen ergänzt. |
-| 0.4 | 02.10.2026 | Vorgang↔Thema konkretisiert: Wirkungsrollen-Taxonomie entfällt; „Bedeutung für das Thema“ mit prägend/relevant/ergänzend und verpflichtender redaktioneller Bestätigung eingeführt; Begriffe Perspektive, Wirkung, Bewertung, Begründung und politischer Bezug als nächster Modellierungsbereich abgegrenzt. |
-| 0.3 | 02.10.2026 | Beziehung Ereignis ↔ Vorgang verbindlich festgelegt: Ereignis `0..n` Vorgänge, Vorgang `1..n` Ereignisse; Meldung-Vorgang-Zuordnung wird über das Ereignis abgeleitet. |
-| 0.2 | 02.10.2026 | Kardinalität Ereignis ↔ Meldung verbindlich festgelegt: ein Ereignis hat 0..1 Meldungen, eine Meldung gehört genau zu einem Ereignis. |
-| 0.1 | 01.10.2026 | G3-Primärdokument angelegt; Trennung von Ereignis und Meldung verbindlich festgelegt; weitere Modellbereiche und nächste Klärungsschritte aufgenommen. |
+| 1.4 | 04.10.2026 | Zweiten Demonstrator-Transfer-Audit und zwischenzeitliche G3-Entscheidungen nachgezogen: eigene Begründung der Verlässlichkeit, Abwägung ohne abschließendes Gesamturteil, persistente offene Fragen/Wissenslücken mit Status/Auflösung, Ableitung von „Was bisher passiert ist“ sowie Bild/Bildverwendung mit Rechte-, Metadaten- und Zuordnungslogik ergänzt. |
+| 1.3 | 03.10.2026 | Politischen Bezug und Begründungslogik konkretisiert: Zielbereich ist der allgemeine politische Maßstab; konkrete dokumentierte grüne Position wird bei einschlägigem Vorliegen zusätzlich verwendet, ist aber keine Voraussetzung für eine Bewertung. |
+| 1.2 | 03.10.2026 | Feste fachliche Wertemengen für Wirkungsrichtung, Bedeutung der Wirkung, Verlässlichkeit und politisches Gewicht festgelegt. |
+| 1.1 | 03.10.2026 | Persistente Wirkung-Perspektive-Zuordnung festgelegt. |
+| 1.0 | 03.10.2026 | Wirkungsmodell konkretisiert. |
+| 0.9 | 03.10.2026 | Themenmodell ergänzt. |
+| 0.8 | 03.10.2026 | Themenmodell korrigiert. |
+| 0.7 | 03.10.2026 | Quellenmodell konkretisiert. |
+| 0.6 | 02.10.2026 | Bestätigungslogik und feldübergreifende Plausibilitätsprüfung festgelegt. |
+| 0.5 | 02.10.2026 | Strukturierter Redaktionsstand als fachliche Quelle festgelegt. |
+| 0.4 | 02.10.2026 | Vorgang↔Thema konkretisiert. |
+| 0.3 | 02.10.2026 | Beziehung Ereignis ↔ Vorgang festgelegt. |
+| 0.2 | 02.10.2026 | Kardinalität Ereignis ↔ Meldung festgelegt. |
+| 0.1 | 01.10.2026 | G3-Primärdokument angelegt. |
