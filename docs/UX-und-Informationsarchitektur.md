@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 2.8 | 03.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
+| 2.9 | 04.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
 
 ## 1. Zweck
 
@@ -211,34 +211,86 @@ Frühere fachliche Aktualisierungen bleiben über **„Frühere Aktualisierungen
 
 ## 9. Meldungsdetailseite
 
-### 9.1 Erstmeldung
+Die Meldungsdetailseite trennt den aktuellen Sachstand, den Verlauf, noch offene Sachfragen, Vertiefung und Beziehungen zu anderen FIB-Inhalten.
+
+### 9.1 Gemeinsame Bausteine
+
+Je nach Inhalt können folgende Bausteine erscheinen:
 
 1. Titel
 2. Datum
 3. Kurzfassung
-4. Worum geht es?
-5. Sachinformation
-6. Quellen
-7. Unsere Einordnung
-8. Mehr wissen?
-9. Zusammenhang zu Vorgang, Thema, Sitzung und Bezugsobjekten
+4. Worum geht es? / Sachinformation
+5. Quellen
+6. **Was bisher passiert ist**
+7. **Offene Fragen**
+8. Unsere Einordnung
+9. Mehr wissen?
+10. **Bezüge**
 
-### 9.2 Folgemeldung
+Nicht jeder optionale Baustein muss bei jeder Meldung erscheinen. Fehlt ein fachlicher Inhalt, wird kein leerer Abschnitt erzeugt.
+
+### 9.2 „Was bisher passiert ist“
+
+Dieser Baustein zeigt frühere **fachlich relevante Ereignisse bzw. daraus entstandene Meldungen**, die zum Verständnis der aktuellen Meldung beitragen.
+
+Er ist kein Ersatz für den vollständigen Vorgangsverlauf. Er ist eine kompakte, meldungsbezogene Orientierung und wird aus den strukturierten Beziehungen zum zugrunde liegenden Vorgang bzw. zu früheren Ereignissen erzeugt.
+
+Verbindlich gilt:
+
+- die aktuelle Meldung selbst erscheint nicht im eigenen Rückblick,
+- nur tatsächlich relevante frühere Schritte werden gezeigt,
+- Einträge sind nach Möglichkeit direkt mit der früheren Meldung oder dem entsprechenden Ereignis/Vorgang verlinkt,
+- eine Folgemeldung kann zusätzlich einen knappen **Bisherigen Stand** im Fließtext enthalten; dieser ersetzt den verlinkten Rückblick nicht, wenn mehrere frühere relevante Schritte vorhanden sind.
+
+### 9.3 „Offene Fragen“
+
+**Offene Fragen** zeigen, was am Sachverhalt selbst noch ungeklärt, noch nicht entschieden, noch nicht belastbar belegt oder noch nicht bekannt ist.
+
+Sie sind von „Mehr wissen?“ zu unterscheiden:
+
+- **Offene Frage** = offene Sachfrage des Ereignisses/Vorgangs/Themas,
+- **Mehr wissen?** = zusätzlicher Erkenntnisweg für Besucher.
+
+Eine offene Frage darf auch eine plausible, noch nicht geklärte Wechselwirkung zu einem anderen Vorgang benennen, wenn sie ausdrücklich als offen bzw. bedingt gekennzeichnet ist. Beispiel: mögliche Auswirkungen einer Hundehaltungsverordnung auf Bedarf oder Ausgestaltung von Freilaufflächen.
+
+Aufgelöste offene Fragen verschwinden nicht spurlos aus der fachlichen Historie; öffentlich wird grundsätzlich nur der aktuelle offene Stand gezeigt, sofern die frühere Frage nicht für den Verlauf erklärungsrelevant bleibt.
+
+### 9.4 „Bezüge“
+
+Der öffentliche Abschnitt **„Bezüge“** bündelt geprüfte strukturierte Beziehungen der Meldung zu wiederkehrenden konkreten Objekten und Orten, z. B. B471/Oberndorfer Straße, A99 oder A94.
+
+Er ist von Quellen und allgemeinem Zusammenhang getrennt:
+
+- Quellen belegen Aussagen,
+- „Bezüge“ erschließen verknüpfte Objekte und weitere FIB-Inhalte.
+
+Reine Volltextnennungen erzeugen keinen Eintrag. Bezugsobjekte werden nur aus explizit geprüften Beziehungen erzeugt und können zu passenden Meldungen, Vorgängen und Themen führen.
+
+### 9.5 Erstmeldung
+
+Eine Erstmeldung kann in kompakter Form erscheinen. „Was bisher passiert ist“ entfällt, wenn es keinen relevanten Vorlauf gibt. Offene Fragen, Mehr wissen? und Bezüge werden nur angezeigt, wenn entsprechende Inhalte vorhanden sind.
+
+### 9.6 Folgemeldung
+
+Zusätzlich zum gemeinsamen Aufbau wird die neue Entwicklung prominent dargestellt:
 
 1. Titel
 2. Datum
 3. Kurzfassung
 4. **Was ist neu?**
-5. **Bisheriger Stand** – nur notwendiger Kontext
-6. Sachinformation
+5. **Bisheriger Stand** – nur notwendiger Kontext im Fließtext
+6. aktueller Sachstand
 7. Quellen
-8. Unsere Einordnung
-9. Mehr wissen?
-10. Zusammenhang
+8. optional **Was bisher passiert ist** als verlinkter Rückblick
+9. optional **Offene Fragen**
+10. Unsere Einordnung
+11. Mehr wissen?
+12. Bezüge
 
-### 9.3 Aktualisierte bestehende Meldung
+### 9.7 Aktualisierte bestehende Meldung
 
-Unter Datumszeile und Kurzfassung wird die neue fachliche Information prominent dargestellt, danach der aktuelle Gesamtstand.
+Unter Datumszeile und Kurzfassung wird die neue fachliche Information prominent dargestellt, danach der aktuelle Gesamtstand. Frühere fachliche Aktualisierungen bleiben über die Aktualisierungshistorie nachvollziehbar.
 
 ## 10. Gemeinsame Themen-/Vorgangsliste
 
@@ -298,6 +350,8 @@ Grundstruktur:
 Nicht alle Themenbestandteile werden gleichrangig dargestellt; ihre redaktionell bestätigte **Bedeutung für das Thema** (`prägend`, `relevant`, `ergänzend`) beeinflusst die Gewichtung. Perspektiven und Wirkungen erklären sachlich, warum ein Vorgang oder direkt ergänztes Ereignis für das Thema relevant ist. Eine separate Wirkungsrollen-Taxonomie wird nicht verwendet.
 
 Zusätzlich gibt es **„Alle Entwicklungen zum Thema“** als automatisch erzeugte Chronologie aus Ereignissen der zugehörigen Vorgänge sowie direkt dem Thema zugeordneten weiteren Ereignissen und den daraus abgeleiteten Meldungen.
+
+Konkrete Entwicklungen aus Nachbargemeinden oder dem regionalen Umfeld können sichtbar als Themenbestandteil bzw. Beispiel erscheinen, wenn ihr Erklärungswert für die Feldkirchner Leitfrage belegt ist. Fremder Ort und Feldkirchen-Bezug müssen transparent bleiben; eine externe Entwicklung wird nicht als Feldkirchner Ereignis umetikettiert.
 
 ## 13. Sitzungslisten und -details
 
@@ -563,6 +617,8 @@ Sie werden aus explizit geprüften Beziehungen erzeugt und können Meldungen, Vo
 
 Aliasnamen und räumliche Zuordnungen unterstützen Suche und Navigation.
 
+Öffentlich werden sie auf passenden Detailseiten im Abschnitt **„Bezüge“** angeboten. Ein Eintrag öffnet bzw. erschließt das konkrete Bezugsobjekt und die damit verknüpften FIB-Inhalte. Die Beziehung muss redaktionell bzw. fachlich explizit bestätigt sein; bloße Namensgleichheit reicht nicht.
+
 ## 23. Explizit zu bestätigende Felder
 
 Als Ausgangspunkt gelten insbesondere:
@@ -599,11 +655,13 @@ Mindestens erforderlich:
 - aktueller Vorgangsstand und Statushistorie,
 - versionierte Themendefinition,
 - Perspektiven und Wirkungen,
-- offene Fragen/Wissenslücken,
+- **persistente offene Fragen/Wissenslücken mit Bezug zu Meldung, Vorgang oder Thema sowie Status und Auflösung**,
+- **ableitbare bzw. gespeicherte Verlaufselemente für „Was bisher passiert ist“**,
 - Aktualisierungsereignisse mit technischer/redaktioneller/fachlicher Art,
 - Relevanz für Neu-seit-letztem-Besuch/Push,
 - Entscheidungen,
 - Bezugsobjekte/Aliase,
+- **Bildbibliothek mit Bildmetadaten, Rechte-/Freigabestatus, Primärzuordnung, weiteren zulässigen Verwendungen und Nutzungsausschlüssen**,
 - Such-/Filtermetadaten,
 - Pflichtbestätigungen,
 - gerätebezogener Lesestatus,
@@ -620,12 +678,13 @@ Konzeptionelle G2-Offenpunkte bestehen nicht mehr.
 
 Produktionsdetails wie exakte SVG-Vektorisierung der Logos, finale Webfont-Implementierung, optimierte Bannerformate, maskable App-Icons oder konkrete CSS-Feinwerte werden in der späteren technischen Umsetzung verifiziert und blockieren den G2-Abschluss nicht.
 
-**G2 ist damit abgeschlossen.** Die G2.5-Korrekturen vom 03.10.2026 ändern keine UX-Grundentscheidung, sondern synchronisieren Terminologie und Datenmodellbezüge mit den späteren G3-Entscheidungen.
+**G2 ist damit abgeschlossen.** Die G2.5-Korrekturen vom 03./04.10.2026 ändern keine UX-Grundentscheidung, sondern synchronisieren Terminologie, Demonstrator-Inhaltsbausteine und Datenmodellbezüge mit den späteren G3-Entscheidungen.
 
 ## Änderungshistorie
 
 | Version | Datum | Änderung |
 |---|---|---|
+| 2.9 | 04.10.2026 | Zweiter Demonstrator-Transfer-Audit: Meldungsbausteine „Was bisher passiert ist“, „Offene Fragen“ und „Bezüge“ verbindlich ergänzt; Abgrenzung „Offene Fragen“ zu „Mehr wissen?“ festgelegt; Nachbarereignisse als mögliche sichtbare Themenbestandteile präzisiert; G3-Auswirkungen für Wissenslücken, Verlauf und Bildbibliothek ergänzt. |
 | 2.8 | 03.10.2026 | G2.5-Konsistenzkorrektur: alte Wirkungsrollen- und Meldung-Direktbeziehungen durch aktuelles G3-Modell ersetzt; „Bedeutung für das Thema“, direkte Ereignis-Thema-Beziehung, Ereignis-Meldung-/Ereignis-Vorgang-Logik und präzisierte Neuigkeitsregel für PWA gespiegelt; keine Änderung der abgeschlossenen G2-UX-Grundentscheidungen. |
 | 2.7 | 01.10.2026 | G2 finalisiert: mobile und Desktop-Bannerlogik integriert, kontextabhängige GRÜNEN-Leiste korrigiert, „Neues“-Icon auf fünf gelbe Strahlen/Blätter umgestellt, Maibaum aus finaler Bildmarke entfernt und G2 nach Widerspruchsprüfung abgeschlossen. |
 | 2.6 | 01.10.2026 | Öffentliche Navigation auf „Neues | Im Blick | Sitzungen | Suche“ konsolidiert; interne Fachbegriffe davon abgegrenzt; Rücksprung zur GRÜNEN-Website als UX-Regel ergänzt; visuelle Identität als Primärquelle eingebunden; offene G2-Punkte auf Bannertext und Abschlussprüfung reduziert. |
