@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 0.3 | 04.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
+| 1.0 | 04.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
 
 ## 1. Anlass
 
@@ -30,10 +30,9 @@ Ein Baustein gilt erst als vollständig übertragen, wenn alle notwendigen Ebene
 
 - **VOLLSTÄNDIG** – fachliche Logik und benötigte Folgeebenen sind im Echtsystem geregelt.
 - **VOLLSTÄNDIG / spätere technische Umsetzung** – fachlich gesichert, technische Realisierung folgt planmäßig später.
-- **TEILWEISE** – wesentliche Teile sind vorhanden, mindestens eine notwendige Ebene fehlt oder ist noch zu entscheiden.
 - **BEWUSST SPÄTER** – Funktion wurde geprüft und ausdrücklich auf eine spätere Ausbaustufe verschoben.
 
-## 4. Transfer-Matrix – Stand nach Nachpflege
+## 4. Transfer-Matrix – Abschlussstand
 
 | ID | Demonstrator-Baustein / Funktion | Ergebnis im Echtsystem | Status |
 |---|---|---|---|
@@ -62,7 +61,7 @@ Ein Baustein gilt erst als vollständig übertragen, wenn alle notwendigen Ebene
 | IA-023 | Bilder bei Themen/Sitzungen nur mit klarem Bezug | unterschiedliche Verwendungsschwellen im Bildkonzept geregelt | **VOLLSTÄNDIG** |
 | IA-024 | „Mehr wissen?“: Eigene Frage stellen / Live-KI | Demonstrator-Funktion bewusst nicht im MVP; freie Besucherfragen spätere Ausbaustufe | **BEWUSST SPÄTER** |
 | IA-025 | „Mehr wissen?“: sichere Formatierung dynamischer KI-Antworten | als expliziter Regressionstest/Sicherheitsanforderung gesichert; technische Sanitizing-/Rendering-Lösung in G5 | **VOLLSTÄNDIG / spätere technische Umsetzung** |
-| IA-026 | Meldung: Link zu zugehöriger Sitzung / „Mehr zum Thema“ | strukturierte Beziehungen sind vorhanden; die öffentliche Darstellung neben dem engeren Abschnitt „Bezüge“ ist noch nicht abschließend festgelegt | **TEILWEISE** |
+| IA-026 | Meldung: Link zu zugehöriger Sitzung / „Mehr zum Thema“ | öffentliche Darstellung in `UX-und-Informationsarchitektur.md` v3.0 entschieden: **Zusammenhänge** für Vorgang/Thema/Sitzung-TOP, **Bezüge** für konkrete Objekte/Orte; Links werden aus strukturierten Beziehungen erzeugt | **VOLLSTÄNDIG** |
 
 ## 5. Fachliche Abgrenzung: Offene Fragen vs. „Mehr wissen?“
 
@@ -117,18 +116,25 @@ Ergebnis:
 - Es wurde **keine weitere fachlich kritische, vollständig unerkannte Funktionsgruppe** gefunden.
 - Die wesentlichen zuvor übersehenen Bereiche waren Meldungsbausteine und redaktionelle Bildfunktionen.
 - Bewusst abweichende Produktentscheidungen werden nun ausdrücklich als solche geführt und nicht mehr mit „vollständig übertragen“ vermischt.
-- Ein Restpunkt bleibt offen: **IA-026 – öffentliche Darstellung der strukturierten Beziehungen zu Vorgang, Thema und Sitzung neben den enger definierten Bezugsobjekten.**
+- IA-026 wurde als letzter Restpunkt entschieden und in der UX geschlossen.
 
-Damit ist der zweite Audit **noch nicht formal geschlossen**, aber fachlich bis auf IA-026 abgearbeitet.
+Damit ist der zweite Audit **formal abgeschlossen**.
 
-## 10. Nächster Schritt
+## 10. Abschlussentscheidung
 
-IA-026 wird als letzter Transferpunkt entschieden und in der UX nachgezogen. Anschließend können der zweite Audit und G2.5 erneut formal geschlossen und die Roadmap wieder auf G3 als alleinigen aktiven nächsten Schritt gesetzt werden.
+Das Transfer-Gate für sichtbare Inhaltsbausteine und Redaktionsfunktionen ist bestanden.
+
+Damit gilt für G2.5 insgesamt:
+
+> **Der Demonstrator wurde in zwei Prüfschichten gegen das Echtsystem gespiegelt: erstens fachliche Regeln und Recherche-/Persistenzlogik, zweitens sichtbare Inhaltsbausteine und redaktionelle Funktionen. Erkannte Lücken wurden in den zuständigen Primärdokumenten geschlossen oder ausdrücklich als bewusste spätere Produktentscheidung dokumentiert.**
+
+Technische Realisierung und automatisierte Regressionstests folgen in den vorgesehenen späteren Phasen und ändern den fachlichen Abschluss dieses Transfer-Audits nicht.
 
 ## Änderungshistorie
 
 | Version | Datum | Änderung |
 |---|---|---|
-| 0.3 | 04.10.2026 | Nachpflege bewertet: Meldungsbausteine, offene Fragen, Bildworkflow/-datenmodell und Regressionstests geschlossen; „Mehr zum Bild“ und freie Live-Fragen als bewusste spätere Funktionen klassifiziert; Abschluss-Gegencheck durchgeführt; IA-026 bleibt als letzter offener Transferpunkt. |
+| 1.0 | 04.10.2026 | IA-026 geschlossen: „Zusammenhänge“ für Vorgang/Thema/Sitzung-TOP und „Bezüge“ für konkrete Objekte/Orte festgelegt; Abschluss-Gegencheck bestätigt; zweite Prüfschicht und Transfer-Gate formal abgeschlossen. |
+| 0.3 | 04.10.2026 | Nachpflege bewertet: Meldungsbausteine, offene Fragen, Bildworkflow/-datenmodell und Regressionstests geschlossen; „Mehr zum Bild“ und freie Live-Fragen als bewusste spätere Funktionen klassifiziert; Abschluss-Gegencheck durchgeführt; IA-026 blieb als letzter offener Transferpunkt. |
 | 0.2 | 04.10.2026 | Zweite Prüfschicht erweitert: strukturierte Bildbibliothek, Primär-/Mehrfachzuordnung, Nutzungsausschlüsse, strengere Bildschwelle für Meldungen, proportionale Inhaltsbilddarstellung, sichere „Mehr wissen?“-Ausgabe und bewusste Verschiebung freier Besucherfragen aufgenommen. |
 | 0.1 | 04.10.2026 | Zweite Transfer-Prüfschicht gestartet; erste 16 Prüfpunkte inventarisiert. |
