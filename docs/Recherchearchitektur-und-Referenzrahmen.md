@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 1.0 | 05.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
+| 1.1 | 05.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
 
 ## 1. Zweck und Geltung
 
@@ -226,7 +226,28 @@ Verbindlicher Grundsatz:
 
 Dies dient zugleich dem Schutz vor scheinbarer Neutralität und vor Bestätigungslogik.
 
-## 12. Sichtbarkeit des Referenzrahmens für Besucher
+## 12. UI und Transparenz des Referenzwissens und Referenzrahmens
+
+Referenzwissen und Referenzrahmen sind nicht nur technische KI-Kontexte. Sie müssen im Echtsystem als fachlich pflegbarer, überprüfbarer und nachvollziehbarer Bestandteil sichtbar werden.
+
+### 12.1 Redaktions-UI für Referenzwissen
+
+Das Echtsystem benötigt eine eigene redaktionelle Benutzeroberfläche für Referenzwissen. Diese muss mindestens ermöglichen:
+
+- Referenzwissen anzeigen und durchsuchen,
+- neue Einträge anlegen,
+- bestehende Einträge fachlich ändern oder ergänzen,
+- Aliase, Beziehungen und Zuordnungen pflegen,
+- Herkunft und Quellen eines Eintrags erkennen,
+- zwischen bestätigtem Referenzwissen und noch zu prüfenden Kandidaten unterscheiden,
+- Änderungen nachvollziehen,
+- veraltetes oder nicht mehr gültiges Referenzwissen kennzeichnen, ohne fachlich wirksame Historie spurlos zu löschen,
+- aus neuen Recherchefunden vorgeschlagenes Referenzwissen prüfen und übernehmen oder verwerfen,
+- erkennen, wofür ein Referenzwissenseintrag im Recherchekontext verwendet wird.
+
+Die konkrete Bedienoberfläche wird später im UX-Konzept ausgearbeitet. Bereits in G3 muss das Datenmodell jedoch so angelegt werden, dass diese Pflege- und Prüffunktionen möglich sind.
+
+### 12.2 Sichtbarkeit des Referenzrahmens für Besucher
 
 Die öffentliche Darstellung des demokratisch-gesellschaftlichen und des spezifisch grünen Referenzrahmens wird in einer späteren UX-/Transparenzphase konkret gestaltet.
 
@@ -271,10 +292,12 @@ Vor der physischen bzw. logischen Modellierung von Referenzwissen und Quellenmon
 4. wie neue Quellen, Begriffe und Zusammenhänge aus offener Recherche in den bestätigten Recherchekontext übernommen werden,
 5. wie der demokratisch-gesellschaftliche Grundrahmen konkret definiert und belegt wird,
 6. wie die Herkunft eines Maßstabs (`allgemeines FIB-Qualitätsprinzip`, `demokratisch-gesellschaftlicher Grundrahmen`, `grüne Position`) gespeichert wird,
-7. welche dieser Informationen bei einem konkreten Recherchelauf der KI zwingend übergeben werden müssen.
+7. welche dieser Informationen bei einem konkreten Recherchelauf der KI zwingend übergeben werden müssen,
+8. welche Daten und Zustände die Redaktions-UI für Referenzwissen benötigt, damit Anlegen, Prüfen, Freigeben, Ändern, Historisieren und Übernehmen von KI-Vorschlägen möglich sind.
 
 ## Änderungshistorie
 
 | Version | Datum | Änderung |
 |---|---|---|
+| 1.1 | 05.10.2026 | Redaktions-UI für Referenzwissen als verbindliche Systemanforderung ergänzt; Pflege, Prüfung, Freigabe, Historie und Übernahme von KI-Vorschlägen als G3-relevante Anforderungen festgelegt; Besuchersichtbarkeit des Referenzrahmens davon abgegrenzt. |
 | 1.0 | 05.10.2026 | Recherchearchitektur als fachliche Primärquelle angelegt; Informationsbedarf, bestehendes FIB-Wissen, Referenzwissen, dynamischer Recherchehorizont, offene Recherche und Lernschleife festgelegt; Referenzrahmen in allgemeine FIB-Qualitätsprinzipien, demokratisch-gesellschaftlichen Grundrahmen und spezifisch grünen politischen Referenzrahmen differenziert; spätere Besuchersichtbarkeit als Architekturanforderung vorgesehen. |
