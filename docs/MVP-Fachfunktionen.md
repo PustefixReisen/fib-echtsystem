@@ -4,13 +4,13 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 1.1 | 05.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
+| 1.2 | 05.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
 
 ## 1. Zweck und Geltung
 
 Dieses Dokument ist die verbindliche Primärquelle für den fachlichen Katalog der MVP-Fachfunktionen von FIB.
 
-Es beschreibt **nicht erneut das fachliche Datenmodell**. Entitäten, Felder, Kardinalitäten, Status und fachliche Datenregeln werden ausschließlich in den dafür zuständigen Primärdokumenten – insbesondere `docs/Datenmodell.md` – definiert.
+Es beschreibt **nicht erneut das fachliche Datenmodell**. Entitäten, Felder, Kardinalitäten, Status und fachliche Datenregeln werden ausschließlich in den dafür zuständigen Primärdokumenten definiert.
 
 Verbindlicher Grundsatz:
 
@@ -81,7 +81,7 @@ Der Katalog wird nach fachlichen Arbeitsbereichen strukturiert. Eine Funktionsfa
 | `register_finding` | konkrete Fundstelle bzw. neuen/geänderten Recherchefund erfassen oder bestehenden Fund erkennen |
 | `manage_finding_access` | Sichtbarkeit und öffentliche Bereitstellung einer gespeicherten Fundstelle/Datei kontrolliert ändern; öffentliche Freigabe ist eine S3-Aktion |
 
-`run_research` erzeugt nicht unmittelbar bestätigte Ereignisse oder Veröffentlichungen. Ergebnisse durchlaufen weiterhin Fundstellen-, Relevanz- und Ereigniskandidatenlogik.
+`run_research` erzeugt nicht unmittelbar bestätigte Ereignisse oder Veröffentlichungen. Ergebnisse durchlaufen weiterhin Fundstellen-, Relevanz- und Ereigniskandidatenlogik. Das fachliche Verhältnis zwischen Beobachtungsauftrag, Recherchelauf und Fundstelle ist in `docs/Beobachtungs-und-Recherchemodell.md` festgelegt.
 
 ### 5.2 Ereignis und Meldung
 
@@ -127,6 +127,8 @@ Ein neuer Referenzmaßstab wird nur vorgeschlagen, wenn er gegenüber dem besteh
 
 Die Funktion bildet einen fachlichen Aggregatbereich. Sitzung, TOP, Beschlusspunkt, Fassung und Abstimmung müssen deshalb nicht vorsorglich jeweils eigene CRUD-Funktionsfamilien erhalten. Unsichere Zuordnungen oder semantische Ableitungen werden als Vorschlag behandelt und benötigen die im Sitzungsmodell vorgesehene redaktionelle Prüfung.
 
+Sitzungs- und TOP-Bezüge von Meldungen werden nicht als parallele autoritative Beziehungen gepflegt, sondern aus `Meldung → Ereignis → TOP/Sitzung` abgeleitet.
+
 ### 5.6 Bilder
 
 | Funktionsfamilie | Fachliche Kernaktion |
@@ -143,7 +145,7 @@ Bild und Bildverwendung bleiben getrennte Datenobjekte; die gemeinsame Funktions
 
 Diese Funktion ist von `manage_open_question` zu unterscheiden: Eine offene Frage beschreibt eine Wissenslücke von FIB; eine „Mehr wissen?“-Frage ist ein öffentliches Vertiefungsangebot für Besucher.
 
-Die endgültige fachliche Datenstruktur dieses Bereichs ist vor technischer Implementierung noch im Datenmodell zu vervollständigen.
+Das fachliche Datenmodell für Vertiefungsfrage, Vertiefungsantwort, Quellenbindung, Aktualität und Freigabe ist in `docs/Mehr-wissen-Modell.md` verbindlich festgelegt.
 
 ### 5.8 AI Tasks
 
@@ -188,29 +190,24 @@ Nicht als eigene Fachfunktionsfamilien geführt werden:
 
 Benutzer-/Rollenverwaltung, Systemkonfiguration und Routingadministration gehören in eine getrennte administrative Servicefamilie und nicht in den fachlichen MVP-Katalog.
 
-## 8. Noch offene G3-Punkte mit Einfluss auf die spätere Schnittstelle
+## 8. G3-Modellabgleich
 
-### 8.1 Sitzungsmodell konsolidieren
+Die drei beim Funktionsaudit gefundenen Modelllücken sind fachlich geschlossen:
 
-Zwischen `docs/Datenmodell.md` und `docs/Sitzungs-und-Beschlussmodell.md` besteht derzeit eine Abweichung zur Frage, ob `Meldung ↔ Sitzung` bzw. `Meldung ↔ TOP` als eigenständige Beziehungen gespeichert werden oder ausschließlich über `Meldung → Ereignis → TOP → Sitzung` abgeleitet werden.
+1. **Sitzung/TOP:** `docs/Sitzungs-und-Beschlussmodell.md` v1.1 ist mit dem Grundsatz der Ableitung über das Ereignis konsolidiert; direkte parallele `Meldung ↔ Sitzung/TOP`-Beziehungen entfallen.
+2. **Beobachtungsauftrag/Recherchelauf:** `docs/Beobachtungs-und-Recherchemodell.md` definiert Primärbezug, Lebenszyklus, Recherchelauf-Provenienz und die Abgrenzung zu AI Tasks.
+3. **„Mehr wissen?“:** `docs/Mehr-wissen-Modell.md` definiert Vertiefungsfrage, Vertiefungsantwort, Quellenbindung, Aktualität, Historie und Freigabe.
 
-Da `docs/Sitzungs-und-Beschlussmodell.md` für seinen Teilbereich ausdrücklich Vorrang beansprucht, muss dieser Punkt vor Abschluss von G3 in die nächste konsolidierte Fassung des Gesamtdatenmodells übernommen oder bewusst korrigiert werden. Der Funktionskatalog legt diese Datenmodellentscheidung nicht eigenständig fest.
-
-### 8.2 „Mehr wissen?“ im Datenmodell vervollständigen
-
-`Mehr wissen?` ist fachlich vorgesehen, aber die persistente Struktur von Frage, gespeicherter Antwort, Quellenbezug, Aktualitätsstand und Freigabe ist noch nicht in derselben Tiefe modelliert wie die übrigen Kernobjekte. Dies ist vor technischer API-Spezifikation nachzuholen.
-
-### 8.3 Beobachtungsauftrag in das Gesamtdatenmodell übernehmen
-
-Die fachliche Konzeption des Beobachtungsauftrags ist in der Recherchearchitektur bereits geklärt. Das Gesamtdatenmodell führt diesen Punkt in Version 2.1 noch als offen. Vor Abschluss von G3 ist die bereits getroffene Entscheidung dort konsistent nachzuziehen.
+Damit bestehen aus dem Funktionsaudit keine offenen fachlichen Datenmodellfragen mehr, die den MVP-Funktionsumfang blockieren.
 
 ## 9. Nächster Schritt
 
-Der Funktionsumfang wird nicht weiter durch Einzelbesprechung technischer Funktionsnamen erweitert. Als nächster G3-Schritt werden die unter Abschnitt 8 genannten Modellinkonsistenzen geschlossen. Danach wird der MVP-Funktionskatalog gegen die konsolidierte Datenmodellfassung abschließend auditiert und für die technische API-/Service-Spezifikation eingefroren.
+Als nächstes wird der **abschließende MVP-Funktionsaudit** durchgeführt. Dabei wird nicht erneut über einzelne Funktionsnamen diskutiert, sondern geprüft, ob der Katalog nach den nun konsolidierten Fachmodellen vollständig, widerspruchsfrei und schlank ist. Danach kann der fachliche Funktionsumfang für die spätere technische API-/Service-Spezifikation eingefroren werden.
 
 ## Änderungshistorie
 
 | Version | Datum | Änderung |
 |---|---|---|
+| 1.2 | 05.10.2026 | Die drei aus dem Funktionsaudit hervorgegangenen Modelllücken geschlossen: Sitzungsmodell auf Ereignis-Ableitung konsolidiert, Beobachtungs-/Recherchemodell und „Mehr wissen?“-Vertiefungsmodell als verbindliche Teilmodelle ergänzt. Funktionskatalog entsprechend bereinigt; nächster Schritt ist der abschließende MVP-Funktionsaudit. |
 | 1.1 | 05.10.2026 | Funktionskatalog systematisch aus Datenmodell, Recherche-/Quellenmodell, Redaktionsworkflow und Zugriffs-/Sicherheitsarchitektur abgeleitet. Fehlende Funktionen für Recherchelauf, Fundstellenfreigabe, Meldungsfreigabe, Freigabe strukturierter Redaktionsstände sowie Bestätigung von Referenzwissen/-maßstäben ergänzt. `Mehr wissen?` als eigene Funktionsfamilie aufgenommen. Read-/List-Prinzip vereinheitlicht, technische/administrative Funktionen abgegrenzt und drei offene G3-Konsolidierungspunkte dokumentiert. |
 | 1.0 | 05.10.2026 | Fachfunktionskatalog als eigene Primärquelle angelegt. Grundsatz „Fachfunktionen referenzieren das Datenmodell statt es zu duplizieren“, gemeinsame Rückgaberegel, Funktionsverkettung im FIB-Chat, Read-/List-Prinzip und bisher geklärte MVP-Funktionsfamilien dokumentiert. |
