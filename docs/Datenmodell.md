@@ -4,956 +4,619 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 2.1 | 05.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
+| 3.0 | 05.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
 
 ## 1. Zweck und Geltung
 
-Dieses Dokument ist die verbindliche Primärquelle für die fachlichen Datenanforderungen und das logische Datenmodell des FIB-Echtsystems.
+Dieses Dokument ist die **konsolidierte Integrationsquelle** für die fachlichen Datenanforderungen und das logische Datenmodell des FIB-Echtsystems.
 
-Es beschreibt zunächst fachliche Entitäten, Beziehungen, Kardinalitäten, Status und Historisierung. Konkrete PostgreSQL-/Supabase-Tabellen, Datentypen, Indizes und technische Implementierungsdetails folgen erst in späteren Schritten.
+Es legt fest:
 
-Ziel ist ein robustes und langfristig tragfähiges Modell, das für einen kleinen Ortsverband mit begrenztem Redaktionsaufwand praktisch betreibbar bleibt.
+- welche zentralen fachlichen Objekte FIB kennt,
+- wie diese Objekte grundsätzlich zusammenhängen,
+- welche Kardinalitäten und Lebenszyklen für die Integration maßgeblich sind,
+- welche spezialisierten Primärdokumente Detailregeln eines Teilbereichs verbindlich festlegen.
+
+Konkrete PostgreSQL-/Supabase-Tabellen, Datentypen, Primär-/Fremdschlüssel, Indizes, Views, RLS-Policies und technische API-Schemas gehören **nicht** in dieses fachliche Modell. Sie werden aus diesem Dokument und den jeweils genannten Teilmodellen in der technischen/physische Modellierung abgeleitet.
+
+Verbindlicher Dokumentationsgrundsatz:
+
+> **Ein Sachverhalt – eine verbindliche Quelle.**
+
+Deshalb wiederholt dieses Dokument spezialisierte Detailregeln nicht vollständig, sondern integriert deren fachliche Ergebnisse und verweist auf die jeweilige Primärquelle.
 
 ## 2. Modellierungsgrundsätze
 
 - Fachliche Objekte werden nicht vorschnell mit Datenbanktabellen gleichgesetzt.
-- Ein Sachverhalt erhält nur eine verbindliche fachliche Primärquelle.
-- Historisierung wird dort vorgesehen, wo fachlich relevante Veränderungen nachvollziehbar bleiben müssen.
-- Technische Änderungen dürfen nicht automatisch als fachliche Änderungen gelten.
-- Sachinformation und „Unsere Einordnung“ bleiben fachlich und technisch unterscheidbar.
-- Das Modell unterstützt KI-gestützte Arbeit, bleibt aber modellunabhängig.
-- Redaktionelle Bestätigung bleibt für veröffentlichungsrelevante und fachlich wirksame Entscheidungen vorgesehen.
-- Für KI-formulierte Einordnungen ist der strukturierte Redaktionsstand die fachliche Quelle; die Textfassung ist eine daraus abgeleitete Darstellung.
-- Fachlich-politische Qualität wird nicht nur über Einzelwerte, sondern auch über Plausibilitätsprüfungen zwischen mehreren strukturierten Angaben abgesichert.
-- Herkunft einer Quelle, konkrete Fundstelle bzw. Datei, technischer Speicherort und öffentliche Sichtbarkeit werden getrennt modelliert.
-- Abgeleitete redaktionelle Texte dürfen bei Analysen nicht als zusätzliche unabhängige Tatsachenbelege für denselben Sachverhalt gezählt werden.
-- Wirkungen werden an Ereignissen verankert; ihr fachlicher Herkunftskontext bestimmt, wo sie geändert werden dürfen.
-- Gleichbedeutende Wirkungen dürfen in einer übergeordneten Analyse nicht mehrfach gewichtet werden.
-- Fachlich wirksame Zuordnungen zwischen Wirkungen und Themenperspektiven werden persistent gespeichert und nur bei konkretem Änderungsanlass neu geprüft.
-- Offene Fragen/Wissenslücken sind eigenständige fachliche Objekte und werden nicht mit „Mehr wissen?“-Fragen vermischt.
-- Bilder und ihre konkrete Verwendung werden getrennt modelliert, damit Rechte, Metadaten und Verwendungskontext nachvollziehbar bleiben.
-- Fachlich einmal wirksame Objekte werden bei geändertem Wissensstand grundsätzlich nicht spurlos gelöscht; fachlich relevante Zustandsänderungen bleiben nachvollziehbar.
-- Historische Nachvollziehbarkeit von Vorgängen und Themen erfolgt über versionierte strukturierte Gesamtstände; einzelne enthaltene Fachbestandteile wie Wirkung, Perspektive, Bewertung oder Begründung erhalten keine eigene parallele Versionshistorie.
-- Öffentlich wird grundsätzlich nur der aktuell freigegebene Stand eines Vorgangs oder Themas gezeigt. Historische Versionen stehen ausschließlich im Redaktionssystem für Vergleich, Nachvollziehbarkeit, Audit und Rekonstruktion früherer Sachstände zur Verfügung.
-- Ein späterer Recherche- oder Aktualisierungslauf darf bestätigte fachliche Objekte nicht allein deshalb entfernen oder entwerten, weil sie in diesem Lauf nicht erneut gefunden wurden.
-- Planung, tatsächliches Geschehen und nachträgliche Dokumentation werden getrennt modelliert. Insbesondere sind Tagesordnung, Vorlage, Beratung, Beschluss und Niederschrift nicht dasselbe.
-- Referenzwissen ergänzt den Wissenskern gezielt, bildet aber keinen parallelen vollständigen Wissensbestand für allgemeines KI-Hintergrundwissen.
+- Sachinformation und politische Einordnung bleiben unterscheidbar.
+- Dokument/Fundstelle und Ereignis sind getrennte Objekte.
+- Redaktionelle Texte sind keine zusätzliche unabhängige Tatsachenquelle.
+- KI darf Vorschläge erzeugen; fachlich oder öffentlich wirksame Entscheidungen folgen den definierten Bestätigungs- und Freigaberegeln.
+- Fachlich bestätigte Objekte und Beziehungen werden nicht spurlos gelöscht, nur weil sie später nicht mehr aktuell oder auffindbar sind.
+- Historisierung erfolgt so schlank wie möglich und so vollständig wie fachlich erforderlich.
+- Referenzwissen ergänzt den Wissenskern gezielt, ersetzt ihn aber nicht.
+- Allgemeines Weltwissen wird nicht vorsorglich als eigener FIB-Datenbestand dupliziert.
+- Fachfunktionen arbeiten auf diesem Datenmodell; sie definieren keine zweite Datenstruktur.
 
-## 3. Wissenskern
+Detailquellen insbesondere:
 
-Die fachliche Grundstruktur lautet:
+- Persistenz/Lebenszyklus: `docs/Persistenz-und-Lebenszyklusmodell.md`
+- Sitzung/Beschluss: `docs/Sitzungs-und-Beschlussmodell.md`
+- Wirkung: `docs/Wirkungsmodell.md`
+- Beobachtung/Recherchelauf: `docs/Beobachtungs-und-Recherchemodell.md`
+- „Mehr wissen?“: `docs/Mehr-wissen-Modell.md`
+- Plausibilität/Freigabe: `docs/Fachliche-Plausibilitaets-und-Freigaberegeln.md`
+- Themen/Vorgänge: `docs/Themen-und-Vorgangslogik.md`
+- Fachfunktionen: `docs/MVP-Fachfunktionen.md`
 
-> **Ereignis → Meldung → Vorgang → Thema**
+## 3. Fachlicher Wissenskern
 
-Diese Struktur ist keine starre Hierarchie. Insbesondere können Vorgänge mehreren Themen zugeordnet sein, Ereignisse mehrere Vorgänge berühren, einzelne Ereignisse zusätzlich direkt einem Thema zugeordnet werden und Sitzungen quer zu mehreren Ebenen liegen.
+Die zentrale fachliche Struktur besteht aus:
 
-### 3.1 `Ereignis`
+- `Ereignis`
+- `Meldung`
+- `Vorgang`
+- `Thema`
+
+Sie bildet **keine starre Hierarchie**.
+
+```mermaid
+erDiagram
+    EREIGNIS ||--o| MELDUNG : kann_haben
+    EREIGNIS }o--o{ VORGANG : gehoert_zu
+    VORGANG }o--o{ THEMA : gehoert_zu
+    EREIGNIS }o--o{ THEMA : kann_direkt_ergaenzen
+```
+
+### 3.1 Ereignis
 
 Ein `Ereignis` ist ein fachlich relevantes Geschehen oder eine relevante Entwicklung in der Wirklichkeit.
 
 Beispiele:
 
-- eine Beschlussvorlage wird veröffentlicht,
-- ein Gemeinderat fasst einen Beschluss,
+- eine neue Beschlussvorlage wird veröffentlicht,
+- ein Gemeinderat behandelt einen TOP oder fasst einen Beschluss,
 - ein Planungsstand ändert sich,
-- ein Vorhabenträger veröffentlicht neue Unterlagen,
+- ein Vorhabenträger veröffentlicht neue relevante Unterlagen,
 - eine neue belastbare Information verändert den Stand eines laufenden Sachverhalts.
 
-Ein `Ereignis` ist damit von seiner redaktionellen Darstellung zu unterscheiden.
+Ein Dokument selbst ist kein Ereignis. Seine Veröffentlichung kann jedoch ein Ereignis sein.
 
-#### 3.1.1 Fachlicher Status und Rücknahme eines Ereignisses
+Fachliche Zustände bestätigter Ereignisse:
 
-Ein Recherchefund oder KI-Kandidat wird nicht allein durch sein Auffinden bereits zum bestätigten `Ereignis`. Erst die fachliche Bestätigung macht ihn zum Bestandteil des Wissenskerns.
+- `bestätigt`,
+- `zurückgenommen`,
+- `zusammengeführt`.
 
-Für bestätigte Ereignisse gelten folgende Zustände:
+Ein Ereignis wird nicht allein wegen Alters oder fehlender späterer Treffer inaktiv oder gelöscht.
 
-- **bestätigt** – das Ereignis ist als fachlich reales und korrekt abgegrenztes Geschehen bestätigt,
-- **zurückgenommen** – die frühere Annahme eines eigenständigen Ereignisses hat sich als sachlich falsch oder nicht hinreichend belegbar erwiesen,
-- **zusammengeführt** – der Datensatz wurde als Dublette eines anderen bestätigten Ereignisses erkannt und auf dieses fachlich zurückgeführt.
+### 3.2 Meldung
 
-Dabei gilt:
-
-- Ein bestätigtes Ereignis wird nicht allein wegen seines Alters oder fehlender neuer Entwicklung inaktiv oder abgeschlossen. Es ist ein historisch eingetretenes Geschehen und bleibt Bestandteil des Wissensbestands.
-- Sachliche Präzisierungen eines bestätigten Ereignisses aktualisieren dessen aktuellen fachlichen Stand und werden nachvollziehbar protokolliert; sie erzeugen keine eigene Ereignis-Versionskette.
-- `zurückgenommen` wird nur verwendet, wenn die frühere fachliche Annahme selbst nicht aufrechterhalten werden kann. Grund, Datum und redaktionelle Entscheidung müssen nachvollziehbar gespeichert werden.
-- Bei `zusammengeführt` bleibt die frühere Identität nachvollziehbar und verweist auf das fortgeführte Ereignis; Beziehungen werden nicht stillschweigend verloren.
-- Ein späterer Recherchelauf, in dem das Ereignis nicht erneut gefunden wird, verändert seinen Status nicht.
-
-### 3.2 `Meldung`
-
-Eine `Meldung` ist die redaktionelle FIB-Darstellung eines eigenständigen berichtenswerten `Ereignisses`.
-
-Verbindliche Entscheidung:
-
-> **`Ereignis` und `Meldung` sind getrennte fachliche Objekte.**
-
-Daraus folgt:
-
-- Ein `Ereignis` kann erkannt und gespeichert werden, ohne zwingend eine eigene veröffentlichte `Meldung` zu erzeugen.
-- Eine `Meldung` setzt ausreichenden Nachrichtenwert voraus.
-- Neue Informationen zum selben `Ereignis` aktualisieren grundsätzlich die bestehende `Meldung`.
-- Ein neues eigenständiges `Ereignis` mit ausreichendem Nachrichtenwert erzeugt grundsätzlich eine neue `Meldung`.
-- Die Entscheidung „neues Ereignis oder Aktualisierung“ bleibt eine fachlich wirksame, redaktionell zu bestätigende Entscheidung.
-
-Diese Trennung erlaubt insbesondere die saubere Unterscheidung zwischen:
-
-1. **Was ist tatsächlich passiert?** → `Ereignis`
-2. **Welche neuen Informationen liegen dazu vor?** → Quellen/Fundstellen und Aktualisierung
-3. **Was veröffentlicht FIB dazu?** → `Meldung`
-
-#### 3.2.1 Veröffentlichungsstatus und Rücknahme einer Meldung
-
-Eine Meldung besitzt einen vom Ereignis getrennten Veröffentlichungsstatus:
-
-- **Entwurf** – redaktionell in Bearbeitung und nicht öffentlich,
-- **freigegeben** – fachlich/redaktionell zur Veröffentlichung bestätigt, aber noch nicht veröffentlicht,
-- **veröffentlicht** – öffentlich sichtbare aktuelle Meldung,
-- **zurückgezogen** – eine zuvor veröffentlichte Meldung soll nicht mehr als regulär gültige Veröffentlichung erscheinen.
-
-Dabei gilt:
-
-- `aktualisiert` und `korrigiert` sind keine dauerhaften Meldungsstatus. Sie beschreiben nachvollziehbare Änderungen an einer grundsätzlich fortbestehenden Meldung.
-- Eine fachliche oder sprachliche Korrektur einer veröffentlichten Meldung führt deshalb grundsätzlich wieder zu einer veröffentlichten aktuellen Fassung; relevante Änderungen werden mit Aktualisierungsdatum und Änderungsgegenstand nachvollziehbar gemacht.
-- `zurückgezogen` wird nur verwendet, wenn die Meldung als Veröffentlichung nicht fortbestehen soll, beispielsweise wegen eines grundlegenden Fehlers, einer unzulässigen Veröffentlichung oder weil das zugrunde gelegte Ereignis fachlich zurückgenommen wurde.
-- Eine zurückgezogene Meldung wird nicht spurlos gelöscht. Im Redaktionssystem bleiben Inhalt, Rücknahmegrund, Zeitpunkt und frühere Veröffentlichung nachvollziehbar.
-- Ob und in welcher Form öffentlich ein Hinweis auf eine zurückgezogene Meldung bestehen bleibt, wird in der Informationsarchitektur bzw. im Redaktionsworkflow geregelt; die fachliche Historie bleibt unabhängig davon erhalten.
-- Ein späterer Recherchelauf, in dem die Meldung oder ihre Quelle nicht erneut gefunden wird, verändert ihren Veröffentlichungsstatus nicht.
-
-### 3.3 Beziehung `Ereignis ↔ Meldung`
+Eine `Meldung` ist die redaktionelle öffentliche FIB-Darstellung eines berichtenswerten Ereignisses.
 
 Verbindliche Kardinalität:
 
-> **Ein `Ereignis` kann keine oder genau eine `Meldung` haben. Eine `Meldung` gehört immer genau zu einem `Ereignis`.**
+- Ereignis → Meldung: `0..1`
+- Meldung → Ereignis: genau `1`
 
-Damit gilt fachlich:
+Damit kann ein Ereignis ohne Meldung bestehen; eine Meldung ohne Ereignis nicht.
 
-- `Ereignis → Meldung`: `0..1`
-- `Meldung → Ereignis`: `1`
+Veröffentlichungsstatus:
 
-Begründung:
+- `Entwurf`,
+- `freigegeben`,
+- `veröffentlicht`,
+- `zurückgezogen`.
 
-- Ein erkanntes `Ereignis` kann fachlich relevant sein, ohne genügend eigenen Nachrichtenwert für eine öffentliche `Meldung` zu besitzen.
-- Wird ein `Ereignis` als berichtenswert bestätigt, erhält es genau eine `Meldung`.
-- Zusätzliche Quellen oder neue Informationen zum selben `Ereignis` erzeugen keine zweite `Meldung`, sondern können die bestehende `Meldung` aktualisieren.
-- Erst ein neues eigenständiges `Ereignis` kann eine weitere `Meldung` erzeugen.
-- Ein zunächst nicht berichtetes `Ereignis` kann später aufgrund neuer Erkenntnisse doch eine `Meldung` erhalten.
+`aktualisiert` und `korrigiert` sind keine eigenen Dauerstatus, sondern nachvollziehbare Änderungen einer fortbestehenden Meldung.
 
-Beispiel:
+### 3.3 Vorgang
 
-- Veröffentlichung einer neuen Beschlussvorlage zur Hundewiese → `Ereignis A` → `Meldung A`.
-- Später gefundener Pressebericht zur selben Vorlage → kein neues `Ereignis`; gegebenenfalls Aktualisierung von `Meldung A`.
-- Spätere Beratung und Beschlussfassung im Gemeinderat → `Ereignis B` → `Meldung B`.
+Ein `Vorgang` bündelt mehrere Ereignisse desselben konkreten länger laufenden Sachverhalts.
 
-Damit bleiben Ereignisfolge und redaktionelle Veröffentlichung voneinander unterscheidbar.
+Verbindliche Kardinalität:
 
-### 3.4 Beziehung `Ereignis ↔ Vorgang`
+- Ereignis → Vorgang: `0..n`
+- Vorgang → Ereignis: `1..n`
 
-Die fachliche Zuordnung zu einem konkreten länger laufenden Sachverhalt erfolgt über das `Ereignis`, nicht über eine parallele eigenständige Meldung-Vorgang-Beziehung.
+Der Normalfall ist eine Ereigniszuordnung zu genau einem Vorgang. Mehrfachzuordnung bleibt möglich, wenn ein reales Ereignis mehrere konkrete Vorgänge tatsächlich berührt.
 
-Verbindliche Entscheidung:
+Eine Meldung wird nicht zusätzlich unabhängig einem Vorgang zugeordnet. Der Zusammenhang wird über `Meldung → Ereignis → Vorgang` abgeleitet.
 
-> **Ein `Ereignis` kann keinem, einem oder mehreren `Vorgängen` zugeordnet sein. Ein `Vorgang` umfasst mindestens ein fachlich zugeordnetes `Ereignis`.**
+Vorgangsstatus:
 
-Damit gilt fachlich:
+- `aktiv`,
+- `ruhend`,
+- `abgeschlossen`,
+- `archiviert`.
 
-- `Ereignis → Vorgang`: `0..n`
-- `Vorgang → Ereignis`: `1..n`
+### 3.4 Thema
 
-Der Normalfall ist die Zuordnung eines `Ereignisses` zu genau einem `Vorgang`. Mehrfachzuordnungen sind zulässig, wenn dasselbe `Ereignis` mehrere konkrete Sachverhalte tatsächlich berührt. Bloße thematische Ähnlichkeit reicht dafür nicht aus.
+Ein `Thema` ist eine übergeordnete Fragestellung, die mehrere Vorgänge und gegebenenfalls einzelne zusätzliche Ereignisse verbindet und dadurch Erklärungsgewinn erzeugt.
 
-`Meldungen` erhalten keine zusätzliche unabhängige Vorgangszuordnung. Ihre Zugehörigkeit zu einem `Vorgang` wird über das zugrunde liegende `Ereignis` abgeleitet:
+Beziehungen:
 
-`Meldung → Ereignis → Vorgang`
+- Vorgang ↔ Thema: `0..n : 0..n`
+- Ereignis ↔ Thema: `0..n : 0..n` als direkte Zusatzbeziehung
 
-Dadurch werden widersprüchliche Doppelzuordnungen vermieden.
+Vorgänge sind der bevorzugte Auswahlweg eines Themas. Mit einem ausgewählten Vorgang werden dessen Ereignisse in die Themenanalyse einbezogen. Direkte Ereignisbeziehungen dienen zusätzlichen Einzelereignissen, die nicht bereits sinnvoll über einen ausgewählten Vorgang enthalten sind.
 
-Beispiel „Hundewiese“:
+Für Vorgang↔Thema und direkte Ereignis↔Thema-Beziehungen wird die redaktionell bestätigte `Bedeutung für das Thema` geführt:
 
-- `Ereignis A`: neue Beschlussvorlage veröffentlicht → `Vorgang` „Hundewiese“ → `Meldung A`.
-- `Ereignis B`: Beratung/Beschluss im Gemeinderat → `Vorgang` „Hundewiese“ → `Meldung B`.
-- `Ereignis C`: kleiner weiterer Planungsschritt → `Vorgang` „Hundewiese“ → keine eigene `Meldung`.
+- `prägend`,
+- `relevant`,
+- `ergänzend`.
 
-Damit erzählt der `Vorgang` die Entwicklung des konkreten Sachverhalts, `Ereignisse` bilden die fachlichen Schritte ab, und `Meldungen` sind die veröffentlichten redaktionellen Darstellungen der berichtenswerten `Ereignisse`.
+Themenstatus:
 
-#### 3.4.1 Status eines Vorgangs
+- `aktiv`,
+- `ruhend`,
+- `archiviert`.
 
-Ein `Vorgang` besitzt genau einen fachlichen Lebenszyklusstatus:
+Ein Thema besitzt bewusst keinen Status `abgeschlossen`.
 
-- **aktiv** – der Vorgang entwickelt sich weiter oder weitere relevante Ereignisse sind zu erwarten,
-- **ruhend** – derzeit ist keine erkennbare Weiterentwicklung vorhanden, eine spätere Fortsetzung bleibt aber möglich,
-- **abgeschlossen** – der konkrete Sachverhalt ist fachlich beendet, z. B. weil eine Maßnahme umgesetzt, endgültig verworfen oder das Verfahren abgeschlossen wurde,
-- **archiviert** – der Vorgang soll nicht mehr zum laufenden öffentlichen Informationsbestand gehören, bleibt aber im Redaktionssystem vollständig erhalten.
+Die detaillierte Entstehungs-, Dublett- und Bearbeitungslogik steht in `docs/Themen-und-Vorgangslogik.md`.
 
-Dabei gilt:
+## 4. Strukturierter Redaktionsstand und politische Einordnung
 
-- `ruhend` und `abgeschlossen` bedeuten nicht automatisch, dass der Vorgang öffentlich unsichtbar wird,
-- ein abgeschlossener Vorgang kann weiterhin öffentlich auffindbar sein und mit seinem letzten freigegebenen Stand angezeigt werden,
-- `archiviert` ist primär eine redaktionelle Bestandsentscheidung; archivierte Vorgänge werden aus der normalen öffentlichen Navigation und Suche entfernt,
-- ein archivierter Vorgang kann bei neuem fachlichem Bedarf wieder aktiviert werden,
-- Statusänderungen sind fachlich relevant und werden im strukturierten Gesamtstand berücksichtigt.
+### 4.1 Grundsatz
 
-### 3.5 Beziehungen `Vorgang ↔ Thema` und `Ereignis ↔ Thema`
+> **Der strukturierte Redaktionsstand ist die fachliche Quelle. Die Textfassung ist eine daraus abgeleitete sprachliche Darstellung.**
 
-Ein `Vorgang` kann keinem, einem oder mehreren `Themen` zugeordnet sein. Ein `Thema` umfasst in der Regel mehrere `Vorgänge`. Die Beziehung ist damit grundsätzlich n:m.
+Für Vorgänge und Themen werden fachlich relevante strukturierte Gesamtstände versioniert. Einzelne Analysebausteine erhalten keine parallelen eigenen Versionsketten.
 
-Verbindliche Entscheidung für die Themenredaktion:
+Öffentlich wird grundsätzlich nur der aktuell freigegebene Stand gezeigt. Frühere bestätigte Gesamtstände bleiben im Redaktionssystem rekonstruierbar.
 
-> **Vorgänge sind der bevorzugte Auswahlweg eines Themas. Mit der Auswahl eines Vorgangs werden dessen zugehörige Ereignisse automatisch in die Themenanalyse einbezogen. Zusätzlich können einzelne weitere relevante Ereignisse direkt einem Thema zugeordnet werden.**
+### 4.2 Perspektive
 
-Direkte `Ereignis ↔ Thema`-Beziehungen dienen ausschließlich zusätzlichen Einzelereignissen, die nicht bereits über einen ausgewählten Vorgang im Thema enthalten sind oder bewusst unabhängig von einem Vorgang aufgenommen werden sollen.
+Eine `Perspektive` ist ein sachlicher Betrachtungsaspekt innerhalb eines Themas, z. B. Lärm, Verkehrssicherheit, Flächenverbrauch oder kommunaler Handlungsspielraum.
 
-Damit gilt fachlich:
+Eine Perspektive gehört zu einem Thema und kann mehrere Wirkungen strukturieren.
 
-- `Vorgang → Thema`: `0..n`
-- `Thema → Vorgang`: `0..n`
-- `Ereignis → Thema`: `0..n` als direkte Zusatzbeziehung
-- ein über einen ausgewählten Vorgang enthaltenes Ereignis benötigt keine redundante zusätzliche direkte Themenzuordnung.
+### 4.3 Wirkung
 
-Für die Herkunft im Thema muss erkennbar bleiben, ob ein Ereignis:
+Eine `Wirkung` ist eine sachlich belegbare oder begründet erwartbare Folge.
 
-1. über einen ausgewählten Vorgang enthalten ist oder
-2. als einzelnes weiteres relevantes Ereignis direkt aufgenommen wurde.
+Verbindliche Integrationsregel:
 
-Meldungen werden nicht separat einem Thema zugeordnet. Hat ein im Thema enthaltenes Ereignis eine Meldung, wird diese über die Ereignisbeziehung als Analysekontext erschlossen.
+> **Jede Wirkung ist an genau einem Ereignis verankert. Zusätzlich besitzt sie einen fachlichen Herkunftskontext, insbesondere Vorgang oder Thema. Dieser Herkunftskontext bestimmt, wo die Wirkung fachlich geändert werden darf.**
 
-Für einen ausgewählten Vorgang werden als Analysegegenstände berücksichtigt:
+Ein Ereignis kann mehrere eigenständige Wirkungen besitzen. Gleichbedeutende Wirkungen dürfen in einer übergeordneten Analyse nicht mehrfach gewichtet werden.
 
-- seine zugehörigen Ereignisse,
-- die Quellen/Fundstellen dieser Ereignisse,
-- der aktuelle Vorgangstext bzw. Sachstand als redaktionelle Verdichtung,
-- die über Ereignisse erschlossenen Meldungstexte,
-- vorhandene redaktionell bestätigte bzw. veröffentlichte „Unsere Einordnung“ dieser Meldungen,
-- weitere bestätigte strukturierte Angaben, soweit thematisch relevant.
+Eine vorhandene Wirkung kann in anderen Bearbeitungskontexten analysiert werden, ohne dort stillschweigend verändert zu werden.
 
-Dabei gilt:
+Die detaillierte Wirkungslogik steht in `docs/Wirkungsmodell.md`.
 
-> **Quelle/Fundstelle und Ereignis bilden die Tatsachenbasis. Meldungs- und Vorgangstexte sind redaktionelle Verdichtungen. „Unsere Einordnung“ ist eine politische Bewertung. Mehrfache textliche Vorkommen desselben Sachverhalts dürfen nicht als voneinander unabhängige Belege oder zusätzliche Gewichtung behandelt werden.**
+### 4.4 Wirkung ↔ Perspektive
 
-Die frühere vorgesehene Wirkungsrolle entfällt als eigenes strukturiertes Merkmal. An ihre Stelle tritt die redaktionell bestätigte `Bedeutung für das Thema`.
+Wird eine Wirkung in einem Thema berücksichtigt, wird sie einer oder mehreren bestätigten Perspektiven dieses Themas zugeordnet.
 
-Die `Bedeutung für das Thema` beschreibt, wie stark ein ausgewählter `Vorgang` oder ein direkt ergänztes einzelnes `Ereignis` das Verständnis oder die Entwicklung eines `Themas` prägt. Es gelten drei Stufen:
+Die Zuordnung wird persistent gespeichert und nur bei fachlichem Anlass erneut geprüft, z. B. bei Änderung der Wirkung, Änderung der Perspektive, neuer Perspektive, auffälliger Plausibilität oder ausdrücklicher redaktioneller Neubewertung.
 
-- `prägend` – ohne diesen Themenbestandteil lässt sich das Thema derzeit kaum sinnvoll erklären,
-- `relevant` – der Themenbestandteil trägt wesentlich zum Verständnis bei,
-- `ergänzend` – der Themenbestandteil liefert zusätzlichen Kontext, ist aber nicht zentral.
+### 4.5 Strukturierte Bewertung
 
-Die Einstufung gilt sowohl für `Vorgang ↔ Thema` als auch für direkte `Ereignis ↔ Thema`-Beziehungen. Sie wird von der KI vorgeschlagen und muss durch die Redaktion verpflichtend geprüft, bestätigt oder geändert werden, bevor sie fachlich wirksam wird.
+Für die politische Einordnung werden insbesondere getrennt geführt:
 
-Die Bedeutung wird nicht automatisch aus der Zahl der `Meldungen`, `Perspektiven` oder Quellen berechnet. Die KI kann ihren Vorschlag u. a. aus Tragweite, Dauer, Auswirkungen, Einfluss auf andere Vorgänge, Aktualität und Bedeutung für die Leitfrage ableiten; die redaktionelle Entscheidung bleibt maßgeblich.
-
-Die fachliche Erklärung, **warum** ein Vorgang oder Ereignis für ein Thema relevant ist, erfolgt über `Perspektiven` und die darunter ausgewerteten `Wirkungen`.
-
-#### 3.5.1 Status eines Themas
-
-Ein `Thema` besitzt genau einen fachlichen Lebenszyklusstatus:
-
-- **aktiv** – das Thema wird aktiv beobachtet und fachlich fortgeschrieben,
-- **ruhend** – derzeit gibt es wenig oder keine relevante Entwicklung, das Thema bleibt jedoch fachlich bestehen und kann wieder aktiv werden,
-- **archiviert** – das Thema soll nicht mehr zum laufenden öffentlichen Informationsbestand gehören, bleibt aber im Redaktionssystem vollständig erhalten.
-
-Für Themen wird bewusst kein Status `abgeschlossen` verwendet. Ein Thema ist ein übergeordneter Beobachtungs- und Erklärungszusammenhang und kann in der Regel nicht in demselben Sinn beendet werden wie ein konkreter Vorgang.
-
-Dabei gilt:
-
-- `ruhend` bedeutet nicht automatisch öffentlich unsichtbar,
-- archivierte Themen werden aus der normalen öffentlichen Navigation und Suche entfernt,
-- archivierte Themen können bei neuer fachlicher Relevanz wieder aktiviert werden,
-- Statusänderungen sind fachlich relevant und werden im strukturierten Gesamtstand berücksichtigt.
-
-### 3.6 Themenentstehung und Dublettprüfung
-
-Ein Thema kann aus einem KI-generierten Themenkandidaten oder durch direkte redaktionelle Anlage entstehen.
-
-Bei einer redaktionellen Neuanlage muss vor dem fachlich wirksamen Speichern eine Ähnlichkeits-/Dublettprüfung gegen den bestehenden Themenbestand erfolgen. Sie prüft nicht nur den Titel, sondern insbesondere Leitfrage, Abgrenzung, bereits zugeordnete Vorgänge und Ereignisse, Perspektiven und sachlichen Erklärungszweck.
-
-Das Prüfergebnis muss mindestens unterscheiden können:
-
-- kein ähnliches Thema gefunden,
-- ähnliches Thema vorhanden – Zusammenführung oder Abgrenzung prüfen,
-- gleiches Thema wahrscheinlich vorhanden – bewusste redaktionelle Entscheidung erforderlich.
-
-Die Herkunft des Themas (`KI-Vorschlag` oder `redaktionelle Anlage`) sowie das Ergebnis einer erforderlichen Dublettprüfung müssen nachvollziehbar gespeichert werden. Die KI darf eine Empfehlung geben, entscheidet aber nicht autonom über Identität, Zusammenführung oder Abgrenzung von Themen.
-
-### 3.7 `Perspektive`, `Wirkung` und `Bewertung`
-
-Für die weitere Modellierung werden folgende Begriffe getrennt:
-
-- `Perspektive` – fachlicher Betrachtungsaspekt innerhalb eines `Themas`, z. B. Lärm, Verkehrssicherheit, Flächenverbrauch oder kommunaler Handlungsspielraum.
-- `Wirkung` – sachlich belegbare oder begründet erwartbare Folge, die fachlich an einem `Ereignis` verankert ist.
-- `Bewertung` – politische Beurteilung einer `Wirkung` im Rahmen von „Unsere Einordnung“.
-- `Begründung` – nachvollziehbare Herleitung der `Bewertung`.
-- `politischer Bezug` – grüner Wert, politisches Ziel oder dokumentierte grüne Position, auf die sich die `Begründung` stützt.
-
-#### 3.7.1 Verankerung und Herkunft einer Wirkung
-
-Verbindliche Entscheidung:
-
-> **Jede Wirkung ist einem Ereignis zugeordnet. Zusätzlich wird ihr fachlicher Herkunftskontext gespeichert.**
-
-Als Herkunftskontext kommen insbesondere ein konkreter `Vorgang` oder ein `Thema` in Betracht. Der Herkunftskontext bezeichnet den Bearbeitungszusammenhang, in dem die Wirkung fachlich angelegt und bestätigt wurde.
-
-Damit gilt:
-
-- Ein Ereignis kann keine, eine oder mehrere Wirkungen besitzen.
-- Ein Ereignis benötigt weder eine Meldung noch eine Vorgangszuordnung, damit eine Wirkung zu ihm erfasst werden kann.
-- Mehrere Wirkungen desselben Ereignisses sind zulässig, wenn sie eigenständige sachliche Aussagen darstellen.
-- Eine bereits bestehende Wirkung bleibt fachlich ihrem Herkunftskontext zugeordnet.
-- Eine Wirkung darf nur in diesem Herkunftskontext fachlich geändert werden.
-- Andere Bearbeitungskontexte dürfen die Wirkung verwenden und analysieren, aber nicht stillschweigend verändern oder durch eine konkurrierende Fassung derselben Aussage ersetzen.
-
-Beispiel:
-
-`Ereignis E1 → Wirkung W1 → Herkunftskontext Vorgang V1`
-
-Ein späteres Thema T1 kann W1 in seiner Analyse berücksichtigen. Soll W1 fachlich geändert werden, muss die Änderung im Vorgang V1 erfolgen.
-
-#### 3.7.2 Mehrere und widersprüchliche Wirkungen
-
-Ein Vorgang bündelt über seine Ereignisse unterschiedliche Wirkungen. Diese können sich ergänzen, in unterschiedliche Richtungen weisen oder scheinbar widersprechen.
-
-Ein solcher Widerspruch ist nicht automatisch ein Datenfehler. Er kann insbesondere entstehen durch:
-
-- gleichzeitig bestehende unterschiedliche Folgen,
-- unterschiedliche räumliche oder sachliche Bedingungen,
-- zeitliche Veränderungen,
-- unterschiedliche Prognosen oder unsichere Erkenntnislagen,
-- tatsächliche Inkonsistenzen.
-
-Widersprüchliche oder auffällig gegensätzliche Wirkungen müssen in der Vorgangs- bzw. Themenanalyse als Prüfkonstellation erkennbar sein. Eine automatische Löschung, Überschreibung oder Zusammenführung ist nicht zulässig.
-
-#### 3.7.3 Gleichbedeutende Wirkungen und Analyse-Dubletten
-
-Mehrere Wirkungen desselben Ereignisses können in unterschiedlichen Herkunftskontexten entstanden sein. Sind sie sachlich gleichbedeutend und nur unterschiedlich formuliert, dürfen sie in einer übergeordneten Analyse nicht als mehrere unabhängige Wirkungen gewichtet werden.
-
-Die KI führt deshalb bei neuen oder gemeinsam analysierten Wirkungen eine semantische Plausibilitätsprüfung durch. Eine erkannte mögliche Dublette wird der Redaktion zur Entscheidung vorgelegt.
-
-Die redaktionelle Entscheidung unterscheidet mindestens:
-
-- gleiche Auswirkung,
-- unterschiedliche Auswirkungen,
-- unsicher.
-
-Bei als gleich bestätigten Wirkungen bleiben die einzelnen Wirkungsdatensätze und ihre Herkunft erhalten. Für Themenanalyse, Abwägung und Textformulierung werden sie jedoch als eine sachliche Aussage behandelt, damit keine künstliche Mehrfachgewichtung entsteht.
-
-#### 3.7.4 Zuordnung `Wirkung ↔ Perspektive`
-
-Für ein Thema werden die Wirkungen aller enthaltenen Ereignisse automatisch berücksichtigt. Eine vorhandene Wirkung wird deshalb nicht erneut für das Thema ausgewählt oder abgewählt.
-
-Die Zuordnung einer Wirkung zu einer oder mehreren bestätigten Perspektiven des Themas ist eine fachlich persistente Zuordnung. Sie wird beim ersten fachlich wirksamen Zuordnen gespeichert und bei späteren Themenanalysen wiederverwendet.
-
-Damit gilt:
-
-- `Wirkung → Perspektive`: `1..n` innerhalb eines konkreten Themas, sofern die Wirkung im Thema berücksichtigt wird,
-- eine Perspektive kann `0..n` Wirkungen enthalten,
-- eine Wirkung kann mehreren Perspektiven desselben Themas zugeordnet sein,
-- eine bestehende Zuordnung wird nicht bei jedem Analyselauf neu erzeugt,
-- die KI darf eine erstmalige oder zusätzlich erforderlich gewordene Zuordnung vorschlagen,
-- die Redaktion kann die Zuordnung korrigieren,
-- eine erneute Prüfung erfolgt nur bei fachlichem Anlass.
-
-Als fachlicher Anlass gelten insbesondere:
-
-- Änderung der zugrunde liegenden Wirkung,
-- Umbenennung, Zusammenführung oder Entfernung einer Perspektive,
-- neue Perspektive mit möglicher zusätzlicher Relevanz,
-- auffällige oder widersprüchliche Zuordnung in einer Plausibilitätsprüfung,
-- ausdrückliche redaktionelle Neubewertung.
-
-Die konkrete UI- und Bestätigungslogik wird im Redaktionsworkflow festgelegt. Das Datenmodell muss die persistente Zuordnung und ihre nachvollziehbare Änderung unterstützen.
-
-#### 3.7.5 Strukturierte Bewertungswerte
-
-Für die strukturierte Bewertung einer Wirkung werden vier getrennte Felder mit festen fachlichen Wertemengen verwendet.
-
-**Wirkungsrichtung** – Wirkung auf den gewählten Zielbereich:
-
+- Zielbereich bzw. einschlägiger Referenzmaßstab,
+- Wirkungsrichtung,
+- Bedeutung der Wirkung,
+- Verlässlichkeit,
+- politisches Gewicht,
+- jeweils zugehörige Begründungen,
+- Gestaltungsoptionen,
+- Zielkonflikte,
+- strukturierte Abwägung.
+
+Feste fachliche Wertemengen:
+
+**Wirkungsrichtung**
 - unterstützt die Zielerreichung,
 - behindert die Zielerreichung,
-- keine erkennbare Auswirkung auf die Zielerreichung,
+- keine erkennbare Auswirkung,
 - unklar.
 
-**Bedeutung der Wirkung** – sachliche Tragweite im konkreten Fall:
-
+**Bedeutung der Wirkung**
 - hoch,
 - mittel,
 - gering,
 - unklar.
 
-**Verlässlichkeit** – Belastbarkeit der Einschätzung:
-
+**Verlässlichkeit**
 - hoch,
 - mittel,
 - gering,
 - unklar.
 
-**Politisches Gewicht** – Bedeutung in der redaktionellen Abwägung:
-
+**Politisches Gewicht**
 - hoch,
 - mittel,
 - gering,
 - offen.
 
-Dabei gilt:
+FIB strukturiert die Abwägung, erzeugt aber **kein pauschales Gesamturteil positiv/negativ** über Vorgang oder Thema.
 
-- Wirkungsrichtung und Bedeutung der Wirkung sind getrennt; die Richtung enthält keine Intensitätsstufe.
-- `unklar` kennzeichnet eine noch nicht ausreichend geklärte fachliche bzw. sachliche Einschätzung.
-- `offen` beim politischen Gewicht kennzeichnet dagegen eine noch nicht getroffene redaktionelle Abwägungsentscheidung.
-- Die Werte werden nicht mechanisch ineinander übersetzt.
+### 4.6 Gesamtversionierung
 
-#### 3.7.6 Politischer Bezug
+Eine neue bestätigte Gesamtversion eines Vorgangs oder Themas entsteht, wenn sich fachliche Aussage, Sachstand oder politische Einordnung relevant ändern.
 
-Der Zielbereich ist der allgemeine politische Maßstab, anhand dessen eine konkrete Wirkung eingeordnet wird. Eine zusätzlich dokumentierte grüne Position ist kein zwingender zweiter Bewertungsmaßstab.
+Typische Auslöser sind:
 
-Verbindliche Entscheidung:
+- neue, entfallene oder wesentlich geänderte Wirkung,
+- relevante Änderung von Perspektive oder Zuordnung,
+- relevante Änderung von Bewertungswert oder Begründung,
+- geänderte Gestaltungsoption oder Abwägung,
+- relevante Änderung einer offenen Frage,
+- wesentliche Änderung von Leitfrage/Abgrenzung eines Themas,
+- neuer Sachstand oder neue Entscheidung eines Vorgangs.
 
-> **Eine Bewertung kann auf dem einschlägigen Zielbereich als allgemeinem politischen Maßstab beruhen. Ein konkreter politischer Bezug wird zusätzlich verwendet, wenn eine einschlägige dokumentierte grüne Position vorhanden ist.**
+Reine Rechtschreib-, Stil-, Format- oder technische Metadatenänderungen erzeugen keine neue fachliche Gesamtversion.
 
-Damit gilt:
+## 5. Quelle, Fundstelle und Beleg
 
-- das Fehlen einer konkreten lokalen Position blockiert die Bewertung nicht,
-- das Fehlen einer lokalen Position darf nicht als Zustimmung oder Ablehnung interpretiert werden,
-- eine einschlägige dokumentierte Position kann die Begründung konkretisieren und ihre politische Herkunft transparenter machen,
-- eine konkrete Position ersetzt weder den Zielbereich noch die fallbezogene Begründung,
-- dokumentierte lokale Positionen haben bei der Herleitung Vorrang vor allgemeineren grünen Bezugsebenen, soweit sie einschlägig und gültig sind.
+### 5.1 Quelle
 
-#### 3.7.7 Begründungen der strukturierten Bewertung
+Eine `Quelle` bezeichnet Herkunft bzw. Träger einer Information, z. B. Gemeinde, Pressemedium, Behörde, Initiative oder Partei.
 
-Die Begründung wird fachlich nicht als ein einziger undifferenzierter Textblock modelliert. Sie wird den jeweiligen Bewertungsurteilen zugeordnet.
+### 5.2 Fundstelle
 
-Verbindlich werden vier getrennte Begründungen geführt:
+Eine `Fundstelle` ist die konkrete Seite, Datei, das Dokument oder die sonstige Informationseinheit.
 
-1. **Begründung der Wirkungsrichtung** – warum die konkrete Wirkung die Zielerreichung unterstützt, behindert, nicht erkennbar beeinflusst oder warum die Richtung unklar ist.
-2. **Begründung der Bedeutung der Wirkung** – warum die sachliche Tragweite als hoch, mittel, gering oder unklar eingeschätzt wird.
-3. **Begründung der Verlässlichkeit** – warum die Einschätzung als hoch, mittel, gering oder unklar belastbar gilt. Grundlage sind insbesondere Quellenlage, Datenqualität, Planungs-/Verfahrensstand, Prognosecharakter, Abhängigkeiten sowie Widersprüche und Unsicherheiten.
-4. **Begründung des politischen Gewichts** – warum die Wirkung in der Abwägung hoch, mittel oder gering zählt bzw. warum das Gewicht noch offen ist.
+Eine Quelle kann mehrere Fundstellen besitzen.
 
-Die KI kann diese Begründungen aus bestätigten Fakten, Quellen und strukturierten Werten als Vorschlag formulieren. Fachlich wirksam werden sie erst durch die redaktionelle Prüfung bzw. Bestätigung. Die Begründungen müssen den jeweiligen Wert nachvollziehbar herleiten und dürfen ihn nicht lediglich in anderen Worten wiederholen.
+Getrennt zu führen sind insbesondere:
 
-Ein einschlägiger konkreter politischer Bezug kann einer oder mehreren Begründungen zugeordnet werden, ist aber nur dann erforderlich, wenn er tatsächlich als Grundlage der jeweiligen Herleitung verwendet wird.
+- fachliche Existenz der Fundstelle,
+- technischer Speicherort/Bereitstellung,
+- ursprüngliche öffentliche Verfügbarkeit,
+- aktuelle technische Erreichbarkeit,
+- öffentliche Sichtbarkeit über FIB,
+- Rechte zur öffentlichen Bereitstellung.
 
-#### 3.7.8 Strukturierte Abwägung ohne Gesamturteil
+Eine nicht mehr erreichbare URL ist kein Löschgrund für eine bereits als Beleg verwendete Fundstelle.
 
-Die strukturierte Abwägung führt relevante Wirkungen, Zielkonflikte, Verlässlichkeit, politisches Gewicht, Begründungen und Gestaltungsoptionen zusammen.
+### 5.3 Öffentliche Bereitstellung
 
-Verbindlicher Grundsatz:
+Öffentliche Bereitstellung einer gespeicherten Datei oder eines Bildes setzt eine positiv geklärte öffentliche Nutzungs-/Veröffentlichungsberechtigung voraus.
 
-> **FIB strukturiert und erläutert die politische Abwägung, leitet daraus aber kein abschließendes Gesamturteil über das Thema oder den Vorgang ab. Das Gesamtfazit bleibt dem Leser überlassen.**
+Ungeklärte Rechte reichen nicht aus.
 
-Die Abwägung kann deshalb insbesondere beantworten:
+Öffentliche Freigabe ist eine geschützte S3-Aktion. Detailregeln: `docs/Fachliche-Plausibilitaets-und-Freigaberegeln.md`.
 
-- welche Wirkungen für oder gegen bestimmte Zielerreichungen sprechen,
-- welche Wirkungen besonders weitreichend oder unsicher sind,
-- welche Zielkonflikte bestehen,
-- welche Wirkungen in der Abwägung besonders schwer wiegen,
-- welche Gestaltungsoptionen bestimmte Wirkungen verändern können.
+## 6. Recherche, Informationsbedarf und Beobachtung
 
-Ein strukturiertes oder sprachliches Feld „Gesamtfazit positiv/negativ“ ist nicht Bestandteil des Modells.
+### 6.1 Beobachtungsauftrag
 
-### 3.8 Strukturierter Redaktionsstand, Gesamtversionen und Textfassung
+Ein `Beobachtungsauftrag` beschreibt einen konkreten fachlichen Informationsbedarf.
 
-Für KI-formulierte Inhalte, insbesondere „Unsere Einordnung“, werden fachliche Struktur und sprachliche Darstellung getrennt behandelt.
+Jeder Beobachtungsauftrag besitzt genau einen Primärbezug auf:
 
-Verbindliche Entscheidungen:
+- einen Vorgang,
+- ein Thema oder
+- eine offene Frage/Wissenslücke.
 
-> **Der `strukturierte Redaktionsstand` ist die fachliche Quelle. Die `Textfassung` ist eine daraus erzeugte sprachliche Darstellung.**
+Status:
 
-> **Versioniert wird der bestätigte strukturierte Gesamtstand eines `Vorgangs` bzw. `Themas`, nicht jeder enthaltene Fachbaustein separat.**
+- `aktiv`,
+- `pausiert`,
+- `beendet`.
 
-Der `strukturierte Redaktionsstand` umfasst die jeweils bestätigten bzw. redaktionell bearbeiteten fachlichen Angaben, insbesondere `Wirkungen`, `Perspektiven`, Zuordnungen zu `Zielbereichen`, `Wirkungsrichtungen`, `Bedeutung der Wirkung`, `Verlässlichkeit`, `politisches Gewicht`, zugehörige `Begründungen`, `Gestaltungsoptionen`, politische Bezüge, offene Fragen und `Abwägung`.
+Der Beobachtungsauftrag speichert keine fest verdrahtete Suchwort- oder Quellenliste. Die konkrete Recherchestrategie wird bei einem Recherchelauf aus dem aktuellen FIB-Kontext abgeleitet.
 
-Für einen `Vorgang` bzw. ein `Thema` gilt:
+### 6.2 Recherchelauf
 
-- Es gibt genau einen aktuell fachlich freigegebenen strukturierten Stand.
-- Eine fachlich wesentliche Änderung erzeugt einen neuen bestätigten Gesamtstand.
-- Frühere bestätigte Gesamtstände bleiben als historische Versionen im Redaktionssystem erhalten.
-- Einzelne enthaltene Elemente wie `Wirkung`, `Perspektive`, `Bewertung`, `Begründung` oder `Gestaltungsoption` erhalten keine eigene unabhängige Versionskette.
-- Wird beispielsweise eine Wirkung fachlich geändert, wird die aktuelle Wirkung im zuständigen Bearbeitungskontext angepasst; die frühere Fassung ist über den vorherigen Gesamtstand des Vorgangs bzw. Themas rekonstruierbar.
-- Mehrere gleichzeitig fachlich unterschiedliche Wirkungen bleiben mehrere Wirkungen; das ist keine Versionierung derselben Wirkung.
+Ein `Recherchelauf` dokumentiert eine konkrete Rechercheausführung und ihre fachliche Provenienz.
 
-#### 3.8.1 Wann entsteht eine neue Gesamtversion?
+Ein Beobachtungsauftrag kann mehrere Rechercheläufe auslösen. Ein Recherchelauf kann auch ohne Beobachtungsauftrag aus offener Recherche, einem manuellen Auftrag oder einem anlassbezogenen Rückblick entstehen.
 
-Eine neue bestätigte Gesamtversion eines Vorgangs oder Themas entsteht, wenn eine Änderung die fachliche Aussage, den aktuellen Sachstand oder die politische Einordnung **inhaltlich relevant verändert**.
+Provenienzkette:
 
-Typische Auslöser sind insbesondere:
-
-- eine Wirkung wird neu aufgenommen, entfällt oder in ihrer fachlichen Aussage wesentlich verändert,
-- eine Perspektive eines Themas wird neu aufgenommen, entfernt, zusammengeführt oder fachlich wesentlich verändert,
-- Wirkungsrichtung, Bedeutung der Wirkung, Verlässlichkeit oder politisches Gewicht ändern sich fachlich relevant,
-- eine Begründung oder strukturierte Abwägung ändert ihre fachliche Aussage,
-- eine Gestaltungsoption wird neu relevant, entfällt oder verändert die Abwägung,
-- eine offene Frage wird neu aufgenommen, wesentlich verändert, teilweise geklärt, geklärt oder gegenstandslos und dies beeinflusst den fachlichen Stand,
-- die Leitfrage, Abgrenzung oder Definition eines Themas ändert sich wesentlich,
-- bei einem Vorgang ändert sich der aktuelle Stand, eine wichtige Entscheidung, ein nächster belegter Schritt oder eine für die Einordnung wesentliche Zuordnung,
-- neue Ereignisse oder Erkenntnisse verändern die bisherige Synthese oder den Zusammenhang so, dass ein Besucher den Sachverhalt danach anders verstehen würde.
-
-Keine neue Gesamtversion entsteht allein durch:
-
-- Rechtschreib-, Zeichensetzungs- oder reine Stilkorrekturen,
-- Formatierungsänderungen,
-- technische Metadatenänderungen ohne fachliche Bedeutung,
-- Austausch eines technisch besseren, inhaltlich identischen Links,
-- reine UI-/Darstellungsänderungen,
-- Änderungen an internen Bearbeitungshinweisen ohne Auswirkung auf den bestätigten fachlichen Stand.
-
-Solche Änderungen werden bei Bedarf protokolliert, verändern aber nicht die fachliche Gesamtversion.
-
-Entscheidungsregel:
-
-> **Würde ein Vergleich von vorherigem und neuem Stand für Redaktion oder Besucher einen fachlich relevanten Unterschied ergeben, entsteht eine neue Gesamtversion. Andernfalls genügt Protokollierung.**
-
-Die KI kann auf einen möglichen Versionierungsanlass hinweisen. Die Entscheidung, ob eine neue fachliche Gesamtversion erzeugt wird, bleibt redaktionell zu bestätigen.
-
-Öffentliche Nutzung:
-
-- Besucher sehen ausschließlich den aktuell freigegebenen Stand eines Vorgangs oder Themas.
-- Historische Versionen werden nicht als parallele öffentliche Fassungen angeboten.
-- Frühere öffentliche Meldungen oder Aktualisierungshinweise können weiterhin auf frühere damalige Sachstände Bezug nehmen; deren Rekonstruktion erfolgt redaktionell über die gespeicherten Gesamtversionen.
-
-Redaktionelle Nutzung historischer Versionen:
-
-- Vergleich `vorher / aktuell`,
-- Nachvollziehen fachlich relevanter Änderungen,
-- Audit und Qualitätssicherung,
-- Prüfung, ob KI-generierte Neufassungen unbeabsichtigte Bedeutungsverschiebungen erzeugt haben,
-- Rekonstruktion des zu einem früheren Zeitpunkt bestätigten Sachstands.
-
-Für jede veröffentlichte oder freigabefähige `Textfassung` muss nachvollziehbar sein, auf welchem versionierten strukturierten Gesamtstand sie beruht.
-
-Es gelten folgende Konsistenzregeln:
-
-- Eine manuelle sprachliche Änderung der `Textfassung` ändert nicht automatisch den `strukturierten Redaktionsstand`.
-- Ändert eine manuelle Textbearbeitung eine fachliche Aussage, Gewichtung, Bewertung, Begründung oder Abwägung, muss die Abweichung erkannt und in den strukturierten Angaben nachvollzogen oder ausdrücklich zurückgenommen werden.
-- Bei einer späteren Neugenerierung wird die neue `Textfassung` aus dem aktuellen strukturierten Stand erzeugt.
-- Dabei muss ein inhaltlicher Vergleich zur vorherigen freigegebenen `Textfassung` erfolgen.
-- Unveränderte strukturierte Kernaussagen dürfen durch die Neugenerierung nicht ohne fachlichen Grund ihre Bedeutung, Gewichtung oder politische Aussage verändern.
-- Inhaltliche Änderungen der neuen `Textfassung` sollen grundsätzlich auf tatsächlich geänderte strukturierte Angaben zurückführbar sein.
-- Sprachliche Änderungen außerhalb der geänderten fachlichen Bereiche sind zulässig, dürfen aber keine neue oder veränderte Kernaussage erzeugen.
-- Der Redakteur muss erkennen können, welche Textänderungen aus welcher strukturierten Änderung entstanden sind.
-
-### 3.9 Bestätigung und Plausibilitätsprüfung
-
-Für den strukturierten Redaktionsprozess werden drei Sicherungsebenen unterschieden:
-
-1. **Pflichtbestätigung** – für Angaben, die die fachliche oder politische Kernaussage unmittelbar prägen.
-2. **sichtbarer KI-Vorschlag** – für Angaben, die die KI vorschlagen darf und die vom Redakteur sichtbar geprüft und bei Bedarf geändert werden können.
-3. **Plausibilitätsprüfung über mehrere Felder oder Wirkungen** – zur Erkennung auffälliger, widersprüchlicher oder semantisch doppelter Kombinationen.
-
-Zur Pflichtbestätigung gehören grundsätzlich insbesondere:
-
-- `Wirkung`,
-- `Zielbereich`,
-- `Wirkungsrichtung`,
-- `Bedeutung der Wirkung`,
-- `politisches Gewicht`,
-- relevante `Gestaltungsoptionen`,
-- die strukturierte `Abwägung`.
-
-`Verlässlichkeit` kann grundsätzlich als sichtbarer KI-Vorschlag geführt werden. Eine ausdrückliche Prüfung wird erforderlich, wenn ihre Kombination mit anderen Angaben fachlich auffällig ist oder die Abwägung wesentlich beeinflusst.
-
-Plausibilitätsprüfungen sind keine automatische politische Entscheidung. Sie markieren Konstellationen, bei denen die Redaktion die fachliche Herleitung gezielt prüfen muss.
-
-### 3.10 `Sitzung` und `TOP`
-
-Eine `Sitzung` ist ein konkreter Termin eines politischen Gremiums. Ein `TOP` ist ein einzelner Tagesordnungspunkt dieser Sitzung.
-
-Verbindliche Abgrenzung:
-
-> **Ein TOP ist kein Ereignis. Er beschreibt zunächst, dass ein Gegenstand für eine Sitzung vorgesehen ist. Veröffentlichung von Unterlagen, tatsächliche Beratung, Vertagung, Beschluss oder andere Verfahrensschritte sind davon getrennte Ereignisse.**
-
-Damit wird insbesondere verhindert, dass aus einer veröffentlichten Tagesordnung bereits eine tatsächlich erfolgte Beratung oder Entscheidung abgeleitet wird.
-
-#### 3.10.1 Beziehung `Sitzung ↔ TOP`
-
-Es gilt:
-
-- `Sitzung → TOP`: `0..n`
-- `TOP → Sitzung`: genau `1`
-
-Ein TOP gehört damit immer genau zu einer konkreten Sitzung. Eine Sitzung kann bereits bekannt sein, bevor einzelne relevante TOPs veröffentlicht oder in FIB erfasst sind.
-
-Ein TOP benötigt mindestens:
-
-- stabile fachliche Identität innerhalb der Sitzung,
-- offizielle bzw. nachvollziehbare Bezeichnung,
-- gegebenenfalls TOP-Nummer,
-- Bezug zur Sitzung,
-- Öffentlichkeits-/Sichtbarkeitsmerkmal, soweit bekannt,
-- aktuellen Verfahrensstatus,
-- relevante Fundstellen und Unterlagen.
-
-#### 3.10.2 Beziehungen `Sitzung/TOP ↔ Ereignis`
-
-Ereignisse bilden die tatsächlichen fachlich relevanten Schritte rund um Sitzungen und TOPs ab.
-
-Es gilt fachlich:
-
-- `Sitzung → Ereignis`: `0..n`
-- `Ereignis → Sitzung`: `0..n`
-- `TOP → Ereignis`: `0..n`
-- `Ereignis → TOP`: `0..n`
-
-Der Normalfall eines TOP-bezogenen Ereignisses ist die Zuordnung zu genau einem TOP und damit mittelbar zu genau einer Sitzung. Mehrfachzuordnungen bleiben möglich, wenn ein reales Ereignis tatsächlich mehrere TOPs oder Sitzungen berührt.
-
-Sitzungsweite Ereignisse können direkt der Sitzung zugeordnet werden, ohne künstlich einem einzelnen TOP zugeschlagen zu werden. Beispiele sind insbesondere Absage einer Sitzung oder öffentlich belegte Genehmigung der Niederschrift.
-
-Typische TOP-bezogene Ereignisse sind:
-
-- eine Beschlussvorlage oder wesentliche Unterlage wird veröffentlicht,
-- ein TOP wird tatsächlich beraten,
-- ein TOP wird vertagt oder abgesetzt,
-- ein Beschluss wird gefasst,
-- ein Ergebnis wird nachträglich dokumentiert oder korrigiert.
-
-Für Meldungen gilt weiterhin der Grundsatz der Ableitung:
-
-`Meldung → Ereignis → TOP → Sitzung`
-
-Eine zusätzliche eigenständige `Meldung ↔ TOP`- oder `Meldung ↔ Sitzung`-Fachbeziehung wird nicht gespeichert.
-
-Auch `Vorgang` und `Thema` erhalten nicht allein wegen der Sitzungsebene eine zweite parallele autoritative Zuordnung. Die fachlichen Zusammenhänge werden grundsätzlich aus den Ereignisbeziehungen und den bereits modellierten Beziehungen `Ereignis ↔ Vorgang` bzw. `Vorgang/Ereignis ↔ Thema` erschlossen.
-
-Dadurch kann die öffentliche Funktion **„Zusammenhänge“** Sitzung und TOP direkt anzeigen, ohne redundante fachliche Wahrheiten zu erzeugen.
-
-#### 3.10.3 Tagesordnung, Beschlussvorlage, weitere Unterlagen und Niederschrift
-
-Tagesordnung, Beschlussvorlage, weitere Sitzungsunterlagen und Niederschrift werden als `Fundstellen` mit fachlichem Dokumenttyp geführt, nicht als Ersatz für Ereignisse.
-
-Typische Zuordnung:
-
-- `Tagesordnung` → primär zur `Sitzung`,
-- `Beschlussvorlage` und TOP-spezifische Unterlagen → primär zum `TOP`,
-- `Niederschrift` → primär zur `Sitzung`; einzelne Aussagen können zusätzlich TOPs oder Ereignisse belegen.
-
-Die Veröffentlichung einer solchen Fundstelle kann selbst ein Ereignis darstellen, wenn sie fachlich relevant ist. Das Dokument und das Ereignis bleiben trotzdem getrennt.
-
-Verbindlich getrennt zu speichern bzw. zu behandeln sind insbesondere:
-
-- Termin der Sitzung,
-- Veröffentlichungsdatum der Tagesordnung,
-- Veröffentlichungsdatum einer Beschlussvorlage oder anderen Unterlage,
-- Datum der tatsächlichen Beratung bzw. Entscheidung,
-- Veröffentlichungsdatum der Niederschrift,
-- Datum der formalen Genehmigung der Niederschrift, soweit öffentlich belegt.
-
-Keines dieser Daten darf ohne Beleg durch ein anderes ersetzt werden.
-
-Insbesondere gilt:
-
-> **Beschlussvorlage ≠ Beschluss. Tagesordnung ≠ tatsächliche Beratung. Veröffentlichung der Niederschrift ≠ automatisch formale Genehmigung der Niederschrift.**
-
-#### 3.10.4 Lebenszyklusstatus einer Sitzung
-
-Eine Sitzung besitzt genau einen der folgenden fachlichen Status:
-
-- **angekündigt** – die Sitzung ist offiziell terminiert bzw. öffentlich angekündigt,
-- **stattgefunden** – die Sitzung hat stattgefunden; der formale Abschluss ist noch nicht öffentlich belegt,
-- **abgeschlossen** – die Genehmigung der Niederschrift ist öffentlich belegt,
-- **abgesagt** – die angekündigte Sitzung hat nicht stattgefunden.
-
-Dabei gilt:
-
-- Eine bloße Terminänderung erzeugt nicht automatisch eine neue Sitzung; die fachliche Identität bleibt bestehen, solange erkennbar derselbe Sitzungstermin lediglich verlegt wird.
-- Eine Sitzung wechselt nicht allein deshalb auf `abgeschlossen`, weil eine Niederschrift im Internet verfügbar ist. Maßgeblich ist der öffentlich belegte formale Genehmigungsstand.
-- Die Genehmigung der Niederschrift und deren öffentliche Bereitstellung sind getrennte Eigenschaften bzw. Ereignisse.
-- Statusänderungen werden mit Datum und Beleg nachvollziehbar geführt.
-- Eine Sitzung wird nicht aus dem Bestand gelöscht, wenn sie später in einer Quelle nicht mehr auffindbar ist.
-
-#### 3.10.5 Verfahrensstatus eines TOP
-
-Ein TOP besitzt einen Verfahrensstatus, der die tatsächliche Behandlung vom bloßen Planungsstand unterscheidet:
-
-- **angekündigt** – der TOP steht auf einer veröffentlichten bzw. bestätigten Tagesordnung,
-- **behandelt** – die tatsächliche Behandlung in der Sitzung ist belegt,
-- **vertagt** – die Behandlung bzw. Entscheidung wurde auf einen späteren Zeitpunkt verschoben,
-- **abgesetzt / nicht behandelt** – der angekündigte TOP wurde in dieser Sitzung nicht behandelt.
-
-`beschlossen` ist bewusst kein TOP-Status. Ein Beschluss ist ein fachliches Ereignis mit eigenem Ergebnis und Beleg. Ein TOP kann behandelt worden sein, ohne dass ein Beschluss gefasst wurde.
-
-Ebenso sind Änderungen an Nummer, Titel oder Reihenfolge eines TOP keine eigenen Dauerstatus. Sie werden nachvollziehbar protokolliert; frühere offizielle Tagesordnungen bleiben als Fundstellen erhalten.
-
-Öffentlichkeitsstatus (`öffentlich / nichtöffentlich / unbekannt`) ist vom Verfahrensstatus getrennt zu führen.
-
-#### 3.10.6 Persistenz und Historie von Sitzung/TOP
-
-Für Sitzungen und TOPs wird keine parallele Gesamtversionslogik wie für Vorgänge und Themen eingeführt.
-
-Stattdessen gilt:
-
-- die aktuelle fachliche Fassung von Sitzung und TOP wird fortgeschrieben,
-- fachlich relevante Änderungen an Termin, Titel, Nummer, Status oder Beziehungen werden protokolliert,
-- frühere offizielle Tagesordnungen, Vorlagen und Niederschriften bleiben als Fundstellen erhalten,
-- ein aus einer aktualisierten Tagesordnung entfernter TOP wird nicht spurlos gelöscht; sein letzter bestätigter Status und die Änderung bleiben nachvollziehbar,
-- spätere Rechercheläufe dürfen bestehende Sitzungen, TOPs oder Beziehungen nicht allein wegen Nichtauffindens entfernen.
-
-Damit kann FIB sowohl den aktuellen Sitzungsstand zeigen als auch redaktionell rekonstruieren, was zu einem früheren Zeitpunkt angekündigt bzw. belegt war.
-
-### 3.11 Noch zu klärende Kernbeziehungen
-
-Als nächste Modellierungsschritte werden geklärt:
-
-- konkrete fachliche Plausibilitätsregeln für den Redaktionsprozess,
-- Persistenz-/Rücknahme-/Archivierungslogik für weitere fachliche Objekte und Beziehungen,
-- Abgrenzung fachlicher Persistenzdaten von rein technischen Betriebsdaten.
-
-## 4. Weitere Modellbereiche
-
-### 4.1 Entscheidungskontext
-
-Der Entscheidungskontext umfasst insbesondere:
-
-- Sitzung,
-- TOP,
-- Tagesordnung,
-- Beschlussvorlage und weitere Unterlagen,
-- Beratung / Verfahrensstand,
-- Beschluss / Ergebnis,
-- Niederschrift.
-
-Die fachlichen Beziehungen und Status von `Sitzung` und `TOP` sind in Abschnitt 3.10 verbindlich modelliert. Tagesordnung, Vorlagen, weitere Unterlagen und Niederschriften werden über das Quellen-/Fundstellenmodell eingebunden; Beratung und Beschluss werden als Ereignisse modelliert.
-
-### 4.2 Wissensbasis und Quellen
-
-Für Quellen und Fundstellen gilt folgende fachliche Trennung:
-
-- `Quelle` – Herkunft bzw. Träger der Information,
-- `Fundstelle` – konkrete Seite, Dokument, Datei oder sonstige Einheit,
-- `Quellenrolle` – fachliche Funktion der Quelle,
-- `Bereitstellung` – Art, wie die Fundstelle technisch in FIB verfügbar ist,
-- `Sichtbarkeit` – Regel, ob eine gespeicherte Fundstelle öffentlich oder nur redaktionell sichtbar ist,
-- Belegbeziehung – Verknüpfung einer Fundstelle mit Aussagen, Ereignissen oder anderen FIB-Inhalten.
-
-Verbindliche Entscheidung:
-
-> **Ursprüngliche Internetverfügbarkeit und öffentliche Bereitstellung über FIB sind getrennte Eigenschaften.**
-
-#### 4.2.1 Referenzwissen als unterstützender Recherche- und Zuordnungskontext
-
-Referenzwissen ist vom eigentlichen Wissenskern `Ereignis → Meldung → Vorgang → Thema` getrennt. Es dient dazu, wiederkehrende FIB-spezifische Identitäten, Bezeichnungen und Zusammenhänge für Recherche, Erkennung, Zuordnung und Relevanzprüfung verfügbar zu machen.
-
-Verbindliche Abgrenzung:
-
-> **FIB archiviert kein allgemeines Sach-, Fach-, Verwaltungs- oder Verfahrenswissen, das ein leistungsfähiges KI-Modell zuverlässig selbst erschließen und bei Bedarf aktuell recherchieren kann. Referenzwissen wird nur gespeichert, wenn daraus ein konkreter, wiederkehrender FIB-Zusatznutzen entsteht.**
-
-Der Ausbau erfolgt damit anlassbezogen und bewusst sparsam.
-
-##### Fachliche Bausteine
-
-Für den MVP werden nur drei konzeptionelle Bausteine benötigt:
-
-- `Referenzobjekt` – stabile FIB-relevante Identität,
-- `Referenzbezeichnung` – alternative, amtliche, gebräuchliche, frühere Bezeichnung oder Abkürzung eines Referenzobjekts,
-- `Referenzbeziehung` – fachlich nützliche Beziehung zwischen zwei Referenzobjekten.
-
-`Fundstelle` bzw. dokumentierte Herkunft/Begründung kann Referenzobjekte und Referenzbeziehungen belegen, ohne dass für triviale lokale oder geografische Zusammenhänge zwingend ein aufwendiger Quellenapparat erforderlich ist.
-
-```mermaid
-erDiagram
-    REFERENZOBJEKT ||--o{ REFERENZBEZEICHNUNG : hat
-    REFERENZOBJEKT ||--o{ REFERENZBEZIEHUNG : ist_quelle
-    REFERENZOBJEKT ||--o{ REFERENZBEZIEHUNG : ist_ziel
-    REFERENZOBJEKT }o--o{ FUNDSTELLE : ist_belegt_durch
-    REFERENZBEZIEHUNG }o--o{ FUNDSTELLE : ist_belegt_durch
+```text
+Beobachtungsauftrag (optional)
+→ Recherchelauf
+→ Fundstelle
+→ Ereigniskandidat
+→ bestätigtes Ereignis
 ```
 
-Ein `Referenzobjekt` benötigt fachlich mindestens:
+Ein Ereigniskandidat wird nicht direkt dauerhaft an den Beobachtungsauftrag gebunden.
 
-- stabile Identität,
-- Hauptbezeichnung,
-- Typ/Kategorie,
-- kurzen FIB-spezifischen Kontext,
-- Herkunft bzw. Erstellungsart,
-- fachlichen Status.
+Detailmodell: `docs/Beobachtungs-und-Recherchemodell.md`.
 
-Die Typisierung bleibt bewusst schlank. Sie muss mindestens die drei vereinbarten Referenzwissensbereiche abbilden können:
+## 7. Offene Frage / Wissenslücke
 
-1. **Orts- und Objektwissen**,
-2. **selektives Akteurs- und Zuständigkeitswissen**,
-3. **FIB-spezifisches Kontextwissen**.
+Eine `offene Frage` beschreibt einen noch nicht geklärten, noch nicht entschiedenen, nicht ausreichend belegten oder noch nicht bekannten Aspekt eines FIB-Sachverhalts.
 
-Für den MVP wird dafür keine zusätzliche breite Entitätsfamilie für allgemeines Sach- und Fachwissen eingeführt. Ein lokaler oder projektspezifischer Begriff kann, sofern tatsächlich notwendig, als entsprechender Typ eines `Referenzobjekts` geführt werden.
+Sie ist ein eigenständiges fachliches Objekt und nicht identisch mit einer öffentlichen „Mehr wissen?“-Frage.
 
-##### Beziehungen und Kardinalitäten
+Fachlicher Erkenntnisstatus:
 
-Es gilt fachlich:
+- `offen`,
+- `teilweise geklärt`,
+- `geklärt`,
+- `gegenstandslos`.
 
-- `Referenzobjekt → Referenzbezeichnung`: `0..n`,
-- jede `Referenzbezeichnung` gehört genau zu einem `Referenzobjekt`,
-- `Referenzobjekt ↔ Referenzobjekt`: `0..n` über `Referenzbeziehung`,
-- ein `Referenzobjekt` kann mit `0..n` Ereignissen, Vorgängen oder Themen in einen fachlichen Kontext gestellt werden,
-- ein Ereignis, Vorgang oder Thema kann `0..n` Referenzobjekte als Recherche- oder Zuordnungskontext besitzen.
+Zusätzlicher Bearbeitungsstatus:
 
-Diese Kontextbeziehungen erzeugen keine zweite fachliche Wahrheit. Die konkrete Bedeutung einer Zuordnung muss erkennbar bleiben. Insbesondere darf aus einem allgemeinen Akteurs- oder Zuständigkeitsbezug nicht automatisch geschlossen werden, dass ein Akteur in einem konkreten Vorgang tatsächlich gehandelt hat.
+- `aktiv`,
+- `zurückgestellt`.
 
-Eine tatsächlich ausgeübte Rolle eines Akteurs in einem Vorgang bzw. Ereignis gehört zum konkreten quellengebundenen FIB-Wissen. Die stabile Identität des Akteurs kann dabei als Referenzobjekt wiederverwendet werden; die konkrete Handlung oder Rolle wird jedoch nicht als allgemeine Referenzbeziehung verallgemeinert.
+Offene Fragen können mit Meldung, Vorgang und/oder Thema in fachlichem Zusammenhang stehen. Ein Beobachtungsauftrag kann eine offene Frage als Primärbezug besitzen.
 
-##### Beziehungstypen im MVP
+Geklärte oder gegenstandslos gewordene Fragen werden nicht gelöscht; Statusänderung und Auflösungsbezug bleiben nachvollziehbar.
 
-Die Menge der Referenzbeziehungstypen wird klein gehalten. Für Orts- und Objektwissen genügen zunächst insbesondere:
+## 8. Sitzung, TOP und Beschluss
 
-- `ist Teil von`,
-- `liegt in / an`,
-- `verbindet`,
-- `erschließt / versorgt`,
-- `steht in funktionalem Zusammenhang mit`.
+Das Detailmodell steht in `docs/Sitzungs-und-Beschlussmodell.md`.
 
-Alternative Bezeichnungen werden grundsätzlich über `Referenzbezeichnung` abgebildet und benötigen nur dann zusätzlich eine eigene Beziehung, wenn dies in der späteren technischen Umsetzung einen klaren Nutzen hat.
+### 8.1 Sitzung und TOP
 
-Weitere Beziehungstypen werden nicht vorsorglich eingeführt. Zeitabhängige Aussagen wie `beeinflusst`, `gefährdet`, `verbessert`, `verschlechtert` oder `ist Treiber von` gehören grundsätzlich in Ereignis-, Vorgangs-, Themen- oder Wirkungszusammenhänge und nicht in dauerhaftes Referenzwissen.
+Eine `Sitzung` ist ein konkreter Termin eines politischen Gremiums. Ein `TOP` gehört genau zu einer Sitzung.
 
-##### Status, Herkunft und Aufnahme
+Kardinalität:
 
-Ein Referenzobjekt oder eine Referenzbeziehung muss mindestens folgende fachliche Zustände unterscheiden können:
+- Sitzung → TOP: `0..n`
+- TOP → Sitzung: genau `1`
 
-- **vorgeschlagen** – aus Recherche, KI-Vorschlag oder manueller Erfassung entstanden, noch nicht fachlich wirksam,
-- **bestätigt** – redaktionell geprüft und Bestandteil des verbindlichen Recherchekontexts,
-- **nicht mehr gültig / zurückgenommen** – soll nicht mehr als aktuelles Referenzwissen verwendet werden; frühere fachliche Wirksamkeit bleibt nachvollziehbar.
+Ein TOP ist kein Ereignis. Er beschreibt den Verfahrens-/Behandlungskontext.
+
+### 8.2 Sitzung/TOP ↔ Ereignis
+
+Sitzung und TOP können mit mehreren Ereignissen verbunden sein; ein Ereignis kann mehreren Sitzung-/TOP-Kontexten zugeordnet sein, wenn dies sachlich tatsächlich zutrifft.
+
+Meldungsbezüge werden abgeleitet:
+
+```text
+Meldung → Ereignis → TOP → Sitzung
+```
+
+Es werden keine zusätzlichen autoritativen Beziehungen `Meldung ↔ TOP` oder `Meldung ↔ Sitzung` gespeichert.
+
+### 8.3 Vorlage, Beratung und Beschluss
+
+Verbindliche Trennung:
+
+- Beschlussvorlage = Fundstelle/Dokument,
+- Veröffentlichung der Vorlage = mögliches Ereignis,
+- tatsächliche Beratung/Behandlung = späteres Ereignis,
+- Vertagung/Absetzung = späteres Ereignis, soweit fachlich relevant,
+- Beschlussfassung = späteres Ereignis bzw. Teil desselben realen Behandlungs-/Entscheidungsschritts.
+
+Der ursprüngliche Beschlussvorschlag bleibt als Vergleichsfassung erhalten.
+
+### 8.4 Beschlusspunkt, Fassung und Abstimmung
+
+Beschlusspunkte und Abstimmungen werden erst aus der Niederschrift bzw. der belastbaren Dokumentation des tatsächlichen Sitzungsverlaufs erzeugt.
+
+Ein Beschlusspunkt kann mehrere Fassungen und mehrere Abstimmungen besitzen. Die tatsächlich abgestimmte Fassung bleibt mit ihrem Abstimmungsergebnis und der belegenden Fundstelle nachvollziehbar.
+
+## 9. Referenzwissen
+
+Referenzwissen ist unterstützender Recherche- und Zuordnungskontext und kein paralleler allgemeiner Wissensbestand.
+
+MVP-Bausteine:
+
+- `Referenzobjekt`,
+- `Referenzbezeichnung`,
+- `Referenzbeziehung`.
+
+Typische Bereiche:
+
+1. Orts- und Objektwissen,
+2. selektives Akteurs-/Zuständigkeitswissen,
+3. FIB-spezifisches Kontextwissen.
+
+Beziehungen:
+
+- Referenzobjekt → Referenzbezeichnung: `0..n`
+- Referenzobjekt ↔ Referenzobjekt: `0..n` über Referenzbeziehung
+- Referenzobjekt ↔ Ereignis/Vorgang/Thema: `0..n` als Kontextbeziehung
+
+MVP-Beziehungstypen insbesondere:
+
+- ist Teil von,
+- liegt in/an,
+- verbindet,
+- erschließt/versorgt,
+- steht in funktionalem Zusammenhang mit.
+
+Status bestätigbarer Referenzobjekte/-beziehungen:
+
+- `vorgeschlagen`,
+- `bestätigt`,
+- `nicht mehr gültig / zurückgenommen`.
 
 Nur bestätigtes Referenzwissen erweitert den verbindlichen Recherchekontext.
 
-Neues Referenzwissen kann auf drei Wegen entstehen:
+## 10. Referenzmaßstab
 
-1. Initialbefüllung aus bereits geprüftem stabilem FIB-Wissen,
-2. KI-Vorschlag aus Recherche oder Quellenanalyse,
-3. manuelle redaktionelle Ergänzung.
+Ein `Referenzmaßstab` ist ein dokumentierter, versionierter Maßstab, der Recherchefragen, Relevanz-/Qualitätsprüfungen oder politische Einordnung ausrichtet, ohne die Tatsachenbasis zu verändern.
 
-Die Aufnahme erfolgt nur bei erkennbarem Zusatznutzen gegenüber allgemeinem KI-Hintergrundwissen. Typische Gründe sind lokale oder projektspezifische Besonderheiten, wiederkehrend wichtige Aliase oder Beziehungen, wiederholte Fehlzuordnungen, schwer zuverlässig ableitbare Zusammenhänge oder der bewusste Wunsch nach modellunabhängig dauerhaft verfügbarem FIB-Wissen.
+FIB unterscheidet drei Ebenen:
 
-##### Abgrenzung Referenzobjekt ↔ Vorgang
+1. allgemeine FIB-Qualitätsmaßstäbe,
+2. demokratisch-gesellschaftliche Maßstäbe,
+3. grün-politische Maßstäbe einschließlich dokumentierter lokaler Positionen.
 
-Ein Gegenstand kann gleichzeitig eine relativ stabile Referenzidentität und einen zeitabhängigen Vorgang besitzen. Beide bleiben fachlich getrennt.
+Ein Referenzmaßstab muss fachlich mindestens eindeutig identifizierbar sein und Ebene, Aussage, Herkunft/Quelle, Geltungsbereich, Status und Version erkennen lassen.
 
-Beispiel `Kiesgrund`:
+Neue oder geänderte Referenzmaßstäbe werden auf:
 
-- `Referenzobjekt` → bezeichnet das Entwicklungsgebiet bzw. seine stabile lokale Identität und Bezeichnung,
-- `Vorgang` → bildet Planungsstände, Entscheidungen, Veröffentlichungen und andere zeitliche Entwicklungen ab.
+- Dublette/Nähe,
+- Widerspruch,
+- Abgrenzung,
+- Ergänzung/Konkretisierung,
+- Erfordernis einer neuen Version
 
-Dasselbe Prinzip gilt für Akteure: Die Institution kann als stabile Identität im Referenzwissen bestehen; ihre konkrete Beteiligung, Aussage oder Handlung wird im jeweiligen Ereignis-/Vorgangskontext quellengebunden geführt.
+geprüft.
 
-##### Pflege- und Ausbauprinzip
+Ein neuer Referenzmaßstab wird nur vorgeschlagen, wenn er gegenüber dem aktiven Referenzrahmen konsistent, hinreichend abgegrenzt und nicht redundant ist.
 
-Im MVP werden Referenzwissen und Beziehungen redaktionell pflegbar gehalten; KI-Vorschläge werden erst nach Bestätigung wirksam. Stabile Einträge werden nur bei konkretem Anlass erneut geprüft.
+## 11. „Mehr wissen?“ – öffentliche Vertiefung
 
-Automatische Wiedervorlagen, Konflikterkennung, feinere Gültigkeitszeiträume, zusätzliche Relationstypen oder weitergehende semantische/raumbezogene Beziehungen gehören nicht zum MVP. Sie werden erst nach Pilot/Echtbetrieb bei nachgewiesenem Bedarf geprüft.
+Detailmodell: `docs/Mehr-wissen-Modell.md`.
 
-### 4.3 Offene Frage / Wissenslücke
+Für den MVP werden unterschieden:
 
-Eine `offene Frage` bzw. `Wissenslücke` beschreibt einen noch nicht geklärten, noch nicht entschiedenen, noch nicht belastbar belegten oder noch nicht bekannten Aspekt eines Sachverhalts.
+- `Vertiefungsfrage`,
+- `Vertiefungsantwort`.
 
-Sie ist ein eigenständiges fachliches Objekt und wird nicht mit einer `Mehr-wissen?-Frage` gleichgesetzt.
+Eine Vertiefungsfrage besitzt genau einen primären öffentlichen Kontext:
 
-#### 4.3.1 Fachlicher Status
+- Meldung oder
+- Thema.
 
-Der fachliche Erkenntnisstand einer offenen Frage wird mit genau einem der folgenden Status geführt:
+Eine Vertiefungsantwort gehört zu einer Vertiefungsfrage und ist quellengebunden.
 
-- **offen** – die Frage ist fachlich noch ungeklärt,
-- **teilweise geklärt** – ein relevanter Teil ist geklärt, wesentliche Teile bleiben offen,
-- **geklärt** – die Frage ist auf Basis des aktuellen Wissensstands beantwortet,
-- **gegenstandslos** – die Frage muss nicht mehr beantwortet werden, weil ihre Voraussetzung entfallen ist oder sich der Sachverhalt so verändert hat, dass sie keine fachliche Bedeutung mehr besitzt.
+Öffentliche Tatsachenbehauptungen einer Vertiefungsantwort müssen auf nachvollziehbare Fundstellen zurückführbar sein.
 
-`gegenstandslos` ist ausdrücklich nicht dasselbe wie `geklärt`: Die Frage wurde nicht beantwortet, sondern hat ihren Gegenstand verloren.
+Eine Vertiefungsfrage ist nicht identisch mit einer offenen Frage/Wissenslücke. Im MVP werden öffentlich grundsätzlich nur Fragen mit veröffentlichungsfähiger Antwort angeboten.
 
-#### 4.3.2 Bearbeitungsstatus
+## 12. Bild und Bildverwendung
 
-Der fachliche Status wird von der redaktionellen Bearbeitungsentscheidung getrennt. Zusätzlich wird geführt:
+`Bild` und `Bildverwendung` sind getrennte Objekte.
 
-- **aktiv** – die Frage soll weiter beobachtet bzw. recherchiert werden,
-- **zurückgestellt** – die Frage bleibt fachlich offen oder teilweise geklärt, wird aber derzeit bewusst nicht aktiv weiterbearbeitet.
+### Bild
 
-Damit verändert `zurückgestellt` nicht den Erkenntnisstand der Frage.
+Beschreibt das wiederverwendbare Asset, insbesondere:
 
-#### 4.3.3 Persistenz und Historie
-
-Mindestens zu speichern sind:
-
-- Fragetext / Gegenstand,
-- fachlicher Bezug zu `Meldung`, `Vorgang` und/oder `Thema`,
-- Herkunft (`KI-Vorschlag`, redaktionell ergänzt, aus Quelle/Verfahren abgeleitet),
-- fachlicher Status,
-- Bearbeitungsstatus,
-- gegebenenfalls Bedingung oder Abhängigkeit,
-- relevante Quellen/Fundstellen,
-- Eröffnungsdatum bzw. fachlicher Stand,
-- Datum und kurze Begründung jeder fachlich relevanten Statusänderung,
-- Auflösungsbezug bei `geklärt` oder `gegenstandslos`,
-- Historie wesentlicher Änderungen.
-
-Fachlich relevante Zustandsänderungen werden nicht durch Löschen ersetzt. Insbesondere bleiben geklärte und gegenstandslos gewordene Fragen nachvollziehbar erhalten.
-
-Eine offene Frage kann eine mögliche Wechselwirkung zwischen getrennten Vorgängen betreffen. Solche Beziehungen bleiben als mögliche bzw. bedingte Wechselwirkung gekennzeichnet und werden nicht als bereits eingetretene Wirkung modelliert.
-
-Öffentlich wird grundsätzlich nur der aktuelle offene bzw. teilweise geklärte Stand gezeigt. Geklärte und gegenstandslos gewordene Fragen bleiben fachlich historisiert und können für den Verlauf weiterhin herangezogen werden.
-
-### 4.4 „Was bisher passiert ist“
-
-Der öffentliche Meldungsbaustein `Was bisher passiert ist` benötigt keinen unabhängigen zweiten Sachverhaltsbestand. Er wird grundsätzlich aus bestehenden Ereignis-, Meldungs- und Vorgangsbeziehungen abgeleitet.
-
-Falls die Redaktion eine Auswahl oder Reihenfolge fachlich bestätigt, muss diese Auswahl als Darstellungsbeziehung nachvollziehbar gespeichert werden können. Die aktuelle Meldung darf nicht Teil ihres eigenen Rückblicks sein.
-
-### 4.5 Bild und Bildverwendung
-
-`Bild` und `Bildverwendung` werden getrennt behandelt.
-
-`Bild` beschreibt das wiederverwendbare Asset und mindestens:
-
-- Speicherreferenz/Datei,
-- Herkunft,
-- Urheber,
-- Nutzungsrecht/Lizenz und gegebenenfalls Nachweis,
+- Speicherreferenz,
+- Herkunft/Urheber,
+- Nutzungsrecht/Lizenz und ggf. Nachweis,
 - Datenschutz-/Persönlichkeitsrechtsstatus soweit erforderlich,
-- motivbezogenen Alt-Text,
-- sachliche Bildunterschrift,
-- gegebenenfalls Aufnahmeort und Aufnahmedatum,
+- Alt-Text,
+- Bildunterschrift,
+- ggf. Aufnahmeort/-datum,
 - Schlagworte/Motivbezug,
 - Freigabestatus.
 
-`Bildverwendung` beschreibt die konkrete Verwendung eines Bildes an einer `Meldung`, einem `Vorgang`, einem `Thema` oder gegebenenfalls einer `Sitzung` und mindestens:
+### Bildverwendung
 
-- Zielobjekt,
-- Verwendungsart/Rolle,
-- fachlich bestätigter Sachbezug,
-- Primärzuordnung oder weitere geeignete Verwendung,
-- gegebenenfalls ausdrücklicher Nutzungsausschluss für andere naheliegende Objekte,
-- redaktionelle Freigabe der konkreten Verwendung,
-- Gültigkeit/Aktualität der Zuordnung.
+Beschreibt die konkrete Verwendung eines Bildes an einem Zielobjekt, insbesondere Meldung, Vorgang, Thema oder ggf. Sitzung.
 
-Mehrfachverwendung eines Bildes ist möglich, wenn jede Verwendung eigenständig fachlich passt und rechtlich zulässig ist. Das Datenmodell erzwingt keinen Bildzwang.
+Sie hält mindestens Sachbezug, Rolle/Verwendungsart, konkrete Freigabe und Aktualität/Gültigkeit der Zuordnung fest.
 
-`Mehr zum Bild` bleibt als optionale spätere Funktion fachlich offen; hierfür würde zusätzlich ein redaktionell geprüfter Motivtext mit Quellen und Aktualitätsstand benötigt.
+Mehrfachverwendung ist möglich, wenn jede Verwendung fachlich passt und rechtlich zulässig ist.
 
-### 4.6 Redaktion, Historisierung und Vertiefung
+## 13. AI Task und AI Task Run
 
-- Rechercheauftrag
-- Aktualisierungsereignis
-- Version / Historisierung
-- „Unsere Einordnung“
-- „Mehr wissen?“-Frage
-- gespeicherte Antwort
-- Quellen einer Antwort
-- offene Frage / Wissenslücke
-- Bild / Bildverwendung
+`AI Task` und `AI Task Run` sind operative Objekte und vom fachlichen Informationsbedarf getrennt.
 
-## 5. Offene G3-Fragen
+- `AI Task` = persistente Definition automatisierter Arbeit, ihres Auslösers, zulässiger Fachfunktionen und Betriebsrahmens.
+- `AI Task Run` = konkrete Ausführung dieses Tasks.
 
-1. Welche Daten gehören zur fachlichen Persistenz und welche nur zum technischen Betrieb?
-2. Welche Plausibilitätsregeln sind verbindlich und welche nur unterstützende Hinweise?
-3. Welche zusätzlichen Rechte- und Freigabestatus werden für öffentlich über FIB bereitgestellte Dateien und Bilder benötigt?
-4. Wie werden Rücknahme, Archivierung und Wiederaufnahme der übrigen fachlichen Objekte und Beziehungen konkret modelliert?
-5. Wie wird der Informationsbedarf bzw. ein redaktioneller Beobachtungsauftrag als fachliches Objekt modelliert und mit Vorgängen, Themen, offenen Fragen und Rechercheläufen verknüpft?
+Ein AI Task kann einen fachlichen Recherchelauf auslösen. AI Task Run und Recherchelauf bleiben jedoch wegen ihrer unterschiedlichen Bedeutung getrennt.
+
+Detailregeln zu Routing, Kosten und Qualitätsklassen stehen in `docs/KI-Betrieb-und-Kosten.md` und `docs/KI-Qualitaet-und-Modellunabhaengigkeit.md`.
+
+## 14. Persistenz und Lebenszyklus
+
+Detailquelle: `docs/Persistenz-und-Lebenszyklusmodell.md`.
+
+Verbindlicher Grundsatz:
+
+> **Ein fachlich bestätigtes Objekt oder eine fachlich bestätigte Beziehung wird nicht spurlos gelöscht, nur weil sie später nicht mehr aktuell, relevant oder auffindbar ist.**
+
+Je nach Objekt kommen stattdessen insbesondere Änderung, Rücknahme, Zusammenführung, Archivierung, Aufhebung einer Beziehung oder Historisierung über einen Gesamtstand in Betracht.
+
+Echte technische Löschung bleibt auf nicht fachlich wirksame technische Zwischenstände, unbeabsichtigte technische Dubletten oder vergleichbare Fälle beschränkt.
+
+Rein technische Betriebsdaten wie Cache, Retry-Informationen, Performance-Metriken oder kurzlebige Session-Daten unterliegen nicht automatisch den fachlichen Persistenzregeln.
+
+## 15. Plausibilität, Freigabe und Rechte
+
+Detailquelle: `docs/Fachliche-Plausibilitaets-und-Freigaberegeln.md`.
+
+Verbindliche Unterscheidung:
+
+- **harte Fachregel:** ein objektiv unzulässiger Zustand wird serverseitig blockiert,
+- **Plausibilitätsprüfung:** semantische Auffälligkeit oder Entscheidungsspielraum erzeugt einen sichtbaren Prüfhinweis; die redaktionelle Entscheidung bleibt erforderlich.
+
+Beispiele blockierender Regeln sind insbesondere unzulässige Kardinalitäten, fehlende notwendige Beziehungen, nicht erfüllte Veröffentlichungsvoraussetzungen oder öffentliche Mediennutzung ohne positiv geklärte Rechte.
+
+## 16. Fachfunktionen als einziger regulärer fachlicher Zugriffsweg
+
+Die Fachfunktionen werden in `docs/MVP-Fachfunktionen.md` beschrieben; Rollen, Bestätigungs- und Zugangslogik in `docs/KI-Zugangswege-und-Fachfunktionen.md`.
+
+Verbindlich gilt:
+
+> **Reguläre fachliche Lese- und Schreibzugriffe aus Web-App, FIB-Chat und AI Tasks laufen über dieselbe Fachfunktions-/Service-Schicht.**
+
+Damit werden Fachregeln, Rechte, Versionierung, Bestätigungen und Audit unabhängig vom Zugangskanal einheitlich durchgesetzt.
+
+Direkte technische Datenbankzugriffe sind ausschließlich für technische Betriebsaufgaben wie Migration, Backup, Restore oder Wartung vorgesehen und kein alternativer fachlicher Arbeitsweg.
+
+## 17. Konsolidierte Beziehungsübersicht
+
+```mermaid
+erDiagram
+    QUELLE ||--o{ FUNDSTELLE : liefert
+    RECHERCHELAUF }o--o{ FUNDSTELLE : erkennt
+
+    EREIGNIS }o--o{ FUNDSTELLE : wird_belegt_durch
+    EREIGNIS ||--o| MELDUNG : kann_haben
+    EREIGNIS }o--o{ VORGANG : gehoert_zu
+    VORGANG }o--o{ THEMA : gehoert_zu
+    EREIGNIS }o--o{ THEMA : ergaenzt_direkt
+
+    EREIGNIS ||--o{ WIRKUNG : hat
+    THEMA ||--o{ PERSPEKTIVE : hat
+    WIRKUNG }o--o{ PERSPEKTIVE : wird_zugeordnet
+
+    SITZUNG ||--o{ TOP : enthaelt
+    TOP }o--o{ EREIGNIS : hat_bezug
+
+    VORGANG ||--o{ BEOBACHTUNGSAUFTRAG : kann_haben
+    THEMA ||--o{ BEOBACHTUNGSAUFTRAG : kann_haben
+    OFFENE_FRAGE ||--o{ BEOBACHTUNGSAUFTRAG : kann_haben
+    BEOBACHTUNGSAUFTRAG ||--o{ RECHERCHELAUF : kann_ausloesen
+
+    MELDUNG ||--o{ VERTIEFUNGSFRAGE : kann_haben
+    THEMA ||--o{ VERTIEFUNGSFRAGE : kann_haben
+    VERTIEFUNGSFRAGE ||--o{ VERTIEFUNGSANTWORT : hat
+    VERTIEFUNGSANTWORT }o--o{ FUNDSTELLE : wird_belegt_durch
+
+    REFERENZOBJEKT ||--o{ REFERENZBEZEICHNUNG : hat
+    REFERENZOBJEKT ||--o{ REFERENZBEZIEHUNG : ist_quelle
+    REFERENZOBJEKT ||--o{ REFERENZBEZIEHUNG : ist_ziel
+```
+
+Die Darstellung ist fachlich/logisch zu lesen. Ob eine n:m-Beziehung später über eine eigene technische Relationstabelle, eine normalisierte Zuordnung oder eine andere PostgreSQL-Struktur umgesetzt wird, wird erst im physischen Modell entschieden.
+
+## 18. Nach G3 offene technische/physische Modellierungsfragen
+
+Nach der fachlichen Konsolidierung bleiben keine bekannten offenen G3-Grundsatzfragen zurück.
+
+Für die nächste Phase sind insbesondere technisch zu entscheiden:
+
+- konkrete PostgreSQL-/Supabase-Tabellen,
+- technische Primär- und Fremdschlüssel,
+- Datentypen und Enums,
+- Relationstabellen und Historisierungsstruktur,
+- Indizes und Such-/Vector-Strukturen,
+- RLS/Policies und Authentifizierung,
+- technische Auditstruktur,
+- API-/JSON-Schemas der Fachfunktionen,
+- technische Aufbewahrungsfristen für Betriebsdaten,
+- konkrete Datei-/Storage-Struktur,
+- Routing-/Providerkonfiguration des KI-Betriebs.
+
+Diese Punkte verändern das fachliche Modell nicht und gehören in die anschließenden Gründungs-/Architekturphasen.
 
 ## Änderungshistorie
 
 | Version | Datum | Änderung |
 |---|---|---|
-| 2.1 | 05.10.2026 | Schlankes Referenzwissen in das konzeptionelle G3-Datenmodell integriert: `Referenzobjekt`, `Referenzbezeichnung` und `Referenzbeziehung` als unterstützender Recherche- und Zuordnungskontext modelliert; drei Referenzwissensbereiche, Kardinalitäten, Kandidat/Bestätigt/Rücknahme-Logik, Herkunft, anlassbezogene Aufnahme und Abgrenzung zu Vorgang/Ereignis festgelegt. Allgemeines Sach-, Fach-, Verwaltungs- und Verfahrenswissen wird nicht als eigener FIB-Wissensbestand dupliziert. Informationsbedarf/Beobachtungsauftrag als nächster offener G3-Baustein aufgenommen. |
-| 2.0 | 04.10.2026 | `Sitzung` und `TOP` vollständig in den Wissenskern integriert. TOP als Planungs-/Gliederungsobjekt klar vom Ereignis getrennt; Beziehungen Sitzung↔TOP und Sitzung/TOP↔Ereignis festgelegt; Meldungs-, Vorgangs- und Themenbezüge daraus abgeleitet statt redundant gespeichert. Tagesordnung, Vorlage, Beratung, Beschluss und Niederschrift getrennt; Datumsarten abgegrenzt. Sitzungsstatus `angekündigt / stattgefunden / abgeschlossen / abgesagt` und TOP-Status `angekündigt / behandelt / vertagt / abgesetzt bzw. nicht behandelt` festgelegt. `beschlossen` bleibt Ereignis statt TOP-Status. Abschluss einer Sitzung setzt öffentlich belegte Genehmigung der Niederschrift voraus; Veröffentlichung und Genehmigung bleiben getrennt. Persistenz- und Historienlogik für Sitzungen/TOPs ergänzt. |
-| 1.9 | 04.10.2026 | Status- und Rücknahmelogik für Ereignis und Meldung festgelegt. Recherchekandidaten werden erst nach fachlicher Bestätigung zu Ereignissen; bestätigte Ereignisse bleiben grundsätzlich dauerhaft im Wissensbestand und können nur `zurückgenommen` oder bei Dubletten `zusammengeführt` werden. Meldungen erhalten die Veröffentlichungsstatus `Entwurf / freigegeben / veröffentlicht / zurückgezogen`; `aktualisiert` und `korrigiert` sind nachvollziehbare Änderungen, keine eigenen Dauerstatus. Späteres Nichtfinden in einem Recherchelauf darf bestehende Objekte nicht entfernen oder entwerten. |
-| 1.8 | 04.10.2026 | Lebenszyklusstatus für Vorgang und Thema festgelegt. Vorgang: `aktiv / ruhend / abgeschlossen / archiviert`; Thema: `aktiv / ruhend / archiviert`. `abgeschlossen` bleibt bewusst auf konkrete Vorgänge beschränkt; `archiviert` bedeutet Entfernung aus laufender öffentlicher Navigation bei vollständigem Erhalt im Redaktionssystem; Wiederaktivierung bleibt möglich. |
-| 1.7 | 04.10.2026 | Schwelle für Gesamtversionen konkretisiert: neue Version nur bei fachlich relevanter Änderung des Vorgangs-/Themenstands; typische Auslöser und reine Protokolländerungen abgegrenzt; redaktionelle Bestätigung der Versionierungsentscheidung festgelegt. |
-| 1.6 | 04.10.2026 | Versionierungsgrundsatz festgelegt: Vorgänge und Themen werden als bestätigte strukturierte Gesamtstände versioniert; enthaltene Fachbausteine wie Wirkung, Perspektive, Bewertung und Begründung erhalten keine eigene parallele Versionshistorie. Öffentlich erscheint nur der aktuelle freigegebene Stand; historische Gesamtversionen bleiben ausschließlich im Redaktionssystem für Vergleich, Audit und Rekonstruktion verfügbar. |
-| 1.5 | 04.10.2026 | G3-Lebenszyklus begonnen: Grundsatz gegen spurloses Löschen fachlich wirksamer Zustände ergänzt; offene Fragen/Wissenslücken konkretisiert. Fachlicher Erkenntnisstatus `offen / teilweise geklärt / geklärt / gegenstandslos` wird vom Bearbeitungsstatus `aktiv / zurückgestellt` getrennt; Statusänderungen, Auflösungsbezug und Historisierung verbindlich festgelegt. |
-| 1.4 | 04.10.2026 | Zweiten Demonstrator-Transfer-Audit und zwischenzeitliche G3-Entscheidungen nachgezogen: eigene Begründung der Verlässlichkeit, Abwägung ohne abschließendes Gesamturteil, persistente offene Fragen/Wissenslücken mit Status/Auflösung, Ableitung von „Was bisher passiert ist“ sowie Bild/Bildverwendung mit Rechte-, Metadaten- und Zuordnungslogik ergänzt. |
-| 1.3 | 03.10.2026 | Politischen Bezug und Begründungslogik konkretisiert: Zielbereich ist der allgemeine politische Maßstab; konkrete dokumentierte grüne Position wird bei einschlägigem Vorliegen zusätzlich verwendet, ist aber keine Voraussetzung für eine Bewertung. |
-| 1.2 | 03.10.2026 | Feste fachliche Wertemengen für Wirkungsrichtung, Bedeutung der Wirkung, Verlässlichkeit und politisches Gewicht festgelegt. |
+| 3.0 | 05.10.2026 | G3-Gesamtkonsolidierung: zentrales Datenmodell zur Integrationsquelle gestrafft; Wissenskern, strukturierter Redaktionsstand, Quellen/Fundstellen, Beobachtungsauftrag/Recherchelauf, Sitzung/Beschluss, Referenzwissen, Referenzmaßstab, „Mehr wissen?“, Bilder, AI Tasks, Persistenz, Plausibilität/Freigabe und gemeinsame Fachfunktionsschicht integriert. Veraltete offene G3-Punkte entfernt; Vorlage als Fundstelle und spätere Behandlung/Beschlussfassung als getrennte Ereignisentwicklung konsolidiert. Verbleibende Fragen ausdrücklich auf technische/physische Modellierung begrenzt. |
+| 2.1 | 05.10.2026 | Schlankes Referenzwissen in das konzeptionelle G3-Datenmodell integriert. |
+| 2.0 | 04.10.2026 | Sitzung und TOP in den Wissenskern integriert. |
+| 1.9 | 04.10.2026 | Status- und Rücknahmelogik für Ereignis und Meldung festgelegt. |
+| 1.8 | 04.10.2026 | Lebenszyklusstatus für Vorgang und Thema festgelegt. |
+| 1.7 | 04.10.2026 | Schwelle für Gesamtversionen konkretisiert. |
+| 1.6 | 04.10.2026 | Versionierungsgrundsatz für strukturierte Gesamtstände festgelegt. |
+| 1.5 | 04.10.2026 | Offene Fragen/Wissenslücken und Lebenszyklus ergänzt. |
+| 1.4 | 04.10.2026 | Demonstrator-Transferentscheidungen zu Einordnung, offenen Fragen und Bildern nachgezogen. |
+| 1.3 | 03.10.2026 | Politischen Bezug und Begründungslogik konkretisiert. |
+| 1.2 | 03.10.2026 | Feste fachliche Wertemengen festgelegt. |
 | 1.1 | 03.10.2026 | Persistente Wirkung-Perspektive-Zuordnung festgelegt. |
 | 1.0 | 03.10.2026 | Wirkungsmodell konkretisiert. |
 | 0.9 | 03.10.2026 | Themenmodell ergänzt. |
@@ -962,6 +625,6 @@ Mehrfachverwendung eines Bildes ist möglich, wenn jede Verwendung eigenständig
 | 0.6 | 02.10.2026 | Bestätigungslogik und feldübergreifende Plausibilitätsprüfung festgelegt. |
 | 0.5 | 02.10.2026 | Strukturierter Redaktionsstand als fachliche Quelle festgelegt. |
 | 0.4 | 02.10.2026 | Vorgang↔Thema konkretisiert. |
-| 0.3 | 02.10.2026 | Beziehung Ereignis ↔ Vorgang festgelegt. |
-| 0.2 | 02.10.2026 | Kardinalität Ereignis ↔ Meldung festgelegt. |
+| 0.3 | 02.10.2026 | Beziehung Ereignis↔Vorgang festgelegt. |
+| 0.2 | 02.10.2026 | Kardinalität Ereignis↔Meldung festgelegt. |
 | 0.1 | 01.10.2026 | G3-Primärdokument angelegt. |
