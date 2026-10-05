@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 1.3 | 05.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
+| 1.4 | 05.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
 
 ## 1. Zweck und Geltung
 
@@ -57,6 +57,8 @@ Für den Nachrichtenstrang `Ereignis → Meldung → Vorgang → Thema` gilt ins
 
 > **Der Chat darf diese Inhalte nicht an den vorgesehenen Qualitäts-, Referenz-, Status- oder Freigaberegeln vorbei verändern. Er kann jedoch dieselben vorgesehenen Bearbeitungs-, Freigabe- und Veröffentlichungsfunktionen wie ein berechtigter Redakteur nutzen.**
 
+Der FIB-Chat kann zur Erfüllung eines fachlich eindeutigen Benutzerauftrags mehrere Fachfunktionen nacheinander orchestrieren. Jede Teilfunktion wird dabei separat serverseitig auf Rolle, Objektzustand, Regeln, Version und gegebenenfalls Bestätigung geprüft. Der Chat fasst anschließend das fachliche Gesamtergebnis zusammen, statt dem Benutzer unnötig die technische Funktionsfolge aufzubürden.
+
 ## 5. Automatische AI Tasks
 
 Automatische AI Tasks bearbeiten periodische oder anlassbezogene Aufgaben ohne laufenden Benutzer-Dialog.
@@ -79,9 +81,17 @@ Automatische Optimierungsaufgaben dürfen Änderungen an der produktiven Routing
 
 ## 6. Gemeinsame Fachfunktionen statt Kanal-Sonderlogik
 
-Die drei Zugangswege schreiben fachlich relevante Daten nicht über beliebige direkte Tabellenmanipulationen oder freies SQL.
+Die drei Zugangswege greifen fachlich relevante Daten nicht über beliebige direkte Tabellenmanipulationen oder freies SQL ab oder verändern sie auf diesem Weg.
 
-Stattdessen verwenden sie definierte FIB-Fachfunktionen bzw. Services, die mindestens sicherstellen:
+Verbindlicher Architekturgrundsatz:
+
+> **Alle regulären fachlichen Lese- und Schreibzugriffe von Web-App, FIB-Chat und AI Tasks auf den FIB-Datenbestand erfolgen über die gemeinsame Fachfunktions-/Service-Schicht.**
+
+Dies gilt sowohl für Änderungen als auch für fachliche Lesezugriffe. Dadurch werden insbesondere Berechtigungen, Sichtbarkeit, Objektzustände und fachliche Ableitungsregeln an einer gemeinsamen Stelle durchgesetzt.
+
+Rein technische Betriebszugriffe – insbesondere Datenbankmigrationen, Backup, Wiederherstellung, Wartung oder technische Diagnose – dürfen auf einer darunterliegenden technischen Ebene direkt mit der Datenbank arbeiten. Sie sind kein regulärer fachlicher Benutzerzugang und dürfen nicht als alternativer Weg zur Umgehung der Fachlogik verwendet werden.
+
+Die Fachfunktions-/Service-Schicht stellt mindestens sicher:
 
 - Berechtigungsprüfung,
 - fachliche Validierung,
@@ -89,21 +99,12 @@ Stattdessen verwenden sie definierte FIB-Fachfunktionen bzw. Services, die minde
 - Dubletten- und Plausibilitätsprüfungen, soweit vorgesehen,
 - Status- und Lebenszyklusregeln,
 - Freigabeanforderungen,
-- Historisierung und Auditierbarkeit.
+- Historisierung und Auditierbarkeit,
+- für Lesezugriffe die jeweils zulässige Sicht auf öffentliche bzw. interne Daten.
 
-Damit darf kein Zugangsweg die fachliche Logik umgehen.
+Damit darf kein produktiver Zugangsweg die fachliche Logik umgehen.
 
-Eine fachliche Aktion soll möglichst genau eine definierte Fachfunktion besitzen. Beispielhaft:
-
-- Referenzbezeichnung ergänzen,
-- Referenzbeziehung vorschlagen,
-- Beobachtungsauftrag anlegen oder ändern,
-- Ereigniskandidat erzeugen,
-- Meldungsentwurf ändern,
-- Vorgangszuordnung vorschlagen,
-- Referenzmaßstab als Kandidat anlegen,
-- Freigabe anstoßen,
-- Meldung veröffentlichen.
+Eine fachliche Aktion soll möglichst genau eine definierte Fachfunktion bzw. Funktionsfamilie besitzen. Der verbindliche MVP-Katalog wird in `docs/MVP-Fachfunktionen.md` geführt und nicht in diesem Architekturdokument dupliziert.
 
 Ob eine Aktion aus Web-App, FIB-Chat oder automatischer KI-Aufgabe kommt, ändert nicht ihre fachlichen Regeln. Der Zugangsweg ist jedoch für Berechtigung, Bestätigungspflicht und Audit mitzuführen.
 
@@ -225,6 +226,8 @@ S3-Aktionen erfordern grundsätzlich eine unmittelbare explizite Bestätigung vo
 Dies gilt insbesondere für:
 
 - Veröffentlichung einer Meldung,
+- öffentliche Bereitstellung einer zuvor nur intern sichtbaren Fundstelle/Datei,
+- Freigabe eines fachlich neuen strukturierten Gesamtstands zur öffentlichen Nutzung, soweit dies den öffentlichen Stand verändert,
 - Rücknahme einer veröffentlichten Meldung,
 - Aktivierung oder wesentliche Änderung einer Fachregel,
 - Aktivierung besonders geschützter Referenzmaßstäbe,
@@ -235,6 +238,7 @@ Dies gilt insbesondere für:
 Unabhängig vom Zugangsweg erhalten fachlich oder administrativ besonders folgenreiche Aktionen eine erhöhte Sicherung. Dazu gehören insbesondere:
 
 - Veröffentlichung und Rücknahme veröffentlichter Inhalte,
+- öffentliche Freigabe bislang interner Dateien/Fundstellen,
 - Zusammenführung von Ereignissen oder Vorgängen mit fachlichen Folgewirkungen,
 - Änderung aktiver Fachregeln,
 - Änderung von Benutzerrechten,
@@ -279,6 +283,8 @@ Jede schreibende oder statusändernde Fachfunktion validiert daher serverseitig 
 - fachliche Vorbedingungen,
 - erwartete Objektversion, soweit relevant.
 
+Auch fachliche Lesezugriffe werden serverseitig auf Rolle, Sichtbarkeit und zulässigen Datenumfang begrenzt.
+
 Die KI darf niemals allein aufgrund eigener Interpretation annehmen, dass eine Aktion zulässig ist.
 
 ## 14. KI-Router und Modellunabhängigkeit
@@ -312,14 +318,17 @@ Für fachlich relevante Änderungen muss mindestens nachvollziehbar sein:
 
 KI-Aufrufe des FIB-Chats und automatischer AI Tasks werden zusätzlich im gemeinsamen Kosten- und Qualitätsmonitoring erfasst.
 
+Lesezugriffe können gegenüber fachlichen Änderungen mit geringerer Detailtiefe protokolliert werden; sicherheits- oder datenschutzrelevante Zugriffe müssen dennoch nachvollziehbar bleiben.
+
 ## 17. Nächster Klärungsschritt
 
-Als nächstes werden die zentralen **MVP-Fachfunktionen** definiert. Für jede Funktion werden insbesondere Zweck, Eingabe-/Ausgabevertrag, zulässige Rollen/Zugangswege, Aktionsstufe, fachliche Vorbedingungen, Bestätigungsbedarf und typische Fehler-/Konfliktfälle festgelegt.
+Der fachliche MVP-Funktionskatalog wird in `docs/MVP-Fachfunktionen.md` konsolidiert. Vor der technischen API-/Service-Spezifikation werden noch bestehende Modellinkonsistenzen geschlossen und der Katalog anschließend gegen das konsolidierte Datenmodell auditiert.
 
 ## Änderungshistorie
 
 | Version | Datum | Änderung |
 |---|---|---|
+| 1.4 | 05.10.2026 | Gemeinsame Fachfunktions-/Service-Schicht als verbindlicher regulärer Lese- und Schreibzugang für Web-App, FIB-Chat und AI Tasks festgelegt; rein technische Betriebszugriffe abgegrenzt. Chat-Orchestrierung mehrerer Fachfunktionen ergänzt, Sichtbarkeitsprüfung für Lesezugriffe sowie öffentliche Fundstellen-/Dateifreigabe und Freigabe strukturierter Gesamtstände in die S3-Logik aufgenommen. Fachfunktionskatalog in eigene Primärquelle `MVP-Fachfunktionen.md` verwiesen. |
 | 1.3 | 05.10.2026 | Sicherheits- und Freigabelogik verbindlich festgelegt: Aktionsstufen S0–S3, Grundmatrix für Besucher/Redakteur/Admin/AI Tasks, Bestätigungslogik des FIB-Chats, besonders geschützte Aktionen, Optimistic Concurrency sowie serverseitige Durchsetzung von Rechten, Regeln, Freigaben und Audit. |
 | 1.2 | 05.10.2026 | Rollenmodell auf Besucher, Redakteur und Admin konkretisiert. Redakteure dürfen veröffentlichen; zusätzliche Publisher-Rolle verworfen. FIB-Chat darf bei entsprechender Rolle dieselben regulären Freigabe-/Veröffentlichungsfunktionen wie die Web-App nutzen; AI Tasks bleiben davon ausgeschlossen. |
 | 1.1 | 05.10.2026 | Drei produktive Zugangswege verbindlich konkretisiert: Redaktions-Web-App, eigener anbieterunabhängiger FIB-Chat und automatische AI Tasks. Gemeinsamer KI-Router, Kosten-/Qualitätsmonitoring und Kostenoptimierung als AI Task ergänzt. MCP als optionale spätere Adapter-Schnittstelle und nicht als MVP-Abhängigkeit abgegrenzt. Entwicklungsarbeit in externen KI-Arbeitsräumen vom produktiven Zugangsmodell getrennt. |
