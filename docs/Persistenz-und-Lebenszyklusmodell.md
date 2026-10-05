@@ -4,198 +4,144 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 1.0 | 04.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
+| 1.1 | 05.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
 
 ## 1. Zweck und Geltung
 
 Dieses Dokument ist die verbindliche Primärquelle für die Persistenz-, Rücknahme-, Archivierungs- und Lebenszyklusregeln fachlicher Objekte und Beziehungen im FIB-Echtsystem.
 
-Es konkretisiert die allgemeinen Grundsätze aus `docs/Datenmodell.md` und gilt ergänzend zu spezialisierten Teilmodellen wie `docs/Sitzungs-und-Beschlussmodell.md` und `docs/Wirkungsmodell.md`.
+Es konkretisiert die allgemeinen Grundsätze aus `docs/Datenmodell.md` und gilt ergänzend zu den spezialisierten Teilmodellen.
 
 ## 2. Gemeinsamer Persistenzgrundsatz
 
 > **Ein fachlich bestätigtes Objekt oder eine fachlich bestätigte Beziehung wird nicht spurlos gelöscht, nur weil sie später nicht mehr aktuell, relevant oder auffindbar ist.**
 
-Je nach Objekt oder Beziehung kommen stattdessen insbesondere in Betracht:
+Je nach Objekt oder Beziehung kommen stattdessen insbesondere fachliche Änderung, Rücknahme, Zusammenführung, Archivierung, Aufhebung einer Beziehung, nachvollziehbare Korrektur oder Historisierung über einen übergeordneten Gesamtstand in Betracht.
 
-- fachliche Änderung,
-- Rücknahme,
-- Zusammenführung,
-- Archivierung,
-- Aufhebung einer Beziehung,
-- nachvollziehbare Korrektur,
-- Historisierung über den übergeordneten Gesamtstand.
-
-Ein echtes technisches Löschen ist nur für Inhalte zulässig, die noch nie fachlich wirksam waren, z. B. verworfene KI-Kandidaten, unbeabsichtigte technische Dubletten vor Bestätigung oder rein technische Zwischenstände ohne fachliche Bedeutung.
+Ein echtes technisches Löschen ist nur für Inhalte zulässig, die noch nie fachlich wirksam waren, z. B. verworfene technische Zwischenstände oder unbeabsichtigte technische Dubletten vor Bestätigung.
 
 ## 3. Statusmodelle nur bei echtem Lebenszyklus
 
-Nicht jedes Fachobjekt erhält einen eigenen Lebenszyklusstatus.
-
-Statusmodelle werden nur dort verwendet, wo das Objekt selbst einen fachlich eigenständigen Lebenszyklus besitzt.
+Nicht jedes Fachobjekt erhält einen künstlichen eigenen Lebenszyklusstatus.
 
 ### 3.1 Objekte mit eigenem Statusmodell
 
-| Objekt | Statuslogik |
+| Objekt | Fachliche Statuslogik |
 |---|---|
 | Ereignis | `bestätigt / zurückgenommen / zusammengeführt` |
 | Meldung | `Entwurf / freigegeben / veröffentlicht / zurückgezogen` |
 | Vorgang | `aktiv / ruhend / abgeschlossen / archiviert` |
 | Thema | `aktiv / ruhend / archiviert` |
 | Sitzung | `angekündigt / stattgefunden / abgeschlossen / abgesagt` |
-| TOP | angekündigt/aktiv, behandelt, vertagt/zurückgestellt, abgesetzt/nicht behandelt |
-| offene Frage / Wissenslücke | `offen / teilweise geklärt / geklärt / gegenstandslos`; zusätzlich Bearbeitungsstatus `aktiv / zurückgestellt` |
+| TOP | angekündigt, behandelt, vertagt, abgesetzt/nicht behandelt |
+| offene Frage / Wissenslücke | `offen / teilweise geklärt / geklärt / gegenstandslos`; Bearbeitung zusätzlich `aktiv / zurückgestellt` |
+| Beobachtungsauftrag | `aktiv / pausiert / beendet` |
+| Referenzwissen | `vorgeschlagen / bestätigt / nicht mehr gültig bzw. zurückgenommen` |
+| Vertiefungsfrage | `Entwurf/Vorschlag / freigegeben / zurückgezogen` |
+| Vertiefungsantwort | `Entwurf / freigegeben / veröffentlicht / zurückgezogen` |
 | Bild | Freigabe-/Rechte-/Verfügbarkeitsstatus nach Bildmodell |
-| Bildverwendung | aktuelle Gültigkeit/Freigabe der konkreten Verwendung |
+| Bildverwendung | Gültigkeit/Freigabe der konkreten Verwendung |
+| AI Task | aktiver, pausierter oder beendeter betrieblicher Zustand gemäß AI-Task-Modell |
 
-Die endgültigen technischen Enum-Bezeichnungen werden erst im physischen Datenmodell festgelegt. Die fachlichen Zustände müssen unterscheidbar bleiben.
+Die endgültigen technischen Enum-Bezeichnungen werden erst im physischen Datenmodell festgelegt.
 
-### 3.2 Objekte ohne eigenen Lebenszyklusstatus
+### 3.2 Objekte ohne künstlichen Lebenszyklusstatus
 
-Folgende Objekte erhalten grundsätzlich keinen künstlichen eigenen Lebenszyklusstatus:
+Insbesondere Wirkung, Perspektive, Bewertung, Begründung, Gestaltungsoption, Beschlusspunkt, Beschlusspunkt-Fassung, Abstimmung und Recherchelauf erhalten keinen allgemeinen Aktiv-/Archiviert-Lebenszyklus.
 
-- Wirkung,
-- Perspektive,
-- Bewertung,
-- Begründung,
-- Gestaltungsoption,
-- Beschlusspunkt,
-- Beschlusspunkt-Fassung,
-- Abstimmung.
-
-Für Analysebestandteile wie Wirkung, Perspektive, Bewertung, Begründung und Gestaltungsoption erfolgt die historische Nachvollziehbarkeit über den versionierten strukturierten Gesamtstand des zugehörigen Vorgangs oder Themas.
-
-Beschlusspunkte, Fassungen und Abstimmungen sind dagegen historische Verfahrens- bzw. Entscheidungstatsachen. Sie bleiben als solche erhalten und werden bei später erkannten Fehlern nachvollziehbar korrigiert, nicht durch einen allgemeinen Aktiv/Archiviert-Lebenszyklus geführt.
+Analysebestandteile werden über den versionierten strukturierten Gesamtstand des zuständigen Vorgangs bzw. Themas historisiert. Beschluss- und Rechercheobjekte bleiben als historische Tatsachen bzw. Provenienz erhalten und werden bei Fehlern nachvollziehbar korrigiert.
 
 ## 4. Stabile fachliche Identitäten
 
-Fachliche Objekte, auf die andere Objekte dauerhaft verweisen können, benötigen eine stabile Identität.
+Fachliche Objekte, auf die dauerhaft verwiesen wird, benötigen stabile Identitäten. Dies gilt insbesondere für Ereignis, Meldung, Vorgang, Thema, Sitzung, TOP, Beschlusspunkt, Quelle, Fundstelle, Bild, offene Frage, Beobachtungsauftrag, Recherchelauf, Referenzobjekt, Vertiefungsfrage und Vertiefungsantwort.
 
-Dies gilt insbesondere für:
-
-- Ereignis,
-- Meldung,
-- Vorgang,
-- Thema,
-- Sitzung,
-- TOP,
-- Beschlusspunkt,
-- Quelle/Fundstelle,
-- Bild,
-- offene Frage/Wissenslücke.
-
-Eine spätere Korrektur verändert diese Identität grundsätzlich nicht. Nur wenn sich herausstellt, dass die frühere fachliche Identitätsannahme falsch war, kommen Rücknahme oder Zusammenführung nach den jeweiligen Spezialregeln in Betracht.
+Eine spätere Korrektur verändert die Identität grundsätzlich nicht. Nur eine fachlich falsche Identitätsannahme kann nach den jeweiligen Spezialregeln zu Rücknahme oder Zusammenführung führen.
 
 ## 5. Persistenz fachlicher Beziehungen
 
-Auch fachlich bestätigte Beziehungen dürfen nicht spurlos verschwinden, wenn sie später aufgehoben oder korrigiert werden.
-
-Dies betrifft insbesondere:
+Auch fachlich wirksame Beziehungen dürfen bei späterer Änderung nicht spurlos verschwinden. Dies betrifft insbesondere:
 
 - `Ereignis ↔ Vorgang`,
 - `Vorgang ↔ Thema`,
-- direkte `Ereignis ↔ Thema`-Beziehung,
-- `Wirkung ↔ Ereignis` als Tatsachengrundlage,
+- direkte `Ereignis ↔ Thema`-Beziehungen,
+- `Ereignis ↔ Wirkung` und Herkunftskontext einer Wirkung,
 - `Wirkung ↔ Perspektive`,
-- `Meldung ↔ Sitzung`,
-- `Meldung ↔ TOP`,
 - `TOP ↔ Ereignis`,
-- weitere fachlich wirksame Zuordnungen.
+- `Beobachtungsauftrag → Primärbezug`,
+- `Beobachtungsauftrag → Recherchelauf`,
+- `Recherchelauf → Fundstelle`,
+- Referenzbeziehungen,
+- Quellen-/Belegbeziehungen,
+- Bildverwendungen,
+- Vertiefungsantwort ↔ Fundstelle.
 
-Für eine Beziehung muss fachlich rekonstruierbar bleiben:
+**Nicht** als eigenständige autoritative Beziehungen geführt werden `Meldung ↔ Sitzung` oder `Meldung ↔ TOP`. Diese Bezüge werden aus `Meldung → Ereignis → TOP/Sitzung` abgeleitet.
 
-- dass sie bestand,
-- wann sie fachlich wirksam wurde,
-- ob und wann sie aufgehoben oder ersetzt wurde,
-- aus welchem Grund dies geschah,
-- auf welcher redaktionellen Entscheidung bzw. welchem Beleg die Änderung beruhte.
-
-Die konkrete technische Umsetzung kann z. B. über Gültigkeitskennzeichen, Zeitpunkte und Änderungsgrund oder über eine allgemeine Beziehungshistorie erfolgen; dies wird erst im physischen Datenmodell festgelegt.
+Für fachlich wirksame Beziehungen muss rekonstruierbar bleiben, wann sie wirksam wurden, ob und wann sie aufgehoben oder ersetzt wurden und warum.
 
 ## 6. Quellen und Fundstellen
 
-Quellen und Fundstellen bleiben erhalten, wenn sie als Beleg verwendet wurden, auch wenn ihre technische Erreichbarkeit später entfällt.
-
-Insbesondere gilt:
+Quellen und als Beleg verwendete Fundstellen bleiben erhalten, auch wenn ihre technische Erreichbarkeit später entfällt.
 
 > **„URL nicht mehr erreichbar“ ist kein Löschgrund.**
 
-Getrennt zu behandeln sind mindestens:
+Getrennt zu behandeln sind fachliche Existenz, aktuelle technische Erreichbarkeit, ursprüngliche öffentliche Verfügbarkeit, öffentliche Bereitstellung über FIB, gegebenenfalls gespeicherte Kopie und Rechte zur öffentlichen Bereitstellung.
 
-- fachliche Existenz der Quelle/Fundstelle,
-- aktuelle technische Erreichbarkeit,
-- ursprüngliche öffentliche Verfügbarkeit,
-- öffentliche Bereitstellung über FIB,
-- gegebenenfalls gespeicherte lokale oder interne Kopie,
-- Rechte zur öffentlichen Bereitstellung.
+## 7. Recherche- und Beobachtungshistorie
 
-Eine als Beleg verwendete Fundstelle darf nicht dadurch fachlich entwertet werden, dass der ursprüngliche Weblink später verschwindet.
+Beobachtungsaufträge werden bei Pause oder Ende nicht gelöscht. Rechercheläufe bleiben als Provenienz der gefundenen bzw. geänderten Fundstellen erhalten.
 
-## 7. Korrekturen historischer Tatsachen
+Ein ergebnisloser späterer Recherchelauf entwertet keine zuvor bestätigten Fundstellen, Ereignisse, Wirkungen oder Beziehungen.
 
-Historische Tatsachenobjekte wie Beschlusspunkte, Beschlusspunkt-Fassungen und Abstimmungen werden nicht über einen normalen Lebenszyklus archiviert.
+Die Wiederaufnahme eines pausierten Beobachtungsauftrags setzt dessen bestehende Identität fort, sofern kein fachlich neuer Informationsbedarf entstanden ist.
 
-Wird später ein Erfassungs- oder Quellenfehler erkannt, gilt:
+## 8. Korrekturen historischer Tatsachen
 
-- der aktuelle fachlich richtige Wert wird berichtigt,
-- die Korrektur bleibt mit Zeitpunkt, Grund und Beleg nachvollziehbar,
-- frühere falsche Angaben werden nicht stillschweigend aus der Auditspur entfernt.
+Historische Tatsachenobjekte wie Beschlusspunkte, Fassungen und Abstimmungen werden bei später erkannten Fehlern nachvollziehbar berichtigt. Der frühere fehlerhafte Stand bleibt in der Auditspur rekonstruierbar.
 
-Beispiel:
+Dasselbe Prinzip gilt für fachlich relevante Korrekturen an bereits verwendeten Fundstellen oder anderen historischen Belegen.
 
-- zunächst erfasst: Abstimmung `12 : 8`,
-- später aus genehmigter Niederschrift korrigiert: `13 : 7`,
-- Korrekturgrund und Fundstelle bleiben nachvollziehbar.
+## 9. Analysebestandteile und Gesamtversionierung
 
-## 8. Analysebestandteile und Gesamtversionierung
+Wirkungen, Perspektiven, Bewertungen, Begründungen, Gestaltungsoptionen und vergleichbare Analysebestandteile werden nicht eigenständig versioniert, sondern über den bestätigten strukturierten Gesamtstand ihres Vorgangs bzw. Themas historisiert.
 
-Für Wirkungen, Perspektiven, Bewertungen, Begründungen, Gestaltungsoptionen und vergleichbare Analysebestandteile gilt:
+Wirkungen sind fachlich am Ereignis verankert; ihr Herkunftskontext bestimmt, in welchem Vorgang oder Thema sie geändert werden dürfen. Frühere Fassungen bleiben über den früheren Gesamtstand rekonstruierbar.
 
-> **Sie werden nicht eigenständig versioniert, sondern über den bestätigten strukturierten Gesamtstand ihres Vorgangs bzw. Themas historisiert.**
+## 10. Vertiefungsinhalte „Mehr wissen?“
 
-Daraus folgt:
+Veröffentlichte Vertiefungsantworten werden bei fachlich relevanter Änderung nicht spurlos überschrieben. Es muss nachvollziehbar bleiben, welche Fassung zu welchem Zeitpunkt freigegeben bzw. veröffentlicht war.
 
-- fachlich geänderte Analysebestandteile werden im aktuellen Stand angepasst,
-- entfallene Analysebestandteile gehören nicht mehr zum neuen aktuellen Stand,
-- frühere Fassungen bleiben über die vorherige Gesamtversion rekonstruierbar,
-- gleichzeitig fachlich unterschiedliche Wirkungen bleiben eigenständige Wirkungen und sind keine Versionen voneinander.
+Reine sprachliche Änderungen ohne Bedeutungsänderung benötigen keine neue fachliche Fassung. Zurückgezogene Fragen und Antworten bleiben intern nachvollziehbar.
 
-Damit werden unnötige parallele Status- und Versionsketten vermieden.
+## 11. Archivierung und Wiederaufnahme
 
-## 9. Archivierung und Wiederaufnahme
+Archivierung ist nur für Objekte vorgesehen, bei denen das Herausnehmen aus dem laufenden öffentlichen Bestand fachlich sinnvoll ist, insbesondere Vorgänge und Themen.
 
-Archivierung ist nur für Objekte vorgesehen, bei denen ein Herausnehmen aus dem laufenden öffentlichen Bestand fachlich sinnvoll ist, insbesondere Vorgänge und Themen.
+Archivierung löscht keine Inhalte oder Beziehungen. Reaktivierung bleibt möglich. Archivierung darf nicht als Ersatz für Rücknahme oder Korrektur verwendet werden.
 
-Dabei gilt:
+## 12. Fachliche Persistenz versus technischer Betrieb
 
-- Archivierung löscht keine fachlichen Inhalte oder Beziehungen,
-- archivierte Objekte bleiben im Redaktionssystem vollständig erhalten,
-- historische Bezüge und Auditfähigkeit bleiben bestehen,
-- eine spätere Reaktivierung ist möglich, wenn neue fachliche Relevanz entsteht.
+Fachlich dauerhaft bzw. nachvollziehbar zu halten sind insbesondere bestätigte Fachobjekte, Freigabestände, fachlich wirksame Beziehungen, Quellen-/Fundstellen-Provenienz, Rechercheläufe, relevante Statusänderungen und Auditinformationen zu fachlichen Änderungen.
 
-Archivierung darf nicht als Ersatz für fachliche Rücknahme oder Korrektur verwendet werden.
+Rein technische Betriebsdaten wie Cache-Einträge, temporäre KI-Rohantworten, Retry-Informationen, Performance-Metriken oder abgelaufene Sessions sind davon getrennt. Ihre Aufbewahrungsfristen werden im technischen Betriebs- und Datenschutzkonzept festgelegt.
 
-## 10. Grundregel für technische Implementierung
+Damit ist die fachliche Abgrenzung geklärt; die konkrete technische Aufbewahrungsdauer einzelner Betriebsdaten ist keine offene G3-Datenmodellfrage.
 
-Das spätere physische Datenmodell muss sicherstellen, dass:
+## 13. Grundregel für die technische Implementierung
+
+Das physische Datenmodell muss sicherstellen, dass:
 
 1. bestätigte fachliche Identitäten stabil bleiben,
 2. fachlich wirksame Beziehungen nicht spurlos gelöscht werden,
 3. Rücknahmen, Zusammenführungen, Aufhebungen und Korrekturen nachvollziehbar sind,
 4. technische Nichtverfügbarkeit keine fachliche Löschung auslöst,
-5. Analysehistorie über Vorgangs-/Themen-Gesamtversionen rekonstruiert werden kann,
-6. technische Betriebsdaten von fachlicher Persistenz getrennt bleiben.
-
-## 11. Abgrenzung zum technischen Betrieb
-
-Dieses Dokument regelt fachliche Persistenz.
-
-Rein technische Betriebsdaten wie Cache-Einträge, temporäre KI-Ausgaben, Job-Logs, technische Retry-Informationen, Performance-Metriken oder abgelaufene Session-Daten unterliegen nicht automatisch denselben Aufbewahrungsregeln.
-
-Ob solche Daten gespeichert, verdichtet oder gelöscht werden, wird im späteren technischen Betriebs- und Datenschutzkonzept geregelt.
+5. Analysehistorie über Vorgangs-/Themen-Gesamtversionen rekonstruierbar bleibt,
+6. Rechercheprovenienz erhalten bleibt,
+7. fachliche Persistenz von rein technischen Betriebsdaten getrennt bleibt.
 
 ## Änderungshistorie
 
 | Version | Datum | Änderung |
 |---|---|---|
-| 1.0 | 04.10.2026 | Gemeinsamen Persistenzgrundsatz festgelegt; Statusmodelle auf Objekte mit echtem Lebenszyklus begrenzt; stabile fachliche Identitäten und nachvollziehbare Aufhebung fachlicher Beziehungen geregelt; Quellen/Fundstellen gegen Verlust bei Linkausfall abgesichert; Korrektur historischer Tatsachen sowie Gesamtversionierung von Analysebestandteilen abgegrenzt; Archivierung und technische Betriebsdaten getrennt. |
+| 1.1 | 05.10.2026 | G3-Gesamtaudit: veraltete direkte Meldung↔Sitzung/TOP-Beziehungen entfernt; Wirkungskonzept an Ereignisverankerung angepasst; Beobachtungsauftrag, Recherchelauf, Referenzwissen und „Mehr wissen?“ in Lebenszyklus/Persistenz aufgenommen; fachliche Persistenz von technischen Betriebsdaten abschließend abgegrenzt. |
+| 1.0 | 04.10.2026 | Gemeinsamen Persistenzgrundsatz, Statusmodelle, stabile Identitäten, Beziehungshistorie, Quellenpersistenz, Gesamtversionierung und Archivierung festgelegt. |
