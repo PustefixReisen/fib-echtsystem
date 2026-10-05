@@ -4,13 +4,11 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 1.1 | 05.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
+| 1.2 | 05.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
 
 ## 1. Zweck und Geltung
 
 Dieses Dokument ist die verbindliche Primärquelle für die fachlich-technische Zugriffsarchitektur zwischen Redaktions-Web-App, dialogorientiertem KI-Zugang, automatischen KI-Aufgaben und dem FIB-Datenbestand.
-
-Es regelt noch nicht die vollständige Rollen- und Berechtigungsmatrix. Diese wird im nächsten Schritt konkretisiert.
 
 Die konzeptionelle und technische Weiterentwicklung von FIB in einem externen Entwicklungs-/Arbeitswerkzeug wie ChatGPT ist von diesen produktiven Zugangswegen zu unterscheiden. Entwicklungsarbeit kann weiterhin in einem geeigneten KI-Arbeitsraum mit GitHub-, Datei- und Recherchezugriff erfolgen; sie ist nicht selbst Bestandteil des produktiven FIB-Zugangsmodells.
 
@@ -53,11 +51,11 @@ Der dialogorientierte KI-Zugang ist fachlich wie ein zusätzlicher Redaktionszug
 
 Die Einschränkung richtet sich deshalb grundsätzlich **nicht nach dem Inhaltstyp**, sondern nach der zulässigen Aktion und dem dafür vorgesehenen Fachworkflow.
 
-Der Chat darf beispielsweise Ereignisse, Meldungen, Vorgänge, Themen, Referenzwissen, Referenzmaßstäbe oder Beobachtungsaufträge analysieren und – soweit Rolle und Workflow dies erlauben – Daten an den dafür vorgesehenen fachlichen Stellen vorbereiten, ergänzen oder zur Freigabe einreichen.
+Der Chat darf beispielsweise Ereignisse, Meldungen, Vorgänge, Themen, Referenzwissen, Referenzmaßstäbe oder Beobachtungsaufträge analysieren und – soweit Rolle und Workflow dies erlauben – Daten an den dafür vorgesehenen fachlichen Stellen vorbereiten, ergänzen, fachlich wirksam ändern oder veröffentlichen.
 
 Für den Nachrichtenstrang `Ereignis → Meldung → Vorgang → Thema` gilt insbesondere:
 
-> **Der Chat darf diese Inhalte nicht an den vorgesehenen Qualitäts-, Referenz-, Status- oder Freigaberegeln vorbei verändern. Er kann jedoch dieselben vorgesehenen Bearbeitungs- und Vorschlagsfunktionen wie ein Redakteur nutzen.**
+> **Der Chat darf diese Inhalte nicht an den vorgesehenen Qualitäts-, Referenz-, Status- oder Freigaberegeln vorbei verändern. Er kann jedoch dieselben vorgesehenen Bearbeitungs-, Freigabe- und Veröffentlichungsfunktionen wie ein berechtigter Redakteur nutzen.**
 
 ## 5. Automatische AI Tasks
 
@@ -104,11 +102,24 @@ Eine fachliche Aktion soll möglichst genau eine definierte Fachfunktion besitze
 - Meldungsentwurf ändern,
 - Vorgangszuordnung vorschlagen,
 - Referenzmaßstab als Kandidat anlegen,
-- Freigabe anstoßen.
+- Freigabe anstoßen,
+- Meldung veröffentlichen.
 
 Ob eine Aktion aus Web-App, FIB-Chat oder automatischer KI-Aufgabe kommt, ändert nicht ihre fachlichen Regeln. Der Zugangsweg ist jedoch für Berechtigung, Bestätigungspflicht und Audit mitzuführen.
 
-## 7. Grundprinzip für Schreibzugriffe
+## 7. Rollenmodell
+
+FIB verwendet für den MVP drei menschliche Rollen:
+
+1. **Besucher** – öffentliche Nutzung ohne redaktionelle Schreib-, Freigabe- oder Administrationsrechte,
+2. **Redakteur** – Recherche, Prüfung, Bearbeitung, fachlich wirksame Änderungen sowie Freigabe und Veröffentlichung im vorgesehenen Workflow,
+3. **Admin** – besitzt zusätzlich zu den Redaktionsrechten administrative Rechte für Benutzer-/Rollenverwaltung, systemweite Konfigurationen und besonders geschützte fachliche Grundlagen.
+
+Eine zusätzliche Rolle `Publisher` bzw. „Veröffentlicher“ ist nicht vorgesehen. **Ein Redakteur darf veröffentlichen.**
+
+Automatische AI Tasks sind keine menschliche Benutzerrolle. Sie handeln als technische Akteure mit separat festgelegten, grundsätzlich engeren Rechten.
+
+## 8. Grundprinzip für Schreibzugriffe
 
 Für jede Fachfunktion wird festgelegt, ob ein bestimmter Akteur und Zugangsweg sie:
 
@@ -122,9 +133,11 @@ dürfen.
 
 Diese Rechte werden nicht pauschal an den FIB-Chat oder die Web-App gebunden, sondern an Rolle, Aktion, Objektzustand und erforderliche Freigabestufe.
 
-Automatische AI Tasks dürfen fachlich wirksame redaktionelle Freigaben nicht allein deshalb besitzen, weil sie systemseitig ausgeführt werden.
+Für Redakteure gilt dabei insbesondere: Web-App und FIB-Chat können grundsätzlich dieselben fachlichen Freigabe- und Veröffentlichungsfunktionen bereitstellen. Der FIB-Chat darf eine Veröffentlichung jedoch nur über die reguläre Fachfunktion und unter Beachtung der vorgesehenen Bestätigungslogik ausführen.
 
-## 8. KI-Router und Modellunabhängigkeit
+Automatische AI Tasks dürfen fachlich wirksame redaktionelle Freigaben oder Veröffentlichungen nicht selbstständig ausführen.
+
+## 9. KI-Router und Modellunabhängigkeit
 
 Web-App, FIB-Chat und AI Tasks verwenden dieselbe Routinglogik für KI-Aufrufe.
 
@@ -132,7 +145,7 @@ Die Fachfunktion legt die erforderliche Qualitätsklasse fest; der Router wählt
 
 Modelle und Provider können anhand von Qualitätsmessungen, Kosten, Datenschutz, Verfügbarkeit und Fallback-Regeln ausgetauscht werden, ohne den fachlichen Workflow neu zu gestalten.
 
-## 9. Externe KI-Systeme / MCP
+## 10. Externe KI-Systeme / MCP
 
 Eine zusätzliche MCP-kompatible Anbindung externer KI-Systeme bleibt architektonisch möglich, ist aber **keine MVP-Abhängigkeit** und kein vierter notwendiger Zugangsweg.
 
@@ -140,7 +153,7 @@ Die FIB-Fach-API bzw. Fachfunktionsschicht bleibt die maßgebliche technische Sc
 
 Die Wiederaufnahme ist im GitHub-Issue **#2 „MCP-Anbindung externer KI-Systeme nach MVP prüfen“** mit konkreten Auslösern dokumentiert.
 
-## 10. Nachvollziehbarkeit
+## 11. Nachvollziehbarkeit
 
 Für fachlich relevante Änderungen muss mindestens nachvollziehbar sein:
 
@@ -154,13 +167,14 @@ Für fachlich relevante Änderungen muss mindestens nachvollziehbar sein:
 
 KI-Aufrufe des FIB-Chats und automatischer AI Tasks werden zusätzlich im gemeinsamen Kosten- und Qualitätsmonitoring erfasst.
 
-## 11. Nächster Klärungsschritt
+## 12. Nächster Klärungsschritt
 
-Als nächstes wird eine konkrete Sicherheits- und Berechtigungsmatrix festgelegt. Dabei werden Fachaktionen nach Risikoklasse und Freigabebedarf geordnet; insbesondere ist zu klären, welche Aktionen im FIB-Chat direkt nach Bestätigung ausgeführt werden dürfen und welche zusätzliche Freigabeschritte benötigen.
+Als nächstes wird die konkrete Sicherheits- und Berechtigungsmatrix für Besucher, Redakteur, Admin und technische AI-Task-Akteure festgelegt. Dabei werden Fachaktionen nach Risikoklasse und Bestätigungsbedarf geordnet; insbesondere ist zu bestimmen, welche Aktionen ein Redakteur im FIB-Chat unmittelbar beauftragen kann und bei welchen vor der Ausführung eine gesonderte Bestätigung erforderlich ist.
 
 ## Änderungshistorie
 
 | Version | Datum | Änderung |
 |---|---|---|
+| 1.2 | 05.10.2026 | Rollenmodell auf Besucher, Redakteur und Admin konkretisiert. Redakteure dürfen veröffentlichen; zusätzliche Publisher-Rolle verworfen. FIB-Chat darf bei entsprechender Rolle dieselben regulären Freigabe-/Veröffentlichungsfunktionen wie die Web-App nutzen; AI Tasks bleiben davon ausgeschlossen. |
 | 1.1 | 05.10.2026 | Drei produktive Zugangswege verbindlich konkretisiert: Redaktions-Web-App, eigener anbieterunabhängiger FIB-Chat und automatische AI Tasks. Gemeinsamer KI-Router, Kosten-/Qualitätsmonitoring und Kostenoptimierung als AI Task ergänzt. MCP als optionale spätere Adapter-Schnittstelle und nicht als MVP-Abhängigkeit abgegrenzt. Entwicklungsarbeit in externen KI-Arbeitsräumen vom produktiven Zugangsmodell getrennt. |
 | 1.0 | 05.10.2026 | Drei Arbeitsweisen (automatisch, strukturiert, dialogorientiert) und gemeinsame Fachfunktionsschicht verbindlich festgelegt. Chat als kontrollierter Redaktionszugang definiert; Inhaltsbeschränkung zugunsten aktions- und workflowbezogener Berechtigungen verworfen; direkter unkontrollierter Tabellen-/SQL-Zugriff ausgeschlossen. |
