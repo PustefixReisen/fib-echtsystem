@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 2.3 | 03.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
+| 2.4 | 05.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
 
 ## 1. Zweck
 
@@ -31,7 +31,107 @@ Für FIB gelten insbesondere:
 - `pustivo/docs/governance/Projektgruendung.md`
 - `pustivo/docs/governance/Projektmoderation.md`
 
-## 4. Verbindliche Quellen im Projekt
+## 4. Thematische Gliederung der FIB-Dokumentation
+
+Die FIB-Dokumentation wird fachlich in sechs übergeordnete Bereiche gegliedert. Diese Gliederung dient Menschen und KI als gemeinsame Navigationsstruktur. Sie wird zunächst logisch in dieser Dokumentationslandkarte geführt und soll nach Abschluss der laufenden fachlichen Konsolidierung, insbesondere nach G3, auch in der GitHub-Ordnerstruktur abgebildet werden.
+
+### 4.1 Leitbild und Governance
+
+Leitfrage: **Warum gibt es FIB, welche Grundprinzipien gelten und wie wird das Projekt geführt?**
+
+Dazu gehören insbesondere:
+
+- `docs/FIB_Management-Approach.md`
+- `docs/Leitprinzipien-FIB.md`
+- `docs/Projektgruendung.md`
+- `docs/Dokumentation.md`
+- `docs/Roadmap.md`
+- `docs/Fachkonzept.md`
+
+### 4.2 Recherche, Wissen und Referenzrahmen
+
+Leitfrage: **Was soll die KI wissen, wo und wie soll sie recherchieren und nach welchen Maßstäben soll sie Informationen hinterfragen und einordnen?**
+
+Dazu gehören insbesondere:
+
+- `docs/Recherchearchitektur-und-Referenzrahmen.md`
+- `docs/Recherche-und-Quellenmonitor.md`
+- künftige Primärquelle(n) zum Referenzwissen,
+- `docs/Gruene-Werte-und-politische-Ziele.md`
+- künftige Konkretisierung des demokratisch-gesellschaftlichen Grundrahmens,
+- `docs/KI-Leitfaden.md`
+- `docs/KI-Qualitaet-und-Modellunabhaengigkeit.md`
+
+### 4.3 Fachliches Wissens- und Datenmodell
+
+Leitfrage: **Welche fachlichen Objekte kennt FIB und wie hängen sie zusammen?**
+
+Dazu gehören insbesondere:
+
+- `docs/Datenmodell.md`
+- `docs/Themen-und-Vorgangslogik.md`
+- `docs/Sitzungs-und-Beschlussmodell.md`
+- `docs/Wirkungsmodell.md`
+- `docs/Persistenz-und-Lebenszyklusmodell.md`
+- `docs/Begriffe.md`
+
+Die während G3 entstandenen Teilmodelle können nach fachlicher Stabilisierung in eine konsolidierte Hauptquelle überführt werden. Ziel ist nicht eine dauerhaft wachsende Zahl gleichrangiger Primärdokumente.
+
+### 4.4 Redaktion und Veröffentlichung
+
+Leitfrage: **Wie wird aus recherchiertem Wissen ein geprüfter und veröffentlichbarer FIB-Inhalt?**
+
+Dazu gehören insbesondere:
+
+- `docs/Redaktionsworkflow.md`
+- `docs/Sprachleitfaden.md`
+- `docs/Mehr-wissen.md`
+- künftige Freigabe-, Rechte- und Veröffentlichungsregeln.
+
+### 4.5 Nutzererlebnis und Kommunikation
+
+Leitfrage: **Wie erleben Besucherinnen und Besucher FIB und wie wird das Angebot sichtbar und verständlich?**
+
+Dazu gehören insbesondere:
+
+- `docs/UX-und-Informationsarchitektur.md`
+- `docs/Visuelle-Identitaet-und-Bildkonzept.md`
+- `docs/Marketing-und-Kommunikation.md`
+- `docs/SEO-und-Auffindbarkeit.md`
+
+### 4.6 Technik und Betrieb
+
+Leitfrage: **Wie wird FIB technisch umgesetzt und dauerhaft betrieben?**
+
+Dazu gehören insbesondere:
+
+- künftige Architektur-Primärquelle,
+- Sicherheit / Datenschutz,
+- Deployment / Betrieb,
+- Backup / Restore,
+- Administration,
+- `docs/KI-Betrieb-und-Kosten.md`
+- `docs/Migrationsstrategie.md`
+- Architekturentscheidungen unter `docs/decisions/`.
+
+### 4.7 Künftige Ordnerstruktur
+
+Nach der fachlichen Konsolidierung soll die logische Gliederung grundsätzlich auch physisch abgebildet werden, voraussichtlich in der Form:
+
+```text
+docs/
+├── 01-governance/
+├── 02-recherche-wissen-referenzrahmen/
+├── 03-fachmodell/
+├── 04-redaktion-veroeffentlichung/
+├── 05-ux-kommunikation/
+├── 06-technik-betrieb/
+└── decisions/
+```
+
+Die Umstellung erfolgt bewusst nicht während laufender G3-Konsolidierung, um Mehrfachverschiebungen und unnötige Linkpflege zu vermeiden.
+
+## 5. Verbindliche Quellen im Projekt
 
 | Themenbereich | Verbindliche Quelle | Status |
 |---|---|---|
@@ -44,12 +144,14 @@ Für FIB gelten insbesondere:
 | Fachkonzept | `docs/Fachkonzept.md` | vorhanden |
 | Begriffe / fachliches Glossar | `docs/Begriffe.md` | vorhanden |
 | Management Approach | `docs/FIB_Management-Approach.md` | vorhanden |
+| Leitprinzipien | `docs/Leitprinzipien-FIB.md` | vorhanden |
+| Recherchearchitektur / Referenzrahmen | `docs/Recherchearchitektur-und-Referenzrahmen.md` | vorhanden / G3 in Arbeit |
 | KI-Arbeitsregeln | `docs/KI-Leitfaden.md` | vorhanden |
 | KI-Qualität / Modellunabhängigkeit | `docs/KI-Qualitaet-und-Modellunabhaengigkeit.md` | vorhanden |
 | Grüne Werte / politische Ziele | `docs/Gruene-Werte-und-politische-Ziele.md` | vorhanden |
 | Sprachregeln | `docs/Sprachleitfaden.md` | vorhanden |
 | Themen- und Vorgangslogik | `docs/Themen-und-Vorgangslogik.md` | vorhanden |
-| Recherche / Suchraum / Quellenmonitor | `docs/Recherche-und-Quellenmonitor.md` | vorhanden |
+| Recherche / Quellenmonitor | `docs/Recherche-und-Quellenmonitor.md` | vorhanden |
 | „Mehr wissen?“ | `docs/Mehr-wissen.md` | vorhanden |
 | UX / Informationsarchitektur / Benutzerführung | `docs/UX-und-Informationsarchitektur.md` | vorhanden |
 | Visuelle Identität / Logo / Bildsprache / UI-Stil | `docs/Visuelle-Identitaet-und-Bildkonzept.md` | vorhanden |
@@ -60,6 +162,9 @@ Für FIB gelten insbesondere:
 | Übernahme Demonstrator-Dokumentation | `docs/Dokumentationsuebernahme-Demonstrator.md` | abgeschlossen / unter G2.5 erneut verifiziert |
 | Architektur | noch anzulegen | offen |
 | Datenmodell | `docs/Datenmodell.md` | in Arbeit |
+| Sitzungs- und Beschlussmodell | `docs/Sitzungs-und-Beschlussmodell.md` | vorhanden / G3-Teilmodell |
+| Wirkungsmodell | `docs/Wirkungsmodell.md` | vorhanden / G3-Teilmodell |
+| Persistenz- und Lebenszyklusmodell | `docs/Persistenz-und-Lebenszyklusmodell.md` | vorhanden / G3-Teilmodell |
 | Sicherheit / Datenschutz | noch anzulegen | offen |
 | Deployment / Betrieb | noch anzulegen | offen |
 | Backup / Restore | noch anzulegen | offen |
@@ -67,7 +172,7 @@ Für FIB gelten insbesondere:
 | Architekturentscheidungen | `docs/decisions/` | bei Bedarf |
 | Arbeitsregeln für KI-/Entwicklungsarbeit | `AGENTS.md` | vorhanden |
 
-## 5. Abgrenzung UX und visuelle Identität
+## 6. Abgrenzung UX und visuelle Identität
 
 `docs/UX-und-Informationsarchitektur.md` ist die Primärquelle für:
 
@@ -89,7 +194,7 @@ Für FIB gelten insbesondere:
 
 Visuelle Mockups dürfen die fachliche UX-Struktur nicht eigenständig verändern.
 
-## 6. Dokumentationshoheit gegenüber dem Demonstrator
+## 7. Dokumentationshoheit gegenüber dem Demonstrator
 
 > **Der Demonstrator ist historische, fachliche und visuelle Referenz. Die weitere fachliche, redaktionelle, UX-bezogene und technische Entwicklung von FIB wird ausschließlich im Repository `PustefixReisen/fib-echtsystem` dokumentiert.**
 
@@ -104,7 +209,7 @@ Daraus folgt:
 
 Die detaillierte Zuordnung der ursprünglichen Dokumentationsübernahme steht in `docs/Dokumentationsuebernahme-Demonstrator.md`. Die abschließende Transferprüfung steht in `docs/Transfer-Audit-Demonstrator-Echtsystem.md`.
 
-## 7. Stand der Übernahme
+## 8. Stand der Übernahme
 
 Die Dokumentationsübernahme ist nach erneuter G2.5-Prüfung **abgeschlossen**.
 
@@ -140,7 +245,7 @@ Das visuelle Identitäts- und Bildkonzept ist eine **neue G2-Primärquelle des E
 
 Das Begriffsregister `docs/Begriffe.md` ist eine **neue G3-Primärquelle** für die einheitliche Bedeutung und Abgrenzung zentraler FIB-Begriffe. Es wird grundsätzlich über das Stand-Datum fortgeschrieben; eine neue Versionsnummer ist nur bei strukturellen oder konzeptionellen Änderungen erforderlich.
 
-## 8. Pflegepflicht
+## 9. Pflegepflicht
 
 Bei jeder verbindlichen fachlichen, technischen, architektonischen, Sicherheits-, Datenmodell-, Prozess- oder Designentscheidung wird geprüft:
 
@@ -152,7 +257,7 @@ Bei jeder verbindlichen fachlichen, technischen, architektonischen, Sicherheits-
 
 Bei vorhandenem GitHub-Zugriff erfolgt die Dokumentationspflege unmittelbar im Projekt.
 
-## 9. Dokumentationsstruktur
+## 10. Dokumentationsstruktur
 
 Für dauerhaft gepflegte Dokumente gilt grundsätzlich:
 
@@ -167,6 +272,7 @@ Für laufend ergänzte Register oder Glossare kann statt einer fortlaufenden Ver
 
 | Version | Datum | Änderung |
 |---|---|---|
+| 2.4 | 05.10.2026 | Dokumentation in sechs übergeordnete Themenbereiche gegliedert; spätere Abbildung dieser Gliederung in der GitHub-Ordnerstruktur nach fachlicher Konsolidierung festgelegt; neue G3-Primärquellen in die Landkarte aufgenommen. |
 | 2.3 | 03.10.2026 | G2.5 nach bestandenem Transfer-Gate als abgeschlossen markiert; Dokumentationsübernahme erneut als abgeschlossen bestätigt; fachliche Nachpflege und Übergabe technischer Folgeaufträge dokumentiert. |
 | 2.2 | 03.10.2026 | G2.5-Transfer-Audit in Dokumentationslandkarte aufgenommen; ursprünglichen Abschlussstatus der Demonstrator-Übernahme zurückgenommen; GitHub-Dokumentationshoheit gegenüber ODT/Exportkopien präzisiert; frühere Chats als Lückenfinder geregelt; Regressionstestkorpus als Projektquelle aufgenommen. |
 | 2.1 | 02.10.2026 | `docs/Begriffe.md` als verbindliches Begriffsregister aufgenommen; Stand-Datum statt fortlaufender Versionsnummer für laufend ergänzte Register/Glossare zugelassen. |
