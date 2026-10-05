@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 2.8 | 04.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
+| 2.9 | 05.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
 
 ## Statusmodell
 
@@ -27,15 +27,15 @@ Es gelten die zentralen Status aus `PustefixReisen/pustivo/docs/governance/Dokum
 | G2 UX / Informationsarchitektur / Fachfunktionen | **Abgeschlossen** | UX, öffentliche Navigation, Screenlogik, visuelle Identität, Claim, responsive Bannerlogik, GRÜNEN-Rücksprung und Assetstruktur sind konsolidiert; Abschlussprüfung durchgeführt |
 | G2.5 Transfer-Audit Demonstrator → Echtsystem | **Abgeschlossen** | zwei Prüfschichten abgeschlossen: fachliche Regeln/Recherche/Persistenz sowie sichtbare Inhaltsbausteine/Redaktionsfunktionen; Transfer-Gates bestanden |
 | Dokumentationsübernahme Demonstrator → Echtsystem | **Abgeschlossen** | Hauptdokumente sowie sichtbare Inhaltsbausteine und Redaktionsfunktionen erneut gegengeprüft; erkannte Lücken geschlossen oder als bewusste spätere Produktentscheidung dokumentiert |
-| G3 Datenanforderungen / Datenmodell | **In Arbeit** | Fachobjekte und strukturierter Redaktionsstand sind weit fortgeschritten; nächster Schwerpunkt: Persistenz-/Rücknahme-/Archivierungslogik und weitere G3-Kernbeziehungen |
-| G4 Schutzbedarf / Datenschutz / Offline | **Geplant** | Schutzklassen und Betriebsanforderungen festlegen |
+| G3 Datenanforderungen / Datenmodell | **Abgeschlossen** | fachliches/logisches Datenmodell v3.0 konsolidiert; G3-Gesamtaudit bestanden; drei Alt-Widersprüche bereinigt; keine offenen fachlichen G3-Grundsatzfragen |
+| G4 Schutzbedarf / Datenschutz / Offline | **Geplant** | nächster Schritt: Schutzklassen, personenbezogene Daten, öffentliche/interne Inhalte und Offline-/Geräteanforderungen festlegen |
 | G5 Zielarchitektur / Stack / Hosting / Deployment | **Geplant** | Hybrid-KI technisch umsetzen; zusätzlich Cache-/Deployment-Verlässlichkeit aus RT-014 und sichere Ausgabe dynamischer KI-Inhalte verbindlich berücksichtigen; produktionsreife Entwicklung auf Entwickler-Infrastruktur und späterer Umzug auf GRÜNEN-Webserver plus eigenes Supabase-Projekt; kein Supabase-Self-Hosting |
-| G6 Rollen / Rechte / Workflow | **Geplant** | konkretes Berechtigungs- und Freigabemodell einschließlich Admin-Verantwortung für Referenzsystem und redaktioneller Pflichtbestätigungen festlegen |
+| G6 Rollen / Rechte / Workflow | **Geplant** | konkretes technisches Berechtigungs- und Freigabemodell aus den bereits fachlich definierten Rollen/Aktionsstufen ableiten |
 | G7 Betrieb | **Geplant** | Backup, Restore, Monitoring, KI-Kostenmessung, Routing-Betrieb, Budgets und Warnschwellen definieren |
-| G8 Governance / Repository / Dokumentation | **Teilweise umgesetzt** | Echtsystem als Dokumentationshoheit etabliert; G2.5 abgeschlossen; zentrale Standards und späterer Gründungsaudit weiterführen |
+| G8 Governance / Repository / Dokumentation | **Teilweise umgesetzt** | Echtsystem als Dokumentationshoheit etabliert; G2.5 und G3 abgeschlossen; zentrale Standards und späterer Gründungsaudit weiterführen |
 | G9 Migration | **Geplant** | Übergang auf GRÜNEN-Infrastruktur nach `docs/Migrationsstrategie.md`; wiederholbares Migrations-Runbook statt separatem Migrations-Probelauf |
 | G10 Go-live-Abnahme | **Geplant** | messbare Abnahmekriterien festlegen, einschließlich Qualität der verpflichtenden Quellen-/Ereignisentdeckung, Transfer-Regressionstests und belastbarer Betriebskostenmessung |
-| Gründungsaudit | **Geplant** | Vollständigkeit und Widerspruchsfreiheit prüfen |
+| Gründungsaudit | **Geplant** | Vollständigkeit und Widerspruchsfreiheit aller Gründungspakete prüfen |
 | Technische Umsetzung | **Geplant** | beginnt erst nach abgeschlossenem Gründungsaudit |
 
 ## G2.5 – Transfer-Audit Demonstrator → Echtsystem
@@ -91,31 +91,31 @@ Verbindliche Detailquellen:
 - `docs/Transfer-Audit-Inhaltsbausteine-und-Redaktionsfunktionen.md`
 - `docs/Regressionstests-Demonstratortransfer.md`
 
-Technische Folgeaufträge bleiben bewusst in späteren Phasen:
-
-- G3: Persistenz-/Rücknahme-/Archivierungslogik konkret modellieren,
-- G5: Cache-/Versionierungs-/Invalidierungsstrategie und sichere Rendering-/Sanitizing-Logik,
-- G3–G10: fachliche Referenzfälle schrittweise automatisierbar machen.
+Die früher aus G2.5 an G3 übergebenen fachlichen Persistenz-/Datenmodellaufgaben sind mit Abschluss von G3 erledigt. Technische Folgeaufträge bleiben in G5/G10 und den weiteren Gründungspaketen verankert.
 
 ## Nächster konkreter Schritt
 
-**G3 – Datenanforderungen / Datenmodell:** Die Persistenz-/Rücknahme-/Archivierungslogik konkretisieren und die noch offenen G3-Kernbeziehungen weiter modellieren. Der Referenzfall **„Ausbau Autobahnkreuz München Ost“** bleibt dafür ein zentraler Testfall.
+**G4 – Schutzbedarf / Datenschutz / Offline:** Schutzbedarf und Datenklassen aus dem abgeschlossenen G3-Modell ableiten. Dabei insbesondere öffentliche vs. redaktionelle Daten, personenbezogene Daten, Rollen-/Accountdaten, Dateien/Bilder, KI-Übermittlungen, Geräte-/Offline-Daten und notwendige Schutzmaßnahmen unterscheiden.
 
 ## Fachlich/UX bereits geklärt
 
 - öffentliche Hauptnavigation: **Neues | Im Blick | Sitzungen | Suche**.
-- interne Fachobjekte bleiben **Meldung | Vorgang | Thema | Sitzung**; `Ereignis` ist eigenständiges fachliches Objekt unterhalb der Meldungsebene.
+- zentrale Fachobjekte sind Ereignis, Meldung, Vorgang, Thema, Sitzung/TOP sowie die in G3 ergänzten Recherche-, Referenz-, Vertiefungs- und Medienobjekte.
 - „Aktuell“ ist ausschließlich zeitliche Hervorhebung.
 - Ereignis und Meldung sind getrennte fachliche Objekte.
+- Dokument/Fundstelle und reales Ereignis sind getrennt; Veröffentlichung einer Vorlage und spätere Beschlussfassung sind verschiedene Entwicklungsschritte.
 - Meldung, Vorgang und Thema sind fachlich getrennte Objekttypen.
 - Themen und Vorgänge erscheinen öffentlich gemeinsam unter **„Im Blick“**.
 - Vorgänge besitzen eigenen aktuellen Stand, Verlauf und Status.
 - Themen erklären übergeordnete Zusammenhänge und gewichten Vorgänge bzw. direkt ergänzte Ereignisse nach **Bedeutung für das Thema**: prägend, relevant oder ergänzend.
 - Perspektiven und Wirkungen erklären die fachliche Relevanz; eine eigene Wirkungsrollen-Taxonomie wird nicht geführt.
+- Wirkung ist am Ereignis verankert; ihr Herkunftskontext bestimmt die fachliche Änderbarkeit.
 - Meldungs-, Vorgangs-, Themen- und Sitzungsdetailseiten sind festgelegt; Demonstrator-Inhaltsbausteine sind nach dem zweiten Transfer-Audit synchronisiert.
 - Meldungen trennen öffentlich **Zusammenhänge** zu Vorgang/Thema/Sitzung-TOP von **Bezügen** zu konkreten Objekten/Orten.
 - zentrale Suche und schlanke Filterlogik sind festgelegt.
-- „Mehr wissen?“ unterscheidet Ereignis-, Vorgangs- und Themenvertiefung und benötigt für Tatsachenbehauptungen eine belastbare Quellenbasis.
+- „Mehr wissen?“ ist als Vertiefungsfrage plus quellengebundene Vertiefungsantwort modelliert und von internen offenen Fragen/Wissenslücken getrennt.
+- Beobachtungsauftrag, Recherchelauf, AI Task und AI Task Run sind getrennte fachliche/operative Objekte.
+- Web-App, FIB-Chat und AI Tasks verwenden dieselbe Fachfunktionsschicht; reguläre fachliche Datenzugriffe umgehen diese Schicht nicht.
 - PWA umfasst lokalen Neuigkeitsstatus, optionale Push-Abonnements und ergänzende Badge-Unterstützung; fachlich relevante Aktualisierungen zählen als Neuigkeit.
 - Teilen, Drucken, Social Preview und zielgenaue Update-Links sind fachlich geklärt.
 - Transparenz, „Über Feldkirchen im Blick“ und Disclaimer sind geklärt.
@@ -123,6 +123,20 @@ Technische Folgeaufträge bleiben bewusst in späteren Phasen:
 - Barrierefreiheit ergänzt die bestehende bürgernahe FIB-Sprache und ersetzt sie nicht.
 - der strukturierte Redaktionsworkflow verwendet feste, modellunabhängige Fragemuster und Antwortoptionen; die fallbezogenen Inhalte werden eingesetzt, nicht das Formular durch KI erfunden.
 - alle vorhandenen Prüfkriterien eines Zielbereichs werden im Redaktionsworkflow sichtbar angeboten; KI-Empfehlungen werden nur vorausgewählt.
+
+## G3 – Abschluss
+
+Verbindlicher Abschlussnachweis: `docs/G3-Gesamtaudit.md` v1.2.
+
+Das Audit hat insbesondere drei erhebliche Alt-Widersprüche bereinigt:
+
+1. redundante Meldung↔Sitzung/TOP-Beziehungen,
+2. widersprüchliche Verankerung von Wirkungen,
+3. Vermischung von Beschlussvorlage/Fundstelle und späterem Beschlussereignis.
+
+Zusätzlich wurden Beobachtung/Recherche, „Mehr wissen?“, Referenzmaßstäbe, Fachfunktionen, Plausibilitäts-/Freigaberegeln, Persistenz und Begriffe konsolidiert.
+
+`docs/Datenmodell.md` v3.0 ist die konsolidierte Integrationsquelle. Es bestehen keine bekannten offenen fachlichen G3-Grundsatzfragen.
 
 ## Hybrid-KI – Entwicklungsprinzip
 
@@ -255,6 +269,12 @@ Zusätzlich bestehen beide Transfer-Audits und ein erweiterter Regressionstestko
 - Transfer-Audit → `docs/Transfer-Audit-Demonstrator-Echtsystem.md`
 - zweite Transfer-Prüfschicht Inhaltsbausteine/Redaktionsfunktionen → `docs/Transfer-Audit-Inhaltsbausteine-und-Redaktionsfunktionen.md`
 - Transfer-Regressionstests → `docs/Regressionstests-Demonstratortransfer.md`
+- Beobachtungs-/Recherchemodell → `docs/Beobachtungs-und-Recherchemodell.md`
+- „Mehr wissen?“-Datenmodell → `docs/Mehr-wissen-Modell.md`
+- MVP-Fachfunktionen → `docs/MVP-Fachfunktionen.md`
+- KI-Zugangswege/Fachfunktionsarchitektur → `docs/KI-Zugangswege-und-Fachfunktionen.md`
+- Plausibilitäts-/Freigaberegeln → `docs/Fachliche-Plausibilitaets-und-Freigaberegeln.md`
+- G3-Gesamtaudit → `docs/G3-Gesamtaudit.md`
 
 ## Modellunabhängigkeit der KI
 
@@ -275,6 +295,7 @@ Für die spätere technische Umsetzung ist vorzusehen:
 
 | Version | Datum | Änderung |
 |---|---|---|
+| 2.9 | 05.10.2026 | G3 nach bestandenem G3-Gesamtaudit abgeschlossen; Datenmodell v3.0 und neue Teilmodelle/Fachfunktionsarchitektur verankert; G4 Schutzbedarf/Datenschutz/Offline als nächsten konkreten Gründungsschritt gesetzt. |
 | 2.8 | 04.10.2026 | Zweite Transfer-Prüfschicht abgeschlossen: IA-026 geschlossen, beide Transfer-Gates bestanden, Dokumentationsübernahme wieder auf abgeschlossen gesetzt und G3 als nächsten aktiven Arbeitsschritt festgelegt. |
 | 2.7 | 04.10.2026 | G2.5 nach neu erkannter Lücke bei sichtbaren Inhaltsbausteinen und Redaktionsfunktionen wieder auf „In Arbeit“ gesetzt; zweite Transfer-Prüfschicht und neues Auditdokument verankert; G3-Fortsetzung hinter Abschluss der aktuellen Transfernacharbeit eingeordnet. |
 | 2.6 | 03.10.2026 | G2.5 nach abgeschlossenem Transfer-Audit und bestandenen Transfer-Gate auf abgeschlossen gesetzt; Dokumentationsübernahme erneut als abgeschlossen markiert; G3 wieder als aktiven nächsten Schritt gesetzt; G3/G5/G10-Folgeaufträge aus dem Transfer-Audit verankert. |
