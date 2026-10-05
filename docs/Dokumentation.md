@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 2.5 | 05.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
+| 2.6 | 05.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
 
 ## 1. Zweck
 
@@ -33,7 +33,7 @@ Für FIB gelten insbesondere:
 
 ## 4. Thematische Gliederung der FIB-Dokumentation
 
-Die FIB-Dokumentation wird fachlich in sechs übergeordnete Bereiche gegliedert. Diese Gliederung dient Menschen und KI als gemeinsame Navigationsstruktur. Sie wird zunächst logisch in dieser Dokumentationslandkarte geführt und soll nach Abschluss der laufenden fachlichen Konsolidierung, insbesondere nach G3, auch in der GitHub-Ordnerstruktur abgebildet werden.
+Die FIB-Dokumentation wird fachlich in sechs übergeordnete Bereiche gegliedert. Diese Gliederung dient Menschen und KI als gemeinsame Navigationsstruktur. Sie wird zunächst logisch in dieser Dokumentationslandkarte geführt und soll nach Abschluss der Gründungs- und Konsolidierungsarbeiten auch in der GitHub-Ordnerstruktur abgebildet werden.
 
 ### 4.1 Leitbild und Governance
 
@@ -67,9 +67,12 @@ Dazu gehören insbesondere:
 
 Leitfrage: **Welche fachlichen Objekte kennt FIB und wie hängen sie zusammen?**
 
-Dazu gehören insbesondere:
+Konsolidierte Integrationsquelle:
 
 - `docs/Datenmodell.md`
+
+Spezialisierte Primärquellen für Detailbereiche:
+
 - `docs/Themen-und-Vorgangslogik.md`
 - `docs/Sitzungs-und-Beschlussmodell.md`
 - `docs/Wirkungsmodell.md`
@@ -79,7 +82,7 @@ Dazu gehören insbesondere:
 - `docs/Fachliche-Plausibilitaets-und-Freigaberegeln.md`
 - `docs/Begriffe.md`
 
-Die während G3 entstandenen Teilmodelle können nach fachlicher Stabilisierung in eine konsolidierte Hauptquelle überführt werden. Ziel ist nicht eine dauerhaft wachsende Zahl gleichrangiger Primärdokumente.
+Mit Abschluss von G3 gilt `docs/Datenmodell.md` v3.0 als konsolidierte Integrationsquelle. Die spezialisierten Teilmodelle liefern Detailregeln, ohne parallel abweichende Grundmodelle zu definieren.
 
 ### 4.4 Redaktion und Veröffentlichung
 
@@ -137,7 +140,7 @@ docs/
 └── decisions/
 ```
 
-Die Umstellung erfolgt bewusst nicht während laufender G3-Konsolidierung, um Mehrfachverschiebungen und unnötige Linkpflege zu vermeiden.
+Die Umstellung erfolgt bewusst erst dann, wenn dadurch keine laufende Gründungsarbeit unnötig durch Link- und Pfadänderungen gestört wird.
 
 ## 5. Verbindliche Quellen im Projekt
 
@@ -148,10 +151,10 @@ Die Umstellung erfolgt bewusst nicht während laufender G3-Konsolidierung, um Me
 | Projektgründung / Gründungsentscheidungen | `docs/Projektgruendung.md` | in Arbeit |
 | Roadmap / nächster Schritt | `docs/Roadmap.md` | vorhanden |
 | G2.5 Transfer-Audit | `docs/Transfer-Audit-Demonstrator-Echtsystem.md` | abgeschlossen |
-| G3 Gesamtaudit | `docs/G3-Gesamtaudit.md` | in Abschlussprüfung |
+| G3 Gesamtaudit | `docs/G3-Gesamtaudit.md` | abgeschlossen |
 | Regressionstestkorpus | `docs/Regressionstests-Demonstratortransfer.md` | vorhanden / wird technisch weiter konkretisiert |
 | Fachkonzept | `docs/Fachkonzept.md` | vorhanden |
-| Begriffe / fachliches Glossar | `docs/Begriffe.md` | vorhanden |
+| Begriffe / fachliches Glossar | `docs/Begriffe.md` | vorhanden / G3-konsolidiert |
 | Management Approach | `docs/FIB_Management-Approach.md` | vorhanden |
 | Leitprinzipien | `docs/Leitprinzipien-FIB.md` | vorhanden |
 | Recherchearchitektur / Referenzrahmen | `docs/Recherchearchitektur-und-Referenzrahmen.md` | vorhanden |
@@ -174,15 +177,15 @@ Die Umstellung erfolgt bewusst nicht während laufender G3-Konsolidierung, um Me
 | KI-Betrieb / Kosten | `docs/KI-Betrieb-und-Kosten.md` | vorhanden |
 | Migrationsstrategie Entwickler → GRÜNEN-Infrastruktur | `docs/Migrationsstrategie.md` | vorhanden |
 | Übernahme Demonstrator-Dokumentation | `docs/Dokumentationsuebernahme-Demonstrator.md` | abgeschlossen / unter G2.5 erneut verifiziert |
-| Architektur | noch anzulegen | offen – nach G3 |
-| Datenmodell | `docs/Datenmodell.md` | G3-Konsolidierung |
+| Architektur | noch anzulegen | offen – G5 |
+| Datenmodell | `docs/Datenmodell.md` | abgeschlossen – G3 v3.0 |
 | Sitzungs- und Beschlussmodell | `docs/Sitzungs-und-Beschlussmodell.md` | vorhanden / konsolidiert |
 | Wirkungsmodell | `docs/Wirkungsmodell.md` | vorhanden / konsolidiert |
 | Persistenz- und Lebenszyklusmodell | `docs/Persistenz-und-Lebenszyklusmodell.md` | vorhanden / konsolidiert |
-| Sicherheit / Datenschutz | noch anzulegen | offen – technische Folgephase |
-| Deployment / Betrieb | noch anzulegen | offen – technische Folgephase |
-| Backup / Restore | noch anzulegen | offen – technische Folgephase |
-| Administration | noch anzulegen | offen – technische Folgephase |
+| Sicherheit / Datenschutz | noch anzulegen | nächster Gründungsschritt G4 |
+| Deployment / Betrieb | noch anzulegen | offen – spätere Phase |
+| Backup / Restore | noch anzulegen | offen – spätere Phase |
+| Administration | noch anzulegen | offen – spätere Phase |
 | Architekturentscheidungen | `docs/decisions/` | bei Bedarf |
 | Arbeitsregeln für KI-/Entwicklungsarbeit | `AGENTS.md` | vorhanden |
 
@@ -253,13 +256,21 @@ Diese fachlichen Transferlücken wurden unter G2.5 geschlossen. Ins Echtsystem �
 - Quellenpflicht bei „Mehr wissen?“,
 - aktuelle Bedeutung-für-das-Thema-Logik.
 
-Die aus dem Audit verbliebenen technischen Folgeaufträge sind regulär nach G3/G5/G10 übergeben und keine offenen Transferlücken mehr.
+Die aus dem Audit verbliebenen technischen Folgeaufträge sind regulär in die späteren Gründungspakete übergeben und keine offenen Transferlücken mehr.
 
 Das visuelle Identitäts- und Bildkonzept ist eine **neue G2-Primärquelle des Echtsystems** und keine übernommene Demonstrator-Dokumentation.
 
 Das Begriffsregister `docs/Begriffe.md` ist eine **neue G3-Primärquelle** für die einheitliche Bedeutung und Abgrenzung zentraler FIB-Begriffe. Es wird grundsätzlich über das Stand-Datum fortgeschrieben; eine neue Versionsnummer ist nur bei strukturellen oder konzeptionellen Änderungen erforderlich.
 
-## 9. Pflegepflicht
+## 9. G3-Abschluss
+
+G3 ist mit `docs/G3-Gesamtaudit.md` v1.2 abgeschlossen.
+
+Das zentrale `docs/Datenmodell.md` wurde auf v3.0 als konsolidierte Integrationsquelle fortgeschrieben. Die während G3 entstandenen spezialisierten Teilmodelle bleiben Primärquellen für ihre Detailregeln.
+
+Es bestehen keine bekannten offenen fachlichen G3-Grundsatzfragen. Der nächste Gründungsschritt ist G4 Schutzbedarf / Datenschutz / Offline.
+
+## 10. Pflegepflicht
 
 Bei jeder verbindlichen fachlichen, technischen, architektonischen, Sicherheits-, Datenmodell-, Prozess- oder Designentscheidung wird geprüft:
 
@@ -271,7 +282,7 @@ Bei jeder verbindlichen fachlichen, technischen, architektonischen, Sicherheits-
 
 Bei vorhandenem GitHub-Zugriff erfolgt die Dokumentationspflege unmittelbar im Projekt.
 
-## 10. Dokumentationsstruktur
+## 11. Dokumentationsstruktur
 
 Für dauerhaft gepflegte Dokumente gilt grundsätzlich:
 
@@ -286,14 +297,15 @@ Für laufend ergänzte Register oder Glossare kann statt einer fortlaufenden Ver
 
 | Version | Datum | Änderung |
 |---|---|---|
+| 2.6 | 05.10.2026 | G3-Abschluss synchronisiert: Datenmodell v3.0 als konsolidierte Integrationsquelle, G3-Gesamtaudit als abgeschlossen und G4 Schutzbedarf/Datenschutz/Offline als nächsten Gründungsschritt ausgewiesen. |
 | 2.5 | 05.10.2026 | G3-Konsolidierung in der Dokumentationslandkarte nachgezogen: Beobachtungs-/Recherchemodell, Mehr-wissen-Modell, MVP-Fachfunktionen, KI-Zugangswege/Fachfunktionen, Plausibilitäts-/Freigaberegeln und G3-Gesamtaudit als kanonische Quellen aufgenommen; Status älterer G3-Teilmodelle konsolidiert und technische Folgephasen abgegrenzt. |
 | 2.4 | 05.10.2026 | Dokumentation in sechs übergeordnete Themenbereiche gegliedert; spätere Abbildung dieser Gliederung in der GitHub-Ordnerstruktur nach fachlicher Konsolidierung festgelegt; neue G3-Primärquellen in die Landkarte aufgenommen. |
 | 2.3 | 03.10.2026 | G2.5 nach bestandenem Transfer-Gate als abgeschlossen markiert; Dokumentationsübernahme erneut als abgeschlossen bestätigt; fachliche Nachpflege und Übergabe technischer Folgeaufträge dokumentiert. |
 | 2.2 | 03.10.2026 | G2.5-Transfer-Audit in Dokumentationslandkarte aufgenommen; ursprünglichen Abschlussstatus der Demonstrator-Übernahme zurückgenommen; GitHub-Dokumentationshoheit gegenüber ODT/Exportkopien präzisiert; frühere Chats als Lückenfinder geregelt; Regressionstestkorpus als Projektquelle aufgenommen. |
 | 2.1 | 02.10.2026 | `docs/Begriffe.md` als verbindliches Begriffsregister aufgenommen; Stand-Datum statt fortlaufender Versionsnummer für laufend ergänzte Register/Glossare zugelassen. |
 | 2.0 | 01.10.2026 | `docs/Datenmodell.md` als G3-Primärquelle für fachliche Datenanforderungen und logisches Datenmodell aufgenommen. |
-| 1.9 | 01.10.2026 | `Migrationsstrategie.md` als Primärquelle für den späteren Übergang von Entwickler- auf GRÜNEN-Infrastruktur aufgenommen; G2-Dokumentstatus auf vorhanden konsolidiert. |
-| 1.8 | 01.10.2026 | `Visuelle-Identitaet-und-Bildkonzept.md` als eigene Primärquelle aufgenommen; Abgrenzung zu UX dokumentiert. |
+| 1.9 | 01.10.2026 | `docs/Migrationsstrategie.md` als Primärquelle für den späteren Übergang von Entwickler- auf GRÜNEN-Infrastruktur aufgenommen; G2-Dokumentstatus auf vorhanden konsolidiert. |
+| 1.8 | 01.10.2026 | `docs/Visuelle-Identitaet-und-Bildkonzept.md` als eigene Primärquelle aufgenommen; Abgrenzung zu UX dokumentiert. |
 | 1.7 | 30.09.2026 | Dokumentationsübernahme nach Querverweis-, Terminologie- und Konsistenzprüfung als abgeschlossen markiert; visuelles Konzept als neue G2-Entscheidung abgegrenzt. |
 | 1.6 | 30.09.2026 | Frontendregeln in UX v2.5 integriert; Werte- und Sprachgrundlagen ins Echtsystem übernommen. |
 | 1.5 | 30.09.2026 | Recherche, Mehr wissen, KI-Qualität, Marketing, SEO und KI-Betrieb übernommen; Übernahmematrix aufgenommen. |
