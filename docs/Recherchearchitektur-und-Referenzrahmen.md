@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 1.3 | 05.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
+| 1.4 | 05.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
 
 ## 1. Zweck und Geltung
 
@@ -232,6 +232,38 @@ Beispiel: Die allgemeine Kenntnis, dass eine Behörde in bestimmten Verfahren ty
 
 Diese Arbeitsteilung dient zugleich der Pflegbarkeit, der Offenheit für bislang unbekannte Akteure und der Modellunabhängigkeit des FIB-Kerns.
 
+### 6.7 Kein allgemeines Sach- und Fachwissensarchiv
+
+FIB führt **keinen eigenen allgemeinen Wissensbestand für fachliche Grundlagen**, die ein leistungsfähiges KI-Modell in der Regel besser, breiter und bei Bedarf aktueller erschließen kann. Dazu gehören beispielsweise allgemeine Grundlagen des Bauplanungsrechts, typische Beteiligungsverfahren, Verkehrsplanung, Geothermie, autonomes Fahren oder andere technische, rechtliche und wissenschaftliche Grundlagen.
+
+Solches Wissen darf und soll die KI für Suche, Verständnis, Fragengenerierung und Einordnung als Hintergrundwissen nutzen. Wenn daraus eine veröffentlichte Tatsachenbehauptung entsteht oder Aktualität bzw. Genauigkeit entscheidend sind, muss der konkrete Sachverhalt durch belastbare aktuelle Quellen abgesichert werden.
+
+Eine eigene breite Kategorie `Sach- und Fachwissen` wird deshalb für FIB nicht aufgebaut.
+
+Stattdessen gibt es nur einen kleinen Auffangbereich **FIB-spezifisches Kontextwissen**. Dort wird fachliches oder begriffliches Wissen nur dann dauerhaft gespeichert, wenn es einen konkreten FIB-spezifischen Zusatznutzen besitzt und nicht sinnvoll als Orts-/Objektwissen oder selektives Akteurs-/Zuständigkeitswissen abgebildet werden kann.
+
+Typische Aufnahmegründe sind insbesondere:
+
+- lokal oder projektspezifisch besondere Begriffsbedeutungen,
+- projektspezifische Varianten, Kürzel oder Definitionen,
+- wiederkehrende fachliche Abgrenzungen, die für mehrere FIB-Vorgänge wichtig sind,
+- Sachzusammenhänge, die allgemeines KI-Wissen leicht missversteht oder nicht zuverlässig lokal zuordnet,
+- bewusst modellunabhängig zu sicherndes FIB-Spezialwissen.
+
+Beispiel: Eine projektspezifische Bezeichnung wie `Vario 5` kann als FIB-spezifisches Kontextwissen sinnvoll sein, wenn sie für wiederkehrende Recherchen und Zuordnungen benötigt wird. Die allgemeine Frage, was eine Verkehrsprognose ist, gehört dagegen nicht in den FIB-Referenzwissensbestand.
+
+Verbindlicher Grundsatz:
+
+> **FIB archiviert kein allgemeines Wissen, das die KI selbst zuverlässig erschließen kann. Dauerhaft gespeichert wird nur FIB-spezifisches Zusatzwissen mit erkennbarem Mehrwert für Recherche, Erkennung, Zuordnung, Relevanzprüfung oder Modellunabhängigkeit.**
+
+Damit bestehen für den fachlichen Referenzwissensbestand zunächst drei bewusst schlanke Bereiche:
+
+1. **Orts- und Objektwissen**,
+2. **selektives Akteurs- und Zuständigkeitswissen**,
+3. **FIB-spezifisches Kontextwissen**.
+
+Der Ausbau aller drei Bereiche erfolgt anlassbezogen und nicht als vorsorgliche Vollerfassung.
+
 ## 7. Dynamischer Recherchehorizont und offene Recherche
 
 Der bisher verwendete Begriff `Suchraum` darf nicht als feste äußere Grenze verstanden werden.
@@ -423,7 +455,7 @@ Chatverläufe sind Arbeitsraum, aber keine dauerhafte Primärquelle für verbind
 
 Vor der physischen bzw. logischen Modellierung von Referenzwissen und Quellenmonitor sind als nächste fachliche Schritte zu klären:
 
-1. welche weiteren Kategorien von Referenzwissen neben Orts-/Objektwissen und selektivem Akteurs-/Zuständigkeitswissen benötigt werden,
+1. welche konkreten Datenanforderungen aus den drei schlanken Referenzwissensbereichen (`Orts- und Objektwissen`, `selektives Akteurs- und Zuständigkeitswissen`, `FIB-spezifisches Kontextwissen`) ins G3-Datenmodell übernommen werden müssen,
 2. welche Teile des Referenzwissens fachlich versioniert oder mit Gültigkeitszeiträumen versehen werden müssen,
 3. wie Informationsbedarf und redaktionelle Beobachtungsaufträge beschrieben werden,
 4. wie neue Quellen, Begriffe und Zusammenhänge aus offener Recherche in den bestätigten Recherchekontext übernommen werden,
@@ -436,6 +468,7 @@ Vor der physischen bzw. logischen Modellierung von Referenzwissen und Quellenmon
 
 | Version | Datum | Änderung |
 |---|---|---|
+| 1.4 | 05.10.2026 | Referenzwissen weiter verschlankt: keine eigene breite Kategorie `Sach- und Fachwissen`; allgemeines fachliches Hintergrundwissen bleibt grundsätzlich bei KI und aktueller Recherche. Kleinen Auffangbereich `FIB-spezifisches Kontextwissen` eingeführt und die drei schlanken Referenzwissensbereiche festgelegt. |
 | 1.3 | 05.10.2026 | Allgemeine Grenze zwischen FIB-Referenzwissen und KI-Hintergrundwissen festgelegt; Akteurs-, Zuständigkeits- und Verfahrenswissen wird nicht vorsorglich vollständig in FIB dupliziert, sondern nur anlassbezogen bei konkretem FIB-Zusatznutzen gespeichert; strukturelle/typische Rollen von tatsächlich ausgeübten Rollen in konkreten Vorgängen getrennt. |
 | 1.2 | 05.10.2026 | Orts- und Objektwissen fachlich konkretisiert: Referenzobjekt, Referenzbezeichnung, Referenzbeziehung und Herkunft/Beleg als konzeptionelle Bausteine festgelegt; kleine MVP-Beziehungstypologie und Pflegeregel beschlossen; Kandidat-vs.-bestätigt-Logik, drei Zuführungswege, Trennung Referenzobjekt↔Vorgang und Zwei-Stufen-Logik mit späterer bedarfsabhängiger Ausbaustufe dokumentiert. |
 | 1.1 | 05.10.2026 | Redaktions-UI für Referenzwissen als verbindliche Systemanforderung ergänzt; Pflege, Prüfung, Freigabe, Historie und Übernahme von KI-Vorschlägen als G3-relevante Anforderungen festgelegt; Besuchersichtbarkeit des Referenzrahmens davon abgegrenzt. |
