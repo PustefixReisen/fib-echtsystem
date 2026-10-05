@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 1.5 | 05.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
+| 1.6 | 05.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
 
 ## 1. Zweck und Geltung
 
@@ -47,18 +47,95 @@ flowchart TD
     I --> K[Neues Referenzwissen / neue Quellen / neuer Suchkontext]
 ```
 
-## 4. Informationsbedarf statt geschlossener Themenliste
+## 4. Informationsbedarf und Beobachtungsauftrag
 
-Der Informationsbedarf beschreibt, welche Arten von Entwicklungen FIB erkennen möchte. Er umfasst insbesondere:
+Der Informationsbedarf beschreibt, welche Arten von Entwicklungen FIB erkennen möchte. Er ist keine abschließende Themenliste und begrenzt die Recherche nicht.
 
-- allgemeine Such- und Beobachtungsfelder,
-- bestehende Vorgänge und Themen,
-- laufende Sitzungen und Verfahren,
-- redaktionell gesetzte Beobachtungsgegenstände,
-- offene Fragen und Wissenslücken,
-- mögliche zukünftige kommunale Herausforderungen.
+Für konkrete, dauerhaft zu verfolgende Informationsbedarfe verwendet FIB einen schlanken **Beobachtungsauftrag**. Ein Beobachtungsauftrag beschreibt fachlich, **was** beobachtet bzw. geklärt werden soll. Er enthält keine fest verdrahtete Liste von Suchbegriffen, Quellen, Akteuren oder Suchwegen; die konkrete Recherchestrategie wird dynamisch aus Auftrag, bestehendem FIB-Wissen, Referenzwissen und Regelbestand abgeleitet.
 
-Der Informationsbedarf ist keine abschließende Themenliste. Er steuert die Recherche, begrenzt sie aber nicht.
+Fachlich werden zunächst drei Typen unterschieden:
+
+1. **Vorgang beobachten** – neue Entwicklungen zu einem bestehenden konkreten Sachverhalt erkennen,
+2. **Thema beobachten** – neue Entwicklungen erkennen, die für eine übergeordnete Leitfrage relevant sind,
+3. **offene Frage klären** – gezielt nach Informationen suchen, mit denen eine bestehende Wissenslücke beantwortet oder eingeordnet werden kann.
+
+Ein Beobachtungsauftrag benötigt konzeptionell mindestens:
+
+- Bezugstyp (`Vorgang`, `Thema` oder `offene Frage`),
+- fachliche Beobachtungsfrage bzw. Beschreibung des Informationsbedarfs,
+- Status,
+- Herkunft (`redaktionell angelegt` oder `aus KI-Vorschlag übernommen`),
+- kurze Begründung bzw. Zweck,
+- nachvollziehbare Änderungshistorie.
+
+Eine Priorität kann optional ergänzt werden, wenn sie sich im Betrieb als redaktionell nützlich erweist; sie ist kein zwingendes MVP-Merkmal.
+
+### 4.1 Lebenszyklus
+
+Ein Beobachtungsauftrag bleibt grundsätzlich aktiv, bis eine fachliche oder redaktionelle Entscheidung seinen Status verändert.
+
+Vorgesehene Zustände sind zunächst:
+
+- **aktiv** – der Auftrag steuert laufende bzw. wiederkehrende Recherche,
+- **pausiert** – aktuell keine weitere Recherche, spätere Wiederaufnahme ist möglich,
+- **beendet** – Beobachtungsziel erreicht, sachlich überholt oder redaktionell nicht mehr erforderlich.
+
+Typische Gründe für Pause oder Ende sind:
+
+- offene Frage beantwortet,
+- beobachteter Sachverhalt fachlich abgeschlossen,
+- Auftrag durch andere Entwicklung gegenstandslos geworden,
+- derzeit keine sinnvolle weitere Recherche,
+- bewusste redaktionelle Beendigung.
+
+Die KI darf Pause oder Ende **vorschlagen**, nimmt diese Änderung aber nicht selbst verbindlich vor. Die redaktionelle Entscheidung bleibt maßgeblich.
+
+### 4.2 Wiedervorlage
+
+FIB führt keine pauschalen regelmäßigen Wiedervorlagen für alle Beobachtungsaufträge ein.
+
+> **Wiedervorlage erfolgt nur bei konkretem Anlass.**
+
+Ein solcher Anlass kann insbesondere sein:
+
+- ein erwarteter Termin oder Verfahrensschritt ist erreicht,
+- eine Quelle kündigt eine spätere Entscheidung oder Veröffentlichung an,
+- ein pausierter Gegenstand erhält ein neues relevantes Ereignis,
+- die KI erkennt eine wesentliche Veränderung der Ausgangslage,
+- ein Auftrag bleibt über längere Zeit ohne belastbare neue Information und eine Überprüfung erscheint sinnvoll.
+
+Ein optionaler nächster Prüfzeitpunkt oder fachlicher Auslöser kann gespeichert werden, wenn er sich aus dem Sachverhalt ergibt. Fehlt ein solcher konkreter Anlass, bleibt der Auftrag aktiv, ohne künstliche Wiedervorlagepflicht.
+
+### 4.3 Abgrenzung: offene Recherche / „Entwicklung entdecken“
+
+**„Entwicklung entdecken“ ist kein eigener Beobachtungsauftragstyp.**
+
+Hier kennt FIB den konkreten Gegenstand noch nicht. Die KI recherchiert offen, findet eine neue Entwicklung und prüft erst danach anhand der Relevanzregeln, ob diese für Feldkirchen gegenwärtig oder künftig bedeutsam sein könnte.
+
+```mermaid
+flowchart LR
+    A[Offene Recherche] --> B[Neuer Fund]
+    B --> C[Relevanzregeln anwenden]
+    C --> D[Ereigniskandidat]
+    D --> E[Redaktioneller Vorschlag]
+    E --> F[ggf. Vorgang / Thema / Beobachtungsauftrag anlegen]
+```
+
+Damit gilt:
+
+> **Offene Recherche / Entwicklung entdecken ist ein regulärer Recherchemodus von FIB und benötigt keinen einzelnen redaktionell angelegten Beobachtungsauftrag.**
+
+Erst aus einem relevanten Fund kann durch redaktionelle Entscheidung ein neuer Vorgang, ein neues Thema oder ein dauerhafter Beobachtungsauftrag entstehen.
+
+### 4.4 Keine automatische Veröffentlichung
+
+Ein Beobachtungsauftrag erzeugt niemals unmittelbar eine Veröffentlichung.
+
+Der Ablauf bleibt:
+
+> **Beobachtungsauftrag → Recherchefund → Quellen-/Qualitäts- und Relevanzprüfung → Ereigniskandidat → redaktionelle Entscheidung → ggf. Meldung**
+
+Damit bleibt die redaktionelle Freigabe auch bei kontinuierlicher Beobachtung erhalten.
 
 ## 5. Bestehendes FIB-Wissen
 
@@ -478,22 +555,25 @@ Chatverläufe sind Arbeitsraum, aber keine dauerhafte Primärquelle für verbind
 
 ## 14. Konsequenzen für G3
 
-Vor der physischen bzw. logischen Modellierung von Referenzwissen und Quellenmonitor sind als nächste fachliche Schritte zu klären:
+Aus den bisher festgelegten Recherche- und Referenzregeln folgen für G3 insbesondere folgende noch zu konkretisierende Datenanforderungen:
 
-1. welche konkreten Datenanforderungen aus den drei schlanken Referenzwissensbereichen (`Orts- und Objektwissen`, `selektives Akteurs- und Zuständigkeitswissen`, `FIB-spezifisches Kontextwissen`) ins G3-Datenmodell übernommen werden müssen,
-2. welche Teile des Referenzwissens fachlich versioniert oder mit Gültigkeitszeiträumen versehen werden müssen,
-3. wie Informationsbedarf und redaktionelle Beobachtungsaufträge beschrieben werden,
-4. wie neue Quellen, Begriffe und Zusammenhänge aus offener Recherche in den bestätigten Recherchekontext übernommen werden,
-5. wie der demokratisch-gesellschaftliche Grundrahmen konkret definiert und belegt wird,
-6. wie die Herkunft eines Maßstabs (`allgemeines FIB-Qualitätsprinzip`, `demokratisch-gesellschaftlicher Grundrahmen`, `grüne Position`) gespeichert wird,
-7. welche dieser Informationen bei einem konkreten Recherchelauf der KI zwingend übergeben werden müssen,
-8. welche Daten und Zustände die Redaktions-UI für Referenzwissen benötigt, damit Anlegen, Prüfen, Freigeben, Ändern, Historisieren und Übernehmen von KI-Vorschlägen möglich sind,
-9. wie Regel-ID, Regelversion und verwendeter Regelstand im G3-Datenmodell abgebildet und mit Recherche-/Bewertungsläufen sowie Kandidaten verknüpft werden.
+1. die drei schlanken Referenzwissensbereiche (`Orts- und Objektwissen`, `selektives Akteurs- und Zuständigkeitswissen`, `FIB-spezifisches Kontextwissen`),
+2. notwendige Versionierung bzw. Gültigkeit von Referenzwissen,
+3. das Fachobjekt `Beobachtungsauftrag` mit Bezugstyp, Beobachtungsfrage, Status, Herkunft, Zweck und Historie,
+4. optionale anlassbezogene Wiedervorlage bzw. nächster Prüfzeitpunkt/Auslöser,
+5. klare Trennung zwischen Beobachtungsauftrag und systemweitem Modus `offene Recherche / Entwicklung entdecken`,
+6. Übernahme neuer Quellen, Begriffe und Zusammenhänge aus offener Recherche in den bestätigten Recherchekontext,
+7. konkrete Definition und Belegung des demokratisch-gesellschaftlichen Grundrahmens,
+8. Herkunft eines Maßstabs (`allgemeines FIB-Qualitätsprinzip`, `demokratisch-gesellschaftlicher Grundrahmen`, `grüne Position`),
+9. welche Informationen bei einem konkreten Recherchelauf zwingend an die KI übergeben werden,
+10. Daten und Zustände der Redaktions-UI für Referenzwissen und Beobachtungsaufträge,
+11. Regel-ID, Regelversion und verwendeter Regelstand sowie deren Verknüpfung mit Recherche-/Bewertungsläufen und Kandidaten.
 
 ## Änderungshistorie
 
 | Version | Datum | Änderung |
 |---|---|---|
+| 1.6 | 05.10.2026 | Informationsbedarf konkretisiert: schlanken Beobachtungsauftrag mit drei Typen (Vorgang beobachten, Thema beobachten, offene Frage klären), Lebenszyklus aktiv/pausiert/beendet, anlassbezogene Wiedervorlage und redaktionelle Hoheit über Pause/Ende festgelegt. `Entwicklung entdecken` ausdrücklich als systemweiten offenen Recherchemodus und nicht als Beobachtungsauftrag eingeordnet. Keine automatische Veröffentlichung aus Beobachtungsaufträgen. |
 | 1.5 | 05.10.2026 | Bidirektionale Konsistenz zwischen dokumentierten fachlich wirksamen Regeln und maschinenlesbarem Regelbestand verbindlich festgelegt; Anforderungen an stabile Regel-ID, Primärquellenbezug, Status, Version und verwendeten Regelstand ergänzt. Nachvollziehbarkeit von KI-Kandidaten um Regelbezug, Begründung, Fundstellen, Unsicherheit und vorgeschlagenen nächsten Zusammenhang erweitert. |
 | 1.4 | 05.10.2026 | Referenzwissen weiter verschlankt: keine eigene breite Kategorie `Sach- und Fachwissen`; allgemeines fachliches Hintergrundwissen bleibt grundsätzlich bei KI und aktueller Recherche. Kleinen Auffangbereich `FIB-spezifisches Kontextwissen` eingeführt und die drei schlanken Referenzwissensbereiche festgelegt. |
 | 1.3 | 05.10.2026 | Allgemeine Grenze zwischen FIB-Referenzwissen und KI-Hintergrundwissen festgelegt; Akteurs-, Zuständigkeits- und Verfahrenswissen wird nicht vorsorglich vollständig in FIB dupliziert, sondern nur anlassbezogen bei konkretem FIB-Zusatznutzen gespeichert; strukturelle/typische Rollen von tatsächlich ausgeübten Rollen in konkreten Vorgängen getrennt. |
