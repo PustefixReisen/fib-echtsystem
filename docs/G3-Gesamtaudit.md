@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 1.0 | 05.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
+| 1.1 | 05.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
 
 ## 1. Zweck
 
@@ -27,7 +27,7 @@ Geprüft werden insbesondere:
 
 ## 2. Auditmaßstab
 
-G3 gilt fachlich als konsolidierbar, wenn:
+G3 gilt fachlich als abgeschlossen, wenn:
 
 1. jeder zentrale Sachverhalt genau eine verbindliche Primärquelle besitzt,
 2. spezialisierte Teilmodelle dem aktuellen Gesamtkonzept nicht widersprechen,
@@ -36,7 +36,7 @@ G3 gilt fachlich als konsolidierbar, wenn:
 5. alle regulären fachlichen Zugriffe über die gemeinsame Fachfunktionsschicht abbildbar sind,
 6. verbleibende offene Punkte ausschließlich technische/physische Umsetzung betreffen.
 
-## 3. Gefundene und bereits behobene Inkonsistenzen
+## 3. Gefundene und behobene Inkonsistenzen
 
 ### 3.1 Meldung ↔ Sitzung/TOP
 
@@ -44,7 +44,7 @@ G3 gilt fachlich als konsolidierbar, wenn:
 
 **Bewertung:** Redundante zweite fachliche Wahrheit.
 
-**Korrektur:** `docs/Sitzungs-und-Beschlussmodell.md` v1.1 und `docs/Persistenz-und-Lebenszyklusmodell.md` v1.1 wurden auf die abgeleitete Beziehung konsolidiert.
+**Korrektur:** `docs/Sitzungs-und-Beschlussmodell.md` und `docs/Persistenz-und-Lebenszyklusmodell.md` wurden auf die abgeleitete Beziehung konsolidiert.
 
 **Status:** behoben.
 
@@ -66,7 +66,7 @@ G3 gilt fachlich als konsolidierbar, wenn:
 
 **Korrektur:** `docs/Beobachtungs-und-Recherchemodell.md` v1.0 definiert Beobachtungsauftrag und Recherchelauf als getrennte Objekte, genau einen Primärbezug je Beobachtungsauftrag sowie die Provenienzkette über Fundstellen.
 
-**Status:** fachlich geklärt; im zentralen `Datenmodell.md` noch redaktionell nachzuziehen.
+**Status:** fachlich geklärt; die veraltete Offen-Markierung im zentralen `Datenmodell.md` ist noch redaktionell zu entfernen.
 
 ### 3.4 „Mehr wissen?“
 
@@ -74,7 +74,7 @@ G3 gilt fachlich als konsolidierbar, wenn:
 
 **Korrektur:** `docs/Mehr-wissen-Modell.md` v1.0 definiert Vertiefungsfrage und Vertiefungsantwort als getrennte, quellengebundene Fachobjekte.
 
-**Status:** fachlich geklärt; im zentralen `Datenmodell.md` noch redaktionell nachzuziehen.
+**Status:** fachlich geklärt; im zentralen `Datenmodell.md` noch als konsolidierter Teilmodellverweis nachzuziehen.
 
 ### 3.5 Blockierende Regeln versus Plausibilitätsprüfung
 
@@ -85,7 +85,7 @@ G3 gilt fachlich als konsolidierbar, wenn:
 - objektiv unzulässiger Zustand → blockierende serverseitige Fachregel,
 - semantische Auffälligkeit mit Entscheidungsspielraum → sichtbarer Prüfhinweis und redaktionelle Entscheidung.
 
-**Status:** behoben.
+**Status:** behoben; im zentralen `Datenmodell.md` ist nur noch die alte Offen-Markierung zu bereinigen.
 
 ### 3.6 Rechte/Freigabe für Dateien und Bilder
 
@@ -95,11 +95,28 @@ G3 gilt fachlich als konsolidierbar, wenn:
 
 **Status:** fachlich behoben; konkrete technische Rechtefelder folgen im physischen Modell.
 
+### 3.7 Beschlussvorlage und Beschluss als Ereignis
+
+**Befund:** Das Sitzungs- und Beschlussmodell behandelte eine Beschlussvorlage und die spätere Beschlussfassung noch als dasselbe übergeordnete Ereignis in unterschiedlichen Zuständen. Das widersprach dem allgemeinen Ereignisbegriff und dem zentralen Datenmodell, nach denen Veröffentlichung einer Vorlage und spätere Behandlung/Beschlussfassung getrennte reale Entwicklungen sind.
+
+**Bewertung:** Struktureller Widerspruch; außerdem Vermischung von Dokument/Fundstelle und Ereignis.
+
+**Korrektur:** `docs/Sitzungs-und-Beschlussmodell.md` v1.2 legt fest:
+
+- Beschlussvorlage = Dokument/Fundstelle,
+- Veröffentlichung einer fachlich relevanten Vorlage = mögliches eigenes Ereignis,
+- spätere Beratung, Vertagung/Absetzung und Beschlussfassung = spätere reale Entwicklungsschritte/Ereignisse,
+- Beschlusspunkte und Abstimmungen gehören zum späteren Behandlungs-/Beschlussereignis,
+- der ursprüngliche Beschlussvorschlag bleibt als Vergleichsgrundlage erhalten.
+
+**Status:** behoben.
+
 ## 4. Bereiche ohne festgestellten konzeptionellen Bruch
 
-Im bisherigen Audit sind folgende Kernentscheidungen miteinander vereinbar:
+Nach den Korrekturen sind folgende Kernentscheidungen miteinander vereinbar:
 
 - Ereignis und Meldung bleiben getrennt; Meldung gehört genau zu einem Ereignis.
+- Dokument/Fundstelle und Ereignis sind getrennt; die Veröffentlichung eines Dokuments kann selbst ein Ereignis sein.
 - Ereignis kann ohne Vorgang bestehen; Vorgangszwang bei Ereignisbestätigung besteht nicht.
 - Vorgang↔Thema ist n:m; zusätzliche direkte Ereignis↔Thema-Beziehung bleibt für Einzelereignisse möglich.
 - Themen entstehen bottom-up und werden nicht stillschweigend durch KI angelegt.
@@ -114,46 +131,42 @@ Im bisherigen Audit sind folgende Kernentscheidungen miteinander vereinbar:
 - S0–S3, Optimistic Concurrency, serverseitige Durchsetzung und Audit sind mit den Fachfunktionen vereinbar.
 - der konsolidierte MVP-Fachfunktionskatalog deckt die notwendigen redaktionellen Fachaktionen ab.
 
-## 5. Noch offene Konsolidierungsarbeit vor G3-Abschluss
+## 5. Konsolidierungsarbeiten vor formellem G3-Abschluss
 
-### 5.1 Zentrales `Datenmodell.md` nachziehen
+### 5.1 Zentrales `Datenmodell.md` redaktionell konsolidieren – noch offen
 
-`docs/Datenmodell.md` v2.1 enthält noch einen veralteten Abschnitt „Offene G3-Fragen“. Mehrere dieser Punkte sind inzwischen in spezialisierten Primärquellen entschieden.
+`docs/Datenmodell.md` v2.1 enthält noch den inzwischen veralteten Abschnitt „Offene G3-Fragen“. Die dort genannten fachlichen Punkte sind inzwischen in spezialisierten Primärquellen entschieden.
 
-Vor formellem G3-Abschluss muss eine neue konsolidierte Fassung des Datenmodells mindestens:
+Vor dem formellen G3-Abschluss ist eine neue konsolidierte Fassung des Datenmodells erforderlich, die mindestens:
 
-- Beobachtungsauftrag/Recherchelauf als geklärtes Teilmodell referenzieren,
-- „Mehr wissen?“ als geklärtes Teilmodell referenzieren,
-- Plausibilitäts- und Freigaberegeln referenzieren,
-- fachliche Persistenz vs. technische Betriebsdaten als geklärt markieren,
-- nur tatsächlich verbleibende technische/physische Fragen offen lassen.
+- Beobachtungsauftrag/Recherchelauf als geklärtes Teilmodell referenziert,
+- „Mehr wissen?“ als geklärtes Teilmodell referenziert,
+- Plausibilitäts- und Freigaberegeln referenziert,
+- fachliche Persistenz vs. technische Betriebsdaten als geklärt markiert,
+- nur tatsächlich verbleibende technische/physische Fragen offen lässt.
 
-Dies ist primär Dokumentenkonsolidierung; derzeit ist daraus keine neue fachliche Grundsatzentscheidung erkennbar.
+Dies ist Dokumentenkonsolidierung; daraus ist derzeit keine neue fachliche Grundsatzentscheidung erkennbar.
 
-### 5.2 Dokumentationslandkarte aktualisieren
+### 5.2 Dokumentationslandkarte aktualisieren – erledigt
 
-Die neu entstandenen G3-Primärquellen müssen in `docs/Dokumentation.md` aufgenommen werden:
+`docs/Dokumentation.md` v2.5 enthält nun die neuen G3-Primärquellen und dieses Auditdokument.
 
-- `docs/Beobachtungs-und-Recherchemodell.md`,
-- `docs/Mehr-wissen-Modell.md`,
-- `docs/MVP-Fachfunktionen.md`,
-- `docs/KI-Zugangswege-und-Fachfunktionen.md`,
-- `docs/Fachliche-Plausibilitaets-und-Freigaberegeln.md`,
-- dieses Auditdokument.
+**Status:** erledigt.
 
-### 5.3 Begriffsregister prüfen
+### 5.3 Begriffsregister prüfen – erledigt
 
-Vor G3-Abschluss ist zu prüfen, ob mindestens folgende inzwischen verbindliche Begriffe im `docs/Begriffe.md` vorhanden und aktuell definiert sind:
+`docs/Begriffe.md` wurde ergänzt bzw. aktualisiert um insbesondere:
 
 - Beobachtungsauftrag,
 - Recherchelauf,
 - AI Task / AI Task Run,
 - Vertiefungsfrage / Vertiefungsantwort,
-- Referenzmaßstab,
 - Fachfunktion,
 - Aktionsstufen S0–S3.
 
-Fehlende Begriffe sind nachzuziehen; die fachlichen Definitionen selbst werden nicht im Glossar neu erfunden.
+Zusätzlich wurden überholte Offenformulierungen bei Bewertung und politischem Bezug an den aktuellen G3-Stand angepasst.
+
+**Status:** erledigt.
 
 ## 6. Nicht mehr als G3-Fachfrage zu behandeln
 
@@ -171,16 +184,17 @@ Folgende Punkte gehören nach dem Audit in die nachfolgende technische/physische
 
 Diese Punkte dürfen G3 nicht künstlich offen halten, solange die fachlichen Anforderungen dafür eindeutig sind.
 
-## 7. Vorläufiges Auditurteil
+## 7. Aktuelles Auditurteil
 
-> **Das fachliche G3-Modell ist inhaltlich weitgehend geschlossen. Es wurden zwei erhebliche Alt-Widersprüche gefunden und behoben. Die zuvor offenen Teilmodelle Beobachtung/Recherche, „Mehr wissen?“, Plausibilitätslogik und Medienfreigabe sind inzwischen fachlich entschieden.**
+> **Das fachliche G3-Modell ist inhaltlich geschlossen. Im Audit wurden drei erhebliche Alt-Widersprüche gefunden und fachlich behoben. Die zuvor offenen Teilmodelle Beobachtung/Recherche, „Mehr wissen?“, Plausibilitätslogik und Medienfreigabe sind entschieden. Dokumentationslandkarte und Begriffsregister sind konsolidiert.**
 
-Ein formeller G3-Abschluss sollte noch **nicht** erklärt werden, bevor die drei Konsolidierungsarbeiten aus Abschnitt 5 erledigt und anschließend ein kurzer Schlusscheck durchgeführt sind.
+Ein formeller G3-Abschluss wird noch nicht erklärt, solange `docs/Datenmodell.md` v2.1 seine inzwischen veralteten Offen-Markierungen enthält. Diese verbleibende Arbeit ist redaktionelle Konsolidierung der zentralen Primärquelle, keine neue fachliche Modellentscheidung.
 
-Es ist derzeit **keine neue Grundsatzentscheidung des Nutzers** erkennbar, die für diese Restarbeiten erforderlich wäre.
+Nach dieser Konsolidierung genügt ein letzter Querverweis-/Statuscheck. Wenn dabei kein neuer Widerspruch auftritt, kann G3 als **Abgeschlossen** markiert und die technische/physische Modellierung vorbereitet werden.
 
 ## Änderungshistorie
 
 | Version | Datum | Änderung |
 |---|---|---|
+| 1.1 | 05.10.2026 | Zweiten Auditdurchgang dokumentiert: zusätzlicher struktureller Widerspruch Vorlage/Beschluss als dasselbe Ereignis erkannt und im Sitzungsmodell v1.2 behoben; Dokumentationslandkarte und Begriffsregister konsolidiert; Auditurteil auf „fachlich geschlossen, zentrale Datenmodell-Konsolidierung noch offen“ präzisiert. |
 | 1.0 | 05.10.2026 | G3-Gesamtaudit gestartet; zentrale Teilmodelle gegeneinander geprüft; Widersprüche bei Meldung↔Sitzung/TOP und Wirkung identifiziert und behoben; Beobachtung/Recherche, „Mehr wissen?“, Plausibilitätslogik und Medienfreigabe als fachlich geklärt bewertet; verbleibende Konsolidierungsarbeiten vor G3-Abschluss festgelegt. |
