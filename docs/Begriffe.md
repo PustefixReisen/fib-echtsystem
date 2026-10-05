@@ -2,7 +2,7 @@
 
 ## Dokumentstand
 
-**Stand:** 03.10.2026, 19:05 Uhr  
+**Stand:** 05.10.2026, 17:36 Uhr  
 **Verantwortlich:** Josef Walter – erstellt mit KI-Unterstützung
 
 Dieses Dokument wird im Normalfall über das **Stand-Datum einschließlich Uhrzeit** fortgeschrieben. Eine neue Versionsnummer wird nur eingeführt, wenn sich die Struktur oder das Grundkonzept des Dokuments wesentlich ändert.
@@ -133,6 +133,24 @@ Wirkungen gehören zur Sachinformation. Sie können unterschiedliche oder auch w
 
 Nicht zu verwechseln mit Bewertung. Wirkung beschreibt, was geschieht oder voraussichtlich geschieht; Bewertung beschreibt, wie die GRÜNEN Feldkirchen diese Wirkung politisch einordnen.
 
+### `Referenzmaßstab`
+
+**Benutzer-Label in der App:** Referenzmaßstab
+
+Ein dokumentierter, versionierter Maßstab, den FIB verwendet, um Recherchefragen, Relevanzprüfungen, Qualitätsprüfungen oder politische Einordnungen nachvollziehbar auszurichten.
+
+Ein Referenzmaßstab ist **keine Tatsachenbehauptung über den konkreten Sachverhalt** und darf die Tatsachenbasis nicht verändern. Er macht vielmehr transparent, welche Fragen gestellt und nach welchen Maßstäben Ergebnisse geprüft oder eingeordnet werden.
+
+FIB unterscheidet dabei drei Ebenen:
+
+- allgemeine FIB-Qualitätsmaßstäbe, etwa Quellenbezug oder nachvollziehbare Ableitung,
+- demokratisch-gesellschaftliche Maßstäbe,
+- grün-politische Maßstäbe einschließlich dokumentierter lokaler Positionen der GRÜNEN Feldkirchen.
+
+Nur Maßstäbe, die für einen konkreten Recherche-, Prüf- oder Bewertungsschritt tatsächlich relevant sind, sollen dort referenziert werden; nicht der gesamte Referenzrahmen.
+
+Nicht zu verwechseln mit Referenzwissen: Referenzwissen hilft, Sachverhalte, Orte, Objekte, Akteure oder Zusammenhänge zu erkennen und zuzuordnen. Ein Referenzmaßstab beschreibt dagegen, **nach welchem Qualitäts-, demokratischen oder politischen Maßstab FIB prüft oder einordnet**.
+
 ### `Zielbereich`
 
 **Benutzer-Label in der App:** Zielbereich
@@ -142,6 +160,8 @@ Ein Bestandteil des grünen politischen Referenzrahmens, der einen politischen M
 Beispiel: „Nachhaltige Mobilität und Verkehrssicherheit“ oder „Flächensparen und nachhaltige Ortsentwicklung“.
 
 Ein Zielbereich besitzt keine feste Rangstufe gegenüber anderen Zielbereichen. Seine Bedeutung für die Einordnung entsteht erst im konkreten Vorgang und in Bezug auf konkrete Wirkungen.
+
+Im übergeordneten Modell ist ein Zielbereich eine fachliche Ausprägung bzw. Strukturierung grün-politischer Referenzmaßstäbe; der Begriff Referenzmaßstab umfasst darüber hinaus auch allgemeine FIB-Qualitätsmaßstäbe und demokratisch-gesellschaftliche Maßstäbe.
 
 ### `Prüfkriterium`
 
@@ -315,15 +335,31 @@ Nicht jedes KI-vorgeschlagene Feld benötigt eine eigene Pflichtbestätigung; un
 
 ## 6. Rollen
 
+### `Besucher`
+
+**Benutzer-Label in der App:** Besucher
+
+Öffentliche Nutzerrolle ohne redaktionelle Schreib-, Freigabe- oder Administrationsrechte. Besucher können die für die Öffentlichkeit freigegebenen FIB-Inhalte und angebotenen öffentlichen Funktionen nutzen.
+
+### `Redakteur`
+
+**Benutzer-Label in der App:** Redakteur
+
+Redaktionelle Rolle für Recherche, Prüfung, Bearbeitung, fachlich wirksame Änderungen und Veröffentlichung im Rahmen der dafür vorgesehenen FIB-Workflows.
+
+Ein Redakteur darf Meldungen freigeben und veröffentlichen. Eine zusätzliche Rolle „Publisher“ bzw. „Veröffentlicher“ ist nicht vorgesehen.
+
+Administrations- und systemweite Konfigurationsrechte sind davon getrennt und dem Admin vorbehalten.
+
 ### `Admin`
 
 **Benutzer-Label in der App:** Admin
 
-Die fachlich und technisch verantwortliche Rolle im FIB-System.
+Die fachlich und technisch verantwortliche Administrationsrolle im FIB-System.
 
-Der Admin ist nicht nur für technische Administration zuständig, sondern verantwortet insbesondere auch den freigegebenen Stand des politischen Referenzsystems. KI- oder redaktionell vorgeschlagene Änderungen am Referenzsystem werden erst durch Admin-Freigabe fachlich wirksam.
+Der Admin besitzt zusätzlich zu den Redaktionsrechten administrative Rechte, insbesondere für Benutzer-/Rollenverwaltung, systemweite Konfigurationen und solche fachlichen Grundlagen, deren Änderung ausdrücklich einer Admin-Freigabe unterliegt.
 
-Die detaillierte Rechteausgestaltung wird im Gründungspaket G6 festgelegt.
+Die detaillierte Rechteausgestaltung wird in der Sicherheits- und Berechtigungsmatrix festgelegt.
 
 ## 7. Akteur und Position
 
