@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 1.3 | 03.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
+| 1.4 | 05.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
 
 ## 1. Zweck dieses Dokuments
 
@@ -41,6 +41,26 @@ FIB soll insbesondere:
 FIB ist damit mehr als eine Meldungssammlung. Die Leitidee lautet:
 
 > **FIB soll nicht primär Dokumente oder Meldungen präsentieren, sondern den aktuellen Wissensstand zu einem Sachverhalt erschließen.**
+
+### 2.1 Übergeordnetes KI- und Transparenzprinzip
+
+FIB nutzt die Fähigkeit von KI, große Wissensbestände und laufend aktualisierte öffentlich zugängliche Informationen zu erschließen, semantisch auszuwerten, Zusammenhänge zu erkennen und daraus begründete Schlussfolgerungen abzuleiten. FIB definiert dafür den Informationsbedarf, die Such- und Relevanzregeln, einen politischen und gesellschaftlichen Referenzrahmen sowie die Regeln für Aufbereitung, Einordnung und Veröffentlichung.
+
+Dabei gelten drei gleichrangige Grundprinzipien:
+
+1. **Quellenbezug** – Sachinformationen müssen sichtbar und nachvollziehbar durch Quellen belegt sein.
+2. **Nachvollziehbare Ableitung** – Ableitungen, Bewertungen und Schlussfolgerungen müssen von den zugrunde liegenden Sachinformationen unterscheidbar und durch Begründungen nachvollziehbar hergeleitet sein.
+3. **Transparente Werteorientierung** – FIB nutzt für das Hinterfragen, Einordnen und Abwägen von Informationen einen dokumentierten politischen und gesellschaftlichen Referenzrahmen; die jeweils maßgeblichen Werte und Ziele sollen bei der Einordnung erkennbar sein.
+
+Der Referenzrahmen verändert nicht die Tatsachenbasis. Sachinformation und politische Einordnung bleiben klar getrennt. Er bestimmt vielmehr, welche Fragen FIB stellt, welche Auswirkungen und Zielkonflikte betrachtet werden und nach welchen Maßstäben Einordnungen erfolgen.
+
+Diese Transparenz schützt FIB zugleich vor zwei Fehlentwicklungen: **scheinbarer Neutralität**, bei der politische Wertmaßstäbe unsichtbar bleiben, und **Bestätigungslogik**, bei der nur Informationen gesucht oder berücksichtigt würden, die zu bereits bestehenden politischen Positionen passen. Auch widersprechende, unerwartete oder politisch unbequeme Sachinformationen gehören zur Informationsbasis, sofern sie relevant und belastbar belegt sind.
+
+Der bekannte Informations- und Suchraum steuert die Recherche, begrenzt sie aber nicht. Offene Recherche muss auch bislang unbekannte Quellen, Entwicklungen, Akteure und Zusammenhänge erschließen können. KI-internes Wissen darf zum Suchen, Verstehen, Verknüpfen und Hinterfragen genutzt werden; eine von FIB veröffentlichte Tatsachenbehauptung benötigt jedoch eine nachvollziehbare Quelle.
+
+Diese Leitprinzipien sind verbindlicher Prüfmaßstab für fachliche, technische und redaktionelle Entscheidungen in FIB. Neue Regeln oder Vereinfachungen dürfen den offenen Informationsraum, die Quellenvielfalt, die Trennung von Sachinformation und Einordnung, die Begründungspflichten oder die transparente Werteorientierung nicht unbeabsichtigt einschränken.
+
+Verbindliche Detailquelle: `docs/Leitprinzipien-FIB.md`.
 
 ## 3. Für wen ist FIB gedacht?
 
@@ -452,6 +472,7 @@ Für das Echtsystem gilt der Grundsatz:
 
 Dieser Management Approach ist die verständliche Management-Zusammenfassung. Verbindliche Details stehen insbesondere in:
 
+- `docs/Leitprinzipien-FIB.md` – übergeordnete Leitprinzipien zu Quellenbezug, nachvollziehbarer Ableitung, transparenter Werteorientierung und offenem Informationsraum,
 - `docs/Themen-und-Vorgangslogik.md` – fachliche Definition und Pflege von Meldung/Vorgang/Thema,
 - `docs/Recherche-und-Quellenmonitor.md` – Quellenbeobachtung, Quellenentdeckung und Übergang in den Redaktionsprozess,
 - `docs/KI-Qualitaet-und-Modellunabhaengigkeit.md` – Qualitätsanforderungen, Modellvergleich und Leistungsklassen,
@@ -468,6 +489,7 @@ Dieser Management Approach ist die verständliche Management-Zusammenfassung. Ve
 
 | Version | Datum | Änderung |
 |---|---|---|
+| 1.4 | 05.10.2026 | Übergeordnetes KI- und Transparenzprinzip ergänzt: Quellenbezug, nachvollziehbare Ableitung und transparente Werteorientierung als gleichrangige Grundprinzipien; Schutz vor scheinbarer Neutralität und Bestätigungslogik; offener Informations- und Suchraum als verbindlicher Entwicklungsmaßstab; `Leitprinzipien-FIB.md` als Detailquelle aufgenommen. |
 | 1.3 | 03.10.2026 | Hybridarchitektur für KI verständlich ergänzt: Quellenbeobachtung ohne KI bis zur Änderung, KI-gestützte Quellenentdeckung und Eingangsanalyse, bedarfsgesteuerte Recherche-KI und optionale Redaktionsassistenz; Qualitätsvorrang bei erforderlicher KI; vorläufigen monatlichen KI-Kostenkorridor 3–13 € mit 15 € Planungs-/Warnrahmen aufgenommen. |
 | 1.2 | 01.10.2026 | Prägnantes Kapitel zu Kommunikationskern, Claim und Botschaften aus dem Demonstrator wieder aufgenommen; öffentlicher Verzicht auf die Abkürzung FIB und Prüfung von „was dahintersteckt“ dokumentiert; Marketingdokument als verbindliche Detailquelle ergänzt. |
 | 1.1 | 01.10.2026 | Öffentliche Navigationsbegriffe auf „Neues | Im Blick | Sitzungen | Suche“ aktualisiert; interne Fachbegriffe abgegrenzt; visuelle Identität als Detailquelle ergänzt. |
