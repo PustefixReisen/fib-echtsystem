@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 2.0 | 04.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
+| 2.1 | 05.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
 
 ## 1. Zweck und Geltung
 
@@ -37,6 +37,7 @@ Ziel ist ein robustes und langfristig tragfähiges Modell, das für einen kleine
 - Öffentlich wird grundsätzlich nur der aktuell freigegebene Stand eines Vorgangs oder Themas gezeigt. Historische Versionen stehen ausschließlich im Redaktionssystem für Vergleich, Nachvollziehbarkeit, Audit und Rekonstruktion früherer Sachstände zur Verfügung.
 - Ein späterer Recherche- oder Aktualisierungslauf darf bestätigte fachliche Objekte nicht allein deshalb entfernen oder entwerten, weil sie in diesem Lauf nicht erneut gefunden wurden.
 - Planung, tatsächliches Geschehen und nachträgliche Dokumentation werden getrennt modelliert. Insbesondere sind Tagesordnung, Vorlage, Beratung, Beschluss und Niederschrift nicht dasselbe.
+- Referenzwissen ergänzt den Wissenskern gezielt, bildet aber keinen parallelen vollständigen Wissensbestand für allgemeines KI-Hintergrundwissen.
 
 ## 3. Wissenskern
 
@@ -725,6 +726,115 @@ Verbindliche Entscheidung:
 
 > **Ursprüngliche Internetverfügbarkeit und öffentliche Bereitstellung über FIB sind getrennte Eigenschaften.**
 
+#### 4.2.1 Referenzwissen als unterstützender Recherche- und Zuordnungskontext
+
+Referenzwissen ist vom eigentlichen Wissenskern `Ereignis → Meldung → Vorgang → Thema` getrennt. Es dient dazu, wiederkehrende FIB-spezifische Identitäten, Bezeichnungen und Zusammenhänge für Recherche, Erkennung, Zuordnung und Relevanzprüfung verfügbar zu machen.
+
+Verbindliche Abgrenzung:
+
+> **FIB archiviert kein allgemeines Sach-, Fach-, Verwaltungs- oder Verfahrenswissen, das ein leistungsfähiges KI-Modell zuverlässig selbst erschließen und bei Bedarf aktuell recherchieren kann. Referenzwissen wird nur gespeichert, wenn daraus ein konkreter, wiederkehrender FIB-Zusatznutzen entsteht.**
+
+Der Ausbau erfolgt damit anlassbezogen und bewusst sparsam.
+
+##### Fachliche Bausteine
+
+Für den MVP werden nur drei konzeptionelle Bausteine benötigt:
+
+- `Referenzobjekt` – stabile FIB-relevante Identität,
+- `Referenzbezeichnung` – alternative, amtliche, gebräuchliche, frühere Bezeichnung oder Abkürzung eines Referenzobjekts,
+- `Referenzbeziehung` – fachlich nützliche Beziehung zwischen zwei Referenzobjekten.
+
+`Fundstelle` bzw. dokumentierte Herkunft/Begründung kann Referenzobjekte und Referenzbeziehungen belegen, ohne dass für triviale lokale oder geografische Zusammenhänge zwingend ein aufwendiger Quellenapparat erforderlich ist.
+
+```mermaid
+erDiagram
+    REFERENZOBJEKT ||--o{ REFERENZBEZEICHNUNG : hat
+    REFERENZOBJEKT ||--o{ REFERENZBEZIEHUNG : ist_quelle
+    REFERENZOBJEKT ||--o{ REFERENZBEZIEHUNG : ist_ziel
+    REFERENZOBJEKT }o--o{ FUNDSTELLE : ist_belegt_durch
+    REFERENZBEZIEHUNG }o--o{ FUNDSTELLE : ist_belegt_durch
+```
+
+Ein `Referenzobjekt` benötigt fachlich mindestens:
+
+- stabile Identität,
+- Hauptbezeichnung,
+- Typ/Kategorie,
+- kurzen FIB-spezifischen Kontext,
+- Herkunft bzw. Erstellungsart,
+- fachlichen Status.
+
+Die Typisierung bleibt bewusst schlank. Sie muss mindestens die drei vereinbarten Referenzwissensbereiche abbilden können:
+
+1. **Orts- und Objektwissen**,
+2. **selektives Akteurs- und Zuständigkeitswissen**,
+3. **FIB-spezifisches Kontextwissen**.
+
+Für den MVP wird dafür keine zusätzliche breite Entitätsfamilie für allgemeines Sach- und Fachwissen eingeführt. Ein lokaler oder projektspezifischer Begriff kann, sofern tatsächlich notwendig, als entsprechender Typ eines `Referenzobjekts` geführt werden.
+
+##### Beziehungen und Kardinalitäten
+
+Es gilt fachlich:
+
+- `Referenzobjekt → Referenzbezeichnung`: `0..n`,
+- jede `Referenzbezeichnung` gehört genau zu einem `Referenzobjekt`,
+- `Referenzobjekt ↔ Referenzobjekt`: `0..n` über `Referenzbeziehung`,
+- ein `Referenzobjekt` kann mit `0..n` Ereignissen, Vorgängen oder Themen in einen fachlichen Kontext gestellt werden,
+- ein Ereignis, Vorgang oder Thema kann `0..n` Referenzobjekte als Recherche- oder Zuordnungskontext besitzen.
+
+Diese Kontextbeziehungen erzeugen keine zweite fachliche Wahrheit. Die konkrete Bedeutung einer Zuordnung muss erkennbar bleiben. Insbesondere darf aus einem allgemeinen Akteurs- oder Zuständigkeitsbezug nicht automatisch geschlossen werden, dass ein Akteur in einem konkreten Vorgang tatsächlich gehandelt hat.
+
+Eine tatsächlich ausgeübte Rolle eines Akteurs in einem Vorgang bzw. Ereignis gehört zum konkreten quellengebundenen FIB-Wissen. Die stabile Identität des Akteurs kann dabei als Referenzobjekt wiederverwendet werden; die konkrete Handlung oder Rolle wird jedoch nicht als allgemeine Referenzbeziehung verallgemeinert.
+
+##### Beziehungstypen im MVP
+
+Die Menge der Referenzbeziehungstypen wird klein gehalten. Für Orts- und Objektwissen genügen zunächst insbesondere:
+
+- `ist Teil von`,
+- `liegt in / an`,
+- `verbindet`,
+- `erschließt / versorgt`,
+- `steht in funktionalem Zusammenhang mit`.
+
+Alternative Bezeichnungen werden grundsätzlich über `Referenzbezeichnung` abgebildet und benötigen nur dann zusätzlich eine eigene Beziehung, wenn dies in der späteren technischen Umsetzung einen klaren Nutzen hat.
+
+Weitere Beziehungstypen werden nicht vorsorglich eingeführt. Zeitabhängige Aussagen wie `beeinflusst`, `gefährdet`, `verbessert`, `verschlechtert` oder `ist Treiber von` gehören grundsätzlich in Ereignis-, Vorgangs-, Themen- oder Wirkungszusammenhänge und nicht in dauerhaftes Referenzwissen.
+
+##### Status, Herkunft und Aufnahme
+
+Ein Referenzobjekt oder eine Referenzbeziehung muss mindestens folgende fachliche Zustände unterscheiden können:
+
+- **vorgeschlagen** – aus Recherche, KI-Vorschlag oder manueller Erfassung entstanden, noch nicht fachlich wirksam,
+- **bestätigt** – redaktionell geprüft und Bestandteil des verbindlichen Recherchekontexts,
+- **nicht mehr gültig / zurückgenommen** – soll nicht mehr als aktuelles Referenzwissen verwendet werden; frühere fachliche Wirksamkeit bleibt nachvollziehbar.
+
+Nur bestätigtes Referenzwissen erweitert den verbindlichen Recherchekontext.
+
+Neues Referenzwissen kann auf drei Wegen entstehen:
+
+1. Initialbefüllung aus bereits geprüftem stabilem FIB-Wissen,
+2. KI-Vorschlag aus Recherche oder Quellenanalyse,
+3. manuelle redaktionelle Ergänzung.
+
+Die Aufnahme erfolgt nur bei erkennbarem Zusatznutzen gegenüber allgemeinem KI-Hintergrundwissen. Typische Gründe sind lokale oder projektspezifische Besonderheiten, wiederkehrend wichtige Aliase oder Beziehungen, wiederholte Fehlzuordnungen, schwer zuverlässig ableitbare Zusammenhänge oder der bewusste Wunsch nach modellunabhängig dauerhaft verfügbarem FIB-Wissen.
+
+##### Abgrenzung Referenzobjekt ↔ Vorgang
+
+Ein Gegenstand kann gleichzeitig eine relativ stabile Referenzidentität und einen zeitabhängigen Vorgang besitzen. Beide bleiben fachlich getrennt.
+
+Beispiel `Kiesgrund`:
+
+- `Referenzobjekt` → bezeichnet das Entwicklungsgebiet bzw. seine stabile lokale Identität und Bezeichnung,
+- `Vorgang` → bildet Planungsstände, Entscheidungen, Veröffentlichungen und andere zeitliche Entwicklungen ab.
+
+Dasselbe Prinzip gilt für Akteure: Die Institution kann als stabile Identität im Referenzwissen bestehen; ihre konkrete Beteiligung, Aussage oder Handlung wird im jeweiligen Ereignis-/Vorgangskontext quellengebunden geführt.
+
+##### Pflege- und Ausbauprinzip
+
+Im MVP werden Referenzwissen und Beziehungen redaktionell pflegbar gehalten; KI-Vorschläge werden erst nach Bestätigung wirksam. Stabile Einträge werden nur bei konkretem Anlass erneut geprüft.
+
+Automatische Wiedervorlagen, Konflikterkennung, feinere Gültigkeitszeiträume, zusätzliche Relationstypen oder weitergehende semantische/raumbezogene Beziehungen gehören nicht zum MVP. Sie werden erst nach Pilot/Echtbetrieb bei nachgewiesenem Bedarf geprüft.
+
 ### 4.3 Offene Frage / Wissenslücke
 
 Eine `offene Frage` bzw. `Wissenslücke` beschreibt einen noch nicht geklärten, noch nicht entschiedenen, noch nicht belastbar belegten oder noch nicht bekannten Aspekt eines Sachverhalts.
@@ -828,11 +938,13 @@ Mehrfachverwendung eines Bildes ist möglich, wenn jede Verwendung eigenständig
 2. Welche Plausibilitätsregeln sind verbindlich und welche nur unterstützende Hinweise?
 3. Welche zusätzlichen Rechte- und Freigabestatus werden für öffentlich über FIB bereitgestellte Dateien und Bilder benötigt?
 4. Wie werden Rücknahme, Archivierung und Wiederaufnahme der übrigen fachlichen Objekte und Beziehungen konkret modelliert?
+5. Wie wird der Informationsbedarf bzw. ein redaktioneller Beobachtungsauftrag als fachliches Objekt modelliert und mit Vorgängen, Themen, offenen Fragen und Rechercheläufen verknüpft?
 
 ## Änderungshistorie
 
 | Version | Datum | Änderung |
 |---|---|---|
+| 2.1 | 05.10.2026 | Schlankes Referenzwissen in das konzeptionelle G3-Datenmodell integriert: `Referenzobjekt`, `Referenzbezeichnung` und `Referenzbeziehung` als unterstützender Recherche- und Zuordnungskontext modelliert; drei Referenzwissensbereiche, Kardinalitäten, Kandidat/Bestätigt/Rücknahme-Logik, Herkunft, anlassbezogene Aufnahme und Abgrenzung zu Vorgang/Ereignis festgelegt. Allgemeines Sach-, Fach-, Verwaltungs- und Verfahrenswissen wird nicht als eigener FIB-Wissensbestand dupliziert. Informationsbedarf/Beobachtungsauftrag als nächster offener G3-Baustein aufgenommen. |
 | 2.0 | 04.10.2026 | `Sitzung` und `TOP` vollständig in den Wissenskern integriert. TOP als Planungs-/Gliederungsobjekt klar vom Ereignis getrennt; Beziehungen Sitzung↔TOP und Sitzung/TOP↔Ereignis festgelegt; Meldungs-, Vorgangs- und Themenbezüge daraus abgeleitet statt redundant gespeichert. Tagesordnung, Vorlage, Beratung, Beschluss und Niederschrift getrennt; Datumsarten abgegrenzt. Sitzungsstatus `angekündigt / stattgefunden / abgeschlossen / abgesagt` und TOP-Status `angekündigt / behandelt / vertagt / abgesetzt bzw. nicht behandelt` festgelegt. `beschlossen` bleibt Ereignis statt TOP-Status. Abschluss einer Sitzung setzt öffentlich belegte Genehmigung der Niederschrift voraus; Veröffentlichung und Genehmigung bleiben getrennt. Persistenz- und Historienlogik für Sitzungen/TOPs ergänzt. |
 | 1.9 | 04.10.2026 | Status- und Rücknahmelogik für Ereignis und Meldung festgelegt. Recherchekandidaten werden erst nach fachlicher Bestätigung zu Ereignissen; bestätigte Ereignisse bleiben grundsätzlich dauerhaft im Wissensbestand und können nur `zurückgenommen` oder bei Dubletten `zusammengeführt` werden. Meldungen erhalten die Veröffentlichungsstatus `Entwurf / freigegeben / veröffentlicht / zurückgezogen`; `aktualisiert` und `korrigiert` sind nachvollziehbare Änderungen, keine eigenen Dauerstatus. Späteres Nichtfinden in einem Recherchelauf darf bestehende Objekte nicht entfernen oder entwerten. |
 | 1.8 | 04.10.2026 | Lebenszyklusstatus für Vorgang und Thema festgelegt. Vorgang: `aktiv / ruhend / abgeschlossen / archiviert`; Thema: `aktiv / ruhend / archiviert`. `abgeschlossen` bleibt bewusst auf konkrete Vorgänge beschränkt; `archiviert` bedeutet Entfernung aus laufender öffentlicher Navigation bei vollständigem Erhalt im Redaktionssystem; Wiederaktivierung bleibt möglich. |
