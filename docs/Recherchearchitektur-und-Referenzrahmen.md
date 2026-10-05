@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 1.1 | 05.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
+| 1.2 | 05.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
 
 ## 1. Zweck und Geltung
 
@@ -94,6 +94,112 @@ Beispiele für FIB können sein:
 - „Kiesgrund“ als Bezeichnung eines großen Entwicklungsgebietes nördlich der S-Bahn.
 
 Referenzwissen kann die Recherche steuern und Suchbegriffe erweitern. Es ist jedoch nicht automatisch eine veröffentlichbare Tatsachenquelle. Veröffentlichte Tatsachenbehauptungen benötigen weiterhin nachvollziehbare Quellen.
+
+### 6.1 Orts- und Objektwissen
+
+Orts- und Objektwissen beschreibt relativ stabile Identitäten, alternative Bezeichnungen und fachlich nützliche Beziehungen zwischen Orten, Räumen, Infrastruktur, Einrichtungen, Projekten und anderen Bezugsobjekten.
+
+Verbindlicher Grundsatz:
+
+> **Orts- und Objektwissen beschreibt stabile Identitäten, alternative Bezeichnungen und relevante Beziehungen. Veränderliche Sachstände gehören nicht in dieses Referenzwissen, sondern in Ereignisse, Vorgänge oder andere zeitabhängige FIB-Objekte.**
+
+Ein Referenzobjekt besitzt eine stabile fachliche Identität. Alternative Bezeichnungen werden nicht als eigene Objekte geführt, sondern diesem Objekt zugeordnet.
+
+Beispiel:
+
+- Objekt: `B471 / Oberndorfer Straße`
+- Hauptbezeichnung: `B471`
+- alternative Bezeichnung: `Oberndorfer Straße`
+
+### 6.2 Konzeptionelles Modell für Orts- und Objektwissen
+
+Für das konzeptionelle G3-Modell werden folgende fachliche Bausteine vorgesehen:
+
+- `REFERENZOBJEKT` – stabile Identität eines Ortes, Raums, Infrastruktur- oder sonstigen Bezugsobjekts,
+- `REFERENZBEZEICHNUNG` – Alias, Abkürzung, amtliche, gebräuchliche oder frühere Bezeichnung eines Referenzobjekts,
+- `REFERENZBEZIEHUNG` – fachlich nützliche Beziehung zwischen zwei Referenzobjekten,
+- `FUNDSTELLE` bzw. Herkunft/Begründung – Nachweis oder dokumentierte Herkunft des Referenzwissens, soweit erforderlich.
+
+```mermaid
+erDiagram
+    REFERENZOBJEKT ||--o{ REFERENZBEZEICHNUNG : hat
+    REFERENZOBJEKT ||--o{ REFERENZBEZIEHUNG : ist_quelle
+    REFERENZOBJEKT ||--o{ REFERENZBEZIEHUNG : ist_ziel
+    REFERENZOBJEKT }o--o{ FUNDSTELLE : ist_belegt_durch
+    REFERENZBEZIEHUNG }o--o{ FUNDSTELLE : ist_belegt_durch
+```
+
+Ein `REFERENZOBJEKT` benötigt konzeptionell mindestens:
+
+- stabile fachliche ID,
+- Hauptbezeichnung,
+- Typ,
+- kurzen fachlichen Kontext,
+- fachlichen Status,
+- Herkunft bzw. Erstellungsart.
+
+### 6.3 Beziehungstypen im MVP
+
+Die Beziehungstypen werden bewusst klein gehalten, damit das Referenzwissen pflegbar bleibt. Für den MVP genügen zunächst insbesondere:
+
+- `ist Teil von`,
+- `liegt in / an`,
+- `verbindet`,
+- `erschließt / versorgt`,
+- `steht in funktionalem Zusammenhang mit`,
+- `ist alternative Bezeichnung von` – soweit die technische Umsetzung Aliasbeziehungen nicht ausschließlich über `REFERENZBEZEICHNUNG` abbildet.
+
+Beziehungen können gerichtet sein. Beispiel: `Kiesgrund liegt in Feldkirchen` ist fachlich nicht identisch mit der umgekehrten Aussage.
+
+Verbindliche Pflegeregel:
+
+> **Eine Beziehung wird nur dann als Referenzwissen gespeichert, wenn sie für Recherche, Erkennung, Zuordnung oder Relevanzprüfung wiederholt nützlich ist.**
+
+Zeitabhängige Wirkungs- oder Bewertungsbeziehungen wie `beeinflusst`, `gefährdet`, `verbessert`, `verschlechtert` oder `ist Treiber von` werden nicht als dauerhafte Referenzbeziehungen modelliert, wenn sie fachlich eher in Ereignis-, Vorgangs- oder Wirkungsmodell gehören.
+
+### 6.4 Kandidat, Bestätigung und Herkunft
+
+Neues Referenzwissen kann auf drei Wegen entstehen:
+
+1. Initialbefüllung aus bereits bekanntem und geprüftem FIB-Wissen,
+2. KI-Vorschlag aus Recherche oder Quellenanalyse,
+3. manuelle redaktionelle Ergänzung.
+
+KI-Funde werden nicht automatisch fachlich wirksam. Referenzobjekte und Referenzbeziehungen müssen zwischen mindestens folgenden Zuständen unterscheiden können:
+
+- `vorgeschlagen`,
+- `bestätigt`,
+- `nicht mehr gültig / zurückgenommen`.
+
+Die genaue spätere technische Statusausprägung wird im Datenmodell festgelegt; fachlich gilt bereits jetzt, dass nur bestätigtes Referenzwissen den verbindlichen Recherchekontext erweitert.
+
+Herkunft bzw. Begründung muss grundsätzlich nachvollziehbar sein. Nicht jede triviale geografische Beziehung benötigt einen aufwendigen Quellenapparat, das Modell muss aber eine Fundstelle, Herkunft oder redaktionelle Begründung aufnehmen können.
+
+### 6.5 Abgrenzung zu Vorgängen und Zwei-Stufen-Logik
+
+Ein Projekt oder Gebiet kann sowohl als Referenzobjekt als auch als `Vorgang` auftreten. Beide Objekte werden nicht zusammengeführt:
+
+- das Referenzobjekt beschreibt die relativ stabile Identität und Bezeichnung,
+- der Vorgang beschreibt die zeitliche Entwicklung des konkreten Sachverhalts.
+
+Beispiel `Kiesgrund`: Die Bezeichnung und räumliche Identität gehören zum Referenzwissen; Planungsstände, neue Entscheidungen und Veränderungen gehören zum Vorgang bzw. zu Ereignissen.
+
+Für die praktische Pflege gilt eine Zwei-Stufen-Logik:
+
+**Stufe 1 – MVP / Erstbetrieb**
+
+- Initialbefüllung aus stabilem vorhandenem FIB-Wissen,
+- manuelle Pflege durch die Redaktion,
+- KI-Vorschläge für Referenzwissenskandidaten,
+- redaktionelle Bestätigung vor fachlicher Wirksamkeit,
+- schlanke Objekt- und Beziehungsstruktur,
+- stabile Einträge nur anlassbezogen prüfen.
+
+**Stufe 2 – nur bei nachgewiesenem Bedarf nach MVP/Pilot**
+
+Mögliche spätere Erweiterungen sind automatische Wiedervorlage, Konflikterkennung, feinere Gültigkeitszeiträume, zusätzliche Beziehungstypen und weitergehende räumliche oder semantische Beziehungen.
+
+Diese Ausbaustufe ist kein vorab festgelegtes Vollausbaupaket. Sie wird nur umgesetzt, wenn der Echtbetrieb einen konkreten Bedarf zeigt. Die Wiedervorlage ist als GitHub-Issue dokumentiert.
 
 ## 7. Dynamischer Recherchehorizont und offene Recherche
 
@@ -286,7 +392,7 @@ Chatverläufe sind Arbeitsraum, aber keine dauerhafte Primärquelle für verbind
 
 Vor der physischen bzw. logischen Modellierung von Referenzwissen und Quellenmonitor sind als nächste fachliche Schritte zu klären:
 
-1. welche Kategorien von Referenzwissen benötigt werden,
+1. welche weiteren Kategorien von Referenzwissen neben Orts- und Objektwissen benötigt werden,
 2. welche Teile des Referenzwissens fachlich versioniert oder mit Gültigkeitszeiträumen versehen werden müssen,
 3. wie Informationsbedarf und redaktionelle Beobachtungsaufträge beschrieben werden,
 4. wie neue Quellen, Begriffe und Zusammenhänge aus offener Recherche in den bestätigten Recherchekontext übernommen werden,
@@ -299,5 +405,6 @@ Vor der physischen bzw. logischen Modellierung von Referenzwissen und Quellenmon
 
 | Version | Datum | Änderung |
 |---|---|---|
+| 1.2 | 05.10.2026 | Orts- und Objektwissen fachlich konkretisiert: Referenzobjekt, Referenzbezeichnung, Referenzbeziehung und Herkunft/Beleg als konzeptionelle Bausteine festgelegt; kleine MVP-Beziehungstypologie und Pflegeregel beschlossen; Kandidat-vs.-bestätigt-Logik, drei Zuführungswege, Trennung Referenzobjekt↔Vorgang und Zwei-Stufen-Logik mit späterer bedarfsabhängiger Ausbaustufe dokumentiert. |
 | 1.1 | 05.10.2026 | Redaktions-UI für Referenzwissen als verbindliche Systemanforderung ergänzt; Pflege, Prüfung, Freigabe, Historie und Übernahme von KI-Vorschlägen als G3-relevante Anforderungen festgelegt; Besuchersichtbarkeit des Referenzrahmens davon abgegrenzt. |
 | 1.0 | 05.10.2026 | Recherchearchitektur als fachliche Primärquelle angelegt; Informationsbedarf, bestehendes FIB-Wissen, Referenzwissen, dynamischer Recherchehorizont, offene Recherche und Lernschleife festgelegt; Referenzrahmen in allgemeine FIB-Qualitätsprinzipien, demokratisch-gesellschaftlichen Grundrahmen und spezifisch grünen politischen Referenzrahmen differenziert; spätere Besuchersichtbarkeit als Architekturanforderung vorgesehen. |
