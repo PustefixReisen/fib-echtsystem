@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 0.7 | 04.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
+| 0.8 | 05.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
 
 ## 1. Zweck und Geltung
 
@@ -16,6 +16,7 @@ Ergänzende Primärquellen:
 
 - fachliches Datenmodell: `docs/Datenmodell.md`
 - Themen- und Vorgangslogik: `docs/Themen-und-Vorgangslogik.md`
+- Recherchearchitektur und Referenzrahmen: `docs/Recherchearchitektur-und-Referenzrahmen.md`
 - politisches Referenzsystem: `docs/Gruene-Werte-und-politische-Ziele.md`
 - Begriffe und Benutzer-Labels: `docs/Begriffe.md`
 - öffentliche UX: `docs/UX-und-Informationsarchitektur.md`
@@ -44,6 +45,34 @@ Bei fachlich relevanten KI-Vorschlägen soll der Bearbeiter nachvollziehen könn
 
 Die Begründung muss nicht ständig vollständig sichtbar sein, aber unmittelbar erreichbar bleiben.
 
+### 2.3 Komplexität im Hintergrund, Einfachheit in der Redaktion
+
+Verbindlicher UX-Grundsatz:
+
+> **FIB darf fachlich und technisch komplex sein, ohne diese Komplexität der Redaktion als Bedienlast aufzubürden. Die normale redaktionelle Arbeit soll mit verständlichen Vorschlägen, wenigen klaren Entscheidungen und kontextbezogenen Aktionen möglich sein.**
+
+Daraus folgt insbesondere:
+
+- interne IDs, Regelstrukturen, Beziehungsmodelle und technische Statuswerte werden im Normalfall nicht als Bedieninhalt in den Vordergrund gestellt,
+- die Redaktion sieht zuerst den konkreten Sachverhalt, die vorgeschlagene Einordnung und den nächsten sinnvollen Arbeitsschritt,
+- fachliche Details, Regelbezüge, Quellen und Unsicherheiten bleiben jederzeit erreichbar, werden aber nur dann aufgeklappt, wenn sie für Prüfung oder Korrektur benötigt werden,
+- ein eindeutiger Normalfall soll möglichst ohne zusätzliche Pflichtdialoge bearbeitbar sein,
+- zusätzliche Komplexität wird nur sichtbar, wenn Unsicherheit, Widerspruch, Mehrdeutigkeit oder ein echter redaktioneller Entscheidungsbedarf besteht.
+
+### 2.4 Gemeinsamer Arbeitsbereich für KI-Vorschläge und redaktionelle Anlage
+
+KI und Redaktion arbeiten nicht in zwei getrennten fachlichen Welten. Vorschläge der KI und manuell angelegte Objekte sollen im gleichen fachlichen Arbeitskontext bearbeitet werden.
+
+Insbesondere sollen dort zusammengeführt werden können:
+
+- Ereigniskandidaten,
+- Vorschläge für neue Vorgänge,
+- Vorschläge für neue Themen,
+- Vorschläge für Beobachtungsaufträge,
+- gegebenenfalls Referenzwissenskandidaten.
+
+Die Redaktion kann an derselben fachlichen Stelle selbst Vorgänge, Themen oder Beobachtungsaufträge anlegen. Die Herkunft bleibt unterscheidbar, z. B. `KI-Vorschlag` oder `redaktionell angelegt`; die anschließende fachliche Prüfung folgt jedoch möglichst derselben Logik.
+
 ## 3. Rollen im Bearbeitungsprozess
 
 ### KI
@@ -51,6 +80,7 @@ Die Begründung muss nicht ständig vollständig sichtbar sein, aber unmittelbar
 - recherchiert und strukturiert,
 - schlägt Wirkungen, Zielbereiche, Prüfkriterien, Einordnungen und Gestaltungsoptionen vor,
 - schlägt Themenkandidaten, passende Vorgänge und weitere relevante Ereignisse vor,
+- kann aus relevanten Ereigniskandidaten neue Vorgänge, Themen oder Beobachtungsaufträge vorschlagen,
 - prüft bei neuen Wirkungen auf mögliche inhaltliche Dubletten zu bereits vorhandenen Wirkungen desselben Ereignisses,
 - ordnet vorhandene Wirkungen im Themenworkflow automatisch einer oder mehreren bestätigten Perspektiven zu,
 - kann offene Fragen/Wissenslücken vorschlagen,
@@ -63,6 +93,7 @@ Die Begründung muss nicht ständig vollständig sichtbar sein, aber unmittelbar
 - prüft, korrigiert, ergänzt und bestätigt,
 - kann Vorschläge aufteilen, zusammenführen oder verwerfen,
 - kann eigene Wirkungen, Zielbereiche, Prüfkriterien und Gestaltungsoptionen ergänzen,
+- kann Vorgänge, Themen und Beobachtungsaufträge selbst anlegen,
 - kann Vorgänge und einzelne weitere relevante Ereignisse für ein Thema auswählen,
 - bestätigt oder verändert offene Fragen/Wissenslücken,
 - bestätigt die konkrete Bildverwendung und die erforderlichen Bildmetadaten,
@@ -291,7 +322,7 @@ Bei „politisches Gewicht“ bedeutet **offen**, dass die redaktionelle Abwägu
 
 Die KI darf die Werte vorschlagen. Pflichtbestätigungen und Plausibilitätsprüfungen richten sich nach den fachlichen Regeln des Datenmodells.
 
-## 9. KI-Begründung
+## 9. KI-Begründung und Nachvollziehbarkeit von Vorschlägen
 
 Zu einem KI-Vorschlag kann die Redaktion eine kurze Begründung öffnen.
 
@@ -306,6 +337,17 @@ Beispiel:
 > **Verwendete Grundlagen:** Quelle/Fundstelle
 
 Die Begründung soll sich auf den konkreten Vorschlag beziehen und keine allgemeine Modellbeschreibung wiederholen.
+
+Bei Ereigniskandidaten und daraus abgeleiteten Strukturvorschlägen muss die Redaktion mindestens nachvollziehen können:
+
+- **Was wurde gefunden?** – kurze verständliche Beschreibung des Ereignisses bzw. Fundes,
+- **Warum könnte es für FIB relevant sein?** – konkrete KI-Begründung,
+- **Welche Regel(n) wurden angewandt?** – aufklappbarer Bezug auf die fachlich wirksamen Relevanz-/Fachregeln,
+- **Welche Fundstellen tragen die Einschätzung?** – maßgebliche Quellen bzw. Fundstellen,
+- **Wie sicher ist die Einschätzung?** – Unsicherheit/Verlässlichkeit, soweit sinnvoll,
+- **Was schlägt die KI als nächsten Schritt vor?** – bestehendem Vorgang/Thema zuordnen, neuen Vorgang/Thema vorschlagen, Beobachtungsauftrag anlegen oder anderen fachlichen Schritt anbieten.
+
+Im normalen Arbeitsbild stehen Fund, Relevanzbegründung und nächster Schritt im Vordergrund. Regel-IDs, Detailbegründungen und technische Metadaten werden bei Bedarf aufgeklappt.
 
 ## 10. Zwischenstände und Orientierung
 
@@ -426,7 +468,10 @@ Verbindlich sind die fachlichen Prinzipien:
 - kontextbezogene Fragen,
 - nachvollziehbarer Anlass jeder fachlich relevanten Frage,
 - nachvollziehbare KI-Begründung,
+- bei Ereigniskandidaten nachvollziehbarer Regelbezug, Fundstellen, Unsicherheit und vorgeschlagener nächster Zusammenhang,
 - erkennbare Wirkung der redaktionellen Entscheidung,
+- Komplexität im Hintergrund, einfache und kontextbezogene Bedienung in der Redaktion,
+- gemeinsamer fachlicher Arbeitsbereich für KI-Vorschläge und redaktionell angelegte Vorgänge/Themen/Beobachtungsaufträge bei unterscheidbarer Herkunft,
 - alle vorhandenen Prüfkriterien eines gewählten Zielbereichs sichtbar,
 - KI-Vorauswahl statt versteckter Vorausfilterung,
 - Ergänzung neuer Prüfkriterien möglich,
@@ -453,6 +498,7 @@ Noch experimentell sind insbesondere:
 - Platzierung und Darstellung von Hilfetexten,
 - konkrete Navigation zwischen Bearbeitungsschritten,
 - visuelle Hervorhebung von KI-Vorschlägen,
+- konkrete Darstellung von Vorschlagslisten und Detail-Aufklappbereichen,
 - Umfang und Darstellung von Quellenbegründungen,
 - konkrete Darstellung der Vorauswahl „Weitere relevante Ereignisse“,
 - konkrete Darstellung und Bestätigungslogik der automatischen Perspektivzuordnung von Wirkungen,
@@ -464,6 +510,7 @@ Diese Punkte werden an realen FIB-Vorgängen und Themen prototypisch getestet.
 
 | Version | Datum | Änderung |
 |---|---|---|
+| 0.8 | 05.10.2026 | UX-Grundsatz „Komplexität im Hintergrund, Einfachheit in der Redaktion“ verbindlich festgelegt; gemeinsamen Arbeitsbereich für KI-Vorschläge und redaktionelle Anlage von Vorgängen/Themen/Beobachtungsaufträgen ergänzt; Nachvollziehbarkeit von Ereigniskandidaten um Relevanzbegründung, Regelbezug, Fundstellen, Unsicherheit und nächsten Strukturvorschlag erweitert. |
 | 0.7 | 04.10.2026 | Zweiter Demonstrator-Transfer-Audit: offene Fragen/Wissenslücken als eigenständigen Redaktionsgegenstand ergänzt; Nachbar-/Regionalereignisse im Themenworkflow präzisiert; verbindlichen Bildredaktionsworkflow für Upload/Bibliothek, KI-Vorschlag, strukturierte Zuordnungen/Ausschlüsse, Rechte-/Datenschutz-/Alt-Text-Prüfung, Freigabe und Austausch aufgenommen. |
 | 0.6 | 03.10.2026 | Bewertungsdialog konkretisiert: verbindliche kontextbezogene Fragen und feste Antwortwerte für Wirkungsrichtung, Bedeutung der Wirkung, Verlässlichkeit und politisches Gewicht festgelegt; „behindert die Zielerreichung“ präzisiert und Tragweitenfrage auf „Wie bedeutend bzw. weitreichend ist diese Auswirkung?“ geändert. |
 | 0.5 | 03.10.2026 | Wirkung-Perspektive-Zuordnung als persistenter Arbeitsstand konkretisiert: festgelegte Zuordnungen werden wiederverwendet und nur bei fachlichem Änderungsanlass, Plausibilitätskonflikt oder ausdrücklicher redaktioneller Neubewertung erneut geprüft. |
