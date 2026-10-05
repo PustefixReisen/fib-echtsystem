@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 2.4 | 05.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
+| 2.5 | 05.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
 
 ## 1. Zweck
 
@@ -47,6 +47,7 @@ Dazu gehören insbesondere:
 - `docs/Dokumentation.md`
 - `docs/Roadmap.md`
 - `docs/Fachkonzept.md`
+- `docs/G3-Gesamtaudit.md`
 
 ### 4.2 Recherche, Wissen und Referenzrahmen
 
@@ -56,7 +57,7 @@ Dazu gehören insbesondere:
 
 - `docs/Recherchearchitektur-und-Referenzrahmen.md`
 - `docs/Recherche-und-Quellenmonitor.md`
-- künftige Primärquelle(n) zum Referenzwissen,
+- `docs/Beobachtungs-und-Recherchemodell.md`
 - `docs/Gruene-Werte-und-politische-Ziele.md`
 - künftige Konkretisierung des demokratisch-gesellschaftlichen Grundrahmens,
 - `docs/KI-Leitfaden.md`
@@ -73,6 +74,9 @@ Dazu gehören insbesondere:
 - `docs/Sitzungs-und-Beschlussmodell.md`
 - `docs/Wirkungsmodell.md`
 - `docs/Persistenz-und-Lebenszyklusmodell.md`
+- `docs/Mehr-wissen-Modell.md`
+- `docs/Beobachtungs-und-Recherchemodell.md`
+- `docs/Fachliche-Plausibilitaets-und-Freigaberegeln.md`
 - `docs/Begriffe.md`
 
 Die während G3 entstandenen Teilmodelle können nach fachlicher Stabilisierung in eine konsolidierte Hauptquelle überführt werden. Ziel ist nicht eine dauerhaft wachsende Zahl gleichrangiger Primärdokumente.
@@ -84,9 +88,12 @@ Leitfrage: **Wie wird aus recherchiertem Wissen ein geprüfter und veröffentlic
 Dazu gehören insbesondere:
 
 - `docs/Redaktionsworkflow.md`
+- `docs/MVP-Fachfunktionen.md`
+- `docs/KI-Zugangswege-und-Fachfunktionen.md`
+- `docs/Fachliche-Plausibilitaets-und-Freigaberegeln.md`
 - `docs/Sprachleitfaden.md`
 - `docs/Mehr-wissen.md`
-- künftige Freigabe-, Rechte- und Veröffentlichungsregeln.
+- `docs/Mehr-wissen-Modell.md`
 
 ### 4.5 Nutzererlebnis und Kommunikation
 
@@ -111,6 +118,7 @@ Dazu gehören insbesondere:
 - Backup / Restore,
 - Administration,
 - `docs/KI-Betrieb-und-Kosten.md`
+- `docs/KI-Zugangswege-und-Fachfunktionen.md`
 - `docs/Migrationsstrategie.md`
 - Architekturentscheidungen unter `docs/decisions/`.
 
@@ -140,19 +148,25 @@ Die Umstellung erfolgt bewusst nicht während laufender G3-Konsolidierung, um Me
 | Projektgründung / Gründungsentscheidungen | `docs/Projektgruendung.md` | in Arbeit |
 | Roadmap / nächster Schritt | `docs/Roadmap.md` | vorhanden |
 | G2.5 Transfer-Audit | `docs/Transfer-Audit-Demonstrator-Echtsystem.md` | abgeschlossen |
+| G3 Gesamtaudit | `docs/G3-Gesamtaudit.md` | in Abschlussprüfung |
 | Regressionstestkorpus | `docs/Regressionstests-Demonstratortransfer.md` | vorhanden / wird technisch weiter konkretisiert |
 | Fachkonzept | `docs/Fachkonzept.md` | vorhanden |
 | Begriffe / fachliches Glossar | `docs/Begriffe.md` | vorhanden |
 | Management Approach | `docs/FIB_Management-Approach.md` | vorhanden |
 | Leitprinzipien | `docs/Leitprinzipien-FIB.md` | vorhanden |
-| Recherchearchitektur / Referenzrahmen | `docs/Recherchearchitektur-und-Referenzrahmen.md` | vorhanden / G3 in Arbeit |
+| Recherchearchitektur / Referenzrahmen | `docs/Recherchearchitektur-und-Referenzrahmen.md` | vorhanden |
+| Beobachtungsauftrag / Recherchelauf | `docs/Beobachtungs-und-Recherchemodell.md` | vorhanden |
 | KI-Arbeitsregeln | `docs/KI-Leitfaden.md` | vorhanden |
 | KI-Qualität / Modellunabhängigkeit | `docs/KI-Qualitaet-und-Modellunabhaengigkeit.md` | vorhanden |
 | Grüne Werte / politische Ziele | `docs/Gruene-Werte-und-politische-Ziele.md` | vorhanden |
 | Sprachregeln | `docs/Sprachleitfaden.md` | vorhanden |
 | Themen- und Vorgangslogik | `docs/Themen-und-Vorgangslogik.md` | vorhanden |
 | Recherche / Quellenmonitor | `docs/Recherche-und-Quellenmonitor.md` | vorhanden |
-| „Mehr wissen?“ | `docs/Mehr-wissen.md` | vorhanden |
+| „Mehr wissen?“ – redaktionelles Konzept | `docs/Mehr-wissen.md` | vorhanden |
+| „Mehr wissen?“ – fachliches Datenmodell | `docs/Mehr-wissen-Modell.md` | vorhanden |
+| MVP-Fachfunktionen | `docs/MVP-Fachfunktionen.md` | vorhanden / konsolidiert |
+| KI-Zugangswege / Rollen / Fachfunktionsarchitektur | `docs/KI-Zugangswege-und-Fachfunktionen.md` | vorhanden |
+| Plausibilitäts- und Freigaberegeln | `docs/Fachliche-Plausibilitaets-und-Freigaberegeln.md` | vorhanden |
 | UX / Informationsarchitektur / Benutzerführung | `docs/UX-und-Informationsarchitektur.md` | vorhanden |
 | Visuelle Identität / Logo / Bildsprache / UI-Stil | `docs/Visuelle-Identitaet-und-Bildkonzept.md` | vorhanden |
 | Marketing / Kommunikation | `docs/Marketing-und-Kommunikation.md` | vorhanden |
@@ -160,15 +174,15 @@ Die Umstellung erfolgt bewusst nicht während laufender G3-Konsolidierung, um Me
 | KI-Betrieb / Kosten | `docs/KI-Betrieb-und-Kosten.md` | vorhanden |
 | Migrationsstrategie Entwickler → GRÜNEN-Infrastruktur | `docs/Migrationsstrategie.md` | vorhanden |
 | Übernahme Demonstrator-Dokumentation | `docs/Dokumentationsuebernahme-Demonstrator.md` | abgeschlossen / unter G2.5 erneut verifiziert |
-| Architektur | noch anzulegen | offen |
-| Datenmodell | `docs/Datenmodell.md` | in Arbeit |
-| Sitzungs- und Beschlussmodell | `docs/Sitzungs-und-Beschlussmodell.md` | vorhanden / G3-Teilmodell |
-| Wirkungsmodell | `docs/Wirkungsmodell.md` | vorhanden / G3-Teilmodell |
-| Persistenz- und Lebenszyklusmodell | `docs/Persistenz-und-Lebenszyklusmodell.md` | vorhanden / G3-Teilmodell |
-| Sicherheit / Datenschutz | noch anzulegen | offen |
-| Deployment / Betrieb | noch anzulegen | offen |
-| Backup / Restore | noch anzulegen | offen |
-| Administration | noch anzulegen | offen |
+| Architektur | noch anzulegen | offen – nach G3 |
+| Datenmodell | `docs/Datenmodell.md` | G3-Konsolidierung |
+| Sitzungs- und Beschlussmodell | `docs/Sitzungs-und-Beschlussmodell.md` | vorhanden / konsolidiert |
+| Wirkungsmodell | `docs/Wirkungsmodell.md` | vorhanden / konsolidiert |
+| Persistenz- und Lebenszyklusmodell | `docs/Persistenz-und-Lebenszyklusmodell.md` | vorhanden / konsolidiert |
+| Sicherheit / Datenschutz | noch anzulegen | offen – technische Folgephase |
+| Deployment / Betrieb | noch anzulegen | offen – technische Folgephase |
+| Backup / Restore | noch anzulegen | offen – technische Folgephase |
+| Administration | noch anzulegen | offen – technische Folgephase |
 | Architekturentscheidungen | `docs/decisions/` | bei Bedarf |
 | Arbeitsregeln für KI-/Entwicklungsarbeit | `AGENTS.md` | vorhanden |
 
@@ -272,6 +286,7 @@ Für laufend ergänzte Register oder Glossare kann statt einer fortlaufenden Ver
 
 | Version | Datum | Änderung |
 |---|---|---|
+| 2.5 | 05.10.2026 | G3-Konsolidierung in der Dokumentationslandkarte nachgezogen: Beobachtungs-/Recherchemodell, Mehr-wissen-Modell, MVP-Fachfunktionen, KI-Zugangswege/Fachfunktionen, Plausibilitäts-/Freigaberegeln und G3-Gesamtaudit als kanonische Quellen aufgenommen; Status älterer G3-Teilmodelle konsolidiert und technische Folgephasen abgegrenzt. |
 | 2.4 | 05.10.2026 | Dokumentation in sechs übergeordnete Themenbereiche gegliedert; spätere Abbildung dieser Gliederung in der GitHub-Ordnerstruktur nach fachlicher Konsolidierung festgelegt; neue G3-Primärquellen in die Landkarte aufgenommen. |
 | 2.3 | 03.10.2026 | G2.5 nach bestandenem Transfer-Gate als abgeschlossen markiert; Dokumentationsübernahme erneut als abgeschlossen bestätigt; fachliche Nachpflege und Übergabe technischer Folgeaufträge dokumentiert. |
 | 2.2 | 03.10.2026 | G2.5-Transfer-Audit in Dokumentationslandkarte aufgenommen; ursprünglichen Abschlussstatus der Demonstrator-Übernahme zurückgenommen; GitHub-Dokumentationshoheit gegenüber ODT/Exportkopien präzisiert; frühere Chats als Lückenfinder geregelt; Regressionstestkorpus als Projektquelle aufgenommen. |
