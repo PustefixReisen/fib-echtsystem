@@ -4,13 +4,13 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 1.0 | 04.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
+| 1.1 | 05.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
 
 ## 1. Zweck und Geltung
 
 Dieses Dokument ist die verbindliche Primärquelle für das fachliche Teilmodell **Sitzung / TOP / Beschlussvorlage / Beschluss / Beschlusspunkt / Abstimmung / Niederschrift** im FIB-Echtsystem.
 
-Es konkretisiert und korrigiert den bisher in `docs/Datenmodell.md`, insbesondere Abschnitt 3.10, beschriebenen Sitzungsbereich. Bei Widersprüchen hat für diesen Teilbereich dieses Dokument Vorrang, bis die nächste konsolidierte Fassung des Gesamtdatenmodells erstellt ist.
+Es konkretisiert den in `docs/Datenmodell.md`, insbesondere Abschnitt 3.10, beschriebenen Sitzungsbereich. Bei Widersprüchen innerhalb dieses Teilbereichs ist eine Konsolidierung mit dem Gesamtdatenmodell erforderlich; parallele fachliche Wahrheiten sollen nicht bestehen bleiben.
 
 Ziel ist ein Modell, das den tatsächlichen Ablauf im Feldkirchner Ratsinformationssystem (RIS) abbildet und zugleich die Nutzung von Sitzungsinhalten in Meldungen, Vorgängen und Themen ermöglicht.
 
@@ -37,12 +37,6 @@ erDiagram
     THEMA ||--o{ EREIGNIS_THEMA : enthaelt_zusaetzlich
 
     EREIGNIS ||--o| MELDUNG : kann_Grundlage_sein
-
-    SITZUNG ||--o{ MELDUNG_SITZUNG : hat_Berichterstattung
-    MELDUNG ||--o{ MELDUNG_SITZUNG : berichtet_ueber
-
-    TOP ||--o{ MELDUNG_TOP : hat_Berichterstattung
-    MELDUNG ||--o{ MELDUNG_TOP : berichtet_ueber
 ```
 
 ## 3. Ereignis im Sitzungsmodell
@@ -276,19 +270,28 @@ Dieser Fall muss ausdrücklich dokumentiert und öffentlich verständlich darges
 
 ## 9. Presse- und FIB-Meldungen zu Sitzungen und TOPs
 
-Zur Sitzung können eigenständige Presse- oder FIB-Meldungen existieren. Diese Meldungen werden regulär als Meldungen angezeigt und sollen zusätzlich bei der zugehörigen Sitzung sichtbar werden können.
+Zur Sitzung können Presse- oder FIB-Meldungen existieren. Fachlich werden dafür jedoch **keine zusätzlichen autoritativen Beziehungen `Meldung ↔ Sitzung` oder `Meldung ↔ TOP` gespeichert**.
 
-Dafür sind eigenständige fachliche Beziehungen `Meldung ↔ Sitzung` und bei konkreter TOP-Berichterstattung `Meldung ↔ TOP` zulässig und sinnvoll.
+Der Bezug wird aus den bereits bestehenden Beziehungen abgeleitet:
 
-Diese Beziehungen bedeuten:
+```text
+Meldung
+→ Ereignis
+→ TOP
+→ Sitzung
+```
 
-> **Die Meldung berichtet über diese Sitzung bzw. diesen TOP.**
+Für sitzungsweite Ereignisse ist entsprechend auch die Ableitung `Meldung → Ereignis → Sitzung` möglich.
 
-Sie ersetzen nicht die Beziehung zwischen TOP und Ereignis.
+Damit gilt:
+
+> **Eine Meldung kann bei einer Sitzung oder einem TOP angezeigt werden, ohne dort eine zweite parallele fachliche Zuordnung zu speichern.**
+
+Das verhindert widersprüchliche Doppelpflege. Wenn eine Meldung mehrere Ereignisbezüge nicht besitzen kann, bleibt für die Sitzungsanzeige das zugrunde liegende Meldungsereignis maßgeblich; zusätzliche Kontextdarstellungen werden aus den vorhandenen Ereignisbeziehungen berechnet.
 
 ## 10. Navigation zwischen TOP, Vorgang und Thema
 
-Ein TOP soll öffentlich anzeigen können, ob das zugehörige Ereignis in einem Vorgang oder Thema behandelt wird. Diese Information soll nach Möglichkeit nicht redundant am TOP gepflegt werden, sondern aus den fachlichen Beziehungen abgeleitet werden:
+Ein TOP soll öffentlich anzeigen können, ob das zugehörige Ereignis in einem Vorgang oder Thema behandelt wird. Diese Information wird nach Möglichkeit nicht redundant am TOP gepflegt, sondern aus den fachlichen Beziehungen abgeleitet:
 
 ```text
 TOP
@@ -347,4 +350,5 @@ Nicht offen ist dagegen die fachliche Anforderung, dass rekonstruierbar sein mus
 
 | Version | Datum | Änderung |
 |---|---|---|
-| 1.0 | 04.10.2026 | Sitzungs- und Beschlussmodell nach Prüfung realer Feldkirchner Niederschriften neu festgelegt. Beschlussvorlage als bereits nutzbares Ereignis; Beschlussvorlage und Beschluss als dasselbe übergeordnete Ereignis; n:m-fähige TOP-Ereignis-Beziehung; Beschlusspunkte und Abstimmungen entstehen erst aus der Niederschrift; Beschlusspunkt-Fassungen und mehrere Abstimmungen modelliert; ursprünglicher Beschlussvorschlag bleibt einsehbar; KI-Zuordnung mit zwingendem sichtbarem Prüfhinweis bei Unsicherheit; Genehmigung und Dokumentverfügbarkeit der Niederschrift getrennt; Meldungen können Sitzung/TOP direkt als Berichterstattungsbezug haben; Navigation TOP↔Vorgang/Thema ableitbar. |
+| 1.1 | 05.10.2026 | Widerspruch zum konsolidierten Datenmodell beseitigt: direkte autoritative Beziehungen `Meldung ↔ Sitzung` und `Meldung ↔ TOP` entfallen. Sitzungs-/TOP-Bezug einer Meldung wird aus `Meldung → Ereignis → TOP/Sitzung` abgeleitet; öffentliche Anzeige und Navigation bleiben daraus vollständig möglich. |
+| 1.0 | 04.10.2026 | Sitzungs- und Beschlussmodell nach Prüfung realer Feldkirchner Niederschriften neu festgelegt. Beschlussvorlage als bereits nutzbares Ereignis; Beschlussvorlage und Beschluss als dasselbe übergeordnete Ereignis; n:m-fähige TOP-Ereignis-Beziehung; Beschlusspunkte und Abstimmungen entstehen erst aus der Niederschrift; Beschlusspunkt-Fassungen und mehrere Abstimmungen modelliert; ursprünglicher Beschlussvorschlag bleibt einsehbar; KI-Zuordnung mit zwingendem sichtbarem Prüfhinweis bei Unsicherheit; Genehmigung und Dokumentverfügbarkeit der Niederschrift getrennt; Navigation TOP↔Vorgang/Thema ableitbar. |
