@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 1.2 | 05.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
+| 1.3 | 05.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
 
 ## 1. Zweck und Geltung
 
@@ -168,9 +168,11 @@ Die technische Ausführung und Orchestrierung eines AI Tasks ist Betriebslogik u
 - `propose_reference_measure` und `manage_reference_measure_status` trennen Vorschlag von normativer Aktivierung.
 - AI Tasks dürfen vorbereiten und vorschlagen, aber keine redaktionellen Entscheidungen ersetzen oder eigene Rechte/Kostenlimits selbst erweitern.
 
-## 7. Vollständigkeitsprüfung
+## 7. Abschließender MVP-Funktionsaudit
 
-Der konsolidierte Katalog deckt für die fachlich relevanten MVP-Bereiche jeweils die erforderlichen Handlungskategorien ab:
+Der Katalog wurde gegen Wissenskern, Quellen-/Recherchemodell, Redaktionsworkflow, Referenzwissen/-rahmen, Sitzungsmodell, Bildmodell, Vertiefungsmodell sowie Rollen-/Sicherheitsarchitektur geprüft.
+
+Er deckt für die fachlich relevanten MVP-Bereiche die erforderlichen Handlungskategorien ab:
 
 - Lesen/Suchen,
 - Recherche/Erfassung,
@@ -180,6 +182,15 @@ Der konsolidierte Katalog deckt für die fachlich relevanten MVP-Bereiche jeweil
 - Freigabe/Veröffentlichung,
 - Historisierung/Audit über die gemeinsame Serviceschicht.
 
+Es wurde keine weitere redaktionelle Fachfunktionsfamilie identifiziert, die für das MVP zwingend ergänzt werden muss.
+
+Insbesondere benötigen folgende Bereiche **keine zusätzlichen CRUD-Funktionsfamilien**:
+
+- einzelne Bestandteile von Sitzung/TOP/Beschluss,
+- einzelne Bestandteile der strukturierten Einordnung,
+- Bild und Bildverwendung als getrennte Endbenutzerfunktionen,
+- Recherchelauf und AI Task Run als frei bearbeitbare redaktionelle Objekte.
+
 Nicht als eigene Fachfunktionsfamilien geführt werden:
 
 - technische Migrationen, Backups und Wartungsoperationen,
@@ -188,11 +199,17 @@ Nicht als eigene Fachfunktionsfamilien geführt werden:
 - technische Benutzeroberflächenaktionen ohne eigene fachliche Wirkung,
 - reine Audit-/Logging-Schreiboperationen, die automatisch aus Fachaktionen entstehen.
 
-Benutzer-/Rollenverwaltung, Systemkonfiguration und Routingadministration gehören in eine getrennte administrative Servicefamilie und nicht in den fachlichen MVP-Katalog.
+### 7.1 Administrative Services
+
+Benutzer-/Rollenverwaltung, aktive Fachregeln, Systemkonfiguration und KI-Routing benötigen ebenfalls kontrollierte Services und dürfen nicht durch unkontrollierten direkten Datenbankzugriff administriert werden.
+
+Sie bilden jedoch eine **getrennte administrative Servicefamilie** und werden bewusst nicht in den redaktionellen MVP-Funktionskatalog aufgenommen. Für sie gelten die bereits definierten Admin-, S3-, Bestätigungs- und Auditregeln.
+
+Damit bleibt der redaktionelle Funktionskatalog schlank, ohne eine Hintertür für administrative Datenänderungen zu schaffen.
 
 ## 8. G3-Modellabgleich
 
-Die drei beim Funktionsaudit gefundenen Modelllücken sind fachlich geschlossen:
+Die drei beim ersten Funktionsaudit gefundenen Modelllücken sind fachlich geschlossen:
 
 1. **Sitzung/TOP:** `docs/Sitzungs-und-Beschlussmodell.md` v1.1 ist mit dem Grundsatz der Ableitung über das Ereignis konsolidiert; direkte parallele `Meldung ↔ Sitzung/TOP`-Beziehungen entfallen.
 2. **Beobachtungsauftrag/Recherchelauf:** `docs/Beobachtungs-und-Recherchemodell.md` definiert Primärbezug, Lebenszyklus, Recherchelauf-Provenienz und die Abgrenzung zu AI Tasks.
@@ -200,14 +217,17 @@ Die drei beim Funktionsaudit gefundenen Modelllücken sind fachlich geschlossen:
 
 Damit bestehen aus dem Funktionsaudit keine offenen fachlichen Datenmodellfragen mehr, die den MVP-Funktionsumfang blockieren.
 
-## 9. Nächster Schritt
+## 9. Status und nächster Schritt
 
-Als nächstes wird der **abschließende MVP-Funktionsaudit** durchgeführt. Dabei wird nicht erneut über einzelne Funktionsnamen diskutiert, sondern geprüft, ob der Katalog nach den nun konsolidierten Fachmodellen vollständig, widerspruchsfrei und schlank ist. Danach kann der fachliche Funktionsumfang für die spätere technische API-/Service-Spezifikation eingefroren werden.
+Der **fachliche MVP-Funktionsumfang ist mit Version 1.3 für die nächste Modellierungsstufe konsolidiert**. „Konsolidiert“ bedeutet nicht, dass spätere fachlich begründete Änderungen verboten sind; neue Funktionen sollen jedoch nur noch aus einem konkreten, bislang nicht abgedeckten fachlichen Bedarf entstehen.
+
+Der nächste sinnvolle Schritt ist nicht die technische API-Spezifikation im Detail, sondern die noch ausstehende **G3-Gesamtkonsolidierung/Audit** der fachlichen Daten- und Teilmodelle. Dabei werden insbesondere verbliebene ältere offene Punkte und Querverweise in den zentralen Dokumenten bereinigt. Erst danach folgt die physische/technische Modellierung.
 
 ## Änderungshistorie
 
 | Version | Datum | Änderung |
 |---|---|---|
-| 1.2 | 05.10.2026 | Die drei aus dem Funktionsaudit hervorgegangenen Modelllücken geschlossen: Sitzungsmodell auf Ereignis-Ableitung konsolidiert, Beobachtungs-/Recherchemodell und „Mehr wissen?“-Vertiefungsmodell als verbindliche Teilmodelle ergänzt. Funktionskatalog entsprechend bereinigt; nächster Schritt ist der abschließende MVP-Funktionsaudit. |
+| 1.3 | 05.10.2026 | Abschließenden MVP-Funktionsaudit durchgeführt. Keine weitere zwingende redaktionelle Fachfunktionsfamilie identifiziert; technische Hilfsfunktionen und administrative Services bewusst abgegrenzt. Fachlichen MVP-Funktionsumfang für die nächste Modellierungsstufe konsolidiert; nächster Schritt ist der G3-Gesamtaudit vor technischer/physischer Modellierung. |
+| 1.2 | 05.10.2026 | Die drei aus dem Funktionsaudit hervorgegangenen Modelllücken geschlossen: Sitzungsmodell auf Ereignis-Ableitung konsolidiert, Beobachtungs-/Recherchemodell und „Mehr wissen?“-Vertiefungsmodell als verbindliche Teilmodelle ergänzt. Funktionskatalog entsprechend bereinigt. |
 | 1.1 | 05.10.2026 | Funktionskatalog systematisch aus Datenmodell, Recherche-/Quellenmodell, Redaktionsworkflow und Zugriffs-/Sicherheitsarchitektur abgeleitet. Fehlende Funktionen für Recherchelauf, Fundstellenfreigabe, Meldungsfreigabe, Freigabe strukturierter Redaktionsstände sowie Bestätigung von Referenzwissen/-maßstäben ergänzt. `Mehr wissen?` als eigene Funktionsfamilie aufgenommen. Read-/List-Prinzip vereinheitlicht, technische/administrative Funktionen abgegrenzt und drei offene G3-Konsolidierungspunkte dokumentiert. |
 | 1.0 | 05.10.2026 | Fachfunktionskatalog als eigene Primärquelle angelegt. Grundsatz „Fachfunktionen referenzieren das Datenmodell statt es zu duplizieren“, gemeinsame Rückgaberegel, Funktionsverkettung im FIB-Chat, Read-/List-Prinzip und bisher geklärte MVP-Funktionsfamilien dokumentiert. |
