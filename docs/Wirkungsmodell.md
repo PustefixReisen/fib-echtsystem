@@ -4,85 +4,87 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 1.0 | 04.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
+| 1.1 | 05.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
 
 ## 1. Zweck und Geltung
 
 Dieses Dokument ist die verbindliche Primärquelle für die fachliche Modellierung von `Wirkung` im FIB-Echtsystem.
 
-Es korrigiert die bisher in `docs/Datenmodell.md` und `docs/Redaktionsworkflow.md` enthaltene ältere Annahme, Wirkungen seien als eigene fachliche Objekte am `Ereignis` verankert. Bei Widersprüchen hat für die Wirkungslogik dieses Dokument Vorrang, bis die betroffenen Gesamtdokumente konsolidiert sind.
+Es gilt ergänzend zu `docs/Datenmodell.md` und `docs/Redaktionsworkflow.md`. Im G3-Gesamtaudit wurde die frühere Fassung 1.0 als überholt erkannt, weil sie Wirkungen ausschließlich Vorgang oder Thema zuordnete. Die zwischenzeitlich konsolidierte Entscheidung lautet dagegen: **Wirkungen sind an Ereignissen verankert und besitzen zusätzlich einen fachlichen Herkunftskontext.**
 
 ## 2. Grundsatz
 
-> **Eine Wirkung gehört zu genau einem Analysekontext: einem `Vorgang` oder einem `Thema`. Sie beschreibt den aktuell fachlich gültigen Wirkungsstand in diesem Kontext.**
-
-Ereignisse und Quellen bilden die Tatsachen- und Begründungsgrundlage einer Wirkung, sind aber nicht deren fachlicher Eigentümer.
+> **Jede Wirkung ist einem Ereignis zugeordnet. Zusätzlich wird gespeichert, in welchem fachlichen Bearbeitungskontext – insbesondere Vorgang oder Thema – sie angelegt und bestätigt wurde.**
 
 Damit gilt:
 
-- eine Wirkung gehört genau zu einem `Vorgang` oder genau zu einem `Thema`,
-- eine Wirkung kann sich auf ein oder mehrere `Ereignisse` stützen,
-- ein Ereignis kann in unterschiedlichen Vorgängen oder Themen zu unterschiedlichen Wirkungen beitragen,
-- dieselbe Wirkung wird nicht als globale unveränderliche Eigenschaft eines Ereignisses geführt,
-- fachliche Änderungen einer Wirkung werden im zuständigen Vorgangs- oder Themenkontext vorgenommen.
+- ein Ereignis kann keine, eine oder mehrere Wirkungen besitzen,
+- eine Wirkung gehört genau zu einem Ereignis,
+- eine Wirkung kann als Herkunftskontext insbesondere einen Vorgang oder ein Thema besitzen,
+- ein Ereignis benötigt weder Meldung noch Vorgangszuordnung, damit eine Wirkung erfasst werden kann,
+- eine bestehende Wirkung wird nur in ihrem Herkunftskontext fachlich geändert,
+- andere Kontexte dürfen die Wirkung verwenden und analysieren, aber nicht stillschweigend verändern oder durch eine konkurrierende Fassung derselben Aussage ersetzen.
 
-## 3. Begründung
+## 3. Fachliche Begründung
 
-Ein Ereignis beschreibt einen fachlich relevanten Sachstand bzw. Informationsgegenstand. Welche Folgen daraus hervorgehoben, zusammengeführt oder bewertet werden, hängt vom jeweiligen Analysekontext ab.
+Das Ereignis ist die quellengebundene Tatsachenbasis, an der die konkrete Folge verankert wird. Der Herkunftskontext erklärt dagegen, **in welchem redaktionellen Analysezusammenhang** diese Wirkung gebildet wurde.
+
+Dadurch bleibt zugleich nachvollziehbar:
+
+- aus welchem realen Geschehen die Wirkung abgeleitet wurde,
+- in welchem Vorgang oder Thema sie redaktionell entstanden ist,
+- welcher Bearbeitungskontext sie ändern darf,
+- in welchen anderen Themen oder Analysen sie wiederverwendet wird.
 
 Beispiel:
 
-Ein Beschluss zur Hundewiese kann im `Vorgang Hundewiese` unter anderem zu folgenden Wirkungen führen:
+`Ereignis E1 → Wirkung W1 → Herkunftskontext Vorgang V1`
 
-- verbesserte Möglichkeit zum Freilauf von Hunden,
-- mögliche zusätzliche Lärmbelastung,
-- zusätzlicher Flächenbedarf.
-
-Dasselbe Ereignis kann in einem übergeordneten Thema unter einer anderen Leitfrage anders gebündelt oder gewichtet werden. Die Wirkung ist deshalb keine kontextfreie Eigenschaft des Ereignisses.
+Wird E1 später über V1 Bestandteil eines Themas T1, wird W1 dort berücksichtigt. Das Thema darf W1 analysieren und Perspektiven zuordnen; eine fachliche Änderung an W1 erfolgt jedoch im Herkunftskontext V1.
 
 ## 4. Fachliche Beziehungen
 
 ```mermaid
 erDiagram
-    VORGANG ||--o{ WIRKUNG : hat
-    THEMA ||--o{ WIRKUNG : hat
-
-    WIRKUNG }o--o{ EREIGNIS : stuetzt_sich_auf
-    EREIGNIS }o--o{ FUNDSTELLE : ist_belegt_durch
-
+    EREIGNIS ||--o{ WIRKUNG : hat
+    VORGANG ||--o{ WIRKUNG : kann_Herkunftskontext_sein
+    THEMA ||--o{ WIRKUNG : kann_Herkunftskontext_sein
     THEMA ||--o{ PERSPEKTIVE : hat
     WIRKUNG }o--o{ PERSPEKTIVE : wird_betrachtet_unter
+    EREIGNIS }o--o{ FUNDSTELLE : ist_belegt_durch
 ```
 
-Die Darstellung ist fachlich zu lesen. Die endgültige physische Umsetzung kann technisch anders normalisiert werden.
+Die konkrete physische Umsetzung der Herkunftskontext-Beziehung wird erst im physischen Datenmodell festgelegt.
 
-## 5. Wirkung im Vorgang
+## 5. Mehrere Wirkungen desselben Ereignisses
 
-Eine Vorgangswirkung beschreibt eine aktuell relevante Folge im konkreten Sachverhalt.
+Ein Ereignis kann mehrere Wirkungen besitzen, wenn diese eigenständige sachliche Aussagen darstellen.
 
-Sie kann sich auf ein oder mehrere Ereignisse des Vorgangs stützen. Eine Vorgangswirkung muss daher nicht einem einzelnen Ereignis exklusiv zugeordnet werden.
+Unterschiedliche Formulierungen derselben sachlichen Wirkung sollen dagegen nicht als mehrere unabhängige Wirkungen gewertet werden. Die KI prüft deshalb bei neuen Wirkungen auf:
 
-Beispiel:
+- semantische Gleichheit,
+- starke Überschneidung,
+- scheinbare oder tatsächliche Widersprüche.
 
-Mehrere Ereignisse – etwa eine ursprüngliche Planung, eine geänderte Beschlussvorlage und ein späterer Beschluss – können gemeinsam die aktuelle Wirkung „zusätzliche Lärmbelastung ist gegenüber dem früheren Plan reduziert“ begründen.
+Mögliche Dubletten oder Widersprüche werden der Redaktion sichtbar angezeigt. Eine Wirkung wird nicht automatisch gelöscht, zusammengeführt oder umgedeutet.
 
-## 6. Wirkung im Thema
+## 6. Verwendung im Vorgang
 
-Eine Themenwirkung beschreibt eine aktuell relevante Folge unter der Leitfrage und den Perspektiven des Themas.
+Ein Vorgang berücksichtigt die Wirkungen seiner zugehörigen Ereignisse. Im Vorgang entstandene Wirkungen tragen den Vorgang als Herkunftskontext.
 
-Sie kann aus:
+Mehrere Ereignisse eines Vorgangs können unterschiedliche, ergänzende oder widersprüchliche Wirkungen besitzen. Solche Unterschiede sind nicht automatisch Fehler, sondern können zeitliche Entwicklung, unterschiedliche Bedingungen oder unsichere Erkenntnislagen ausdrücken.
 
-- Vorgängen des Themas,
-- den darin enthaltenen Ereignissen,
-- direkt ergänzten einzelnen Ereignissen
+## 7. Verwendung im Thema
 
-abgeleitet werden.
+Mit einem ausgewählten Vorgang werden dessen Ereignisse und damit die vorhandenen Wirkungen in die Themenanalyse einbezogen. Dasselbe gilt für direkt ergänzte Ereignisse.
 
-Eine Themenwirkung ist dabei eine eigenständige kontextbezogene Analyse. Sie ist nicht automatisch identisch mit einer Vorgangswirkung und wird nicht durch bloßes Kopieren erzeugt.
+> **Ereignis im Thema + vorhandene Wirkung = Wirkung wird im Thema behandelt.**
 
-## 7. Bezug zu Perspektiven
+Eine vorhandene Wirkung wird nicht allein für die Themenanalyse dupliziert. Entsteht im Themenkontext tatsächlich eine neue eigenständige Wirkung zu einem Ereignis, erhält diese das Thema als Herkunftskontext.
 
-Perspektiven gehören zum Thema. Eine Themenwirkung kann einer oder mehreren Perspektiven zugeordnet werden.
+## 8. Bezug zu Perspektiven
+
+Perspektiven gehören zum Thema. Eine im Thema berücksichtigte Wirkung wird einer oder mehreren bestätigten Perspektiven zugeordnet.
 
 Die Zuordnung `Wirkung ↔ Perspektive` wird persistent gespeichert und nur bei fachlichem Anlass neu geprüft, insbesondere wenn:
 
@@ -92,65 +94,23 @@ Die Zuordnung `Wirkung ↔ Perspektive` wird persistent gespeichert und nur bei 
 - eine Plausibilitätsprüfung eine auffällige Zuordnung erkennt,
 - die Redaktion eine Neubewertung verlangt.
 
-Eine Wirkung kann mehreren Perspektiven zugeordnet sein.
+## 9. Anti-Doppelzählung
 
-## 8. Keine eigene Versionshistorie der Wirkung
+Gleichbedeutende Wirkungen desselben Ereignisses dürfen in einer übergeordneten Analyse nicht mehrfach gewichtet werden.
+
+Wird fachlich bestätigt, dass zwei Wirkungen im Wesentlichen dieselbe sachliche Auswirkung beschreiben, bleiben ihre Identitäten und Herkunftskontexte nachvollziehbar, werden aber in Themenanalyse, Abwägung und Textformulierung nur einmal als sachliche Aussage gewichtet.
+
+## 10. Keine eigene Versionshistorie der Wirkung
 
 > **Wirkungen erhalten keine eigene unabhängige Versionskette.**
 
-Eine Wirkung beschreibt den aktuell fachlich gültigen Stand ihres Vorgangs- oder Themenkontexts.
+Eine fachlich wesentliche Änderung einer Wirkung wird im zuständigen Herkunftskontext vorgenommen und kann eine neue Gesamtversion des betreffenden Vorgangs bzw. Themas auslösen. Die frühere Fassung bleibt über den vorherigen strukturierten Gesamtstand rekonstruierbar.
 
-Ändert sich eine Wirkung fachlich:
-
-1. wird die aktuelle Wirkung im zuständigen Kontext angepasst,
-2. eine fachlich wesentliche Änderung kann eine neue Gesamtversion des zugehörigen Vorgangs bzw. Themas auslösen,
-3. die frühere Wirkung bleibt über den vorherigen versionierten Gesamtstand rekonstruierbar.
-
-Mehrere gleichzeitig unterschiedliche Folgen werden als mehrere Wirkungen geführt. Sie sind keine Versionen derselben Wirkung.
-
-## 9. Quellen- und Ereignisbezug
-
-Für jede Wirkung muss nachvollziehbar sein, auf welche Tatsachengrundlage sie sich stützt.
-
-Dazu können gehören:
-
-- ein oder mehrere Ereignisse,
-- deren Quellen/Fundstellen,
-- gegebenenfalls weitere bestätigte fachliche Angaben des Vorgangs bzw. Themas.
-
-Der Bezug auf mehrere Ereignisse ist ausdrücklich zulässig und häufig sinnvoll.
-
-Ein späterer Recherchelauf darf eine bestätigte Wirkung nicht allein deshalb entfernen, weil ein zugrunde liegendes Ereignis oder eine Quelle in diesem Lauf nicht erneut gefunden wurde. Eine fachliche Änderung muss begründet und redaktionell nachvollziehbar sein.
-
-## 10. Dubletten und Widersprüche
-
-Dublettenprüfung erfolgt innerhalb des jeweiligen Analysekontexts.
-
-Die KI prüft neue Wirkungen insbesondere auf:
-
-- semantische Gleichheit zu vorhandenen Wirkungen,
-- starke Überschneidung,
-- scheinbare oder tatsächliche Widersprüche.
-
-Mögliche Dubletten oder Widersprüche werden der Redaktion sichtbar angezeigt. Eine Wirkung wird nicht automatisch gelöscht, zusammengeführt oder umgedeutet.
-
-Unterschiedliche Wirkungen können gleichzeitig richtig sein, beispielsweise bei unterschiedlichen räumlichen, zeitlichen oder sachlichen Bedingungen.
-
-## 11. Redaktioneller Workflow
-
-Für Vorgänge und Themen gilt:
-
-1. KI analysiert den aktuellen Tatsachenbestand aus Ereignissen und Quellen.
-2. KI schlägt kontextbezogene Wirkungen vor bzw. weist auf Änderungsbedarf bestehender Wirkungen hin.
-3. Redaktion bestätigt, ändert, trennt, ergänzt oder verwirft die Vorschläge.
-4. Bestätigte Wirkungen werden Bestandteil des aktuellen strukturierten Redaktionsstands des Vorgangs bzw. Themas.
-5. Bei fachlich wesentlicher Änderung wird geprüft, ob eine neue Gesamtversion des Vorgangs bzw. Themas erforderlich ist.
-
-## 12. Abgrenzung zur Bewertung
+## 11. Abgrenzung zur Bewertung
 
 `Wirkung` beschreibt eine sachlich belegbare oder begründet erwartbare Folge.
 
-Davon getrennt bleiben:
+Davon getrennt bleiben insbesondere:
 
 - `Zielbereich`,
 - `Wirkungsrichtung`,
@@ -161,14 +121,21 @@ Davon getrennt bleiben:
 - `politischer Bezug`,
 - strukturierte `Abwägung`.
 
-Diese Angaben bewerten bzw. erklären die Wirkung im jeweiligen Analysekontext; sie sind nicht Bestandteil des Ereignisses.
+Diese Angaben gehören zur strukturierten redaktionellen Einordnung und dürfen nicht mit der Tatsachenbasis der Wirkung vermischt werden.
+
+## 12. Persistenz
+
+Ein späterer Recherchelauf darf eine bestätigte Wirkung nicht allein deshalb entfernen, weil das Ereignis oder eine Fundstelle in diesem Lauf nicht erneut gefunden wurde.
+
+Eine fachlich wirksame Änderung oder Aufhebung muss begründet und nachvollziehbar sein. Historische Nachvollziehbarkeit erfolgt über die Gesamtversionen des zuständigen Vorgangs bzw. Themas und die Auditspur der Beziehung.
 
 ## 13. Verbindliche Kurzregel
 
-> **Ereignisse und Quellen liefern die Tatsachenbasis. Wirkungen gehören zum aktuellen Analysezustand eines Vorgangs oder Themas. Sie können sich auf mehrere Ereignisse stützen, werden nicht eigenständig versioniert und bleiben historisch über die Gesamtversionen ihres Vorgangs bzw. Themas rekonstruierbar.**
+> **Wirkungen sind an Ereignissen verankert. Ihr Herkunftskontext bestimmt, wo sie fachlich geändert werden dürfen. Andere Vorgänge oder Themen dürfen sie verwenden und analysieren, aber nicht verdeckt verändern. Gleichbedeutende Wirkungen werden in übergeordneten Analysen nicht mehrfach gewichtet.**
 
 ## Änderungshistorie
 
 | Version | Datum | Änderung |
 |---|---|---|
-| 1.0 | 04.10.2026 | Wirkungsmodell korrigiert: Wirkung gehört zu Vorgang oder Thema statt zum Ereignis; Mehrfachbezug auf Ereignisse zugelassen; keine eigene Wirkungs-Versionierung; Historisierung über Gesamtversionen von Vorgang/Thema; Perspektivzuordnung und redaktioneller Workflow angepasst. |
+| 1.1 | 05.10.2026 | G3-Gesamtaudit: Widerspruch zu Datenmodell und Redaktionsworkflow beseitigt. Wirkung wieder verbindlich am Ereignis verankert; Herkunftskontext Vorgang/Thema, Änderungszuständigkeit, Themenverwendung und Anti-Doppelzählung konsolidiert. |
+| 1.0 | 04.10.2026 | Zwischenstand: Wirkung wurde ausschließlich Vorgang oder Thema zugeordnet. Diese Fassung wurde durch die spätere G3-Konsolidierung abgelöst. |
