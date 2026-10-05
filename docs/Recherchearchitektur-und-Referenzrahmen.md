@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 1.4 | 05.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
+| 1.5 | 05.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
 
 ## 1. Zweck und Geltung
 
@@ -89,7 +89,7 @@ Beispiele:
 
 Beispiele für FIB können sein:
 
-- `B471 = Oberndorfer Straße`,
+- lokale Bezeichnungen bzw. Straßenabschnitte im Zusammenhang mit der B471/Oberndorfer Straße,
 - funktionaler Zusammenhang A94 / A99 / Kreuz München Ost,
 - „Kiesgrund“ als Bezeichnung eines großen Entwicklungsgebietes nördlich der S-Bahn.
 
@@ -107,9 +107,9 @@ Ein Referenzobjekt besitzt eine stabile fachliche Identität. Alternative Bezeic
 
 Beispiel:
 
-- Objekt: `B471 / Oberndorfer Straße`
-- Hauptbezeichnung: `B471`
-- alternative Bezeichnung: `Oberndorfer Straße`
+- Objekt: ein lokaler Straßenabschnitt bzw. Verkehrsbezug der B471,
+- Hauptbezeichnung: `B471`,
+- alternative bzw. lokale Bezeichnung im passenden räumlichen Kontext: `Oberndorfer Straße`.
 
 ### 6.2 Konzeptionelles Modell für Orts- und Objektwissen
 
@@ -322,6 +322,16 @@ flowchart LR
 
 Damit ist FIB als lernendes Wissens- und Recherchesystem angelegt.
 
+Für einen KI-erzeugten Kandidaten muss die fachliche Herleitung nachvollziehbar mitgeführt werden. Mindestens verfügbar sein müssen:
+
+- die angewandte(n) Relevanz- bzw. Fachregel(n),
+- eine kurze KI-Begründung, warum der Fund für FIB relevant sein könnte,
+- die maßgeblichen Quellen/Fundstellen,
+- eine Unsicherheits- bzw. Verlässlichkeitseinschätzung, soweit fachlich sinnvoll,
+- ein vorgeschlagener nächster Zusammenhang, z. B. Zuordnung zu bestehendem Vorgang oder Thema, Vorschlag eines neuen Vorgangs/Themas oder Beobachtungsauftrag.
+
+Diese Angaben dienen der redaktionellen Prüfung. Sie ersetzen keine redaktionelle Entscheidung und keine erforderliche Quellenprüfung.
+
 ## 9. Recherchebreite und Veröffentlichungsbreite
 
 Breite Recherche und Veröffentlichung sind fachlich zu trennen.
@@ -441,6 +451,21 @@ Verbindliche Architekturregel:
 
 > **Alle fachlich wirksamen Recherche-, Relevanz-, Referenz- und Qualitätsregeln werden in versionierten FIB-Primärdokumenten geführt. Die KI-Funktionen des Echtsystems müssen diese Regeln aus dem dokumentierten und freigegebenen Regelbestand beziehen können.**
 
+Zusätzlich gilt die Konsistenzanforderung in beide Richtungen:
+
+> **Jede fachlich wirksame, im System aktive maschinenlesbare Regel muss eindeutig auf eine dokumentierte und versionierte FIB-Primärregel zurückführbar sein. Umgekehrt muss jede als fachlich wirksam gekennzeichnete FIB-Regel eine maschinenlesbare Entsprechung besitzen oder ausdrücklich als noch nicht operativ umgesetzt bzw. deaktiviert gekennzeichnet sein.**
+
+Damit darf es weder eine nur in der Datenbank vorhandene „Schattenregel“ noch eine als wirksam dokumentierte Regel geben, die vom produktiven System unbemerkt nicht verwendet wird.
+
+Der operative Regelbestand muss deshalb mindestens ermöglichen:
+
+- eine stabile Regel-ID,
+- Verweis auf Primärdokument und Regel-/Abschnittsversion,
+- Regeltyp und Geltungsbereich,
+- fachlichen Status (`aktiv`, `deaktiviert`, ggf. `noch nicht operativ umgesetzt`),
+- Version bzw. Gültigkeitsstand,
+- Nachvollziehbarkeit, welcher Regelstand bei einem Recherche- oder Bewertungslauf verwendet wurde.
+
 Damit gilt dieselbe fachliche Quelle für:
 
 - menschliches Nachlesen,
@@ -462,12 +487,14 @@ Vor der physischen bzw. logischen Modellierung von Referenzwissen und Quellenmon
 5. wie der demokratisch-gesellschaftliche Grundrahmen konkret definiert und belegt wird,
 6. wie die Herkunft eines Maßstabs (`allgemeines FIB-Qualitätsprinzip`, `demokratisch-gesellschaftlicher Grundrahmen`, `grüne Position`) gespeichert wird,
 7. welche dieser Informationen bei einem konkreten Recherchelauf der KI zwingend übergeben werden müssen,
-8. welche Daten und Zustände die Redaktions-UI für Referenzwissen benötigt, damit Anlegen, Prüfen, Freigeben, Ändern, Historisieren und Übernehmen von KI-Vorschlägen möglich sind.
+8. welche Daten und Zustände die Redaktions-UI für Referenzwissen benötigt, damit Anlegen, Prüfen, Freigeben, Ändern, Historisieren und Übernehmen von KI-Vorschlägen möglich sind,
+9. wie Regel-ID, Regelversion und verwendeter Regelstand im G3-Datenmodell abgebildet und mit Recherche-/Bewertungsläufen sowie Kandidaten verknüpft werden.
 
 ## Änderungshistorie
 
 | Version | Datum | Änderung |
 |---|---|---|
+| 1.5 | 05.10.2026 | Bidirektionale Konsistenz zwischen dokumentierten fachlich wirksamen Regeln und maschinenlesbarem Regelbestand verbindlich festgelegt; Anforderungen an stabile Regel-ID, Primärquellenbezug, Status, Version und verwendeten Regelstand ergänzt. Nachvollziehbarkeit von KI-Kandidaten um Regelbezug, Begründung, Fundstellen, Unsicherheit und vorgeschlagenen nächsten Zusammenhang erweitert. |
 | 1.4 | 05.10.2026 | Referenzwissen weiter verschlankt: keine eigene breite Kategorie `Sach- und Fachwissen`; allgemeines fachliches Hintergrundwissen bleibt grundsätzlich bei KI und aktueller Recherche. Kleinen Auffangbereich `FIB-spezifisches Kontextwissen` eingeführt und die drei schlanken Referenzwissensbereiche festgelegt. |
 | 1.3 | 05.10.2026 | Allgemeine Grenze zwischen FIB-Referenzwissen und KI-Hintergrundwissen festgelegt; Akteurs-, Zuständigkeits- und Verfahrenswissen wird nicht vorsorglich vollständig in FIB dupliziert, sondern nur anlassbezogen bei konkretem FIB-Zusatznutzen gespeichert; strukturelle/typische Rollen von tatsächlich ausgeübten Rollen in konkreten Vorgängen getrennt. |
 | 1.2 | 05.10.2026 | Orts- und Objektwissen fachlich konkretisiert: Referenzobjekt, Referenzbezeichnung, Referenzbeziehung und Herkunft/Beleg als konzeptionelle Bausteine festgelegt; kleine MVP-Beziehungstypologie und Pflegeregel beschlossen; Kandidat-vs.-bestätigt-Logik, drei Zuführungswege, Trennung Referenzobjekt↔Vorgang und Zwei-Stufen-Logik mit späterer bedarfsabhängiger Ausbaustufe dokumentiert. |
