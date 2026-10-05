@@ -2,7 +2,7 @@
 
 ## Dokumentstand
 
-**Stand:** 05.10.2026, 17:36 Uhr  
+**Stand:** 05.10.2026, 23:45 Uhr  
 **Verantwortlich:** Josef Walter – erstellt mit KI-Unterstützung
 
 Dieses Dokument wird im Normalfall über das **Stand-Datum einschließlich Uhrzeit** fortgeschrieben. Eine neue Versionsnummer wird nur eingeführt, wenn sich die Struktur oder das Grundkonzept des Dokuments wesentlich ändert.
@@ -253,13 +253,13 @@ Die politische Beurteilung einer Wirkung im Rahmen von „Unsere Einordnung“.
 
 Die strukturierte Bewertungssicht in FIB ist die von BÜNDNIS 90/DIE GRÜNEN Feldkirchen. Positionen anderer Akteure können als Sachinformation dokumentiert werden, bilden aber kein paralleles FIB-Bewertungssystem.
 
-Die Bewertung kann durch Wirkungsrichtung, politisches Gewicht und Begründung strukturiert werden. Ob dafür zusätzlich ein eigenes Bewertungsfeld erforderlich ist, wird im weiteren G3-Modell noch abschließend geklärt.
+Die Bewertung wird durch die strukturierten Angaben zu Wirkungsrichtung, Bedeutung, Verlässlichkeit, politischem Gewicht und Begründungen nachvollziehbar hergeleitet. Ein zusätzliches pauschales Gesamturteil positiv/negativ ist nicht Bestandteil des Modells.
 
 ### `Begründung`
 
 **Benutzer-Label in der App:** Begründung
 
-Die nachvollziehbare Herleitung, warum eine Wirkung politisch so bewertet und gewichtet wird.
+Die nachvollziehbare Herleitung eines strukturierten Bewertungsurteils. FIB führt getrennte Begründungen insbesondere für Wirkungsrichtung, Bedeutung der Wirkung, Verlässlichkeit und politisches Gewicht.
 
 Die Begründung soll, soweit für das Verständnis erforderlich, den politischen Maßstab offenlegen und darf nicht nur ein unbegründetes Werturteil wiederholen.
 
@@ -281,21 +281,17 @@ Strukturierte Zusammenschau der für einen konkreten Vorgang relevanten Wirkunge
 
 Beispiel: Zusätzlicher Flächenverbrauch kann gegen Verbesserungen für Radverkehr oder Biotopvernetzung abgewogen werden, ohne die unterschiedlichen Wirkungen rechnerisch gegeneinander aufzurechnen.
 
-Die Abwägung ist keine rechnerische Addition von Plus- und Minuspunkten. Die KI erstellt einen nachvollziehbaren Vorschlag; die strukturierte Abwägung wird redaktionell bestätigt und bildet die Grundlage für die sprachliche Einordnung.
+Die Abwägung ist keine rechnerische Addition von Plus- und Minuspunkten. Die KI erstellt einen nachvollziehbaren Vorschlag; die strukturierte Abwägung wird redaktionell bestätigt und bildet die Grundlage für die sprachliche Einordnung. FIB leitet daraus kein abschließendes Gesamturteil über Vorgang oder Thema ab.
 
 ### `Politischer Bezug`
 
 **Benutzer-Label in der App:** Politischer Bezug
 
-Ein grüner Wert, ein politisches Ziel oder eine dokumentierte grüne Position, auf die sich die Begründung einer Bewertung stützt.
+Ein dokumentierter grüner Wert, ein politisches Ziel oder eine konkrete grüne Position, auf die sich eine Begründung stützt.
 
-Der politische Bezug kann insbesondere aus folgenden Ebenen stammen:
+Ein politischer Bezug wird zusätzlich verwendet, wenn eine einschlägige dokumentierte Position vorhanden ist. Fehlt eine konkrete lokale Position, blockiert dies die Bewertung nicht; der einschlägige Zielbereich kann als allgemeiner politischer Maßstab dienen.
 
-- dokumentierte lokale Position der GRÜNEN Feldkirchen,
-- Position einer höheren grünen Ebene als Referenz für eine redaktionelle Ableitung,
-- allgemeiner grüner Wert oder Zielbereich als Bewertungsmaßstab.
-
-Die konkrete Modellierung dieses Referenzsystems wird in G3 gesondert festgelegt.
+Dokumentierte lokale Positionen haben bei der Herleitung Vorrang vor allgemeineren grünen Bezugsebenen, soweit sie einschlägig und gültig sind.
 
 ## 5. Redaktion und Konsistenz
 
@@ -321,9 +317,11 @@ Eine Textänderung darf eine fachliche Änderung nicht verdeckt einführen. Fach
 
 **Benutzer-Label in der App:** Prüfhinweis
 
-Prüfung mehrerer strukturierter Angaben in ihrem Zusammenhang, um auffällige oder widersprüchliche Kombinationen zu erkennen.
+Semantische oder feldübergreifende Prüfung, die eine fachlich auffällige, widersprüchliche oder möglicherweise doppelte Konstellation erkennt, ohne selbst eine politische oder redaktionelle Entscheidung zu treffen.
 
-Beispiel: geringe Verlässlichkeit einer Wirkung bei gleichzeitig hohem politischem Gewicht. Eine Plausibilitätsprüfung erzeugt einen Prüfhinweis, ersetzt aber nicht die redaktionelle Entscheidung.
+Eine Plausibilitätsprüfung erzeugt bei Entscheidungsspielraum einen sichtbaren Prüfhinweis. Objektiv unzulässige Zustände werden dagegen durch blockierende Fachregeln verhindert.
+
+Beispiel: geringe Verlässlichkeit einer Wirkung bei gleichzeitig hohem politischem Gewicht kann einen Prüfhinweis auslösen.
 
 ### `Pflichtbestätigung`
 
@@ -332,6 +330,27 @@ Beispiel: geringe Verlässlichkeit einer Wirkung bei gleichzeitig hohem politisc
 Explizite redaktionelle Bestätigung einer strukturierten Angabe, wenn diese die fachliche oder politische Kernaussage unmittelbar prägt.
 
 Nicht jedes KI-vorgeschlagene Feld benötigt eine eigene Pflichtbestätigung; unterstützende Angaben können sichtbar vorgeschlagen und durch Plausibilitätsprüfungen abgesichert werden.
+
+### `Fachfunktion`
+
+**Benutzer-Label in der App:** kein technisches Pflichtlabel
+
+Eine definierte fachliche Serviceoperation, über die reguläre fachliche Lese- oder Schreibzugriffe auf FIB-Daten erfolgen. Web-App, FIB-Chat und AI Tasks verwenden dieselbe Fachfunktionsschicht; Berechtigungen, Fachregeln, Versionierung, Bestätigung und Audit werden dabei serverseitig durchgesetzt.
+
+Fachfunktionen definieren nicht erneut die Datenstruktur, sondern arbeiten auf dem verbindlichen Datenmodell.
+
+### `Aktionsstufe S0–S3`
+
+**Benutzer-Label in der App:** im Normalfall kein sichtbares Kürzel
+
+Klassifikation der Wirkung einer Fachaktion:
+
+- **S0 – Lesen/Analysieren:** keine fachliche Änderung,
+- **S1 – Vorschlag/Entwurf:** noch nicht fachlich oder öffentlich wirksam,
+- **S2 – fachlich wirksame Änderung:** bestätigte interne FIB-Daten ändern sich,
+- **S3 – Freigabe/Veröffentlichung/normative Aktivierung:** öffentliche oder systemweit normative Wirkung.
+
+Die Aktionsstufe ist keine Benutzerrolle. Rechte ergeben sich aus Rolle, Aktion, Objektzustand und Freigabestufe.
 
 ## 6. Rollen
 
@@ -370,6 +389,8 @@ Die detaillierte Rechteausgestaltung wird in der Sicherheits- und Berechtigungsm
 Eine Organisation, Institution, Gruppe oder gegebenenfalls Person, die für einen Sachverhalt relevant ist, z. B. Gemeinde, Landkreis, Autobahn GmbH, Bürgerinitiative, Verein oder Partei.
 
 Akteure können insbesondere zuständig, beteiligt, betroffen, Quelle einer Aussage oder Träger einer dokumentierten Position sein.
+
+Ein breites eigenständiges Akteurs-Stammdatenmodell ist für den MVP nicht vorgesehen. Stabile, wiederkehrend relevante Akteure können bei konkretem FIB-Zusatznutzen als Referenzobjekte geführt werden.
 
 ### `Dokumentierte Position`
 
@@ -413,7 +434,23 @@ Die Bereitstellung sagt noch nichts darüber aus, ob Besucher die Fundstelle seh
 
 Festlegung, ob eine in FIB gespeicherte Fundstelle öffentlich über FIB zugänglich oder nur für die Redaktion sichtbar ist.
 
-Eine Datei kann öffentlich über FIB bereitgestellt werden, obwohl sie ursprünglich nicht frei im Internet verfügbar war, sofern die Veröffentlichung freigegeben und zulässig ist.
+Eine Datei darf öffentlich über FIB bereitgestellt werden, wenn ihre öffentliche Nutzung positiv als zulässig geklärt und redaktionell freigegeben ist. Ungeklärte Rechte reichen für eine öffentliche Bereitstellung nicht aus.
+
+### `Beobachtungsauftrag`
+
+**Benutzer-Label in der App:** Beobachtungsauftrag
+
+Ein konkreter fachlicher Informationsbedarf, den FIB über einen Zeitraum beobachten oder klären soll. Jeder Beobachtungsauftrag besitzt genau einen Primärbezug auf einen Vorgang, ein Thema oder eine offene Frage/Wissenslücke.
+
+Er beschreibt **was** beobachtet werden soll, nicht eine fest verdrahtete Suchstrategie. Status: aktiv, pausiert oder beendet.
+
+### `Recherchelauf`
+
+**Benutzer-Label in der App:** Recherchelauf
+
+Eine konkrete, nachvollziehbare Ausführung von Recherche zu einem bestimmten Zeitpunkt oder Anlass. Ein Recherchelauf kann durch einen Beobachtungsauftrag, offene Recherche, einen manuellen Auftrag oder einen anlassbezogenen Rückblick ausgelöst werden.
+
+Er dokumentiert die fachliche Herkunft neu erkannter oder geänderter Fundstellen. Ein Recherchelauf ist nicht dasselbe wie ein AI Task Run.
 
 ### `Quellenbeobachtung`
 
@@ -447,6 +484,22 @@ Gezielter KI-Einsatz für eine konkrete Wissenslücke oder offene Recherchefrage
 
 Zuschaltbare KI-Unterstützung für Redaktionsschritte, die auch ohne KI vollständig bearbeitet werden können, etwa Wirkungen vorschlagen, Prüfkriterien vorauswählen, Plausibilität prüfen oder Textentwürfe erzeugen.
 
+### `AI Task`
+
+**Benutzer-Label in der App:** AI Task / KI-Aufgabe
+
+Persistente operative Definition einer automatisierten KI-Arbeit: Zweck, Auslöser oder Zeitplan, erlaubte Fachfunktionen, Leistungs-/Routinganforderungen, Kostenrahmen und Status.
+
+Ein AI Task ist nicht der fachliche Informationsbedarf selbst. Ein Beobachtungsauftrag kann Anlass für einen AI Task sein, bleibt aber ein getrenntes Objekt.
+
+### `AI Task Run`
+
+**Benutzer-Label in der App:** Ausführung / Lauf
+
+Eine konkrete operative Ausführung eines AI Tasks mit Zeitpunkt, Ergebnis, verwendeter Routing-/Modellentscheidung, Kosten- und Fehlerinformationen soweit erforderlich.
+
+Ein AI Task Run kann einen fachlichen Recherchelauf auslösen, ist mit diesem aber nicht identisch.
+
 ### `KI-Leistungsklasse`
 
 **Benutzer-Label in der App:** KI-Leistungsklasse
@@ -459,15 +512,30 @@ Modellunabhängige Einordnung der für eine FIB-Aufgabe erforderlichen KI-Leistu
 
 Konfigurierbare Zuordnung von FIB-Aufgaben zu KI-Bedarf, Qualitätsanforderung bzw. KI-Leistungsklasse, freigegebenem Provider/Modell, Fallback- und gegebenenfalls Kostenregeln. Die Routing-Matrix ermöglicht Modellwechsel, ohne Redaktionsworkflow oder fachliche Regeln umzubauen.
 
-## 9. Noch zu ergänzende Begriffe
+## 9. Offene Frage und öffentliche Vertiefung
 
-Dieses Register wird im Verlauf von G3 und den folgenden Gründungspaketen erweitert, insbesondere um:
+### `Offene Frage / Wissenslücke`
 
-- Quellenrolle,
-- Sitzung,
-- TOP,
-- Aktualisierungsereignis,
-- Version / Historisierung,
-- Rechercheauftrag,
-- Wissenslücke,
-- Freigabestatus.
+**Benutzer-Label in der App:** Offene Frage
+
+Ein noch nicht geklärter, noch nicht entschiedener, noch nicht belastbar belegter oder noch nicht bekannter Aspekt eines FIB-Sachverhalts. Die Frage besitzt einen fachlichen Erkenntnisstatus und getrennt davon einen Bearbeitungsstatus.
+
+Sie beschreibt etwas, das FIB selbst noch nicht ausreichend weiß, und ist nicht mit einer öffentlich angebotenen Vertiefungsfrage gleichzusetzen.
+
+### `Vertiefungsfrage`
+
+**Benutzer-Label in der App:** Mehr wissen?
+
+Eine redaktionell kontrollierte öffentliche Frage, die eine Meldung oder ein Thema um weiterführenden Kontext ergänzt und Besucher zum vertieften Verständnis führen soll.
+
+Eine Vertiefungsfrage ist kein interner Rechercheauftrag und keine Wissenslücke von FIB.
+
+### `Vertiefungsantwort`
+
+**Benutzer-Label in der App:** Antwort
+
+Die quellengebundene, redaktionell verantwortete Antwort auf eine Vertiefungsfrage. Öffentliche Tatsachenbehauptungen müssen auf nachvollziehbare Fundstellen zurückführbar sein; fachlich relevante frühere Fassungen bleiben nachvollziehbar.
+
+## 10. Noch zu ergänzende Begriffe
+
+Das Register wird weiter anlassbezogen gepflegt. Noch nicht zwingend als eigene Glossarbegriffe ausmodelliert sind insbesondere spezielle technische Begriffe der späteren physischen Datenbank-, Sicherheits- und Betriebsarchitektur. Diese werden erst aufgenommen, wenn ihre fachliche Bedeutung im Projekt festgelegt ist.
