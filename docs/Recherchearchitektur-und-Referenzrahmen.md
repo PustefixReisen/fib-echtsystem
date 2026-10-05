@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 1.2 | 05.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
+| 1.3 | 05.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
 
 ## 1. Zweck und Geltung
 
@@ -201,6 +201,37 @@ Mögliche spätere Erweiterungen sind automatische Wiedervorlage, Konflikterkenn
 
 Diese Ausbaustufe ist kein vorab festgelegtes Vollausbaupaket. Sie wird nur umgesetzt, wenn der Echtbetrieb einen konkreten Bedarf zeigt. Die Wiedervorlage ist als GitHub-Issue dokumentiert.
 
+### 6.6 Selektives Akteurs- und Zuständigkeitswissen statt Wissensduplikation
+
+FIB führt **kein vollständiges Register allgemeiner institutioneller, organisatorischer oder rechtlicher Zuständigkeiten**. Dieses allgemeine Hintergrundwissen soll primär durch die eingesetzte KI und bei Bedarf durch aktuelle Recherche erschlossen werden.
+
+Verbindlicher Grundsatz:
+
+> **FIB speichert allgemeines Akteurs-, Zuständigkeits-, Verfahrens- und sonstiges Hintergrundwissen nur dann dauerhaft als Referenzwissen, wenn die Speicherung gegenüber dem allgemeinen KI-Hintergrundwissen einen konkreten zusätzlichen Nutzen für FIB bringt.**
+
+Referenzwissen ist damit kein Vorratsspeicher für alles, was ein leistungsfähiges KI-Modell ohnehin zuverlässig erschließen kann. Es ist ein gezielter, modellunabhängig gespeicherter FIB-spezifischer Zusatz.
+
+Eine dauerhafte Aufnahme ist insbesondere sinnvoll, wenn:
+
+- ein Zusammenhang lokal oder projektspezifisch besonders ist,
+- eine Bezeichnung, ein Alias oder eine Beziehung sonst leicht übersehen wird,
+- die Information für wiederkehrende FIB-Recherchen besonders wichtig ist,
+- allgemeines KI-Hintergrundwissen den Sachverhalt nicht zuverlässig oder eindeutig abbildet,
+- wiederholte Fehlzuordnungen oder Recherchelücken einen expliziten FIB-Eintrag rechtfertigen,
+- die Redaktion bewusst sicherstellen möchte, dass das Wissen unabhängig vom jeweils verwendeten KI-Modell verfügbar bleibt.
+
+Der Ausbau dieses Wissensbestands erfolgt **anlassbezogen**, nicht durch vorsorgliche Vollerfassung aller bekannten oder denkbaren Akteure und Zuständigkeiten.
+
+Dabei werden drei Ebenen unterschieden:
+
+1. **allgemeine strukturelle bzw. rechtlich-organisatorische Rolle** – grundsätzlich KI-Hintergrundwissen; nur bei konkretem FIB-Zusatznutzen dauerhaft speichern,
+2. **typische oder mögliche Rolle in einem Verfahrenstyp** – grundsätzlich KI-Hintergrundwissen bzw. Gegenstand bedarfsgesteuerter Recherche; nur bei konkretem FIB-Zusatznutzen dauerhaft speichern,
+3. **tatsächlich ausgeübte Rolle in einem konkreten Vorgang** – konkretes FIB-Wissen und quellengebunden über Ereignis, Vorgang, Quelle/Fundstelle oder passende Fachbeziehung abzubilden; nicht als allgemeine Zuständigkeit zu verallgemeinern.
+
+Beispiel: Die allgemeine Kenntnis, dass eine Behörde in bestimmten Verfahren typischerweise beteiligt oder zuständig sein kann, darf die KI als Recherchehinweis nutzen. Daraus darf jedoch nicht abgeleitet werden, dass die Behörde im konkreten Feldkirchner Vorgang tatsächlich beteiligt war oder gehandelt hat. Eine solche Tatsachenbehauptung benötigt einen konkreten Beleg.
+
+Diese Arbeitsteilung dient zugleich der Pflegbarkeit, der Offenheit für bislang unbekannte Akteure und der Modellunabhängigkeit des FIB-Kerns.
+
 ## 7. Dynamischer Recherchehorizont und offene Recherche
 
 Der bisher verwendete Begriff `Suchraum` darf nicht als feste äußere Grenze verstanden werden.
@@ -392,7 +423,7 @@ Chatverläufe sind Arbeitsraum, aber keine dauerhafte Primärquelle für verbind
 
 Vor der physischen bzw. logischen Modellierung von Referenzwissen und Quellenmonitor sind als nächste fachliche Schritte zu klären:
 
-1. welche weiteren Kategorien von Referenzwissen neben Orts- und Objektwissen benötigt werden,
+1. welche weiteren Kategorien von Referenzwissen neben Orts-/Objektwissen und selektivem Akteurs-/Zuständigkeitswissen benötigt werden,
 2. welche Teile des Referenzwissens fachlich versioniert oder mit Gültigkeitszeiträumen versehen werden müssen,
 3. wie Informationsbedarf und redaktionelle Beobachtungsaufträge beschrieben werden,
 4. wie neue Quellen, Begriffe und Zusammenhänge aus offener Recherche in den bestätigten Recherchekontext übernommen werden,
@@ -405,6 +436,7 @@ Vor der physischen bzw. logischen Modellierung von Referenzwissen und Quellenmon
 
 | Version | Datum | Änderung |
 |---|---|---|
+| 1.3 | 05.10.2026 | Allgemeine Grenze zwischen FIB-Referenzwissen und KI-Hintergrundwissen festgelegt; Akteurs-, Zuständigkeits- und Verfahrenswissen wird nicht vorsorglich vollständig in FIB dupliziert, sondern nur anlassbezogen bei konkretem FIB-Zusatznutzen gespeichert; strukturelle/typische Rollen von tatsächlich ausgeübten Rollen in konkreten Vorgängen getrennt. |
 | 1.2 | 05.10.2026 | Orts- und Objektwissen fachlich konkretisiert: Referenzobjekt, Referenzbezeichnung, Referenzbeziehung und Herkunft/Beleg als konzeptionelle Bausteine festgelegt; kleine MVP-Beziehungstypologie und Pflegeregel beschlossen; Kandidat-vs.-bestätigt-Logik, drei Zuführungswege, Trennung Referenzobjekt↔Vorgang und Zwei-Stufen-Logik mit späterer bedarfsabhängiger Ausbaustufe dokumentiert. |
 | 1.1 | 05.10.2026 | Redaktions-UI für Referenzwissen als verbindliche Systemanforderung ergänzt; Pflege, Prüfung, Freigabe, Historie und Übernahme von KI-Vorschlägen als G3-relevante Anforderungen festgelegt; Besuchersichtbarkeit des Referenzrahmens davon abgegrenzt. |
 | 1.0 | 05.10.2026 | Recherchearchitektur als fachliche Primärquelle angelegt; Informationsbedarf, bestehendes FIB-Wissen, Referenzwissen, dynamischer Recherchehorizont, offene Recherche und Lernschleife festgelegt; Referenzrahmen in allgemeine FIB-Qualitätsprinzipien, demokratisch-gesellschaftlichen Grundrahmen und spezifisch grünen politischen Referenzrahmen differenziert; spätere Besuchersichtbarkeit als Architekturanforderung vorgesehen. |
