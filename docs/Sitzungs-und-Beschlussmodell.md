@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 1.1 | 05.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
+| 1.2 | 05.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
 
 ## 1. Zweck und Geltung
 
@@ -18,7 +18,7 @@ Ziel ist ein Modell, das den tatsächlichen Ablauf im Feldkirchner Ratsinformati
 
 Sitzungen mit ihren TOPs bestehen fachlich unabhängig von Meldungen, Vorgängen und Themen.
 
-Ein Sitzungsereignis ist jedoch ein reguläres FIB-Ereignis und kann wie andere Ereignisse in Meldungen, Vorgängen und Themen verwendet werden.
+Ein sitzungsbezogenes Ereignis ist jedoch ein reguläres FIB-Ereignis und kann wie andere Ereignisse in Meldungen, Vorgängen und Themen verwendet werden.
 
 ```mermaid
 erDiagram
@@ -43,33 +43,48 @@ erDiagram
 
 ### 3.1 Gemeinsames Ereignis-Grundobjekt
 
-Ein Sitzungsereignis ist fachlich **kein eigener Ereignistyp außerhalb des allgemeinen FIB-Ereignismodells**. Aus Sicht des späteren physischen Datenmodells soll deshalb grundsätzlich dieselbe Ereignisidentität verwendet werden wie für Ereignisse, die in Meldungen, Vorgängen oder Themen vorkommen.
+Ein sitzungsbezogenes Ereignis ist fachlich **kein eigener Ereignistyp außerhalb des allgemeinen FIB-Ereignismodells**.
 
-Ein Ereignis ist in diesem Teilmodell ein fachlich relevanter, persistent gespeicherter Sachstand bzw. Informationsgegenstand, der in Meldungen, Vorgängen und Themen genutzt werden kann. Bei Sitzungsereignissen kann dieser Sachstand insbesondere durch ein offizielles RIS-Dokument verkörpert werden.
+Auch im Sitzungsmodell gilt deshalb der allgemeine Ereignisbegriff:
 
-### 3.2 Beschlussvorlage als Ereignis
+> **Ein Ereignis ist ein fachlich relevantes Geschehen oder eine relevante Entwicklung in der Wirklichkeit. Dokumente und Fundstellen belegen ein Ereignis oder können durch ihre Veröffentlichung selbst ein Ereignis auslösen; sie sind aber nicht mit dem Ereignis identisch.**
 
-Eine Beschlussvorlage ist bereits ein Ereignis, auch wenn sie noch keiner Sitzung und keinem TOP zugeordnet ist.
+Damit bleiben insbesondere Dokument, Veröffentlichung, tatsächliche Beratung und Beschluss voneinander unterscheidbar.
 
-Damit kann eine neue Vorlage unabhängig von einer späteren Sitzung bereits:
+### 3.2 Veröffentlichung einer Beschlussvorlage
+
+Eine Beschlussvorlage ist als Dokument eine `Fundstelle`. Ihre Veröffentlichung kann ein eigenes Ereignis darstellen, wenn sie fachlich relevant ist.
+
+Beispiel:
+
+`Fundstelle Beschlussvorlage` → belegt `Ereignis: Beschlussvorlage veröffentlicht`
+
+Dieses Ereignis kann bereits vor der Sitzung:
 
 - einem Vorgang zugeordnet werden,
 - in einem Thema verwendet werden,
 - bei ausreichendem Nachrichtenwert Grundlage einer Meldung sein.
 
-Die spätere Zuordnung zu einem TOP verändert nicht die fachliche Identität dieses Ereignisses.
+Wird die Vorlage später einem TOP zugeordnet, kann sowohl die Fundstelle dem TOP als Unterlage zugeordnet als auch das Veröffentlichungsereignis in den Sitzungskontext eingeordnet werden. Die Vorlage selbst wird dadurch nicht zum Ereignis.
 
-### 3.3 Beschlussvorlage und Beschluss
+### 3.3 Vorlage, Beratung und Beschluss sind getrennte Sachverhalte
 
-Beschlussvorlage und späterer Beschluss sind **nicht zwei verschiedene Ereignisse**. Sie sind dasselbe übergeordnete Ereignis in unterschiedlichen Verfahrens- bzw. Sachständen.
+Die Veröffentlichung einer Beschlussvorlage und die spätere tatsächliche Behandlung in einer Sitzung sind **nicht dasselbe Ereignis**.
 
-Der ursprüngliche Beschlussvorschlag bleibt dabei dauerhaft nachvollziehbar und einsehbar. Er wird nicht durch die später beschlossene Fassung überschrieben.
+Verbindlich gilt:
+
+- Veröffentlichung einer Vorlage → eigenes Ereignis, sofern fachlich relevant,
+- tatsächliche Beratung/Behandlung → späteres sitzungsbezogenes Ereignis,
+- Vertagung oder Absetzung → entsprechendes späteres Ereignis, wenn fachlich relevant,
+- Beschlussfassung → späteres Ereignis; sie kann mit der Behandlung als ein gemeinsames Ereignis modelliert werden, wenn beides sachlich und zeitlich denselben Verfahrensschritt bildet, oder getrennt, wenn dies für die Nachvollziehbarkeit erforderlich ist.
+
+Der ursprüngliche Beschlussvorschlag bleibt als Fundstelle bzw. Ausgangsfassung dauerhaft nachvollziehbar und wird durch eine spätere beschlossene Fassung nicht überschrieben.
 
 Insbesondere gilt:
 
 > **Der Besucher soll bei einem Beschluss bei Bedarf auch den ursprünglichen Beschlussvorschlag einsehen können.**
 
-Dadurch kann FIB transparent zeigen, ob und wie sich der Inhalt in der Sitzung verändert hat.
+Dadurch kann FIB transparent zeigen, ob und wie sich der tatsächlich beschlossene Inhalt gegenüber dem ursprünglichen Vorschlag verändert hat, ohne unterschiedliche reale Entwicklungsschritte zu einem künstlichen Ereignis zusammenzuziehen.
 
 ## 4. Sitzung und TOP
 
@@ -90,11 +105,11 @@ Eine Sitzung besitzt mindestens:
 
 ### 4.2 TOP
 
-Ein TOP ist ein konkreter Tagesordnungspunkt einer Sitzung. Er ist kein Ereignis, sondern der Verfahrens- und Behandlungskontext, in dem ein oder mehrere Ereignisse verwendet werden können.
+Ein TOP ist ein konkreter Tagesordnungspunkt einer Sitzung. Er ist kein Ereignis, sondern der Verfahrens- und Behandlungskontext, in dem ein oder mehrere Ereignisse vorkommen bzw. auf den sich mehrere Ereignisse beziehen können.
 
 Ein TOP gehört genau einer Sitzung.
 
-Ein TOP kann mehrere fachliche Sachverhalte bzw. Ereignisse behandeln. Ein Ereignis kann wiederum in mehreren TOPs verwendet werden, insbesondere bei Vertagung, erneuter Behandlung oder Fortführung in einer späteren Sitzung.
+Ein TOP kann mehrere fachliche Sachverhalte bzw. Ereignisse betreffen. Ein Ereignis kann wiederum mehreren TOPs zugeordnet sein, wenn derselbe reale Vorgangsschritt tatsächlich mehrere TOPs betrifft; bei Vertagung oder erneuter Behandlung entstehen dagegen regelmäßig neue spätere Ereignisse für die jeweiligen realen Entwicklungsschritte.
 
 Diese Beziehung darf deshalb nicht auf 1:1 begrenzt werden.
 
@@ -102,13 +117,12 @@ Diese Beziehung darf deshalb nicht auf 1:1 begrenzt werden.
 
 Die Beziehung zwischen TOP und Ereignis ist fachlich selbst relevant. Sie muss mindestens erkennen lassen:
 
-- welches Ereignis in welchem TOP verwendet wurde,
+- welches Ereignis welchem TOP zugeordnet ist,
 - in welcher Sitzung dieser TOP lag,
 - welchen Verfahrensstatus der TOP erreichte,
-- ob sich der Sachstand des Ereignisses in diesem TOP änderte,
-- welche Abstimmungen daraus hervorgingen.
+- welche Beschlusspunkte und Abstimmungen aus einem Entscheidungsereignis hervorgingen.
 
-Ein Vorgang oder Thema muss daraus ableiten können, **bei welchem TOP ein Ereignis einen bestimmten Verfahrens- oder Sachstand erreicht hat**.
+Ein Vorgang oder Thema muss daraus ableiten können, **bei welchem TOP ein bestimmtes Ereignis stattgefunden hat bzw. welchem TOP es fachlich zuzuordnen ist**.
 
 ## 5. Verfahrensstatus des TOP
 
@@ -139,7 +153,7 @@ Der ursprüngliche Beschlussvorschlag bleibt als Originalinhalt der Vorlage gesp
 
 ### 6.2 Entstehung der Beschlusspunkte
 
-`Beschlusspunkt` und `Abstimmung` entstehen erst mit der Auswertung der Niederschrift.
+`Beschlusspunkt` und `Abstimmung` entstehen erst mit der Auswertung der Niederschrift und werden dem Ereignis der tatsächlichen Beschlussfassung bzw. Behandlung zugeordnet, nicht dem früheren Veröffentlichungsereignis der Vorlage.
 
 Für die Feldkirchner Niederschriften gilt nach Prüfung mehrerer Beispiele als verbindliche Extraktionsregel:
 
@@ -179,7 +193,7 @@ erDiagram
     TOP ||--o{ TOP_EREIGNIS : behandelt
     EREIGNIS ||--o{ TOP_EREIGNIS : wird_behandelt
 
-    EREIGNIS ||--o{ BESCHLUSSPUNKT : erhaelt_nach_Niederschrift
+    EREIGNIS ||--o{ BESCHLUSSPUNKT : hat_bei_Beschluss
     BESCHLUSSPUNKT ||--o{ BESCHLUSSPUNKT_FASSUNG : hat
     BESCHLUSSPUNKT_FASSUNG ||--o{ ABSTIMMUNG : wird_abgestimmt
     TOP_EREIGNIS ||--o{ ABSTIMMUNG : erfolgt_in
@@ -189,7 +203,7 @@ erDiagram
 
 ### 6.5 Semantischer Vergleich mit der Beschlussvorlage
 
-Erst nachdem die Niederschrift die tatsächlich abgestimmten Beschlusspunkte und Fassungen erkennen lässt, vergleicht die KI diese mit dem ursprünglichen Beschlussvorschlag.
+Erst nachdem die Niederschrift die tatsächlich abgestimmten Beschlusspunkte und Fassungen erkennen lässt, vergleicht die KI diese mit dem ursprünglichen Beschlussvorschlag aus der zugehörigen Vorlage/Fundstelle.
 
 Dabei kann sie insbesondere feststellen:
 
@@ -218,20 +232,22 @@ Für die Ermittlung des beschlossenen Inhalts ist der unmittelbar vor der Abstim
 
 Die KI übernimmt semantisch insbesondere:
 
-1. Zuordnung des Niederschriften-TOPs zum bereits bekannten Ereignis bzw. zur Beschlussvorlage,
-2. Erkennung der tatsächlich abgestimmten Beschlusstexte,
-3. Bildung der Beschlusspunkte,
-4. Zuordnung jeder Abstimmung zur unmittelbar vorausgehenden Beschlusspunkt-Fassung,
-5. semantischen Vergleich mit dem ursprünglichen Beschlussvorschlag,
-6. Kennzeichnung fachlich relevanter Änderungen.
+1. Zuordnung des Niederschriften-TOPs zum bekannten Vorgang/Sachverhalt sowie zu vorhandenen Vorlage-Fundstellen und früheren Ereignissen,
+2. Erkennung der tatsächlich stattgefundenen Behandlung bzw. Entscheidung und Bildung oder Zuordnung des entsprechenden neuen Ereignisses,
+3. Erkennung der tatsächlich abgestimmten Beschlusstexte,
+4. Bildung der Beschlusspunkte,
+5. Zuordnung jeder Abstimmung zur unmittelbar vorausgehenden Beschlusspunkt-Fassung,
+6. semantischen Vergleich mit dem ursprünglichen Beschlussvorschlag,
+7. Kennzeichnung fachlich relevanter Änderungen.
 
-Für die Ereigniszuordnung werden möglichst mehrere Merkmale gemeinsam genutzt, insbesondere:
+Für die Zuordnung werden möglichst mehrere Merkmale gemeinsam genutzt, insbesondere:
 
 - Sitzung,
 - TOP-Nummer,
 - TOP-Titel,
 - Vorlagen-/Beschlussnummer,
 - Dokumentbeziehungen,
+- bereits bekannte Vorgangs- und Ereignisbeziehungen,
 - semantischer Inhalt.
 
 ### 7.3 Unsichere Zuordnung und Pflichtprüfung
@@ -242,7 +258,7 @@ Kann die KI eine Zuordnung nicht hinreichend sicher vornehmen, gilt verbindlich:
 
 Dies gilt insbesondere bei Unsicherheit über:
 
-- das zugehörige Ereignis,
+- das zugehörige Ereignis bzw. die Frage, ob ein neues Ereignis anzulegen ist,
 - den zugehörigen TOP,
 - die Abgrenzung eines Beschlusspunkts,
 - die Zuordnung einer Abstimmung,
@@ -287,11 +303,11 @@ Damit gilt:
 
 > **Eine Meldung kann bei einer Sitzung oder einem TOP angezeigt werden, ohne dort eine zweite parallele fachliche Zuordnung zu speichern.**
 
-Das verhindert widersprüchliche Doppelpflege. Wenn eine Meldung mehrere Ereignisbezüge nicht besitzen kann, bleibt für die Sitzungsanzeige das zugrunde liegende Meldungsereignis maßgeblich; zusätzliche Kontextdarstellungen werden aus den vorhandenen Ereignisbeziehungen berechnet.
+Das verhindert widersprüchliche Doppelpflege. Für die Sitzungsanzeige ist das zugrunde liegende Meldungsereignis maßgeblich; zusätzliche Kontextdarstellungen werden aus den vorhandenen Ereignisbeziehungen berechnet.
 
 ## 10. Navigation zwischen TOP, Vorgang und Thema
 
-Ein TOP soll öffentlich anzeigen können, ob das zugehörige Ereignis in einem Vorgang oder Thema behandelt wird. Diese Information wird nach Möglichkeit nicht redundant am TOP gepflegt, sondern aus den fachlichen Beziehungen abgeleitet:
+Ein TOP soll öffentlich anzeigen können, ob zugehörige Ereignisse in einem Vorgang oder Thema behandelt werden. Diese Information wird nach Möglichkeit nicht redundant am TOP gepflegt, sondern aus den fachlichen Beziehungen abgeleitet:
 
 ```text
 TOP
@@ -338,17 +354,18 @@ Insbesondere wird erst dort entschieden, ob bestimmte Zustandsinformationen dire
 
 Nicht offen ist dagegen die fachliche Anforderung, dass rekonstruierbar sein muss:
 
-- welches Ereignis in welchem TOP behandelt wurde,
+- welches Ereignis welchem TOP zugeordnet war,
 - welche Beschlusspunkte aus der Niederschrift entstanden,
 - welche Fassung tatsächlich abgestimmt wurde,
 - welches Abstimmungsergebnis dazu gehört,
 - wie der ursprüngliche Beschlussvorschlag lautete,
 - ob und wie sich der Beschluss gegenüber dem Vorschlag änderte,
-- in welchem TOP ein Ereignis einen bestimmten Sach- oder Verfahrensstand erreichte.
+- welche früheren und späteren Ereignisse denselben Vorgang/Sachverhalt betreffen.
 
 ## Änderungshistorie
 
 | Version | Datum | Änderung |
 |---|---|---|
+| 1.2 | 05.10.2026 | G3-Audit: Ereignisbegriff mit dem Gesamtdatenmodell konsolidiert. Beschlussvorlage ist als Dokument eine Fundstelle; ihre Veröffentlichung kann ein Ereignis sein. Spätere Beratung, Vertagung/Absetzung und Beschlussfassung sind getrennte reale Entwicklungsschritte und werden nicht als bloßer neuer Zustand desselben Vorlagenereignisses behandelt. Niederschriftenauswertung und Beschlusspunkte auf das spätere Behandlungs-/Beschlussereignis ausgerichtet. |
 | 1.1 | 05.10.2026 | Widerspruch zum konsolidierten Datenmodell beseitigt: direkte autoritative Beziehungen `Meldung ↔ Sitzung` und `Meldung ↔ TOP` entfallen. Sitzungs-/TOP-Bezug einer Meldung wird aus `Meldung → Ereignis → TOP/Sitzung` abgeleitet; öffentliche Anzeige und Navigation bleiben daraus vollständig möglich. |
-| 1.0 | 04.10.2026 | Sitzungs- und Beschlussmodell nach Prüfung realer Feldkirchner Niederschriften neu festgelegt. Beschlussvorlage als bereits nutzbares Ereignis; Beschlussvorlage und Beschluss als dasselbe übergeordnete Ereignis; n:m-fähige TOP-Ereignis-Beziehung; Beschlusspunkte und Abstimmungen entstehen erst aus der Niederschrift; Beschlusspunkt-Fassungen und mehrere Abstimmungen modelliert; ursprünglicher Beschlussvorschlag bleibt einsehbar; KI-Zuordnung mit zwingendem sichtbarem Prüfhinweis bei Unsicherheit; Genehmigung und Dokumentverfügbarkeit der Niederschrift getrennt; Navigation TOP↔Vorgang/Thema ableitbar. |
+| 1.0 | 04.10.2026 | Sitzungs- und Beschlussmodell nach Prüfung realer Feldkirchner Niederschriften neu festgelegt. Frühere Annahmen zur Ereignisidentität von Vorlage und Beschluss wurden in v1.2 korrigiert; weiterhin gültig bleiben n:m-fähige TOP-Ereignis-Beziehung, Entstehung von Beschlusspunkten/Abstimmungen aus der Niederschrift, Fassungsvergleich, sichtbare Prüfung unsicherer KI-Zuordnungen sowie Trennung von Genehmigung und Dokumentverfügbarkeit der Niederschrift. |
