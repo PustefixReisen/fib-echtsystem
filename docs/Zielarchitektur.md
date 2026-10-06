@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 0.4 | 06.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
+| 0.5 | 06.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
 
 ## 1. Zweck und Geltung
 
@@ -26,6 +26,7 @@ Verbindliche Grundlagen insbesondere:
 - `docs/decisions/ADR-003-Publikations-und-Deploymentprozess.md`
 - `docs/decisions/ADR-004-Suche-und-RAG.md`
 - `docs/decisions/ADR-005-AI-Tasks-Scheduler-und-Queue.md`
+- `docs/decisions/ADR-006-Authentifizierung-und-Rechtearchitektur.md`
 
 ## 2. Architekturprinzipien
 
@@ -41,6 +42,7 @@ Verbindliche Grundlagen insbesondere:
 10. **Öffentliche Auslieferung static-first:** Besucher lesen einen freigegebenen, versionierten K0-Stand und benötigen für normales Lesen weder Supabase noch KI.
 11. **Suche folgt der Fachstruktur:** explizite Beziehungen und strukturierte Filter haben Vorrang vor Volltext; Volltext hat Vorrang vor optionaler semantischer Suche.
 12. **Automatisierung ist persistent und wiederaufnehmbar:** fachlich wichtige AI Tasks werden als Runs/Jobs nachvollziehbar gespeichert und nicht an einen einzelnen kurzlebigen Prozess gebunden.
+13. **Autorisierung ist mehrstufig:** Fachservices prüfen die fachliche Berechtigung; RLS schützt zusätzlich die Datenbank.
 
 ## 3. Logische Gesamtarchitektur
 
@@ -62,13 +64,14 @@ flowchart TB
     AI[freigegebene KI-Provider]
     WEB[statischer öffentlicher Webserver]
 
+    R --> AUTH
+    C --> AUTH
     R --> FS
     C --> FS
     T --> Q
     Q --> FS
 
     FS --> DB
-    FS --> AUTH
     FS --> STORE
     FS --> AIR
     AIR --> AI
@@ -148,6 +151,7 @@ Die Redaktions-Web-App ist der strukturierte Arbeitszugang.
 Sie nutzt:
 
 - Supabase Auth,
+- administrativ eingerichtete Redakteur-/Admin-Konten statt öffentlicher Selbstregistrierung,
 - gemeinsame Fachfunktionen,
 - Online-Betrieb im MVP,
 - keine dauerhafte Offline-Spiegelung interner Daten,
@@ -261,7 +265,28 @@ Embeddings sind abgeleitete technische Suchdaten und dürfen jederzeit neu erzeu
 
 Details: `docs/decisions/ADR-004-Suche-und-RAG.md`.
 
-## 12. Publikationsprozess
+## 12. Authentifizierung und Rechtearchitektur
+
+Besucher benötigen kein Konto. Authentifizierung betrifft im MVP ausschließlich Redakteure und Admins.
+
+Technische Grundsätze:
+
+- Supabase Auth dient als Identitätsdienst,
+- Konten werden administrativ angelegt/eingeladen; keine offene Selbstregistrierung,
+- fachliche Rollen werden serverseitig verwaltet und nicht aus frei änderbaren `user_metadata`-Feldern abgeleitet,
+- jeder fachlich wirksame Aufruf wird serverseitig gegen Identität, aktive Rolle, Schutzklasse, Objektzustand und erforderliche Bestätigung geprüft,
+- RLS bildet eine zusätzliche Sicherheitsbarriere und ersetzt diese Prüfung nicht,
+- öffentliche Besucher erhalten keine fachlichen Schreibrechte und benötigen keinen direkten Data-API-Zugriff,
+- privilegierte Service-/Secret-Schlüssel bleiben ausschließlich serverseitig,
+- MFA wird technisch unterstützt; Admin-MFA muss durchsetzbar sein,
+- Rollenentzug muss serverseitig kurzfristig wirksam werden und darf nicht allein auf veraltete JWT-Claims warten,
+- AI Tasks sind technische Akteure und erben keine menschlichen Redakteur-/Adminrechte.
+
+Die konkrete Rollen-/Policy-Matrix, S2-/S3-Bestätigungen und MFA-Pflichten je Rolle/Aktion werden in G6 festgelegt.
+
+Details: `docs/decisions/ADR-006-Authentifizierung-und-Rechtearchitektur.md`.
+
+## 13. Publikationsprozess
 
 Eine fachliche S3-Freigabe schreibt nicht direkt in öffentliche Webdateien.
 
@@ -295,7 +320,7 @@ Wesentliche Regeln:
 
 Details: `docs/decisions/ADR-003-Publikations-und-Deploymentprozess.md`.
 
-## 13. Hosting- und Umgebungsmodell
+## 14. Hosting- und Umgebungsmodell
 
 Mindestens drei logisch getrennte Umgebungen werden vorgesehen:
 
@@ -313,7 +338,7 @@ Zielbetrieb:
 
 Der statische öffentliche Build ist transportabel und kann in der Pilotphase auf IONOS und später auf dem GRÜNEN-Webserver ausgeliefert werden.
 
-## 14. Deployment und Reproduzierbarkeit
+## 15. Deployment und Reproduzierbarkeit
 
 Im Repository versioniert werden mindestens:
 
@@ -332,7 +357,7 @@ Nicht ins Repository gehören Secrets und produktive personenbezogene Daten.
 
 Eine Zielumgebung muss aus Repository plus dokumentierter Konfiguration reproduzierbar aufgebaut werden können.
 
-## 15. Cache, Versionierung und Aktualität
+## 16. Cache, Versionierung und Aktualität
 
 Die Cache-Strategie folgt dem versionierten Static-Publish-Modell:
 
@@ -346,7 +371,7 @@ Die Cache-Strategie folgt dem versionierten Static-Publish-Modell:
 
 Damit wird das im Demonstrator beobachtete Mehrfach-Reload-/Cacheproblem strukturell vermieden.
 
-## 16. Sichere Ausgabe dynamischer Inhalte
+## 17. Sichere Ausgabe dynamischer Inhalte
 
 Alle dynamisch erzeugten oder aus externen Quellen übernommenen Inhalte werden vor öffentlicher Ausgabe sicher gerendert.
 
@@ -358,13 +383,18 @@ Verbindlich:
 - Schutz vor XSS/Script-Injektion,
 - externe Inhalte erhalten keine Möglichkeit, FIB-Fachfunktionen oder Browserkontext zu manipulieren.
 
-## 17. In G5 bereits entschieden
+## 18. In G5 bereits entschieden
 
 - TypeScript als gemeinsame Implementierungssprache für Web-/Service-Schicht,
 - Astro/static-first für die öffentliche Seite,
 - gemeinsame serverseitige Fachservice-Schicht,
 - Supabase/PostgreSQL als strukturierter Kern,
 - Supabase Auth als Authentifizierungsbasis,
+- keine Besucher-Konten und keine offene Selbstregistrierung im MVP,
+- serverseitig verwaltete Redakteur-/Adminrollen,
+- Fachservices als primäre Autorisierungsinstanz, RLS als Defense in Depth,
+- privilegierte Schlüssel ausschließlich serverseitig,
+- MFA-fähige Architektur mit durchsetzbarer Admin-MFA,
 - interner Datei-/Bildspeicher über austauschbaren Adapter,
 - Nextcloud als Pilotkandidat, aber nicht als Systemvoraussetzung,
 - öffentliche Medien werden aus internem Speicher in den K0-Deploy übernommen,
@@ -376,19 +406,21 @@ Verbindlich:
 - Supabase Cron + durable Queue + Edge-Function Worker als MVP-Automatisierung,
 - lange AI-/Rechercheläufe werden resumierbar in Schritte zerlegt.
 
-## 18. Noch offene G5-Entscheidungen
+## 19. Noch offene G5-Entscheidungen
 
 Vor Abschluss von G5 sind insbesondere noch zu entscheiden:
 
-1. konkrete technische Auth-/RLS-Ausgestaltung,
-2. konkrete Provider-/Routerintegration,
-3. konkrete CI/CD-Plattform und Upload-/Deploymentmethode,
-4. Detailstruktur des Repositories bzw. der Anwendungen/Packages.
+1. konkrete Provider-/Routerintegration,
+2. konkrete CI/CD-Plattform und Upload-/Deploymentmethode,
+3. Detailstruktur des Repositories bzw. der Anwendungen/Packages.
+
+Die konkrete RLS-/Rechtematrix ist keine offene G5-Grundsatzfrage mehr, sondern wird in G6 aus dem fachlichen Rollen-/Aktionsmodell und ADR-006 abgeleitet.
 
 ## Änderungshistorie
 
 | Version | Datum | Änderung |
 |---|---|---|
+| 0.5 | 06.10.2026 | ADR-006 integriert; Authentifizierung auf Redakteur/Admin begrenzt, keine Besucher-Konten, serverseitige Rollenverwaltung, Fachservices als primäre Autorisierungsinstanz, RLS als Defense in Depth, privilegierte Schlüssel nur serverseitig und MFA-fähige Architektur festgelegt. |
 | 0.4 | 06.10.2026 | ADR-005 integriert; Supabase Cron + durable Queue + Edge-Function Worker für AI Tasks festgelegt; lange Läufe als wiederaufnehmbare Schritte, Idempotenz und Retry-Grundsätze verankert; eigener Worker-Server im MVP ausgeschlossen. |
 | 0.3 | 06.10.2026 | ADR-004 integriert; öffentliche statische Suche, interne strukturierte/Volltextsuche und gestufte RAG-Kontextbeschaffung festgelegt; Vektorsuche als optionale Ergänzung nach Qualitätsnachweis statt MVP-Pflicht eingeordnet. |
 | 0.2 | 06.10.2026 | ADR-001 bis ADR-003 integriert; static-first als verbindliche öffentliche Architektur festgelegt; versionierter K0-Publish, Validierung, atomarer Deploy, Rollback und Cache-Strategie ergänzt; interne und öffentliche Medienauslieferung getrennt; offene G5-Punkte bereinigt. |
