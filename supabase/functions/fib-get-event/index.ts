@@ -1,4 +1,3 @@
-import { withSupabase } from 'npm:@supabase/server@1';
 import postgres from 'npm:postgres@3.4.7';
 
 import {
@@ -9,39 +8,83 @@ import {
   type VerifiedAuthClaims,
 } from './shared.ts';
 
+const corsHeaders = {
+  'access-control-allow-origin': 'https://fib.pustivo.de',
+  'access-control-allow-headers': 'authorization, x-client-info, apikey, content-type',
+  'access-control-allow-methods': 'POST, OPTIONS',
+};
+
 function json(body: unknown, status = 200): Response {
   return Response.json(body, {
     status,
-    headers: { 'cache-control': 'no-store' },
+    headers: { ...corsHeaders, 'cache-control': 'no-store' },
   });
 }
 
-function claimsFromContext(ctx: {
-  userClaims?: Record<string, unknown> | null;
-}): VerifiedAuthClaims | null {
-  const claims = ctx.userClaims;
-  if (!claims || typeof claims.sub !== 'string') return null;
+function decodeJwtPayload(token: string): Record<string, unknown> | null {
+  try {
+    const part = token.split('.')[1];
+    if (!part) return null;
+    const normalized = part.replace(/-/g, '+').replace(/_/g, '/');
+    const padded = normalized + '='.repeat((4 - normalized.length % 4) % 4);
+    return JSON.parse(atob(padded));
+  } catch {
+    return null;
+  }
+}
 
-  const aal = claims.aal;
+async function verifyUserToken(req: Request): Promise<VerifiedAuthClaims | null> {
+  const authHeader = req.headers.get('authorization');
+  if (!authHeader?.startsWith('Bearer ')) return null;
+
+  const token = authHeader.slice(7);
+  const supabaseUrl = Deno.env.get('SUPABASE_URL');
+  const anonKey = Deno.env.get('SUPABASE_ANON_KEY');
+  if (!supabaseUrl || !anonKey) return null;
+
+  const response = await fetch(`${supabaseUrl}/auth/v1/user`, {
+    headers: {
+      apikey: anonKey,
+      authorization: `Bearer ${token}`,
+    },
+  });
+
+  if (!response.ok) return null;
+
+  const user = await response.json() as { id?: string };
+  if (!user.id) return null;
+
+  const payload = decodeJwtPayload(token);
+  if (!payload || payload.sub !== user.id) return null;
+
+  const aal = payload.aal;
   if (aal !== undefined && aal !== 'aal1' && aal !== 'aal2') return null;
 
   return {
-    sub: claims.sub,
+    sub: user.id,
     aal,
-    sessionId: typeof claims.session_id === 'string' ? claims.session_id : undefined,
-    isAnonymous: claims.is_anonymous === true,
+    sessionId: typeof payload.session_id === 'string' ? payload.session_id : undefined,
+    isAnonymous: payload.is_anonymous === true,
   };
 }
 
 export default {
-  fetch: withSupabase({ auth: 'user' }, async (req, ctx) => {
+  async fetch(req: Request) {
+    if (req.method === 'OPTIONS') {
+      return new Response(null, { status: 204, headers: corsHeaders });
+    }
+
     if (req.method !== 'POST') {
       return json({ error: 'method_not_allowed' }, 405);
     }
 
-    const claims = claimsFromContext(ctx);
+    const claims = await verifyUserToken(req);
     if (!claims) {
       return json({ error: 'invalid_auth_claims' }, 401);
+    }
+
+    if (claims.aal !== 'aal2') {
+      return json({ error: 'mfa_required' }, 403);
     }
 
     const databaseUrl = Deno.env.get('FIB_DATABASE_URL');
@@ -92,8 +135,11 @@ export default {
       }
 
       return json(result);
+    } catch (error) {
+      console.error('fib-get-event failed', error);
+      return json({ error: 'internal_error' }, 500);
     } finally {
       await sql.end({ timeout: 1 });
     }
-  }),
+  },
 };
