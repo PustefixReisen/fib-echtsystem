@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 0.1 | 06.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
+| 1.0 | 06.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
 
 ## 1. Zweck und Geltung
 
@@ -177,26 +177,65 @@ Rollenentzug bzw. Deaktivierung muss serverseitig kurzfristig wirksam werden. Ei
 
 Jede S2-/S3-Aktion prüft deshalb den aktuellen serverseitigen Benutzer-/Rollenstatus erneut.
 
-## 10. MFA – G6-Entscheidungspunkt
+## 10. MFA und Step-up-Authentifizierung
 
-Technisch unterstützt FIB MFA/TOTP für Redakteure und Admins.
+Für den produktiven FIB-Betrieb gilt verbindlich:
 
-Bereits verbindlich:
-
-- Admin-MFA muss technisch erzwingbar sein,
-- besonders geschützte Aktionen müssen einen hinreichend aktuellen authentifizierten Benutzerstatus prüfen können.
-
-**Noch zu entscheiden:** Soll MFA im Produktivbetrieb nur für Admins oder für **alle Redakteure und Admins** verpflichtend sein?
-
-Fachliche Empfehlung für FIB:
-
-> **MFA für alle Redakteure und Admins verpflichtend.**
-
-Begründung: Redakteure können S3-Veröffentlichungen durchführen, K1/K2-Inhalte einsehen und den öffentlichen Informationsstand verändern. Der zusätzliche Schutz rechtfertigt den geringen Mehraufwand bei der kleinen Zahl interner Konten.
+> **MFA/TOTP ist für alle Redakteure und Admins verpflichtend.**
 
 Besucher benötigen keine Anmeldung und damit keine MFA.
 
-## 11. Workflow-Grundsätze
+Die normale erfolgreiche Anmeldung mit zweitem Faktor reicht für gewöhnliche redaktionelle S2-/S3-Aktionen einschließlich Veröffentlichung aus. Eine erneute Eingabe eines Authenticator-Codes bei jeder Veröffentlichung wird **nicht** verlangt.
+
+Eine zusätzliche **Step-up-Authentifizierung** unmittelbar vor Ausführung wird dagegen für besonders kritische administrative Aktionen vorgesehen, insbesondere wenn sie Rechte oder Sicherheitsgrenzen verändern. Dazu gehören mindestens:
+
+- Rollen-/Rechteänderungen,
+- Deaktivierung/Aktivierung administrativer Konten,
+- Änderung sicherheitsrelevanter Auth-/MFA-Konfiguration,
+- Änderung von Secrets oder Providerzugängen,
+- Änderung systemweiter KI-/Routing-Sicherheitsgrenzen,
+- Änderung von Schutzklassen- oder vergleichbaren systemweiten Sicherheitsregeln.
+
+Step-up bedeutet: Die bestehende Sitzung muss einen hinreichend aktuellen starken Authentifizierungsnachweis besitzen; andernfalls ist eine erneute MFA-Prüfung erforderlich.
+
+Damit werden normale redaktionelle Abläufe nicht unnötig erschwert, während administrative Hochrisikoaktionen stärker geschützt sind.
+
+## 11. RLS- und Policy-Grenzen
+
+RLS ist in FIB **Defense in Depth** und nicht die alleinige fachliche Berechtigungslogik.
+
+Verbindliche Aufgabenteilung:
+
+### Fachservice-Schicht
+
+Sie entscheidet pro Fachaktion insbesondere über:
+
+- menschliche/technische Rolle,
+- konkrete Fachfunktion,
+- Objektzustand und erlaubten Statusübergang,
+- Schutzklasse und Personenbezug,
+- S0–S3,
+- erforderliche Bestätigung,
+- Versions-/Concurrency-Prüfung,
+- fachliche Plausibilitäts- und Freigaberegeln,
+- Adminvorbehalt.
+
+### RLS / Datenbank-Policies
+
+Sie bilden bewusst gröbere, robuste technische Grenzen und verhindern insbesondere:
+
+- anonyme Schreibzugriffe auf Fachtabellen,
+- fachliche Schreibzugriffe ohne authentifizierten internen Akteur,
+- direkten Zugriff auf nicht für den jeweiligen internen Kontext freigegebene K1/K2-Daten,
+- Benutzer-/Rollen- oder Sicherheitsadministration durch Redakteure,
+- regulären Browserzugriff mit privilegierten Service-Schlüsseln,
+- Umgehung der vorgesehenen Service-Schicht über exponierte Standard-Data-APIs.
+
+Nicht jede einzelne fachliche Statusregel wird doppelt in RLS nachmodelliert. Komplexe Fachregeln bleiben in den Fachservices und Datenbank-Constraints/Transaktionen. Dadurch entsteht kein zweites konkurrierendes Regelwerk.
+
+Für produktive Browserzugriffe gilt grundsätzlich **least privilege**. Privilegierte Service-Rollen sind nur serverseitig zulässig.
+
+## 12. Workflow-Grundsätze
 
 - Web-App und FIB-Chat besitzen für denselben Benutzer grundsätzlich dieselben Fachrechte.
 - Die Web-App darf Bedienelemente rollen-/statusabhängig ausblenden; dies ersetzt keine serverseitige Prüfung.
@@ -205,8 +244,9 @@ Besucher benötigen keine Anmeldung und damit keine MFA.
 - AI Tasks dürfen S0/S1 durchführen, aber keine menschliche S2-/S3-Entscheidung simulieren.
 - Fachlich wirksame Änderungen verwenden Optimistic Concurrency/Versionsprüfung; veraltete Bearbeitungsstände dürfen bestätigte Daten nicht still überschreiben.
 - Fehlende Berechtigung, fehlende Pflichtbestätigung, unzulässiger Objektzustand oder Schutzklassenverstoß sind harte Blocker und keine übersteuerbaren Warnungen.
+- Dasselbe fachliche Ergebnis muss unabhängig vom Zugangsweg denselben Status-/Rechte-/Bestätigungsregeln unterliegen.
 
-## 12. Auditanforderung
+## 13. Auditanforderung
 
 Für S2/S3 und besonders geschützte administrative Aktionen wird mindestens nachvollziehbar protokolliert:
 
@@ -218,19 +258,29 @@ Für S2/S3 und besonders geschützte administrative Aktionen wird mindestens nac
 - fachlich relevanter Vorher-/Nachher-Zustand,
 - verwendete Workflow-/Regelversion,
 - erforderliche und erteilte Bestätigung,
+- MFA-/Step-up-Anforderung und deren Erfüllung, soweit relevant,
 - Ergebnis bzw. Ablehnungsgrund.
 
-## 13. Noch offene G6-Punkte
+## 14. G6-Abschlussstand
 
-Vor Abschluss von G6 sind noch zu klären:
+Mit Version 1.0 sind die G6-Grundsatzfragen geklärt:
 
-1. MFA-Pflicht für Redakteure,
-2. ob einzelne S3-Aktionen zusätzlich zu MFA eine erneute Step-up-Authentifizierung unmittelbar vor Ausführung benötigen,
-3. technische Ableitung der RLS-/Policy-Grenzen aus dieser Matrix,
-4. Schlussaudit gegen Fachfunktionskatalog, G4-Schutzklassen und G5-Architektur.
+- Rollen und technische Akteure,
+- S0–S3,
+- Fachfunktionsrechte,
+- Bestätigungslogik,
+- Adminvorbehalte,
+- AI-Task-Grenzen,
+- verpflichtende MFA für Redakteure und Admins,
+- Step-up nur für besonders kritische administrative Aktionen,
+- Aufgabenteilung zwischen Fachservices und RLS,
+- Audit- und Concurrency-Anforderungen.
+
+Die konkrete SQL-/RLS-Policy-Implementierung erfolgt in U1. Betriebsparameter wie Sitzungsdauer, Token-/MFA-Lebensdauer und konkrete Recovery-/Notfallverfahren gehören zu G7.
 
 ## Änderungshistorie
 
 | Version | Datum | Änderung |
 |---|---|---|
+| 1.0 | 06.10.2026 | MFA für Redakteure/Admins verpflichtend festgelegt; kein Step-up bei normalen Veröffentlichungen, Step-up für kritische Adminaktionen; RLS-/Fachservice-Aufgabenteilung konsolidiert; G6-Grundsatzfragen abgeschlossen. |
 | 0.1 | 06.10.2026 | G6 gestartet; Rollen-/Aktionsmatrix, Fachfunktionsrechte, Bestätigungslogik, Adminvorbehalte, AI-Task-Grenzen und MFA-Entscheidungspunkt konsolidiert. |
