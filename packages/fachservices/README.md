@@ -39,4 +39,15 @@ Dabei gilt ausdrücklich:
 Mit `authenticatedGetEvent()` existiert der erste durchgängige S0-Pfad bis zur Fachfunktion `getEvent()`.
 Regressionstestfälle liegen unter `tests/fachservices/authenticated-get-event.spec.ts`.
 
+## Live-Verifikation Shared-Apps
+
+Die technische Sicherheitsgrenze wurde gegen das reale Shared-Apps-Projekt geprüft:
+
+- ein erster menschlicher FIB-Admin ist aktiv in `fib.app_users` zugeordnet,
+- die PostgreSQL-Rolle `authenticated` besitzt weiterhin weder `USAGE` auf Schema `fib` noch `SELECT` auf `fib.events`,
+- `fib_app` besitzt den erwarteten Lesezugriff auf `fib.events`, aber keinen Lesezugriff auf `public.events`,
+- damit kann ein normal angemeldeter Supabase-Auth-Benutzer die Fachservice-Schicht nicht durch direkten Data-API-Zugriff auf `fib` umgehen.
+
+Für einen vollständigen realen Browser-/Session-End-to-End-Test muss der erste Admin zusätzlich einen verifizierten MFA-Faktor besitzen, damit der Auth-Kontext `aal2` erreicht. Dieser Schritt erfolgt über den normalen Supabase-Auth-MFA-Flow des Benutzers; MFA-Secrets werden nicht administrativ in der Datenbank erzeugt oder im Repository abgelegt.
+
 Die weiteren Fachfunktionen aus `docs/MVP-Fachfunktionen.md` werden schrittweise auf dieselbe gemeinsame Schranke aufgesetzt. Frontends dürfen keine eigene, abweichende Autorisierungslogik etablieren.
