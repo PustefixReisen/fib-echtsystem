@@ -4,443 +4,313 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 0.2 | 06.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
+| 0.3 | 06.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
 
 ## 1. Zweck und Geltung
 
-Dieses Dokument ist die verbindliche Primärquelle für **G4 – Schutzbedarf / Datenschutz / Offline** des FIB-Echtsystems.
+Dieses Dokument ist die verbindliche Integrationsquelle für **G4 – Schutzbedarf / Datenschutz / Offline** des FIB-Echtsystems.
 
-Es leitet aus dem abgeschlossenen fachlichen Datenmodell ab,
+Es legt fest:
 
-- wie FIB-Daten nach Schutzbedarf klassifiziert werden,
-- welche Daten öffentlich, intern oder besonders geschützt verarbeitet werden dürfen,
-- welche Daten an externe KI-Dienste übermittelt werden dürfen,
-- welche Daten auf Endgeräten bzw. offline gespeichert werden dürfen,
-- welche fachlichen Anforderungen sich daraus für G5 Zielarchitektur und G6 Rollen/Rechte ergeben.
+- Schutzklassen für FIB-Daten,
+- Anforderungen an personenbezogene und vertrauliche Daten,
+- Regeln für KI-Übermittlung,
+- Offline-/PWA-Grundsätze,
+- Anforderungen an Bilder, Dateien, Push und Logs,
+- Übergaben an G5–G7.
 
-Dieses Dokument beschreibt noch **keine konkrete technische Umsetzung** von Verschlüsselung, RLS, Authentifizierung, Storage oder Gerätesicherheit. Diese wird in den nachfolgenden Gründungsphasen aus den hier festgelegten Anforderungen abgeleitet.
+Detailquelle für personenbezogene Verarbeitungen und Löschlogik:
+
+- `docs/Datenschutz-Verarbeitungen-und-Loeschlogik.md`
+
+Konkrete technische Umsetzung von Verschlüsselung, RLS, Authentifizierung, Storage, Log-Rotation oder Löschjobs folgt erst in G5–G7.
 
 ## 2. Rechts- und Schutzrahmen
 
-G4 orientiert sich insbesondere an folgenden aktuellen Grundsätzen:
+G4 orientiert sich insbesondere an:
 
 - DSGVO Art. 5: Rechtmäßigkeit, Transparenz, Zweckbindung, Datenminimierung, Richtigkeit, Speicherbegrenzung sowie Integrität und Vertraulichkeit,
-- DSGVO Art. 9: besonderer Schutz personenbezogener Daten, aus denen u. a. politische Meinungen hervorgehen,
-- TDDDG § 25: Speicherung von Informationen auf Endgeräten bzw. Zugriff darauf grundsätzlich nur mit Einwilligung, soweit keine gesetzliche Ausnahme – insbesondere technische Erforderlichkeit für einen ausdrücklich gewünschten digitalen Dienst – greift.
+- DSGVO Art. 6: Rechtsgrundlage je personenbezogener Verarbeitung,
+- DSGVO Art. 9: besonderer Schutz u. a. politischer Meinungen,
+- DSGVO Art. 13/14: Informationspflichten,
+- DSGVO Art. 16/17: Berichtigung und Löschung,
+- TDDDG § 25: Speicherung bzw. Zugriff auf Informationen im Endgerät grundsätzlich nur mit Einwilligung, soweit keine gesetzliche Ausnahme – insbesondere technische Erforderlichkeit für einen ausdrücklich gewünschten Dienst – greift.
 
-Diese Nennung ersetzt keine spätere konkrete Datenschutzprüfung des produktiven Betriebs. Sie legt den fachlichen Rahmen fest, aus dem G5–G7 die technische Umsetzung ableiten.
+Diese Einordnung ersetzt keine abschließende rechtliche Prüfung des Produktivbetriebs.
 
 ## 3. Grundprinzipien
 
-### 3.1 Schutzbedarf hängt vom konkreten Inhalt ab
+### 3.1 Schutzbedarf hängt vom Inhalt ab
 
-Ein fachlicher Objekttyp besitzt nicht zwingend immer dieselbe Schutzklasse.
+> **Schutzbedarf wird anhand des konkreten Dateninhalts und seiner vorgesehenen Nutzung bestimmt, nicht allein anhand des Fachobjekttyps.**
 
-Beispiele:
+Dasselbe Objekt kann unterschiedliche Schutzstände besitzen: veröffentlichte Meldung K0, Entwurf K1; öffentlich freigegebenes Bild K0, ungeklärtes Personenbild K2.
 
-- eine veröffentlichte Meldung ist öffentlich,
-- ihr interner Entwurf ist intern,
-- eine zugrunde liegende nicht öffentliche Datei kann vertraulich sein,
-- ein API-Schlüssel ist sicherheitskritisch.
+### 3.2 Datenminimierung
 
-Deshalb gilt:
+FIB speichert und übermittelt nur Daten, die für die jeweilige Funktion erforderlich sind.
 
-> **Schutzbedarf wird anhand des konkreten Dateninhalts und seiner vorgesehenen Nutzung bestimmt, nicht allein anhand des Tabellennamens oder Fachobjekttyps.**
+Insbesondere:
 
-### 3.2 Minimierungsprinzip
+- keine personenbezogene Vorratsspeicherung,
+- keine Besucherprofile,
+- KI erhält nur benötigten Kontext,
+- Telemetrie/Logs enthalten keine unnötigen Inhaltskopien,
+- technischer Datenzugriff allein rechtfertigt keine KI-Übermittlung.
 
-FIB speichert und übermittelt nur Daten, die für die jeweilige fachliche Funktion erforderlich sind.
+### 3.3 Öffentliche Quelle ≠ freie Weiterverarbeitung
 
-Insbesondere gilt:
+Öffentliche Auffindbarkeit bedeutet nicht automatisch freie Speicherung, Vervielfältigung, Veröffentlichung oder KI-Übermittlung. Datenschutz, Urheberrecht, Persönlichkeits- und Nutzungsrechte bleiben getrennt zu prüfen.
 
-- personenbezogene Daten werden nicht vorsorglich gesammelt,
-- KI-Modelle erhalten nur den für die konkrete Aufgabe erforderlichen Kontext,
-- Telemetrie und Kostenprotokolle enthalten keine unnötigen Inhaltskopien,
-- öffentliche Nutzung erzeugt möglichst keine personenbezogenen Nutzerprofile,
-- ein vorhandener technischer Datenzugriff ist keine Begründung dafür, Daten in einen KI-Kontext aufzunehmen.
+### 3.4 Integrität ist besonders wichtig
 
-### 3.3 Öffentliche Quelle bedeutet nicht automatisch freie Weiterverarbeitung
-
-Die öffentliche Auffindbarkeit einer Information oder Datei bedeutet nicht automatisch, dass FIB sie beliebig speichern, vervielfältigen, veröffentlichen oder an externe Dienste übermitteln darf.
-
-Urheberrecht, Persönlichkeitsrechte, Datenschutz, Nutzungsrechte und die konkrete Verarbeitungsnotwendigkeit bleiben getrennt zu prüfen.
-
-### 3.4 Schutz von Integrität ist für FIB besonders wichtig
-
-FIB verarbeitet überwiegend öffentlichkeitsbezogene politische und kommunale Informationen. Deshalb ist neben Vertraulichkeit insbesondere die **Integrität** wesentlich:
+Neben Vertraulichkeit ist für FIB die Integrität zentral:
 
 - veröffentlichte Inhalte dürfen nicht unbemerkt verändert werden,
-- redaktionell bestätigte Fakten und Bewertungen müssen nachvollziehbar bleiben,
-- Rollen, Freigaben und Audit dürfen nicht umgangen werden,
-- KI-Ergebnisse dürfen nicht automatisch zu fachlich verbindlichen Aussagen werden.
+- bestätigte Fakten/Bewertungen bleiben nachvollziehbar,
+- Rollen/Freigaben/Audit dürfen nicht umgangen werden,
+- KI-Ergebnisse werden nicht automatisch fachlich wirksam.
 
 ## 4. Schutzklassen
 
-FIB verwendet für G4 vier fachliche Schutzklassen.
-
 ### K0 – öffentlich
 
-Daten, die bestimmungsgemäß öffentlich über FIB bereitgestellt werden dürfen.
-
-Beispiele:
-
-- veröffentlichte Meldungen,
-- öffentlich freigegebene Vorgangs- und Themenstände,
-- veröffentlichte Vertiefungsfragen und -antworten,
-- öffentliche Sitzungs-/TOP-Daten,
-- öffentlich freigegebene Bilder und Dateien,
-- öffentliche Quellenangaben und Links.
-
-Grundsatz:
+Bestimmungsgemäß öffentlich bereitgestellte Daten, z. B. veröffentlichte Meldungen, öffentliche Vorgangs-/Themenstände, Sitzungsdaten, freigegebene Vertiefungen, Bilder und Dateien.
 
 - öffentlich lesbar,
-- Offline-Cache auf Besuchergeräten grundsätzlich zulässig, soweit die konkrete lokale Speicherung für die gewünschte Funktion zulässig und transparent ist,
-- Übermittlung an freigegebene KI-Dienste grundsätzlich möglich, soweit für eine FIB-Aufgabe erforderlich,
-- Integritäts- und Aktualitätsschutz bleibt erforderlich.
+- öffentlicher Offline-Cache grundsätzlich möglich,
+- an freigegebene KI-Provider übermittelbar, soweit für die Aufgabe erforderlich,
+- Integritäts-/Aktualitätsschutz bleibt nötig.
 
 ### K1 – intern
 
-Redaktionelle oder betriebliche Daten ohne besonderen Vertraulichkeitsbedarf, die aber nicht für Besucher bestimmt sind.
+Nicht öffentliche Redaktions-/Betriebsdaten ohne besonderen Vertraulichkeitsbedarf, z. B. Entwürfe, KI-Vorschläge, Beobachtungsaufträge, interne Bearbeitungsstände.
 
-Beispiele:
-
-- Meldungsentwürfe,
-- KI-Kandidaten und Vorschläge,
-- interne Beobachtungsaufträge,
-- offene redaktionelle Fragen,
-- noch nicht freigegebene strukturierte Redaktionsstände,
-- interne Bearbeitungshinweise,
-- nicht öffentliche AI-Task-Ergebnisse ohne besonders sensible Inhalte.
-
-Grundsatz:
-
-- nur für berechtigte Redakteure/Admins bzw. technisch berechtigte AI Tasks,
-- keine öffentliche Auslieferung oder öffentlicher Cache,
-- KI-Übermittlung nur im Rahmen einer vorgesehenen Fachfunktion,
-- Offline-Speicherung auf Redaktionsgeräten nicht automatisch erlaubt; nur bei später ausdrücklich definiertem sicheren Offline-Konzept.
+- nur berechtigte Redaktion/Admin bzw. zulässige AI Tasks,
+- kein öffentlicher Cache,
+- KI-Übermittlung nur über vorgesehene FIB-Funktion,
+- kein dauerhafter Redaktions-Offlinebestand im MVP.
 
 ### K2 – vertraulich / personenbezogen
 
-Daten, deren Offenlegung für Personen, Organisation oder Redaktion nachteilig sein kann oder die personenbezogene Informationen enthalten, die nicht bereits bestimmungsgemäß öffentlich verarbeitet werden.
-
-Beispiele können sein:
-
-- nicht öffentliche Dokumente oder interne GRÜNEN-Unterlagen,
-- Kontaktdaten,
-- nicht öffentliche personenbezogene Angaben,
-- Bilder mit noch ungeklärtem Persönlichkeits-/Veröffentlichungsrecht,
-- interne Quellen oder Dateien mit Zugangsbeschränkung,
-- redaktionelle Informationen, aus denen vertrauliche politische Vorbereitung oder interne Positionierungsprozesse hervorgehen,
-- personenbezogene Inhalte in Chat-/Recherchekontexten, soweit für die Aufgabe erforderlich.
-
-Grundsatz:
+Nicht öffentliche personenbezogene oder anderweitig vertrauliche Daten, z. B. Benutzerkonten, interne GRÜNEN-Unterlagen, Zugangsbeschränkte Quellen, ungeklärte Personenbilder oder sensible Recherchekontexte.
 
 - Zugriff nur bei fachlicher Erforderlichkeit,
 - keine öffentliche Bereitstellung,
-- keine Übermittlung an einen KI-Provider allein deshalb, weil der Inhalt technisch verfügbar ist,
-- KI-Übermittlung nur, wenn die konkrete Aufgabe dies erfordert und Provider/Betriebsweg für diese Schutzklasse ausdrücklich freigegeben ist,
-- möglichst Minimierung, Redaktion oder Pseudonymisierung vor externer Übermittlung,
+- KI-Übermittlung nur über ausdrücklich für K2 freigegebenen Betriebsweg,
+- Datenminimierung/Pseudonymisierung vor Übermittlung,
 - keine ungeschützte Offline-Speicherung.
 
 ### K3 – sicherheitskritisch
 
-Daten, deren Offenlegung oder Manipulation unmittelbar die Sicherheit oder Kontrolle des FIB-Systems gefährden kann.
+Secrets, Passwörter, API-Schlüssel, private Schlüssel, Session-/Recovery-Geheimnisse und vergleichbare Sicherheitsdaten.
 
-Beispiele:
+- außerhalb normaler FIB-Fachdatenhaltung,
+- niemals an Sprachmodelle übermitteln,
+- nicht in Logs/Prompts/Audittexte kopieren,
+- nur geeignete Secret-/Credential-Infrastruktur.
 
-- Passwörter,
-- API-Schlüssel und Secrets,
-- private Schlüssel,
-- Recovery-/Backup-Zugangsdaten,
-- Authentifizierungs- und Session-Geheimnisse,
-- hochprivilegierte administrative Zugangsdaten,
-- sicherheitskritische Konfigurationswerte.
+## 5. Typischer Schutzbedarf
 
-Grundsatz:
+| Datenbereich | typischer Schutzbedarf |
+|---|---:|
+| veröffentlichte Meldung | K0 |
+| Meldungsentwurf | K1 |
+| Ereignis / Sachinformation | K0/K1 |
+| Vorgang / Thema | K0/K1 |
+| strukturierte Einordnung | K0/K1, ggf. K2 |
+| Quelle / Fundstelle / Datei | K0–K2 |
+| Bild | K0–K2 |
+| offene Frage / Wissenslücke | K0–K2 |
+| Beobachtungsauftrag / Recherchelauf | K1, ggf. K2 |
+| Referenzwissen / Referenzmaßstab | K0/K1 |
+| Vertiefungsinhalte | K0/K1 |
+| AI Task / Run | K1, ggf. K2 |
+| Benutzerkonto / Rolle | K2 |
+| Push-Subscription | K2 |
+| technische Logs | K1/K2 |
+| Secrets | K3 |
 
-- nicht als normaler fachlicher Inhalt in FIB speichern,
-- niemals an Sprachmodelle oder Recherche-KI übermitteln,
-- nicht in Logs, Chatverläufe, Prompts oder fachliche Audittexte kopieren,
-- nur in dafür geeigneter Secret-/Credential-Infrastruktur verwalten,
-- Offline-Speicherung nur innerhalb ausdrücklich dafür vorgesehener sicherer Credential-Systeme.
-
-## 5. Schutzbedarf nach FIB-Datenbereich
-
-| Datenbereich | typischer Schutzbedarf | Anmerkung |
-|---|---|---|
-| veröffentlichte Meldung | K0 | Entwurf davor K1 |
-| Ereignis / bestätigte Sachinformation | K0 oder K1 | abhängig davon, ob öffentlich dargestellt bzw. aus interner Quelle gewonnen |
-| Vorgang / Thema | K0 oder K1 | veröffentlichter Stand K0, Arbeitsstand K1 |
-| strukturierte politische Einordnung | K0/K1 | veröffentlichter Stand K0, Bearbeitungsstand K1; interne politische Vorbereitung kann im Einzelfall K2 sein |
-| Quelle / Fundstelle | K0–K2 | Schutzklasse hängt von Herkunft, Inhalt, Rechten und Sichtbarkeit ab |
-| gespeicherte Datei | K0–K2 | öffentliche Bereitstellung nur nach Rechte-/Freigabeprüfung |
-| Bild | K0–K2 | Rechte-, Persönlichkeits- und Freigabestatus maßgeblich |
-| offene Frage / Wissenslücke | K0–K2 | öffentliche Sachfrage kann K0 sein; interne Recherchefrage K1/K2 |
-| Beobachtungsauftrag | meist K1 | bei vertraulichem Gegenstand K2 |
-| Recherchelauf | K1, ggf. K2 | kann vertrauliche Such-/Quellenkontexte enthalten |
-| Referenzwissen | K0/K1 | öffentliches/stabiles Wissen K0, interne Ergänzungen K1 |
-| Referenzmaßstab | K0/K1 | aktive transparente Maßstäbe grundsätzlich öffentlich erklärbar; Entwurf K1 |
-| „Mehr wissen?“-Inhalte | K0/K1 | Entwurf K1, veröffentlicht K0 |
-| AI Task Definition/Run | K1 | Betriebs-/Kontextdaten können im Einzelfall K2 sein |
-| KI-Kosten-/Qualitätsprotokoll | K1 | keine unnötigen personenbezogenen Inhaltskopien |
-| Benutzerkonto / Rollen | K2 | Identitäts- und Kontodaten nicht öffentlich |
-| Push-Abonnement | K2 | pseudonyme technische Subscription-Daten; nicht mit Besuchsprofilen verknüpfen |
-| technische Logs | K1/K2 | abhängig vom Inhalt; Secrets müssen ausgeschlossen sein |
-| Secrets / Zugangsdaten | K3 | außerhalb fachlicher FIB-Datenhaltung |
-
-Diese Matrix beschreibt typische Fälle. Die konkrete Klassifikation kann innerhalb eines Datenbereichs höher ausfallen.
+Die Klassifikation erfolgt im Einzelfall nach Inhalt und Nutzung.
 
 ## 6. K2-Minimierung im MVP
 
-### 6.1 Grundsatz
+FIB ist kein CRM, Bürgerregister, Mitgliederverwaltungssystem oder allgemeines Archiv interner Parteidokumente.
 
-> **FIB soll im MVP K2-Daten nur speichern, wenn sie für Redaktion, Rechteklärung, Authentifizierung oder eine konkrete Recherchefunktion tatsächlich erforderlich sind.**
+Im MVP voraussichtlich erforderliche K2-Daten:
 
-FIB ist kein CRM, kein Bürgerregister, kein Mitgliederverwaltungssystem und kein allgemeines Archiv interner Parteidokumente.
+- Redakteur-/Admin-Konten,
+- einzelne konkret benötigte interne GRÜNEN-Fundstellen,
+- Rechte-/Nachweisdaten zu Bildern/Dateien,
+- noch ungeklärte Personenbilder,
+- technische Push-Subscriptions, falls Push aktiviert wird,
+- einzelne erforderliche Recherche-/Chatkontexte.
 
-### 6.2 Im MVP voraussichtlich erforderliche K2-Daten
-
-K2 wird insbesondere benötigt für:
-
-- Benutzer-/Redaktionskonten und Rollen,
-- gegebenenfalls interne GRÜNEN-Dokumente, die als konkrete Recherchequelle fachlich benötigt werden,
-- Rechte-/Nachweisinformationen zu Bildern oder Dateien, soweit diese personenbezogene oder vertrauliche Inhalte enthalten,
-- noch nicht freigegebene Bilder mit identifizierbaren Personen bzw. ungeklärten Persönlichkeitsrechten,
-- technische Push-Subscription-Daten, sofern Push im MVP aktiviert wird,
-- einzelne Recherche-/Chatkontexte, wenn ihre fachlich erforderliche Bearbeitung nicht ohne personenbezogene oder vertrauliche Angaben möglich ist.
-
-### 6.3 Im MVP bewusst nicht als FIB-Datenbestand vorsehen
-
-Ohne gesonderte spätere Produktentscheidung speichert FIB insbesondere **nicht**:
+Bewusst nicht vorgesehen:
 
 - Besucher-Benutzerkonten,
-- personenbezogene Besuchs- oder Interessenprofile,
-- zentrale Historien darüber, welche Meldungen ein bestimmter Besucher gelesen hat,
-- Mitgliederlisten oder allgemeine Parteikontaktdatenbanken,
+- personenbezogene Besuchs-/Interessenprofile,
+- zentrale Lesehistorien,
+- Mitglieder-/Bürgerdatenbanken,
 - Bürgerdossiers,
-- freie öffentliche Kommentar-/Diskussionsprofile,
+- öffentliche Kommentarprofile,
 - private Adresssammlungen,
-- allgemeine E-Mail-Postfächer oder Nachrichtenarchive,
-- personenbezogene Daten „auf Vorrat“ für mögliche spätere Nutzung.
+- allgemeine E-Mail-/Nachrichtenarchive,
+- personenbezogene Vorratsspeicherung.
 
-### 6.4 Interne GRÜNEN-Dokumente
-
-Nicht öffentliche GRÜNEN-Unterlagen können als K2-Fundstellen aufgenommen werden, wenn sie für einen konkreten FIB-Sachverhalt einen echten Recherchemehrwert besitzen.
-
-Dabei gilt:
-
-- sie bleiben intern und werden nicht allein durch Aufnahme in FIB öffentlich,
-- sie dürfen Recherche, Einordnung und die Suche nach öffentlichen Belegen unterstützen,
-- vertrauliche Inhalte werden nicht unbeabsichtigt in öffentliche Texte übernommen,
-- für veröffentlichte Tatsachenbehauptungen soll nach Möglichkeit eine öffentlich nachvollziehbare Quellenbasis verwendet werden,
-- eine interne Quelle wird nicht durch einen scheinbar öffentlichen Quellenhinweis verschleiert.
-
-FIB baut damit kein zweites Vollarchiv interner Parteidokumente auf.
+Interne GRÜNEN-Unterlagen dürfen nur bei konkretem FIB-Recherchezweck aufgenommen werden. Sie bleiben intern und werden nicht durch Aufnahme in FIB öffentlich.
 
 ## 7. Schutzklassen-Metadaten und Vererbung
 
-Nicht jedes fachliche Objekt benötigt zwingend ein manuell gepflegtes Schutzklassenfeld. Für Datenbereiche mit variablem Schutzbedarf muss die Schutzklasse jedoch technisch eindeutig bestimmbar sein.
+Für Datenbereiche mit variablem Schutzbedarf muss die Schutzklasse technisch eindeutig bestimmbar sein.
 
-Für G5 ist deshalb mindestens vorzusehen:
+Mindestens betroffen:
 
-- `Fundstelle`/gespeicherte Datei: explizite oder eindeutig ableitbare Schutzklasse,
-- `Bild`: explizite oder eindeutig ableitbare Schutzklasse,
-- importierte Dokument-/Dateiinhalte: Schutzklasse der zugrunde liegenden Fundstelle,
-- AI-Task-/Recherche-Kontext: effektive Schutzklasse aus den tatsächlich einbezogenen Daten,
-- Chat-/KI-Aufruf: effektive Schutzklasse des übermittelten Kontexts.
+- Fundstelle/gespeicherte Datei,
+- Bild,
+- importierte Dokumentinhalte,
+- AI-Task-/Recherche-Kontext,
+- Chat-/KI-Aufruf.
 
-Verbindliche Regel:
+> **Ein abgeleiteter interner Arbeitsinhalt übernimmt mindestens den höchsten Schutzbedarf seiner Eingabedaten, solange nicht durch bewusste Redaktion/Redaktionierung ein eigenständiger geringer geschützter Inhalt entstanden und freigegeben ist.**
 
-> **Ein abgeleiteter interner Arbeitsinhalt übernimmt mindestens den höchsten Schutzbedarf seiner verwendeten Eingabedaten, solange nicht durch eine bewusste Redaktion/Redaktionierung ein eigenständiger, geringer geschützter Inhalt entstanden und freigegeben ist.**
+K0 entsteht nicht automatisch, sondern durch den vorgesehenen Freigabe-/Veröffentlichungsprozess.
 
-Eine Herabstufung auf K0 erfolgt nicht automatisch, sondern durch den vorgesehenen Freigabe-/Veröffentlichungsprozess.
+## 8. Personenbezogene Daten und Löschlogik
 
-## 8. Personenbezogene Daten
+Detailquelle: `docs/Datenschutz-Verarbeitungen-und-Loeschlogik.md`.
 
-### 8.1 Öffentliche Personenbezüge
+Verbindliche Kernaussagen:
 
-FIB kann personenbezogene Informationen aus öffentlich zugänglichen kommunalpolitischen oder institutionellen Quellen benötigen, etwa Namen und öffentliche Funktionen von Mandatsträgern, Ansprechpartnern oder öffentlich auftretenden Akteuren.
+- Rechtsgrundlage wird je konkreter Verarbeitung festgelegt, nicht pauschal für FIB.
+- Politische Meinungen und andere Art.-9-Daten benötigen besondere Prüfung.
+- Fachhistorie rechtfertigt nicht automatisch unbegrenzte personenbezogene Speicherung.
+- Historischer Sachverhalt und identifizierende Zusatzinformation werden soweit möglich entkoppelt.
+- Konten werden bei Rollenverlust deaktiviert; Audit-Historie darf davon getrennt erhalten bleiben.
+- technische Logs werden kurz und zweckgebunden gehalten,
+- Push-Subscriptions werden bei Abmeldung/Ungültigkeit gelöscht,
+- interne K2-Dateien werden nach Wegfall ihres konkreten Zwecks auf Löschung/Redaktion/Metadatenreduktion geprüft,
+- FIB archiviert nicht standardmäßig vollständige KI-Dialoge oder Rohkontexte.
 
-Auch solche Informationen bleiben personenbezogene Daten. Ihre Verarbeitung wird auf den für den Informationszweck erforderlichen Umfang begrenzt.
-
-FIB soll insbesondere vermeiden:
-
-- private Kontaktinformationen ohne fachliche Notwendigkeit,
-- private Adressen,
-- private Lebensumstände ohne unmittelbaren Sachbezug,
-- Profilbildung über Personen über den FIB-Zweck hinaus.
-
-### 8.2 Besonders geschützte personenbezogene Daten
-
-Daten, aus denen insbesondere politische Meinungen oder andere besondere Kategorien personenbezogener Daten im Sinne von DSGVO Art. 9 hervorgehen, werden nicht allein deshalb übernommen, weil sie in einer recherchierten Quelle vorkommen.
-
-Bei solchen Inhalten ist vor Persistenz, KI-Übermittlung oder Veröffentlichung eine gesonderte Erforderlichkeits- und Zulässigkeitsprüfung erforderlich.
-
-Das betrifft insbesondere den politischen Kontext von FIB: Eine redaktionelle Benutzerrolle, interne Parteikommunikation oder Mitgliedschaft darf nicht unnötig als öffentliches Personenmerkmal weiterverarbeitet werden.
-
-### 8.3 Benutzer- und Redaktionskonten
-
-Kontodaten von Redakteuren/Admins sind von den öffentlichen FIB-Inhalten getrennt zu behandeln. Öffentliche Beiträge müssen nicht unnötig mit persönlichen Kontodaten der Bearbeiter verknüpft werden.
-
-Für Auditzwecke muss intern nachvollziehbar sein, welcher authentifizierte Akteur eine fachlich wirksame Aktion ausgeführt hat. Die öffentliche Anzeige dieser Identität ist daraus nicht automatisch abzuleiten.
+Konkrete technische Retentionwerte in Tagen/Monaten werden erst in G7 anhand Architektur und Risiko parametrisiert.
 
 ## 9. KI-Übermittlung
 
-### 9.1 Grundregel
+> **An einen KI-Provider wird nur der für die konkrete Aufgabe erforderliche Kontext übermittelt.**
 
-> **An einen KI-Provider wird nur der für die konkrete FIB-Aufgabe erforderliche Kontext übermittelt.**
+- K0: grundsätzlich zulässig bei freigegebenem Provider und Erforderlichkeit.
+- K1: nur im vorgesehenen FIB-KI-Workflow mit produktiv freigegebenem Provider.
+- K2: nur bei ausdrücklicher Freigabe des konkreten Providers/Betriebswegs für K2 und fachlicher Erforderlichkeit.
+- K3: niemals.
 
-Die Schutzklasse wird vor dem KI-Aufruf berücksichtigt.
+Für K1/K2 sind vor Freigabe mindestens zu prüfen:
 
-### 9.2 Zulässigkeit nach Schutzklasse
-
-- **K0:** grundsätzlich an freigegebene Provider übermittelbar, wenn für die Aufgabe erforderlich.
-- **K1:** übermittelbar, wenn die vorgesehene FIB-Funktion KI benötigt bzw. bewusst KI nutzt und der Provider für produktive FIB-Nutzung freigegeben ist.
-- **K2:** nur bei ausdrücklicher technischer und organisatorischer Freigabe des Providers/Betriebswegs für diese Schutzklasse und nur bei fachlicher Erforderlichkeit; Datenminimierung hat Vorrang.
-- **K3:** keine Übermittlung an KI-Provider.
-
-### 9.3 Mindestanforderungen für K1/K2-Provider
-
-Die konkrete Providerprüfung erfolgt in G5/G7. G4 verlangt jedoch mindestens, dass vor produktiver Nutzung geklärt und dokumentiert wird:
-
-- vertragliche Rolle und Auftragsverarbeitung, soweit erforderlich,
-- Datenstandort bzw. Drittlandübermittlung,
-- Nutzung von Eingaben/Ausgaben für Anbietertraining oder andere eigene Zwecke,
-- Aufbewahrung/Logging beim Provider,
-- Lösch-/Retention-Möglichkeiten,
-- Unterauftragnehmer bzw. relevante weitere Empfänger,
+- vertragliche Rolle/Auftragsverarbeitung,
+- Datenstandort/Drittlandübermittlung,
+- Training/sonstige Eigennutzung,
+- Provider-Retention/Logging,
+- Löschmöglichkeiten,
+- Unterauftragnehmer/Empfänger,
 - technische Zugriffssicherheit,
-- Eignung für die jeweils erlaubte Schutzklasse.
+- zulässige Schutzklasse.
 
-K2 darf nicht allein aufgrund einer allgemeinen Providerfreigabe für K1 übermittelt werden.
+Der FIB-Chat/AI Task erhält niemals pauschal den vollständigen Datenbestand. Die Fachfunktionsschicht bleibt Datenschutz- und Sicherheitsgrenze.
 
-### 9.4 Kein implizites Gesamt-Datenbank-Sharing
+## 10. Offline / lokale Speicherung
 
-Der FIB-Chat oder ein AI Task erhält nicht pauschal den vollständigen Datenbestand. Fachfunktionen stellen nur die jeweils zulässigen und erforderlichen Daten bereit.
+### 10.1 Besucher-PWA
 
-Damit bleibt die bereits festgelegte Fachfunktionsschicht zugleich eine zentrale Datenschutz- und Sicherheitsgrenze.
+K0-Inhalte dürfen technisch gecacht werden, soweit Aktualität, Invalidierung und Endgerätespeicherung rechtlich sauber gelöst sind. Dazu können App-Shell, öffentliche Inhalte/Bilder und lokaler Stand „neu seit letztem Besuch“ gehören.
 
-## 10. Offline und lokale Speicherung
+Der Neuigkeitsstatus bleibt gerätebezogen und erzeugt kein zentrales Besucherprofil.
 
-### 10.1 Öffentliche Besucher-PWA
+TDDDG § 25 ist in G5 für jede lokale Speicherfunktion zu prüfen.
 
-Für K0-Inhalte ist ein technischer Offline-/Cache-Betrieb grundsätzlich zulässig und erwünscht, soweit Aktualität, Cache-Invalidierung und die rechtliche Zulässigkeit der konkreten Endgerätespeicherung sauber gelöst sind.
+### 10.2 Redaktion
 
-Dazu können gehören:
+> **Im MVP keine eigenständige Offline-Redaktionsdatenbank und keine dauerhafte lokale Spiegelung von K1/K2.**
 
-- App-Shell und statische Assets,
-- zuletzt geladene öffentliche Meldungen,
-- öffentliche Vorgangs-/Themen-/Sitzungsinformationen,
-- freigegebene öffentliche Bilder,
-- lokaler Gerätestand für „neu seit letztem Besuch“.
-
-Der gerätegebundene Neuigkeitsstatus benötigt keine Benutzeranmeldung und soll keine zentrale Nutzerprofilbildung erzeugen.
-
-Für lokale Speicherung bzw. Auslesen auf dem Endgerät ist TDDDG § 25 in der konkreten Umsetzung zu berücksichtigen. G5 muss deshalb unterscheiden, welche lokalen Informationen für den vom Nutzer gewünschten PWA-Dienst unbedingt erforderlich sind und wo andernfalls eine Einwilligung erforderlich wäre.
-
-### 10.2 Redaktionelle Daten
-
-Für K1/K2-Redaktionsdaten gilt im MVP:
-
-> **Keine eigenständige Offline-Redaktionsdatenbank und keine dauerhafte lokale Spiegelung des internen FIB-Bestands.**
-
-Die Redaktions-Web-App ist im MVP grundsätzlich online orientiert. Kurzlebige technische Browser-/Session-Daten sind davon zu unterscheiden und sollen auf das notwendige Minimum begrenzt werden.
-
-Ein späterer echter Offline-Redaktionsmodus wäre eine eigene Sicherheits- und Synchronisationsfunktion und wird nur bei nachgewiesenem Bedarf eingeführt.
-
-### 10.3 Logout und Geräteverlust
-
-Die spätere technische Umsetzung muss sicherstellen, dass besonders geschützte interne Daten nicht allein durch einen früheren Browserzugriff dauerhaft frei auf einem verlorenen Gerät verfügbar bleiben.
-
-Konkrete Session-, Cache-, Token- und Löschregeln werden in G5/G6 technisch festgelegt.
+Die Redaktions-Web-App ist online orientiert. Ein echter späterer Offline-Redaktionsmodus wäre eine eigene Sicherheits-/Synchronisationsfunktion.
 
 ## 11. Push und Newsletter
 
-### 11.1 Push
+### Push
 
-Push soll im MVP, sofern umgesetzt, **ohne Besucherprofil** auskommen.
-
-Vorzugsmodell:
+Wenn Push umgesetzt wird:
 
 - pseudonyme technische Subscription,
-- keine Verknüpfung mit Namen/E-Mail,
-- keine zentrale Lesefortschritts- oder Interessenakte,
-- Speicherung nur der für Zustellung/Verwaltung notwendigen Subscription-Daten,
+- keine Verknüpfung mit Name/E-Mail,
+- keine Lese-/Interessenakte,
+- nur notwendige Zustelldaten,
 - einfache Abmeldung/Löschung.
 
-Push-Subscription-Daten werden K2 zugeordnet.
+### Newsletter
 
-### 11.2 Newsletter
-
-Ein Newsletter ist kein notwendiger Bestandteil der FIB-Kerndatenbank.
-
-Falls er eingeführt wird, sollen E-Mail-Adressen, Einwilligungsnachweise, Abmeldungen und Versandlisten vorzugsweise in einem dafür geeigneten spezialisierten Newsletter-Dienst verarbeitet werden. FIB benötigt dann nur die für die Integration erforderliche minimale Schnittstelle und baut keine zweite Mailinglistenverwaltung auf.
+Newsletter-Daten sollen vorzugsweise in einem spezialisierten Dienst verarbeitet werden; FIB baut keine zweite Mailinglistenverwaltung auf.
 
 ## 12. Bilder und Dateien
 
-Für Bilder und Dateien gelten gemeinsam:
+- Speicherung und öffentliche Bereitstellung sind getrennt.
+- Öffentliche Bereitstellung setzt positiv geklärte Rechte voraus.
+- identifizierbare Personen können K2 erzeugen.
+- Originaldatei kann stärker geschützt sein als öffentliche Ableitung.
+- Metadaten werden vor Veröffentlichung minimiert.
 
-1. Speicherbarkeit ist von öffentlicher Bereitstellung zu unterscheiden.
-2. Öffentliche Bereitstellung setzt positiv geklärte Rechte voraus.
-3. personenbezogene oder identifizierbare Personen im Bild können zusätzlichen Schutzbedarf erzeugen.
-4. Originaldateien können intern stärker geschützt sein als eine daraus freigegebene öffentliche Darstellung.
-5. Metadaten dürfen keine unnötigen personenbezogenen oder sicherheitsrelevanten Informationen veröffentlichen.
+Ein Bild kann intern K2 und nach geklärter/rechtskonformer Freigabe in seiner öffentlichen Verwendung K0 sein.
 
-Ein Bild kann damit z. B. intern K2 sein, bis Rechte und Personenbezug geklärt sind, und nach Freigabe in seiner öffentlichen Verwendung K0 werden.
+## 13. Audit und Datenschutz-Adminworkflow
 
-## 13. Audit und Protokollierung
+Audit protokolliert Akteur, Aktion/Fachfunktion, Objekt, Zeitpunkt, Ergebnis/Bestätigung, soweit erforderlich Vorher/Nachher – aber keine Secrets und keine unnötigen Inhaltskopien.
 
-Auditdaten dienen Nachvollziehbarkeit und Sicherheit, dürfen aber nicht unnötig vollständige Fachinhalte vervielfältigen.
+Betroffenenanfragen werden über einen kontrollierten Adminworkflow bearbeitet, nicht über freies SQL. Der Workflow muss Auffinden, Berichtigung, Löschprüfung, ggf. Einschränkung/Sperrung sowie getrennte Behandlung öffentlicher Veröffentlichung und interner Persistenz ermöglichen.
 
-Für Audit gilt deshalb:
+## 14. Anforderungen an G5–G7
 
-- Identität des handelnden Akteurs intern nachvollziehbar,
-- Fachfunktion/Aktion, Objektbezug, Zeitpunkt, Ergebnis und Bestätigung nachvollziehbar,
-- Vorher/Nachher soweit fachlich notwendig,
-- keine Secrets,
-- personenbezogene Inhaltsdaten nur soweit für Audit tatsächlich erforderlich.
+### G5
 
-Aufbewahrungsfristen und technische Logstruktur werden später festgelegt.
-
-## 14. Konsequenzen für G5 und G6
-
-Aus G4 sind mindestens folgende technische Anforderungen abzuleiten:
-
-### G5 Zielarchitektur
-
-- Trennung öffentlicher und interner Zugriffswege,
-- geeignete Storage-/Zugriffsstrategie für K0–K2-Dateien,
+- öffentliche/interne Zugriffswege trennen,
+- Storage-/Zugriffsstrategie für K0–K2,
 - Secret-Infrastruktur für K3,
-- KI-Router mit schutzklassenabhängiger Datenfreigabe,
-- keine pauschalen Datenbank-Dumps an KI,
-- technische Bestimmbarkeit der Schutzklasse bei variabel geschützten Daten,
-- Cache-/PWA-Strategie nur für freigegebene öffentliche Inhalte,
-- TDDDG-konforme Bewertung lokaler Endgerätespeicherung,
-- sichere Session- und Tokenhaltung,
-- Audit ohne Secret-/Inhaltsüberkopie.
+- schutzklassenbewusster KI-Router,
+- keine Datenbank-Dumps an KI,
+- Schutzklasse bei variablen Daten technisch bestimmbar,
+- PWA-Cache nur für K0,
+- sichere Session-/Tokenhaltung,
+- technisch mögliche Löschung/Anonymisierung der dafür vorgesehenen Daten.
 
-### G6 Rollen/Rechte
+### G6
 
 - Besucher nur K0,
-- Redakteur K0/K1 und fachlich erforderliche K2-Daten,
-- Admin zusätzlich administrative K2/K3-Verwaltungsfunktionen, wobei K3-Secrets selbst nicht als normale FIB-Daten angezeigt werden sollen,
-- AI Tasks nur explizit freigegebene Daten/Fachfunktionen,
-- öffentliche Freigabe weiterhin S3,
-- Rechteprüfung serverseitig über die Fachfunktionsschicht.
+- Redakteur K0/K1 und erforderliche K2-Daten,
+- Admin zusätzliche administrative Funktionen,
+- AI Tasks nur explizit freigegebene Daten/Funktionen,
+- S3-Freigabe weiter serverseitig erzwingen,
+- Datenschutz-Adminworkflow.
 
-## 15. Noch zu klärende G4-Punkte
+### G7 / Go-live
 
-Vor Abschluss von G4 sind noch gezielt zu prüfen:
+- konkrete Log-/Audit-/Backup-Retention parametrisieren,
+- Datenschutzerklärung anhand tatsächlicher Dienste,
+- Rechtsgrundlagen/Informationspflichten je Verarbeitung dokumentieren,
+- Verarbeitungsinventar/ggf. Verzeichnis von Verarbeitungstätigkeiten,
+- tatsächliche Provider/Empfänger dokumentieren.
 
-1. konkrete Rechtsgrundlagen/Informationspflichten der tatsächlich vorgesehenen personenbezogenen Verarbeitungen im Produktivbetrieb,
-2. konkrete Aufbewahrungs-/Löschanforderungen für Benutzerkonten, Push-Subscriptions, Audit, technische Logs und K2-Fundstellen,
-3. konkrete Providerfreigabekriterien und zulässige Anbieter/Betriebswege für K1/K2,
-4. ob und wie Datenschutz-Folgenabschätzung bzw. vergleichbare Risikoprüfung für einzelne Verarbeitungen erforderlich ist,
-5. ob weitere FIB-Fachobjekte außer Datei/Fundstelle/Bild eine explizite Schutzklassenkennzeichnung benötigen oder eine Ableitung aus Status/Quelle ausreicht.
+## 15. Noch offene G4-Punkte
+
+Vor Abschluss von G4 sind noch zu klären:
+
+1. Providerfreigabekriterien und zulässige Betriebswege für K1/K2,
+2. ob für konkrete Verarbeitungen eine Datenschutz-Folgenabschätzung erforderlich ist,
+3. ob Push im MVP tatsächlich aktiviert wird und welcher Dienst verwendet wird,
+4. Datenschutz-/Auftragsverarbeitungsmodell des geplanten externen Datei-/Bildspeichers,
+5. ob weitere Fachobjekte außer Datei/Fundstelle/Bild eine explizite Schutzklassenkennzeichnung benötigen oder Ableitung genügt.
+
+Nicht mehr als offene G4-Grundsatzfrage gilt die Löschlogik; offen sind nur technische Retentionparameter in späteren Phasen.
 
 ## Änderungshistorie
 
 | Version | Datum | Änderung |
 |---|---|---|
-| 0.2 | 06.10.2026 | K2-Minimierung für MVP festgelegt; Besucherprofile, CRM-/Mitglieder-/Bürgerdatenbestände ausgeschlossen; interne GRÜNEN-Dokumente eingegrenzt; Schutzklassenvererbung und technische Bestimmbarkeit definiert; Push/Newsletter datensparsam abgegrenzt; aktuelle Rechtsanker DSGVO Art. 5/9 und TDDDG § 25 aufgenommen; Provider-Mindestprüfung für K1/K2 ergänzt. |
-| 0.1 | 06.10.2026 | G4 gestartet; vier Schutzklassen K0–K3, erste Schutzbedarfsmatrix, Grundregeln für personenbezogene Daten, KI-Übermittlung, Offline/PWA, Bilder/Dateien, Audit sowie Anforderungen an G5/G6 festgelegt. |
+| 0.3 | 06.10.2026 | Hauptquelle konsolidiert; Detailquelle für personenbezogene Verarbeitungen/Löschlogik eingebunden; Fachhistorie und personenbezogene Aufbewahrung getrennt; Löschlogik als G4-Grundsatz geklärt, konkrete technische Retentionwerte nach G7 verschoben. |
+| 0.2 | 06.10.2026 | K2-Minimierung, Schutzklassenvererbung, Push/Newsletter-Abgrenzung, Rechtsanker und Provider-Mindestprüfung ergänzt. |
+| 0.1 | 06.10.2026 | G4 gestartet; Schutzklassen und erste Matrix festgelegt. |
