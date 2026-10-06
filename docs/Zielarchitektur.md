@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 0.5 | 06.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
+| 0.6 | 06.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
 
 ## 1. Zweck und Geltung
 
@@ -27,6 +27,7 @@ Verbindliche Grundlagen insbesondere:
 - `docs/decisions/ADR-004-Suche-und-RAG.md`
 - `docs/decisions/ADR-005-AI-Tasks-Scheduler-und-Queue.md`
 - `docs/decisions/ADR-006-Authentifizierung-und-Rechtearchitektur.md`
+- `docs/decisions/ADR-007-KI-Router-und-Providerintegration.md`
 
 ## 2. Architekturprinzipien
 
@@ -43,6 +44,7 @@ Verbindliche Grundlagen insbesondere:
 11. **Suche folgt der Fachstruktur:** explizite Beziehungen und strukturierte Filter haben Vorrang vor Volltext; Volltext hat Vorrang vor optionaler semantischer Suche.
 12. **Automatisierung ist persistent und wiederaufnehmbar:** fachlich wichtige AI Tasks werden als Runs/Jobs nachvollziehbar gespeichert und nicht an einen einzelnen kurzlebigen Prozess gebunden.
 13. **Autorisierung ist mehrstufig:** Fachservices prüfen die fachliche Berechtigung; RLS schützt zusätzlich die Datenbank.
+14. **KI-Routing erfolgt nach Bedarf statt Anbieterbindung:** Aufgabenklasse, Qualität, Schutzklasse, Kosten und Fallback bestimmen den zulässigen Betriebsweg.
 
 ## 3. Logische Gesamtarchitektur
 
@@ -215,25 +217,42 @@ Details: `docs/decisions/ADR-005-AI-Tasks-Scheduler-und-Queue.md`.
 
 ## 10. KI-Router
 
-Der FIB-KI-Router ist eine zentrale technische Komponente.
+Alle produktiven KI-Aufrufe aus Fachservices, FIB-Chat und AI Tasks laufen über einen zentralen FIB-KI-Router.
 
-Er berücksichtigt pro Auftrag mindestens:
+Die Fachfunktion fordert keinen konkreten Anbieter oder Modellnamen an, sondern beschreibt den fachlichen Bedarf. Der Router berücksichtigt mindestens:
 
 - FIB-Aufgabenklasse,
-- erforderliche Qualitäts-/Leistungsklasse,
-- Schutzklasse und Personenbezug,
-- erlaubte Provider/Modelle,
+- Qualitäts-/Leistungsklasse Q1 bis Q3,
+- Schutzklasse K0 bis K3,
+- Personenbezug und ggf. besondere Sensibilität,
+- erforderliche Modellfähigkeiten,
+- freigegebene Provider-/Modell-/Regionskombinationen,
 - Kosten-/Tokenrahmen,
-- Fallback-/Review-Regel,
-- Tool-/Recherchefreigabe.
+- zulässige Fallbacks,
+- notwendige Review-/Freigabestufe.
 
 Verbindlich:
 
-- keine festen Modellnamen in Fachfunktionen,
-- K3 niemals an KI,
-- K2 nur an ausdrücklich K2-freigegebene Betriebswege,
-- Providerwechsel über Konfiguration,
-- Nutzung und Kosten protokollierbar.
+- mindestens zwei Provider müssen technisch parallel konfigurierbar sein,
+- Fachfunktionen enthalten keine festen Modellnamen,
+- Qualität hat Vorrang vor dem niedrigsten Preis, wenn die Aufgabe dies erfordert,
+- günstigere Modelle werden bei nachgewiesen ausreichender Qualität bevorzugt,
+- K3 geht niemals an externe KI,
+- K2 nur an ausdrücklich dafür freigegebene Betriebswege,
+- Freigaben gelten für konkrete Betriebswege und nicht pauschal für einen Provider,
+- Fallbacks dürfen Schutz- oder Datenschutzanforderungen niemals abschwächen,
+- Provider-/Modellwechsel erfolgt über Konfiguration und erst nach Regressionstest,
+- Nutzung, Qualität und Kosten sind je Aufgabenklasse messbar.
+
+Beispielhafte Qualitätsklassen:
+
+- **Q1:** einfache Klassifikation, Extraktion, Formatierung und kostensensitive Massenaufgaben,
+- **Q2:** strukturierte Analyse, normale Recherche, Zusammenfassung und Zuordnung,
+- **Q3:** schwierige Quellenlagen, komplexe Synthesen, anspruchsvolle fachliche Abwägung und Qualitätsprüfung.
+
+Die Zuordnung konkreter Modelle zu Q1–Q3 wird im Pilotbetrieb anhand fester FIB-Referenzfälle kalibriert und bleibt austauschbar.
+
+Details: `docs/decisions/ADR-007-KI-Router-und-Providerintegration.md`.
 
 ## 11. Suche und RAG
 
@@ -404,15 +423,21 @@ Verbindlich:
 - Vektorsuche nur optional nach Qualitätsnachweis,
 - RAG priorisiert explizite Fachbeziehungen vor semantischer Ähnlichkeit,
 - Supabase Cron + durable Queue + Edge-Function Worker als MVP-Automatisierung,
-- lange AI-/Rechercheläufe werden resumierbar in Schritte zerlegt.
+- lange AI-/Rechercheläufe werden resumierbar in Schritte zerlegt,
+- zentraler KI-Router mit Aufgaben- und Qualitätsklassen,
+- mindestens zwei parallel konfigurierbare KI-Provider,
+- Providerfreigabe je konkretem Betriebsweg statt pauschal je Anbieter,
+- qualitätsgeprüfte Fallbacks ohne Absenkung von Schutz-/Datenschutzanforderungen,
+- Modell-/Providerwechsel über Konfiguration und Regressionstest.
 
 ## 19. Noch offene G5-Entscheidungen
 
 Vor Abschluss von G5 sind insbesondere noch zu entscheiden:
 
-1. konkrete Provider-/Routerintegration,
-2. konkrete CI/CD-Plattform und Upload-/Deploymentmethode,
-3. Detailstruktur des Repositories bzw. der Anwendungen/Packages.
+1. konkrete CI/CD-Plattform und Upload-/Deploymentmethode,
+2. Detailstruktur des Repositories bzw. der Anwendungen/Packages.
+
+Die konkrete Modellzuordnung je Aufgabenklasse, Providerfreigaben im laufenden Betrieb und Kostenkalibrierung sind keine offenen Architekturgrundsätze mehr; sie werden im Pilotbetrieb/G7 anhand aktueller Qualität, Verträge, Datenschutzbedingungen und Kosten gepflegt.
 
 Die konkrete RLS-/Rechtematrix ist keine offene G5-Grundsatzfrage mehr, sondern wird in G6 aus dem fachlichen Rollen-/Aktionsmodell und ADR-006 abgeleitet.
 
@@ -420,6 +445,7 @@ Die konkrete RLS-/Rechtematrix ist keine offene G5-Grundsatzfrage mehr, sondern 
 
 | Version | Datum | Änderung |
 |---|---|---|
+| 0.6 | 06.10.2026 | ADR-007 integriert; zentralen KI-Router mit Aufgaben-/Qualitätsklassen, Mehranbieterbetrieb, Betriebswegfreigaben, qualitätsgeprüften Fallbacks sowie zentraler Kosten-/Datenschutzsteuerung festgelegt. |
 | 0.5 | 06.10.2026 | ADR-006 integriert; Authentifizierung auf Redakteur/Admin begrenzt, keine Besucher-Konten, serverseitige Rollenverwaltung, Fachservices als primäre Autorisierungsinstanz, RLS als Defense in Depth, privilegierte Schlüssel nur serverseitig und MFA-fähige Architektur festgelegt. |
 | 0.4 | 06.10.2026 | ADR-005 integriert; Supabase Cron + durable Queue + Edge-Function Worker für AI Tasks festgelegt; lange Läufe als wiederaufnehmbare Schritte, Idempotenz und Retry-Grundsätze verankert; eigener Worker-Server im MVP ausgeschlossen. |
 | 0.3 | 06.10.2026 | ADR-004 integriert; öffentliche statische Suche, interne strukturierte/Volltextsuche und gestufte RAG-Kontextbeschaffung festgelegt; Vektorsuche als optionale Ergänzung nach Qualitätsnachweis statt MVP-Pflicht eingeordnet. |
