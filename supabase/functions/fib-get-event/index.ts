@@ -7,7 +7,7 @@ import {
   resolveHumanActor,
   type FibSqlExecutor,
   type VerifiedAuthClaims,
-} from '../../../packages/fachservices/src/index.ts';
+} from './shared.ts';
 
 function json(body: unknown, status = 200): Response {
   return Response.json(body, {
@@ -17,9 +17,9 @@ function json(body: unknown, status = 200): Response {
 }
 
 function claimsFromContext(ctx: {
-  jwtClaims?: Record<string, unknown> | null;
+  userClaims?: Record<string, unknown> | null;
 }): VerifiedAuthClaims | null {
-  const claims = ctx.jwtClaims;
+  const claims = ctx.userClaims;
   if (!claims || typeof claims.sub !== 'string') return null;
 
   const aal = claims.aal;
