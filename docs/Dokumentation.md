@@ -4,13 +4,13 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 2.7 | 06.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
+| 3.0 | 06.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
 
 ## 1. Zweck
 
 Dieses Dokument ist die verbindliche Dokumentationslandkarte für das Repository `PustefixReisen/fib-echtsystem`.
 
-Es legt fest, wo dauerhaft relevante fachliche, technische, organisatorische und betriebliche Sachverhalte verbindlich dokumentiert werden.
+Es legt fest, **wo dauerhaft relevante fachliche, technische, organisatorische und betriebliche Sachverhalte verbindlich dokumentiert werden** und welche Quelle bei Überschneidungen maßgeblich ist.
 
 ## 2. Zentrale Dokumentationsregel
 
@@ -20,7 +20,14 @@ Es gilt:
 
 Andere Dokumente dürfen zusammenfassen oder referenzieren, aber keine abweichende zweite Festlegung enthalten.
 
-Projektübergreifende Regeln bleiben im zentralen Repository `PustefixReisen/pustivo` verbindlich und werden hier nicht dupliziert.
+Projektübergreifende Regeln bleiben im zentralen Repository `PustefixReisen/pustivo` verbindlich und werden hier nicht dupliziert. Insbesondere gilt `pustivo/docs/governance/Dokumentenpflege.md`.
+
+Daraus folgt für FIB:
+
+- verbindliche Entscheidungen werden unmittelbar in der zuständigen Primärquelle dokumentiert,
+- zurückgestellte Funktionen/Ausbaustufen werden mit Wiederaufnahme-Kriterium in Roadmap oder GitHub-Issue gesichert,
+- potenziell dauerhaft relevante, aber noch nicht entschiedene Erkenntnisse werden aktiv auf Dokumentationsbedarf geprüft,
+- Chats sind Arbeitsraum und Lückenfinder, aber keine kanonische Projektquelle.
 
 ## 3. Zentrale Governance
 
@@ -30,28 +37,30 @@ Für FIB gelten insbesondere:
 - `pustivo/docs/governance/Dokumentationsstruktur.md`
 - `pustivo/docs/governance/Projektgruendung.md`
 - `pustivo/docs/governance/Projektmoderation.md`
+- die projektspezifischen Arbeitsregeln in `AGENTS.md`.
 
-## 4. Thematische Gliederung der FIB-Dokumentation
+## 4. Thematische Gliederung
 
-Die FIB-Dokumentation wird fachlich in sechs übergeordnete Bereiche gegliedert. Diese Gliederung dient Menschen und KI als gemeinsame Navigationsstruktur. Sie wird zunächst logisch in dieser Dokumentationslandkarte geführt und soll nach Abschluss der Gründungs- und Konsolidierungsarbeiten auch in der GitHub-Ordnerstruktur abgebildet werden.
+Die FIB-Dokumentation ist logisch in sechs Bereiche gegliedert. Diese Gliederung ist die Navigationsstruktur; sie muss nicht zwingend als physische Ordnerhierarchie umgesetzt werden.
 
 ### 4.1 Leitbild und Governance
 
 Leitfrage: **Warum gibt es FIB, welche Grundprinzipien gelten und wie wird das Projekt geführt?**
 
-Dazu gehören insbesondere:
+Primär- und Steuerungsquellen:
 
+- `README.md`
 - `docs/FIB_Management-Approach.md`
 - `docs/Leitprinzipien-FIB.md`
 - `docs/Projektgruendung.md`
 - `docs/Dokumentation.md`
 - `docs/Roadmap.md`
 - `docs/Fachkonzept.md`
-- `docs/G3-Gesamtaudit.md`
+- phasenbezogene Gesamtaudits `docs/G*-Gesamtaudit.md`.
 
 ### 4.2 Recherche, Wissen und Referenzrahmen
 
-Leitfrage: **Was soll die KI wissen, wo und wie soll sie recherchieren und nach welchen Maßstäben soll sie Informationen hinterfragen und einordnen?**
+Leitfrage: **Was soll FIB wissen, wo und wie wird recherchiert und nach welchen Maßstäben werden Informationen geprüft und eingeordnet?**
 
 Dazu gehören insbesondere:
 
@@ -59,9 +68,8 @@ Dazu gehören insbesondere:
 - `docs/Recherche-und-Quellenmonitor.md`
 - `docs/Beobachtungs-und-Recherchemodell.md`
 - `docs/Gruene-Werte-und-politische-Ziele.md`
-- künftige Konkretisierung des demokratisch-gesellschaftlichen Grundrahmens,
 - `docs/KI-Leitfaden.md`
-- `docs/KI-Qualitaet-und-Modellunabhaengigkeit.md`
+- `docs/KI-Qualitaet-und-Modellunabhaengigkeit.md`.
 
 ### 4.3 Fachliches Wissens- und Datenmodell
 
@@ -69,9 +77,9 @@ Leitfrage: **Welche fachlichen Objekte kennt FIB und wie hängen sie zusammen?**
 
 Konsolidierte Integrationsquelle:
 
-- `docs/Datenmodell.md`
+- `docs/Datenmodell.md`.
 
-Spezialisierte Primärquellen für Detailbereiche:
+Spezialisierte Primärquellen liefern Detailregeln, insbesondere:
 
 - `docs/Themen-und-Vorgangslogik.md`
 - `docs/Sitzungs-und-Beschlussmodell.md`
@@ -80,9 +88,9 @@ Spezialisierte Primärquellen für Detailbereiche:
 - `docs/Mehr-wissen-Modell.md`
 - `docs/Beobachtungs-und-Recherchemodell.md`
 - `docs/Fachliche-Plausibilitaets-und-Freigaberegeln.md`
-- `docs/Begriffe.md`
+- `docs/Begriffe.md`.
 
-Mit Abschluss von G3 gilt `docs/Datenmodell.md` v3.0 als konsolidierte Integrationsquelle. Die spezialisierten Teilmodelle liefern Detailregeln, ohne parallel abweichende Grundmodelle zu definieren.
+`docs/Datenmodell.md` v3.0 ist seit Abschluss von G3 die konsolidierte Integrationsquelle. Teilmodelle dürfen keine abweichenden Grundregeln definieren.
 
 ### 4.4 Redaktion und Veröffentlichung
 
@@ -94,189 +102,128 @@ Dazu gehören insbesondere:
 - `docs/MVP-Fachfunktionen.md`
 - `docs/KI-Zugangswege-und-Fachfunktionen.md`
 - `docs/Fachliche-Plausibilitaets-und-Freigaberegeln.md`
+- `docs/Rollen-Rechte-und-Workflow.md`
 - `docs/Sprachleitfaden.md`
 - `docs/Mehr-wissen.md`
-- `docs/Mehr-wissen-Modell.md`
+- `docs/Mehr-wissen-Modell.md`.
 
 ### 4.5 Nutzererlebnis und Kommunikation
 
-Leitfrage: **Wie erleben Besucherinnen und Besucher FIB und wie wird das Angebot sichtbar und verständlich?**
+Leitfrage: **Wie erleben Besucher FIB und wie wird das Angebot sichtbar und verständlich?**
 
 Dazu gehören insbesondere:
 
 - `docs/UX-und-Informationsarchitektur.md`
 - `docs/Visuelle-Identitaet-und-Bildkonzept.md`
 - `docs/Marketing-und-Kommunikation.md`
-- `docs/SEO-und-Auffindbarkeit.md`
+- `docs/SEO-und-Auffindbarkeit.md`.
 
 ### 4.6 Technik und Betrieb
 
-Leitfrage: **Wie wird FIB technisch umgesetzt und dauerhaft betrieben?**
+Leitfrage: **Wie wird FIB technisch umgesetzt, geschützt und dauerhaft betrieben?**
 
-Dazu gehören insbesondere:
+Verbindliche Hauptquellen:
 
-- `docs/Schutzbedarf-Datenschutz-und-Offline.md`,
-- künftige Architektur-Primärquelle,
-- Deployment / Betrieb,
-- Backup / Restore,
-- Administration,
-- `docs/KI-Betrieb-und-Kosten.md`
-- `docs/KI-Zugangswege-und-Fachfunktionen.md`
-- `docs/Migrationsstrategie.md`
-- Architekturentscheidungen unter `docs/decisions/`.
+- `docs/Zielarchitektur.md` – technische Zielarchitektur, Stack, Komponenten, Hosting-/Deploymentgrundsätze,
+- `docs/Schutzbedarf-Datenschutz-und-Offline.md` – Schutzklassen, Datenschutz- und Offlinegrundsätze,
+- `docs/Datenschutz-Verarbeitungen-und-Loeschlogik.md` – personenbezogene Verarbeitung und Löschlogik,
+- `docs/Rollen-Rechte-und-Workflow.md` – Rollen, Rechte, MFA, Aktionsstufen und Policy-Grenzen,
+- `docs/Betrieb-und-Wiederherstellung.md` – Backup, Restore, Monitoring, Retention, Störungen und Betriebsziele,
+- `docs/KI-Betrieb-und-Kosten.md` – KI-Kosten-, Qualitäts- und Routingbetrieb,
+- `docs/Migrationsstrategie.md` – Übergang Entwickler-/Pilotbetrieb → GRÜNEN-Infrastruktur,
+- `docs/decisions/` – dauerhafte Architekturentscheidungen (ADR).
 
-### 4.7 Künftige Ordnerstruktur
-
-Nach der fachlichen Konsolidierung soll die logische Gliederung grundsätzlich auch physisch abgebildet werden, voraussichtlich in der Form:
-
-```text
-docs/
-├── 01-governance/
-├── 02-recherche-wissen-referenzrahmen/
-├── 03-fachmodell/
-├── 04-redaktion-veroeffentlichung/
-├── 05-ux-kommunikation/
-├── 06-technik-betrieb/
-└── decisions/
-```
-
-Die Umstellung erfolgt bewusst erst dann, wenn dadurch keine laufende Gründungsarbeit unnötig durch Link- und Pfadänderungen gestört wird.
-
-## 5. Verbindliche Quellen im Projekt
+## 5. Verbindliche Quellen und Status
 
 | Themenbereich | Verbindliche Quelle | Status |
 |---|---|---|
 | Projektüberblick / Einstieg | `README.md` | vorhanden |
-| Dokumentationslandkarte | `docs/Dokumentation.md` | vorhanden |
-| Projektgründung / Gründungsentscheidungen | `docs/Projektgruendung.md` | in Arbeit |
-| Roadmap / nächster Schritt | `docs/Roadmap.md` | vorhanden |
-| G2.5 Transfer-Audit | `docs/Transfer-Audit-Demonstrator-Echtsystem.md` | abgeschlossen |
-| G3 Gesamtaudit | `docs/G3-Gesamtaudit.md` | abgeschlossen |
-| Regressionstestkorpus | `docs/Regressionstests-Demonstratortransfer.md` | vorhanden / wird technisch weiter konkretisiert |
+| Dokumentationslandkarte | `docs/Dokumentation.md` | aktuell – G8 konsolidiert |
+| Projektgründung / Gründungsentscheidungen | `docs/Projektgruendung.md` | laufende Integrationsquelle bis Gründungsaudit |
+| Roadmap / nächster Schritt | `docs/Roadmap.md` | aktuell |
+| Demonstrator-Transfer | `docs/Transfer-Audit-Demonstrator-Echtsystem.md` | abgeschlossen – G2.5 |
+| Regressionstestkorpus | `docs/Regressionstests-Demonstratortransfer.md` | vorhanden; technische Umsetzung folgt |
 | Fachkonzept | `docs/Fachkonzept.md` | vorhanden |
-| Begriffe / fachliches Glossar | `docs/Begriffe.md` | vorhanden / G3-konsolidiert |
-| Management Approach | `docs/FIB_Management-Approach.md` | vorhanden |
-| Leitprinzipien | `docs/Leitprinzipien-FIB.md` | vorhanden |
-| Recherchearchitektur / Referenzrahmen | `docs/Recherchearchitektur-und-Referenzrahmen.md` | vorhanden |
-| Beobachtungsauftrag / Recherchelauf | `docs/Beobachtungs-und-Recherchemodell.md` | vorhanden |
-| KI-Arbeitsregeln | `docs/KI-Leitfaden.md` | vorhanden |
-| KI-Qualität / Modellunabhängigkeit | `docs/KI-Qualitaet-und-Modellunabhaengigkeit.md` | vorhanden |
-| Grüne Werte / politische Ziele | `docs/Gruene-Werte-und-politische-Ziele.md` | vorhanden |
-| Sprachregeln | `docs/Sprachleitfaden.md` | vorhanden |
-| Themen- und Vorgangslogik | `docs/Themen-und-Vorgangslogik.md` | vorhanden |
-| Recherche / Quellenmonitor | `docs/Recherche-und-Quellenmonitor.md` | vorhanden |
-| „Mehr wissen?“ – redaktionelles Konzept | `docs/Mehr-wissen.md` | vorhanden |
-| „Mehr wissen?“ – fachliches Datenmodell | `docs/Mehr-wissen-Modell.md` | vorhanden |
-| MVP-Fachfunktionen | `docs/MVP-Fachfunktionen.md` | vorhanden / konsolidiert |
-| KI-Zugangswege / Rollen / Fachfunktionsarchitektur | `docs/KI-Zugangswege-und-Fachfunktionen.md` | vorhanden |
-| Plausibilitäts- und Freigaberegeln | `docs/Fachliche-Plausibilitaets-und-Freigaberegeln.md` | vorhanden |
-| UX / Informationsarchitektur / Benutzerführung | `docs/UX-und-Informationsarchitektur.md` | vorhanden |
-| Visuelle Identität / Logo / Bildsprache / UI-Stil | `docs/Visuelle-Identitaet-und-Bildkonzept.md` | vorhanden |
-| Marketing / Kommunikation | `docs/Marketing-und-Kommunikation.md` | vorhanden |
-| SEO / Auffindbarkeit | `docs/SEO-und-Auffindbarkeit.md` | vorhanden |
-| KI-Betrieb / Kosten | `docs/KI-Betrieb-und-Kosten.md` | vorhanden |
-| Schutzbedarf / Datenschutz / Offline | `docs/Schutzbedarf-Datenschutz-und-Offline.md` | in Arbeit – G4 |
-| Migrationsstrategie Entwickler → GRÜNEN-Infrastruktur | `docs/Migrationsstrategie.md` | vorhanden |
-| Übernahme Demonstrator-Dokumentation | `docs/Dokumentationsuebernahme-Demonstrator.md` | abgeschlossen / unter G2.5 erneut verifiziert |
-| Architektur | noch anzulegen | offen – G5 |
+| Begriffe / Glossar | `docs/Begriffe.md` | G3-konsolidiert |
 | Datenmodell | `docs/Datenmodell.md` | abgeschlossen – G3 v3.0 |
-| Sitzungs- und Beschlussmodell | `docs/Sitzungs-und-Beschlussmodell.md` | vorhanden / konsolidiert |
-| Wirkungsmodell | `docs/Wirkungsmodell.md` | vorhanden / konsolidiert |
-| Persistenz- und Lebenszyklusmodell | `docs/Persistenz-und-Lebenszyklusmodell.md` | vorhanden / konsolidiert |
-| Deployment / Betrieb | noch anzulegen | offen – spätere Phase |
-| Backup / Restore | noch anzulegen | offen – spätere Phase |
-| Administration | noch anzulegen | offen – spätere Phase |
-| Architekturentscheidungen | `docs/decisions/` | bei Bedarf |
-| Arbeitsregeln für KI-/Entwicklungsarbeit | `AGENTS.md` | vorhanden |
+| G3 Abschluss | `docs/G3-Gesamtaudit.md` | abgeschlossen |
+| Schutzbedarf / Datenschutz / Offline | `docs/Schutzbedarf-Datenschutz-und-Offline.md` | abgeschlossen – G4 |
+| Datenschutz / Löschlogik | `docs/Datenschutz-Verarbeitungen-und-Loeschlogik.md` | abgeschlossen – G4 |
+| Zielarchitektur | `docs/Zielarchitektur.md` | abgeschlossen – G5 v1.0 |
+| G5 Abschluss | `docs/G5-Gesamtaudit.md` | abgeschlossen |
+| Rollen / Rechte / Workflow | `docs/Rollen-Rechte-und-Workflow.md` | abgeschlossen – G6 v1.0 |
+| G6 Abschluss | `docs/G6-Gesamtaudit.md` | abgeschlossen |
+| Betrieb / Backup / Restore / Monitoring | `docs/Betrieb-und-Wiederherstellung.md` | abgeschlossen – G7 |
+| Backup-Pilotentscheidung | `docs/decisions/ADR-010-Backup-Pilotbetrieb.md` | beschlossen |
+| G7 Abschluss | `docs/G7-Gesamtaudit.md` | abgeschlossen |
+| KI-Betrieb / Kosten | `docs/KI-Betrieb-und-Kosten.md` | vorhanden; Pilotwerte später kalibrieren |
+| Migrationsstrategie | `docs/Migrationsstrategie.md` | vorhanden; G9 konkretisiert Runbook |
+| Architekturentscheidungen | `docs/decisions/` | ADR-001 ff., fortlaufend |
+| Arbeitsregeln KI-/Entwicklungsarbeit | `AGENTS.md` | vorhanden; zentrale Governance gilt ergänzend |
 
-## 6. Abgrenzung UX und visuelle Identität
+Weitere fachliche und UX-Primärquellen aus den Bereichen 4.2–4.5 bleiben verbindlich und werden nicht durch diese Statusübersicht ersetzt.
 
-`docs/UX-und-Informationsarchitektur.md` ist die Primärquelle für:
+## 6. Abgrenzung wichtiger Integrationsquellen
 
-- Informationsarchitektur,
-- Navigation und Funktionslogik,
-- Seitenstruktur,
-- responsive und barrierearme Bedienung.
+### 6.1 Datenmodell und Teilmodelle
 
-`docs/Visuelle-Identitaet-und-Bildkonzept.md` ist die Primärquelle für:
+`docs/Datenmodell.md` beschreibt das konsolidierte fachliche/logische Gesamtmodell. Spezialisierte Teilmodelle erläutern Detailregeln und dürfen das Gesamtmodell nicht parallel neu definieren.
 
-- visuelle Grundhaltung,
-- Logo und Bildmarke,
-- Banner,
-- Farbrollen,
-- Bildsprache,
-- PWA-Icon,
-- Icon-Stil,
-- konkrete gestalterische Anwendung der UX-Struktur.
+### 6.2 UX und visuelle Identität
+
+`docs/UX-und-Informationsarchitektur.md` ist Primärquelle für Informationsarchitektur, Navigation, Seiten-/Funktionslogik, responsive Bedienung und Barrierefreiheit.
+
+`docs/Visuelle-Identitaet-und-Bildkonzept.md` ist Primärquelle für visuelle Grundhaltung, Logo/Bildmarke, Farbrollen, Bildsprache, Banner, Icons und konkrete gestalterische Anwendung.
 
 Visuelle Mockups dürfen die fachliche UX-Struktur nicht eigenständig verändern.
 
-## 7. Dokumentationshoheit gegenüber dem Demonstrator
+### 6.3 Zielarchitektur und ADRs
 
-> **Der Demonstrator ist historische, fachliche und visuelle Referenz. Die weitere fachliche, redaktionelle, UX-bezogene und technische Entwicklung von FIB wird ausschließlich im Repository `PustefixReisen/fib-echtsystem` dokumentiert.**
+`docs/Zielarchitektur.md` ist die konsolidierte Integrationsquelle für G5. ADRs dokumentieren einzelne dauerhafte Architekturentscheidungen einschließlich Alternativen und Folgen. Bei Widersprüchen muss die Integrationsquelle nachgezogen werden; ein ADR bleibt historischer Entscheidungsnachweis.
+
+### 6.4 Betrieb
+
+`docs/Betrieb-und-Wiederherstellung.md` integriert die G7-Betriebsregeln. Spezialisierte Quellen wie `docs/KI-Betrieb-und-Kosten.md` bleiben für ihren Detailbereich maßgeblich.
+
+## 7. Dokumentationshoheit gegenüber Demonstrator, Chats und Kopien
+
+> **Der Demonstrator ist historische, fachliche und visuelle Referenz. Die laufende Entwicklung von FIB wird ausschließlich im Repository `PustefixReisen/fib-echtsystem` dokumentiert.**
 
 Daraus folgt:
 
 - Demonstrator-Dokumente werden nicht mehr als laufende Primärdokumentation fortgeschrieben.
-- Relevante Inhalte werden im Echtsystem übernommen, bereinigt und aktualisiert.
-- Nach der Übernahme bleibt die Demonstrator-Fassung historischer Stand.
 - Widersprüche werden zugunsten der kanonischen Echtsystem-Dokumentation aufgelöst.
-- Bibliotheks-, ODT-, Export- oder sonstige Kopien sind keine gleichwertige Primärquelle. Ein neueres Dateidatum allein begründet keine Dokumentationshoheit.
-- Frühere FIB-Chats dienen im G2.5-Audit als **Lückenfinder**, nicht als kanonische Wahrheit. Wiedergewonnene Erkenntnisse werden erst nach fachlicher Prüfung in eine kanonische Echtsystem-Quelle oder einen Regressionstest überführt.
+- Bibliotheks-, ODT-, Export- oder sonstige Kopien sind keine gleichwertige Primärquelle.
+- Ein neueres Dateidatum allein begründet keine Dokumentationshoheit.
+- Frühere und laufende Chats können Erkenntnisse liefern, sind aber keine kanonische Wahrheit.
+- Dauerhaft relevante Chat-Ergebnisse werden erst durch Übernahme in eine zuständige Primärquelle oder ein Issue verbindlich bzw. nachverfolgbar.
 
-Die detaillierte Zuordnung der ursprünglichen Dokumentationsübernahme steht in `docs/Dokumentationsuebernahme-Demonstrator.md`. Die abschließende Transferprüfung steht in `docs/Transfer-Audit-Demonstrator-Echtsystem.md`.
+## 8. Issues für bewusst vertagte Punkte
 
-## 8. Stand der Übernahme
+Bewusst vertagte oder optionale Entwicklungen werden nicht als unspezifisches „später“ geführt. Sie erhalten ein nachvollziehbares Wiederaufnahme-Kriterium.
 
-Die Dokumentationsübernahme ist nach erneuter G2.5-Prüfung **abgeschlossen**.
+Aktuell insbesondere:
 
-Der erneute Transfer-Audit wurde notwendig, weil sich gezeigt hatte, dass:
+- Issue #1 – Referenzwissen: Ausbaustufe 2 nach MVP/Pilot prüfen,
+- Issue #2 – MCP-Anbindung externer KI-Systeme nach MVP prüfen,
+- Issue #3 – Restore-Test vor Produktivstart durchführen.
 
-- einzelne Demonstrator-Regeln zwar dokumentiert waren, im Echtsystem aber nicht an der operativ zuständigen Stelle standen,
-- eine Bibliotheks-/ODT-Fassung gegenüber dem kanonischen GitHub-Stand inhaltlich zurücklag,
-- weitere Detailerkenntnisse nur in Betriebs-/Fehlerfällen oder früheren Chats auffindbar waren,
-- ältere Begriffe nach späteren G3-Entscheidungen noch in einzelnen Echtsystem-Dokumenten fortwirkten.
+Neue vertagte Punkte werden nach demselben Muster erfasst, wenn sie später relevant werden können.
 
-Diese fachlichen Transferlücken wurden unter G2.5 geschlossen. Ins Echtsystem überführt bzw. nachgepflegt sind insbesondere:
+## 9. Physische Dokumentationsstruktur
 
-- Management Approach,
-- Fachkonzept,
-- KI-Leitfaden,
-- KI-Qualität und Modellunabhängigkeit,
-- Quellenmonitor und Recherchelogik,
-- Mehr-wissen-Konzept,
-- Frontend-/Darstellungsregeln in der UX-Primärquelle,
-- Marketing und Kommunikation,
-- SEO und Auffindbarkeit,
-- KI-Betrieb und Kosten,
-- grüne Werte und politische Ziele,
-- wissenschaftlich-politische und bürgernahe Sprachregeln,
-- erweiterter Suchraum, Rückblickslogik und 30-%-Warnschwelle,
-- Persistenzschutz,
-- Quellenpflicht bei „Mehr wissen?“,
-- aktuelle Bedeutung-für-das-Thema-Logik.
+Die logische Sechs-Bereiche-Struktur reicht derzeit als Navigationsmodell aus. Eine physische Umordnung aller Dokumente in nummerierte Unterordner wird **nicht allein aus Ordnungsgesichtspunkten durchgeführt**, da sie zahlreiche Pfad-/Linkänderungen erzeugen würde, ohne den fachlichen Stand zu verbessern.
 
-Die aus dem Audit verbliebenen technischen Folgeaufträge sind regulär in die späteren Gründungspakete übergeben und keine offenen Transferlücken mehr.
+Eine physische Neuordnung wird nur wieder aufgenommen, wenn mindestens eines der folgenden Kriterien eintritt:
 
-Das visuelle Identitäts- und Bildkonzept ist eine **neue G2-Primärquelle des Echtsystems** und keine übernommene Demonstrator-Dokumentation.
+- die Dokumentationslandkarte reicht für zuverlässige Navigation nicht mehr aus,
+- die Zahl der Dokumente führt regelmäßig zu Fehlablagen oder falschen Primärquellen,
+- technische Dokumentationswerkzeuge profitieren nachweislich von einer Ordnerstruktur,
+- ein größerer ohnehin notwendiger Dokumentationsumbau macht die Umstellung mit geringem Zusatzaufwand möglich.
 
-Das Begriffsregister `docs/Begriffe.md` ist eine **neue G3-Primärquelle** für die einheitliche Bedeutung und Abgrenzung zentraler FIB-Begriffe. Es wird grundsätzlich über das Stand-Datum fortgeschrieben; eine neue Versionsnummer ist nur bei strukturellen oder konzeptionellen Änderungen erforderlich.
+Bis dahin bleibt die bestehende Pfadstruktur stabil.
 
-## 9. G3-Abschluss
-
-G3 ist mit `docs/G3-Gesamtaudit.md` v1.2 abgeschlossen.
-
-Das zentrale `docs/Datenmodell.md` wurde auf v3.0 als konsolidierte Integrationsquelle fortgeschrieben. Die während G3 entstandenen spezialisierten Teilmodelle bleiben Primärquellen für ihre Detailregeln.
-
-Es bestehen keine bekannten offenen fachlichen G3-Grundsatzfragen. G4 Schutzbedarf / Datenschutz / Offline ist gestartet.
-
-## 10. G4-Start
-
-G4 wird in `docs/Schutzbedarf-Datenschutz-und-Offline.md` geführt.
-
-Die erste verbindliche Fassung legt eine vierstufige Schutzklassifikation K0–K3, eine Schutzbedarfsmatrix sowie Grundregeln für personenbezogene Daten, KI-Übermittlung, Offline/PWA, Bilder/Dateien und Audit fest. Die weitere G4-Konsolidierung konzentriert sich auf die tatsächlich benötigten K2-Daten, Provider-/KI-Zulässigkeit, rechtliche Pflichten, Aufbewahrung/Löschung und Push/Newsletter.
-
-## 11. Pflegepflicht
+## 10. Pflegepflicht
 
 Bei jeder verbindlichen fachlichen, technischen, architektonischen, Sicherheits-, Datenmodell-, Prozess- oder Designentscheidung wird geprüft:
 
@@ -286,16 +233,18 @@ Bei jeder verbindlichen fachlichen, technischen, architektonischen, Sicherheits-
 4. ob Roadmap und Issues angepasst werden müssen,
 5. ob Dokumentstand und Änderungshistorie fortzuschreiben sind.
 
+Zusätzlich gilt die zentrale weit gefasste Dokumentationsprüfung aus `pustivo/docs/governance/Dokumentenpflege.md`.
+
 Bei vorhandenem GitHub-Zugriff erfolgt die Dokumentationspflege unmittelbar im Projekt.
 
-## 12. Dokumentationsstruktur
+## 11. Dokumentationsstruktur einzelner Dateien
 
 Für dauerhaft gepflegte Dokumente gilt grundsätzlich:
 
-1. Titel
-2. Dokumentstand
-3. Inhalt
-4. Änderungshistorie als letzter inhaltlicher Abschnitt
+1. Titel,
+2. Dokumentstand,
+3. Inhalt,
+4. Änderungshistorie als letzter inhaltlicher Abschnitt.
 
 Für laufend ergänzte Register oder Glossare kann statt einer fortlaufenden Versionsnummer primär ein Stand-Datum verwendet werden. Eine neue Versionsnummer ist dort nur bei strukturellen oder konzeptionellen Änderungen erforderlich.
 
@@ -303,21 +252,16 @@ Für laufend ergänzte Register oder Glossare kann statt einer fortlaufenden Ver
 
 | Version | Datum | Änderung |
 |---|---|---|
+| 3.0 | 06.10.2026 | G8-Konsolidierung: Dokumentationslandkarte auf Stand G4–G7 gebracht, Zielarchitektur/Rollen/Betrieb/ADRs als Primärquellen ergänzt, vertagte Punkte über Issues verankert und physische Ordnerumstellung nur noch bei konkretem Nutzen vorgesehen. |
 | 2.7 | 06.10.2026 | G4-Primärquelle `Schutzbedarf-Datenschutz-und-Offline.md` aufgenommen; G4-Start und Schutzklassifikation K0–K3 in der Dokumentationslandkarte verankert. |
 | 2.6 | 05.10.2026 | G3-Abschluss synchronisiert: Datenmodell v3.0 als konsolidierte Integrationsquelle, G3-Gesamtaudit als abgeschlossen und G4 Schutzbedarf/Datenschutz/Offline als nächsten Gründungsschritt ausgewiesen. |
-| 2.5 | 05.10.2026 | G3-Konsolidierung in der Dokumentationslandkarte nachgezogen: Beobachtungs-/Recherchemodell, Mehr-wissen-Modell, MVP-Fachfunktionen, KI-Zugangswege/Fachfunktionen, Plausibilitäts-/Freigaberegeln und G3-Gesamtaudit als kanonische Quellen aufgenommen; Status älterer G3-Teilmodelle konsolidiert und technische Folgephasen abgegrenzt. |
-| 2.4 | 05.10.2026 | Dokumentation in sechs übergeordnete Themenbereiche gegliedert; spätere Abbildung dieser Gliederung in der GitHub-Ordnerstruktur nach fachlicher Konsolidierung festgelegt; neue G3-Primärquellen in die Landkarte aufgenommen. |
-| 2.3 | 03.10.2026 | G2.5 nach bestandenem Transfer-Gate als abgeschlossen markiert; Dokumentationsübernahme erneut als abgeschlossen bestätigt; fachliche Nachpflege und Übergabe technischer Folgeaufträge dokumentiert. |
-| 2.2 | 03.10.2026 | G2.5-Transfer-Audit in Dokumentationslandkarte aufgenommen; ursprünglichen Abschlussstatus der Demonstrator-Übernahme zurückgenommen; GitHub-Dokumentationshoheit gegenüber ODT/Exportkopien präzisiert; frühere Chats als Lückenfinder geregelt; Regressionstestkorpus als Projektquelle aufgenommen. |
-| 2.1 | 02.10.2026 | `docs/Begriffe.md` als verbindliches Begriffsregister aufgenommen; Stand-Datum statt fortlaufender Versionsnummer für laufend ergänzte Register/Glossare zugelassen. |
-| 2.0 | 01.10.2026 | `docs/Datenmodell.md` als G3-Primärquelle für fachliche Datenanforderungen und logisches Datenmodell aufgenommen. |
-| 1.9 | 01.10.2026 | `docs/Migrationsstrategie.md` als Primärquelle für den späteren Übergang von Entwickler- auf GRÜNEN-Infrastruktur aufgenommen; G2-Dokumentstatus auf vorhanden konsolidiert. |
-| 1.8 | 01.10.2026 | `docs/Visuelle-Identitaet-und-Bildkonzept.md` als eigene Primärquelle aufgenommen; Abgrenzung zu UX dokumentiert. |
-| 1.7 | 30.09.2026 | Dokumentationsübernahme nach Querverweis-, Terminologie- und Konsistenzprüfung als abgeschlossen markiert; visuelles Konzept als neue G2-Entscheidung abgegrenzt. |
-| 1.6 | 30.09.2026 | Frontendregeln in UX v2.5 integriert; Werte- und Sprachgrundlagen ins Echtsystem übernommen. |
-| 1.5 | 30.09.2026 | Recherche, Mehr wissen, KI-Qualität, Marketing, SEO und KI-Betrieb übernommen; Übernahmematrix aufgenommen. |
-| 1.4 | 30.09.2026 | Fachkonzept und KI-Leitfaden als kanonische Primärquellen aufgenommen. |
-| 1.3 | 30.09.2026 | Management Approach als kanonische Echtsystem-Fassung aufgenommen. |
-| 1.2 | 30.09.2026 | Dokumentationshoheit des Echtsystems festgelegt; Demonstrator als eingefrorene Referenz definiert. |
-| 1.1 | 29.09.2026 | UX- und Informationsarchitektur als verbindliche Primärquelle aufgenommen. |
-| 1.0 | 29.09.2026 | Initiale Dokumentationslandkarte angelegt. |
+| 2.5 | 05.10.2026 | G3-Konsolidierung in der Dokumentationslandkarte nachgezogen. |
+| 2.4 | 05.10.2026 | Dokumentation in sechs übergeordnete Themenbereiche gegliedert; spätere physische Abbildung zunächst vorgesehen. |
+| 2.3 | 03.10.2026 | G2.5 nach bestandenem Transfer-Gate als abgeschlossen markiert. |
+| 2.2 | 03.10.2026 | G2.5-Transfer-Audit aufgenommen; GitHub-Dokumentationshoheit präzisiert; Chats als Lückenfinder geregelt. |
+| 2.1 | 02.10.2026 | `docs/Begriffe.md` als verbindliches Begriffsregister aufgenommen. |
+| 2.0 | 01.10.2026 | `docs/Datenmodell.md` als G3-Primärquelle aufgenommen. |
+| 1.9 | 01.10.2026 | `docs/Migrationsstrategie.md` aufgenommen. |
+| 1.8 | 01.10.2026 | `docs/Visuelle-Identitaet-und-Bildkonzept.md` aufgenommen. |
+| 1.7 | 30.09.2026 | Dokumentationsübernahme konsolidiert. |
+| 1.0–1.6 | 29.–30.09.2026 | Initiale Dokumentationslandkarte und schrittweise Übernahme der Demonstrator-/Projektquellen. |
