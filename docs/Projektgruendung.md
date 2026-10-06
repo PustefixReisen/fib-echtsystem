@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 1.4 | 03.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
+| 1.5 | 06.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
 
 ## 1. Zweck
 
@@ -46,7 +46,7 @@ UX- und Fachentscheidungen werden darauf geprüft, welche Anforderungen daraus f
 
 - separates Echtsystem-Repository,
 - persistente PostgreSQL-Datenhaltung statt Demonstrator-JSON,
-- Supabase als bevorzugte Backend-/Datenbank-Basis; konkrete Produktivarchitektur wird in G5 festgelegt,
+- Supabase als Backend-/Datenbank-Basis gemäß `docs/Zielarchitektur.md`,
 - Redaktions-Web-App mit Freigabeprozess,
 - öffentliche Website ohne notwendiges Benutzerkonto,
 - PWA,
@@ -266,37 +266,22 @@ Geprüft wurden:
 
 Gefundene fachliche Lücken wurden in die zuständigen Echtsystem-Primärquellen übernommen. Wesentliche Referenzfälle sind in `docs/Regressionstests-Demonstratortransfer.md` dokumentiert.
 
-Verbleibende Folgeaufträge sind regulär den späteren Phasen zugeordnet:
-
-- G3: konkrete Persistenz-/Rücknahme-/Archivierungslogik,
-- G5: Cache-/Versionierungs-/Invalidierungsstrategie,
-- G3–G10: technische Automatisierung der Transfer-Regressionstests.
+Die daraus entstandenen fachlichen Folgeaufträge sind in G3–G10 übernommen und dort abgeschlossen bzw. als Umsetzungs-/Go-live-Aufgaben weitergeführt.
 
 ## 7. Weitere Gründungspakete
 
-### G3 – Fachliche Datenanforderungen und logisches Datenmodell
-**In Arbeit.** Entitäten, Beziehungen, Status, Historisierung, Quellen, Bezugsobjekte, Medien, Suche, Mehr-wissen-Daten und Migration. Nächster Transfer-Folgeauftrag ist die konkrete Persistenz-/Rücknahme-/Archivierungslogik; Referenzfall bleibt der Ausbau Autobahnkreuz München Ost.
+G3 bis G10 sind abgeschlossen. Die verbindlichen Detailentscheidungen stehen ausschließlich in den jeweiligen Primär- und Abschlussdokumenten; dieses Projektgründungsdokument führt nur den konsolidierten Status.
 
-### G4 – Schutzbedarf, Datenschutz und Offline-Modell
-Datenarten, Sensitivität, Authentifizierung, Logging, Verschlüsselung, lokale Speicherung und Offline-Fähigkeit.
+- **G3 – Datenanforderungen / Datenmodell:** abgeschlossen; `docs/Datenmodell.md` v3.0 und `docs/G3-Gesamtaudit.md`.
+- **G4 – Schutzbedarf / Datenschutz / Offline:** abgeschlossen; `docs/Schutzbedarf-Datenschutz-und-Offline.md` v1.0.
+- **G5 – Zielarchitektur / Stack / Hosting / Deployment:** abgeschlossen; `docs/Zielarchitektur.md` v1.0 und `docs/G5-Gesamtaudit.md`.
+- **G6 – Rollen / Rechte / Workflow:** abgeschlossen; `docs/Rollen-Rechte-und-Workflow.md` v1.0 und `docs/G6-Gesamtaudit.md`.
+- **G7 – Betrieb:** abgeschlossen; `docs/Betrieb-und-Wiederherstellung.md` und `docs/G7-Gesamtaudit.md`.
+- **G8 – Governance / Repository / Dokumentation:** abgeschlossen; `docs/Dokumentation.md` v3.0 und `docs/G8-Governance-und-Dokumentationsaudit.md`.
+- **G9 – Migration:** abgeschlossen; `docs/Migrationsstrategie.md` v1.1, `docs/Migrations-Runbook.md` v1.0 und `docs/G9-Gesamtaudit.md`.
+- **G10 – Go-live-Abnahme:** abgeschlossen; `docs/Go-live-Abnahmekriterien.md` v1.0 und `docs/G10-Gesamtaudit.md`.
 
-### G5 – Zielarchitektur und Technologie-Stack
-Frontend-/Backend-Aufteilung, Framework, Programmiersprache, Supabase-Rolle, KI-Anbindung, Hosting, Routing, Deployment und Cache-/Invalidierungsstrategie.
-
-### G6 – Rollen, Rechte und Freigabeworkflow
-Rollenmodell, Statusmodell, Freigaben, Veröffentlichung und technische Administration.
-
-### G7 – Betrieb
-Entwicklungs-, Test- und Produktivumgebung, Backup, Restore, Monitoring, Kostenkontrolle und Updateverfahren.
-
-### G8 – Governance, Repository und Dokumentation
-Zentrale Standards, Dokumentationsstruktur, Audit und Issues.
-
-### G9 – Migration
-Datenqualitätscheck, Transformation, Validierung und Übernahme der Demonstratordaten.
-
-### G10 – Go-live-Abnahme
-Fachliche Parität, Transfer-Regressionstests, UX-/Funktionsabnahme, Sicherheitsprüfung, Restore-Test, Rollenprüfung, PWA/SEO, Migration und Redaktions-Probelauf.
+Der nächste Schritt ist der übergreifende **Gründungsaudit**. Erst nach dessen Bestehen beginnt die technische Umsetzung U1–U6.
 
 ## 8. Dokumentationsübernahme Demonstrator → Echtsystem
 
@@ -316,23 +301,23 @@ Das Repository liegt während der Entwicklung zunächst im persönlichen GitHub-
 
 Vor Produktivbetrieb wird die technische Eigentümerschaft so organisiert, dass keine persönliche Einzelperson einen Single Point of Failure bildet.
 
-Das öffentliche Echtsystem soll auf Infrastruktur der GRÜNEN betrieben werden, soweit dies technisch sinnvoll und mit der Zielarchitektur vereinbar ist. Die Rahmenbedingungen werden in G5 verbindlich festgelegt.
+Das öffentliche Echtsystem soll gemäß Zielarchitektur und Migrationsstrategie auf organisationskontrollierter GRÜNEN-Infrastruktur betrieben werden.
 
-## 10. Reihenfolge
+## 10. Reihenfolge und Status
 
 1. G1 Produktumfang und MVP – **abgeschlossen**
 2. G2 UX / Informationsarchitektur / Fachfunktionen – **abgeschlossen**
 3. G2.5 Transfer-Audit Demonstrator → Echtsystem – **abgeschlossen**
-4. G3 Datenanforderungen / Datenmodell – **in Arbeit**
-5. G4 Schutzbedarf / Datenschutz / Offline
-6. G5 Zielarchitektur / Stack / Hosting / Deployment
-7. G6 Rollen / Rechte / Workflow
-8. G7 Betrieb
-9. G8 Governance / Repository / Dokumentation
-10. G9 Migration
-11. G10 Go-live-Abnahme
-12. Gründungsaudit
-13. technische Umsetzung
+4. G3 Datenanforderungen / Datenmodell – **abgeschlossen**
+5. G4 Schutzbedarf / Datenschutz / Offline – **abgeschlossen**
+6. G5 Zielarchitektur / Stack / Hosting / Deployment – **abgeschlossen**
+7. G6 Rollen / Rechte / Workflow – **abgeschlossen**
+8. G7 Betrieb – **abgeschlossen**
+9. G8 Governance / Repository / Dokumentation – **abgeschlossen**
+10. G9 Migration – **abgeschlossen**
+11. G10 Go-live-Abnahme – **abgeschlossen**
+12. Gründungsaudit – **in Arbeit**
+13. technische Umsetzung U1–U6 – **noch nicht begonnen**
 
 ## 11. Abschlusskriterium
 
@@ -342,6 +327,7 @@ Die Projektgründungsphase ist abgeschlossen, wenn die wesentlichen Grundentsche
 
 | Version | Datum | Änderung |
 |---|---|---|
+| 1.5 | 06.10.2026 | G3–G10 auf abgeschlossenen Stand konsolidiert; veraltete Phasenstände entfernt; Gründungsaudit als aktiven nächsten Schritt gesetzt. |
 | 1.4 | 03.10.2026 | Projektgründung nach G2-/G2.5-Abschluss konsolidiert: aktuelle Navigation, Ereignis-/Meldungslogik, Bedeutung-für-das-Thema-Modell, Transfer-Audit, Regressionstestkorpus und aktiven G3-Stand übernommen; alte Wirkungsrollen- und G2-Offenstände entfernt. |
 | 1.3 | 30.09.2026 | Dokumentationshoheit des Echtsystems und aktuelle Meldungs-/Vorgangs-/Themenlogik übernommen; alte Presseschau-Terminologie im MVP entfernt; G2-Stand und Dokumentationsübernahme aktualisiert. |
 | 1.2 | 29.09.2026 | G1 abgeschlossen: MVP-/Ausbaustufen-Abgrenzung, Nicht-Ziele und Aufwandstreiber festgelegt. |
