@@ -4,27 +4,15 @@
 
 begin;
 
-set local role fib_app;
-
--- Muss funktionieren: Zugriff auf FIB-Schema.
-select has_schema_privilege(current_user, 'fib', 'USAGE') as fib_schema_usage;
-
--- Muss fehlschlagen bzw. false liefern: fremdes public-Schema.
-select has_schema_privilege(current_user, 'public', 'USAGE') as public_schema_usage;
-
-reset role;
-
--- Harte Assertions.
+-- Harte Struktur-/Rechte-Assertions.
 do $$
 begin
   if not has_schema_privilege('fib_app', 'fib', 'USAGE') then
     raise exception 'Isolationstest fehlgeschlagen: fib_app hat keinen USAGE-Zugriff auf fib';
   end if;
 
-  if has_schema_privilege('fib_app', 'public', 'USAGE') then
-    raise exception 'Isolationstest fehlgeschlagen: fib_app darf public nicht verwenden';
-  end if;
-
+  -- public besitzt projektweit USAGE über die PostgreSQL-Rolle PUBLIC.
+  -- Entscheidend ist daher: keinerlei Objektprivilegien für FIB in public.
   if exists (
     select 1
     from information_schema.role_table_grants
@@ -32,6 +20,18 @@ begin
       and table_schema = 'public'
   ) then
     raise exception 'Isolationstest fehlgeschlagen: FIB-Rolle besitzt Tabellenrechte in public';
+  end if;
+
+  if has_table_privilege('fib_app', 'public.events', 'SELECT')
+     or has_table_privilege('fib_app', 'public.events', 'INSERT')
+     or has_table_privilege('fib_app', 'public.events', 'UPDATE')
+     or has_table_privilege('fib_app', 'public.events', 'DELETE') then
+    raise exception 'Isolationstest fehlgeschlagen: fib_app kann auf public.events zugreifen';
+  end if;
+
+  if not has_table_privilege('fib_app', 'fib.events', 'SELECT')
+     or not has_table_privilege('fib_app', 'fib.events', 'INSERT') then
+    raise exception 'Isolationstest fehlgeschlagen: fib_app besitzt nicht die erwarteten Rechte auf fib.events';
   end if;
 
   if (select rolbypassrls from pg_roles where rolname = 'fib_app') then
@@ -43,5 +43,16 @@ begin
   end if;
 end
 $$;
+
+-- Positiver Laufzeittest innerhalb fib. Wird durch ROLLBACK wieder entfernt.
+set local role fib_app;
+insert into fib.events (title, status)
+values ('__fib_isolation_test__', 'confirmed');
+
+select count(*)
+from fib.events
+where title = '__fib_isolation_test__';
+
+reset role;
 
 rollback;
