@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 3.8 | 06.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
+| 3.9 | 06.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
 
 ## Statusmodell
 
@@ -34,8 +34,8 @@ Es gelten die zentralen Status aus `PustefixReisen/pustivo/docs/governance/Dokum
 | G7 Betrieb | **Abgeschlossen** | Betriebsrahmen v0.2 und G7-Gesamtaudit v1.0 abgeschlossen; Pilot-Backup Supabase → Nextcloud → PC → Back In Time, Restore-Pflicht, Monitoring/Warnwege, RPO/RTO, Retention sowie KI-Kosten-/Providerbetrieb festgelegt |
 | G8 Governance / Repository / Dokumentation | **Abgeschlossen** | Dokumentationslandkarte v3.0 konsolidiert, zentrale pustivo-Dokumentationsregel erweitert, Issues mit Wiederaufnahme-Kriterien geprüft und G8-Governanceaudit bestanden |
 | G9 Migration | **Abgeschlossen** | Migrationsstrategie v1.1 präzisiert; ausführbares Runbook v1.0 mit Zielvorbereitung, Daten-/Storage-/Providerübernahme, Prüfgates, Go-live- und Rückfalllogik erstellt; G9-Gesamtaudit bestanden |
-| G10 Go-live-Abnahme | **Geplant** | messbare Abnahmekriterien festlegen, einschließlich Qualität der verpflichtenden Quellen-/Ereignisentdeckung, Transfer-Regressionstests, Datenschutz-/Schutzbedarfsanforderungen, Restore-Test, Migrations-Gates und belastbarer Betriebskostenmessung |
-| Gründungsaudit | **Geplant** | Vollständigkeit und Widerspruchsfreiheit aller Gründungspakete prüfen; danach beginnt die eigentliche Produktentwicklung |
+| G10 Go-live-Abnahme | **Abgeschlossen** | Go-live-Abnahmekriterien v1.0 mit harten Blockern, Regressionen, Recherchequalität, Sicherheit/Datenschutz, Restore, Migration, Betrieb, KI-Kosten und organisatorischer Übergabe festgelegt; G10-Gesamtaudit bestanden |
+| Gründungsaudit | **Geplant** | Vollständigkeit und Widerspruchsfreiheit aller Gründungspakete G1–G10 prüfen; danach beginnt die eigentliche Produktentwicklung |
 
 ## 2. Umsetzungsphasen nach dem Gründungsaudit
 
@@ -50,7 +50,7 @@ Nach bestandenem Gründungsaudit beginnt die technische Umsetzung in sichtbar ge
 | U3 Öffentliche FIB-Seite / PWA | konkrete Besucheroberfläche mit `Neues | Im Blick | Sitzungen | Suche`, Detailseiten, Bildern, „Mehr wissen?“, Transparenz, Teilen, PWA, Neuigkeitsstatus und Web Push |
 | U4 Recherche / AI Tasks / KI-Funktionen | Quellenbeobachtung, Quellenentdeckung, Rechercheläufe, Ereigniserkennung, Entwurfserstellung, KI-gestützte Einordnung, Routing und Qualitätskontrollen |
 | U5 Veröffentlichung / Deployment / Betrieb | S3-Publish-Prozess, statischer öffentlicher Build, Medienübernahme, Sitemap/SEO, Deployment, Cache/Invalidierung, Monitoring, Backup/Restore und betriebliche Automatisierung |
-| U6 Integration / Pilot / Go-live-Vorbereitung | End-to-End-Tests, Demonstrator-Regressionen, Usability-Feinschliff von Redaktion und Besucherseite, Datenmigration, Pilotbetrieb, Fehlerkorrektur und Vorbereitung der G10-Abnahme |
+| U6 Integration / Pilot / Go-live-Vorbereitung | End-to-End-Tests, Demonstrator-Regressionen, Usability-Feinschliff von Redaktion und Besucherseite, Datenmigration, Pilotbetrieb, Fehlerkorrektur und Vorbereitung der realen G10-Abnahme |
 
 ## 3. G2.5 – Transfer-Audit Demonstrator → Echtsystem
 
@@ -62,7 +62,7 @@ Verbindliche Detailquellen:
 
 ## 4. Nächster konkreter Schritt
 
-**G10 – Go-live-Abnahme:** Messbare Abnahmekriterien und harte Go-live-Gates festlegen. Dazu gehören insbesondere Fachqualität/Recherchevollständigkeit, Demonstrator-Regressionen, Rechte/Sicherheit/Datenschutz, Restore- und Migrationsnachweise, Betriebsfähigkeit, Kostenmessung sowie die Bedingungen, unter denen ein Produktivstart ausdrücklich blockiert wird.
+**Gründungsaudit:** G1–G10 als Gesamtsystem auf Vollständigkeit, Widerspruchsfreiheit, Doppelregelungen, offene Grundsatzfragen und saubere Übergabe an U1–U6 prüfen. Erst nach bestandenem Gründungsaudit beginnt die eigentliche Produktentwicklung.
 
 ## 5. G3 – Abschluss
 
@@ -90,35 +90,40 @@ Verbindliche Dokumentationslandkarte: `docs/Dokumentation.md` v3.0. Abschlussnac
 
 ## 11. G9 – Abschluss
 
-Verbindliche Primärquelle: `docs/Migrationsstrategie.md` v1.1.
+Verbindliche Primärquelle: `docs/Migrationsstrategie.md` v1.1. Ausführbares Runbook: `docs/Migrations-Runbook.md` v1.0. Abschlussnachweis: `docs/G9-Gesamtaudit.md` v1.0.
 
-Ausführbares Runbook: `docs/Migrations-Runbook.md` v1.0.
+## 12. G10 – Abschluss
 
-Verbindlicher Abschlussnachweis: `docs/G9-Gesamtaudit.md` v1.0.
+Verbindliche Primärquelle: `docs/Go-live-Abnahmekriterien.md` v1.0.
+
+Verbindlicher Abschlussnachweis: `docs/G10-Gesamtaudit.md` v1.0.
 
 Festgelegt sind insbesondere:
 
-- G9 plant und prüft die Migration; die reale Migration erfolgt erst nach U1–U6 im Go-live-Kontext,
-- organisationskontrollierte Zielumgebung für Webhosting, Supabase, Storage, Repository/CI-CD, KI-Provider, Backup, Monitoring/Mail, Domains und Adminzugänge,
-- kein paralleler produktiver Schreibbetrieb auf Quelle und Ziel,
-- wiederholbarer Aufbau der Zielumgebung vor Go-live,
-- Prüfgates nach Infrastruktur-, Schema-, Daten- und Betriebsübernahme,
-- finaler End-to-End-Test vor Umschaltung,
-- klarer Rückfallpfad vor Go-live,
-- kein unkontrollierter Rücksprung nach neuen produktiven Schreibvorgängen,
-- Übergabeprotokoll und Entfernung zwingender persönlicher Betriebsabhängigkeiten.
+- keine Go-live-Freigabe mit offenen kritischen fachlichen Regressionen,
+- 100 % der kritisch eingestuften Transfer-Referenzfälle müssen bestanden sein,
+- Recherche-/Ereignisentdeckung wird mit realem Pilotkorpus bewertet; kritische Pflichtquellen- und Ereignisfälle müssen erkannt werden,
+- keine erfundene globale Qualitätsquote ohne Datenbasis; Precision/Recall-Schwellen werden aus Pilotmessungen abgeleitet,
+- MFA-/Rechte-/S3-/RLS-/Audit-Anforderungen müssen praktisch nachgewiesen sein,
+- offene Datenschutz-/DSFA-/Providerblocker verhindern Go-live,
+- Static-first-Build, Rollback, PWA, Links und K0-Abgrenzung müssen funktionieren,
+- erfolgreicher Restore-Test aus GitHub Issue #3 ist zwingende Go-live-Bedingung,
+- reale Migration und organisatorische Übergabe müssen vollständig validiert sein,
+- KI-Providerwege, Qualität, Fallbacks, Kostenmessung und Produktivbudget müssen mit Pilotdaten geprüft sein,
+- bekannte kritische Sicherheitslücken oder ungeschützte Secrets blockieren den Go-live,
+- nichtkritische Komfortabweichungen dürfen nur dokumentiert nach Go-live verschoben werden.
 
-## 12. Hybrid-KI – Entwicklungsprinzip
+## 13. Hybrid-KI – Entwicklungsprinzip
 
 Für das Echtsystem gilt verbindlich:
 
 > **KI wird nur dort eingesetzt, wo sie fachlich erforderlich ist oder einen klaren zusätzlichen Nutzen bringt. Wird KI eingesetzt, hat die erforderliche Ergebnisqualität Vorrang vor dem niedrigsten Preis.**
 
-## 13. Visuelle Identität – geklärt
+## 14. Visuelle Identität – geklärt
 
 Verbindliche Primärquelle: `docs/Visuelle-Identitaet-und-Bildkonzept.md`.
 
-## 14. Wichtige Echtsystem-Dokumentation
+## 15. Wichtige Echtsystem-Dokumentation
 
 Die aktuelle Dokumentationslandkarte und Zuordnung der Primärquellen steht in `docs/Dokumentation.md` v3.0. Architekturentscheidungen liegen unter `docs/decisions/`.
 
@@ -126,6 +131,7 @@ Die aktuelle Dokumentationslandkarte und Zuordnung der Primärquellen steht in `
 
 | Version | Datum | Änderung |
 |---|---|---|
+| 3.9 | 06.10.2026 | G10 nach Festlegung der Go-live-Abnahmekriterien und bestandenem G10-Gesamtaudit abgeschlossen; Gründungsaudit als nächsten Schritt gesetzt. |
 | 3.8 | 06.10.2026 | G9 nach Präzisierung der Migrationsstrategie, Erstellung des Migrations-Runbooks und bestandenem G9-Gesamtaudit abgeschlossen; G10 Go-live-Abnahme als nächsten Gründungsschritt gesetzt. |
 | 3.7 | 06.10.2026 | G8 nach Konsolidierung der Dokumentationslandkarte und zentralen Dokumentationsregeln abgeschlossen; G8-Governanceaudit bestanden; G9 Migration als nächsten konkreten Gründungsschritt gesetzt. |
 | 3.6 | 06.10.2026 | G7 nach Festlegung der Pilot-Backupkette, Restore-Pflicht, RPO/RTO, Retention und Monitoring-/Warnwege abgeschlossen; G7-Gesamtaudit bestanden; G8 Governance/Dokumentation als nächsten konkreten Gründungsschritt gesetzt. |
