@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 3.4 | 06.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
+| 3.5 | 06.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
 
 ## Statusmodell
 
@@ -31,8 +31,8 @@ Es gelten die zentralen Status aus `PustefixReisen/pustivo/docs/governance/Dokum
 | G4 Schutzbedarf / Datenschutz / Offline | **Abgeschlossen** | Schutzklassen K0–K3, K2-Minimierung, Löschlogik, KI-/Provider-Prüfrahmen, Offline/PWA-Grundsätze und DSFA-Vorprüfung festgelegt |
 | G5 Zielarchitektur / Stack / Hosting / Deployment | **Abgeschlossen** | Zielarchitektur v1.0 und ADR-001 bis ADR-009 konsolidiert; G5-Gesamtaudit bestanden; Static-first, Fachservices, Storage, Suche/RAG, AI Tasks, Auth/RLS, KI-Router, CI/CD und Monorepo-Struktur verbindlich festgelegt |
 | G6 Rollen / Rechte / Workflow | **Abgeschlossen** | Rollen-/Aktions- und Fachfunktionsmatrix v1.0, verpflichtende MFA für Redakteure/Admins, Step-up-Regeln, Adminvorbehalte sowie Fachservice-/RLS-Grenzen festgelegt; G6-Gesamtaudit bestanden |
-| G7 Betrieb | **Geplant** | Backup, Restore, Monitoring, KI-Kostenmessung, Routing-Betrieb, Budgets, Warnschwellen sowie technische Aufbewahrungs-/Löschregeln definieren |
-| G8 Governance / Repository / Dokumentation | **Teilweise umgesetzt** | Echtsystem als Dokumentationshoheit etabliert; G2.5–G6 abgeschlossen; zentrale Standards und späterer Gründungsaudit weiterführen |
+| G7 Betrieb | **In Arbeit** | `docs/Betrieb-und-Wiederherstellung.md` v0.1 angelegt; Backup/Restore, Monitoring, Free-Plan-Pausierung, Retention, KI-Kosten-/Providerbetrieb und Störungsprioritäten konsolidiert; Betriebszielwerte und Warnwege noch abschließen |
+| G8 Governance / Repository / Dokumentation | **Teilweise umgesetzt** | Echtsystem als Dokumentationshoheit etabliert; G2.5–G6 abgeschlossen; G7 in Arbeit; zentrale Standards und späterer Gründungsaudit weiterführen |
 | G9 Migration | **Geplant** | Übergang auf GRÜNEN-Infrastruktur nach `docs/Migrationsstrategie.md`; wiederholbares Migrations-Runbook statt separatem Migrations-Probelauf |
 | G10 Go-live-Abnahme | **Geplant** | messbare Abnahmekriterien festlegen, einschließlich Qualität der verpflichtenden Quellen-/Ereignisentdeckung, Transfer-Regressionstests, Datenschutz-/Schutzbedarfsanforderungen und belastbarer Betriebskostenmessung |
 | Gründungsaudit | **Geplant** | Vollständigkeit und Widerspruchsfreiheit aller Gründungspakete prüfen; danach beginnt die eigentliche Produktentwicklung |
@@ -152,7 +152,7 @@ Verbindliche Detailquellen:
 
 ## 4. Nächster konkreter Schritt
 
-**G7 – Betrieb:** Backup/Restore, Monitoring, technische Aufbewahrung/Löschung, Sitzungs-/Recoveryregeln, KI-Kosten- und Routingbetrieb, Budgets, Warnschwellen sowie betriebliche Verantwortlichkeiten festlegen. Die konkrete technische Implementierung erfolgt später in U1/U5.
+**G7 – Betrieb:** `docs/Betrieb-und-Wiederherstellung.md` v0.1 ist angelegt. Als nächstes werden die Betriebszielwerte (RPO/RTO und technische Retention), konkrete Warn-/Benachrichtigungswege und der Schlussaudit festgelegt. Die technische Implementierung folgt später in U1/U5.
 
 ## 5. Fachlich/UX bereits geklärt
 
@@ -240,18 +240,18 @@ Verbindlicher Abschlussnachweis: `docs/G6-Gesamtaudit.md` v1.0.
 
 Festgelegt sind insbesondere:
 
-- genau drei menschliche Rollen: Besucher, Redakteur, Admin,
-- AI Tasks als technische Akteure mit maximal S0/S1,
-- Fachfunktionsrechte und S0–S3-Bestätigungslogik,
+- drei menschliche MVP-Rollen Besucher, Redakteur, Admin,
+- keine eigene Publisher-Rolle,
+- AI Tasks als technische Akteure mit S0/S1-Grenze,
+- Fachfunktionsmatrix für S0–S3,
 - S3 immer mit unmittelbarer expliziter Bestätigung,
-- Adminvorbehalte für Sicherheits-, Rechte- und systemweite normative Änderungen,
-- verpflichtende MFA/TOTP für Redakteure und Admins,
-- keine erneute MFA-Eingabe bei jeder normalen Veröffentlichung,
-- Step-up-Authentifizierung für besonders kritische Adminaktionen,
-- Fachservices als primäre Rechteinstanz und RLS als zusätzliche technische Sperrschicht,
-- serverseitige Rollenprüfung bei S2/S3 sowie Optimistic Concurrency und Auditpflicht.
-
-Konkrete SQL-/RLS-Policies werden erst in U1 implementiert. Sitzungs-/Tokenlebensdauer, MFA-Recovery und Notfallverfahren gehören zu G7.
+- MFA verpflichtend für Redakteure und Admins,
+- kein erneuter Authenticator-Code für normale Veröffentlichungen,
+- Step-up-MFA für besonders kritische Admin-Aktionen,
+- Fachservices als primäre Autorisierungsinstanz,
+- RLS als grobe zusätzliche technische Sicherheitsgrenze,
+- rollen-/statusabhängige UI ohne Vertrauen in clientseitige Berechtigung,
+- Optimistic Concurrency und Audit für fachlich wirksame Änderungen.
 
 ## 10. Hybrid-KI – Entwicklungsprinzip
 
@@ -295,6 +295,7 @@ Zu den neu aufgebauten Primär- und Detailquellen gehören inzwischen insbesonde
 - `docs/G5-Gesamtaudit.md`
 - `docs/Rollen-Rechte-und-Workflow.md`
 - `docs/G6-Gesamtaudit.md`
+- `docs/Betrieb-und-Wiederherstellung.md`
 - `docs/decisions/ADR-001-Web-und-Service-Stack.md`
 - `docs/decisions/ADR-002-Datei-und-Bildspeicher.md`
 - `docs/decisions/ADR-003-Publikations-und-Deploymentprozess.md`
@@ -309,7 +310,8 @@ Zu den neu aufgebauten Primär- und Detailquellen gehören inzwischen insbesonde
 
 | Version | Datum | Änderung |
 |---|---|---|
-| 3.4 | 06.10.2026 | G6 mit `Rollen-Rechte-und-Workflow.md` v1.0 und bestandenem G6-Gesamtaudit abgeschlossen; MFA für Redakteure/Admins, Step-up für kritische Adminaktionen und Fachservice-/RLS-Grenzen festgelegt; G7 Betrieb als nächsten Schritt gesetzt. |
+| 3.5 | 06.10.2026 | G7 gestartet; `Betrieb-und-Wiederherstellung.md` v0.1 mit Backup/Restore, Monitoring, Pausierung, Retention, KI-Kosten-/Providerbetrieb und Störungsprioritäten angelegt; G7 auf in Arbeit gesetzt. |
+| 3.4 | 06.10.2026 | G6 nach Festlegung verpflichtender MFA für Redakteure/Admins, Step-up-Regeln und Policy-/RLS-Grenzen abgeschlossen; G6-Gesamtaudit bestanden; G7 Betrieb als nächsten konkreten Gründungsschritt gesetzt. |
 | 3.3 | 06.10.2026 | G6 gestartet; `Rollen-Rechte-und-Workflow.md` v0.1 mit Rollen-/Aktionsmatrix, Fachfunktionsrechten, Bestätigungslogik und MFA-Entscheidungspunkt angelegt; G6 auf in Arbeit gesetzt. |
 | 3.2 | 06.10.2026 | G5 nach Zielarchitektur v1.0 und bestandenem G5-Gesamtaudit abgeschlossen; ADR-001 bis ADR-009 verankert; G6 Rollen/Rechte/Workflow als nächsten konkreten Gründungsschritt gesetzt. |
 | 3.1 | 06.10.2026 | Roadmap in Gründungs- und Umsetzungsphasen gegliedert; Redaktions-App und öffentliche FIB-Seite/PWA als eigene Produktstränge U2/U3 sichtbar gemacht; technische Umsetzung in U1–U6 konkretisiert; G4 auf abgeschlossen und G5 auf in Arbeit synchronisiert. |
