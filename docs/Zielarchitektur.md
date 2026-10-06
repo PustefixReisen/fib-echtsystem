@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 0.2 | 06.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
+| 0.3 | 06.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
 
 ## 1. Zweck und Geltung
 
@@ -24,6 +24,7 @@ Verbindliche Grundlagen insbesondere:
 - `docs/decisions/ADR-001-Web-und-Service-Stack.md`
 - `docs/decisions/ADR-002-Datei-und-Bildspeicher.md`
 - `docs/decisions/ADR-003-Publikations-und-Deploymentprozess.md`
+- `docs/decisions/ADR-004-Suche-und-RAG.md`
 
 ## 2. Architekturprinzipien
 
@@ -37,6 +38,7 @@ Verbindliche Grundlagen insbesondere:
 8. **Migration ist Architekturmerkmal:** Entwicklungs-/Pilotbetrieb und späterer GRÜNEN-Zielbetrieb verwenden dieselbe Software und dasselbe reproduzierbare Schema.
 9. **MVP online-first für Redaktion:** kein dauerhafter lokaler Spiegel interner K1/K2-Daten.
 10. **Öffentliche Auslieferung static-first:** Besucher lesen einen freigegebenen, versionierten K0-Stand und benötigen für normales Lesen weder Supabase noch KI.
+11. **Suche folgt der Fachstruktur:** explizite Beziehungen und strukturierte Filter haben Vorrang vor Volltext; Volltext hat Vorrang vor optionaler semantischer Suche.
 
 ## 3. Logische Gesamtarchitektur
 
@@ -86,7 +88,8 @@ Vorgesehen sind insbesondere:
 - Row Level Security als zusätzliche technische Schutzschicht,
 - reproduzierbare Migrationen für Schema, Constraints, Policies, Funktionen und Trigger,
 - technische Audit-/Betriebsdaten, soweit passend,
-- gegebenenfalls PostgreSQL-Such-/Vektorfunktionen, sofern der spätere Such-/RAG-Entwurf dies benötigt.
+- PostgreSQL-Volltextsuche,
+- optional `pgvector` für ausgewählte semantische Such-/RAG-Fälle nach Qualitätsnachweis.
 
 > **RLS ersetzt die Fachfunktionsschicht nicht.**
 
@@ -101,7 +104,7 @@ FIB verwendet einen gekapselten Storage-Adapter statt produktabhängiger Pfade i
 Nextcloud ist für Entwicklung/Pilot ein geeigneter Kandidat. Verbindlich ist aber:
 
 - keine Abhängigkeit von einem persönlichen Nextcloud-Konto,
-- standardisierte/gekap­selte Schnittstelle,
+- standardisierte/gekapselte Schnittstelle,
 - K1/K2-Dateien nicht öffentlich ausliefern,
 - Produktwechsel ohne Änderung des Fachmodells ermöglichen.
 
@@ -203,7 +206,41 @@ Verbindlich:
 - Providerwechsel über Konfiguration,
 - Nutzung und Kosten protokollierbar.
 
-## 11. Publikationsprozess
+## 11. Suche und RAG
+
+FIB verwendet keine pauschale „alles per Vektorsuche“-Architektur.
+
+Verbindlicher Grundsatz:
+
+> **Struktur vor Text, Text vor Semantik.**
+
+### Öffentliche Suche
+
+Beim Static Build wird ein eigener K0-Suchindex erzeugt. Die öffentliche Suche greift damit nicht auf interne Daten oder direkt auf Supabase zu.
+
+Für das MVP ist keine öffentliche Vektorsuche erforderlich.
+
+### Interne Suche
+
+Redaktion und FIB-Chat suchen gestuft über:
+
+1. explizite FIB-Beziehungen,
+2. strukturierte Filter wie Typ, Status, Zeitraum und Schutzklasse,
+3. PostgreSQL-Volltextsuche.
+
+### RAG
+
+KI-Kontext wird ausgehend vom konkreten Fachobjekt zusammengestellt. Explizite Beziehungen und Quellenbindung werden zuerst genutzt. Volltext ergänzt diesen Kontext.
+
+Semantische Suche/Embeddings werden erst dann ergänzt, wenn Tests einen klaren Mehrwert zeigen, insbesondere bei längeren unstrukturierten Dokumenten oder sprachlich stark abweichenden Formulierungen.
+
+Wenn Semantik eingeführt wird, ist hybride Suche – Volltext plus semantische Suche – der bevorzugte Prüfansatz.
+
+Embeddings sind abgeleitete technische Suchdaten und dürfen jederzeit neu erzeugt werden. Sie übernehmen mindestens die Schutzklasse ihres zugrunde liegenden Inhalts.
+
+Details: `docs/decisions/ADR-004-Suche-und-RAG.md`.
+
+## 12. Publikationsprozess
 
 Eine fachliche S3-Freigabe schreibt nicht direkt in öffentliche Webdateien.
 
@@ -239,7 +276,7 @@ Wesentliche Regeln:
 
 Details: `docs/decisions/ADR-003-Publikations-und-Deploymentprozess.md`.
 
-## 12. Hosting- und Umgebungsmodell
+## 13. Hosting- und Umgebungsmodell
 
 Mindestens drei logisch getrennte Umgebungen werden vorgesehen:
 
@@ -257,7 +294,7 @@ Zielbetrieb:
 
 Der statische öffentliche Build ist transportabel und kann in der Pilotphase auf IONOS und später auf dem GRÜNEN-Webserver ausgeliefert werden.
 
-## 13. Deployment und Reproduzierbarkeit
+## 14. Deployment und Reproduzierbarkeit
 
 Im Repository versioniert werden mindestens:
 
@@ -276,7 +313,7 @@ Nicht ins Repository gehören Secrets und produktive personenbezogene Daten.
 
 Eine Zielumgebung muss aus Repository plus dokumentierter Konfiguration reproduzierbar aufgebaut werden können.
 
-## 14. Cache, Versionierung und Aktualität
+## 15. Cache, Versionierung und Aktualität
 
 Die Cache-Strategie folgt dem versionierten Static-Publish-Modell:
 
@@ -290,7 +327,7 @@ Die Cache-Strategie folgt dem versionierten Static-Publish-Modell:
 
 Damit wird das im Demonstrator beobachtete Mehrfach-Reload-/Cacheproblem strukturell vermieden.
 
-## 15. Sichere Ausgabe dynamischer Inhalte
+## 16. Sichere Ausgabe dynamischer Inhalte
 
 Alle dynamisch erzeugten oder aus externen Quellen übernommenen Inhalte werden vor öffentlicher Ausgabe sicher gerendert.
 
@@ -302,7 +339,7 @@ Verbindlich:
 - Schutz vor XSS/Script-Injektion,
 - externe Inhalte erhalten keine Möglichkeit, FIB-Fachfunktionen oder Browserkontext zu manipulieren.
 
-## 16. In G5 bereits entschieden
+## 17. In G5 bereits entschieden
 
 - TypeScript als gemeinsame Implementierungssprache für Web-/Service-Schicht,
 - Astro/static-first für die öffentliche Seite,
@@ -312,22 +349,26 @@ Verbindlich:
 - interner Datei-/Bildspeicher über austauschbaren Adapter,
 - Nextcloud als Pilotkandidat, aber nicht als Systemvoraussetzung,
 - öffentliche Medien werden aus internem Speicher in den K0-Deploy übernommen,
-- versionierter Build mit Validierung, atomarem Deploy und Rollbackfähigkeit.
+- versionierter Build mit Validierung, atomarem Deploy und Rollbackfähigkeit,
+- öffentlicher statischer K0-Suchindex,
+- interne strukturierte Suche + PostgreSQL-Volltext,
+- Vektorsuche nur optional nach Qualitätsnachweis,
+- RAG priorisiert explizite Fachbeziehungen vor semantischer Ähnlichkeit.
 
-## 17. Noch offene G5-Entscheidungen
+## 18. Noch offene G5-Entscheidungen
 
 Vor Abschluss von G5 sind insbesondere noch zu entscheiden:
 
 1. konkrete technische Auth-/RLS-Ausgestaltung,
 2. Scheduler-/Worker-Technik für AI Tasks,
-3. technische Such-/RAG-Architektur und Notwendigkeit von Vektorsuche,
-4. konkrete Provider-/Routerintegration,
-5. konkrete CI/CD-Plattform und Upload-/Deploymentmethode,
-6. Detailstruktur des Repositories bzw. der Anwendungen/Packages.
+3. konkrete Provider-/Routerintegration,
+4. konkrete CI/CD-Plattform und Upload-/Deploymentmethode,
+5. Detailstruktur des Repositories bzw. der Anwendungen/Packages.
 
 ## Änderungshistorie
 
 | Version | Datum | Änderung |
 |---|---|---|
+| 0.3 | 06.10.2026 | ADR-004 integriert; öffentliche statische Suche, interne strukturierte/Volltextsuche und gestufte RAG-Kontextbeschaffung festgelegt; Vektorsuche als optionale Ergänzung nach Qualitätsnachweis statt MVP-Pflicht eingeordnet. |
 | 0.2 | 06.10.2026 | ADR-001 bis ADR-003 integriert; static-first als verbindliche öffentliche Architektur festgelegt; versionierter K0-Publish, Validierung, atomarer Deploy, Rollback und Cache-Strategie ergänzt; interne und öffentliche Medienauslieferung getrennt; offene G5-Punkte bereinigt. |
 | 0.1 | 06.10.2026 | G5 gestartet; logische Zielarchitektur mit Supabase/PostgreSQL-Kern, gemeinsamer Fachfunktionsschicht, entkoppeltem Datei-/Bildspeicher, Storage-Adapter, Nextcloud als Pilotkandidat, Web-App/PWA, FIB-Chat, AI Tasks, KI-Router, Umgebungs-/Deploymentmodell, Cache- und sichere Renderinganforderungen festgelegt. |
