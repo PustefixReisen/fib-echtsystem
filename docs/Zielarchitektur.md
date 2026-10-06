@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 0.3 | 06.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
+| 0.4 | 06.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
 
 ## 1. Zweck und Geltung
 
@@ -25,6 +25,7 @@ Verbindliche Grundlagen insbesondere:
 - `docs/decisions/ADR-002-Datei-und-Bildspeicher.md`
 - `docs/decisions/ADR-003-Publikations-und-Deploymentprozess.md`
 - `docs/decisions/ADR-004-Suche-und-RAG.md`
+- `docs/decisions/ADR-005-AI-Tasks-Scheduler-und-Queue.md`
 
 ## 2. Architekturprinzipien
 
@@ -39,6 +40,7 @@ Verbindliche Grundlagen insbesondere:
 9. **MVP online-first für Redaktion:** kein dauerhafter lokaler Spiegel interner K1/K2-Daten.
 10. **Öffentliche Auslieferung static-first:** Besucher lesen einen freigegebenen, versionierten K0-Stand und benötigen für normales Lesen weder Supabase noch KI.
 11. **Suche folgt der Fachstruktur:** explizite Beziehungen und strukturierte Filter haben Vorrang vor Volltext; Volltext hat Vorrang vor optionaler semantischer Suche.
+12. **Automatisierung ist persistent und wiederaufnehmbar:** fachlich wichtige AI Tasks werden als Runs/Jobs nachvollziehbar gespeichert und nicht an einen einzelnen kurzlebigen Prozess gebunden.
 
 ## 3. Logische Gesamtarchitektur
 
@@ -52,6 +54,7 @@ flowchart TB
     FS[FIB-Fachfunktionen / Services]
     AIR[FIB-KI-Router]
     PUB[Publish / Build]
+    Q[Queue / Worker]
 
     DB[(Supabase PostgreSQL)]
     AUTH[Supabase Auth]
@@ -61,7 +64,8 @@ flowchart TB
 
     R --> FS
     C --> FS
-    T --> FS
+    T --> Q
+    Q --> FS
 
     FS --> DB
     FS --> AUTH
@@ -75,7 +79,7 @@ flowchart TB
     V --> WEB
 ```
 
-Damit sind interner Arbeitsbetrieb und öffentliche Auslieferung bewusst entkoppelt.
+Damit sind interner Arbeitsbetrieb, Automatisierung und öffentliche Auslieferung bewusst entkoppelt.
 
 ## 4. Technischer Kern: Supabase / PostgreSQL
 
@@ -89,7 +93,9 @@ Vorgesehen sind insbesondere:
 - reproduzierbare Migrationen für Schema, Constraints, Policies, Funktionen und Trigger,
 - technische Audit-/Betriebsdaten, soweit passend,
 - PostgreSQL-Volltextsuche,
-- optional `pgvector` für ausgewählte semantische Such-/RAG-Fälle nach Qualitätsnachweis.
+- optional `pgvector` für ausgewählte semantische Such-/RAG-Fälle nach Qualitätsnachweis,
+- Supabase Cron/`pg_cron` für geplante Auslöser,
+- Supabase Queues/`pgmq` für durable asynchrone Jobs.
 
 > **RLS ersetzt die Fachfunktionsschicht nicht.**
 
@@ -168,21 +174,40 @@ FIB-Fachfunktionen
 
 Der Chat besitzt keinen pauschalen DB-Zugriff. Er erhält nur den für die jeweilige Fachfunktion zulässigen Kontext. Das verwendete Sprachmodell bleibt austauschbar.
 
-## 9. AI Tasks und Scheduler
+## 9. AI Tasks, Scheduler und Queue
 
-AI Tasks werden getrennt von ihren Runs gespeichert.
+Fachlich wichtige automatische Aufgaben werden nicht als einzelner langer Cron-/Function-Aufruf behandelt.
 
-Die technische Ausführung benötigt:
+Der MVP verwendet:
 
-- Scheduler/Trigger,
-- kontrollierten Aufruf zulässiger Fachfunktionen,
-- Laufstatus und Fehlerbehandlung,
-- Retry-/Timeout-Regeln,
-- Kosten-/Modellprotokollierung,
-- Schutzklassenprüfung vor externem KI-Aufruf,
-- keine eigenmächtige S2-/S3-Eskalation.
+```text
+AI Task
+   ↓
+Supabase Cron oder fachlicher Trigger
+   ↓
+AITaskRun
+   ↓
+Supabase Queue / pgmq
+   ↓
+Edge-Function Worker
+   ↓
+FIB-Fachfunktionen / Recherche / KI-Router
+```
 
-Die konkrete Scheduler-/Worker-Technik wird in G5 weiter entschieden.
+Verbindlich:
+
+- Zeitplanung und Verarbeitung sind getrennt,
+- Queue-Jobs bleiben bei kurzfristigen Fehlern erhalten,
+- Runs besitzen sichtbaren Status und Fehler,
+- Retry darf fachliche Ablehnungen nicht umgehen,
+- Jobs/Schritte müssen idempotent sein,
+- lange Aufgaben werden in wiederaufnehmbare Schritte zerlegt,
+- AI Tasks dürfen keine S2-/S3-Aktion eigenmächtig durchführen,
+- manueller Start und Folgeaufträge verwenden dasselbe Run-/Queue-Modell.
+
+Ein eigener dauerhaft laufender Worker-Server ist im MVP nicht vorgesehen und wird nur bei nachgewiesenem Bedarf eingeführt.
+
+Details: `docs/decisions/ADR-005-AI-Tasks-Scheduler-und-Queue.md`.
 
 ## 10. KI-Router
 
@@ -210,15 +235,11 @@ Verbindlich:
 
 FIB verwendet keine pauschale „alles per Vektorsuche“-Architektur.
 
-Verbindlicher Grundsatz:
-
 > **Struktur vor Text, Text vor Semantik.**
 
 ### Öffentliche Suche
 
-Beim Static Build wird ein eigener K0-Suchindex erzeugt. Die öffentliche Suche greift damit nicht auf interne Daten oder direkt auf Supabase zu.
-
-Für das MVP ist keine öffentliche Vektorsuche erforderlich.
+Beim Static Build wird ein eigener K0-Suchindex erzeugt. Die öffentliche Suche greift damit nicht auf interne Daten oder direkt auf Supabase zu. Für das MVP ist keine öffentliche Vektorsuche erforderlich.
 
 ### Interne Suche
 
@@ -243,8 +264,6 @@ Details: `docs/decisions/ADR-004-Suche-und-RAG.md`.
 ## 12. Publikationsprozess
 
 Eine fachliche S3-Freigabe schreibt nicht direkt in öffentliche Webdateien.
-
-Der Ablauf ist:
 
 ```text
 S3-Freigabe
@@ -353,22 +372,24 @@ Verbindlich:
 - öffentlicher statischer K0-Suchindex,
 - interne strukturierte Suche + PostgreSQL-Volltext,
 - Vektorsuche nur optional nach Qualitätsnachweis,
-- RAG priorisiert explizite Fachbeziehungen vor semantischer Ähnlichkeit.
+- RAG priorisiert explizite Fachbeziehungen vor semantischer Ähnlichkeit,
+- Supabase Cron + durable Queue + Edge-Function Worker als MVP-Automatisierung,
+- lange AI-/Rechercheläufe werden resumierbar in Schritte zerlegt.
 
 ## 18. Noch offene G5-Entscheidungen
 
 Vor Abschluss von G5 sind insbesondere noch zu entscheiden:
 
 1. konkrete technische Auth-/RLS-Ausgestaltung,
-2. Scheduler-/Worker-Technik für AI Tasks,
-3. konkrete Provider-/Routerintegration,
-4. konkrete CI/CD-Plattform und Upload-/Deploymentmethode,
-5. Detailstruktur des Repositories bzw. der Anwendungen/Packages.
+2. konkrete Provider-/Routerintegration,
+3. konkrete CI/CD-Plattform und Upload-/Deploymentmethode,
+4. Detailstruktur des Repositories bzw. der Anwendungen/Packages.
 
 ## Änderungshistorie
 
 | Version | Datum | Änderung |
 |---|---|---|
+| 0.4 | 06.10.2026 | ADR-005 integriert; Supabase Cron + durable Queue + Edge-Function Worker für AI Tasks festgelegt; lange Läufe als wiederaufnehmbare Schritte, Idempotenz und Retry-Grundsätze verankert; eigener Worker-Server im MVP ausgeschlossen. |
 | 0.3 | 06.10.2026 | ADR-004 integriert; öffentliche statische Suche, interne strukturierte/Volltextsuche und gestufte RAG-Kontextbeschaffung festgelegt; Vektorsuche als optionale Ergänzung nach Qualitätsnachweis statt MVP-Pflicht eingeordnet. |
 | 0.2 | 06.10.2026 | ADR-001 bis ADR-003 integriert; static-first als verbindliche öffentliche Architektur festgelegt; versionierter K0-Publish, Validierung, atomarer Deploy, Rollback und Cache-Strategie ergänzt; interne und öffentliche Medienauslieferung getrennt; offene G5-Punkte bereinigt. |
 | 0.1 | 06.10.2026 | G5 gestartet; logische Zielarchitektur mit Supabase/PostgreSQL-Kern, gemeinsamer Fachfunktionsschicht, entkoppeltem Datei-/Bildspeicher, Storage-Adapter, Nextcloud als Pilotkandidat, Web-App/PWA, FIB-Chat, AI Tasks, KI-Router, Umgebungs-/Deploymentmodell, Cache- und sichere Renderinganforderungen festgelegt. |
