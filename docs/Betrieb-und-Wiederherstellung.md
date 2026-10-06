@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 0.1 | 06.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
+| 0.2 | 06.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
 
 ## 1. Zweck und Geltung
 
@@ -23,6 +23,7 @@ Verbindliche Grundlagen insbesondere:
 - `docs/decisions/ADR-005-AI-Tasks-Scheduler-und-Queue.md`
 - `docs/decisions/ADR-007-KI-Router-und-Providerintegration.md`
 - `docs/decisions/ADR-008-CI-CD-und-Deployment.md`
+- `docs/decisions/ADR-010-Backup-Pilotbetrieb.md`
 
 ## 2. Betriebsprinzipien
 
@@ -51,12 +52,12 @@ Ziel: sehr hohe praktische Verfügbarkeit durch statische Auslieferung.
 
 Ein zeitweiser Ausfall ist tolerierbar, darf aber keinen Datenverlust verursachen.
 
-Vorläufiges Betriebsziel für den MVP:
+Betriebsziel für den MVP:
 
 - **RPO:** höchstens 24 Stunden Verlust seit letztem extern gesicherten Datenstand,
 - **RTO:** Wiederaufnahme des Redaktionsbetriebs innerhalb eines Arbeitstags als Zielgröße.
 
-Diese Werte sind vor Go-live anhand Pilotbetrieb und realem Redaktionsbedarf zu bestätigen.
+Diese Werte sind vor Go-live anhand Pilotbetrieb und realem Redaktionsbedarf erneut zu prüfen; eine Verschärfung ist möglich, ohne die Architektur zu ändern.
 
 ### C – KI-Provider / Recherche
 
@@ -88,15 +89,25 @@ Secrets und produktive personenbezogene Daten gehören nicht in GitHub.
 
 Mindestens täglich muss ein unabhängiger wiederherstellbarer Datenbankstand verfügbar sein.
 
-Für einen Supabase-Free-Betrieb gilt ausdrücklich:
+Für Entwicklung/Pilot gilt verbindlich die in ADR-010 festgelegte kostenfreie Sicherungskette:
 
-- keine Annahme automatischer Plattform-Backups,
-- externer automatisierter logischer Datenbankexport mindestens täglich,
-- Sicherung außerhalb des laufenden Supabase-Projekts,
+```text
+Supabase PostgreSQL
+   ↓ täglich automatischer logischer Dump
+Nextcloud
+   ↓ reguläre Desktop-Synchronisation
+lokaler PC
+   ↓ Back In Time
+lokale versionierte Sicherung
+```
+
+Zusätzlich gilt:
+
 - Fehler des Backup-Jobs erzeugen eine Warnung,
-- Wiederherstellung anhand dokumentiertem Runbook regelmäßig testen.
-
-Bei einem späteren Plan mit verwalteten Plattform-Backups bleiben unabhängige Export-/Restore-Fähigkeit und Restore-Tests trotzdem erhalten.
+- Sicherung muss unabhängig vom laufenden Supabase-Projekt verfügbar sein,
+- Nextcloud-Synchronisation allein gilt nicht als vollständige Sicherungsstrategie; die lokale Versionierung ergänzt sie,
+- ein Wiederherstellungstest ist vor Produktivstart verpflichtend und in GitHub Issue #3 nachverfolgt,
+- bei einem späteren Supabase-Plan mit verwalteten Plattform-Backups bleiben unabhängige Export-/Restore-Fähigkeit und Restore-Tests trotzdem erhalten.
 
 ### 4.3 Interner Datei-/Bildspeicher
 
@@ -106,6 +117,8 @@ Originale, interne Dokumente, Rechte-Nachweise und andere nicht reproduzierbare 
 - Sicherung umfasst Dateiinhalt und erforderliche Zuordnung/Metadaten,
 - bei Wiederherstellung müssen DB-Referenzen und Dateiablage wieder konsistent zusammenpassen,
 - öffentliche K0-Medien im Web-Release ersetzen kein Backup der Originale.
+
+Soweit Nextcloud selbst als interner Datei-/Bildspeicher verwendet wird, wirkt die Desktop-Synchronisation mit lokaler Back-In-Time-Versionierung auch für diese Dateien als zusätzliche Sicherungsebene.
 
 ### 4.4 Öffentliche Releases
 
@@ -160,7 +173,19 @@ Mindestens zu überwachen:
 - Speicher-/Quota-Nutzung,
 - Monatskosten und Budgetwarnungen.
 
-Warnungen müssen an mindestens einen aktiv betreuten administrativen Kanal gehen; im Zielbetrieb sollen mindestens zwei Personen handlungsfähig sein.
+### 7.1 Pilot-Warnweg
+
+Für Entwicklung/Pilot wird kein zusätzlicher externer Enterprise-Monitoringdienst vorausgesetzt.
+
+Verbindlicher Pilot-Warnweg:
+
+1. **Redaktions-App/Betriebsübersicht:** aktive Störungen und Warnungen sichtbar anzeigen,
+2. **E-Mail:** P1- und P2-Störungen sowie ausgefallene/überfällige Backups unmittelbar an eine administrativ betreute Adresse melden,
+3. **P3:** in der Betriebsübersicht sichtbar halten; E-Mail nur bei Wiederholung, Häufung oder längerem Fortbestehen.
+
+Ziel ist ein einziger verständlicher Betriebsüberblick statt vieler separater Warnkanäle.
+
+Im späteren GRÜNEN-Zielbetrieb müssen mindestens zwei Personen die administrativen Warnungen erhalten oder darauf zugreifen können. Der konkrete organisationsbezogene Empfängerkreis wird vor Produktivstart festgelegt.
 
 ## 8. Störungsprioritäten
 
@@ -196,7 +221,7 @@ Maßnahme: Fallback oder spätere Wiederholung; keine Absenkung fachlicher Quali
 
 ## 9. Technische Aufbewahrung / Löschung
 
-Grundlage bleibt die G4-Löschlogik. Für G7 gelten folgende MVP-Betriebswerte als Ausgangspunkt:
+Grundlage bleibt die G4-Löschlogik. Für G7 gelten folgende MVP-Betriebswerte:
 
 | Datenart | MVP-Regel |
 |---|---|
@@ -205,7 +230,8 @@ Grundlage bleibt die G4-Löschlogik. Für G7 gelten folgende MVP-Betriebswerte a
 | AI-Task-/Recherche-Run-Metadaten | fachlich relevante Provenienz nach Fachmodell; rein technische Debugdaten 30 Tage |
 | Push-Subscriptions | bis Abmeldung oder technische Ungültigkeit; ungültige Endpunkte zeitnah löschen |
 | deaktivierte Kontodaten | Zugriff sofort entziehen; identifizierende Daten nach Wegfall des Verwaltungs-/Nachweiszwecks minimieren |
-| Backups | rollierend; vorläufig 35 Tage für tägliche externe DB-Sicherungen, danach automatisch löschen, soweit kein dokumentierter Anlass zur längeren Aufbewahrung besteht |
+| tägliche externe DB-Backups in Nextcloud | rollierend 35 Tage; ältere Dumps automatisch löschen, soweit kein dokumentierter Anlass zur längeren Aufbewahrung besteht |
+| lokale Back-In-Time-Sicherung | nach lokalem Sicherungskonzept; sie darf ältere Backupgenerationen enthalten, unterliegt aber derselben Datenschutz- und Zugriffsschutzlogik |
 | öffentliche Releases | aktueller Stand plus ausreichende Rollback-Historie; keine unbegrenzte technische Releaseablage erforderlich, fachliche Historie bleibt im FIB-Datenbestand |
 
 Diese Fristen sind technische Betriebswerte, keine pauschale Aussage zur fachlichen oder gesetzlichen Aufbewahrung. Vor Go-live werden sie mit dem tatsächlichen Verarbeitungsverzeichnis und den eingesetzten Providern gegengeprüft.
@@ -273,17 +299,16 @@ Bei Limit/Eskalation werden zuerst optionale bzw. wiederholbare KI-Aufgaben gest
 
 ## 14. Noch offene G7-Punkte
 
-Vor Abschluss von G7 sind insbesondere zu entscheiden bzw. zu prüfen:
+Vor Abschluss von G7 ist nur noch zu prüfen:
 
-1. Bestätigung der vorläufigen RPO-/RTO-Ziele (24 h / ein Arbeitstag),
-2. Bestätigung der technischen Retentionwerte (insbesondere 30 Tage Logs, 35 Tage Backups, 12 Monate KI-Kostenmetadaten),
-3. Festlegung der konkreten Warn-/Benachrichtigungskanäle im Zielbetrieb,
-4. Schlussaudit gegen G4–G6 und `KI-Betrieb-und-Kosten.md`.
+1. Schlussaudit gegen G4–G6 und `KI-Betrieb-und-Kosten.md`,
+2. ob aus dem Audit zusätzliche Produktiv-Go-live-Aufgaben für G10 entstehen.
 
-Konkrete Provider-/Tarifentscheidung für den Produktivbetrieb wird erst vor Go-live anhand Pilotdaten getroffen; sie ist kein dauerhaftes Architekturprinzip.
+Die konkreten Empfängeradressen, Provider-/Tarifentscheidung und gegebenenfalls strengere RPO/RTO-Werte werden vor Produktivstart anhand Pilotdaten festgelegt; sie sind keine dauerhaft fest codierten Architekturprinzipien.
 
 ## Änderungshistorie
 
 | Version | Datum | Änderung |
 |---|---|---|
+| 0.2 | 06.10.2026 | Pilot-Backupkette Supabase → Nextcloud → PC → Back In Time integriert; RPO/RTO und technische Retentionwerte bestätigt; Monitoring-/Warnweg Redaktionsübersicht + E-Mail konkretisiert; offene G7-Punkte auf Schlussaudit reduziert. |
 | 0.1 | 06.10.2026 | G7 gestartet; Betriebsprinzipien, Verfügbarkeitsklassen, Backup/Restore, Free-Plan-Pausierung, Monitoring, Störungsprioritäten, Retention, KI-Kosten-/Providerbetrieb und regelmäßige Prüfungen konsolidiert. |
