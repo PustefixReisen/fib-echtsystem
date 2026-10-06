@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 4.3 | 06.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
+| 4.4 | 06.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
 
 ## Statusmodell
 
@@ -68,38 +68,39 @@ Gemäß ADR-009 angelegt:
 - `tests/`,
 - `scripts/`.
 
-Die Bereiche enthalten zunächst nur Verantwortungsgrenzen und noch keine unnötige Framework-/Geschäftslogik.
+### U1.2 Supabase-Schema und Isolation – umgesetzt, Ausbau läuft weiter
 
-### U1.2 Supabase-Schema und Migrationen – in Arbeit
+Im bestehenden Supabase-Projekt `Shared-Apps` wurden die ersten FIB-Migrationen ausgeführt:
 
-Der erste technische SQL-Kern liegt in `supabase/schema/core.sql`.
+- Schema `fib` angelegt,
+- Kernobjekte `app_users`, `events`, `messages`, `processes`, `topics`, Quellen/Fundstellen und zentrale n:m-Beziehungen angelegt,
+- RLS auf allen FIB-Kerntabellen aktiviert,
+- `anon`, `authenticated` und `service_role` besitzen keinen Schema-/Tabellenzugriff auf `fib`,
+- Rollen `fib_runtime` und `fib_app` mit Least Privilege angelegt,
+- `fib_app` erbt ausschließlich `fib_runtime`, besitzt kein `BYPASSRLS` und keine Superuser-Rechte,
+- RLS-Policies ausschließlich für `fib_runtime` angelegt,
+- Default Privileges für künftige FIB-Objekte abgesichert,
+- FIB-spezifische Objektprivilegien in `public` ausgeschlossen,
+- Beispielprüfung gegen `public.events`: `fib_app` besitzt dort weder SELECT, INSERT, UPDATE noch DELETE; auf `fib.events` bestehen die erwarteten Rechte,
+- Supabase Security Advisor meldet nach Policy-Ergänzung keine FIB-spezifische `RLS enabled no policy`-Warnung mehr,
+- fehlender Index auf `fib.events.merged_into_event_id` ergänzt.
 
-Nach der Architekturkonkretisierung ADR-011 gilt nun verbindlich:
+Der Supabase-Connector kann den echten Laufzeittest nicht per `SET ROLE fib_app` durchführen, weil seine Administrationsverbindung nicht Mitglied dieser Rolle ist. Der vollständige Login-Test folgt nach sicherer Vergabe des `fib_app`-Runtime-Secrets auf pustivo.
 
-- FIB nutzt das bestehende Supabase-Projekt `Shared-Apps`,
-- FIB erhält das eigene PostgreSQL-Schema `fib`,
-- Memorix verbleibt unverändert in `public`,
-- zwischen `fib` und `public` werden keine fachlichen Querabhängigkeiten angelegt,
-- Supabase Auth wird projektweit gemeinsam genutzt,
-- FIB-Autorisierung erfolgt ausschließlich über FIB-eigene Zuordnungen in `fib`,
-- normale FIB-Fachzugriffe erhalten keinen pauschalen `service_role`-Zugang,
-- `fib` wird standardmäßig nicht für `anon`/`authenticated` freigegeben,
-- RLS bleibt Defense in Depth,
-- FIB-Daten müssen schema-spezifisch sicherbar und wiederherstellbar sein.
+### Legacy-Ausnahme im Schema `public`
 
-`core.sql` wurde entsprechend bereits von `public.*` auf `fib.*` umgestellt und um `fib.app_users` als anwendungsspezifische Zuordnung zu `auth.users` ergänzt.
+`public.fib_ai_daily_usage` ist laut Datenbankkommentar ein Zähler des alten öffentlichen FIB-„Mehr wissen?“-Demonstrators und gehört nicht zum Echtsystem. Die Tabelle bleibt solange unverändert, wie der Demonstrator sie benötigt. Bereinigung/Wiederaufnahme ist in GitHub Issue #5 dokumentiert.
 
-### U1.3 Nächster Schritt – Runtime-Rolle und Isolationstest
+### U1.3 Nächster Schritt – Fachservice-/Runtime-Anbindung
 
-Bevor das Schema tatsächlich in `Shared-Apps` angelegt wird, wird die technische Isolation verbindlich umgesetzt und geprüft:
+Als nächstes:
 
-1. FIB-spezifische Runtime-/DB-Rolle mit Least Privilege definieren,
-2. Rechte ausschließlich auf `fib` und ausdrücklich erforderliche Supabase-Systemfunktionen begrenzen,
-3. sicherstellen, dass diese Rolle `public`/Memorix weder lesen noch schreiben kann, soweit nicht technisch unvermeidbar und ausdrücklich dokumentiert,
-4. Default Privileges für spätere FIB-Objekte absichern,
-5. Testfälle „FIB kann fib“ und „FIB kann public/andere App-Schemata nicht“ anlegen,
-6. erst danach `fib` in `Shared-Apps` erzeugen und Schema/Advisors praktisch verifizieren,
-7. anschließend schema-spezifischen Dump/Restore-Pfad vorbereiten.
+1. sicheren `fib_app`-Runtime-Zugang für pustivo konfigurieren und echten Credential-Isolationstest durchführen,
+2. Fachservice-Grundgerüst an `fib` anbinden,
+3. Auth-Token serverseitig prüfen und gegen `fib.app_users` autorisieren,
+4. erste FIB-Fachfunktion mit Audit-/Rechteprüfung implementieren,
+5. Spezialbereiche des Datenmodells modular ergänzen,
+6. schema-spezifischen FIB-Dump/Restore-Pfad vorbereiten.
 
 Parallel gilt für Storage gemäß ADR-011:
 
@@ -123,7 +124,7 @@ Parallel gilt für Storage gemäß ADR-011:
 - `docs/Migrations-Runbook.md` v1.0
 - `docs/Go-live-Abnahmekriterien.md` v1.0
 - `docs/Regressionstests-Demonstratortransfer.md`
-- Architekturentscheidungen unter `docs/decisions/`, insbesondere ADR-011 für Shared-Apps-/Schema-/pustivo-Betrieb
+- Architekturentscheidungen unter `docs/decisions/`, insbesondere ADR-011
 
 ## 5. Offene, aber nicht blockierende Folgepunkte
 
@@ -132,6 +133,7 @@ Parallel gilt für Storage gemäß ADR-011:
 | Referenzwissen Ausbaustufe 2 | GitHub Issue #1; nach Pilot nur bei nachgewiesenem Bedarf |
 | externe MCP-Anbindung | GitHub Issue #2; nach MVP bei konkretem Nutzen |
 | Restore-Test | GitHub Issue #3; spätestens U6 / reale G10-Abnahme; zusätzlich schema-spezifischen `fib`-Restore nachweisen |
+| Legacy-FIB-Tabelle in `public` | GitHub Issue #5; nach Abschaltung bzw. Entkopplung des Demonstrators bereinigen |
 | Recherche-/Qualitätsschwellen | U4/U6 anhand Pilotkorpus kalibrieren |
 | konkrete Produktivprovider/-modelle und Budget | U4/U6 anhand Qualitäts-, Datenschutz- und Kostenmessung |
 | möglicher späterer Umzug auf GRÜNEN-Infrastruktur | nur bei tatsächlicher Betriebsentscheidung; pustivo darf dauerhafter Produktivbetrieb bleiben |
@@ -154,6 +156,7 @@ Parallel gilt für Storage gemäß ADR-011:
 
 | Version | Datum | Änderung |
 |---|---|---|
+| 4.4 | 06.10.2026 | `fib` in Shared-Apps angelegt; Runtime-Rollen, RLS-Policies, Default Privileges und Isolation praktisch geprüft; Advisor-Nacharbeiten durchgeführt; Legacy-Tabelle des Demonstrators über Issue #5 abgegrenzt; nächster Schritt auf Runtime-/Fachservice-Anbindung gesetzt. |
 | 4.3 | 06.10.2026 | ADR-011 übernommen: Shared-Apps mit eigenem Schema `fib`, gemeinsames Supabase Auth bei FIB-eigener Autorisierung, getrennte Nextcloud-/Backup-Zugänge, pustivo als möglicher Dauerbetrieb; `core.sql` auf `fib` umgestellt; Runtime-Rollen-/Isolationstest als nächsten Schritt gesetzt. |
 | 4.2 | 06.10.2026 | U1.2 begonnen; erstes SQL-Kernschema mit RLS-/Grant-Baseline angelegt. |
 | 4.1 | 06.10.2026 | U1 gestartet; Monorepo-/Paketstruktur gemäß ADR-009 umgesetzt; nächster Schritt auf Supabase-Schema und Migrationen gesetzt. |
