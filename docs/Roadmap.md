@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 3.1 | 06.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
+| 3.2 | 06.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
 
 ## Statusmodell
 
@@ -29,10 +29,10 @@ Es gelten die zentralen Status aus `PustefixReisen/pustivo/docs/governance/Dokum
 | Dokumentationsübernahme Demonstrator → Echtsystem | **Abgeschlossen** | Hauptdokumente sowie sichtbare Inhaltsbausteine und Redaktionsfunktionen erneut gegengeprüft; erkannte Lücken geschlossen oder als bewusste spätere Produktentscheidung dokumentiert |
 | G3 Datenanforderungen / Datenmodell | **Abgeschlossen** | fachliches/logisches Datenmodell v3.0 konsolidiert; G3-Gesamtaudit bestanden; drei Alt-Widersprüche bereinigt; keine offenen fachlichen G3-Grundsatzfragen |
 | G4 Schutzbedarf / Datenschutz / Offline | **Abgeschlossen** | Schutzklassen K0–K3, K2-Minimierung, Löschlogik, KI-/Provider-Prüfrahmen, Offline/PWA-Grundsätze und DSFA-Vorprüfung festgelegt |
-| G5 Zielarchitektur / Stack / Hosting / Deployment | **In Arbeit** | Zielarchitektur, Static-first-Veröffentlichung, Fachservice-Schicht sowie Datei-/Bildspeicher-Abstraktion begonnen; Repository-/Anwendungsstruktur, Suche/RAG, Publish-/Deployment-Prozess und AI-Task-Ausführung weiter konkretisieren |
-| G6 Rollen / Rechte / Workflow | **Geplant** | konkretes technisches Berechtigungs- und Freigabemodell aus Rollen/Aktionsstufen und G4-Schutzklassen ableiten |
+| G5 Zielarchitektur / Stack / Hosting / Deployment | **Abgeschlossen** | Zielarchitektur v1.0 und ADR-001 bis ADR-009 konsolidiert; G5-Gesamtaudit bestanden; Static-first, Fachservices, Storage, Suche/RAG, AI Tasks, Auth/RLS, KI-Router, CI/CD und Monorepo-Struktur verbindlich festgelegt |
+| G6 Rollen / Rechte / Workflow | **Geplant** | konkretes technisches Berechtigungs- und Freigabemodell aus Rollen/Aktionsstufen, G4-Schutzklassen und ADR-006 ableiten |
 | G7 Betrieb | **Geplant** | Backup, Restore, Monitoring, KI-Kostenmessung, Routing-Betrieb, Budgets, Warnschwellen sowie technische Aufbewahrungs-/Löschregeln definieren |
-| G8 Governance / Repository / Dokumentation | **Teilweise umgesetzt** | Echtsystem als Dokumentationshoheit etabliert; G2.5–G4 abgeschlossen; G5 in Arbeit; zentrale Standards und späterer Gründungsaudit weiterführen |
+| G8 Governance / Repository / Dokumentation | **Teilweise umgesetzt** | Echtsystem als Dokumentationshoheit etabliert; G2.5–G5 abgeschlossen; zentrale Standards und späterer Gründungsaudit weiterführen |
 | G9 Migration | **Geplant** | Übergang auf GRÜNEN-Infrastruktur nach `docs/Migrationsstrategie.md`; wiederholbares Migrations-Runbook statt separatem Migrations-Probelauf |
 | G10 Go-live-Abnahme | **Geplant** | messbare Abnahmekriterien festlegen, einschließlich Qualität der verpflichtenden Quellen-/Ereignisentdeckung, Transfer-Regressionstests, Datenschutz-/Schutzbedarfsanforderungen und belastbarer Betriebskostenmessung |
 | Gründungsaudit | **Geplant** | Vollständigkeit und Widerspruchsfreiheit aller Gründungspakete prüfen; danach beginnt die eigentliche Produktentwicklung |
@@ -152,7 +152,7 @@ Verbindliche Detailquellen:
 
 ## 4. Nächster konkreter Schritt
 
-**G5 – Zielarchitektur / Stack / Hosting / Deployment:** Die begonnene Zielarchitektur vervollständigen. Als Nächstes werden Repository-/Anwendungsstruktur, Fachservice-API, Publish-/Build-/Deployment-Prozess, AI-Task-Ausführung, Suche/RAG sowie Cache-/Invalidierungsstrategie konkretisiert.
+**G6 – Rollen / Rechte / Workflow:** Aus dem bereits fachlich festgelegten Rollenmodell (Besucher, Redakteur, Admin), den Aktionsstufen S0–S3, den G4-Schutzklassen und der in G5 festgelegten Auth-/RLS-Architektur die konkrete technische Berechtigungs-, Bestätigungs- und Workflow-Matrix ableiten. Dabei werden insbesondere MFA-Pflichten, serverseitige Rechteprüfungen und technische Policy-Grenzen konkretisiert, ohne die Fachregeln neu zu definieren.
 
 ## 5. Fachlich/UX bereits geklärt
 
@@ -208,7 +208,31 @@ Festgelegt sind insbesondere:
 - keine Offline-Redaktionsdatenbank im MVP,
 - Regeln für Bilder/Dateien, Push und Logs.
 
-## 8. Hybrid-KI – Entwicklungsprinzip
+## 8. G5 – Abschluss
+
+Verbindliche Integrationsquelle: `docs/Zielarchitektur.md` v1.0.
+
+Verbindlicher Abschlussnachweis: `docs/G5-Gesamtaudit.md` v1.0.
+
+Festgelegt sind insbesondere:
+
+- TypeScript/Astro und Static-first für die öffentliche Seite,
+- gemeinsame serverseitige Fachservice-Schicht,
+- Supabase/PostgreSQL als strukturierter Kern,
+- austauschbarer Datei-/Bildspeicher mit Nextcloud als Pilotkandidat,
+- versionierter K0-Publish mit Validierung und Rollback,
+- strukturierte Suche/Volltext vor optionaler Vektorsuche,
+- RAG auf Basis des FIB-Kontexts,
+- Supabase Cron/Queue/Worker für AI Tasks,
+- Supabase Auth + serverseitige Rechteprüfung + RLS als Defense in Depth,
+- zentraler KI-Router mit Mehranbieterbetrieb und Qualitätsklassen,
+- GitHub Actions für CI/CD,
+- hosterunabhängiger Build mit SFTP/SSH-Pilotdeployment auf IONOS,
+- FIB-Monorepo mit getrennten Anwendungen für öffentliche Seite und Redaktion.
+
+Die konkrete Rollen-/Policy-Matrix ist bewusst G6 zugeordnet; Backup/Monitoring/Kosten-/Providerbetrieb folgen in G7, das konkrete Migrationsrunbook in G9.
+
+## 9. Hybrid-KI – Entwicklungsprinzip
 
 Für das Echtsystem gilt verbindlich:
 
@@ -216,15 +240,15 @@ Für das Echtsystem gilt verbindlich:
 
 Die Zielarchitektur unterscheidet verpflichtende Entdeckungs-/Eingangs-KI, bedarfsgesteuerte Recherche-KI, optionale Redaktions-KI und den modellunabhängigen FIB-Kern.
 
-Für G5 ist eine konfigurierbare Routing-Matrix vorzusehen. Sie ordnet FIB-Aufgaben nicht fest an Modellnamen, sondern an KI-Bedarf, Qualitätsanforderung/Leistungsklasse, Provider/Modell, Fallback und gegebenenfalls Kostenrahmen.
+Der in G5 festgelegte KI-Router ordnet FIB-Aufgaben nicht fest an Modellnamen, sondern an Aufgabenklasse, Qualitätsklasse, Schutzklasse, zulässigen Provider-/Modell-/Regionsweg, Fallback und Kostenrahmen.
 
-## 9. Visuelle Identität – geklärt
+## 10. Visuelle Identität – geklärt
 
 Verbindliche Primärquelle: `docs/Visuelle-Identitaet-und-Bildkonzept.md`.
 
 Festgelegt sind insbesondere visuelle Grundhaltung, Logos/Bildmarke, Claim **„Mehr Überblick. Besser verstehen.“**, responsive Bannerlogik, Navigation, PWA-/Icon-Anwendung und Produktionsassets.
 
-## 10. Migrationsgrundsatz – Entwickler → GRÜNEN-Infrastruktur
+## 11. Migrationsgrundsatz – Entwickler → GRÜNEN-Infrastruktur
 
 Verbindliche Primärquelle: `docs/Migrationsstrategie.md`.
 
@@ -237,7 +261,7 @@ Festgelegt ist:
 - reproduzierbare Datenbank-/Backend-/Deployment-Konfiguration,
 - wiederholbare Migration mit Runbook.
 
-## 11. Neue Echtsystem-Dokumentation
+## 12. Neue Echtsystem-Dokumentation
 
 Zu den neu aufgebauten Primär- und Detailquellen gehören inzwischen insbesondere:
 
@@ -247,13 +271,22 @@ Zu den neu aufgebauten Primär- und Detailquellen gehören inzwischen insbesonde
 - `docs/Datenschutz-Verarbeitungen-und-Loeschlogik.md`
 - `docs/KI-Provider-und-DSFA-Pruefrahmen.md`
 - `docs/Zielarchitektur.md`
+- `docs/G5-Gesamtaudit.md`
 - `docs/decisions/ADR-001-Web-und-Service-Stack.md`
 - `docs/decisions/ADR-002-Datei-und-Bildspeicher.md`
+- `docs/decisions/ADR-003-Publikations-und-Deploymentprozess.md`
+- `docs/decisions/ADR-004-Suche-und-RAG.md`
+- `docs/decisions/ADR-005-AI-Tasks-Scheduler-und-Queue.md`
+- `docs/decisions/ADR-006-Authentifizierung-und-Rechtearchitektur.md`
+- `docs/decisions/ADR-007-KI-Router-und-Providerintegration.md`
+- `docs/decisions/ADR-008-CI-CD-und-Deployment.md`
+- `docs/decisions/ADR-009-Repository-und-Anwendungsstruktur.md`
 
 ## Änderungshistorie
 
 | Version | Datum | Änderung |
 |---|---|---|
+| 3.2 | 06.10.2026 | G5 nach Zielarchitektur v1.0 und bestandenem G5-Gesamtaudit abgeschlossen; ADR-001 bis ADR-009 verankert; G6 Rollen/Rechte/Workflow als nächsten konkreten Gründungsschritt gesetzt. |
 | 3.1 | 06.10.2026 | Roadmap in Gründungs- und Umsetzungsphasen gegliedert; Redaktions-App und öffentliche FIB-Seite/PWA als eigene Produktstränge U2/U3 sichtbar gemacht; technische Umsetzung in U1–U6 konkretisiert; G4 auf abgeschlossen und G5 auf in Arbeit synchronisiert. |
 | 3.0 | 06.10.2026 | G4 gestartet; Schutzbedarf/Datenschutz/Offline als aktive Phase und neue Primärquelle verankert; G5–G7/G10 um Folgeanforderungen aus G4 ergänzt. |
 | 2.9 | 05.10.2026 | G3 nach bestandenem G3-Gesamtaudit abgeschlossen; Datenmodell v3.0 und neue Teilmodelle/Fachfunktionsarchitektur verankert; G4 Schutzbedarf/Datenschutz/Offline als nächsten konkreten Gründungsschritt gesetzt. |
