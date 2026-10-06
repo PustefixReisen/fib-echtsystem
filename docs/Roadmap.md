@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 3.9 | 06.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
+| 4.0 | 06.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
 
 ## Statusmodell
 
@@ -23,115 +23,94 @@ Es gelten die zentralen Status aus `PustefixReisen/pustivo/docs/governance/Dokum
 | Phase | Status | Ergebnis / nächster Schritt |
 |---|---|---|
 | Projektbasis / Repository | **Abgeschlossen** | separates Repository und initiale Dokumentationsstruktur vorhanden |
-| G1 Produktumfang / MVP | **Abgeschlossen** | MVP, unmittelbare Ausbaustufe, spätere Erweiterungen, Nicht-Ziele und Aufwandstreiber verbindlich festgelegt |
-| G2 UX / Informationsarchitektur / Fachfunktionen | **Abgeschlossen** | UX, öffentliche Navigation, Screenlogik, visuelle Identität, Claim, responsive Bannerlogik, GRÜNEN-Rücksprung und Assetstruktur sind konsolidiert; Abschlussprüfung durchgeführt |
-| G2.5 Transfer-Audit Demonstrator → Echtsystem | **Abgeschlossen** | zwei Prüfschichten abgeschlossen: fachliche Regeln/Recherche/Persistenz sowie sichtbare Inhaltsbausteine/Redaktionsfunktionen; Transfer-Gates bestanden |
-| Dokumentationsübernahme Demonstrator → Echtsystem | **Abgeschlossen** | Hauptdokumente sowie sichtbare Inhaltsbausteine und Redaktionsfunktionen erneut gegengeprüft; erkannte Lücken geschlossen oder als bewusste spätere Produktentscheidung dokumentiert |
-| G3 Datenanforderungen / Datenmodell | **Abgeschlossen** | fachliches/logisches Datenmodell v3.0 konsolidiert; G3-Gesamtaudit bestanden; drei Alt-Widersprüche bereinigt; keine offenen fachlichen G3-Grundsatzfragen |
-| G4 Schutzbedarf / Datenschutz / Offline | **Abgeschlossen** | Schutzklassen K0–K3, K2-Minimierung, Löschlogik, KI-/Provider-Prüfrahmen, Offline/PWA-Grundsätze und DSFA-Vorprüfung festgelegt |
-| G5 Zielarchitektur / Stack / Hosting / Deployment | **Abgeschlossen** | Zielarchitektur v1.0 und ADR-001 bis ADR-009 konsolidiert; G5-Gesamtaudit bestanden; Static-first, Fachservices, Storage, Suche/RAG, AI Tasks, Auth/RLS, KI-Router, CI/CD und Monorepo-Struktur verbindlich festgelegt |
-| G6 Rollen / Rechte / Workflow | **Abgeschlossen** | Rollen-/Aktions- und Fachfunktionsmatrix v1.0, verpflichtende MFA für Redakteure/Admins, Step-up-Regeln, Adminvorbehalte sowie Fachservice-/RLS-Grenzen festgelegt; G6-Gesamtaudit bestanden |
-| G7 Betrieb | **Abgeschlossen** | Betriebsrahmen v0.2 und G7-Gesamtaudit v1.0 abgeschlossen; Pilot-Backup Supabase → Nextcloud → PC → Back In Time, Restore-Pflicht, Monitoring/Warnwege, RPO/RTO, Retention sowie KI-Kosten-/Providerbetrieb festgelegt |
-| G8 Governance / Repository / Dokumentation | **Abgeschlossen** | Dokumentationslandkarte v3.0 konsolidiert, zentrale pustivo-Dokumentationsregel erweitert, Issues mit Wiederaufnahme-Kriterien geprüft und G8-Governanceaudit bestanden |
-| G9 Migration | **Abgeschlossen** | Migrationsstrategie v1.1 präzisiert; ausführbares Runbook v1.0 mit Zielvorbereitung, Daten-/Storage-/Providerübernahme, Prüfgates, Go-live- und Rückfalllogik erstellt; G9-Gesamtaudit bestanden |
-| G10 Go-live-Abnahme | **Abgeschlossen** | Go-live-Abnahmekriterien v1.0 mit harten Blockern, Regressionen, Recherchequalität, Sicherheit/Datenschutz, Restore, Migration, Betrieb, KI-Kosten und organisatorischer Übergabe festgelegt; G10-Gesamtaudit bestanden |
-| Gründungsaudit | **Geplant** | Vollständigkeit und Widerspruchsfreiheit aller Gründungspakete G1–G10 prüfen; danach beginnt die eigentliche Produktentwicklung |
+| G1 Produktumfang / MVP | **Abgeschlossen** | MVP, Ausbaustufen, Nicht-Ziele und Aufwandstreiber festgelegt |
+| G2 UX / Informationsarchitektur / Fachfunktionen | **Abgeschlossen** | öffentliche und redaktionelle Zielbilder fachlich geklärt |
+| G2.5 Transfer-Audit Demonstrator → Echtsystem | **Abgeschlossen** | fachliche Regeln, sichtbare Inhaltsbausteine und Redaktionsfunktionen transfergesichert |
+| Dokumentationsübernahme Demonstrator → Echtsystem | **Abgeschlossen** | Echtsystem ist Dokumentationshoheit; Transferlücken geschlossen |
+| G3 Datenanforderungen / Datenmodell | **Abgeschlossen** | Datenmodell v3.0 und G3-Audit abgeschlossen |
+| G4 Schutzbedarf / Datenschutz / Offline | **Abgeschlossen** | K0–K3, Löschlogik, KI-/Provider-Prüfrahmen und Offline/PWA-Grundsätze festgelegt |
+| G5 Zielarchitektur / Stack / Hosting / Deployment | **Abgeschlossen** | Zielarchitektur v1.0, ADR-001 bis ADR-009 und G5-Audit abgeschlossen |
+| G6 Rollen / Rechte / Workflow | **Abgeschlossen** | Rollen-/Rechtematrix, MFA, S0–S3, Fachservice-/RLS-Grenzen festgelegt |
+| G7 Betrieb | **Abgeschlossen** | Backup/Restore, Monitoring, RPO/RTO, Retention und KI-Kosten-/Providerbetrieb festgelegt |
+| G8 Governance / Repository / Dokumentation | **Abgeschlossen** | Dokumentationslandkarte, zentrale Governance und Wiederaufnahme-Kriterien konsolidiert |
+| G9 Migration | **Abgeschlossen** | Migrationsstrategie und ausführbares Runbook festgelegt |
+| G10 Go-live-Abnahme | **Abgeschlossen** | messbare Abnahmekriterien und harte Go-live-Blocker festgelegt |
+| Gründungsaudit | **Abgeschlossen** | G1–G10 übergreifend geprüft; eine Statusinkonsistenz in `Projektgruendung.md` korrigiert; keine blockierende Grundsatzfrage offen |
 
-## 2. Umsetzungsphasen nach dem Gründungsaudit
+## 2. Umsetzungsphasen
 
-Die Gründungsphasen G1–G10 legen fest, **was FIB können soll und wie es sicher, wartbar und migrierbar aufgebaut wird**. Sie ersetzen nicht die eigentliche Produktentwicklung.
+Nach bestandenem Gründungsaudit beginnt die technische Produktentwicklung.
 
-Nach bestandenem Gründungsaudit beginnt die technische Umsetzung in sichtbar getrennten Produktsträngen. Diese dürfen technisch parallelisiert werden, soweit ihre Abhängigkeiten geklärt sind.
+| Umsetzungsphase | Status | Ziel / Produkt |
+|---|---|---|
+| U1 Technischer FIB-Kern | **Geplant** | Datenbankschema, Migrationen, gemeinsame Fachservice-Schicht, Auth-/RLS-Grundlage, Datei-/Bildspeicher-Anbindung, KI-Router-Grundlage, gemeinsame Konfiguration und Testbasis |
+| U2 Redaktions-App | **Geplant** | interne Web-App für Rechercheeingang, Ereignisse/Meldungen, Vorgänge, Themen, Sitzungen, Bilder, „Mehr wissen?“, Freigaben, FIB-Chat und Administration |
+| U3 Öffentliche FIB-Seite / PWA | **Geplant** | Besucheroberfläche mit `Neues | Im Blick | Sitzungen | Suche`, Detailseiten, PWA, Teilen, Transparenz und Neuigkeitsstatus |
+| U4 Recherche / AI Tasks / KI-Funktionen | **Geplant** | Quellenbeobachtung, Quellenentdeckung, Rechercheläufe, Ereigniserkennung, Entwurfserstellung, Routing und Qualitätskontrollen |
+| U5 Veröffentlichung / Deployment / Betrieb | **Geplant** | S3-Publish-Prozess, statischer Build, Deployment, Monitoring, Backup/Restore und betriebliche Automatisierung |
+| U6 Integration / Pilot / Go-live-Vorbereitung | **Geplant** | End-to-End-Tests, Demonstrator-Regressionen, Usability-Feinschliff, Datenmigration, Pilotbetrieb und Vorbereitung der realen Go-live-Abnahme |
 
-| Umsetzungsphase | Ziel / Produkt |
-|---|---|
-| U1 Technischer FIB-Kern | Datenbankschema, Migrationen, gemeinsame Fachservice-Schicht, Auth-Grundlage, Datei-/Bildspeicher-Anbindung, KI-Router, gemeinsame Konfiguration und Testgrundlage |
-| U2 Redaktions-App | interne Web-App für Rechercheeingang, Ereignisse/Meldungen, Vorgänge, Themen, Sitzungen, Bilder, „Mehr wissen?“, Freigaben, FIB-Chat und redaktionelle Administration |
-| U3 Öffentliche FIB-Seite / PWA | konkrete Besucheroberfläche mit `Neues | Im Blick | Sitzungen | Suche`, Detailseiten, Bildern, „Mehr wissen?“, Transparenz, Teilen, PWA, Neuigkeitsstatus und Web Push |
-| U4 Recherche / AI Tasks / KI-Funktionen | Quellenbeobachtung, Quellenentdeckung, Rechercheläufe, Ereigniserkennung, Entwurfserstellung, KI-gestützte Einordnung, Routing und Qualitätskontrollen |
-| U5 Veröffentlichung / Deployment / Betrieb | S3-Publish-Prozess, statischer öffentlicher Build, Medienübernahme, Sitemap/SEO, Deployment, Cache/Invalidierung, Monitoring, Backup/Restore und betriebliche Automatisierung |
-| U6 Integration / Pilot / Go-live-Vorbereitung | End-to-End-Tests, Demonstrator-Regressionen, Usability-Feinschliff von Redaktion und Besucherseite, Datenmigration, Pilotbetrieb, Fehlerkorrektur und Vorbereitung der realen G10-Abnahme |
+## 3. Nächster konkreter Schritt
 
-## 3. G2.5 – Transfer-Audit Demonstrator → Echtsystem
+**U1 – Technischer FIB-Kern starten.**
 
-Verbindliche Detailquellen:
+U1 beginnt nicht mit einer Vollimplementierung „auf einmal“, sondern mit einem belastbaren technischen Grundgerüst. Die erste Teilsequenz soll mindestens umfassen:
 
-- `docs/Transfer-Audit-Demonstrator-Echtsystem.md`
-- `docs/Transfer-Audit-Inhaltsbausteine-und-Redaktionsfunktionen.md`
+1. Monorepo-/Paketstruktur gemäß ADR-009 konkret anlegen,
+2. Supabase-Projekt- und Migrationsstruktur für das fachliche Datenmodell vorbereiten,
+3. gemeinsame Typen und Konfigurationsschema anlegen,
+4. Fachservice-Grundgerüst und erste serverseitige Autorisierungsgrenzen umsetzen,
+5. Auth-/MFA-/RLS-Grundlage vorbereiten,
+6. Storage-Adapter und KI-Router-Schnittstellen als austauschbare Adapter definieren,
+7. Testbasis und erste Regressionstests aufsetzen.
+
+Die Umsetzung wird in kleinen, prüfbaren Schritten gegen die Gründungsdokumentation geführt.
+
+## 4. Verbindliche Abschlussquellen der Gründung
+
+- `docs/Projektgruendung.md` v1.5
+- `docs/Dokumentation.md` v3.0
+- `docs/Gruendungsaudit.md` v1.0
+- `docs/Datenmodell.md` v3.0
+- `docs/Schutzbedarf-Datenschutz-und-Offline.md` v1.0
+- `docs/Zielarchitektur.md` v1.0
+- `docs/Rollen-Rechte-und-Workflow.md` v1.0
+- `docs/Betrieb-und-Wiederherstellung.md`
+- `docs/Migrationsstrategie.md` v1.1
+- `docs/Migrations-Runbook.md` v1.0
+- `docs/Go-live-Abnahmekriterien.md` v1.0
+- G3-, G5-, G6-, G7-, G8-, G9- und G10-Abschlussaudits
 - `docs/Regressionstests-Demonstratortransfer.md`
+- Architekturentscheidungen unter `docs/decisions/`
 
-## 4. Nächster konkreter Schritt
+## 5. Offene, aber nicht blockierende Folgepunkte
 
-**Gründungsaudit:** G1–G10 als Gesamtsystem auf Vollständigkeit, Widerspruchsfreiheit, Doppelregelungen, offene Grundsatzfragen und saubere Übergabe an U1–U6 prüfen. Erst nach bestandenem Gründungsaudit beginnt die eigentliche Produktentwicklung.
+| Punkt | Wiederaufnahme / Phase |
+|---|---|
+| Referenzwissen Ausbaustufe 2 | GitHub Issue #1; nach Pilot nur bei nachgewiesenem Bedarf |
+| externe MCP-Anbindung | GitHub Issue #2; nach MVP bei konkretem Nutzen |
+| Restore-Test | GitHub Issue #3; spätestens U6 / reale G10-Abnahme |
+| Recherche-/Qualitätsschwellen | U4/U6 anhand Pilotkorpus kalibrieren |
+| konkrete Produktivprovider/-modelle und Budget | U4/U6 anhand Qualitäts-, Datenschutz- und Kostenmessung |
+| reale Migration auf GRÜNEN-Infrastruktur | nach U1–U6 im Go-live-Kontext |
 
-## 5. G3 – Abschluss
+## 6. Entwicklungsprinzipien
 
-Verbindlicher Abschlussnachweis: `docs/G3-Gesamtaudit.md` v1.2. `docs/Datenmodell.md` v3.0 ist die konsolidierte Integrationsquelle.
-
-## 6. G4 – Abschluss
-
-Verbindliche Integrationsquelle: `docs/Schutzbedarf-Datenschutz-und-Offline.md` v1.0.
-
-## 7. G5 – Abschluss
-
-Verbindliche Integrationsquelle: `docs/Zielarchitektur.md` v1.0. Abschlussnachweis: `docs/G5-Gesamtaudit.md` v1.0.
-
-## 8. G6 – Abschluss
-
-Verbindliche Integrationsquelle: `docs/Rollen-Rechte-und-Workflow.md` v1.0. Abschlussnachweis: `docs/G6-Gesamtaudit.md` v1.0.
-
-## 9. G7 – Abschluss
-
-Verbindliche Integrationsquelle: `docs/Betrieb-und-Wiederherstellung.md` v0.2. Abschlussnachweis: `docs/G7-Gesamtaudit.md` v1.0.
-
-## 10. G8 – Abschluss
-
-Verbindliche Dokumentationslandkarte: `docs/Dokumentation.md` v3.0. Abschlussnachweis: `docs/G8-Governance-und-Dokumentationsaudit.md` v1.0.
-
-## 11. G9 – Abschluss
-
-Verbindliche Primärquelle: `docs/Migrationsstrategie.md` v1.1. Ausführbares Runbook: `docs/Migrations-Runbook.md` v1.0. Abschlussnachweis: `docs/G9-Gesamtaudit.md` v1.0.
-
-## 12. G10 – Abschluss
-
-Verbindliche Primärquelle: `docs/Go-live-Abnahmekriterien.md` v1.0.
-
-Verbindlicher Abschlussnachweis: `docs/G10-Gesamtaudit.md` v1.0.
-
-Festgelegt sind insbesondere:
-
-- keine Go-live-Freigabe mit offenen kritischen fachlichen Regressionen,
-- 100 % der kritisch eingestuften Transfer-Referenzfälle müssen bestanden sein,
-- Recherche-/Ereignisentdeckung wird mit realem Pilotkorpus bewertet; kritische Pflichtquellen- und Ereignisfälle müssen erkannt werden,
-- keine erfundene globale Qualitätsquote ohne Datenbasis; Precision/Recall-Schwellen werden aus Pilotmessungen abgeleitet,
-- MFA-/Rechte-/S3-/RLS-/Audit-Anforderungen müssen praktisch nachgewiesen sein,
-- offene Datenschutz-/DSFA-/Providerblocker verhindern Go-live,
-- Static-first-Build, Rollback, PWA, Links und K0-Abgrenzung müssen funktionieren,
-- erfolgreicher Restore-Test aus GitHub Issue #3 ist zwingende Go-live-Bedingung,
-- reale Migration und organisatorische Übergabe müssen vollständig validiert sein,
-- KI-Providerwege, Qualität, Fallbacks, Kostenmessung und Produktivbudget müssen mit Pilotdaten geprüft sein,
-- bekannte kritische Sicherheitslücken oder ungeschützte Secrets blockieren den Go-live,
-- nichtkritische Komfortabweichungen dürfen nur dokumentiert nach Go-live verschoben werden.
-
-## 13. Hybrid-KI – Entwicklungsprinzip
-
-Für das Echtsystem gilt verbindlich:
-
-> **KI wird nur dort eingesetzt, wo sie fachlich erforderlich ist oder einen klaren zusätzlichen Nutzen bringt. Wird KI eingesetzt, hat die erforderliche Ergebnisqualität Vorrang vor dem niedrigsten Preis.**
-
-## 14. Visuelle Identität – geklärt
-
-Verbindliche Primärquelle: `docs/Visuelle-Identitaet-und-Bildkonzept.md`.
-
-## 15. Wichtige Echtsystem-Dokumentation
-
-Die aktuelle Dokumentationslandkarte und Zuordnung der Primärquellen steht in `docs/Dokumentation.md` v3.0. Architekturentscheidungen liegen unter `docs/decisions/`.
+- Fachliche Parität zum Demonstrator ist Mindestanforderung, nicht Endziel.
+- Ein Sachverhalt besitzt eine verbindliche Dokumentationsquelle.
+- Web-App, FIB-Chat und AI Tasks nutzen dieselbe Fachservice-Schicht.
+- KI wird nur mit klarem Nutzen eingesetzt; erforderliche Qualität geht vor niedrigstem Preis.
+- AI Tasks bleiben S0/S1; fachliche Bestätigung und Veröffentlichung bleiben menschlich verantwortlich.
+- Öffentliche Auslieferung bleibt Static-first.
+- Datenschutz-, Schutzklassen-, Rechte-, Audit- und Quellenregeln werden technisch abgesichert.
+- Implementierung und Dokumentation werden gemeinsam fortgeschrieben.
 
 ## Änderungshistorie
 
 | Version | Datum | Änderung |
 |---|---|---|
+| 4.0 | 06.10.2026 | Gründungsaudit bestanden; G1–G10 und Gründungsphase abgeschlossen; U1 als nächsten technischen Umsetzungsschritt gesetzt; Roadmap auf Umsetzungsphasen umgestellt. |
 | 3.9 | 06.10.2026 | G10 nach Festlegung der Go-live-Abnahmekriterien und bestandenem G10-Gesamtaudit abgeschlossen; Gründungsaudit als nächsten Schritt gesetzt. |
-| 3.8 | 06.10.2026 | G9 nach Präzisierung der Migrationsstrategie, Erstellung des Migrations-Runbooks und bestandenem G9-Gesamtaudit abgeschlossen; G10 Go-live-Abnahme als nächsten Gründungsschritt gesetzt. |
-| 3.7 | 06.10.2026 | G8 nach Konsolidierung der Dokumentationslandkarte und zentralen Dokumentationsregeln abgeschlossen; G8-Governanceaudit bestanden; G9 Migration als nächsten konkreten Gründungsschritt gesetzt. |
-| 3.6 | 06.10.2026 | G7 nach Festlegung der Pilot-Backupkette, Restore-Pflicht, RPO/RTO, Retention und Monitoring-/Warnwege abgeschlossen; G7-Gesamtaudit bestanden; G8 Governance/Dokumentation als nächsten konkreten Gründungsschritt gesetzt. |
+| 3.8 | 06.10.2026 | G9 nach Präzisierung der Migrationsstrategie, Erstellung des Migrations-Runbooks und bestandenem G9-Gesamtaudit abgeschlossen; G10 als nächsten Gründungsschritt gesetzt. |
+| 3.7 | 06.10.2026 | G8 nach Konsolidierung der Dokumentationslandkarte und zentralen Dokumentationsregeln abgeschlossen; G9 als nächsten Gründungsschritt gesetzt. |
+| 3.6 | 06.10.2026 | G7 nach Festlegung von Backup, Restore-Pflicht, RPO/RTO, Retention und Monitoring abgeschlossen; G8 als nächsten Schritt gesetzt. |
