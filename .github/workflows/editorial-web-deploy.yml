@@ -1,0 +1,57 @@
+name: Deploy Editorial Web
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'apps/editorial-web/**'
+      - '.github/workflows/editorial-web-deploy.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: editorial-web-pilot
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: apps/editorial-web/package.json
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build editorial web
+        env:
+          VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
+          VITE_SUPABASE_PUBLISHABLE_KEY: ${{ secrets.VITE_SUPABASE_PUBLISHABLE_KEY }}
+        run: npm run build --workspace @fib/editorial-web
+
+      - name: Install SFTP client
+        run: sudo apt-get update && sudo apt-get install -y lftp
+
+      - name: Deploy to IONOS
+        env:
+          IONOS_SFTP_HOST: ${{ secrets.IONOS_SFTP_HOST }}
+          IONOS_SFTP_USER: ${{ secrets.IONOS_SFTP_USER }}
+          IONOS_SFTP_PASSWORD: ${{ secrets.IONOS_SFTP_PASSWORD }}
+        run: |
+          lftp -c "
+            set cmd:fail-exit yes;
+            set net:max-retries 2;
+            set net:timeout 20;
+            set sftp:auto-confirm yes;
+            open -u \"$IONOS_SFTP_USER\",\"$IONOS_SFTP_PASSWORD\" sftp://$IONOS_SFTP_HOST;
+            mkdir -p redaktion;
+            mirror --reverse --delete --verbose apps/editorial-web/dist/ redaktion/;
+            bye;
+          "
