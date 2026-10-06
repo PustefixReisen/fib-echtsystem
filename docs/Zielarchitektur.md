@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 0.1 | 06.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
+| 0.2 | 06.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
 
 ## 1. Zweck und Geltung
 
@@ -21,6 +21,9 @@ Verbindliche Grundlagen insbesondere:
 - `docs/KI-Provider-und-DSFA-Pruefrahmen.md`
 - `docs/Migrationsstrategie.md`
 - `docs/KI-Betrieb-und-Kosten.md`
+- `docs/decisions/ADR-001-Web-und-Service-Stack.md`
+- `docs/decisions/ADR-002-Datei-und-Bildspeicher.md`
+- `docs/decisions/ADR-003-Publikations-und-Deploymentprozess.md`
 
 ## 2. Architekturprinzipien
 
@@ -33,7 +36,7 @@ Verbindliche Grundlagen insbesondere:
 7. **Konfiguration statt persönlicher Bindung:** Domains, Projekt-IDs, Speicherendpunkte, Provider, Redirects und Secrets werden konfiguriert, nicht in Fachlogik hart codiert.
 8. **Migration ist Architekturmerkmal:** Entwicklungs-/Pilotbetrieb und späterer GRÜNEN-Zielbetrieb verwenden dieselbe Software und dasselbe reproduzierbare Schema.
 9. **MVP online-first für Redaktion:** kein dauerhafter lokaler Spiegel interner K1/K2-Daten.
-10. **Öffentliche Auslieferung möglichst einfach und robust:** Besucherzugriff soll keine KI und kein Benutzerkonto benötigen.
+10. **Öffentliche Auslieferung static-first:** Besucher lesen einen freigegebenen, versionierten K0-Stand und benötigen für normales Lesen weder Supabase noch KI.
 
 ## 3. Logische Gesamtarchitektur
 
@@ -44,19 +47,15 @@ flowchart TB
     C[FIB-Chat]
     T[AI Tasks]
 
-    PUB[Öffentliche Lese-/Auslieferungsschicht]
     FS[FIB-Fachfunktionen / Services]
     AIR[FIB-KI-Router]
+    PUB[Publish / Build]
 
     DB[(Supabase PostgreSQL)]
     AUTH[Supabase Auth]
-    STORE[(Datei-/Bildspeicher)]
-    AI[Freigegebene KI-Provider]
-    WEB[Öffentlicher Webserver]
-
-    V --> WEB
-    WEB --> PUB
-    PUB --> FS
+    STORE[(interner Datei-/Bildspeicher)]
+    AI[freigegebene KI-Provider]
+    WEB[statischer öffentlicher Webserver]
 
     R --> FS
     C --> FS
@@ -67,9 +66,14 @@ flowchart TB
     FS --> STORE
     FS --> AIR
     AIR --> AI
+
+    FS -->|S3 / K0-Stand| PUB
+    STORE -->|freigegebene Medien| PUB
+    PUB --> WEB
+    V --> WEB
 ```
 
-Die Darstellung ist logisch. Ob einzelne Services später als Edge Function, serverseitiger API-Endpunkt, Datenbankfunktion oder eigener schlanker Dienst umgesetzt werden, wird innerhalb von G5 weiter konkretisiert.
+Damit sind interner Arbeitsbetrieb und öffentliche Auslieferung bewusst entkoppelt.
 
 ## 4. Technischer Kern: Supabase / PostgreSQL
 
@@ -79,77 +83,54 @@ Vorgesehen sind insbesondere:
 
 - PostgreSQL für strukturierte FIB-Daten,
 - Supabase Auth für Redakteur-/Admin-Authentifizierung,
-- Row Level Security bzw. gleichwertige serverseitige Zugriffssicherung als zusätzliche technische Schutzschicht,
+- Row Level Security als zusätzliche technische Schutzschicht,
 - reproduzierbare Migrationen für Schema, Constraints, Policies, Funktionen und Trigger,
 - technische Audit-/Betriebsdaten, soweit passend,
-- gegebenenfalls PostgreSQL-Vektor-/Suchfunktionen, sofern der spätere Such-/RAG-Entwurf dies tatsächlich benötigt.
-
-Verbindlicher Grundsatz:
+- gegebenenfalls PostgreSQL-Such-/Vektorfunktionen, sofern der spätere Such-/RAG-Entwurf dies benötigt.
 
 > **RLS ersetzt die Fachfunktionsschicht nicht.**
 
-RLS schützt Datenzugriffe technisch. Fachregeln, Zustandsübergänge, Bestätigungen, Freigaben und Audit werden weiterhin durch die Fachservices erzwungen.
+Fachregeln, Zustandsübergänge, Bestätigungen, Freigaben und Audit werden durch die Fachservices erzwungen. Ein öffentlicher Browser erhält keinen regulären direkten Zugriff auf FIB-Fachtabellen.
 
 ## 5. Datei- und Bildspeicher
 
-### 5.1 Trennung von Metadaten und Binärdatei
+Die FIB-Datenbank speichert fachliche Identität, Herkunft, Rechte, Schutzklasse, Freigabestatus, Beziehungen und eine technische Speicherreferenz. Die Binärdatei selbst liegt in einem dafür vorgesehenen Speicher.
 
-Die FIB-Datenbank speichert insbesondere:
+FIB verwendet einen gekapselten Storage-Adapter statt produktabhängiger Pfade in der Fachlogik.
 
-- fachliche Bild-/Dateiidentität,
-- Herkunft und Rechte,
-- Schutzklasse,
-- Veröffentlichungs-/Freigabestatus,
-- Beziehungen zu FIB-Objekten,
-- technische Speicherreferenz.
-
-Die Binärdatei selbst liegt in einem dafür vorgesehenen Speicher.
-
-### 5.2 Speicheradapter statt fest verdrahtetem Produkt
-
-FIB erhält eine kleine Storage-Abstraktion. Fachfunktionen arbeiten nicht direkt mit herstellerspezifischen URLs oder Dateipfaden.
-
-Mindestens erforderliche Speicheroperationen:
-
-- Datei ablegen,
-- Datei lesen/streamen,
-- Metadaten bzw. technischen Identifier erhalten,
-- Datei ersetzen/versionieren soweit erforderlich,
-- Datei löschen bzw. sperren, wenn dies fachlich/rechtlich zulässig und vorgesehen ist,
-- öffentliche bzw. geschützte Auslieferung entsprechend Schutz-/Freigabestatus.
-
-### 5.3 Nextcloud
-
-Nextcloud ist für Entwicklungs-/Pilotbetrieb ein geeigneter Kandidat für Dokument- und Bildspeicherung, insbesondere wenn bereits eine verwaltete Instanz vorhanden ist.
-
-Für die Zielarchitektur gilt jedoch:
+Nextcloud ist für Entwicklung/Pilot ein geeigneter Kandidat. Verbindlich ist aber:
 
 - keine Abhängigkeit von einem persönlichen Nextcloud-Konto,
-- Zugriff über standardisierte bzw. klar gekapselte Schnittstelle, vorzugsweise WebDAV/geeignete API,
-- fachliche Speicherreferenz unabhängig von der konkreten Nextcloud-URL,
-- öffentliche Dateien/Bilder nur nach FIB-Freigabe bereitstellen,
-- K1/K2-Dateien nicht über erratbare öffentliche Links ausliefern,
-- späterer Wechsel auf organisationsgebundene Nextcloud, Supabase Storage oder einen anderen geeigneten Speicher muss ohne Änderung des Fachmodells möglich bleiben.
+- standardisierte/gekap­selte Schnittstelle,
+- K1/K2-Dateien nicht öffentlich ausliefern,
+- Produktwechsel ohne Änderung des Fachmodells ermöglichen.
 
-Eine selbst installierte Nextcloud auf gemeinsam genutztem Webhosting ist **keine Architekturvoraussetzung**. Die bestehende IONOS-Webhosting-Plattform unterstützt zwar PHP/SSH; Nextcloud gehört jedoch nicht zu den offiziell angebotenen Click-&-Build-Anwendungen. Deshalb wird G5 nicht davon abhängig gemacht, dass dort eine zusätzliche Nextcloud ohne Mehrkosten betrieben werden kann.
+Öffentlich freigegebene Medien werden bei der Veröffentlichung in den öffentlichen K0-Stand bzw. dessen Medienablage übernommen. Besucher greifen dadurch nicht auf den internen Dateispeicher zu.
+
+Details: `docs/decisions/ADR-002-Datei-und-Bildspeicher.md`.
 
 ## 6. Öffentliche Webanwendung / PWA
 
-Die öffentliche FIB-Anwendung ist eine mobile-first Webanwendung/PWA.
+Die öffentliche FIB-Anwendung wird **static-first** umgesetzt.
 
-Ziel:
+Vorgesehener Stack gemäß ADR-001:
 
-- statische bzw. cachebare App-Shell und öffentliche Assets,
+- TypeScript,
+- Astro für die öffentliche Website und statische Seitengenerierung,
+- gezielte interaktive Komponenten statt vollständiger SPA-Abhängigkeit,
+- PWA-Funktionen für App-Installation, lokalen Neuigkeitsstatus und Push.
+
+Ziele:
+
 - öffentliche Inhalte ohne Anmeldung,
-- keine KI-Aufrufe für normales Lesen,
-- stabile öffentliche URLs,
-- SEO-fähige Ausgabe,
-- lokaler gerätebezogener Neuigkeitsstatus ohne zentrales Besucherprofil,
+- normales Lesen ohne laufenden KI-Aufruf,
+- normales Lesen ohne laufenden Datenbankzugriff,
+- stabile URLs,
+- SEO-fähige HTML-Ausgabe,
+- gerätebezogener Neuigkeitsstatus ohne zentrales Besucherprofil,
 - Web Push nur nach Opt-in,
-- öffentliche K0-Inhalte können kontrolliert gecacht werden,
+- K0 kann kontrolliert lokal gecacht werden,
 - keine K1/K2-Daten im öffentlichen PWA-Cache.
-
-Die genaue Rendering-Strategie – statische Vorabgenerierung, serverseitige Ausgabe oder Hybrid – wird in G5 nach SEO-, Hosting- und Aktualitätsanforderungen entschieden.
 
 ## 7. Redaktions-Web-App
 
@@ -159,18 +140,15 @@ Sie nutzt:
 
 - Supabase Auth,
 - gemeinsame Fachfunktionen,
-- keine direkten frei verfügbaren Tabellenänderungen,
 - Online-Betrieb im MVP,
 - keine dauerhafte Offline-Spiegelung interner Daten,
 - serverseitig erzwungene Rollen-, Schutzklassen-, Status- und Freigaberegeln.
 
-Die Web-App darf als technischer Client austauschbar bleiben; die Geschäftslogik liegt nicht ausschließlich im Browser.
+Die Geschäftslogik liegt nicht ausschließlich im Browser. Die App kann gezielt interaktive React-Komponenten verwenden; fachliche Regeln bleiben in den Services.
 
 ## 8. FIB-Chat
 
 Der FIB-Chat ist ein eigener produktiver Zugang zur gleichen Fachfunktionsschicht.
-
-Architektur:
 
 ```text
 Benutzer
@@ -185,9 +163,7 @@ FIB-Fachfunktionen
   └─ FIB-KI-Router
 ```
 
-Der Chat besitzt keinen pauschalen DB-Zugriff. Er erhält nur den für die jeweilige Fachfunktion zulässigen Kontext.
-
-Das verwendete Sprachmodell ist austauschbar.
+Der Chat besitzt keinen pauschalen DB-Zugriff. Er erhält nur den für die jeweilige Fachfunktion zulässigen Kontext. Das verwendete Sprachmodell bleibt austauschbar.
 
 ## 9. AI Tasks und Scheduler
 
@@ -203,23 +179,21 @@ Die technische Ausführung benötigt:
 - Schutzklassenprüfung vor externem KI-Aufruf,
 - keine eigenmächtige S2-/S3-Eskalation.
 
-Ob Scheduler/Worker über Supabase-Funktionen, externes Cron oder einen kleinen separaten Dienst realisiert werden, wird anhand Zuverlässigkeit und Hostingmöglichkeiten entschieden.
+Die konkrete Scheduler-/Worker-Technik wird in G5 weiter entschieden.
 
 ## 10. KI-Router
 
 Der FIB-KI-Router ist eine zentrale technische Komponente.
 
-Er erhält pro Auftrag mindestens:
+Er berücksichtigt pro Auftrag mindestens:
 
 - FIB-Aufgabenklasse,
 - erforderliche Qualitäts-/Leistungsklasse,
-- Schutzklasse und Personenbezug des übermittelten Kontexts,
+- Schutzklasse und Personenbezug,
 - erlaubte Provider/Modelle,
 - Kosten-/Tokenrahmen,
 - Fallback-/Review-Regel,
 - Tool-/Recherchefreigabe.
-
-Er wählt daraus den freigegebenen Betriebsweg.
 
 Verbindlich:
 
@@ -229,25 +203,61 @@ Verbindlich:
 - Providerwechsel über Konfiguration,
 - Nutzung und Kosten protokollierbar.
 
-## 11. Hosting- und Umgebungsmodell
+## 11. Publikationsprozess
+
+Eine fachliche S3-Freigabe schreibt nicht direkt in öffentliche Webdateien.
+
+Der Ablauf ist:
+
+```text
+S3-Freigabe
+   ↓
+versionierter öffentlicher K0-Stand
+   ↓
+Static Build
+   ├─ HTML
+   ├─ Suchindex
+   ├─ Sitemap / SEO
+   ├─ PWA-Artefakte
+   └─ freigegebene Medien
+   ↓
+Validierung
+   ↓
+atomarer Deploy
+   ↓
+öffentliche Seite
+```
+
+Wesentliche Regeln:
+
+- nur freigegebene K0-Daten gelangen in den öffentlichen Build,
+- fehlgeschlagener Build ersetzt niemals die bisherige Website,
+- Besucher sehen keinen halbfertigen Mischstand,
+- Deployments sind versioniert und rollbackfähig,
+- Redaktionssystem zeigt Publish-Status und Fehler,
+- fachlich veröffentlicht und technisch öffentlich ausgeliefert werden als zwei nachvollziehbare Zustände unterschieden.
+
+Details: `docs/decisions/ADR-003-Publikations-und-Deploymentprozess.md`.
+
+## 12. Hosting- und Umgebungsmodell
 
 Mindestens drei logisch getrennte Umgebungen werden vorgesehen:
 
-1. **lokale/Entwicklungsumgebung** – Entwicklung und Tests,
-2. **Pilot-/Entwicklerumgebung** – produktionsnaher Testbetrieb unter Entwicklerverantwortung,
-3. **Produktivumgebung GRÜNE Feldkirchen** – organisationskontrollierter Zielbetrieb.
+1. **lokale/Entwicklungsumgebung**,
+2. **Pilot-/Entwicklerumgebung**,
+3. **Produktivumgebung GRÜNE Feldkirchen**.
 
-Nicht zwingend jede Umgebung benötigt dauerhaft vollständig eigene kostenpflichtige Infrastruktur. Entscheidend ist die Konfigurations- und Datenabgrenzung sowie reproduzierbare Herstellung.
-
-Zielbetrieb gemäß Migrationsstrategie:
+Zielbetrieb:
 
 - GRÜNEN-Webserver,
 - eigenes Supabase-Projekt der Organisation,
-- organisationskontrollierte Storage-/Providerkonten,
+- organisationskontrollierter Datei-/Bildspeicher und Providerkonten,
 - organisationskontrollierte Domains, Secrets und Administrationszugänge,
 - mindestens zwei administrativ handlungsfähige Personen.
 
-## 12. Deployment und Reproduzierbarkeit
+Der statische öffentliche Build ist transportabel und kann in der Pilotphase auf IONOS und später auf dem GRÜNEN-Webserver ausgeliefert werden.
+
+## 13. Deployment und Reproduzierbarkeit
 
 Im Repository versioniert werden mindestens:
 
@@ -259,28 +269,28 @@ Im Repository versioniert werden mindestens:
 - Edge-/Serverfunktionen,
 - Konfigurationsschemas,
 - Tests und Regressionstests,
-- Deployment-Skripte bzw. Workflows,
+- Build-/Deployment-Skripte bzw. Workflows,
 - dokumentierte notwendige externe Projekteinstellungen.
 
 Nicht ins Repository gehören Secrets und produktive personenbezogene Daten.
 
-Deployment muss so gestaltet werden, dass eine Zielumgebung aus Repository + dokumentierter Konfiguration reproduzierbar aufgebaut werden kann.
+Eine Zielumgebung muss aus Repository plus dokumentierter Konfiguration reproduzierbar aufgebaut werden können.
 
-## 13. Cache, Versionierung und Aktualität
+## 14. Cache, Versionierung und Aktualität
 
-G5 muss für öffentliche Inhalte eine explizite Cache-/Invalidierungsstrategie festlegen.
+Die Cache-Strategie folgt dem versionierten Static-Publish-Modell:
 
-Mindestens gilt:
+- stabile Inhalts-URLs bleiben stabil,
+- statische Assets erhalten versions-/hashbasierte Dateinamen und können lange gecacht werden,
+- HTML und öffentliche Inhalts-/Versionsmanifeste werden kurz bzw. revalidierbar gecacht,
+- Service Worker und PWA erkennen neue Releases,
+- neue Veröffentlichungen dürfen nicht dauerhaft durch alte Browser-/PWA-Caches verdeckt werden,
+- K1/K2 dürfen nie in öffentlichen Caches landen,
+- jeder Deploy besitzt eine technisch prüfbare Releasekennung.
 
-- fachlich relevante Veröffentlichung/Änderung erzeugt eine neue öffentliche Version bzw. einen eindeutigen Aktualitätsstand,
-- Browser/PWA/CDN dürfen veröffentlichte neue Stände nicht durch alten Cache dauerhaft verdecken,
-- stabile URLs bleiben stabil; Cache-Busting erfolgt über Version/ETag/Manifest oder vergleichbare technische Mechanismen,
-- öffentliche Assets dürfen aggressiver gecacht werden als veränderliche FIB-Inhalte,
-- K1/K2 dürfen nie in öffentlichen Caches landen.
+Damit wird das im Demonstrator beobachtete Mehrfach-Reload-/Cacheproblem strukturell vermieden.
 
-Die im Demonstrator beobachteten Mehrfach-Reload-/Cacheprobleme dürfen im Echtsystem nicht wieder auftreten.
-
-## 14. Sichere Ausgabe dynamischer Inhalte
+## 15. Sichere Ausgabe dynamischer Inhalte
 
 Alle dynamisch erzeugten oder aus externen Quellen übernommenen Inhalte werden vor öffentlicher Ausgabe sicher gerendert.
 
@@ -292,23 +302,32 @@ Verbindlich:
 - Schutz vor XSS/Script-Injektion,
 - externe Inhalte erhalten keine Möglichkeit, FIB-Fachfunktionen oder Browserkontext zu manipulieren.
 
-## 15. Noch offene G5-Entscheidungen
+## 16. In G5 bereits entschieden
+
+- TypeScript als gemeinsame Implementierungssprache für Web-/Service-Schicht,
+- Astro/static-first für die öffentliche Seite,
+- gemeinsame serverseitige Fachservice-Schicht,
+- Supabase/PostgreSQL als strukturierter Kern,
+- Supabase Auth als Authentifizierungsbasis,
+- interner Datei-/Bildspeicher über austauschbaren Adapter,
+- Nextcloud als Pilotkandidat, aber nicht als Systemvoraussetzung,
+- öffentliche Medien werden aus internem Speicher in den K0-Deploy übernommen,
+- versionierter Build mit Validierung, atomarem Deploy und Rollbackfähigkeit.
+
+## 17. Noch offene G5-Entscheidungen
 
 Vor Abschluss von G5 sind insbesondere noch zu entscheiden:
 
-1. konkrete Frontend-/Web-App-Technologie,
-2. konkrete öffentliche Rendering-/Deploymentstrategie,
-3. konkrete Implementierungsform der Fachservices,
-4. konkrete technische Auth-/RLS-Architektur,
-5. produktiver Datei-/Bildspeicher und Storage-Adapter,
-6. Scheduler-/Worker-Technik für AI Tasks,
-7. technische Such-/RAG-Architektur und Notwendigkeit von Vektorsuche,
-8. konkrete Provider-/Routerintegration,
-9. genaue Cache-/Invalidierungsmechanik,
-10. CI/CD- und Test-/Deploymentablauf.
+1. konkrete technische Auth-/RLS-Ausgestaltung,
+2. Scheduler-/Worker-Technik für AI Tasks,
+3. technische Such-/RAG-Architektur und Notwendigkeit von Vektorsuche,
+4. konkrete Provider-/Routerintegration,
+5. konkrete CI/CD-Plattform und Upload-/Deploymentmethode,
+6. Detailstruktur des Repositories bzw. der Anwendungen/Packages.
 
 ## Änderungshistorie
 
 | Version | Datum | Änderung |
 |---|---|---|
+| 0.2 | 06.10.2026 | ADR-001 bis ADR-003 integriert; static-first als verbindliche öffentliche Architektur festgelegt; versionierter K0-Publish, Validierung, atomarer Deploy, Rollback und Cache-Strategie ergänzt; interne und öffentliche Medienauslieferung getrennt; offene G5-Punkte bereinigt. |
 | 0.1 | 06.10.2026 | G5 gestartet; logische Zielarchitektur mit Supabase/PostgreSQL-Kern, gemeinsamer Fachfunktionsschicht, entkoppeltem Datei-/Bildspeicher, Storage-Adapter, Nextcloud als Pilotkandidat, Web-App/PWA, FIB-Chat, AI Tasks, KI-Router, Umgebungs-/Deploymentmodell, Cache- und sichere Renderinganforderungen festgelegt. |
