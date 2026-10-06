@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 4.4 | 06.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
+| 4.5 | 06.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
 
 ## Statusmodell
 
@@ -85,22 +85,34 @@ Im bestehenden Supabase-Projekt `Shared-Apps` wurden die ersten FIB-Migrationen 
 - Supabase Security Advisor meldet nach Policy-Ergänzung keine FIB-spezifische `RLS enabled no policy`-Warnung mehr,
 - fehlender Index auf `fib.events.merged_into_event_id` ergänzt.
 
-Der Supabase-Connector kann den echten Laufzeittest nicht per `SET ROLE fib_app` durchführen, weil seine Administrationsverbindung nicht Mitglied dieser Rolle ist. Der vollständige Login-Test folgt nach sicherer Vergabe des `fib_app`-Runtime-Secrets auf pustivo.
+Der vollständige Login-Test mit echten `fib_app`-Credentials folgt, sobald das Runtime-Secret auf pustivo gesetzt werden kann.
 
 ### Legacy-Ausnahme im Schema `public`
 
 `public.fib_ai_daily_usage` ist laut Datenbankkommentar ein Zähler des alten öffentlichen FIB-„Mehr wissen?“-Demonstrators und gehört nicht zum Echtsystem. Die Tabelle bleibt solange unverändert, wie der Demonstrator sie benötigt. Bereinigung/Wiederaufnahme ist in GitHub Issue #5 dokumentiert.
 
-### U1.3 Nächster Schritt – Fachservice-/Runtime-Anbindung
+### U1.3 Runtime- und Fachservice-Grundgerüst – begonnen
+
+Umgesetzt:
+
+- `.env.example` als verbindlicher Konfigurationsvertrag ohne echte Secrets,
+- `docs/Betrieb-FIB-Runtimezugang.md` für `fib_app`, Secret-Regeln und Live-Isolationstest,
+- `@fib/domain-contracts` mit Akteurs-, Rollen-, MFA- und S0–S3-Verträgen,
+- `@fib/fachservices` mit zentraler Autorisierungsbasis,
+- AI Tasks technisch auf S0/S1 begrenzt,
+- S3 verlangt explizite Bestätigung,
+- Admin- und MFA-Step-up-Anforderungen sind zentral prüfbar,
+- offener manueller pustivo-Schritt separat dokumentiert.
 
 Als nächstes:
 
-1. sicheren `fib_app`-Runtime-Zugang für pustivo konfigurieren und echten Credential-Isolationstest durchführen,
-2. Fachservice-Grundgerüst an `fib` anbinden,
-3. Auth-Token serverseitig prüfen und gegen `fib.app_users` autorisieren,
-4. erste FIB-Fachfunktion mit Audit-/Rechteprüfung implementieren,
-5. Spezialbereiche des Datenmodells modular ergänzen,
-6. schema-spezifischen FIB-Dump/Restore-Pfad vorbereiten.
+1. Datenbankzugriffsadapter im Fachservice anbinden,
+2. Auth-Token serverseitig prüfen und gegen `fib.app_users` autorisieren,
+3. erste konkrete FIB-Fachfunktion über den gemeinsamen Autorisierungspfad implementieren,
+4. automatisierte Tests für die Autorisierungsbasis ergänzen,
+5. bei eingerichtetem pustivo-Serverprozess `FIB_DATABASE_URL` sicher setzen und echten Credential-Isolationstest durchführen,
+6. Spezialbereiche des Datenmodells modular ergänzen,
+7. schema-spezifischen FIB-Dump/Restore-Pfad vorbereiten.
 
 Parallel gilt für Storage gemäß ADR-011:
 
@@ -134,6 +146,7 @@ Parallel gilt für Storage gemäß ADR-011:
 | externe MCP-Anbindung | GitHub Issue #2; nach MVP bei konkretem Nutzen |
 | Restore-Test | GitHub Issue #3; spätestens U6 / reale G10-Abnahme; zusätzlich schema-spezifischen `fib`-Restore nachweisen |
 | Legacy-FIB-Tabelle in `public` | GitHub Issue #5; nach Abschaltung bzw. Entkopplung des Demonstrators bereinigen |
+| pustivo Runtime-Secret / echter `fib_app`-Login | bei Einrichtung des FIB-Serverprozesses; Ablauf in `docs/Offener-Punkt-pustivo-FIB-Runtime-Secret.md` |
 | Recherche-/Qualitätsschwellen | U4/U6 anhand Pilotkorpus kalibrieren |
 | konkrete Produktivprovider/-modelle und Budget | U4/U6 anhand Qualitäts-, Datenschutz- und Kostenmessung |
 | möglicher späterer Umzug auf GRÜNEN-Infrastruktur | nur bei tatsächlicher Betriebsentscheidung; pustivo darf dauerhafter Produktivbetrieb bleiben |
@@ -156,8 +169,9 @@ Parallel gilt für Storage gemäß ADR-011:
 
 | Version | Datum | Änderung |
 |---|---|---|
-| 4.4 | 06.10.2026 | `fib` in Shared-Apps angelegt; Runtime-Rollen, RLS-Policies, Default Privileges und Isolation praktisch geprüft; Advisor-Nacharbeiten durchgeführt; Legacy-Tabelle des Demonstrators über Issue #5 abgegrenzt; nächster Schritt auf Runtime-/Fachservice-Anbindung gesetzt. |
-| 4.3 | 06.10.2026 | ADR-011 übernommen: Shared-Apps mit eigenem Schema `fib`, gemeinsames Supabase Auth bei FIB-eigener Autorisierung, getrennte Nextcloud-/Backup-Zugänge, pustivo als möglicher Dauerbetrieb; `core.sql` auf `fib` umgestellt; Runtime-Rollen-/Isolationstest als nächsten Schritt gesetzt. |
+| 4.5 | 06.10.2026 | U1.3 begonnen: Runtime-Konfigurationsvertrag, Secret-Regeln, Domain-Contracts und zentrale Fachservice-Autorisierungsbasis angelegt; pustivo-Live-Credentialtest als konkreten manuellen Schritt dokumentiert. |
+| 4.4 | 06.10.2026 | `fib` in Shared-Apps angelegt; Runtime-Rollen, RLS-Policies, Default Privileges und Isolation praktisch geprüft; Advisor-Nacharbeiten durchgeführt; Legacy-Tabelle des Demonstrators über Issue #5 abgegrenzt. |
+| 4.3 | 06.10.2026 | ADR-011 übernommen: Shared-Apps mit eigenem Schema `fib`, gemeinsames Supabase Auth bei FIB-eigener Autorisierung, getrennte Nextcloud-/Backup-Zugänge, pustivo als möglicher Dauerbetrieb; `core.sql` auf `fib` umgestellt. |
 | 4.2 | 06.10.2026 | U1.2 begonnen; erstes SQL-Kernschema mit RLS-/Grant-Baseline angelegt. |
-| 4.1 | 06.10.2026 | U1 gestartet; Monorepo-/Paketstruktur gemäß ADR-009 umgesetzt; nächster Schritt auf Supabase-Schema und Migrationen gesetzt. |
+| 4.1 | 06.10.2026 | U1 gestartet; Monorepo-/Paketstruktur gemäß ADR-009 umgesetzt. |
 | 4.0 | 06.10.2026 | Gründungsaudit bestanden; G1–G10 und Gründungsphase abgeschlossen; U1 als nächsten technischen Umsetzungsschritt gesetzt. |
