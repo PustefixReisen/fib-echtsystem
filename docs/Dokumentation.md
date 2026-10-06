@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 2.6 | 05.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
+| 2.7 | 06.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
 
 ## 1. Zweck
 
@@ -115,8 +115,8 @@ Leitfrage: **Wie wird FIB technisch umgesetzt und dauerhaft betrieben?**
 
 Dazu gehören insbesondere:
 
+- `docs/Schutzbedarf-Datenschutz-und-Offline.md`,
 - künftige Architektur-Primärquelle,
-- Sicherheit / Datenschutz,
 - Deployment / Betrieb,
 - Backup / Restore,
 - Administration,
@@ -175,6 +175,7 @@ Die Umstellung erfolgt bewusst erst dann, wenn dadurch keine laufende Gründungs
 | Marketing / Kommunikation | `docs/Marketing-und-Kommunikation.md` | vorhanden |
 | SEO / Auffindbarkeit | `docs/SEO-und-Auffindbarkeit.md` | vorhanden |
 | KI-Betrieb / Kosten | `docs/KI-Betrieb-und-Kosten.md` | vorhanden |
+| Schutzbedarf / Datenschutz / Offline | `docs/Schutzbedarf-Datenschutz-und-Offline.md` | in Arbeit – G4 |
 | Migrationsstrategie Entwickler → GRÜNEN-Infrastruktur | `docs/Migrationsstrategie.md` | vorhanden |
 | Übernahme Demonstrator-Dokumentation | `docs/Dokumentationsuebernahme-Demonstrator.md` | abgeschlossen / unter G2.5 erneut verifiziert |
 | Architektur | noch anzulegen | offen – G5 |
@@ -182,7 +183,6 @@ Die Umstellung erfolgt bewusst erst dann, wenn dadurch keine laufende Gründungs
 | Sitzungs- und Beschlussmodell | `docs/Sitzungs-und-Beschlussmodell.md` | vorhanden / konsolidiert |
 | Wirkungsmodell | `docs/Wirkungsmodell.md` | vorhanden / konsolidiert |
 | Persistenz- und Lebenszyklusmodell | `docs/Persistenz-und-Lebenszyklusmodell.md` | vorhanden / konsolidiert |
-| Sicherheit / Datenschutz | noch anzulegen | nächster Gründungsschritt G4 |
 | Deployment / Betrieb | noch anzulegen | offen – spätere Phase |
 | Backup / Restore | noch anzulegen | offen – spätere Phase |
 | Administration | noch anzulegen | offen – spätere Phase |
@@ -268,9 +268,15 @@ G3 ist mit `docs/G3-Gesamtaudit.md` v1.2 abgeschlossen.
 
 Das zentrale `docs/Datenmodell.md` wurde auf v3.0 als konsolidierte Integrationsquelle fortgeschrieben. Die während G3 entstandenen spezialisierten Teilmodelle bleiben Primärquellen für ihre Detailregeln.
 
-Es bestehen keine bekannten offenen fachlichen G3-Grundsatzfragen. Der nächste Gründungsschritt ist G4 Schutzbedarf / Datenschutz / Offline.
+Es bestehen keine bekannten offenen fachlichen G3-Grundsatzfragen. G4 Schutzbedarf / Datenschutz / Offline ist gestartet.
 
-## 10. Pflegepflicht
+## 10. G4-Start
+
+G4 wird in `docs/Schutzbedarf-Datenschutz-und-Offline.md` geführt.
+
+Die erste verbindliche Fassung legt eine vierstufige Schutzklassifikation K0–K3, eine Schutzbedarfsmatrix sowie Grundregeln für personenbezogene Daten, KI-Übermittlung, Offline/PWA, Bilder/Dateien und Audit fest. Die weitere G4-Konsolidierung konzentriert sich auf die tatsächlich benötigten K2-Daten, Provider-/KI-Zulässigkeit, rechtliche Pflichten, Aufbewahrung/Löschung und Push/Newsletter.
+
+## 11. Pflegepflicht
 
 Bei jeder verbindlichen fachlichen, technischen, architektonischen, Sicherheits-, Datenmodell-, Prozess- oder Designentscheidung wird geprüft:
 
@@ -282,7 +288,7 @@ Bei jeder verbindlichen fachlichen, technischen, architektonischen, Sicherheits-
 
 Bei vorhandenem GitHub-Zugriff erfolgt die Dokumentationspflege unmittelbar im Projekt.
 
-## 11. Dokumentationsstruktur
+## 12. Dokumentationsstruktur
 
 Für dauerhaft gepflegte Dokumente gilt grundsätzlich:
 
@@ -297,6 +303,7 @@ Für laufend ergänzte Register oder Glossare kann statt einer fortlaufenden Ver
 
 | Version | Datum | Änderung |
 |---|---|---|
+| 2.7 | 06.10.2026 | G4-Primärquelle `Schutzbedarf-Datenschutz-und-Offline.md` aufgenommen; G4-Start und Schutzklassifikation K0–K3 in der Dokumentationslandkarte verankert. |
 | 2.6 | 05.10.2026 | G3-Abschluss synchronisiert: Datenmodell v3.0 als konsolidierte Integrationsquelle, G3-Gesamtaudit als abgeschlossen und G4 Schutzbedarf/Datenschutz/Offline als nächsten Gründungsschritt ausgewiesen. |
 | 2.5 | 05.10.2026 | G3-Konsolidierung in der Dokumentationslandkarte nachgezogen: Beobachtungs-/Recherchemodell, Mehr-wissen-Modell, MVP-Fachfunktionen, KI-Zugangswege/Fachfunktionen, Plausibilitäts-/Freigaberegeln und G3-Gesamtaudit als kanonische Quellen aufgenommen; Status älterer G3-Teilmodelle konsolidiert und technische Folgephasen abgegrenzt. |
 | 2.4 | 05.10.2026 | Dokumentation in sechs übergeordnete Themenbereiche gegliedert; spätere Abbildung dieser Gliederung in der GitHub-Ordnerstruktur nach fachlicher Konsolidierung festgelegt; neue G3-Primärquellen in die Landkarte aufgenommen. |
