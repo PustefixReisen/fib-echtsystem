@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 4.0 | 06.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
+| 4.1 | 06.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
 
 ## Statusmodell
 
@@ -35,36 +35,44 @@ Es gelten die zentralen Status aus `PustefixReisen/pustivo/docs/governance/Dokum
 | G8 Governance / Repository / Dokumentation | **Abgeschlossen** | Dokumentationslandkarte, zentrale Governance und Wiederaufnahme-Kriterien konsolidiert |
 | G9 Migration | **Abgeschlossen** | Migrationsstrategie und ausführbares Runbook festgelegt |
 | G10 Go-live-Abnahme | **Abgeschlossen** | messbare Abnahmekriterien und harte Go-live-Blocker festgelegt |
-| Gründungsaudit | **Abgeschlossen** | G1–G10 übergreifend geprüft; eine Statusinkonsistenz in `Projektgruendung.md` korrigiert; keine blockierende Grundsatzfrage offen |
+| Gründungsaudit | **Abgeschlossen** | G1–G10 übergreifend geprüft; keine blockierende Grundsatzfrage offen |
 
 ## 2. Umsetzungsphasen
 
-Nach bestandenem Gründungsaudit beginnt die technische Produktentwicklung.
-
 | Umsetzungsphase | Status | Ziel / Produkt |
 |---|---|---|
-| U1 Technischer FIB-Kern | **Geplant** | Datenbankschema, Migrationen, gemeinsame Fachservice-Schicht, Auth-/RLS-Grundlage, Datei-/Bildspeicher-Anbindung, KI-Router-Grundlage, gemeinsame Konfiguration und Testbasis |
+| U1 Technischer FIB-Kern | **In Arbeit** | Datenbankschema, Migrationen, gemeinsame Fachservice-Schicht, Auth-/RLS-Grundlage, Datei-/Bildspeicher-Anbindung, KI-Router-Grundlage, gemeinsame Konfiguration und Testbasis |
 | U2 Redaktions-App | **Geplant** | interne Web-App für Rechercheeingang, Ereignisse/Meldungen, Vorgänge, Themen, Sitzungen, Bilder, „Mehr wissen?“, Freigaben, FIB-Chat und Administration |
 | U3 Öffentliche FIB-Seite / PWA | **Geplant** | Besucheroberfläche mit `Neues | Im Blick | Sitzungen | Suche`, Detailseiten, PWA, Teilen, Transparenz und Neuigkeitsstatus |
 | U4 Recherche / AI Tasks / KI-Funktionen | **Geplant** | Quellenbeobachtung, Quellenentdeckung, Rechercheläufe, Ereigniserkennung, Entwurfserstellung, Routing und Qualitätskontrollen |
 | U5 Veröffentlichung / Deployment / Betrieb | **Geplant** | S3-Publish-Prozess, statischer Build, Deployment, Monitoring, Backup/Restore und betriebliche Automatisierung |
 | U6 Integration / Pilot / Go-live-Vorbereitung | **Geplant** | End-to-End-Tests, Demonstrator-Regressionen, Usability-Feinschliff, Datenmigration, Pilotbetrieb und Vorbereitung der realen Go-live-Abnahme |
 
-## 3. Nächster konkreter Schritt
+## 3. U1 – aktueller Stand
 
-**U1 – Technischer FIB-Kern starten.**
+### U1.1 Monorepo-/Paketstruktur – umgesetzt
 
-U1 beginnt nicht mit einer Vollimplementierung „auf einmal“, sondern mit einem belastbaren technischen Grundgerüst. Die erste Teilsequenz soll mindestens umfassen:
+Gemäß ADR-009 angelegt:
 
-1. Monorepo-/Paketstruktur gemäß ADR-009 konkret anlegen,
-2. Supabase-Projekt- und Migrationsstruktur für das fachliche Datenmodell vorbereiten,
-3. gemeinsame Typen und Konfigurationsschema anlegen,
-4. Fachservice-Grundgerüst und erste serverseitige Autorisierungsgrenzen umsetzen,
-5. Auth-/MFA-/RLS-Grundlage vorbereiten,
-6. Storage-Adapter und KI-Router-Schnittstellen als austauschbare Adapter definieren,
-7. Testbasis und erste Regressionstests aufsetzen.
+- npm-Workspace-Grundlage in `package.json`,
+- gemeinsame strikte TypeScript-Basis in `tsconfig.base.json`,
+- `apps/public-web`,
+- `apps/editorial-web`,
+- `packages/domain-contracts`,
+- `packages/fachservices`,
+- `packages/ai-router`,
+- `packages/storage-adapter`,
+- `packages/publish`,
+- `packages/ui`,
+- `supabase/`,
+- `tests/`,
+- `scripts/`.
 
-Die Umsetzung wird in kleinen, prüfbaren Schritten gegen die Gründungsdokumentation geführt.
+Die Bereiche enthalten zunächst nur Verantwortungsgrenzen und noch keine unnötige Framework-/Geschäftslogik.
+
+### U1.2 Nächster Schritt – Supabase-Schema und Migrationen
+
+Als nächstes wird aus `docs/Datenmodell.md` v3.0 die erste reproduzierbare Datenbankmigration abgeleitet. Dabei wird in fachlich kontrollierten Blöcken vorgegangen, beginnend mit Kernobjekten und gemeinsamen technischen Grundlagen; RLS, Fachservice-Endpunkte und weitere Teilmodelle werden anschließend schrittweise ergänzt.
 
 ## 4. Verbindliche Abschlussquellen der Gründung
 
@@ -79,7 +87,6 @@ Die Umsetzung wird in kleinen, prüfbaren Schritten gegen die Gründungsdokument
 - `docs/Migrationsstrategie.md` v1.1
 - `docs/Migrations-Runbook.md` v1.0
 - `docs/Go-live-Abnahmekriterien.md` v1.0
-- G3-, G5-, G6-, G7-, G8-, G9- und G10-Abschlussaudits
 - `docs/Regressionstests-Demonstratortransfer.md`
 - Architekturentscheidungen unter `docs/decisions/`
 
@@ -109,8 +116,6 @@ Die Umsetzung wird in kleinen, prüfbaren Schritten gegen die Gründungsdokument
 
 | Version | Datum | Änderung |
 |---|---|---|
-| 4.0 | 06.10.2026 | Gründungsaudit bestanden; G1–G10 und Gründungsphase abgeschlossen; U1 als nächsten technischen Umsetzungsschritt gesetzt; Roadmap auf Umsetzungsphasen umgestellt. |
+| 4.1 | 06.10.2026 | U1 gestartet; Monorepo-/Paketstruktur gemäß ADR-009 umgesetzt; nächster Schritt auf Supabase-Schema und Migrationen gesetzt. |
+| 4.0 | 06.10.2026 | Gründungsaudit bestanden; G1–G10 und Gründungsphase abgeschlossen; U1 als nächsten technischen Umsetzungsschritt gesetzt. |
 | 3.9 | 06.10.2026 | G10 nach Festlegung der Go-live-Abnahmekriterien und bestandenem G10-Gesamtaudit abgeschlossen; Gründungsaudit als nächsten Schritt gesetzt. |
-| 3.8 | 06.10.2026 | G9 nach Präzisierung der Migrationsstrategie, Erstellung des Migrations-Runbooks und bestandenem G9-Gesamtaudit abgeschlossen; G10 als nächsten Gründungsschritt gesetzt. |
-| 3.7 | 06.10.2026 | G8 nach Konsolidierung der Dokumentationslandkarte und zentralen Dokumentationsregeln abgeschlossen; G9 als nächsten Gründungsschritt gesetzt. |
-| 3.6 | 06.10.2026 | G7 nach Festlegung von Backup, Restore-Pflicht, RPO/RTO, Retention und Monitoring abgeschlossen; G8 als nächsten Schritt gesetzt. |
