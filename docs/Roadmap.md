@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 4.1 | 06.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
+| 4.2 | 06.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
 
 ## Statusmodell
 
@@ -70,9 +70,33 @@ Gemäß ADR-009 angelegt:
 
 Die Bereiche enthalten zunächst nur Verantwortungsgrenzen und noch keine unnötige Framework-/Geschäftslogik.
 
-### U1.2 Nächster Schritt – Supabase-Schema und Migrationen
+### U1.2 Supabase-Schema und Migrationen – begonnen
 
-Als nächstes wird aus `docs/Datenmodell.md` v3.0 die erste reproduzierbare Datenbankmigration abgeleitet. Dabei wird in fachlich kontrollierten Blöcken vorgegangen, beginnend mit Kernobjekten und gemeinsamen technischen Grundlagen; RLS, Fachservice-Endpunkte und weitere Teilmodelle werden anschließend schrittweise ergänzt.
+Der erste technische SQL-Kern wurde in `supabase/schema/core.sql` abgeleitet. Enthalten sind:
+
+- Ereignisse und Meldungen mit 1:0..1-Beziehung,
+- Vorgänge und Ereignis↔Vorgang,
+- Themen sowie Vorgang↔Thema und direkte Ereignis↔Thema-Beziehungen,
+- `Bedeutung für das Thema` als technische Wertemenge,
+- Quellen und Fundstellen,
+- Fundstelle↔Ereignis als Belegbeziehung,
+- erste fachlich sinnvolle Indizes,
+- RLS auf allen Kern-Tabellen,
+- keine pauschalen `anon`-/`authenticated`-Rechte,
+- expliziter technischer Zugriff für `service_role`.
+
+Die SQL-Datei ist bewusst noch **keine Supabase-Migration**. Es existiert derzeit kein eigenes FIB-Supabase-Projekt; die vorhandenen Projekte `Private-Apps` und `Shared-Apps` werden nicht ungefragt verändert. Vor der ersten echten Migration wird eine eigene FIB-Entwicklungsumgebung festgelegt. Die Migration selbst wird anschließend mit dem Supabase CLI erzeugt, ausgeführt und über Advisors/Testabfragen verifiziert.
+
+### U1.3 Nächster Schritt – FIB-Entwicklungsdatenbank und Schema-Ausbau
+
+Als nächstes wird die kostenfreie Entwicklungsstrategie für Supabase konkretisiert. Bevorzugt wird eine lokale Supabase-Entwicklungsumgebung, damit kein bestehendes Cloud-Projekt zweckentfremdet und kein drittes kostenpflichtiges Projekt benötigt wird. Danach:
+
+1. lokale FIB-Datenbank initialisieren,
+2. `core.sql` anwenden und prüfen,
+3. Security-/Performance-Advisors ausführen,
+4. erste echte Migration erzeugen,
+5. Spezialbereiche des Datenmodells modular ergänzen,
+6. TypeScript-Domain-Contracts aus dem verifizierten Schema ableiten.
 
 ## 4. Verbindliche Abschlussquellen der Gründung
 
@@ -116,6 +140,6 @@ Als nächstes wird aus `docs/Datenmodell.md` v3.0 die erste reproduzierbare Date
 
 | Version | Datum | Änderung |
 |---|---|---|
+| 4.2 | 06.10.2026 | U1.2 begonnen; erstes SQL-Kernschema mit RLS-/Grant-Baseline angelegt; keine bestehenden Supabase-Projekte verändert; lokale FIB-Entwicklungsdatenbank als bevorzugten nächsten Schritt festgehalten. |
 | 4.1 | 06.10.2026 | U1 gestartet; Monorepo-/Paketstruktur gemäß ADR-009 umgesetzt; nächster Schritt auf Supabase-Schema und Migrationen gesetzt. |
 | 4.0 | 06.10.2026 | Gründungsaudit bestanden; G1–G10 und Gründungsphase abgeschlossen; U1 als nächsten technischen Umsetzungsschritt gesetzt. |
-| 3.9 | 06.10.2026 | G10 nach Festlegung der Go-live-Abnahmekriterien und bestandenem G10-Gesamtaudit abgeschlossen; Gründungsaudit als nächsten Schritt gesetzt. |
