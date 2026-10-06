@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 3.0 | 06.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
+| 3.1 | 06.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
 
 ## Statusmodell
 
@@ -18,7 +18,7 @@ Es gelten die zentralen Status aus `PustefixReisen/pustivo/docs/governance/Dokum
 - Zurückgestellt
 - Entfallen
 
-## Aktueller Stand
+## 1. Aktueller Stand – Gründungsphase
 
 | Phase | Status | Ergebnis / nächster Schritt |
 |---|---|---|
@@ -28,17 +28,76 @@ Es gelten die zentralen Status aus `PustefixReisen/pustivo/docs/governance/Dokum
 | G2.5 Transfer-Audit Demonstrator → Echtsystem | **Abgeschlossen** | zwei Prüfschichten abgeschlossen: fachliche Regeln/Recherche/Persistenz sowie sichtbare Inhaltsbausteine/Redaktionsfunktionen; Transfer-Gates bestanden |
 | Dokumentationsübernahme Demonstrator → Echtsystem | **Abgeschlossen** | Hauptdokumente sowie sichtbare Inhaltsbausteine und Redaktionsfunktionen erneut gegengeprüft; erkannte Lücken geschlossen oder als bewusste spätere Produktentscheidung dokumentiert |
 | G3 Datenanforderungen / Datenmodell | **Abgeschlossen** | fachliches/logisches Datenmodell v3.0 konsolidiert; G3-Gesamtaudit bestanden; drei Alt-Widersprüche bereinigt; keine offenen fachlichen G3-Grundsatzfragen |
-| G4 Schutzbedarf / Datenschutz / Offline | **In Arbeit** | Schutzklassen K0–K3 und erste Schutzbedarfsmatrix festgelegt; als Nächstes K2-Minimierung, KI-Übermittlung, rechtliche Pflichten und Aufbewahrung/Löschung konkretisieren |
-| G5 Zielarchitektur / Stack / Hosting / Deployment | **Geplant** | Hybrid-KI technisch umsetzen; Schutzklassen aus G4 in Storage, KI-Router, Session-/Cache-Strategie und Secret-Verwaltung abbilden; zusätzlich Cache-/Deployment-Verlässlichkeit aus RT-014 und sichere Ausgabe dynamischer KI-Inhalte berücksichtigen |
+| G4 Schutzbedarf / Datenschutz / Offline | **Abgeschlossen** | Schutzklassen K0–K3, K2-Minimierung, Löschlogik, KI-/Provider-Prüfrahmen, Offline/PWA-Grundsätze und DSFA-Vorprüfung festgelegt |
+| G5 Zielarchitektur / Stack / Hosting / Deployment | **In Arbeit** | Zielarchitektur, Static-first-Veröffentlichung, Fachservice-Schicht sowie Datei-/Bildspeicher-Abstraktion begonnen; Repository-/Anwendungsstruktur, Suche/RAG, Publish-/Deployment-Prozess und AI-Task-Ausführung weiter konkretisieren |
 | G6 Rollen / Rechte / Workflow | **Geplant** | konkretes technisches Berechtigungs- und Freigabemodell aus Rollen/Aktionsstufen und G4-Schutzklassen ableiten |
 | G7 Betrieb | **Geplant** | Backup, Restore, Monitoring, KI-Kostenmessung, Routing-Betrieb, Budgets, Warnschwellen sowie technische Aufbewahrungs-/Löschregeln definieren |
-| G8 Governance / Repository / Dokumentation | **Teilweise umgesetzt** | Echtsystem als Dokumentationshoheit etabliert; G2.5 und G3 abgeschlossen; G4 in Arbeit; zentrale Standards und späterer Gründungsaudit weiterführen |
+| G8 Governance / Repository / Dokumentation | **Teilweise umgesetzt** | Echtsystem als Dokumentationshoheit etabliert; G2.5–G4 abgeschlossen; G5 in Arbeit; zentrale Standards und späterer Gründungsaudit weiterführen |
 | G9 Migration | **Geplant** | Übergang auf GRÜNEN-Infrastruktur nach `docs/Migrationsstrategie.md`; wiederholbares Migrations-Runbook statt separatem Migrations-Probelauf |
 | G10 Go-live-Abnahme | **Geplant** | messbare Abnahmekriterien festlegen, einschließlich Qualität der verpflichtenden Quellen-/Ereignisentdeckung, Transfer-Regressionstests, Datenschutz-/Schutzbedarfsanforderungen und belastbarer Betriebskostenmessung |
-| Gründungsaudit | **Geplant** | Vollständigkeit und Widerspruchsfreiheit aller Gründungspakete prüfen |
-| Technische Umsetzung | **Geplant** | beginnt erst nach abgeschlossenem Gründungsaudit |
+| Gründungsaudit | **Geplant** | Vollständigkeit und Widerspruchsfreiheit aller Gründungspakete prüfen; danach beginnt die eigentliche Produktentwicklung |
 
-## G2.5 – Transfer-Audit Demonstrator → Echtsystem
+## 2. Umsetzungsphasen nach dem Gründungsaudit
+
+Die Gründungsphasen G1–G10 legen fest, **was FIB können soll und wie es sicher, wartbar und migrierbar aufgebaut wird**. Sie ersetzen nicht die eigentliche Produktentwicklung.
+
+Nach bestandenem Gründungsaudit beginnt die technische Umsetzung in sichtbar getrennten Produktsträngen. Diese dürfen technisch parallelisiert werden, soweit ihre Abhängigkeiten geklärt sind.
+
+| Umsetzungsphase | Ziel / Produkt |
+|---|---|
+| U1 Technischer FIB-Kern | Datenbankschema, Migrationen, gemeinsame Fachservice-Schicht, Auth-Grundlage, Datei-/Bildspeicher-Anbindung, KI-Router, gemeinsame Konfiguration und Testgrundlage |
+| U2 Redaktions-App | interne Web-App für Rechercheeingang, Ereignisse/Meldungen, Vorgänge, Themen, Sitzungen, Bilder, „Mehr wissen?“, Freigaben, FIB-Chat und redaktionelle Administration |
+| U3 Öffentliche FIB-Seite / PWA | konkrete Besucheroberfläche mit `Neues | Im Blick | Sitzungen | Suche`, Detailseiten, Bildern, „Mehr wissen?“, Transparenz, Teilen, PWA, Neuigkeitsstatus und Web Push |
+| U4 Recherche / AI Tasks / KI-Funktionen | Quellenbeobachtung, Quellenentdeckung, Rechercheläufe, Ereigniserkennung, Entwurfserstellung, KI-gestützte Einordnung, Routing und Qualitätskontrollen |
+| U5 Veröffentlichung / Deployment / Betrieb | S3-Publish-Prozess, statischer öffentlicher Build, Medienübernahme, Sitemap/SEO, Deployment, Cache/Invalidierung, Monitoring, Backup/Restore und betriebliche Automatisierung |
+| U6 Integration / Pilot / Go-live-Vorbereitung | End-to-End-Tests, Demonstrator-Regressionen, Usability-Feinschliff von Redaktion und Besucherseite, Datenmigration, Pilotbetrieb, Fehlerkorrektur und Vorbereitung der G9/G10-Abnahme |
+
+### 2.1 Redaktions-App
+
+Die **Redaktions-App ist ein eigenständiges zentrales Produkt** und wird in U2 umgesetzt. G2 und G3 haben bereits fachlich beschrieben, welche Funktionen und Daten sie benötigt; G5/G6 legen die technische Architektur und die Rechte dafür fest.
+
+Zum MVP der Redaktions-App gehören insbesondere:
+
+- Login und rollenabhängiger Arbeitsbereich,
+- Rechercheeingang und Ereigniskandidaten,
+- Bearbeitung von Ereignis und Meldung,
+- Vorgangs- und Themenpflege,
+- Sitzungen/TOPs,
+- strukturierte Wirkungen, Perspektiven und Einordnung,
+- offene Fragen und Beobachtungsaufträge,
+- Bilder und Bildverwendungen,
+- „Mehr wissen?“-Inhalte,
+- Freigabe/Veröffentlichung/Rücknahme,
+- FIB-Chat als dialogorientierter Zugang zu denselben Fachfunktionen,
+- kompakter Betriebs-/Redaktionsüberblick.
+
+Die konkrete Bediengestaltung der Redaktions-App wird während U2 iterativ mit realen Arbeitsfällen geprüft. Die bereits festgelegten Fachregeln und Workflows sind dabei verbindlich; Bildschirmaufteilung und Bedienkomfort dürfen weiter optimiert werden.
+
+### 2.2 Öffentliche FIB-Seite / PWA
+
+Die **öffentliche Besucheroberfläche ist ebenfalls ein eigener Produktstrang** und wird in U3 umgesetzt.
+
+G2 hat Informationsarchitektur, Navigation, Detailseiten, Bildsprache und wesentliche UX-Regeln bereits konzipiert. U3 übersetzt diese Vorgaben in die tatsächlich nutzbare Website/PWA und verfeinert sie anhand realer Geräte und Inhalte.
+
+Zum MVP gehören insbesondere:
+
+- Startseite,
+- `Neues`, `Im Blick`, `Sitzungen`, `Suche`,
+- Meldungs-, Vorgangs-, Themen- und Sitzungsdetailseiten,
+- Bilder und Bildunterschriften,
+- Quellen, Zusammenhänge, Bezüge und Verlauf,
+- „Mehr wissen?“,
+- Transparenz/Disclaimer,
+- Teilen, Drucken und Social Preview,
+- responsive/mobile Darstellung und WCAG-2.2-AA-Ziel,
+- PWA,
+- gerätebezogenes „Neu seit letztem Besuch“,
+- Web Push nach Opt-in,
+- technische SEO-Grundlagen.
+
+Die öffentliche Gestaltung ist damit **nicht mit G2 abgeschlossen**: G2 definiert das fachliche/gestalterische Zielbild; U3 ist die eigentliche Umsetzung und der iterative visuelle und ergonomische Feinschliff.
+
+## 3. G2.5 – Transfer-Audit Demonstrator → Echtsystem
 
 G2.5 sichert ab, dass der aufwändige Demonstrator- und Testbetrieb vollständig in das Echtsystem einfließt und nicht nur die bereits sichtbaren Hauptdokumente übernommen werden.
 
@@ -91,13 +150,11 @@ Verbindliche Detailquellen:
 - `docs/Transfer-Audit-Inhaltsbausteine-und-Redaktionsfunktionen.md`
 - `docs/Regressionstests-Demonstratortransfer.md`
 
-Die früher aus G2.5 an G3 übergebenen fachlichen Persistenz-/Datenmodellaufgaben sind mit Abschluss von G3 erledigt. Technische Folgeaufträge bleiben in G5/G10 und den weiteren Gründungspaketen verankert.
+## 4. Nächster konkreter Schritt
 
-## Nächster konkreter Schritt
+**G5 – Zielarchitektur / Stack / Hosting / Deployment:** Die begonnene Zielarchitektur vervollständigen. Als Nächstes werden Repository-/Anwendungsstruktur, Fachservice-API, Publish-/Build-/Deployment-Prozess, AI-Task-Ausführung, Suche/RAG sowie Cache-/Invalidierungsstrategie konkretisiert.
 
-**G4 – Schutzbedarf / Datenschutz / Offline:** Die mit `docs/Schutzbedarf-Datenschutz-und-Offline.md` begonnene Schutzbedarfsmatrix vervollständigen. Schwerpunkt sind K2-Minimierung, KI-Übermittlung, rechtliche Informations-/Dokumentationspflichten, Aufbewahrung/Löschung, Push/Newsletter sowie die Frage, welche Objekte eine explizite Schutzklassenkennzeichnung benötigen.
-
-## Fachlich/UX bereits geklärt
+## 5. Fachlich/UX bereits geklärt
 
 - öffentliche Hauptnavigation: **Neues | Im Blick | Sitzungen | Suche**.
 - zentrale Fachobjekte sind Ereignis, Meldung, Vorgang, Thema, Sitzung/TOP sowie die in G3 ergänzten Recherche-, Referenz-, Vertiefungs- und Medienobjekte.
@@ -121,10 +178,8 @@ Die früher aus G2.5 an G3 übergebenen fachlichen Persistenz-/Datenmodellaufgab
 - Transparenz, „Über Feldkirchen im Blick“ und Disclaimer sind geklärt.
 - Mobile First und **WCAG 2.2 AA** sind technisches Ziel.
 - Barrierefreiheit ergänzt die bestehende bürgernahe FIB-Sprache und ersetzt sie nicht.
-- der strukturierte Redaktionsworkflow verwendet feste, modellunabhängige Fragemuster und Antwortoptionen; die fallbezogenen Inhalte werden eingesetzt, nicht das Formular durch KI erfunden.
-- alle vorhandenen Prüfkriterien eines Zielbereichs werden im Redaktionsworkflow sichtbar angeboten; KI-Empfehlungen werden nur vorausgewählt.
 
-## G3 – Abschluss
+## 6. G3 – Abschluss
 
 Verbindlicher Abschlussnachweis: `docs/G3-Gesamtaudit.md` v1.2.
 
@@ -134,188 +189,71 @@ Das Audit hat insbesondere drei erhebliche Alt-Widersprüche bereinigt:
 2. widersprüchliche Verankerung von Wirkungen,
 3. Vermischung von Beschlussvorlage/Fundstelle und späterem Beschlussereignis.
 
-Zusätzlich wurden Beobachtung/Recherche, „Mehr wissen?“, Referenzmaßstäbe, Fachfunktionen, Plausibilitäts-/Freigaberegeln, Persistenz und Begriffe konsolidiert.
-
 `docs/Datenmodell.md` v3.0 ist die konsolidierte Integrationsquelle. Es bestehen keine bekannten offenen fachlichen G3-Grundsatzfragen.
 
-## G4 – Schutzbedarf / Datenschutz / Offline
+## 7. G4 – Abschluss
 
-G4 wurde am 06.10.2026 mit `docs/Schutzbedarf-Datenschutz-und-Offline.md` gestartet.
+Verbindliche Integrationsquelle: `docs/Schutzbedarf-Datenschutz-und-Offline.md` v1.0.
 
-Die erste Fassung legt insbesondere fest:
+Festgelegt sind insbesondere:
 
-- vier Schutzklassen K0 öffentlich, K1 intern, K2 vertraulich/personenbezogen und K3 sicherheitskritisch,
-- Klassifikation nach konkretem Inhalt statt pauschal nach Objekttyp,
-- Datenminimierung als Grundsatz,
-- schutzklassenabhängige KI-Übermittlung,
-- keine KI-Übermittlung von K3-Secrets,
-- öffentliche PWA-/Offline-Caches nur für K0,
-- im MVP keine eigenständige Offline-Redaktionsdatenbank für K1/K2,
-- positive Rechteklärung vor öffentlicher Bild-/Dateinutzung,
-- Trennung von fachlichem Audit und unnötiger Inhalts-/Secret-Protokollierung.
+- Schutzklassen K0–K3,
+- Datenminimierung und K2-Minimierung,
+- Trennung von Schutzklasse und Personenbezug,
+- Lösch-/Aufbewahrungsgrundsätze,
+- schutzklassenabhängige KI-/Providerfreigabe,
+- keine K3-Übermittlung an KI,
+- DSFA-Vorprüfung vor Go-live,
+- Besucher-PWA ohne zentrale Besucherprofile,
+- keine Offline-Redaktionsdatenbank im MVP,
+- Regeln für Bilder/Dateien, Push und Logs.
 
-## Hybrid-KI – Entwicklungsprinzip
+## 8. Hybrid-KI – Entwicklungsprinzip
 
 Für das Echtsystem gilt verbindlich:
 
 > **KI wird nur dort eingesetzt, wo sie fachlich erforderlich ist oder einen klaren zusätzlichen Nutzen bringt. Wird KI eingesetzt, hat die erforderliche Ergebnisqualität Vorrang vor dem niedrigsten Preis.**
 
-Die Zielarchitektur unterscheidet:
-
-1. **Verpflichtende Entdeckungs-/Eingangs-KI** – aktive Suche nach neuen Quellen, semantische Analyse neuer oder geänderter Fundstellen, Ereigniserkennung und notwendige Erstzuordnung.
-2. **Bedarfsgesteuerte Recherche-KI** – gezielte Bearbeitung konkreter Wissenslücken, die im Redaktionsworkflow entstehen.
-3. **Optionale Redaktions-KI** – Vorschläge, Vorbefüllung, Plausibilitätsprüfung, Abwägungs- und Textentwürfe; der Redaktionsworkflow bleibt ohne diese Funktionen vollständig nutzbar.
-4. **Modellunabhängiger FIB-Kern** – Datenmodell, Formulare, Fragemuster, Antwortoptionen, Zustandslogik, Validierungen, Versionierung und Freigaben gehören zur Anwendung.
-
-Der Quellenmonitor besteht entsprechend aus:
-
-- **Quellenbeobachtung** bekannter Adressen: technische Änderungsfeststellung ohne KI; KI erst bei neuer/geänderter Fundstelle,
-- **Quellenentdeckung**: aktive KI-gestützte Suche nach bislang unbekannten relevanten Quellen.
+Die Zielarchitektur unterscheidet verpflichtende Entdeckungs-/Eingangs-KI, bedarfsgesteuerte Recherche-KI, optionale Redaktions-KI und den modellunabhängigen FIB-Kern.
 
 Für G5 ist eine konfigurierbare Routing-Matrix vorzusehen. Sie ordnet FIB-Aufgaben nicht fest an Modellnamen, sondern an KI-Bedarf, Qualitätsanforderung/Leistungsklasse, Provider/Modell, Fallback und gegebenenfalls Kostenrahmen.
 
-Vorläufiger Kostenrahmen für die Planung: **ca. 3–13 € KI-API-Kosten pro Monat im Normalbetrieb**, davon **ca. 3–8 €** für die verpflichtende Quellenentdeckung und Eingangsanalyse; **15 € pro Monat** dienen bis zur Pilotmessung als Planungs-/Warnrahmen. Verbindliche Details und spätere Ist-Kalibrierung: `docs/KI-Betrieb-und-Kosten.md`.
-
-## Visuelle Identität – geklärt
+## 9. Visuelle Identität – geklärt
 
 Verbindliche Primärquelle: `docs/Visuelle-Identitaet-und-Bildkonzept.md`.
 
-Festgelegt sind insbesondere:
+Festgelegt sind insbesondere visuelle Grundhaltung, Logos/Bildmarke, Claim **„Mehr Überblick. Besser verstehen.“**, responsive Bannerlogik, Navigation, PWA-/Icon-Anwendung und Produktionsassets.
 
-- visuelle Grundhaltung: **klar, ruhig, bürgernah, sachlich, lokal verankert, modern und erkennbar grün geprägt**;
-- drei gelbe Sonnenblumenblätter als wiederkehrender grafischer roter Faden;
-- Bildmarke mit Rathaus Feldkirchen, Kirche, Bäumen/Bodenlinie und Sonnenblumenblättern; **kein Maibaum** in der finalen Bildmarke;
-- Rathausdarstellung mit charakteristischem Pultdach, Ziegelfassade und vier Fahnenmasten;
-- Primärlogo horizontal, Kompaktlogo, monochrome Variante und PWA/Icon-Anwendung;
-- finaler Claim **„Mehr Überblick. Besser verstehen.“**;
-- ausführlicher Tablet-/Desktop-Erklärungstext und kompakte Mobile-Fassung;
-- Tablet/Desktop: responsiver Zwei-Spalten-Banner mit echtem Text links und separater Illustration rechts;
-- Smartphone/PWA: echte Textbestandteile mit hellem halbtransparentem Overlay über der tiefer positionierten Illustration;
-- finale Bannerillustration als eigenes Produktionsasset;
-- Blau nur als funktionale Akzentfarbe, nicht als dominante Markenfläche;
-- Hauptnavigation mit **Neues** als fünf gelben strahlen-/blattartigen Formen im Bogen, **Im Blick** als Auge, **Sitzungen** als Gremium und **Suche** als Lupe;
-- kompakte Leiste **„Zur Website der GRÜNEN in Feldkirchen“** direkt unter dem mobilen Banner bei direktem Einstieg; bei Einbettung in die GRÜNEN-Homepage entfällt sie;
-- zusammengesetzte Bannerbilder dienen nur noch als Styleguide-/Mockup-Referenzen; produktiv werden Text und Illustration getrennt aufgebaut.
-
-## Markenassets – aktueller Stand
-
-Ablage: `assets/brand/`.
-
-Bereits vorhanden bzw. freigegeben:
-
-- Logo-Rasterreferenzen in `logo/`,
-- finale Bannerillustration in `banner/`,
-- produktive Navigations-SVGs in `icons/`,
-- PWA-Rasterreferenz in `pwa/`,
-- Styleguide-/Responsive-/Bannerreferenzen in `reference/`,
-- Sonnenblumen-Grundelement in `elements/`.
-
-Noch während der technischen Umsetzung zu erzeugen:
-
-- echte vektorielle Logo-Master ohne gestalterische Neuinterpretation,
-- produktive PWA-Exports 192×192, 512×512 und maskable,
-- Social-Preview-Asset 1200×630,
-- ggf. optimierte WebP-/SVG-Varianten der Bannerillustration.
-
-Diese Produktionsdetails blockieren G2 nicht.
-
-Die verbindliche Assetübersicht steht in `assets/brand/README.md`.
-
-## Claim, Botschaften und Mission
-
-Finaler Claim:
-
-> **Mehr Überblick. Besser verstehen.**
-
-Ausführlicher Erklärungstext:
-
-> **Relevante Informationen aus Rathaus, Presse und weiteren Quellen – verständlich zusammengeführt und in ihren Zusammenhängen erklärt.**
-
-Mobile Kurzfassung:
-
-> **Aktuelles aus Rathaus, Presse und weiteren Quellen – verständlich zusammengeführt.**
-
-Der Dreiklang
-
-> **Informieren · Verstehen · Nachfragen**
-
-bleibt als sekundäres Kommunikationselement verfügbar, ist aber kein Pflichtbestandteil des Banners.
-
-Marketing- und Kommunikationsdetails stehen in `docs/Marketing-und-Kommunikation.md`.
-
-## Migrationsgrundsatz – Entwickler → GRÜNEN-Infrastruktur
+## 10. Migrationsgrundsatz – Entwickler → GRÜNEN-Infrastruktur
 
 Verbindliche Primärquelle: `docs/Migrationsstrategie.md`.
 
 Festgelegt ist:
 
-- FIB wird zunächst vollständig produktionsreif auf der Infrastruktur des Entwicklers aufgebaut und erprobt;
-- Zielbetrieb ist ein GRÜNEN-Webserver plus eigenes Supabase-Projekt unter Organisationsverantwortung;
-- Supabase-Self-Hosting ist ausgeschlossen;
-- Architektur und Deployment dürfen keine persönliche Bindung an Domains, Projekt-IDs, Accounts oder Secrets enthalten;
-- Datenbanklogik, Edge Functions und relevante Konfiguration werden reproduzierbar im Repository bzw. in einem Runbook abgebildet;
-- ein separater zusätzlicher Migrations-Probelauf ist nicht erforderlich;
-- die eigentliche Migration in die noch wegwerfbare GRÜNEN-Zielumgebung darf vor Go-live bei Bedarf verworfen und wiederholt werden;
-- G9 erstellt hierfür ein vollständiges Migrations-Runbook und eine Abnahmecheckliste.
+- produktionsreife Entwicklung zunächst auf Entwickler-Infrastruktur,
+- späterer Zielbetrieb auf GRÜNEN-Webserver plus eigenem Supabase-Projekt,
+- kein Supabase-Self-Hosting,
+- keine persönliche Bindung von Architektur oder Geschäftslogik,
+- reproduzierbare Datenbank-/Backend-/Deployment-Konfiguration,
+- wiederholbare Migration mit Runbook.
 
-## Dokumentationsübernahme – unter G2.5 erneut verifiziert und abgeschlossen
+## 11. Neue Echtsystem-Dokumentation
 
-Übernommen bzw. konsolidiert sind:
+Zu den neu aufgebauten Primär- und Detailquellen gehören inzwischen insbesondere:
 
-1. Management Approach → `docs/FIB_Management-Approach.md`
-2. Inhaltliches Fachkonzept → `docs/Fachkonzept.md`
-3. KI-Leitfaden → `docs/KI-Leitfaden.md`
-4. KI-Modellunabhängigkeit/Qualität → `docs/KI-Qualitaet-und-Modellunabhaengigkeit.md`
-5. Quellenmonitor/Recherche → `docs/Recherche-und-Quellenmonitor.md`
-6. Mehr wissen → `docs/Mehr-wissen.md`
-7. Frontend/Darstellung → in `docs/UX-und-Informationsarchitektur.md` integriert und im zweiten Transfer-Audit erneut auf sichtbare Inhaltsbausteine geprüft
-8. Marketing/Kommunikation → `docs/Marketing-und-Kommunikation.md`
-9. SEO/Auffindbarkeit → `docs/SEO-und-Auffindbarkeit.md`
-10. KI-Kosten/Betrieb → `docs/KI-Betrieb-und-Kosten.md`
-11. Grüne Werte/politische Ziele → `docs/Gruene-Werte-und-politische-Ziele.md`
-12. wissenschaftlich-politische/bürgernahe Sprachregeln → `docs/Sprachleitfaden.md`
-
-Zusätzlich bestehen beide Transfer-Audits und ein erweiterter Regressionstestkorpus. Frühere FIB-Chats bleiben ausschließlich Lückenfinder. Laufende Dokumentation wird ausschließlich im Echtsystem fortgeschrieben.
-
-## Neue Echtsystem-Dokumentation
-
-- Visuelle Identität / Logo / Bildsprache / UI-Stil → `docs/Visuelle-Identitaet-und-Bildkonzept.md`
-- Migration Entwickler-Infrastruktur → GRÜNEN-Infrastruktur → `docs/Migrationsstrategie.md`
-- strukturierter Redaktionsworkflow → `docs/Redaktionsworkflow.md`
-- Transfer-Audit → `docs/Transfer-Audit-Demonstrator-Echtsystem.md`
-- zweite Transfer-Prüfschicht Inhaltsbausteine/Redaktionsfunktionen → `docs/Transfer-Audit-Inhaltsbausteine-und-Redaktionsfunktionen.md`
-- Transfer-Regressionstests → `docs/Regressionstests-Demonstratortransfer.md`
-- Beobachtungs-/Recherchemodell → `docs/Beobachtungs-und-Recherchemodell.md`
-- „Mehr wissen?“-Datenmodell → `docs/Mehr-wissen-Modell.md`
-- MVP-Fachfunktionen → `docs/MVP-Fachfunktionen.md`
-- KI-Zugangswege/Fachfunktionsarchitektur → `docs/KI-Zugangswege-und-Fachfunktionen.md`
-- Plausibilitäts-/Freigaberegeln → `docs/Fachliche-Plausibilitaets-und-Freigaberegeln.md`
-- G3-Gesamtaudit → `docs/G3-Gesamtaudit.md`
-- Schutzbedarf/Datenschutz/Offline → `docs/Schutzbedarf-Datenschutz-und-Offline.md`
-
-## Modellunabhängigkeit der KI
-
-Die fachlichen FIB-Regeln werden in der Projektdokumentation und nicht in einem einzelnen Modell oder Chat verankert.
-
-Verbindliche Qualitätsquelle: `docs/KI-Qualitaet-und-Modellunabhaengigkeit.md`.
-
-Für die spätere technische Umsetzung ist vorzusehen:
-
-- zentrale modellunabhängige Regel-/Prompt-Schicht,
-- strukturierte Ein- und Ausgaben,
-- Regressionstests mit festen FIB-Referenzfällen,
-- Modellvergleich nach FIB-Aufgabe und Qualitätsanforderung,
-- konfigurierbare Routing-Matrix,
-- Modellwechsel nur nach Qualitätsprüfung.
+- `docs/Datenmodell.md`
+- `docs/G3-Gesamtaudit.md`
+- `docs/Schutzbedarf-Datenschutz-und-Offline.md`
+- `docs/Datenschutz-Verarbeitungen-und-Loeschlogik.md`
+- `docs/KI-Provider-und-DSFA-Pruefrahmen.md`
+- `docs/Zielarchitektur.md`
+- `docs/decisions/ADR-001-Web-und-Service-Stack.md`
+- `docs/decisions/ADR-002-Datei-und-Bildspeicher.md`
 
 ## Änderungshistorie
 
 | Version | Datum | Änderung |
 |---|---|---|
+| 3.1 | 06.10.2026 | Roadmap in Gründungs- und Umsetzungsphasen gegliedert; Redaktions-App und öffentliche FIB-Seite/PWA als eigene Produktstränge U2/U3 sichtbar gemacht; technische Umsetzung in U1–U6 konkretisiert; G4 auf abgeschlossen und G5 auf in Arbeit synchronisiert. |
 | 3.0 | 06.10.2026 | G4 gestartet; Schutzbedarf/Datenschutz/Offline als aktive Phase und neue Primärquelle verankert; G5–G7/G10 um Folgeanforderungen aus G4 ergänzt. |
 | 2.9 | 05.10.2026 | G3 nach bestandenem G3-Gesamtaudit abgeschlossen; Datenmodell v3.0 und neue Teilmodelle/Fachfunktionsarchitektur verankert; G4 Schutzbedarf/Datenschutz/Offline als nächsten konkreten Gründungsschritt gesetzt. |
-| 2.8 | 04.10.2026 | Zweite Transfer-Prüfschicht abgeschlossen: IA-026 geschlossen, beide Transfer-Gates bestanden, Dokumentationsübernahme wieder auf abgeschlossen gesetzt und G3 als nächsten aktiven Arbeitsschritt festgelegt. |
-| 2.7 | 04.10.2026 | G2.5 nach neu erkannter Lücke bei sichtbaren Inhaltsbausteinen und Redaktionsfunktionen wieder auf „In Arbeit“ gesetzt; zweite Transfer-Prüfschicht und neues Auditdokument verankert; G3-Fortsetzung hinter Abschluss der aktuellen Transfernacharbeit eingeordnet. |
-| 2.6 | 03.10.2026 | G2.5 nach abgeschlossenem Transfer-Audit und bestandenen Transfer-Gate auf abgeschlossen gesetzt; Dokumentationsübernahme erneut als abgeschlossen markiert; G3 wieder als aktiven nächsten Schritt gesetzt; G3/G5/G10-Folgeaufträge aus dem Transfer-Audit verankert. |
-| 2.5 | 03.10.2026 | G2.5 „Transfer-Audit Demonstrator → Echtsystem“ als laufenden Zwischenschritt zwischen G2 und vollständiger Fortsetzung von G3 aufgenommen; bisherige Aussage „Dokumentationsübernahme abgeschlossen“ wegen neu erkannter Versionsdrift und Transferlücken auf „teilweise umgesetzt“ zurückgenommen; Transfer-Gate, fünf Prüfquellen und unmittelbare Regelübernahme verankert. |
-| 2.4 | 03.10.2026 | Hybrid-KI als Entwicklungsprinzip aufgenommen: verpflichtende Entdeckungs-/Eingangs-KI, bedarfsgesteuerte Recherche-KI, optionale Redaktions-KI und modellunabhängiger Kern; Quellenmonitor in Quellenbeobachtung und Quellenentdeckung gegliedert; G3/G5/G7/G10 sowie vorläufigen KI-Kostenrahmen angepasst. |
