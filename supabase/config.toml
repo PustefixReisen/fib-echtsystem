@@ -1,0 +1,4 @@
+project_id = "apaubomxffcwtzjimori"
+
+[functions.fib-get-event]
+verify_jwt = true
