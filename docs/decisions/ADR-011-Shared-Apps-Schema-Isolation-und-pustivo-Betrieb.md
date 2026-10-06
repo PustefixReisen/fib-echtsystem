@@ -42,6 +42,8 @@ Memorix verbleibt bis auf Weiteres im bestehenden Schema `public`. Eine Migratio
 
 Spätere Anwendungen erhalten eigene Schemas und dürfen nicht standardmäßig auf `fib` oder andere Anwendungsschemata zugreifen.
 
+**Legacy-Ausnahme:** `public.fib_ai_daily_usage` gehört zum alten öffentlichen FIB-„Mehr wissen?“-Demonstrator und nicht zum Echtsystem. Sie bleibt solange unangetastet, wie der Demonstrator sie noch benötigt. Die Bereinigung ist in GitHub Issue #5 mit Wiederaufnahme-Kriterium dokumentiert. Neue Echtsystem-FIB-Objekte werden ausschließlich im Schema `fib` angelegt.
+
 ### 3. Keine fachlichen Querabhängigkeiten
 
 Zwischen `fib` und `public`/Memorix werden grundsätzlich keine fachlichen Kopplungen angelegt.
@@ -67,11 +69,22 @@ Der normale FIB-Fachbetrieb verwendet **nicht** den projektweit privilegierten `
 
 Der projektweite `service_role` bzw. vergleichbar privilegierte Zugänge bleiben auf notwendige technische Administrations-/Supabase-Sonderfälle beschränkt und dürfen nicht als normale FIB-Fachautorisierung dienen.
 
-Ziel ist:
+Implementiert sind:
+
+- Gruppenrolle `fib_runtime` ohne Login, Superuser-, CreateDB-, CreateRole-, Replication- oder `BYPASSRLS`-Rechte,
+- Loginrolle `fib_app`, die ausschließlich `fib_runtime` erbt,
+- Objektprivilegien nur im Schema `fib`,
+- keine FIB-spezifischen Tabellen-/Sequenz-/Funktionsrechte in `public`,
+- keine Data-API-Rechte von `anon`, `authenticated` oder `service_role` auf `fib`,
+- RLS auf den FIB-Tabellen mit expliziten Policies ausschließlich für `fib_runtime`.
+
+PostgreSQL gewährt Schema-`USAGE` auf `public` projektweit über die Rolle `PUBLIC`. Dies allein erlaubt jedoch keinen Tabellenzugriff. Der Isolationstest prüft daher die tatsächlich sicherheitsrelevanten Objektprivilegien. Für `public.events` wurde verifiziert, dass `fib_app` weder `SELECT`, `INSERT`, `UPDATE` noch `DELETE` besitzt; für `fib.events` bestehen die vorgesehenen FIB-Rechte.
+
+Ziel bleibt:
 
 > **Ein Fehler in FIB-Code darf technisch nicht ausreichen, um Memorix-/`public`-Daten zu verändern.**
 
-Die konkrete Rollen-/Grant-Matrix wird in U1 implementiert und getestet.
+Ein echter Login-Laufzeittest mit `fib_app` wird nach sicherer Vergabe des Runtime-Secrets auf pustivo durchgeführt. Die Supabase-Connector-Administrationsverbindung kann nicht per `SET ROLE` in `fib_app` wechseln und ersetzt diesen späteren Credential-Test daher nicht.
 
 ### 5. Gemeinsames Supabase Auth, getrennte Autorisierung
 
@@ -176,9 +189,10 @@ Nicht gewählt, weil ein kompromittierter Anwendungszugang sonst auch Backups ve
 
 ## Konsequenzen
 
-- U1 muss das Schema `fib` und eine konkrete DB-Rollen-/Grant-Isolation umsetzen.
+- Das Schema `fib` und die grundlegende DB-Rollen-/Grant-Isolation sind in `Shared-Apps` angelegt.
 - FIB-Auth-Zuordnungen liegen im Schema `fib`; `auth.users` bleibt projektweit gemeinsam.
 - U1/U5 müssen schema-spezifische Backup-/Restore-Skripte bereitstellen.
 - Storage-Adapter und Nextcloud-Zugang werden anwendungsspezifisch konfiguriert.
 - G7/G9/G10 werden so interpretiert, dass pustivo selbst dauerhafter Produktivbetrieb sein kann; Migration auf GRÜNEN-Infrastruktur ist eine mögliche, nicht zwingende spätere Betriebsentscheidung.
-- Isolation zwischen `fib`, `public` und späteren Anwendungsschemata wird Bestandteil technischer Integrations- und Sicherheitstests.
+- Isolation zwischen `fib`, `public` und späteren Anwendungsschemata bleibt Bestandteil technischer Integrations- und Sicherheitstests.
+- GitHub Issue #5 verfolgt die spätere Bereinigung der Legacy-Demonstrator-Tabelle `public.fib_ai_daily_usage`.
