@@ -45,13 +45,15 @@ jobs:
           IONOS_SFTP_USER: ${{ secrets.IONOS_SFTP_USER }}
           IONOS_SFTP_PASSWORD: ${{ secrets.IONOS_SFTP_PASSWORD }}
         run: |
-          lftp -c "
-            set cmd:fail-exit yes;
-            set net:max-retries 2;
-            set net:timeout 20;
-            set sftp:auto-confirm yes;
-            open -u \"$IONOS_SFTP_USER\",\"$IONOS_SFTP_PASSWORD\" sftp://$IONOS_SFTP_HOST;
-            mkdir -p redaktion;
-            mirror --reverse --delete --verbose apps/editorial-web/dist/ redaktion/;
-            bye;
-          "
+          lftp \
+            -u "$IONOS_SFTP_USER","$IONOS_SFTP_PASSWORD" \
+            "sftp://$IONOS_SFTP_HOST" \
+            -e '
+              set cmd:fail-exit yes;
+              set net:max-retries 2;
+              set net:timeout 20;
+              set sftp:auto-confirm yes;
+              mkdir -p redaktion;
+              mirror --reverse --delete --verbose apps/editorial-web/dist/ redaktion/;
+              bye;
+            '
