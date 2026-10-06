@@ -4,15 +4,15 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 0.6 | 06.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
+| 1.0 | 06.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
 
-## 1. Zweck und Geltung
+## 1. Zweck
 
-Dieses Dokument ist die verbindliche Integrationsquelle für **G5 – Zielarchitektur / Stack / Hosting / Deployment** des FIB-Echtsystems.
+Dieses Dokument ist die verbindliche Integrationsquelle für **G5 – Zielarchitektur / Stack / Hosting / Deployment**.
 
-Es übersetzt die fachlichen Entscheidungen aus G1–G4 in eine technische Zielarchitektur, ohne das fachliche Datenmodell oder die Fachfunktionen erneut zu definieren.
+Es beschreibt die technische Gesamtidee so, dass die wesentlichen Entscheidungen fachlich nachvollziehbar bleiben. Technische Detailentscheidungen stehen in den zugehörigen ADRs unter `docs/decisions/`.
 
-Verbindliche Grundlagen insbesondere:
+Grundlage sind insbesondere:
 
 - `docs/Datenmodell.md`
 - `docs/MVP-Fachfunktionen.md`
@@ -21,293 +21,175 @@ Verbindliche Grundlagen insbesondere:
 - `docs/KI-Provider-und-DSFA-Pruefrahmen.md`
 - `docs/Migrationsstrategie.md`
 - `docs/KI-Betrieb-und-Kosten.md`
-- `docs/decisions/ADR-001-Web-und-Service-Stack.md`
-- `docs/decisions/ADR-002-Datei-und-Bildspeicher.md`
-- `docs/decisions/ADR-003-Publikations-und-Deploymentprozess.md`
-- `docs/decisions/ADR-004-Suche-und-RAG.md`
-- `docs/decisions/ADR-005-AI-Tasks-Scheduler-und-Queue.md`
-- `docs/decisions/ADR-006-Authentifizierung-und-Rechtearchitektur.md`
-- `docs/decisions/ADR-007-KI-Router-und-Providerintegration.md`
 
-## 2. Architekturprinzipien
+Zugehörige Architekturentscheidungen:
 
-1. **Eine gemeinsame Fachfunktionsschicht:** Web-App, FIB-Chat und AI Tasks lesen und schreiben fachliche Daten ausschließlich über dieselben Fachservices.
-2. **Supabase/PostgreSQL als strukturierter Kern:** fachliche strukturierte Daten, Beziehungen, Status, Historisierung, Audit und Authentifizierung werden dort technisch umgesetzt, soweit kein spezialisierter externer Dienst sachlich geeigneter ist.
-3. **Datei-/Bildspeicher vom relationalen Kern entkoppeln:** Binärdateien werden nicht in PostgreSQL eingebettet; die Datenbank speichert Identität, Metadaten, Rechte-/Schutzstatus und technische Speicherreferenzen.
-4. **Providerunabhängige KI-Schicht:** Fachfunktionen kennen keine fest verdrahteten Modellnamen. KI-Aufrufe laufen über einen zentralen FIB-KI-Router.
-5. **Schutzklassenbewusste Datenweitergabe:** K0–K3 und Personenbezug werden vor Storage-, KI- und Cache-Aktionen berücksichtigt.
-6. **Keine direkte fachliche DB-Nutzung:** Direkter SQL-/DB-Zugriff bleibt technischen Betriebsaufgaben vorbehalten.
-7. **Konfiguration statt persönlicher Bindung:** Domains, Projekt-IDs, Speicherendpunkte, Provider, Redirects und Secrets werden konfiguriert, nicht in Fachlogik hart codiert.
-8. **Migration ist Architekturmerkmal:** Entwicklungs-/Pilotbetrieb und späterer GRÜNEN-Zielbetrieb verwenden dieselbe Software und dasselbe reproduzierbare Schema.
-9. **MVP online-first für Redaktion:** kein dauerhafter lokaler Spiegel interner K1/K2-Daten.
-10. **Öffentliche Auslieferung static-first:** Besucher lesen einen freigegebenen, versionierten K0-Stand und benötigen für normales Lesen weder Supabase noch KI.
-11. **Suche folgt der Fachstruktur:** explizite Beziehungen und strukturierte Filter haben Vorrang vor Volltext; Volltext hat Vorrang vor optionaler semantischer Suche.
-12. **Automatisierung ist persistent und wiederaufnehmbar:** fachlich wichtige AI Tasks werden als Runs/Jobs nachvollziehbar gespeichert und nicht an einen einzelnen kurzlebigen Prozess gebunden.
-13. **Autorisierung ist mehrstufig:** Fachservices prüfen die fachliche Berechtigung; RLS schützt zusätzlich die Datenbank.
-14. **KI-Routing erfolgt nach Bedarf statt Anbieterbindung:** Aufgabenklasse, Qualität, Schutzklasse, Kosten und Fallback bestimmen den zulässigen Betriebsweg.
+- `ADR-001-Web-und-Service-Stack.md`
+- `ADR-002-Datei-und-Bildspeicher.md`
+- `ADR-003-Publikations-und-Deploymentprozess.md`
+- `ADR-004-Suche-und-RAG.md`
+- `ADR-005-AI-Tasks-Scheduler-und-Queue.md`
+- `ADR-006-Authentifizierung-und-Rechtearchitektur.md`
+- `ADR-007-KI-Router-und-Providerintegration.md`
+- `ADR-008-CI-CD-und-Deployment.md`
+- `ADR-009-Repository-und-Anwendungsstruktur.md`
 
-## 3. Logische Gesamtarchitektur
+## 2. Gesamtidee
 
-```mermaid
-flowchart TB
-    V[Besucher / PWA]
-    R[Redaktions-Web-App]
-    C[FIB-Chat]
-    T[AI Tasks]
+FIB wird technisch in drei Bereiche getrennt:
 
-    FS[FIB-Fachfunktionen / Services]
-    AIR[FIB-KI-Router]
-    PUB[Publish / Build]
-    Q[Queue / Worker]
+1. **Redaktion und Automatisierung** – Redaktions-App, FIB-Chat und AI Tasks,
+2. **interner FIB-Kern** – Fachservices, Datenbank, Dateispeicher und KI-Router,
+3. **öffentliche FIB-Seite** – fertig erzeugte, freigegebene Seiten für Besucher.
 
-    DB[(Supabase PostgreSQL)]
-    AUTH[Supabase Auth]
-    STORE[(interner Datei-/Bildspeicher)]
-    AI[freigegebene KI-Provider]
-    WEB[statischer öffentlicher Webserver]
+```text
+Redaktions-App / FIB-Chat / AI Tasks
+                │
+                ▼
+        gemeinsame Fachservices
+        ┌───────┼─────────┐
+        ▼       ▼         ▼
+    Supabase  Storage   KI-Router
+                         │
+                         ▼
+                   KI-Provider
 
-    R --> AUTH
-    C --> AUTH
-    R --> FS
-    C --> FS
-    T --> Q
-    Q --> FS
-
-    FS --> DB
-    FS --> STORE
-    FS --> AIR
-    AIR --> AI
-
-    FS -->|S3 / K0-Stand| PUB
-    STORE -->|freigegebene Medien| PUB
-    PUB --> WEB
-    V --> WEB
+              S3-Freigabe
+                   │
+                   ▼
+          öffentlicher K0-Stand
+                   │
+                   ▼
+          Build + Validierung
+                   │
+                   ▼
+          öffentlicher Webserver
+                   │
+                   ▼
+                Besucher
 ```
 
-Damit sind interner Arbeitsbetrieb, Automatisierung und öffentliche Auslieferung bewusst entkoppelt.
+Der wichtigste Grundsatz lautet:
 
-## 4. Technischer Kern: Supabase / PostgreSQL
+> **FIB arbeitet intern dynamisch mit Datenbank und KI, veröffentlicht nach außen aber einen stabilen, freigegebenen Informationsstand.**
 
-Supabase bleibt die bevorzugte Backend-Basis des MVP.
+## 3. Gemeinsame Fachservices
 
-Vorgesehen sind insbesondere:
+Web-App, FIB-Chat und AI Tasks dürfen nicht jeweils eigene fachliche Regeln entwickeln.
 
-- PostgreSQL für strukturierte FIB-Daten,
-- Supabase Auth für Redakteur-/Admin-Authentifizierung,
-- Row Level Security als zusätzliche technische Schutzschicht,
-- reproduzierbare Migrationen für Schema, Constraints, Policies, Funktionen und Trigger,
-- technische Audit-/Betriebsdaten, soweit passend,
-- PostgreSQL-Volltextsuche,
-- optional `pgvector` für ausgewählte semantische Such-/RAG-Fälle nach Qualitätsnachweis,
-- Supabase Cron/`pg_cron` für geplante Auslöser,
-- Supabase Queues/`pgmq` für durable asynchrone Jobs.
+Alle regulären fachlichen Lese- und Schreibzugriffe laufen über dieselbe Fachservice-Schicht.
 
-> **RLS ersetzt die Fachfunktionsschicht nicht.**
+Dort werden insbesondere erzwungen:
 
-Fachregeln, Zustandsübergänge, Bestätigungen, Freigaben und Audit werden durch die Fachservices erzwungen. Ein öffentlicher Browser erhält keinen regulären direkten Zugriff auf FIB-Fachtabellen.
+- Rollen und Berechtigungen,
+- Schutzklassen,
+- Statusübergänge,
+- S2-/S3-Bestätigungen,
+- Plausibilitäts- und Freigaberegeln,
+- Audit,
+- KI-Routing,
+- Publish-Auslösung.
 
-## 5. Datei- und Bildspeicher
+Direkter Datenbankzugriff bleibt technischen Betriebsaufgaben vorbehalten.
 
-Die FIB-Datenbank speichert fachliche Identität, Herkunft, Rechte, Schutzklasse, Freigabestatus, Beziehungen und eine technische Speicherreferenz. Die Binärdatei selbst liegt in einem dafür vorgesehenen Speicher.
+## 4. Datenbank und Authentifizierung
 
-FIB verwendet einen gekapselten Storage-Adapter statt produktabhängiger Pfade in der Fachlogik.
+### Supabase/PostgreSQL
 
-Nextcloud ist für Entwicklung/Pilot ein geeigneter Kandidat. Verbindlich ist aber:
+Supabase/PostgreSQL bleibt der strukturierte Kern des MVP.
 
-- keine Abhängigkeit von einem persönlichen Nextcloud-Konto,
-- standardisierte/gekapselte Schnittstelle,
-- K1/K2-Dateien nicht öffentlich ausliefern,
-- Produktwechsel ohne Änderung des Fachmodells ermöglichen.
+Dort liegen insbesondere:
 
-Öffentlich freigegebene Medien werden bei der Veröffentlichung in den öffentlichen K0-Stand bzw. dessen Medienablage übernommen. Besucher greifen dadurch nicht auf den internen Dateispeicher zu.
+- fachliche FIB-Daten und Beziehungen,
+- Status und Historie,
+- Auditdaten,
+- Benutzeridentitäten,
+- technische Suchdaten,
+- AI-Task-/Run-Daten,
+- Queue-/Cron-nahe Betriebsdaten soweit passend.
 
-Details: `docs/decisions/ADR-002-Datei-und-Bildspeicher.md`.
+### Authentifizierung
 
-## 6. Öffentliche Webanwendung / PWA
+Besucher benötigen kein Konto.
 
-Die öffentliche FIB-Anwendung wird **static-first** umgesetzt.
+Nur Redakteure und Admins werden authentifiziert. Konten werden administrativ angelegt oder eingeladen; eine öffentliche Selbstregistrierung ist nicht vorgesehen.
 
-Vorgesehener Stack gemäß ADR-001:
+Die eigentliche fachliche Rechteprüfung geschieht serverseitig in den Fachservices. **RLS** dient zusätzlich als zweite Sicherheitsbarriere.
+
+Privilegierte Schlüssel und Secrets dürfen niemals im Browser oder öffentlichen Build landen.
+
+MFA/2FA wird technisch unterstützt; konkrete Pflichten je Rolle/Aktion werden in G6 festgelegt.
+
+## 5. Öffentliche FIB-Seite / PWA
+
+Die öffentliche Seite wird **static-first** umgesetzt.
+
+Vorgesehener Stack:
 
 - TypeScript,
-- Astro für die öffentliche Website und statische Seitengenerierung,
+- Astro für die öffentliche Website,
 - gezielte interaktive Komponenten statt vollständiger SPA-Abhängigkeit,
-- PWA-Funktionen für App-Installation, lokalen Neuigkeitsstatus und Push.
+- PWA-Funktionen für Installation, lokalen Neuigkeitsstatus und Push.
 
-Ziele:
+Für Besucher bedeutet das:
 
-- öffentliche Inhalte ohne Anmeldung,
-- normales Lesen ohne laufenden KI-Aufruf,
+- kein Login,
 - normales Lesen ohne laufenden Datenbankzugriff,
+- normales Lesen ohne laufenden KI-Aufruf,
 - stabile URLs,
-- SEO-fähige HTML-Ausgabe,
-- gerätebezogener Neuigkeitsstatus ohne zentrales Besucherprofil,
-- Web Push nur nach Opt-in,
-- K0 kann kontrolliert lokal gecacht werden,
-- keine K1/K2-Daten im öffentlichen PWA-Cache.
+- gute SEO-Fähigkeit,
+- robuste Auslieferung auch bei Ausfall interner Dienste.
 
-## 7. Redaktions-Web-App
+Öffentliche K0-Inhalte dürfen kontrolliert lokal gecacht werden. K1/K2 dürfen nicht in öffentliche PWA-Caches gelangen.
 
-Die Redaktions-Web-App ist der strukturierte Arbeitszugang.
+## 6. Redaktions-App und FIB-Chat
 
-Sie nutzt:
+Die Redaktions-App ist die strukturierte Arbeitsoberfläche für Redakteure und Admins.
+
+Sie verwendet:
 
 - Supabase Auth,
-- administrativ eingerichtete Redakteur-/Admin-Konten statt öffentlicher Selbstregistrierung,
-- gemeinsame Fachfunktionen,
+- gemeinsame Fachservices,
 - Online-Betrieb im MVP,
-- keine dauerhafte Offline-Spiegelung interner Daten,
-- serverseitig erzwungene Rollen-, Schutzklassen-, Status- und Freigaberegeln.
+- keine dauerhafte Offline-Spiegelung interner K1/K2-Daten.
 
-Die Geschäftslogik liegt nicht ausschließlich im Browser. Die App kann gezielt interaktive React-Komponenten verwenden; fachliche Regeln bleiben in den Services.
+Der **FIB-Chat** bleibt ein eigener produktiver Arbeitszugang, benötigt im MVP aber keine dritte separate Webanwendung. Er wird als eigener geschützter Bereich innerhalb der Redaktions-App umgesetzt.
 
-## 8. FIB-Chat
+Wichtig:
 
-Der FIB-Chat ist ein eigener produktiver Zugang zur gleichen Fachfunktionsschicht.
+> Der Chat interpretiert natürliche Sprache, arbeitet aber mit denselben Fachfunktionen wie die strukturierte Redaktionsoberfläche.
 
-```text
-Benutzer
-  ↓
-FIB-Chat UI
-  ↓
-Chat-Orchestrierung / Intent-Erkennung
-  ↓
-FIB-Fachfunktionen
-  ├─ strukturierte Daten
-  ├─ Recherche
-  └─ FIB-KI-Router
-```
+Er besitzt keinen Sonderzugriff auf die Datenbank.
 
-Der Chat besitzt keinen pauschalen DB-Zugriff. Er erhält nur den für die jeweilige Fachfunktion zulässigen Kontext. Das verwendete Sprachmodell bleibt austauschbar.
+## 7. Datei- und Bildspeicher
 
-## 9. AI Tasks, Scheduler und Queue
+Binärdateien wie Bilder und Dokumente werden nicht in PostgreSQL eingebettet.
 
-Fachlich wichtige automatische Aufgaben werden nicht als einzelner langer Cron-/Function-Aufruf behandelt.
+Die Datenbank hält stattdessen:
 
-Der MVP verwendet:
+- fachliche Identität,
+- Herkunft,
+- Rechte-/Lizenzstatus,
+- Schutzklasse,
+- Freigabestatus,
+- Beziehungen zu FIB-Objekten,
+- technische Speicherreferenz.
 
-```text
-AI Task
-   ↓
-Supabase Cron oder fachlicher Trigger
-   ↓
-AITaskRun
-   ↓
-Supabase Queue / pgmq
-   ↓
-Edge-Function Worker
-   ↓
-FIB-Fachfunktionen / Recherche / KI-Router
-```
+Der eigentliche Dateiinhalt liegt in einem austauschbaren Storage.
 
-Verbindlich:
+### Nextcloud
 
-- Zeitplanung und Verarbeitung sind getrennt,
-- Queue-Jobs bleiben bei kurzfristigen Fehlern erhalten,
-- Runs besitzen sichtbaren Status und Fehler,
-- Retry darf fachliche Ablehnungen nicht umgehen,
-- Jobs/Schritte müssen idempotent sein,
-- lange Aufgaben werden in wiederaufnehmbare Schritte zerlegt,
-- AI Tasks dürfen keine S2-/S3-Aktion eigenmächtig durchführen,
-- manueller Start und Folgeaufträge verwenden dasselbe Run-/Queue-Modell.
+Nextcloud ist für den Pilotbetrieb ein geeigneter Kandidat, aber keine feste Systemvoraussetzung.
 
-Ein eigener dauerhaft laufender Worker-Server ist im MVP nicht vorgesehen und wird nur bei nachgewiesenem Bedarf eingeführt.
+FIB arbeitet über einen Storage-Adapter, sodass später auch eine organisationsgebundene Nextcloud, Supabase Storage oder ein anderer geeigneter Speicher verwendet werden kann.
 
-Details: `docs/decisions/ADR-005-AI-Tasks-Scheduler-und-Queue.md`.
+Öffentlich freigegebene Bilder/Dokumente werden bei der Veröffentlichung in den öffentlichen K0-Build übernommen. Besucher greifen nicht auf interne Nextcloud-/Storage-URLs zu.
 
-## 10. KI-Router
+## 8. Publikationsmodell
 
-Alle produktiven KI-Aufrufe aus Fachservices, FIB-Chat und AI Tasks laufen über einen zentralen FIB-KI-Router.
+Eine fachliche S3-Freigabe veröffentlicht nicht direkt einzelne Dateien auf dem Webserver.
 
-Die Fachfunktion fordert keinen konkreten Anbieter oder Modellnamen an, sondern beschreibt den fachlichen Bedarf. Der Router berücksichtigt mindestens:
-
-- FIB-Aufgabenklasse,
-- Qualitäts-/Leistungsklasse Q1 bis Q3,
-- Schutzklasse K0 bis K3,
-- Personenbezug und ggf. besondere Sensibilität,
-- erforderliche Modellfähigkeiten,
-- freigegebene Provider-/Modell-/Regionskombinationen,
-- Kosten-/Tokenrahmen,
-- zulässige Fallbacks,
-- notwendige Review-/Freigabestufe.
-
-Verbindlich:
-
-- mindestens zwei Provider müssen technisch parallel konfigurierbar sein,
-- Fachfunktionen enthalten keine festen Modellnamen,
-- Qualität hat Vorrang vor dem niedrigsten Preis, wenn die Aufgabe dies erfordert,
-- günstigere Modelle werden bei nachgewiesen ausreichender Qualität bevorzugt,
-- K3 geht niemals an externe KI,
-- K2 nur an ausdrücklich dafür freigegebene Betriebswege,
-- Freigaben gelten für konkrete Betriebswege und nicht pauschal für einen Provider,
-- Fallbacks dürfen Schutz- oder Datenschutzanforderungen niemals abschwächen,
-- Provider-/Modellwechsel erfolgt über Konfiguration und erst nach Regressionstest,
-- Nutzung, Qualität und Kosten sind je Aufgabenklasse messbar.
-
-Beispielhafte Qualitätsklassen:
-
-- **Q1:** einfache Klassifikation, Extraktion, Formatierung und kostensensitive Massenaufgaben,
-- **Q2:** strukturierte Analyse, normale Recherche, Zusammenfassung und Zuordnung,
-- **Q3:** schwierige Quellenlagen, komplexe Synthesen, anspruchsvolle fachliche Abwägung und Qualitätsprüfung.
-
-Die Zuordnung konkreter Modelle zu Q1–Q3 wird im Pilotbetrieb anhand fester FIB-Referenzfälle kalibriert und bleibt austauschbar.
-
-Details: `docs/decisions/ADR-007-KI-Router-und-Providerintegration.md`.
-
-## 11. Suche und RAG
-
-FIB verwendet keine pauschale „alles per Vektorsuche“-Architektur.
-
-> **Struktur vor Text, Text vor Semantik.**
-
-### Öffentliche Suche
-
-Beim Static Build wird ein eigener K0-Suchindex erzeugt. Die öffentliche Suche greift damit nicht auf interne Daten oder direkt auf Supabase zu. Für das MVP ist keine öffentliche Vektorsuche erforderlich.
-
-### Interne Suche
-
-Redaktion und FIB-Chat suchen gestuft über:
-
-1. explizite FIB-Beziehungen,
-2. strukturierte Filter wie Typ, Status, Zeitraum und Schutzklasse,
-3. PostgreSQL-Volltextsuche.
-
-### RAG
-
-KI-Kontext wird ausgehend vom konkreten Fachobjekt zusammengestellt. Explizite Beziehungen und Quellenbindung werden zuerst genutzt. Volltext ergänzt diesen Kontext.
-
-Semantische Suche/Embeddings werden erst dann ergänzt, wenn Tests einen klaren Mehrwert zeigen, insbesondere bei längeren unstrukturierten Dokumenten oder sprachlich stark abweichenden Formulierungen.
-
-Wenn Semantik eingeführt wird, ist hybride Suche – Volltext plus semantische Suche – der bevorzugte Prüfansatz.
-
-Embeddings sind abgeleitete technische Suchdaten und dürfen jederzeit neu erzeugt werden. Sie übernehmen mindestens die Schutzklasse ihres zugrunde liegenden Inhalts.
-
-Details: `docs/decisions/ADR-004-Suche-und-RAG.md`.
-
-## 12. Authentifizierung und Rechtearchitektur
-
-Besucher benötigen kein Konto. Authentifizierung betrifft im MVP ausschließlich Redakteure und Admins.
-
-Technische Grundsätze:
-
-- Supabase Auth dient als Identitätsdienst,
-- Konten werden administrativ angelegt/eingeladen; keine offene Selbstregistrierung,
-- fachliche Rollen werden serverseitig verwaltet und nicht aus frei änderbaren `user_metadata`-Feldern abgeleitet,
-- jeder fachlich wirksame Aufruf wird serverseitig gegen Identität, aktive Rolle, Schutzklasse, Objektzustand und erforderliche Bestätigung geprüft,
-- RLS bildet eine zusätzliche Sicherheitsbarriere und ersetzt diese Prüfung nicht,
-- öffentliche Besucher erhalten keine fachlichen Schreibrechte und benötigen keinen direkten Data-API-Zugriff,
-- privilegierte Service-/Secret-Schlüssel bleiben ausschließlich serverseitig,
-- MFA wird technisch unterstützt; Admin-MFA muss durchsetzbar sein,
-- Rollenentzug muss serverseitig kurzfristig wirksam werden und darf nicht allein auf veraltete JWT-Claims warten,
-- AI Tasks sind technische Akteure und erben keine menschlichen Redakteur-/Adminrechte.
-
-Die konkrete Rollen-/Policy-Matrix, S2-/S3-Bestätigungen und MFA-Pflichten je Rolle/Aktion werden in G6 festgelegt.
-
-Details: `docs/decisions/ADR-006-Authentifizierung-und-Rechtearchitektur.md`.
-
-## 13. Publikationsprozess
-
-Eine fachliche S3-Freigabe schreibt nicht direkt in öffentliche Webdateien.
+Ablauf:
 
 ```text
 S3-Freigabe
@@ -323,131 +205,247 @@ Static Build
    ↓
 Validierung
    ↓
-atomarer Deploy
+Deployment
    ↓
 öffentliche Seite
 ```
 
-Wesentliche Regeln:
+Verbindlich:
 
-- nur freigegebene K0-Daten gelangen in den öffentlichen Build,
-- fehlgeschlagener Build ersetzt niemals die bisherige Website,
+- nur freigegebene K0-Daten gehen in den Build,
 - Besucher sehen keinen halbfertigen Mischstand,
-- Deployments sind versioniert und rollbackfähig,
-- Redaktionssystem zeigt Publish-Status und Fehler,
-- fachlich veröffentlicht und technisch öffentlich ausgeliefert werden als zwei nachvollziehbare Zustände unterschieden.
+- ein fehlgeschlagener Build ersetzt niemals den funktionierenden Stand,
+- Deployments sind versioniert,
+- Rollback auf den letzten funktionierenden Stand ist möglich,
+- fachliche Freigabe und technische Auslieferung bleiben nachvollziehbar getrennt.
 
-Details: `docs/decisions/ADR-003-Publikations-und-Deploymentprozess.md`.
+## 9. Suche und RAG
 
-## 14. Hosting- und Umgebungsmodell
+FIB folgt dem Grundsatz:
 
-Mindestens drei logisch getrennte Umgebungen werden vorgesehen:
+> **Struktur vor Text, Text vor Semantik.**
 
-1. **lokale/Entwicklungsumgebung**,
-2. **Pilot-/Entwicklerumgebung**,
-3. **Produktivumgebung GRÜNE Feldkirchen**.
+### Öffentliche Suche
+
+Beim Build entsteht ein eigener öffentlicher K0-Suchindex. Besucher durchsuchen damit nur freigegebene Inhalte und greifen nicht direkt auf Supabase zu.
+
+### Interne Suche
+
+Redaktion und FIB-Chat verwenden zuerst:
+
+1. vorhandene fachliche Beziehungen,
+2. strukturierte Filter,
+3. PostgreSQL-Volltextsuche.
+
+### RAG
+
+Für KI-Antworten wird gezielt der passende FIB-Kontext zusammengestellt: Ereignisse, Vorgänge, Themen, Quellen und andere relevante Objekte.
+
+Semantische/Vektorsuche ist im MVP **keine Pflicht**. Sie wird nur ergänzt, wenn Tests einen klaren Mehrwert zeigen.
+
+## 10. AI Tasks und automatische Recherche
+
+Automatische Aufgaben dürfen nicht von einem einzelnen langen Prozess abhängen.
+
+Vorgesehen ist:
+
+```text
+AI Task
+   ↓
+Cron / fachlicher Trigger
+   ↓
+AITaskRun
+   ↓
+persistente Queue
+   ↓
+Worker
+   ↓
+Fachservices / Recherche / KI-Router
+```
+
+Damit können Läufe nach Fehlern kontrolliert wieder aufgenommen werden.
+
+Verbindlich:
+
+- Zeitplanung und Verarbeitung sind getrennt,
+- Jobs sind nachvollziehbar und möglichst idempotent,
+- lange Rechercheläufe werden in Schritte zerlegt,
+- AI Tasks dürfen keine S2-/S3-Aktion eigenmächtig durchführen.
+
+Für den MVP werden Supabase Cron, Queue/`pgmq` und Edge-Function-Worker verwendet. Ein eigener dauerhaft laufender Worker-Server ist zunächst nicht nötig.
+
+## 11. KI-Router und Mehranbieterbetrieb
+
+Alle produktiven KI-Aufrufe laufen über einen zentralen KI-Router.
+
+Eine Fachfunktion verlangt nicht „OpenAI Modell X“ oder „Mistral Modell Y“, sondern beschreibt den Bedarf:
+
+- Aufgabenklasse,
+- Qualitätsklasse,
+- Schutzklasse,
+- Personenbezug,
+- benötigte Fähigkeiten,
+- Kostenrahmen,
+- zulässige Fallbacks.
+
+Der Router wählt daraus einen freigegebenen Betriebsweg.
+
+Qualitätsklassen:
+
+- **Q1:** einfache Extraktion, Klassifikation, Formatierung, kostensensitive Massenaufgaben,
+- **Q2:** normale Analyse, Recherche, Zusammenfassung und Zuordnung,
+- **Q3:** schwierige Quellenlagen, komplexe Synthesen und Qualitätsprüfung.
+
+Verbindlich:
+
+- mindestens zwei Provider müssen parallel konfigurierbar sein,
+- Qualität hat Vorrang vor niedrigstem Preis, wenn die Aufgabe dies erfordert,
+- günstigere Modelle werden bevorzugt, wenn sie nachweislich ausreichen,
+- K3 geht niemals an externe KI,
+- K2 nur über ausdrücklich dafür freigegebene Betriebswege,
+- Fallbacks dürfen Schutz-/Datenschutzanforderungen nicht abschwächen,
+- Modell-/Providerwechsel erfolgt über Konfiguration und Regressionstest.
+
+Konkrete Modellzuordnungen werden im Pilotbetrieb kalibriert und gehören später zum Betrieb, nicht zur festen Architektur.
+
+## 12. CI/CD und Deployment
+
+GitHub Actions wird als zentrale CI/CD-Plattform verwendet.
+
+Es gibt zwei getrennte Wege:
+
+### Softwareänderung
+
+Codeänderungen werden geprüft durch:
+
+- Typecheck/Lint,
+- automatisierte Tests,
+- FIB-Regressionstests soweit relevant,
+- Anwendungs-/Astro-Build,
+- Sicherheits-/Konfigurationsprüfungen.
+
+### Inhaltsveröffentlichung
+
+Eine S3-Freigabe erzeugt einen versionierten K0-Stand und stößt für genau diesen Stand den Publish-Build an.
+
+Wichtig:
+
+> **Ein Code-Commit ist keine fachliche Veröffentlichung, und eine fachliche Veröffentlichung benötigt keinen Code-Commit.**
+
+### Build once, deploy same artifact
+
+Der erfolgreich geprüfte Build wird als versioniertes Paket erzeugt und genau dieses Paket ausgeliefert.
+
+Pilot:
+
+- Deployment auf IONOS-Webspace über SFTP/SSH bzw. gleichwertig sichere Methode.
+
+Zielbetrieb:
+
+- dasselbe Paket auf den späteren GRÜNEN-Webserver,
+- nur Zielkonfiguration und Secrets ändern sich.
+
+Dadurch bleibt FIB vom konkreten Webhoster unabhängig.
+
+## 13. Umgebungen und Migration
+
+Mindestens drei logisch getrennte Umgebungen sind vorgesehen:
+
+1. lokale/Entwicklungsumgebung,
+2. Pilot-/Entwicklerumgebung,
+3. Produktivumgebung GRÜNE Feldkirchen.
+
+Entwicklungs-/Pilotbetrieb und späterer Zielbetrieb verwenden dieselbe Software und dasselbe reproduzierbare Schema.
+
+Domains, Projekt-IDs, Storage-Endpunkte, Provider und Secrets werden konfiguriert und nicht in Fachlogik eingebaut.
 
 Zielbetrieb:
 
 - GRÜNEN-Webserver,
 - eigenes Supabase-Projekt der Organisation,
-- organisationskontrollierter Datei-/Bildspeicher und Providerkonten,
-- organisationskontrollierte Domains, Secrets und Administrationszugänge,
+- organisationskontrollierter Storage,
+- organisationskontrollierte Providerkonten, Domains und Secrets,
 - mindestens zwei administrativ handlungsfähige Personen.
 
-Der statische öffentliche Build ist transportabel und kann in der Pilotphase auf IONOS und später auf dem GRÜNEN-Webserver ausgeliefert werden.
+## 14. Repository- und Anwendungsstruktur
 
-## 15. Deployment und Reproduzierbarkeit
+FIB bleibt ein **Monorepo**.
 
-Im Repository versioniert werden mindestens:
+Zielstruktur:
 
-- Frontend-Code,
-- Fachservice-/Backend-Code,
-- Datenbankmigrationen,
-- Policies/Constraints/Trigger/Funktionen,
-- AI-Task-Definitionen soweit als Code/Konfiguration geführt,
-- Edge-/Serverfunktionen,
-- Konfigurationsschemas,
-- Tests und Regressionstests,
-- Build-/Deployment-Skripte bzw. Workflows,
-- dokumentierte notwendige externe Projekteinstellungen.
+```text
+fib-echtsystem/
+├── apps/
+│   ├── public-web/          # öffentliche Astro-Seite / PWA
+│   └── editorial-web/       # Redaktions-App + FIB-Chat
+├── packages/
+│   ├── fachservices/
+│   ├── domain-contracts/
+│   ├── ai-router/
+│   ├── storage-adapter/
+│   ├── publish/
+│   └── ui/
+├── supabase/
+│   ├── migrations/
+│   └── functions/
+├── tests/
+├── scripts/
+├── assets/
+├── docs/
+└── .github/workflows/
+```
 
-Nicht ins Repository gehören Secrets und produktive personenbezogene Daten.
+Die öffentliche Website und die Redaktions-App werden getrennt gebaut. Fachlogik wird nicht in den Frontends dupliziert.
 
-Eine Zielumgebung muss aus Repository plus dokumentierter Konfiguration reproduzierbar aufgebaut werden können.
+Gemeinsame Pakete entstehen nur, wenn tatsächlich gemeinsamer Nutzen besteht; unnötige technische Zergliederung wird vermieden.
 
-## 16. Cache, Versionierung und Aktualität
-
-Die Cache-Strategie folgt dem versionierten Static-Publish-Modell:
-
-- stabile Inhalts-URLs bleiben stabil,
-- statische Assets erhalten versions-/hashbasierte Dateinamen und können lange gecacht werden,
-- HTML und öffentliche Inhalts-/Versionsmanifeste werden kurz bzw. revalidierbar gecacht,
-- Service Worker und PWA erkennen neue Releases,
-- neue Veröffentlichungen dürfen nicht dauerhaft durch alte Browser-/PWA-Caches verdeckt werden,
-- K1/K2 dürfen nie in öffentlichen Caches landen,
-- jeder Deploy besitzt eine technisch prüfbare Releasekennung.
-
-Damit wird das im Demonstrator beobachtete Mehrfach-Reload-/Cacheproblem strukturell vermieden.
-
-## 17. Sichere Ausgabe dynamischer Inhalte
-
-Alle dynamisch erzeugten oder aus externen Quellen übernommenen Inhalte werden vor öffentlicher Ausgabe sicher gerendert.
+## 15. Sicherheit und Cache
 
 Verbindlich:
 
 - keine ungeprüfte HTML-Ausgabe von KI-/Quelltext,
-- Markdown/strukturierte Inhalte nur über kontrollierten Renderer,
-- URLs/Embeds nach Positivregeln,
+- kontrolliertes Rendering von Markdown/strukturierten Inhalten,
 - Schutz vor XSS/Script-Injektion,
-- externe Inhalte erhalten keine Möglichkeit, FIB-Fachfunktionen oder Browserkontext zu manipulieren.
+- keine Secrets in Repository oder öffentlichen Buildartefakten,
+- K1/K2 niemals im öffentlichen Cache,
+- statische Assets dürfen stark gecacht werden,
+- HTML/Releaseinformationen müssen neue Veröffentlichungen zuverlässig sichtbar machen,
+- jeder öffentliche Deploy besitzt eine prüfbare Releasekennung.
 
-## 18. In G5 bereits entschieden
+Damit soll insbesondere das im Demonstrator beobachtete Problem veralteter Browser-/PWA-Stände strukturell vermieden werden.
 
-- TypeScript als gemeinsame Implementierungssprache für Web-/Service-Schicht,
-- Astro/static-first für die öffentliche Seite,
-- gemeinsame serverseitige Fachservice-Schicht,
-- Supabase/PostgreSQL als strukturierter Kern,
-- Supabase Auth als Authentifizierungsbasis,
-- keine Besucher-Konten und keine offene Selbstregistrierung im MVP,
-- serverseitig verwaltete Redakteur-/Adminrollen,
-- Fachservices als primäre Autorisierungsinstanz, RLS als Defense in Depth,
-- privilegierte Schlüssel ausschließlich serverseitig,
-- MFA-fähige Architektur mit durchsetzbarer Admin-MFA,
-- interner Datei-/Bildspeicher über austauschbaren Adapter,
-- Nextcloud als Pilotkandidat, aber nicht als Systemvoraussetzung,
-- öffentliche Medien werden aus internem Speicher in den K0-Deploy übernommen,
-- versionierter Build mit Validierung, atomarem Deploy und Rollbackfähigkeit,
-- öffentlicher statischer K0-Suchindex,
-- interne strukturierte Suche + PostgreSQL-Volltext,
-- Vektorsuche nur optional nach Qualitätsnachweis,
-- RAG priorisiert explizite Fachbeziehungen vor semantischer Ähnlichkeit,
-- Supabase Cron + durable Queue + Edge-Function Worker als MVP-Automatisierung,
-- lange AI-/Rechercheläufe werden resumierbar in Schritte zerlegt,
-- zentraler KI-Router mit Aufgaben- und Qualitätsklassen,
-- mindestens zwei parallel konfigurierbare KI-Provider,
-- Providerfreigabe je konkretem Betriebsweg statt pauschal je Anbieter,
-- qualitätsgeprüfte Fallbacks ohne Absenkung von Schutz-/Datenschutzanforderungen,
-- Modell-/Providerwechsel über Konfiguration und Regressionstest.
+## 16. Ergebnis G5
 
-## 19. Noch offene G5-Entscheidungen
+Mit ADR-001 bis ADR-009 sind die wesentlichen Architekturgrundsätze für die technische Umsetzung festgelegt:
 
-Vor Abschluss von G5 sind insbesondere noch zu entscheiden:
+- Web-/Service-Stack,
+- Storage,
+- Publikation,
+- Suche/RAG,
+- AI Tasks,
+- Authentifizierung/Rechtearchitektur,
+- KI-Router/Providerintegration,
+- CI/CD/Deployment,
+- Repository-/Anwendungsstruktur.
 
-1. konkrete CI/CD-Plattform und Upload-/Deploymentmethode,
-2. Detailstruktur des Repositories bzw. der Anwendungen/Packages.
+Nicht mehr G5-Grundsatzfragen sind insbesondere:
 
-Die konkrete Modellzuordnung je Aufgabenklasse, Providerfreigaben im laufenden Betrieb und Kostenkalibrierung sind keine offenen Architekturgrundsätze mehr; sie werden im Pilotbetrieb/G7 anhand aktueller Qualität, Verträge, Datenschutzbedingungen und Kosten gepflegt.
+- konkrete RLS-Policy-Matrix → G6,
+- MFA-Pflichten je Rolle/Aktion → G6/G7,
+- konkrete Modellzuordnung und Providerfreigabe → Pilotbetrieb/G7,
+- Backup/Restore/Monitoring/Kostenwarnungen → G7,
+- konkretes Migrationsrunbook → G9.
 
-Die konkrete RLS-/Rechtematrix ist keine offene G5-Grundsatzfrage mehr, sondern wird in G6 aus dem fachlichen Rollen-/Aktionsmodell und ADR-006 abgeleitet.
+Vor dem formalen Abschluss von G5 erfolgt ein kurzer G5-Gesamtaudit auf Vollständigkeit und Widerspruchsfreiheit.
 
 ## Änderungshistorie
 
 | Version | Datum | Änderung |
 |---|---|---|
-| 0.6 | 06.10.2026 | ADR-007 integriert; zentralen KI-Router mit Aufgaben-/Qualitätsklassen, Mehranbieterbetrieb, Betriebswegfreigaben, qualitätsgeprüften Fallbacks sowie zentraler Kosten-/Datenschutzsteuerung festgelegt. |
-| 0.5 | 06.10.2026 | ADR-006 integriert; Authentifizierung auf Redakteur/Admin begrenzt, keine Besucher-Konten, serverseitige Rollenverwaltung, Fachservices als primäre Autorisierungsinstanz, RLS als Defense in Depth, privilegierte Schlüssel nur serverseitig und MFA-fähige Architektur festgelegt. |
-| 0.4 | 06.10.2026 | ADR-005 integriert; Supabase Cron + durable Queue + Edge-Function Worker für AI Tasks festgelegt; lange Läufe als wiederaufnehmbare Schritte, Idempotenz und Retry-Grundsätze verankert; eigener Worker-Server im MVP ausgeschlossen. |
-| 0.3 | 06.10.2026 | ADR-004 integriert; öffentliche statische Suche, interne strukturierte/Volltextsuche und gestufte RAG-Kontextbeschaffung festgelegt; Vektorsuche als optionale Ergänzung nach Qualitätsnachweis statt MVP-Pflicht eingeordnet. |
-| 0.2 | 06.10.2026 | ADR-001 bis ADR-003 integriert; static-first als verbindliche öffentliche Architektur festgelegt; versionierter K0-Publish, Validierung, atomarer Deploy, Rollback und Cache-Strategie ergänzt; interne und öffentliche Medienauslieferung getrennt; offene G5-Punkte bereinigt. |
-| 0.1 | 06.10.2026 | G5 gestartet; logische Zielarchitektur mit Supabase/PostgreSQL-Kern, gemeinsamer Fachfunktionsschicht, entkoppeltem Datei-/Bildspeicher, Storage-Adapter, Nextcloud als Pilotkandidat, Web-App/PWA, FIB-Chat, AI Tasks, KI-Router, Umgebungs-/Deploymentmodell, Cache- und sichere Renderinganforderungen festgelegt. |
+| 1.0 | 06.10.2026 | G5 nach ADR-001 bis ADR-009 vollständig konsolidiert; Static-first, Fachservices, Supabase-Kern, Storage, Publikation, Suche/RAG, AI Tasks, Auth/RLS, KI-Router, CI/CD und Monorepo-Struktur als verständliche Gesamtarchitektur zusammengeführt. |
+| 0.6 | 06.10.2026 | KI-Router und Mehranbieterbetrieb integriert. |
+| 0.5 | 06.10.2026 | Authentifizierung und Rechtearchitektur integriert. |
+| 0.4 | 06.10.2026 | AI-Task-/Queue-Architektur integriert. |
+| 0.3 | 06.10.2026 | Suche/RAG integriert. |
+| 0.2 | 06.10.2026 | Web-/Service-Stack, Storage und Publikationsprozess integriert. |
+| 0.1 | 06.10.2026 | G5 gestartet. |
