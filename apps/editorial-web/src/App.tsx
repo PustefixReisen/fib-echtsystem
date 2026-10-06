@@ -3,6 +3,19 @@ import { supabase } from './supabase.js';
 
 type AuthState = 'signed_out' | 'aal1_no_factor' | 'aal1_factor_available' | 'aal2';
 
+type EventResult = {
+  ok: true;
+  event: {
+    id: string;
+    title: string;
+    summary: string | null;
+    status: 'confirmed' | 'withdrawn' | 'merged';
+    occurredAt: string | null;
+  };
+};
+
+const LIVE_TEST_EVENT_ID = 'ff02ffad-e2a5-4724-a94b-073a1483051d';
+
 export function App() {
   const [email, setEmail] = useState('josef@kjwalter.de');
   const [password, setPassword] = useState('');
@@ -11,6 +24,9 @@ export function App() {
   const [qrCode, setQrCode] = useState<string | null>(null);
   const [state, setState] = useState<AuthState>('signed_out');
   const [message, setMessage] = useState('');
+  const [eventResult, setEventResult] = useState<EventResult['event'] | null>(null);
+  const [serviceError, setServiceError] = useState<string | null>(null);
+  const [serviceRunning, setServiceRunning] = useState(false);
 
   async function refreshAuthState() {
     const { data: sessionData } = await supabase.auth.getSession();
@@ -18,6 +34,8 @@ export function App() {
       setState('signed_out');
       setFactorId(null);
       setQrCode(null);
+      setEventResult(null);
+      setServiceError(null);
       return;
     }
 
@@ -64,6 +82,8 @@ export function App() {
   async function login(event: FormEvent) {
     event.preventDefault();
     setMessage('Anmeldung wird geprüft …');
+    setEventResult(null);
+    setServiceError(null);
 
     const { error } = await supabase.auth.signInWithPassword({ email, password });
     setPassword('');
@@ -111,9 +131,35 @@ export function App() {
     await refreshAuthState();
   }
 
+  async function runLiveServiceTest() {
+    setServiceRunning(true);
+    setEventResult(null);
+    setServiceError(null);
+
+    const { data, error } = await supabase.functions.invoke<EventResult>('fib-get-event', {
+      body: { eventId: LIVE_TEST_EVENT_ID },
+    });
+
+    setServiceRunning(false);
+
+    if (error) {
+      setServiceError(error.message || 'FIB-Fachservice konnte nicht aufgerufen werden.');
+      return;
+    }
+
+    if (!data?.ok) {
+      setServiceError('FIB-Fachservice lieferte kein gültiges Ergebnis.');
+      return;
+    }
+
+    setEventResult(data.event);
+  }
+
   async function logout() {
     await supabase.auth.signOut();
     setMessage('');
+    setEventResult(null);
+    setServiceError(null);
   }
 
   return (
@@ -168,6 +214,19 @@ export function App() {
       {state === 'aal2' && (
         <section>
           <p><strong>MFA bestätigt.</strong> Der Redaktionszugang kann jetzt den FIB-Fachservice verwenden.</p>
+          <p>
+            <button onClick={runLiveServiceTest} disabled={serviceRunning}>
+              {serviceRunning ? 'Live-Test läuft …' : 'FIB-Fachservice live testen'}
+            </button>
+          </p>
+          {eventResult && (
+            <div>
+              <p><strong>Live-Test erfolgreich.</strong></p>
+              <p>{eventResult.title}</p>
+              {eventResult.summary && <p>{eventResult.summary}</p>}
+            </div>
+          )}
+          {serviceError && <p><strong>Live-Test fehlgeschlagen:</strong> {serviceError}</p>}
         </section>
       )}
 
