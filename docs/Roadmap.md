@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 3.5 | 06.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
+| 3.6 | 06.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
 
 ## Statusmodell
 
@@ -31,10 +31,10 @@ Es gelten die zentralen Status aus `PustefixReisen/pustivo/docs/governance/Dokum
 | G4 Schutzbedarf / Datenschutz / Offline | **Abgeschlossen** | Schutzklassen K0–K3, K2-Minimierung, Löschlogik, KI-/Provider-Prüfrahmen, Offline/PWA-Grundsätze und DSFA-Vorprüfung festgelegt |
 | G5 Zielarchitektur / Stack / Hosting / Deployment | **Abgeschlossen** | Zielarchitektur v1.0 und ADR-001 bis ADR-009 konsolidiert; G5-Gesamtaudit bestanden; Static-first, Fachservices, Storage, Suche/RAG, AI Tasks, Auth/RLS, KI-Router, CI/CD und Monorepo-Struktur verbindlich festgelegt |
 | G6 Rollen / Rechte / Workflow | **Abgeschlossen** | Rollen-/Aktions- und Fachfunktionsmatrix v1.0, verpflichtende MFA für Redakteure/Admins, Step-up-Regeln, Adminvorbehalte sowie Fachservice-/RLS-Grenzen festgelegt; G6-Gesamtaudit bestanden |
-| G7 Betrieb | **In Arbeit** | `docs/Betrieb-und-Wiederherstellung.md` v0.1 angelegt; Backup/Restore, Monitoring, Free-Plan-Pausierung, Retention, KI-Kosten-/Providerbetrieb und Störungsprioritäten konsolidiert; Betriebszielwerte und Warnwege noch abschließen |
-| G8 Governance / Repository / Dokumentation | **Teilweise umgesetzt** | Echtsystem als Dokumentationshoheit etabliert; G2.5–G6 abgeschlossen; G7 in Arbeit; zentrale Standards und späterer Gründungsaudit weiterführen |
+| G7 Betrieb | **Abgeschlossen** | Betriebsrahmen v0.2 und G7-Gesamtaudit v1.0 abgeschlossen; Pilot-Backup Supabase → Nextcloud → PC → Back In Time, Restore-Pflicht, Monitoring/Warnwege, RPO/RTO, Retention sowie KI-Kosten-/Providerbetrieb festgelegt |
+| G8 Governance / Repository / Dokumentation | **Teilweise umgesetzt** | Echtsystem als Dokumentationshoheit etabliert; G2.5–G7 abgeschlossen; verbleibende Governance-/Dokumentationspunkte und späterer Gründungsaudit weiterführen |
 | G9 Migration | **Geplant** | Übergang auf GRÜNEN-Infrastruktur nach `docs/Migrationsstrategie.md`; wiederholbares Migrations-Runbook statt separatem Migrations-Probelauf |
-| G10 Go-live-Abnahme | **Geplant** | messbare Abnahmekriterien festlegen, einschließlich Qualität der verpflichtenden Quellen-/Ereignisentdeckung, Transfer-Regressionstests, Datenschutz-/Schutzbedarfsanforderungen und belastbarer Betriebskostenmessung |
+| G10 Go-live-Abnahme | **Geplant** | messbare Abnahmekriterien festlegen, einschließlich Qualität der verpflichtenden Quellen-/Ereignisentdeckung, Transfer-Regressionstests, Datenschutz-/Schutzbedarfsanforderungen, Restore-Test und belastbarer Betriebskostenmessung |
 | Gründungsaudit | **Geplant** | Vollständigkeit und Widerspruchsfreiheit aller Gründungspakete prüfen; danach beginnt die eigentliche Produktentwicklung |
 
 ## 2. Umsetzungsphasen nach dem Gründungsaudit
@@ -152,7 +152,7 @@ Verbindliche Detailquellen:
 
 ## 4. Nächster konkreter Schritt
 
-**G7 – Betrieb:** `docs/Betrieb-und-Wiederherstellung.md` v0.1 ist angelegt. Als nächstes werden die Betriebszielwerte (RPO/RTO und technische Retention), konkrete Warn-/Benachrichtigungswege und der Schlussaudit festgelegt. Die technische Implementierung folgt später in U1/U5.
+**G8 – Governance / Repository / Dokumentation:** Die bereits etablierten Dokumentations- und Governance-Regeln auf Vollständigkeit prüfen, offene projektweite Standards konsolidieren und die Voraussetzungen für G9/G10 sowie den abschließenden Gründungsaudit vorbereiten.
 
 ## 5. Fachlich/UX bereits geklärt
 
@@ -253,7 +253,29 @@ Festgelegt sind insbesondere:
 - rollen-/statusabhängige UI ohne Vertrauen in clientseitige Berechtigung,
 - Optimistic Concurrency und Audit für fachlich wirksame Änderungen.
 
-## 10. Hybrid-KI – Entwicklungsprinzip
+## 10. G7 – Abschluss
+
+Verbindliche Integrationsquelle: `docs/Betrieb-und-Wiederherstellung.md` v0.2.
+
+Verbindlicher Abschlussnachweis: `docs/G7-Gesamtaudit.md` v1.0.
+
+Festgelegt sind insbesondere:
+
+- Static-first schützt die öffentliche Verfügbarkeit bei internen Störungen,
+- RPO maximal 24 Stunden und RTO innerhalb eines Arbeitstags als MVP-Ziel,
+- täglicher automatischer Supabase-Dump in Nextcloud,
+- Desktop-Synchronisation auf lokalen PC plus Back-In-Time-Versionierung,
+- verpflichtender Restore-Test vor Produktivstart; GitHub Issue #3 verfolgt ihn,
+- 35 Tage rollierende externe DB-Dumps,
+- normale technische Logs 30 Tage,
+- detaillierte KI-Kosten-/Nutzungsmetadaten 12 Monate, danach Aggregation/Löschung soweit möglich,
+- Monitoring von Website, Fachservices, Backup, Storage, Queue/AI Tasks, Provider, Quoten und Kosten,
+- Redaktionsübersicht plus E-Mail als Pilot-Warnweg,
+- P1/P2/P3-Störungsprioritäten,
+- organisationskontrollierte Secrets/Providerkonten im Zielbetrieb,
+- kosten- und qualitätsbewusster KI-Betrieb ohne automatische Qualitätsabsenkung.
+
+## 11. Hybrid-KI – Entwicklungsprinzip
 
 Für das Echtsystem gilt verbindlich:
 
@@ -263,13 +285,13 @@ Die Zielarchitektur unterscheidet verpflichtende Entdeckungs-/Eingangs-KI, bedar
 
 Der in G5 festgelegte KI-Router ordnet FIB-Aufgaben nicht fest an Modellnamen, sondern an Aufgabenklasse, Qualitätsklasse, Schutzklasse, zulässigen Provider-/Modell-/Regionsweg, Fallback und Kostenrahmen.
 
-## 11. Visuelle Identität – geklärt
+## 12. Visuelle Identität – geklärt
 
 Verbindliche Primärquelle: `docs/Visuelle-Identitaet-und-Bildkonzept.md`.
 
 Festgelegt sind insbesondere visuelle Grundhaltung, Logos/Bildmarke, Claim **„Mehr Überblick. Besser verstehen.“**, responsive Bannerlogik, Navigation, PWA-/Icon-Anwendung und Produktionsassets.
 
-## 12. Migrationsgrundsatz – Entwickler → GRÜNEN-Infrastruktur
+## 13. Migrationsgrundsatz – Entwickler → GRÜNEN-Infrastruktur
 
 Verbindliche Primärquelle: `docs/Migrationsstrategie.md`.
 
@@ -282,7 +304,7 @@ Festgelegt ist:
 - reproduzierbare Datenbank-/Backend-/Deployment-Konfiguration,
 - wiederholbare Migration mit Runbook.
 
-## 13. Neue Echtsystem-Dokumentation
+## 14. Neue Echtsystem-Dokumentation
 
 Zu den neu aufgebauten Primär- und Detailquellen gehören inzwischen insbesondere:
 
@@ -296,6 +318,7 @@ Zu den neu aufgebauten Primär- und Detailquellen gehören inzwischen insbesonde
 - `docs/Rollen-Rechte-und-Workflow.md`
 - `docs/G6-Gesamtaudit.md`
 - `docs/Betrieb-und-Wiederherstellung.md`
+- `docs/G7-Gesamtaudit.md`
 - `docs/decisions/ADR-001-Web-und-Service-Stack.md`
 - `docs/decisions/ADR-002-Datei-und-Bildspeicher.md`
 - `docs/decisions/ADR-003-Publikations-und-Deploymentprozess.md`
@@ -305,11 +328,13 @@ Zu den neu aufgebauten Primär- und Detailquellen gehören inzwischen insbesonde
 - `docs/decisions/ADR-007-KI-Router-und-Providerintegration.md`
 - `docs/decisions/ADR-008-CI-CD-und-Deployment.md`
 - `docs/decisions/ADR-009-Repository-und-Anwendungsstruktur.md`
+- `docs/decisions/ADR-010-Backup-Pilotbetrieb.md`
 
 ## Änderungshistorie
 
 | Version | Datum | Änderung |
 |---|---|---|
+| 3.6 | 06.10.2026 | G7 nach Festlegung der Pilot-Backupkette, Restore-Pflicht, RPO/RTO, Retention und Monitoring-/Warnwege abgeschlossen; G7-Gesamtaudit bestanden; G8 Governance/Dokumentation als nächsten konkreten Gründungsschritt gesetzt. |
 | 3.5 | 06.10.2026 | G7 gestartet; `Betrieb-und-Wiederherstellung.md` v0.1 mit Backup/Restore, Monitoring, Pausierung, Retention, KI-Kosten-/Providerbetrieb und Störungsprioritäten angelegt; G7 auf in Arbeit gesetzt. |
 | 3.4 | 06.10.2026 | G6 nach Festlegung verpflichtender MFA für Redakteure/Admins, Step-up-Regeln und Policy-/RLS-Grenzen abgeschlossen; G6-Gesamtaudit bestanden; G7 Betrieb als nächsten konkreten Gründungsschritt gesetzt. |
 | 3.3 | 06.10.2026 | G6 gestartet; `Rollen-Rechte-und-Workflow.md` v0.1 mit Rollen-/Aktionsmatrix, Fachfunktionsrechten, Bestätigungslogik und MFA-Entscheidungspunkt angelegt; G6 auf in Arbeit gesetzt. |
