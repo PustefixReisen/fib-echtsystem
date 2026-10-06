@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 4.2 | 06.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
+| 4.3 | 06.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
 
 ## Statusmodell
 
@@ -29,11 +29,11 @@ Es gelten die zentralen Status aus `PustefixReisen/pustivo/docs/governance/Dokum
 | Dokumentationsübernahme Demonstrator → Echtsystem | **Abgeschlossen** | Echtsystem ist Dokumentationshoheit; Transferlücken geschlossen |
 | G3 Datenanforderungen / Datenmodell | **Abgeschlossen** | Datenmodell v3.0 und G3-Audit abgeschlossen |
 | G4 Schutzbedarf / Datenschutz / Offline | **Abgeschlossen** | K0–K3, Löschlogik, KI-/Provider-Prüfrahmen und Offline/PWA-Grundsätze festgelegt |
-| G5 Zielarchitektur / Stack / Hosting / Deployment | **Abgeschlossen** | Zielarchitektur v1.0, ADR-001 bis ADR-009 und G5-Audit abgeschlossen |
+| G5 Zielarchitektur / Stack / Hosting / Deployment | **Abgeschlossen** | Zielarchitektur v1.0, ADR-001 bis ADR-009 und G5-Audit abgeschlossen; ADR-011 konkretisiert Shared-Apps-/pustivo-Betrieb |
 | G6 Rollen / Rechte / Workflow | **Abgeschlossen** | Rollen-/Rechtematrix, MFA, S0–S3, Fachservice-/RLS-Grenzen festgelegt |
-| G7 Betrieb | **Abgeschlossen** | Backup/Restore, Monitoring, RPO/RTO, Retention und KI-Kosten-/Providerbetrieb festgelegt |
+| G7 Betrieb | **Abgeschlossen** | Backup/Restore, Monitoring, RPO/RTO, Retention und KI-Kosten-/Providerbetrieb festgelegt; ADR-011 konkretisiert schema-spezifisches FIB-Backup |
 | G8 Governance / Repository / Dokumentation | **Abgeschlossen** | Dokumentationslandkarte, zentrale Governance und Wiederaufnahme-Kriterien konsolidiert |
-| G9 Migration | **Abgeschlossen** | Migrationsstrategie und ausführbares Runbook festgelegt |
+| G9 Migration | **Abgeschlossen** | Migrationsstrategie und ausführbares Runbook festgelegt; Umzug auf GRÜNEN-Infrastruktur ist optional, nicht zwingend |
 | G10 Go-live-Abnahme | **Abgeschlossen** | messbare Abnahmekriterien und harte Go-live-Blocker festgelegt |
 | Gründungsaudit | **Abgeschlossen** | G1–G10 übergreifend geprüft; keine blockierende Grundsatzfrage offen |
 
@@ -70,35 +70,46 @@ Gemäß ADR-009 angelegt:
 
 Die Bereiche enthalten zunächst nur Verantwortungsgrenzen und noch keine unnötige Framework-/Geschäftslogik.
 
-### U1.2 Supabase-Schema und Migrationen – begonnen
+### U1.2 Supabase-Schema und Migrationen – in Arbeit
 
-Der erste technische SQL-Kern wurde in `supabase/schema/core.sql` abgeleitet. Enthalten sind:
+Der erste technische SQL-Kern liegt in `supabase/schema/core.sql`.
 
-- Ereignisse und Meldungen mit 1:0..1-Beziehung,
-- Vorgänge und Ereignis↔Vorgang,
-- Themen sowie Vorgang↔Thema und direkte Ereignis↔Thema-Beziehungen,
-- `Bedeutung für das Thema` als technische Wertemenge,
-- Quellen und Fundstellen,
-- Fundstelle↔Ereignis als Belegbeziehung,
-- erste fachlich sinnvolle Indizes,
-- RLS auf allen Kern-Tabellen,
-- keine pauschalen `anon`-/`authenticated`-Rechte,
-- expliziter technischer Zugriff für `service_role`.
+Nach der Architekturkonkretisierung ADR-011 gilt nun verbindlich:
 
-Die SQL-Datei ist bewusst noch **keine Supabase-Migration**. Es existiert derzeit kein eigenes FIB-Supabase-Projekt; die vorhandenen Projekte `Private-Apps` und `Shared-Apps` werden nicht ungefragt verändert. Vor der ersten echten Migration wird eine eigene FIB-Entwicklungsumgebung festgelegt. Die Migration selbst wird anschließend mit dem Supabase CLI erzeugt, ausgeführt und über Advisors/Testabfragen verifiziert.
+- FIB nutzt das bestehende Supabase-Projekt `Shared-Apps`,
+- FIB erhält das eigene PostgreSQL-Schema `fib`,
+- Memorix verbleibt unverändert in `public`,
+- zwischen `fib` und `public` werden keine fachlichen Querabhängigkeiten angelegt,
+- Supabase Auth wird projektweit gemeinsam genutzt,
+- FIB-Autorisierung erfolgt ausschließlich über FIB-eigene Zuordnungen in `fib`,
+- normale FIB-Fachzugriffe erhalten keinen pauschalen `service_role`-Zugang,
+- `fib` wird standardmäßig nicht für `anon`/`authenticated` freigegeben,
+- RLS bleibt Defense in Depth,
+- FIB-Daten müssen schema-spezifisch sicherbar und wiederherstellbar sein.
 
-### U1.3 Nächster Schritt – FIB-Entwicklungsdatenbank und Schema-Ausbau
+`core.sql` wurde entsprechend bereits von `public.*` auf `fib.*` umgestellt und um `fib.app_users` als anwendungsspezifische Zuordnung zu `auth.users` ergänzt.
 
-Als nächstes wird die kostenfreie Entwicklungsstrategie für Supabase konkretisiert. Bevorzugt wird eine lokale Supabase-Entwicklungsumgebung, damit kein bestehendes Cloud-Projekt zweckentfremdet und kein drittes kostenpflichtiges Projekt benötigt wird. Danach:
+### U1.3 Nächster Schritt – Runtime-Rolle und Isolationstest
 
-1. lokale FIB-Datenbank initialisieren,
-2. `core.sql` anwenden und prüfen,
-3. Security-/Performance-Advisors ausführen,
-4. erste echte Migration erzeugen,
-5. Spezialbereiche des Datenmodells modular ergänzen,
-6. TypeScript-Domain-Contracts aus dem verifizierten Schema ableiten.
+Bevor das Schema tatsächlich in `Shared-Apps` angelegt wird, wird die technische Isolation verbindlich umgesetzt und geprüft:
 
-## 4. Verbindliche Abschlussquellen der Gründung
+1. FIB-spezifische Runtime-/DB-Rolle mit Least Privilege definieren,
+2. Rechte ausschließlich auf `fib` und ausdrücklich erforderliche Supabase-Systemfunktionen begrenzen,
+3. sicherstellen, dass diese Rolle `public`/Memorix weder lesen noch schreiben kann, soweit nicht technisch unvermeidbar und ausdrücklich dokumentiert,
+4. Default Privileges für spätere FIB-Objekte absichern,
+5. Testfälle „FIB kann fib“ und „FIB kann public/andere App-Schemata nicht“ anlegen,
+6. erst danach `fib` in `Shared-Apps` erzeugen und Schema/Advisors praktisch verifizieren,
+7. anschließend schema-spezifischen Dump/Restore-Pfad vorbereiten.
+
+Parallel gilt für Storage gemäß ADR-011:
+
+- Nextcloud auf pustivo als möglicher dauerhafter Storage,
+- eigener technischer FIB-Storage-Zugang,
+- separater FIB-Backup-Zugang,
+- normaler FIB-Anwendungszugang erhält keinen Schreib-/Löschzugriff auf Backup-Dateien,
+- DB speichert logische Storage-Referenzen statt fest verdrahteter Nextcloud-URLs.
+
+## 4. Verbindliche Abschlussquellen der Gründung und Architekturkonkretisierung
 
 - `docs/Projektgruendung.md` v1.5
 - `docs/Dokumentation.md` v3.0
@@ -112,7 +123,7 @@ Als nächstes wird die kostenfreie Entwicklungsstrategie für Supabase konkretis
 - `docs/Migrations-Runbook.md` v1.0
 - `docs/Go-live-Abnahmekriterien.md` v1.0
 - `docs/Regressionstests-Demonstratortransfer.md`
-- Architekturentscheidungen unter `docs/decisions/`
+- Architekturentscheidungen unter `docs/decisions/`, insbesondere ADR-011 für Shared-Apps-/Schema-/pustivo-Betrieb
 
 ## 5. Offene, aber nicht blockierende Folgepunkte
 
@@ -120,10 +131,10 @@ Als nächstes wird die kostenfreie Entwicklungsstrategie für Supabase konkretis
 |---|---|
 | Referenzwissen Ausbaustufe 2 | GitHub Issue #1; nach Pilot nur bei nachgewiesenem Bedarf |
 | externe MCP-Anbindung | GitHub Issue #2; nach MVP bei konkretem Nutzen |
-| Restore-Test | GitHub Issue #3; spätestens U6 / reale G10-Abnahme |
+| Restore-Test | GitHub Issue #3; spätestens U6 / reale G10-Abnahme; zusätzlich schema-spezifischen `fib`-Restore nachweisen |
 | Recherche-/Qualitätsschwellen | U4/U6 anhand Pilotkorpus kalibrieren |
 | konkrete Produktivprovider/-modelle und Budget | U4/U6 anhand Qualitäts-, Datenschutz- und Kostenmessung |
-| reale Migration auf GRÜNEN-Infrastruktur | nach U1–U6 im Go-live-Kontext |
+| möglicher späterer Umzug auf GRÜNEN-Infrastruktur | nur bei tatsächlicher Betriebsentscheidung; pustivo darf dauerhafter Produktivbetrieb bleiben |
 
 ## 6. Entwicklungsprinzipien
 
@@ -134,12 +145,16 @@ Als nächstes wird die kostenfreie Entwicklungsstrategie für Supabase konkretis
 - AI Tasks bleiben S0/S1; fachliche Bestätigung und Veröffentlichung bleiben menschlich verantwortlich.
 - Öffentliche Auslieferung bleibt Static-first.
 - Datenschutz-, Schutzklassen-, Rechte-, Audit- und Quellenregeln werden technisch abgesichert.
+- Neue pustivo-Anwendungen erhalten grundsätzlich eigene PostgreSQL-Schemata und eigene technische Zugänge.
+- FIB muss auch innerhalb von `Shared-Apps` technisch von Memorix und späteren Apps isoliert bleiben.
+- pustivo wird nicht als Wegwerf-Pilot behandelt, sondern produktionsnah und dauerhaft betreibbar aufgebaut.
 - Implementierung und Dokumentation werden gemeinsam fortgeschrieben.
 
 ## Änderungshistorie
 
 | Version | Datum | Änderung |
 |---|---|---|
-| 4.2 | 06.10.2026 | U1.2 begonnen; erstes SQL-Kernschema mit RLS-/Grant-Baseline angelegt; keine bestehenden Supabase-Projekte verändert; lokale FIB-Entwicklungsdatenbank als bevorzugten nächsten Schritt festgehalten. |
+| 4.3 | 06.10.2026 | ADR-011 übernommen: Shared-Apps mit eigenem Schema `fib`, gemeinsames Supabase Auth bei FIB-eigener Autorisierung, getrennte Nextcloud-/Backup-Zugänge, pustivo als möglicher Dauerbetrieb; `core.sql` auf `fib` umgestellt; Runtime-Rollen-/Isolationstest als nächsten Schritt gesetzt. |
+| 4.2 | 06.10.2026 | U1.2 begonnen; erstes SQL-Kernschema mit RLS-/Grant-Baseline angelegt. |
 | 4.1 | 06.10.2026 | U1 gestartet; Monorepo-/Paketstruktur gemäß ADR-009 umgesetzt; nächster Schritt auf Supabase-Schema und Migrationen gesetzt. |
 | 4.0 | 06.10.2026 | Gründungsaudit bestanden; G1–G10 und Gründungsphase abgeschlossen; U1 als nächsten technischen Umsetzungsschritt gesetzt. |
