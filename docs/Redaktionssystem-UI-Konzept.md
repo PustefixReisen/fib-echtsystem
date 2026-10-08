@@ -567,7 +567,25 @@ Verbindlich:
 - das Öffnen/Bearbeiten erfolgt über den standardisierten Icon-Button;
 - der FIB-Assistent bleibt visuell identisch und arbeitet mit dem aktuellen Listen-/Filterkontext.
 
-## 22. Nächste UI-Schritte
+## 22. Veröffentlichung: Kommunikation
+
+Der Bereich **Kommunikation** steuert die aktive Weitergabe bereits fachlich freigegebener FIB-Inhalte nach außen. Er ist kein zweiter Ort für die inhaltliche Bearbeitung einer Meldung.
+
+Verbindlich:
+
+- Kommunikationsobjekte beziehen sich auf einen bereits vorhandenen FIB-Inhalt, in der Regel eine Meldung;
+- mögliche Ausspielungen sind z. B. **Link mit Teaser**, **Social-Teaser**, **Hinweis an Multiplikatoren** oder andere definierte Kommunikationskanäle;
+- der Kommunikationsbereich zeigt kompakt **Ziel/Kanal**, **bezogenen Inhalt**, **Status** und **nächsten Schritt**;
+- Inhalte werden nicht hier neu formuliert, wenn dadurch eine abweichende Parallelfassung entsteht. Kommunikation verwendet freigegebene Inhalte bzw. daraus erzeugte, nachvollziehbare Kurzfassungen;
+- Statusbeispiele sind **Vorbereitung offen**, **Zur Freigabe bereit**, **Freigegeben**, **Versendet/Veröffentlicht**, **Zurückgestellt**;
+- Versand oder Veröffentlichung nach außen ist eine explizite Aktion und darf nicht durch bloßes Speichern ausgelöst werden;
+- ein Kommunikationsobjekt kann mehrere Ausspielungen desselben Inhalts bündeln, wenn diese fachlich zusammengehören;
+- Verknüpfungen zur späteren Wirkungsanalyse bleiben erhalten, damit Reichweite und Reaktionen je Kanal ausgewertet werden können;
+- die Liste verwendet die allgemeinen Standards: semantische Tabs, lokale Suche, Filter, kompakte Titel-/Ergebniszeile, Icon-Button und kontextbezogenen FIB-Assistenten;
+- zur Anlage einer neuen Ausspielung gibt es den Primärbutton **„Neue Kommunikation“**. Der Begriff folgt dem Bereichsnamen; im Detail wird anschließend der konkrete Kanal bzw. die Ausspielungsart gewählt;
+- die Beispiel-Fragen des FIB-Assistenten beziehen sich auf die aktuell sichtbaren Kommunikationsobjekte und deren nächste Entscheidungen, z. B. **„Welche offene Kommunikation sollte ich zuerst bearbeiten?“**, **„Wo fehlt noch eine Freigabe?“** oder **„Bei welchen Meldungen ist noch keine vorgesehene Ausspielung angelegt?“**.
+
+## 23. Nächste UI-Schritte
 
 Auf Basis dieses Konzepts werden schrittweise konkretisiert:
 
