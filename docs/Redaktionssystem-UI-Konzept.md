@@ -559,7 +559,10 @@ Verbindlich:
 - erläuternde Metadaten gehören ins Detail;
 - pro Medium werden mindestens Typ, Rechte-/Freigabestatus, Verwendung und gegebenenfalls Handlungsbedarf sichtbar;
 - Rechteprobleme oder ungeklärte Nutzung stehen in der Sortierung vor unauffälligen Medien;
-- Medien können einem oder mehreren Inhalten zugeordnet sein;
+- Medien können einem oder mehreren Inhalten zugeordnet sein. Die Zuordnungen zu Meldungen, Vorgängen und Themen werden im Mediendetail gepflegt und als aktuelle Verwendungen angezeigt;
+- das Mediendetail unterscheidet **Verwendung** und **Bindungsregel**. Eine Bindungsregel kann z. B. festlegen, dass ein Bild exklusiv für einen bestimmten Beitrag bzw. Inhalt vorgesehen ist und nicht automatisch anderweitig angeboten wird;
+- die konkrete Entscheidung, ob und wie ein Medium in einer Meldung verwendet wird, erfolgt zusätzlich im jeweiligen Inhaltsobjekt (insbesondere in der Meldung). Dort wird z. B. Bildauswahl, Position bzw. Veröffentlichungsverwendung bestätigt;
+- jede bestätigte Verwendung wird zum Medium zurückgespiegelt, sodass dort sichtbar ist, **wo** das Medium aktuell verwendet wird und ob die Verwendung exklusiv oder mehrfach zulässig ist;
 - ein Medium mit ungeklärten Rechten darf eine Veröffentlichung blockieren;
 - das Öffnen/Bearbeiten erfolgt über den standardisierten Icon-Button;
 - der FIB-Assistent bleibt visuell identisch und arbeitet mit dem aktuellen Listen-/Filterkontext.
