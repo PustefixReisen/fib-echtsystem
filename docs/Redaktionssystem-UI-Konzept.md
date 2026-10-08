@@ -335,7 +335,19 @@ Bei Themen werden Zustand und Pflegeentscheidung zusätzlich sauber unterschiede
 
 Listenansichten dürfen sowohl nach Zuständen/Status als auch nach offenem Handlungsbedarf filtern.
 
-## 11. UI-Statusbegriffe
+## 11. Objektlisten
+
+Jeder bearbeitbare Objekttyp besitzt eine Listen-/Auswahlansicht. Diese dient nicht nur der Navigation, sondern auch der gezielten Auswahl und Pflege des jeweiligen Objektbestands.
+
+Für Objektlisten gelten folgende UI-Regeln:
+
+- **Zustand/Status und To do** werden je Eintrag kompakt und unmittelbar zusammen dargestellt, damit der Unterschied sichtbar bleibt, ohne die Liste unnötig zu verbreitern. In Listen wird der nächste Arbeitsschritt mit dem kurzen Label **„To do:“** gekennzeichnet.
+- Datumsangaben erhalten immer ein sichtbares Label. Wenn zwei Datumsangaben zusammengehören, werden sie in einer Zeile dargestellt, z. B. **„Geändert: 08.10.2026 | Nächste Prüfung: 15.01.2027“**.
+- Unbeschriftete Navigationszeichen wie **„>“** werden vermieden. Stattdessen ist der Eintrag selbst klar anklickbar oder erhält bei Bedarf eine eindeutige Aktion **„Öffnen“**.
+- Neben Filtern besitzt jede Objektliste eine **auf diese Liste beschränkte Suche**. Sie durchsucht nur die aktuell angezeigte Objektart und ist von der globalen Suche **„In FIB suchen …“** zu unterscheiden.
+- Aktionen zum Anlegen eines neuen Objekts werden systemweit nach dem Muster **„Neue/Neuer/Neues <Objekt>“** beschriftet, z. B. **„Neues Thema“**, **„Neue Meldung“**, **„Neuer Vorgang“**. Dies ist kürzer und über alle Bereiche konsistent.
+
+## 12. UI-Statusbegriffe
 
 Technische Workflowstufen wie S0–S3 bleiben Teil des internen Regelwerks, der Fachlogik und des Audits. In der normalen Redaktionsoberfläche werden stattdessen verständliche Klartextbegriffe verwendet.
 
@@ -349,7 +361,7 @@ Beispiele:
 
 Technische Statuscodes werden nur dort gezeigt, wo sie für Administration, Audit oder technische Diagnose erforderlich sind.
 
-## 12. Status- und Farblogik
+## 13. Status- und Farblogik
 
 Farben unterstützen die Bedeutung, sind aber nie alleiniger Informationsträger.
 
@@ -363,7 +375,7 @@ Jeder Status verwendet zusätzlich Icon und Text.
 
 Fachlicher Status und technischer Status werden nicht vermischt.
 
-## 13. Nicht Teil des Dashboards
+## 14. Nicht Teil des Dashboards
 
 Nicht vorgesehen:
 
@@ -375,7 +387,7 @@ Nicht vorgesehen:
 
 Diese Inhalte gehören in die jeweiligen Fach- oder Admin-Bereiche.
 
-## 14. Nächste UI-Schritte
+## 15. Nächste UI-Schritte
 
 Auf Basis dieses Konzepts werden schrittweise konkretisiert:
 
