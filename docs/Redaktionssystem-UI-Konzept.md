@@ -341,8 +341,8 @@ Jeder bearbeitbare Objekttyp besitzt eine Listen-/Auswahlansicht. Diese dient ni
 
 Für Objektlisten gelten folgende UI-Regeln:
 
-- **Zustand/Status und To do** werden je Eintrag kompakt und unmittelbar zusammen dargestellt, damit der Unterschied sichtbar bleibt, ohne die Liste unnötig zu verbreitern. In Listen wird der nächste Arbeitsschritt mit dem kurzen Label **„To do:“** gekennzeichnet.
-- Datumsangaben erhalten immer ein sichtbares Label. Wenn zwei Datumsangaben zusammengehören, werden sie in einer Zeile dargestellt, z. B. **„Geändert: 08.10.2026 | Nächste Prüfung: 15.01.2027“**.
+- **Zustand/Status und To do** werden je Eintrag kompakt und unmittelbar zusammen dargestellt, damit der Unterschied sichtbar bleibt, ohne die Liste unnötig zu verbreitern. In Listen wird der nächste Arbeitsschritt mit dem kurzen Label **„To-do:“** gekennzeichnet.
+- Datumsangaben erhalten immer ein sichtbares Label. Wenn zwei Angaben in einer Zeile inhaltlich getrennt werden, wird als Standard das **Mittelpunkt-Zeichen „·“** verwendet, z. B. **„Geändert: 08.10.2026 · Nächste Prüfung: 15.01.2027“**. Das Pipe-Zeichen „|“ wird in der normalen Oberfläche nicht als Trenner verwendet.
 - Unbeschriftete Navigationszeichen wie **„>“** werden vermieden. Stattdessen ist der Eintrag selbst klar anklickbar oder erhält bei Bedarf eine eindeutige Aktion **„Öffnen“**.
 - Neben Filtern besitzt jede Objektliste eine **auf diese Liste beschränkte Suche**. Sie durchsucht nur die aktuell angezeigte Objektart und ist von der globalen Suche **„In FIB suchen …“** zu unterscheiden.
 - Aktionen zum Anlegen eines neuen Objekts werden systemweit nach dem Muster **„Neue/Neuer/Neues <Objekt>“** beschriftet, z. B. **„Neues Thema“**, **„Neue Meldung“**, **„Neuer Vorgang“**. Dies ist kürzer und über alle Bereiche konsistent.
