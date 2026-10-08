@@ -387,7 +387,45 @@ Nicht vorgesehen:
 
 Diese Inhalte gehören in die jeweiligen Fach- oder Admin-Bereiche.
 
-## 15. Nächste UI-Schritte
+## 15. Recherche – Fundliste und Schnellentscheidungen
+
+Die Fundliste bleibt bewusst schlank. Die obere Auswahl trennt die Recherche-Objekttypen:
+
+- **Funde (Anzahl)**
+- **Quellen (Anzahl)**
+- **Beobachtungsaufträge (Anzahl)**
+
+Darunter folgen jeweils nur die für die gewählte Liste passenden lokalen Filter und die lokale Suche.
+
+Für **Funde** gilt:
+
+- einfache, offensichtliche Entscheidungen dürfen direkt in der Liste getroffen werden, insbesondere **„Nicht relevant“** und **„Zurückstellen“**;
+- komplexere fachliche Entscheidungen erfolgen in der Funddetailansicht;
+- bei direkten Entscheidungen kann eine **kurze Begründung** erfasst werden;
+- das System bietet dafür **Begründungsschablonen** an, die der Redakteur übernehmen, anpassen oder ergänzen kann;
+- Beispiele für Schablonen: **„Kein erkennbarer Feldkirchen-Bezug“**, **„Bereits vollständig durch bestehenden Vorgang abgedeckt“**, **„Nur Wiederholung ohne neuen Sachstand“**;
+- die Herkunft eines Fundes wird direkt am Fund angezeigt, z. B. **„Gefunden durch: Quellenmonitor · Merkur“**, **„Gefunden durch: offene Recherche“** oder **„Gefunden durch: Beobachtungsauftrag ‚Kiesgrund‘“**.
+
+Auf der Fundliste werden **kein separater Recherche-Status** und **keine zusätzliche Seitenliste „Beobachtungsaufträge mit Treffer“** angezeigt. Zustände von Quellen und Beobachtungsaufträgen gehören in deren jeweilige Listen-/Detailansichten.
+
+Der **FIB-Assistent** übernimmt auf der Fundliste den Kontext **Recherche › Funde + aktuelle Filterung**. Geeignete Hinweise sind z. B.:
+
+- „Sind unter diesen Funden wahrscheinlich Dubletten?“
+- „Warum werden diese Funde als hoch relevant eingestuft?“
+- „Welche Funde sollte ich zuerst prüfen?“
+
+Erst in der Funddetailansicht bezieht sich der Assistent auf einen konkreten Fund.
+
+Ergonomie für lange Listen:
+
+- Bereichs-/Objekttyp-Auswahl, lokale Suche und Filter bleiben beim Scrollen sichtbar (**sticky**).
+- Der kontextbezogene FIB-Assistent steht vor der Liste, scrollt aber normal mit und ist nicht sticky.
+- Die Listenfußzeile bleibt am Listenende und ist nicht sticky.
+- Die Standardsortierung wird oben in der Nähe der Filter **dezent sichtbar** gemacht, z. B. **„Sortiert nach: Handlungsbedarf, dann Funddatum“**. Sie ist zunächst Information; eine Änderung der Sortierung kann über eine kleine Auswahl erfolgen.
+- Für die Fundliste lautet die Standardsortierung: **zuerst Handlungsbedarf/Relevanz, innerhalb dessen neueste Funde zuerst**.
+
+
+## 16. Nächste UI-Schritte
 
 Auf Basis dieses Konzepts werden schrittweise konkretisiert:
 
