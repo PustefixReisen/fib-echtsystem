@@ -629,6 +629,28 @@ FIB verwendet für den kleinen Redaktionsbetrieb **keine restriktive Zuständigk
 
 ### UI-Grundsatz
 
+Der **Arbeitskorb ist die zentrale Koordinationsansicht der Redaktion**. Nur hier wird Federführung/Bearbeitung zu einem primären Ordnungs- und Filterkriterium. In den normalen Objektlisten bleibt dagegen der fachliche Zustand des jeweiligen Objekts das Hauptkriterium.
+
+Jeder Arbeitskorbeintrag zeigt weiterhin die bereits vereinbarten Sachinformationen:
+- worum es geht;
+- warum eine Entscheidung nötig ist;
+- KI-Vorschlag und kurze Begründung, soweit vorhanden;
+- nächster möglicher Schritt / To-do;
+- fachlicher Zustand bzw. Entscheidungsart.
+
+Zusätzlich zeigt er klar getrennt die Koordinationsinformationen:
+- **Federführung**;
+- **aktuelle Bearbeitung**;
+- letzte relevante Aktion mit Person und Zeitpunkt.
+
+Die Zuständigkeitsinformationen **ersetzen keine Sachinformationen**, sondern ergänzen sie.
+
+Darstellungsvorschlag je Arbeitskorbeintrag:
+1. **Titelzeile:** Objektart + Titel.
+2. **Sachzeile:** Entscheidungsart / fachlicher Zustand · warum Handlungsbedarf besteht · To-do.
+3. **Koordinationszeile:** Federführung · aktuelle Bearbeitung · letzte Aktion.
+4. Aktionen: Öffnen, Übernehmen bzw. Übernahme anfragen; nur kontextabhängig weitere Aktionen.
+
 - Federführung wird dezent, aber gut sichtbar im Objektkopf und im Arbeitskorb angezeigt.
 - Bei nicht übernommenen Einträgen erscheint **„noch ohne Federführung“** mit der Aktion **„Übernehmen“**.
 - Eine Federführung darf nie wie eine Berechtigungsschranke wirken.
