@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-label="Vorgang">
+  <g fill="none" stroke="#16355F" stroke-width="7" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M12 29 Q12 23 19 23 H53 Q59 23 59 29 V95 Q52 88 44 88 H19 Q12 88 12 81 Z"/>
+    <path d="M104 29 Q104 23 97 23 H65 Q59 23 59 29 V95 Q65 89 72 88"/>
+    <path d="M25 39 H47 M25 52 H47 M25 65 H47"/>
+    <path d="M73 39 H94 M73 52 H94"/>
+    <circle cx="91" cy="91" r="25"/>
+    <path d="M91 77 V91 L101 97"/>
+  </g>
+</svg>
