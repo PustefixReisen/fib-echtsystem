@@ -548,7 +548,23 @@ Verbindlich:
 - blockierte oder unvollständige Inhalte werden geöffnet und im Detail weiterbearbeitet;
 - der kontextbezogene FIB-Assistent verwendet dieselbe visuelle Komponente wie in anderen Bereichen und bezieht sich auf die aktuelle Filterung.
 
-## 21. Nächste UI-Schritte
+## 21. Veröffentlichung: Medien & Dateien
+
+Der Bereich **Medien & Dateien** verwaltet Bilder, Dokumente und sonstige veröffentlichungsrelevante Dateien einschließlich Rechte- und Verwendungsstatus.
+
+Verbindlich:
+
+- dieselbe Listenstruktur wie in Freigaben und Recherche: semantische Tabs, lokale Suche, Filter, Sortierhinweis, kompakte Titel- und Ergebniszeile;
+- die Liste zeigt nur Informationen, die für Auswahl, Prüfung und Veröffentlichung relevant sind;
+- erläuternde Metadaten gehören ins Detail;
+- pro Medium werden mindestens Typ, Rechte-/Freigabestatus, Verwendung und gegebenenfalls Handlungsbedarf sichtbar;
+- Rechteprobleme oder ungeklärte Nutzung stehen in der Sortierung vor unauffälligen Medien;
+- Medien können einem oder mehreren Inhalten zugeordnet sein;
+- ein Medium mit ungeklärten Rechten darf eine Veröffentlichung blockieren;
+- das Öffnen/Bearbeiten erfolgt über den standardisierten Icon-Button;
+- der FIB-Assistent bleibt visuell identisch und arbeitet mit dem aktuellen Listen-/Filterkontext.
+
+## 22. Nächste UI-Schritte
 
 Auf Basis dieses Konzepts werden schrittweise konkretisiert:
 
