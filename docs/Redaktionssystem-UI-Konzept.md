@@ -462,7 +462,20 @@ Für Quellen gilt:
 
 Der FIB-Assistent bleibt im Funddetail kontextbezogen auf den aktuell geöffneten Fund.
 
-## 17. Nächste UI-Schritte
+## 17. Quellenliste
+
+Die Quellenliste ist die zentrale Pflegeansicht für den **gesamten hinterlegten Recherchequellenbestand**. Sie enthält Pflichtquellen, Regelquellen und ergänzende Quellen unabhängig davon, ob aktuell Handlungsbedarf besteht.
+
+Für die Darstellung gilt:
+
+- Die Liste soll tabellenartig und vertikal gut scanbar sein.
+- Rolle und Zustand werden in einer Zeile zusammengefasst, z. B. **„Pflichtquelle · aktiv“**.
+- Letzte Prüfung und Prüfintervall werden ebenfalls in einer Zeile zusammengefasst, z. B. **„Geprüft: heute 09:46 · täglich“**.
+- Das To-do bleibt eine eigene Spalte.
+- Quellen mit Handlungsbedarf stehen standardmäßig vor unauffälligen Quellen; innerhalb gleicher Priorität folgt die Sortierung nach Quellenname.
+- Zähler in den Recherche-Tabs werden semantisch beschriftet, damit klar ist, was gezählt wird, z. B. **„Funde (8 offen)“**, **„Quellen (2 Hinweise)“**, **„Beobachtungsaufträge (6 aktiv)“**.
+
+## 18. Nächste UI-Schritte
 
 Auf Basis dieses Konzepts werden schrittweise konkretisiert:
 
