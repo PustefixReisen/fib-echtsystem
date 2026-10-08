@@ -648,7 +648,7 @@ Die Zuständigkeitsinformationen **ersetzen keine Sachinformationen**, sondern e
 Darstellungsvorschlag je Arbeitskorbeintrag:
 1. **Titelzeile:** Objektart + Titel.
 2. **Sachzeile:** Entscheidungsart / fachlicher Zustand · warum Handlungsbedarf besteht · To-do.
-3. **Koordinationszeile:** Federführung · aktuelle Bearbeitung · letzte Aktion.
+3. **Koordinationszeile:** **Federführung: Maria Keller · Letzte Bearbeitung: Josef Walter · Quelle geprüft · heute 13:42**. Die Formulierung **„Letzte Bearbeitung“** wird gegenüber „aktuelle Bearbeitung“ bevorzugt, weil sie keine exklusive oder noch laufende Sperrwirkung suggeriert.
 4. Aktionen: Öffnen, Übernehmen bzw. Übernahme anfragen; nur kontextabhängig weitere Aktionen.
 
 - Federführung wird dezent, aber gut sichtbar im Objektkopf und im Arbeitskorb angezeigt.
