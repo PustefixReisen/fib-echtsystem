@@ -652,6 +652,9 @@ Darstellungsvorschlag je Arbeitskorbeintrag:
 4. Aktionen: Öffnen, Übernehmen bzw. Übernahme anfragen; nur kontextabhängig weitere Aktionen.
 
 - Federführung wird dezent, aber gut sichtbar im Objektkopf und im Arbeitskorb angezeigt.
+- **Farben kennzeichnen keine Personen oder Zuständigkeiten.** Die Koordinationszeile ist visuell neutral (vorzugsweise Grau bzw. zurückhaltendes Blau als Informationsfarbe).
+- Die bestehende FIB-Farblogik bleibt ausschließlich fachlichen Zuständen vorbehalten: Grün = vollständig/erledigt, Gelb/Orange = Aufmerksamkeit/Prüfung nötig, Rot = blockierend/kritisch, Blau = neutrale Information/in Arbeit, Grau = nachgeordnet/inaktiv.
+- In einem Arbeitskorbeintrag erhält daher primär der **fachliche Zustand bzw. Handlungsbedarf** eine Statusfarbe; Federführung, letzte Bearbeitung und Historieninformation werden typografisch gegliedert, nicht farblich codiert.
 - Bei nicht übernommenen Einträgen erscheint **„noch ohne Federführung“** mit der Aktion **„Übernehmen“**.
 - Eine Federführung darf nie wie eine Berechtigungsschranke wirken.
 
