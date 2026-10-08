@@ -585,7 +585,55 @@ Verbindlich:
 - zur Anlage einer neuen Ausspielung gibt es den Primärbutton **„Neue Kommunikation“**. Der Begriff folgt dem Bereichsnamen; im Detail wird anschließend der konkrete Kanal bzw. die Ausspielungsart gewählt;
 - die Beispiel-Fragen des FIB-Assistenten beziehen sich auf die aktuell sichtbaren Kommunikationsobjekte und deren nächste Entscheidungen, z. B. **„Welche offene Kommunikation sollte ich zuerst bearbeiten?“**, **„Wo fehlt noch eine Freigabe?“** oder **„Bei welchen Meldungen ist noch keine vorgesehene Ausspielung angelegt?“**.
 
-## 23. Nächste UI-Schritte
+## 23. Zusammenarbeit: Federführung und Transparenz
+
+FIB verwendet für den kleinen Redaktionsbetrieb **keine restriktive Zuständigkeits- oder Besitzlogik**. Ziel ist Transparenz und Kontinuität, nicht Exklusivität.
+
+### Gemeinsamer Arbeitskorb
+
+- Der Arbeitskorb bleibt **für alle Redakteure gemeinsam**.
+- Es gibt keine personenbezogenen Arbeitskörbe.
+- Ein Filter **„Meine Federführungen“** bzw. **„Von mir bearbeitet“** darf die gemeinsame Sicht ergänzen, ersetzt sie aber nicht.
+- Offene Einträge ohne Federführung bleiben für alle sichtbar und können von jedem Redakteur übernommen werden.
+
+### Federführung
+
+- Für länger laufende Objekte, insbesondere **Vorgänge**, kann eine **Federführung** hinterlegt werden.
+- Federführung bedeutet: **Wer behält diesen Vorgang hauptsächlich im Blick?**
+- Sie erzeugt keine Sperre und keine exklusiven Bearbeitungsrechte.
+- Andere Redakteure dürfen jederzeit einzelne Arbeitsschritte übernehmen.
+- Die Federführung kann freiwillig übernommen, gewechselt oder abgegeben werden.
+- Zugehörige Funde, Meldungen oder Aufgaben können die Federführung des Vorgangs anzeigen, ohne dadurch automatisch exklusiv zugewiesen zu sein.
+
+### Aktuelle Bearbeitung
+
+- Ein Eintrag im Arbeitskorb kann durch **„Übernehmen“** sichtbar in Bearbeitung genommen werden.
+- Die Anzeige lautet z. B. **„in Bearbeitung durch Maria Keller“** oder **„Federführung: Maria Keller“**.
+- Diese Kennzeichnung dient nur der Koordination.
+- Eine bestehende Bearbeitung blockiert andere Redakteure nicht.
+
+### Historie und Einzelaktionen
+
+- Jede fachlich relevante Aktion wird mit **Person und Zeitpunkt** protokolliert.
+- In der Historie ist dadurch sichtbar, wer einen einzelnen Arbeitsschritt tatsächlich ausgeführt hat, auch wenn die Federführung bei einer anderen Person liegt.
+- Beispiel: **„Einordnung geändert · Josef Walter · 08.10.2026, 18:42“**.
+- Federführung, aktuelle Bearbeitung und Historie bleiben als drei unterschiedliche Informationen erkennbar.
+
+### Übernahme anfragen
+
+- Für Funde, Meldungen, Vorgänge und andere geeignete Arbeitsobjekte gibt es die Aktion **„Übernahme anfragen“**.
+- Der anfragende Redakteur wählt einen anderen Redakteur und kann eine kurze Nachricht ergänzen.
+- FIB versendet eine E-Mail mit direktem Link zum betreffenden Objekt.
+- Die Anfrage erzeugt **keine automatische Zuweisung**. Der Empfänger kann das Objekt öffnen und anschließend freiwillig **„Übernehmen“**.
+- Versand der Anfrage und spätere Übernahme werden in der Historie protokolliert.
+
+### UI-Grundsatz
+
+- Federführung wird dezent, aber gut sichtbar im Objektkopf und im Arbeitskorb angezeigt.
+- Bei nicht übernommenen Einträgen erscheint **„noch ohne Federführung“** mit der Aktion **„Übernehmen“**.
+- Eine Federführung darf nie wie eine Berechtigungsschranke wirken.
+
+## 24. Nächste UI-Schritte
 
 Auf Basis dieses Konzepts werden schrittweise konkretisiert:
 
