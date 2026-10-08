@@ -245,7 +245,20 @@ Daraus folgt:
 
 ## 8. Arbeitskorb
 
-Der Arbeitskorb bündelt alle Fälle, die eine menschliche Entscheidung benötigen.
+Der Arbeitskorb bündelt offene oder zurückgestellte Fälle, die eine menschliche Entscheidung benötigen.
+
+Er ist **kein verpflichtender Zwischenstopp für jede redaktionelle Handlung**. Wenn die Redaktion bereits in einem Objekt arbeitet und der nächste sinnvolle Schritt dort direkt erledigt werden kann, erfolgt die Bearbeitung unmittelbar im aktuellen Kontext.
+
+Ein Fall gelangt insbesondere dann in den Arbeitskorb, wenn:
+
+- die Bearbeitung bewusst auf später verschoben wird,
+- die Redaktion den aktuellen Bearbeitungskontext verlässt, bevor der nächste Schritt erledigt ist,
+- eine neue Entscheidung außerhalb des aktuell geöffneten Objekts entsteht,
+- ein automatischer Prozess oder eine Recherche einen neuen Prüfbedarf erzeugt.
+
+Grundsatz:
+
+> Aktuellen Schritt direkt im Objekt bearbeiten, wenn möglich. Nur offene oder zurückgestellte Entscheidungen in den Arbeitskorb übernehmen.
 
 Er wird nach **Entscheidungsart**, nicht nach technischen Objekttypen strukturiert.
 
@@ -267,7 +280,48 @@ Jeder Eintrag zeigt:
 - kurze Begründung
 - nächsten möglichen Schritt
 
-## 9. Status- und Farblogik
+## 9. Navigationsprinzip für Fachobjekte
+
+Für alle bearbeitbaren Fachobjekte gilt grundsätzlich:
+
+> **Bereich → Liste/Auswahl → Detail-/Bearbeitungsansicht**
+
+Beispiele:
+
+- Meldungen → Meldungsliste → Meldungsdetail
+- Vorgänge → Vorgangsliste → Vorgangsdetail
+- Themen → Themenliste → Themendetail
+- Sitzungen → Sitzungsliste → Sitzungsdetail
+- Funde → Fundliste → Fundprüfung
+- Quellen → Quellenliste → Quellendetail
+- Beobachtungsaufträge → Liste → Auftragsdetail
+- Freigaben → Freigabeliste → konkrete Freigabe
+- Medien & Dateien → Medienliste → Mediendetail
+- Tasks & Läufe → Taskliste → Task-/Laufdetail
+
+Direkteinstiege in eine Detailansicht sind ausdrücklich erlaubt, zum Beispiel aus Dashboard, Arbeitskorb, Suche, FIB-Assistent oder über Querverweise.
+
+Damit trotz Direkteinstieg jederzeit erkennbar bleibt, **wo sich die Redaktion befindet**, verwendet jede Detail- und Bearbeitungsansicht eine Breadcrumb-Navigation, zum Beispiel:
+
+> Inhalte › Vorgänge › Ausbau BAB Kreuz München Ost
+
+Die Breadcrumbs dienen sowohl der Orientierung als auch dem direkten Rücksprung auf übergeordnete Ebenen. Zusätzlich soll der Rückweg zur jeweiligen Listen-/Auswahlansicht klar erreichbar bleiben.
+
+## 10. UI-Statusbegriffe
+
+Technische Workflowstufen wie S0–S3 bleiben Teil des internen Regelwerks, der Fachlogik und des Audits. In der normalen Redaktionsoberfläche werden stattdessen verständliche Klartextbegriffe verwendet.
+
+Beispiele:
+
+- Entwurf
+- Fachlich geprüft
+- Zur Veröffentlichung bereit
+- Veröffentlicht
+- Veröffentlichung blockiert
+
+Technische Statuscodes werden nur dort gezeigt, wo sie für Administration, Audit oder technische Diagnose erforderlich sind.
+
+## 11. Status- und Farblogik
 
 Farben unterstützen die Bedeutung, sind aber nie alleiniger Informationsträger.
 
@@ -281,7 +335,7 @@ Jeder Status verwendet zusätzlich Icon und Text.
 
 Fachlicher Status und technischer Status werden nicht vermischt.
 
-## 10. Nicht Teil des Dashboards
+## 12. Nicht Teil des Dashboards
 
 Nicht vorgesehen:
 
@@ -293,7 +347,7 @@ Nicht vorgesehen:
 
 Diese Inhalte gehören in die jeweiligen Fach- oder Admin-Bereiche.
 
-## 11. Nächste UI-Schritte
+## 13. Nächste UI-Schritte
 
 Auf Basis dieses Konzepts werden schrittweise konkretisiert:
 
