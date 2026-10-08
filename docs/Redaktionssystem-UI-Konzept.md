@@ -425,7 +425,44 @@ Ergonomie für lange Listen:
 - Für die Fundliste lautet die Standardsortierung: **zuerst Handlungsbedarf/Relevanz, innerhalb dessen neueste Funde zuerst**.
 
 
-## 16. Nächste UI-Schritte
+## 16. Funddetail – geführter Entscheidungsablauf
+
+Das Funddetail führt die Redaktion schrittweise durch die fachliche Prüfung:
+
+1. **Fund verstehen**
+2. **Ereignis entscheiden**
+3. **Meldungsentscheidung**
+4. **Zuordnung**
+5. **Abschluss**
+
+Die Schritte zeigen ihren Bearbeitungszustand sichtbar an, z. B.:
+
+- **erledigt**
+- **aktuell**
+- **offen**
+- **nicht erforderlich**
+
+Der Objektkopf zeigt immer nur den **aktuell offenen nächsten Arbeitsschritt** als To-do. Eine bestätigte Zuordnung bleibt kein dauerhaftes To-do.
+
+Für Zuordnungen gilt:
+
+- KI-Vorschläge zu Vorgang und Thema werden direkt im Schritt **„Zuordnung“** angezeigt.
+- Die Redaktion kann einen Vorschlag **bestätigen**, **ändern** oder **verwerfen**.
+- Nach Bestätigung ist der Zuordnungsschritt erledigt, bis sich durch neue Informationen erneut ein Prüfbedarf ergibt.
+
+Ein separater Seitenkasten **„Bereits erkannte Zusammenhänge“** entfällt, weil er die Informationen aus dem Zuordnungsschritt doppelt.
+
+Für Quellen gilt:
+
+- Der Fund verweist zunächst auf seine konkrete Fundquelle.
+- Die Einordnung **Primärquelle / Sekundärquelle** ist eine Eigenschaft der Quelle.
+- Zusätzliche Quellen zu demselben Sachverhalt werden als eigene Quellenbelege erfasst und später dem Ereignis bzw. der Meldung zugeordnet.
+- Ein separater Kasten **„Quellenlage“** im Funddetail entfällt.
+- In **„Fund verstehen“** kann bei Bedarf die Aktion **„Weitere Quelle suchen“** angeboten werden.
+
+Der FIB-Assistent bleibt im Funddetail kontextbezogen auf den aktuell geöffneten Fund.
+
+## 17. Nächste UI-Schritte
 
 Auf Basis dieses Konzepts werden schrittweise konkretisiert:
 
