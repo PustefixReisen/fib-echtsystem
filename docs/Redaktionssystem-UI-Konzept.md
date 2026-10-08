@@ -511,7 +511,29 @@ Für Tabs gilt:
 - Zähler werden semantisch beschriftet, wenn ihre Bedeutung sonst unklar wäre, z. B. **„Quellen (2 Hinweise)“**;
 - Tab-Design und Button-Design bleiben visuell verwandt, aber klar unterscheidbar.
 
-## 19. Nächste UI-Schritte
+## 19. Konsistenz innerhalb Recherche
+
+Die drei Recherchelisten **Funde**, **Quellen** und **Beobachtungsaufträge** verwenden dieselbe visuelle Grundstruktur.
+
+Verbindlich:
+
+- gleiche Tab-Darstellung mit semantischen Zählern;
+- gleiche lokale Suche, Filterlogik und dezente Sortierinformation;
+- kompakte, tabellenartig scanbare Listeneinträge;
+- möglichst **Titelzeile + Ergebniszeile** je Eintrag;
+- gleicher Icon-Button-Stil zum Öffnen/Bearbeiten;
+- gleiche Darstellung des kontextbezogenen FIB-Assistenten vor langen Listen.
+
+Der FIB-Assistent soll innerhalb des Redaktionssystems **nicht je Bereich anders gestaltet** werden. Unterschiede ergeben sich nur aus Kontext und Beispieltext, nicht aus der visuellen Komponente.
+
+Für die Fundliste gilt zusätzlich:
+
+- Titelzeile = Fundtitel;
+- Ergebniszeile = Herkunft, Relevanz, Zuordnungshinweis und kompaktes To-do;
+- offensichtliche Schnellentscheidungen wie **„Nicht relevant“** und **„Zurückstellen“** bleiben direkt in der Liste möglich, werden aber visuell nachgeordnet;
+- komplexe Entscheidungen bleiben im Funddetail.
+
+## 20. Nächste UI-Schritte
 
 Auf Basis dieses Konzepts werden schrittweise konkretisiert:
 
