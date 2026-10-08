@@ -581,7 +581,9 @@ Verbindlich:
 - Versand oder Veröffentlichung nach außen ist eine explizite Aktion und darf nicht durch bloßes Speichern ausgelöst werden;
 - ein Kommunikationsobjekt kann mehrere Ausspielungen desselben Inhalts bündeln, wenn diese fachlich zusammengehören;
 - Verknüpfungen zur späteren Wirkungsanalyse bleiben erhalten, damit Reichweite und Reaktionen je Kanal ausgewertet werden können;
-- die Liste verwendet die allgemeinen Standards: semantische Tabs, lokale Suche, Filter, kompakte Titel-/Ergebniszeile, Icon-Button und kontextbezogenen FIB-Assistenten.
+- die Liste verwendet die allgemeinen Standards: semantische Tabs, lokale Suche, Filter, kompakte Titel-/Ergebniszeile, Icon-Button und kontextbezogenen FIB-Assistenten;
+- zur Anlage einer neuen Ausspielung gibt es den Primärbutton **„Neue Kommunikation“**. Der Begriff folgt dem Bereichsnamen; im Detail wird anschließend der konkrete Kanal bzw. die Ausspielungsart gewählt;
+- die Beispiel-Fragen des FIB-Assistenten beziehen sich auf die aktuell sichtbaren Kommunikationsobjekte und deren nächste Entscheidungen, z. B. **„Welche offene Kommunikation sollte ich zuerst bearbeiten?“**, **„Wo fehlt noch eine Freigabe?“** oder **„Bei welchen Meldungen ist noch keine vorgesehene Ausspielung angelegt?“**.
 
 ## 23. Nächste UI-Schritte
 
