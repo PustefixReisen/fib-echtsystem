@@ -31,13 +31,14 @@ Der produktive Banner ist **kein zusammengesetztes Bild**. Text und Illustration
 
 Produktive SVG-Master:
 
-- `nav-neues.svg` – fünf gelbe strahlen-/blattartige Formen im Bogen, ohne Text und ohne Hintergrund
+- `meldung.svg` – verbindliches Icon für das fachliche Objekt **Meldung**: aufgeschlagene Zeitung; wird im Redaktionssystem und im Besuchersystem verwendet
+- `nav-neues.svg` – identisches Meldungs-Symbol für die Besuchernavigation **Neues**; bleibt aus Kompatibilitätsgründen als Navigationsasset bestehen
 - `nav-im-blick.svg` – Auge
 - `nav-sitzungen.svg` – Personengruppe/Gremium
 - `nav-suche.svg` – Lupe
 - `sonnenblumenblaetter.svg` – grafisches Grundelement
 
-Vorhandene `*-approved.png`-Dateien dienen als visuelle Rasterreferenzen, nicht als bevorzugtes Web-Masterformat.
+Vorhandene `*-approved.png`-Dateien dienen als visuelle Rasterreferenzen, nicht als bevorzugtes Web-Masterformat. Bei einer ausdrücklich beschlossenen Icon-Änderung ist die SVG-Masterdatei maßgeblich; zugehörige Rasterreferenzen müssen anschließend auf denselben Stand gebracht werden.
 
 ### `pwa/`
 
