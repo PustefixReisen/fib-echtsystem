@@ -462,7 +462,56 @@ Für Quellen gilt:
 
 Der FIB-Assistent bleibt im Funddetail kontextbezogen auf den aktuell geöffneten Fund.
 
-## 17. Nächste UI-Schritte
+## 17. Quellenliste
+
+Die Quellenliste ist die zentrale Pflegeansicht für den **gesamten hinterlegten Recherchequellenbestand**. Sie enthält Pflichtquellen, Regelquellen und ergänzende Quellen unabhängig davon, ob aktuell Handlungsbedarf besteht.
+
+Für die Darstellung gilt:
+
+- Die Liste soll **stark verdichtet, tabellenartig und vertikal gut scanbar** sein.
+- Pro Quelle genügen grundsätzlich **zwei Zeilen**: eine Titelzeile und eine kompakte Ergebniszeile.
+- Erläuternde Beschreibungstexte zur Quelle werden in der Liste weggelassen und gehören ins Quellendetail.
+- In der Ergebniszeile stehen Rolle, Zustand sowie Prüfzeitpunkt und Prüfintervall kompakt nebeneinander, z. B. **„Pflichtquelle · Prüfung fehlgeschlagen · Geprüft: heute 09:46 · täglich“**.
+- Ein separates To-do wird in der Quellenliste nicht wiederholt, wenn es eindeutig aus dem Zustand hervorgeht. Der konkrete nächste Schritt wird im Quellendetail gezeigt.
+- Die Aktion zum Öffnen/Bearbeiten soll platzsparend in die Titelzeile integriert werden. Bevorzugt wird ein eindeutiges Bearbeiten-Symbol (Bleistift) mit Tooltip/Accessible Label **„Quelle öffnen“** statt einer zusätzlichen Aktionsspalte.
+- Quellen mit Handlungsbedarf stehen standardmäßig vor unauffälligen Quellen; innerhalb gleicher Priorität folgt die Sortierung nach Quellenname.
+- Zähler in Tabs werden generell **semantisch beschriftet**, damit klar ist, was gezählt wird, z. B. **„Funde (8 offen)“**, **„Quellen (2 Hinweise)“**, **„Beobachtungsaufträge (6 aktiv)“**. Dieses Prinzip gilt systemweit, wenn Tab-Zähler unterschiedliche Bedeutungen haben können.
+
+## 18. Bedienelemente: Buttons und Tabs
+
+Buttons und Tabs werden im Redaktionssystem als unterschiedliche UI-Komponenten behandelt.
+
+### Buttons
+
+Buttons lösen **Aktionen** aus.
+
+Verbindliche Grundtypen:
+
+- **Primärbutton**: wichtigste Aktion im aktuellen Kontext, z. B. **„Speichern“**, **„Prüfung abschließen“**, **„Veröffentlichen“**. Visuell deutlich hervorgehoben.
+- **Sekundärbutton**: alternative oder ergänzende Aktion, z. B. **„Zurückstellen“**, **„Anderen wählen“**, **„Weitere Quelle suchen“**.
+- **Icon-Button**: platzsparende, häufig wiederkehrende Aktion mit eindeutigem Symbol. Er besitzt eine sichtbare Buttonfläche, Hover-/Focus-Zustand, Tooltip und Accessible Label. Ein nacktes Symbol ohne erkennbare Interaktionsfläche wird vermieden.
+- **Kritische Aktion**: irreversible oder folgenreiche Aktion, z. B. Löschen oder endgültiges Verwerfen. Sie erhält eine eigene Warn-/Bestätigungslogik und wird nicht mit normalen Primäraktionen vermischt.
+
+Für Listen kann ein Icon-Button direkt in der Titelzeile stehen, wenn dadurch eine zusätzliche Aktionsspalte vermieden wird. Beim Quellenkatalog wird dafür ein Bearbeiten-/Öffnen-Icon verwendet. Das konkrete Produktions-Icon wird aus dem verbindlichen FIB-Icon-Stil abgeleitet; das Bleistiftzeichen im Wireframe ist nur Platzhalter.
+
+### Tabs
+
+Tabs sind **keine normalen Aktionsbuttons**, sondern dienen dem Wechsel zwischen gleichrangigen Ansichten innerhalb eines Bereichs.
+
+Beispiele:
+
+- **Funde**
+- **Quellen**
+- **Beobachtungsaufträge**
+
+Für Tabs gilt:
+
+- genau ein Tab ist als aktuell ausgewählt erkennbar;
+- Tabs verändern die angezeigte Ansicht, führen aber keine fachliche Aktion aus;
+- Zähler werden semantisch beschriftet, wenn ihre Bedeutung sonst unklar wäre, z. B. **„Quellen (2 Hinweise)“**;
+- Tab-Design und Button-Design bleiben visuell verwandt, aber klar unterscheidbar.
+
+## 19. Nächste UI-Schritte
 
 Auf Basis dieses Konzepts werden schrittweise konkretisiert:
 
