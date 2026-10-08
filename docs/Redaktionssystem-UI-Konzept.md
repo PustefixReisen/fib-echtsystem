@@ -416,6 +416,15 @@ Der **FIB-Assistent** übernimmt auf der Fundliste den Kontext **Recherche › F
 
 Erst in der Funddetailansicht bezieht sich der Assistent auf einen konkreten Fund.
 
+Ergonomie für lange Listen:
+
+- Bereichs-/Objekttyp-Auswahl, lokale Suche und Filter bleiben beim Scrollen sichtbar (**sticky**).
+- Der kontextbezogene FIB-Assistent steht vor der Liste, scrollt aber normal mit und ist nicht sticky.
+- Die Listenfußzeile bleibt am Listenende und ist nicht sticky.
+- Die Standardsortierung wird oben in der Nähe der Filter **dezent sichtbar** gemacht, z. B. **„Sortiert nach: Handlungsbedarf, dann Funddatum“**. Sie ist zunächst Information; eine Änderung der Sortierung kann über eine kleine Auswahl erfolgen.
+- Für die Fundliste lautet die Standardsortierung: **zuerst Handlungsbedarf/Relevanz, innerhalb dessen neueste Funde zuerst**.
+
+
 ## 16. Nächste UI-Schritte
 
 Auf Basis dieses Konzepts werden schrittweise konkretisiert:
