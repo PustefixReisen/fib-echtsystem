@@ -533,7 +533,22 @@ Für die Fundliste gilt zusätzlich:
 - offensichtliche Schnellentscheidungen wie **„Nicht relevant“** und **„Zurückstellen“** bleiben direkt in der Liste möglich, werden aber visuell nachgeordnet;
 - komplexe Entscheidungen bleiben im Funddetail.
 
-## 20. Nächste UI-Schritte
+## 20. Veröffentlichung: Freigaben
+
+Die Freigabeliste übernimmt die etablierten Listenstandards des Redaktionssystems.
+
+Verbindlich:
+
+- Tabs mit semantisch eindeutigen Zählern, z. B. **„Freigaben (3 offen)“**, **„Medien & Dateien (2 Hinweise)“**, **„Kommunikation (1 offen)“**, **„Besucherführung (0 Hinweise)“**;
+- lokale Suche, Filter und dezente Sortierinformation;
+- kompakte Darstellung je Eintrag mit Titelzeile und Ergebniszeile;
+- Ergebniszeile kombiniert Freigabestatus, relevante Prüfergebnisse und das nächste To-do;
+- Einträge mit höchster Entscheidungsreife bzw. dringendem Handlungsbedarf stehen zuerst;
+- die direkte Aktion **„Freigeben“** wird nur angeboten, wenn alle fachlichen und technischen Voraussetzungen erfüllt sind;
+- blockierte oder unvollständige Inhalte werden geöffnet und im Detail weiterbearbeitet;
+- der kontextbezogene FIB-Assistent verwendet dieselbe visuelle Komponente wie in anderen Bereichen und bezieht sich auf die aktuelle Filterung.
+
+## 21. Nächste UI-Schritte
 
 Auf Basis dieses Konzepts werden schrittweise konkretisiert:
 
