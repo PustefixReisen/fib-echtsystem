@@ -658,7 +658,21 @@ Darstellungsvorschlag je Arbeitskorbeintrag:
 - Bei nicht übernommenen Einträgen erscheint **„noch ohne Federführung“** mit der Aktion **„Übernehmen“**.
 - Eine Federführung darf nie wie eine Berechtigungsschranke wirken.
 
-## 24. Nächste UI-Schritte
+## 24. Benutzerverwaltung: Rufname
+
+Für Benutzer wird zusätzlich zum vollständigen Namen ein optionaler **Rufname** geführt.
+
+Verbindlich:
+
+- Der vollständige Name bleibt für Benutzerverwaltung, Audit und formale Historie erhalten.
+- Der Rufname dient der kompakten Darstellung in kooperativen UI-Bereichen.
+- In Arbeitskorb, Federführung, Übernahmeanfragen und vergleichbaren Koordinationsanzeigen wird bevorzugt der **Rufname** verwendet.
+- Beispiele: **„Federführung: Maria“**, **„Letzte Bearbeitung: Josef“**.
+- Falls kein Rufname hinterlegt ist, wird der vollständige Anzeigename verwendet.
+- In Audit-/Historienansichten kann zusätzlich der vollständige Name erscheinen, damit die Zuordnung eindeutig bleibt.
+- Der Rufname ist kein Login-Name und hat keine Berechtigungswirkung.
+
+## 25. Nächste UI-Schritte
 
 Auf Basis dieses Konzepts werden schrittweise konkretisiert:
 
