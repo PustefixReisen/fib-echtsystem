@@ -468,12 +468,14 @@ Die Quellenliste ist die zentrale Pflegeansicht für den **gesamten hinterlegten
 
 Für die Darstellung gilt:
 
-- Die Liste soll tabellenartig und vertikal gut scanbar sein.
-- Rolle und Zustand werden in einer Zeile zusammengefasst, z. B. **„Pflichtquelle · aktiv“**.
-- Letzte Prüfung und Prüfintervall werden ebenfalls in einer Zeile zusammengefasst, z. B. **„Geprüft: heute 09:46 · täglich“**.
-- Das To-do bleibt eine eigene Spalte.
+- Die Liste soll **stark verdichtet, tabellenartig und vertikal gut scanbar** sein.
+- Pro Quelle genügen grundsätzlich **zwei Zeilen**: eine Titelzeile und eine kompakte Ergebniszeile.
+- Erläuternde Beschreibungstexte zur Quelle werden in der Liste weggelassen und gehören ins Quellendetail.
+- In der Ergebniszeile stehen Rolle, Zustand sowie Prüfzeitpunkt und Prüfintervall kompakt nebeneinander, z. B. **„Pflichtquelle · Prüfung fehlgeschlagen · Geprüft: heute 09:46 · täglich“**.
+- Ein separates To-do wird in der Quellenliste nicht wiederholt, wenn es eindeutig aus dem Zustand hervorgeht. Der konkrete nächste Schritt wird im Quellendetail gezeigt.
+- Die Aktion zum Öffnen/Bearbeiten soll platzsparend in die Titelzeile integriert werden. Bevorzugt wird ein eindeutiges Bearbeiten-Symbol (Bleistift) mit Tooltip/Accessible Label **„Quelle öffnen“** statt einer zusätzlichen Aktionsspalte.
 - Quellen mit Handlungsbedarf stehen standardmäßig vor unauffälligen Quellen; innerhalb gleicher Priorität folgt die Sortierung nach Quellenname.
-- Zähler in den Recherche-Tabs werden semantisch beschriftet, damit klar ist, was gezählt wird, z. B. **„Funde (8 offen)“**, **„Quellen (2 Hinweise)“**, **„Beobachtungsaufträge (6 aktiv)“**.
+- Zähler in Tabs werden generell **semantisch beschriftet**, damit klar ist, was gezählt wird, z. B. **„Funde (8 offen)“**, **„Quellen (2 Hinweise)“**, **„Beobachtungsaufträge (6 aktiv)“**. Dieses Prinzip gilt systemweit, wenn Tab-Zähler unterschiedliche Bedeutungen haben können.
 
 ## 18. Nächste UI-Schritte
 
