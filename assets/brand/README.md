@@ -31,13 +31,36 @@ Der produktive Banner ist **kein zusammengesetztes Bild**. Text und Illustration
 
 Produktive SVG-Master:
 
-- `nav-neues.svg` – fünf gelbe strahlen-/blattartige Formen im Bogen, ohne Text und ohne Hintergrund
+- `meldung.svg` – verbindliches Icon für das fachliche Objekt **Meldung**: aufgeschlagene Zeitung; wird im Redaktionssystem und im Besuchersystem verwendet
+- `nav-neues.svg` – identisches Meldungs-Symbol für die Besuchernavigation **Neues**; bleibt aus Kompatibilitätsgründen als Navigationsasset bestehen
 - `nav-im-blick.svg` – Auge
 - `nav-sitzungen.svg` – Personengruppe/Gremium
 - `nav-suche.svg` – Lupe
 - `sonnenblumenblaetter.svg` – grafisches Grundelement
 
 Vorhandene `*-approved.png`-Dateien dienen als visuelle Rasterreferenzen, nicht als bevorzugtes Web-Masterformat.
+
+#### Redaktionssystem
+
+Zusätzliche produktive SVG-Master für das Redaktionssystem:
+
+- `redaktion-dashboard.svg` – Dashboard/Home
+- `redaktion-arbeitskorb.svg` – Arbeitskorb
+- `meldung.svg` – Meldung als aufgeschlagene Zeitung; identisches Fachsymbol wie `nav-neues.svg`
+- `vorgang.svg` – Meldung/Zeitung mit kleiner Uhr als Symbol für die Entwicklung eines Sachverhalts
+- `thema.svg` – Knoten-/Netzwerkstruktur als Symbol für den thematischen Zusammenhang
+- `redaktion-veroeffentlichung.svg` – Veröffentlichung
+- `redaktion-auswertung.svg` – Auswertung
+- `fib-assistent.svg` – Sprechblase mit „KI“, anbieterneutral
+- `redaktion-administration.svg` – Administration
+
+Bereits vorhandene Icons werden systemübergreifend wiederverwendet, wo die Bedeutung identisch ist:
+
+- `nav-sitzungen.svg` – Sitzungen
+- `nav-suche.svg` – Suche bzw. Recherche
+
+Die Redaktions-Icons verwenden **keinen Blatt-Zusatz**. Das Blatt ist kein generelles Kennzeichen für den Redaktionskontext.
+ Bei einer ausdrücklich beschlossenen Icon-Änderung ist die SVG-Masterdatei maßgeblich; zugehörige Rasterreferenzen müssen anschließend auf denselben Stand gebracht werden.
 
 ### `pwa/`
 

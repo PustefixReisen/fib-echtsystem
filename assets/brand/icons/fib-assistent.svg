@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-label="FIB-Assistent">
+  <g fill="none" stroke="#16355F" stroke-width="7" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M20 28 H108 V82 H63 L42 103 V82 H20 Z"/>
+  </g>
+  <text x="64" y="65" text-anchor="middle" font-family="Arial, sans-serif" font-size="34" font-weight="700" fill="#16355F">KI</text>
+</svg>
