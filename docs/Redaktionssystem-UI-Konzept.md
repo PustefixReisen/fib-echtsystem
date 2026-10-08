@@ -477,7 +477,41 @@ Für die Darstellung gilt:
 - Quellen mit Handlungsbedarf stehen standardmäßig vor unauffälligen Quellen; innerhalb gleicher Priorität folgt die Sortierung nach Quellenname.
 - Zähler in Tabs werden generell **semantisch beschriftet**, damit klar ist, was gezählt wird, z. B. **„Funde (8 offen)“**, **„Quellen (2 Hinweise)“**, **„Beobachtungsaufträge (6 aktiv)“**. Dieses Prinzip gilt systemweit, wenn Tab-Zähler unterschiedliche Bedeutungen haben können.
 
-## 18. Nächste UI-Schritte
+## 18. Bedienelemente: Buttons und Tabs
+
+Buttons und Tabs werden im Redaktionssystem als unterschiedliche UI-Komponenten behandelt.
+
+### Buttons
+
+Buttons lösen **Aktionen** aus.
+
+Verbindliche Grundtypen:
+
+- **Primärbutton**: wichtigste Aktion im aktuellen Kontext, z. B. **„Speichern“**, **„Prüfung abschließen“**, **„Veröffentlichen“**. Visuell deutlich hervorgehoben.
+- **Sekundärbutton**: alternative oder ergänzende Aktion, z. B. **„Zurückstellen“**, **„Anderen wählen“**, **„Weitere Quelle suchen“**.
+- **Icon-Button**: platzsparende, häufig wiederkehrende Aktion mit eindeutigem Symbol. Er besitzt eine sichtbare Buttonfläche, Hover-/Focus-Zustand, Tooltip und Accessible Label. Ein nacktes Symbol ohne erkennbare Interaktionsfläche wird vermieden.
+- **Kritische Aktion**: irreversible oder folgenreiche Aktion, z. B. Löschen oder endgültiges Verwerfen. Sie erhält eine eigene Warn-/Bestätigungslogik und wird nicht mit normalen Primäraktionen vermischt.
+
+Für Listen kann ein Icon-Button direkt in der Titelzeile stehen, wenn dadurch eine zusätzliche Aktionsspalte vermieden wird. Beim Quellenkatalog wird dafür ein Bearbeiten-/Öffnen-Icon verwendet. Das konkrete Produktions-Icon wird aus dem verbindlichen FIB-Icon-Stil abgeleitet; das Bleistiftzeichen im Wireframe ist nur Platzhalter.
+
+### Tabs
+
+Tabs sind **keine normalen Aktionsbuttons**, sondern dienen dem Wechsel zwischen gleichrangigen Ansichten innerhalb eines Bereichs.
+
+Beispiele:
+
+- **Funde**
+- **Quellen**
+- **Beobachtungsaufträge**
+
+Für Tabs gilt:
+
+- genau ein Tab ist als aktuell ausgewählt erkennbar;
+- Tabs verändern die angezeigte Ansicht, führen aber keine fachliche Aktion aus;
+- Zähler werden semantisch beschriftet, wenn ihre Bedeutung sonst unklar wäre, z. B. **„Quellen (2 Hinweise)“**;
+- Tab-Design und Button-Design bleiben visuell verwandt, aber klar unterscheidbar.
+
+## 19. Nächste UI-Schritte
 
 Auf Basis dieses Konzepts werden schrittweise konkretisiert:
 
