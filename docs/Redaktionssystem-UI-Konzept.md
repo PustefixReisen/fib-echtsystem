@@ -447,7 +447,7 @@ Der Objektkopf zeigt immer nur den **aktuell offenen nächsten Arbeitsschritt** 
 Für Zuordnungen gilt:
 
 - KI-Vorschläge zu Vorgang und Thema werden direkt im Schritt **„Zuordnung“** angezeigt.
-- Die Redaktion kann einen Vorschlag **bestätigen**, **ändern** oder **verwerfen**.
+- Die Redaktion kann einen Vorschlag **bestätigen**, **ändern** oder mit **„Keine Zuordnung“** verwerfen. Diese Optionen gelten für Vorgang und Thema gleichermaßen.
 - Nach Bestätigung ist der Zuordnungsschritt erledigt, bis sich durch neue Informationen erneut ein Prüfbedarf ergibt.
 
 Ein separater Seitenkasten **„Bereits erkannte Zusammenhänge“** entfällt, weil er die Informationen aus dem Zuordnungsschritt doppelt.
