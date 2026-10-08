@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-label="Auswertung">
+  <g fill="none" stroke="#16355F" stroke-width="8" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M20 104 H108"/>
+    <path d="M32 91 V68 H48 V91"/>
+    <path d="M57 91 V49 H73 V91"/>
+    <path d="M82 91 V28 H98 V91"/>
+  </g>
+</svg>
