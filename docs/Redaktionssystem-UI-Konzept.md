@@ -307,7 +307,35 @@ Damit trotz Direkteinstieg jederzeit erkennbar bleibt, **wo sich die Redaktion b
 
 Die Breadcrumbs dienen sowohl der Orientierung als auch dem direkten Rücksprung auf übergeordnete Ebenen. Zusätzlich soll der Rückweg zur jeweiligen Listen-/Auswahlansicht klar erreichbar bleiben.
 
-## 10. UI-Statusbegriffe
+## 10. Objektkopf: Zustand/Status und nächste Schritte trennen
+
+Der Objektkopf zeigt den Redakteuren auf einen Blick sowohl den **aktuellen Zustand bzw. Status** eines Objekts als auch den **nächsten redaktionellen Schritt**. Diese beiden Informationen werden visuell und begrifflich getrennt dargestellt.
+
+Grundregel:
+
+> **Zustand/Status beschreibt, was das Objekt derzeit ist. Nächster Schritt beschreibt, was als Nächstes damit getan werden soll.**
+
+Beispiele:
+
+- Thema: **Zustand: Weiterverfolgen** · **Nächster Schritt: Themenprüfung durchführen**
+- Meldung: **Status: Fachlich geprüft** · **Nächster Schritt: Veröffentlichung vorbereiten**
+- Vorgang: **Zustand: laufender Sachverhalt** · **Nächster Schritt: neue Auswirkung prüfen**
+
+Die Trennung soll auch im Kopfbereich sichtbar sein, zum Beispiel in zwei getrennten Feldern oder Gruppen:
+
+- **Zustand / Status**
+- **Nächster Schritt**
+
+Ein nächster Schritt kann direkt im aktuellen Objekt bearbeitet werden. Erst wenn er zurückgestellt oder außerhalb des aktuellen Kontexts weiterbearbeitet werden soll, entsteht daraus ein Eintrag im Arbeitskorb.
+
+Bei Themen werden Zustand und Pflegeentscheidung zusätzlich sauber unterschieden:
+
+- dauerhafte Zustände: **Weiterverfolgen**, **Archiviert**
+- mögliche nächste Schritte bzw. Prüfentscheidungen: **Ausschärfen**, **Zusammenführen**, **Themenprüfung durchführen**
+
+Listenansichten dürfen sowohl nach Zuständen/Status als auch nach offenem Handlungsbedarf filtern.
+
+## 11. UI-Statusbegriffe
 
 Technische Workflowstufen wie S0–S3 bleiben Teil des internen Regelwerks, der Fachlogik und des Audits. In der normalen Redaktionsoberfläche werden stattdessen verständliche Klartextbegriffe verwendet.
 
@@ -321,7 +349,7 @@ Beispiele:
 
 Technische Statuscodes werden nur dort gezeigt, wo sie für Administration, Audit oder technische Diagnose erforderlich sind.
 
-## 11. Status- und Farblogik
+## 12. Status- und Farblogik
 
 Farben unterstützen die Bedeutung, sind aber nie alleiniger Informationsträger.
 
@@ -335,7 +363,7 @@ Jeder Status verwendet zusätzlich Icon und Text.
 
 Fachlicher Status und technischer Status werden nicht vermischt.
 
-## 12. Nicht Teil des Dashboards
+## 13. Nicht Teil des Dashboards
 
 Nicht vorgesehen:
 
@@ -347,7 +375,7 @@ Nicht vorgesehen:
 
 Diese Inhalte gehören in die jeweiligen Fach- oder Admin-Bereiche.
 
-## 13. Nächste UI-Schritte
+## 14. Nächste UI-Schritte
 
 Auf Basis dieses Konzepts werden schrittweise konkretisiert:
 
