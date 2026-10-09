@@ -869,7 +869,51 @@ Die Auswertung soll insbesondere helfen zu erkennen:
 - geringe Fallzahlen werden kenntlich gemacht;
 - der FIB-Assistent kann Muster erläutern und mögliche Anpassungen der Recherchelogik vorschlagen, Änderungen aber nicht ohne redaktionelle Bestätigung ausführen.
 
-## 30. Nächste UI-Schritte
+## 30. Auswertung: Redaktion
+
+Der Bereich **Redaktion** zeigt, wie gut die redaktionelle Arbeit organisiert ist und wo sich Rückstände, Wartezeiten oder wiederkehrende Engpässe bilden. Er dient der Arbeitsorganisation und Prozessverbesserung, nicht der Bewertung einzelner Personen.
+
+Verbindlich:
+
+- keine Ranglisten oder Leistungsbewertungen von Redakteuren;
+- personenbezogene Angaben nur dort, wo sie für Koordination und Nachvollziehbarkeit erforderlich sind;
+- Schwerpunkt auf Arbeitsfluss, offenen Entscheidungen, Liegezeiten und Übergängen;
+- Federführung, letzte Bearbeitung, Bearbeitungssperre und Historie bleiben fachlich getrennte Konzepte;
+- technische Laufdaten bleiben im Admin-Bereich.
+
+### Kernfragen
+
+Die Auswertung soll insbesondere helfen zu erkennen:
+
+- Wo stauen sich offene Entscheidungen?
+- Welche Objekttypen oder Arbeitsschritte bleiben besonders lange offen?
+- Wo entstehen wiederholt Rückfragen oder Nacharbeiten?
+- Welche Freigaben warten ungewöhnlich lange?
+- Wo fehlen Federführungen oder Übernahmen?
+- Welche Arbeitsschritte werden häufig zurückgestellt?
+- Wie entwickelt sich der offene Bestand über Zeit?
+
+### Zentrale Kennzahlen und Darstellungen
+
+- offene Arbeitskorb-Einträge nach Entscheidungstyp;
+- Alter offener Einträge in sinnvollen Zeitklassen;
+- mittlere bzw. typische Liegezeit je Arbeitsschritt;
+- Anzahl der Einträge ohne Federführung;
+- zurückgestellte Einträge und deren Alter;
+- Freigaben, die auf fachliche Voraussetzungen warten;
+- Wiedereröffnungen bzw. Nachbearbeitungen nach bereits erfolgter Bearbeitung;
+- Entwicklung des offenen Bestands gegenüber dem Vergleichszeitraum.
+
+### Darstellung
+
+- keine pauschale Gesamtbewertung wie „Redaktion läuft gut/schlecht“;
+- konkrete beobachtbare Aussagen statt Werturteile, zum Beispiel „5 Freigaben warten länger als 7 Tage“ oder „3 Funde ohne Federführung“;
+- zentrale Darstellung nach Arbeitsschritt bzw. Entscheidungstyp;
+- auffällige Liegezeiten werden hervorgehoben;
+- geringe Fallzahlen werden kenntlich gemacht;
+- der FIB-Assistent kann Muster erläutern und organisatorische Verbesserungen vorschlagen, führt aber keine Änderungen ohne Bestätigung aus.
+
+## 31. Nächste UI-Schritte
 
 Auf Basis dieses Konzepts werden schrittweise konkretisiert:
 

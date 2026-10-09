@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>FIB – Auswertung Redaktion</title><link rel="stylesheet" href="style.css">
+<style>
+.summary{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:14px 0}
+@media(max-width:900px){.summary{grid-template-columns:repeat(2,1fr)}}
+.age{display:flex;gap:8px;flex-wrap:wrap}.age span{padding:5px 8px;border-radius:999px;background:#eef3f6;font-size:11px}
+.warnbox{background:#fff5d8;border:1px solid #ead9a8;border-radius:10px;padding:10px 12px;margin:12px 0;font-size:12px}
+</style></head>
+<body><main class="page">
+<div class="crumb">Auswertung › Redaktion</div>
+<h1>Redaktion</h1>
+<div class="meta">Wo entstehen Rückstände oder Wartezeiten im redaktionellen Arbeitsfluss?</div>
+
+<div class="tabs">
+<button class="tab">Besucher & Wirkung</button>
+<button class="tab">Inhalte</button>
+<button class="tab">Recherche</button>
+<button class="tab active">Redaktion</button>
+</div>
+
+<div class="filters"><button class="pill active">Letzte 30 Tage</button><button class="pill">Vorherige 30 Tage vergleichen</button></div>
+
+<div class="assistant"><b>FIB-Assistent · Kontext: Auswertung › Redaktion</b><br>
+Zum Beispiel: „Wo stauen sich Entscheidungen?“, „Welche Arbeitsschritte dauern auffällig lange?“ oder „Welche offenen Punkte brauchen organisatorische Klärung?“</div>
+
+<h2>Offener Bestand nach Arbeitsschritt</h2>
+<table class="table">
+<tr><th>Arbeitsschritt / Entscheidung</th><th>Offen</th><th>davon &gt; 7 Tage</th><th>typische Liegezeit</th><th>Beobachtung</th></tr>
+<tr><td>Funde prüfen</td><td>8</td><td>2</td><td>2,1 Tage</td><td>ähnlich wie im Vergleichszeitraum</td></tr>
+<tr><td>Ereignisentscheidung</td><td>5</td><td>1</td><td>1,8 Tage</td><td>kein auffälliger Rückstand</td></tr>
+<tr><td>Zuordnung Vorgang/Thema</td><td>4</td><td>2</td><td>4,6 Tage</td><td><span class="status">mehrere ältere offene Entscheidungen</span></td></tr>
+<tr><td>Meldungsentwurf</td><td>6</td><td>1</td><td>3,2 Tage</td><td>leicht höher als zuvor</td></tr>
+<tr><td>Freigabe</td><td>5</td><td>3</td><td>6,7 Tage</td><td><span class="status">längste Wartezeit</span></td></tr>
+<tr><td>Medienrechte</td><td>2</td><td>2</td><td>9,4 Tage</td><td><span class="bad status">beide Fälle älter als 7 Tage</span></td></tr>
+</table>
+
+<h2>Koordination</h2>
+<div class="summary">
+<div class="kpi"><b>Ohne Federführung</b><div style="font-size:24px;font-weight:700">3</div><div class="meta">offene Objekte</div></div>
+<div class="kpi"><b>Zurückgestellt</b><div style="font-size:24px;font-weight:700">7</div><div class="meta">davon 2 älter als 30 Tage</div></div>
+<div class="kpi"><b>Übernahmeanfragen offen</b><div style="font-size:24px;font-weight:700">2</div><div class="meta">noch nicht beantwortet</div></div>
+<div class="kpi"><b>Nachbearbeitung</b><div style="font-size:24px;font-weight:700">4</div><div class="meta">wieder geöffnete Fälle</div></div>
+</div>
+
+<div class="warnbox"><b>Beobachtung:</b> 5 Freigaben sind offen, davon 3 länger als 7 Tage. Bei 2 Fällen fehlen noch Medienrechte. Die Ansicht bewertet keine Personen, sondern zeigt den Arbeitsfluss.</div>
+
+<h2>Alter offener Arbeit</h2>
+<div class="card item">
+<div class="age"><span>0–2 Tage: 12</span><span>3–7 Tage: 9</span><span>8–14 Tage: 5</span><span>15–30 Tage: 3</span><span>&gt; 30 Tage: 2</span></div>
+</div>
+
+<div class="note">Beispieldaten zur Visualisierung. Personennamen werden nicht für Leistungsrankings oder Produktivitätsvergleiche verwendet.</div>
+</main></body></html>
