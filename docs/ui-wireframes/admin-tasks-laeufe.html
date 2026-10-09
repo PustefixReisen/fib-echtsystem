@@ -1,0 +1,28 @@
+<!doctype html><html lang="de"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>FIB – Tasks & Läufe</title><link rel="stylesheet" href="style.css"></head>
+<body><main class="page">
+<div class="crumb">Administration › Tasks &amp; Läufe</div>
+<h1>Tasks &amp; Läufe</h1>
+<div class="meta">Automatische und systemseitige Hintergrundverarbeitung – mit Fokus auf Fehler und Handlungsbedarf.</div>
+
+<div class="filters">
+<button class="pill active">Alle</button>
+<button class="pill">Fehler / Handlungsbedarf (2)</button>
+<button class="pill">Aktiv</button>
+<button class="pill">Pausiert</button>
+<button class="pill">Manuell auslösbar</button>
+</div>
+
+<div class="assistant"><b>FIB-Assistent · Kontext: Tasks &amp; Läufe</b><br>
+Zum Beispiel: „Warum ist dieser Lauf fehlgeschlagen?“, „Welche Tasks sind überfällig?“ oder „Welche Fehler betreffen die Recherche?“</div>
+
+<table class="table">
+<tr><th>Task</th><th>Typ</th><th>Betrieb</th><th>Letzter Lauf</th><th>Nächster Lauf</th><th>Handlungsbedarf</th><th></th></tr>
+<tr><td><b>Quellenmonitor Pflichtquellen</b><br><span class="meta">prüft konfigurierte Pflichtquellen</span></td><td>Recherche</td><td><span class="ok status">Aktiv</span><br>stündlich</td><td><span class="bad status">Fehler</span><br>heute 12:41</td><td>heute 13:41</td><td>Autobahn GmbH nicht erreichbar</td><td><button class="btn">Öffnen</button></td></tr>
+<tr><td><b>Beobachtungsaufträge</b><br><span class="meta">führt aktive Aufträge aus</span></td><td>Recherche</td><td><span class="ok status">Aktiv</span><br>täglich</td><td><span class="ok status">Erfolgreich</span><br>heute 08:03</td><td>morgen 08:00</td><td>–</td><td><button class="btn">Öffnen</button></td></tr>
+<tr><td><b>Besuchsstatistik bereinigen</b><br><span class="meta">filtert Bots und automatisierte Abrufe</span></td><td>Auswertung</td><td><span class="ok status">Aktiv</span><br>täglich</td><td><span class="status">Warnung</span><br>heute 04:12</td><td>morgen 04:00</td><td>ungewöhnlich hoher Crawler-Anteil</td><td><button class="btn">Öffnen</button></td></tr>
+<tr><td><b>KI-Kostenaggregation</b></td><td>KI/Betrieb</td><td><span class="ok status">Aktiv</span><br>täglich</td><td><span class="ok status">Erfolgreich</span><br>heute 02:00</td><td>morgen 02:00</td><td>–</td><td><button class="btn">Öffnen</button></td></tr>
+<tr><td><b>Transfer-Regressionstest</b></td><td>Qualität</td><td><span class="status">Pausiert</span><br>manuell</td><td>07.10.2026</td><td>–</td><td>–</td><td><button class="btn">Öffnen</button></td></tr>
+</table>
+
+<div class="note">Beispieldaten. Fachliche Entscheidungen über erzeugte Funde oder Inhalte erfolgen weiterhin in den Fachbereichen, nicht hier.</div>
+</main></body></html>
