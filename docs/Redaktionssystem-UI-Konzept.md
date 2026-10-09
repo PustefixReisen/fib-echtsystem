@@ -1132,7 +1132,66 @@ Kostensteuerung darf qualitätskritische Pflichtfunktionen nicht stillschweigend
 
 Die Oberfläche bildet die getrennten Rollen **Primärmodell** und **Review-/Qualitätsmodell** sichtbar ab. Eskalationen und Kontrollstichproben werden getrennt ausgewertet. Der Startwert der Kontrollstichprobe beträgt gemäß KI-Konzept 5 %, bleibt aber administrativ bzw. regelbasiert anpassbar.
 
-## 35. Nächste UI-Schritte
+## 35. Administration – Referenzsystem
+
+Der Bereich **Referenzsystem** bündelt dauerhaftes FIB-spezifisches Referenzwissen, politische bzw. fachliche Referenzmaßstäbe und zentrale fachliche Systemparameter. Er ist kein allgemeines Wissensarchiv.
+
+### Struktur
+
+Die Ansicht trennt drei Sichten:
+
+- **Referenzwissen** – Referenzobjekte, Bezeichnungen/Aliase und fachlich nützliche Beziehungen;
+- **Referenzmaßstäbe** – dokumentierte, versionierte Maßstäbe für Recherche, Relevanzprüfung, Qualität und politische Einordnung;
+- **Schwellenwerte & Statusregeln** – zentral administrierbare Warnschwellen und semantische Statusregeln.
+
+### Referenzwissen
+
+Referenzwissen dient dazu, lokale oder FIB-spezifische Zusammenhänge zuverlässig und modellunabhängig verfügbar zu machen. Es enthält insbesondere:
+
+- stabile Referenzobjekte, z. B. Orte, Räume, Infrastruktur oder Projekte;
+- Hauptbezeichnungen und Aliase;
+- Beziehungen wie „ist Teil von“, „liegt in/an“, „verbindet“, „erschließt/versorgt“ oder „steht in funktionalem Zusammenhang mit“;
+- Herkunft bzw. Begründung, soweit erforderlich;
+- Status: vorgeschlagen, bestätigt oder nicht mehr gültig/zurückgenommen.
+
+Nur bestätigtes Referenzwissen erweitert den verbindlichen Recherchekontext.
+
+Die Oberfläche muss deutlich zwischen **stabiler Identität** und **zeitabhängigem Sachstand** unterscheiden. Planungsstände, Entscheidungen oder Wirkungen gehören nicht in das Referenzwissen, sondern in Ereignisse, Vorgänge oder Themen.
+
+### Referenzmaßstäbe
+
+Referenzmaßstäbe werden nach den drei Ebenen geführt:
+
+1. allgemeine FIB-Qualitätsmaßstäbe;
+2. demokratisch-gesellschaftliche Maßstäbe;
+3. grün-politische Maßstäbe einschließlich dokumentierter lokaler Positionen.
+
+Je Referenzmaßstab werden mindestens angezeigt:
+
+- Bezeichnung;
+- Ebene;
+- Aussage / Kurzinhalt;
+- Herkunft bzw. Quelle;
+- Geltungsbereich;
+- Status;
+- Version;
+- letzte Änderung.
+
+Neue oder geänderte Maßstäbe werden auf Dubletten, Widersprüche, Abgrenzung, Ergänzung/Konkretisierung und ggf. notwendige neue Version geprüft.
+
+### Schwellenwerte & Statusregeln
+
+Dieser Unterbereich verwendet die bereits definierte zentrale Admin-Tabelle. Numerische Warnschwellen und semantische Regeln bleiben systemweit konsistent und werden nicht dezentral im UI-Code gepflegt.
+
+### Arbeitsprinzip
+
+Das Referenzsystem folgt einem zurückhaltenden Pflegeprinzip:
+
+> **Nur Wissen und Regeln dauerhaft speichern, die für FIB wiederholt nützlich sind oder unabhängig vom eingesetzten KI-Modell zuverlässig verfügbar bleiben sollen.**
+
+KI darf neue Referenzobjekte, Beziehungen oder Maßstäbe vorschlagen. Fachlich wirksam werden sie erst nach Bestätigung durch einen berechtigten Menschen. Änderungen und Rücknahmen werden historisiert bzw. auditiert.
+
+## 36. Nächste UI-Schritte
 
 Auf Basis dieses Konzepts werden schrittweise konkretisiert:
 
