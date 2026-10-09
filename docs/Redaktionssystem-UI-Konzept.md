@@ -1274,7 +1274,77 @@ Systemparameter sind technische Konfigurationen, keine fachlichen Regeln. Fachli
 
 Sicherheitsrelevante Systemänderungen sind geschützte Adminaktionen und werden auditiert.
 
-## 37. Nächste UI-Schritte
+## 37. Administration – Audit
+
+Der Bereich **Audit** macht fachlich und administrativ relevante Änderungen nachvollziehbar. Er ist kein technisches Rohlog, sondern eine verständliche, filterbare Änderungs- und Entscheidungsansicht.
+
+### Ziel
+
+Das Audit beantwortet insbesondere:
+
+- wer hat eine relevante Änderung ausgelöst;
+- wann ist sie erfolgt;
+- über welchen Zugangsweg;
+- welches Objekt oder welche Konfiguration war betroffen;
+- welche fachliche oder administrative Wirkung hatte die Änderung;
+- welcher Vorher-/Nachher-Zustand ist relevant;
+- welche Bestätigung war erforderlich und wurde erteilt;
+- ob MFA/Step-up erforderlich war;
+- ob die Aktion erfolgreich, abgelehnt oder zurückgenommen wurde.
+
+### Audit-Sichten
+
+Sinnvolle Filter und Sichten sind:
+
+- Zeitraum;
+- Benutzer / technischer Akteur;
+- Objektart;
+- Aktionsart;
+- Fachbereich;
+- S2 / S3 / besonders geschützte Adminaktion;
+- erfolgreich / abgelehnt / zurückgenommen;
+- nur sicherheitsrelevante Änderungen.
+
+### Besonders relevante Audit-Ereignisse
+
+Mindestens nachvollziehbar bleiben:
+
+- fachlich wirksame Änderungen an Ereignissen, Vorgängen, Themen und strukturierten Einordnungen;
+- Freigaben, Veröffentlichungen und Rücknahmen;
+- Benutzer- und Rollenänderungen;
+- Aktivierung/Deaktivierung interner Benutzer;
+- erzwungene Aufhebung fremder Bearbeitungssperren;
+- Änderungen an Schwellenwerten und Statusregeln;
+- Änderungen am Referenzrahmen;
+- Änderungen an KI-Routing, Providerfreigaben und Sicherheitsgrenzen;
+- sicherheitsrelevante Systemkonfiguration;
+- besonders geschützte Daten-/Dateifreigaben.
+
+### Darstellung
+
+Die Liste zeigt kompakt:
+
+- Zeitpunkt;
+- Akteur;
+- Aktion;
+- betroffenes Objekt;
+- Ergebnis;
+- ggf. Warn-/Schutzkennzeichnung.
+
+Die Detailansicht zeigt den fachlich relevanten Vorher-/Nachher-Zustand. Technische Debugdaten werden nur ergänzend angezeigt, wenn sie zur Klärung benötigt werden.
+
+### Abgrenzung
+
+- technische Laufprotokolle bleiben unter **Tasks & Läufe**;
+- fachliche Objekt-Historien können zusätzlich direkt am Objekt gezeigt werden;
+- das Audit ist die systemweite, übergreifende Nachvollziehbarkeit;
+- Auswertungen zur redaktionellen Zusammenarbeit bewerten keine einzelnen Personen.
+
+### Schutz und Unveränderbarkeit
+
+Audit-Einträge werden nicht nachträglich redaktionell überschrieben. Korrekturen erfolgen durch neue nachvollziehbare Folgeereignisse. Zugriff auf das vollständige Audit ist Admins vorbehalten.
+
+## 38. Nächste UI-Schritte
 
 Auf Basis dieses Konzepts werden schrittweise konkretisiert:
 
