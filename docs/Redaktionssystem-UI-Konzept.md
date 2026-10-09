@@ -985,7 +985,80 @@ Die Administration folgt denselben Navigationsprinzipien wie das übrige Redakti
 
 Direkteinstiege aus Systemhinweisen sind erlaubt. Breadcrumbs bleiben verpflichtend.
 
-## 33. Nächste UI-Schritte
+## 33. Administration: Tasks & Läufe
+
+Der Bereich **Tasks & Läufe** macht technische und fachliche Hintergrundverarbeitungen administrierbar. Er dient Diagnose und Betrieb, nicht der redaktionellen Tagesarbeit.
+
+### Begriffe
+
+- **Task** = persistente Definition einer automatisierten oder systemseitig ausgelösten Arbeit.
+- **Lauf** = konkrete Ausführung eines Tasks zu einem bestimmten Zeitpunkt.
+- fachliche Ergebnisse eines Laufs, z. B. neue Funde, werden in den zuständigen Fachbereichen weiterbearbeitet und nicht im Admin-Bereich fachlich entschieden.
+
+### Listenansicht
+
+Die Standardansicht zeigt die Tasks mit ihrem aktuellen Betriebszustand. Pro Task werden mindestens angezeigt:
+
+- Bezeichnung;
+- Zweck bzw. Task-Typ;
+- Aktiv/Pausiert;
+- Auslöser bzw. Rhythmus;
+- letzter Lauf mit Ergebnis;
+- nächster geplanter Lauf, soweit vorhanden;
+- aktueller Handlungsbedarf;
+- Fehlerstatus, wenn ein Lauf fehlgeschlagen ist.
+
+Sinnvolle Filter:
+
+- Alle;
+- Fehler / Handlungsbedarf;
+- Aktiv;
+- Pausiert;
+- manuell auslösbar;
+- nach Task-Typ.
+
+Die Standardsortierung priorisiert:
+
+> **Fehler/Handlungsbedarf → blockierte Läufe → überfällige Läufe → übrige aktive Tasks**
+
+Erfolgreiche Routinevorgänge dominieren die Liste nicht.
+
+### Taskdetail
+
+Das Taskdetail trennt klar zwischen:
+
+1. **Definition** – was der Task tun soll;
+2. **Betrieb** – ob und wann er läuft;
+3. **Laufhistorie** – konkrete Ausführungen;
+4. **Fehler/Diagnose** – technische Ursache und mögliche Abhilfe.
+
+Mögliche Admin-Aktionen:
+
+- pausieren / aktivieren;
+- manuellen Lauf starten, falls für den Task vorgesehen;
+- fehlgeschlagenen Lauf erneut anstoßen;
+- technische Diagnose öffnen;
+- bei zulässigen Task-Typen Rhythmus bzw. fachliche Parameter bearbeiten.
+
+Kritische Aktionen benötigen Bestätigung. Änderungen werden auditiert.
+
+### Laufdetail
+
+Ein Laufdetail zeigt mindestens:
+
+- Start und Ende;
+- Status;
+- auslösender Task;
+- Auslöser;
+- Laufdauer;
+- fachlich erzeugte Ergebnisse in aggregierter Form, z. B. Zahl neuer Funde;
+- technische Fehlermeldung, soweit vorhanden;
+- Retry-/Wiederholungsinformation;
+- Link zu relevanten Fachobjekten, wenn der Lauf dort Ergebnisse erzeugt hat.
+
+Technische Logdetails dürfen ausführlicher sein als im normalen Redaktionssystem, bleiben aber auf das für Diagnose erforderliche Maß begrenzt.
+
+## 34. Nächste UI-Schritte
 
 Auf Basis dieses Konzepts werden schrittweise konkretisiert:
 
