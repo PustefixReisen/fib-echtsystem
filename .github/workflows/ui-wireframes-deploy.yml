@@ -30,15 +30,24 @@ jobs:
           IONOS_SFTP_USER: ${{ secrets.IONOS_SFTP_USER }}
           IONOS_SFTP_PASSWORD: ${{ secrets.IONOS_SFTP_PASSWORD }}
         run: |
-          lftp \
-            -u "$IONOS_SFTP_USER","$IONOS_SFTP_PASSWORD" \
-            "sftp://$IONOS_SFTP_HOST" \
-            -e '
-              set cmd:fail-exit yes;
-              set net:max-retries 2;
-              set net:timeout 20;
-              set sftp:auto-confirm yes;
-              mkdir -p wireframes;
-              mirror --reverse --delete --verbose docs/ui-wireframes/ wireframes/;
-              bye;
-            '
+          for attempt in 1 2 3; do
+            echo "SFTP deploy attempt $attempt of 3"
+            if lftp \
+              -u "$IONOS_SFTP_USER","$IONOS_SFTP_PASSWORD" \
+              "sftp://$IONOS_SFTP_HOST" \
+              -e '
+                set cmd:fail-exit yes;
+                set net:max-retries 4;
+                set net:timeout 45;
+                set net:reconnect-interval-base 5;
+                set net:reconnect-interval-max 20;
+                set sftp:auto-confirm yes;
+                mkdir -p wireframes;
+                mirror --reverse --delete --verbose docs/ui-wireframes/ wireframes/;
+                bye;
+              '; then
+              exit 0
+            fi
+            sleep $((attempt * 15))
+          done
+          exit 1
