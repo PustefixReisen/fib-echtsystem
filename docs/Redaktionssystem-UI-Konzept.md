@@ -1083,6 +1083,8 @@ Die Übersicht zeigt nur administrativ relevante Kennzahlen und Abweichungen:
 - auffällige Kostenentwicklungen oder Fehlerloops;
 - ggf. Provider-/Modellstörungen.
 
+Die Übersicht erhält eine kompakte **Info-/Legendenfunktion**, die die Kennzahlen fachlich erklärt. Dazu gehören mindestens Bedeutung, Bezugszeitraum, Berechnungslogik und ggf. Ziel-/Warnbereich. Die Legende soll insbesondere erläutern, wie Monatskosten, Eskalationsquote, Kontrollstichprobe und Providerstatus zu interpretieren sind. Beispielwerte oder Zielwerte werden klar als solche gekennzeichnet.
+
 Konkrete Anbieterpreise werden nicht als dauerhafte fachliche Regel behandelt.
 
 ### Routing
