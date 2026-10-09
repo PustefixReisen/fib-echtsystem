@@ -43,21 +43,22 @@ Verbindliche Grundstruktur:
   - Vorgänge
   - Themen
   - Sitzungen
-- Recherche
-  - Funde
-  - Quellen
-  - Beobachtungsaufträge
-- Veröffentlichung
-  - Freigaben
-  - Medien & Dateien
-  - Kommunikation
-  - Besucherführung
-- Auswertung
-  - Besucher & Wirkung
-  - Inhalte
+- Redaktion
   - Recherche
-  - Redaktion
-- FIB-Assistent
+    - Funde
+    - Quellen
+    - Beobachtungsaufträge
+  - Veröffentlichung
+    - Freigaben
+    - Medien & Dateien
+    - Kommunikation
+    - Besucherführung
+  - Auswertung
+    - Besucher & Wirkung
+    - Inhalte
+    - Recherche
+    - Redaktion
+  - FIB-Assistent
 - Administration
   - Tasks & Läufe
   - KI & Kosten
@@ -161,7 +162,7 @@ Ein Fund wird dann im Hauptarbeitsbereich priorisiert, wenn daraus eine konkrete
 
 ### 6.5 Freigaben
 
-Zeigt Inhalte mit anstehender S2-/S3-Entscheidung.
+Zeigt Inhalte mit anstehender **fachlich wirksamer** oder **freigabe- bzw. veröffentlichungswirksamer** Entscheidung.
 
 Wesentlich sind:
 
@@ -1301,7 +1302,7 @@ Sinnvolle Filter und Sichten sind:
 - Objektart;
 - Aktionsart;
 - Fachbereich;
-- S2 / S3 / besonders geschützte Adminaktion;
+- Wirksame Änderungen / Veröffentlichungen & Freigaben / besonders geschützte Adminaktion;
 - erfolgreich / abgelehnt / zurückgenommen;
 - nur sicherheitsrelevante Änderungen.
 
@@ -1319,6 +1320,17 @@ Mindestens nachvollziehbar bleiben:
 - Änderungen an KI-Routing, Providerfreigaben und Sicherheitsgrenzen;
 - sicherheitsrelevante Systemkonfiguration;
 - besonders geschützte Daten-/Dateifreigaben.
+
+### Klartextbezeichnungen der Aktionsstufen
+
+In der normalen Oberfläche werden die technischen Kürzel S0–S3 nicht als primäre Begriffe verwendet:
+
+- **S0 – Lesen / analysieren**
+- **S1 – Vorschlagen / entwerfen**
+- **S2 – Fachlich wirksam**
+- **S3 – Freigabe- bzw. veröffentlichungswirksam**
+
+Für gemeinsame Filter wird bevorzugt **Wirksame Änderungen** verwendet. Die technischen Kürzel können in Auditdetails ergänzend angezeigt werden.
 
 ### Darstellung
 
