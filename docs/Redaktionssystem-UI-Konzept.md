@@ -767,7 +767,8 @@ Verbindlich:
 **Reichweite**
 - Besuche / Aufrufe im gewählten Zeitraum;
 - erreichte Inhalte bzw. meistgesehene Meldungen/Themen;
-- Zugangswege, z. B. Direktaufruf, geteilte Links, Social, persönliche Kontakte / Multiplikatoren;
+- Zugangswege, z. B. Direktaufruf, geteilte Links und Social;
+- **persönliche Rückmeldungen** werden als eigener Wirkungskanal ausgewiesen und nicht mit technischen Zugangswegen vermischt;
 - PWA-Nutzung, soweit datenschutzkonform erfassbar.
 
 **Bindung**
@@ -780,7 +781,8 @@ Verbindlich:
 - welche Inhalte führen zu **weiterführender Nutzung**;
 - welche Kommunikationswege bringen tatsächlich interessierte Besucher;
 - welche Besucherführungs-Hinweise werden genutzt oder ignoriert;
-- analoge Resonanz kann manuell ergänzt werden, z. B. Rückmeldungen aus Vereinen, persönlichen Gesprächen oder Veranstaltungen.
+- persönliche Rückmeldungen können manuell ergänzt werden, z. B. aus Vereinen, persönlichen Gesprächen, Telefonaten oder Veranstaltungen;
+- für persönliche Rückmeldungen wird die Art zahlenmäßig dargestellt, mindestens **Zustimmung**, **Kritik**, **Hinweis** und **Ergänzung**.
 
 ### Darstellung
 
