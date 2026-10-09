@@ -20,3 +20,9 @@ Die verbindlichen fachlichen Regeln stehen in `docs/Redaktionssystem-UI-Konzept.
 - Recherche: Funde, Funddetail, Quellen, Beobachtungsaufträge
 - Veröffentlichung: Freigaben, Medien & Dateien, Kommunikation, Besucherführung
 - Auswertung: Besucher & Wirkung, Inhalte, Recherche
+
+## Browser-Vorschau
+
+Die gerenderten Wireframes können direkt im Browser geöffnet werden:
+
+https://fib.pustivo.de/wireframes/
