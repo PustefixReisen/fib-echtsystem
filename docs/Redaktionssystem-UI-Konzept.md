@@ -800,12 +800,23 @@ Verbindlich:
 
 - auswählbarer Zeitraum und klarer Vergleichszeitraum;
 - Auswertung nach Meldungen, Vorgängen und Themen;
-- mindestens Aufrufe, weiterführende Nutzung und Veränderung zum Vergleichszeitraum;
+- mindestens **bereinigte Besuche/Aufrufe**, weiterführende Nutzung und Veränderung zum Vergleichszeitraum;
 - Unterschiede zwischen hoher Reichweite und hoher weiterführender Nutzung werden sichtbar;
 - keine automatische Erfolg-/Misserfolgsbewertung;
 - geringe Fallzahlen und unsichere Aussagen werden kenntlich gemacht;
+- **bereinigte Besuche** schließen offensichtliche Bots, Crawler und automatisierte Abrufe aus; die Kennzahl wird nicht als exakte Personenzahl interpretiert;
 - persönliche Rückmeldungen können einem Inhalt zugeordnet und in aggregierter Form sichtbar gemacht werden;
 - der FIB-Assistent erläutert auffällige Muster, weist aber ausdrücklich auf Unsicherheiten und alternative Erklärungen hin.
+
+### Bereinigung menschlicher Nutzung
+
+- bekannte Bot-/Crawler-Kennungen werden ausgeschlossen;
+- auffällige, stark automatisierte Abrufmuster werden nicht als menschlicher Besuch gewertet;
+- technische Abrufe ohne normale Nutzungssignale werden separat behandelt;
+- Suchmaschinen- und KI-Crawler fließen nicht in die redaktionelle Reichweitenkennzahl ein;
+- die Trennung erfolgt ohne personenbezogene Identifikation;
+- eine vollständige Trennung Mensch/Maschine ist technisch nicht garantiert, daher bleibt die Kennzahl ausdrücklich eine **bereinigte Besuchszahl**;
+- automatisierte Abrufe können separat in einer technischen Betriebs-/Admin-Auswertung dargestellt werden, gehören aber nicht in die redaktionelle Wirkungsanalyse.
 
 Die Darstellung folgt einer kompakten tabellenartigen Logik. Sinnvolle Spalten sind:
 - Inhalt;
