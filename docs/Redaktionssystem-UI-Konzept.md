@@ -760,6 +760,7 @@ Verbindlich:
 - keine personenbezogenen Besucherprofile;
 - Zeiträume und Vergleichswerte müssen eindeutig beschriftet sein;
 - Kennzahlen werden immer mit fachlicher Bedeutung bzw. möglicher redaktioneller Konsequenz verknüpft.
+- Wertende oder unklare Etiketten wie **„stabile Nutzung“**, **„stabile Bindung“**, **„gut“** oder **„schwach“** werden vermieden, wenn stattdessen eine konkrete beobachtete Veränderung beschrieben werden kann.
 
 ### Kernkennzahlen
 
@@ -771,13 +772,12 @@ Verbindlich:
 
 **Bindung**
 - wiederkehrende Nutzung;
-- Nutzung von Vertiefungen wie **„Mehr wissen?“**;
-- Wechsel von Meldung zu Vorgang oder Thema;
+- **weiterführende Nutzung**, z. B. Aufruf von **„Mehr wissen?“**, Wechsel von einer Meldung zu Vorgang oder Thema, Öffnen einer Hintergrundfrage oder einer weiteren Quelle;
 - Nutzung von „neu seit letztem Besuch“;
 - wiederholte Nutzung innerhalb eines geeigneten Zeitraums.
 
 **Wirkung**
-- welche Inhalte führen zu weiterer Beschäftigung;
+- welche Inhalte führen zu **weiterführender Nutzung**;
 - welche Kommunikationswege bringen tatsächlich interessierte Besucher;
 - welche Besucherführungs-Hinweise werden genutzt oder ignoriert;
 - analoge Resonanz kann manuell ergänzt werden, z. B. Rückmeldungen aus Vereinen, persönlichen Gesprächen oder Veranstaltungen.
@@ -787,7 +787,7 @@ Verbindlich:
 - Überblick mit wenigen Kennzahlkarten und verständlicher Veränderung zum Vergleichszeitraum;
 - darunter tabellenartige Auswertung nach Inhalt, Kanal oder Besucherführung;
 - keine technische Analytics-Oberfläche im Stil eines Rohdaten-Dashboards;
-- auffällige Veränderungen werden als Hinweis dargestellt, nicht automatisch als Erfolg oder Misserfolg bewertet;
+- auffällige Veränderungen werden konkret beschrieben, z. B. **„Aufrufe etwa auf Vorperiodenniveau“**, **„Wiederkehrende Nutzung +4 %“** oder **„hoher Aufruf, geringer Anteil weiterführender Nutzung“**; sie werden nicht automatisch als Erfolg oder Misserfolg bewertet;
 - der FIB-Assistent kann die sichtbaren Daten erläutern und Hypothesen anbieten, muss Unsicherheiten und geringe Fallzahlen ausdrücklich benennen.
 
 ## 28. Nächste UI-Schritte
