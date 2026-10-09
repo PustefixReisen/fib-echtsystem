@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>FIB – UI-Wireframes</title>
+<link rel="stylesheet" href="style.css">
+<style>
+.intro{margin:8px 0 18px;color:#6d7a83;max-width:850px;line-height:1.5}
+.groups{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.group{background:#fff;border:1px solid #dce3e7;border-radius:12px;padding:14px}
+.group h2{margin:0 0 10px;font-size:16px}
+.links{display:grid;gap:7px}
+.links a{display:block;text-decoration:none;color:#20313c;border:1px solid #e4eaed;border-radius:8px;padding:9px 10px;background:#fafcfd}
+.links a:hover{background:#eef4f1;border-color:#bfd2c6}
+.meta{font-size:11px;color:#6d7a83;margin-top:18px}
+@media(max-width:800px){.groups{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<main class="page">
+<div class="crumb">FIB › UI-Wireframes</div>
+<h1>UI-Wireframes</h1>
+<div class="intro">Inhaltliche und strukturelle Referenz für das FIB-Redaktionssystem. Die Ansichten sind nicht pixelgenau verbindlich; Abstände, Größen und responsive Details dürfen sich bei der Umsetzung weiterentwickeln.</div>
+
+<div class="groups">
+<section class="group">
+<h2>Grundsystem</h2>
+<div class="links">
+<a href="dashboard.html">Dashboard</a>
+<a href="arbeitskorb.html">Arbeitskorb</a>
+<a href="arbeitskorb-sperren.html">Arbeitskorb – Sperranzeige</a>
+<a href="meldung-detail-freigabe.html">Meldungsdetail / Freigabe</a>
+<a href="vorgang.html">Vorgang</a>
+<a href="themen-liste.html">Themenliste</a>
+</div>
+</section>
+
+<section class="group">
+<h2>Recherche</h2>
+<div class="links">
+<a href="recherche-funde.html">Funde</a>
+<a href="recherche-funddetail.html">Funddetail</a>
+<a href="recherche-quellen.html">Quellen</a>
+<a href="recherche-beobachtungsauftraege.html">Beobachtungsaufträge</a>
+</div>
+</section>
+
+<section class="group">
+<h2>Veröffentlichung</h2>
+<div class="links">
+<a href="veroeffentlichung-freigaben.html">Freigaben</a>
+<a href="veroeffentlichung-medien.html">Medien & Dateien</a>
+<a href="veroeffentlichung-kommunikation.html">Kommunikation</a>
+<a href="veroeffentlichung-besucherfuehrung.html">Besucherführung</a>
+</div>
+</section>
+
+<section class="group">
+<h2>Auswertung</h2>
+<div class="links">
+<a href="auswertung-besucher-wirkung.html">Besucher & Wirkung</a>
+<a href="auswertung-inhalte.html">Inhalte</a>
+<a href="auswertung-recherche.html">Recherche</a>
+</div>
+</section>
+</div>
+
+<div class="meta">Quelle: <code>docs/ui-wireframes/</code> im GitHub-Repository. Maßgebliche fachliche Regeln: <code>docs/Redaktionssystem-UI-Konzept.md</code>.</div>
+</main>
+</body>
+</html>
