@@ -792,7 +792,31 @@ Verbindlich:
 - auffällige Veränderungen werden konkret beschrieben, z. B. **„Aufrufe etwa auf Vorperiodenniveau“**, **„Wiederkehrende Nutzung +4 %“** oder **„hoher Aufruf, geringer Anteil weiterführender Nutzung“**; sie werden nicht automatisch als Erfolg oder Misserfolg bewertet;
 - der FIB-Assistent kann die sichtbaren Daten erläutern und Hypothesen anbieten, muss Unsicherheiten und geringe Fallzahlen ausdrücklich benennen.
 
-## 28. Nächste UI-Schritte
+## 28. Auswertung: Inhalte
+
+Der Bereich **Inhalte** zeigt, welche Meldungen, Vorgänge und Themen besonders häufig genutzt werden und welche davon zu weiterführender Nutzung führen. Ziel ist redaktionelle Orientierung, nicht eine Rangliste „guter“ oder „schlechter“ Inhalte.
+
+Verbindlich:
+
+- auswählbarer Zeitraum und klarer Vergleichszeitraum;
+- Auswertung nach Meldungen, Vorgängen und Themen;
+- mindestens Aufrufe, weiterführende Nutzung und Veränderung zum Vergleichszeitraum;
+- Unterschiede zwischen hoher Reichweite und hoher weiterführender Nutzung werden sichtbar;
+- keine automatische Erfolg-/Misserfolgsbewertung;
+- geringe Fallzahlen und unsichere Aussagen werden kenntlich gemacht;
+- persönliche Rückmeldungen können einem Inhalt zugeordnet und in aggregierter Form sichtbar gemacht werden;
+- der FIB-Assistent erläutert auffällige Muster, weist aber ausdrücklich auf Unsicherheiten und alternative Erklärungen hin.
+
+Die Darstellung folgt einer kompakten tabellenartigen Logik. Sinnvolle Spalten sind:
+- Inhalt;
+- Typ;
+- Aufrufe;
+- weiterführende Nutzung;
+- persönliche Rückmeldungen;
+- Veränderung zum Vergleichszeitraum;
+- beobachtbarer Hinweis.
+
+## 29. Nächste UI-Schritte
 
 Auf Basis dieses Konzepts werden schrittweise konkretisiert:
 
