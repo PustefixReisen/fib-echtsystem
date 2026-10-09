@@ -1085,6 +1085,16 @@ Die Übersicht zeigt nur administrativ relevante Kennzahlen und Abweichungen:
 
 Die Übersicht erhält eine kompakte **Info-/Legendenfunktion**, die die Kennzahlen fachlich erklärt. Dazu gehören mindestens Bedeutung, Bezugszeitraum, Berechnungslogik und ggf. Ziel-/Warnbereich. Die Legende soll insbesondere erläutern, wie Monatskosten, Eskalationsquote, Kontrollstichprobe und Providerstatus zu interpretieren sind. Beispielwerte oder Zielwerte werden klar als solche gekennzeichnet.
 
+Unter der Routing-Tabelle wird zusätzlich eine kurze fachliche Erklärung der dort verwendeten Begriffe angezeigt:
+
+- **Klasse A – Routine:** klar begrenzte, stark strukturierte Aufgaben;
+- **Klasse B – Analyse:** anspruchsvollere semantische Analyse mit mehreren Abhängigkeiten;
+- **Klasse C – komplexe Bewertung:** besonders anspruchsvolle Abwägungs-, Konsistenz- oder Konfliktfälle;
+- **Primärmodell:** wirtschaftliches Standardmodell für den Regelfall, sofern es die geforderte Qualität erfüllt;
+- **Review-/Qualitätsmodell:** leistungsfähigeres Modell für Eskalationen, komplexe Fälle und Kontrollstichproben.
+
+Die Begriffe werden als fachliche Rollen erklärt und ausdrücklich nicht an einen bestimmten Anbieter oder Modellnamen gebunden.
+
 Konkrete Anbieterpreise werden nicht als dauerhafte fachliche Regel behandelt.
 
 ### Routing
