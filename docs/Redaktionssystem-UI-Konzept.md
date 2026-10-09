@@ -672,7 +672,54 @@ Verbindlich:
 - In Audit-/Historienansichten kann zusätzlich der vollständige Name erscheinen, damit die Zuordnung eindeutig bleibt.
 - Der Rufname ist kein Login-Name und hat keine Berechtigungswirkung.
 
-## 25. Nächste UI-Schritte
+## 25. Federführung vererben und Bearbeitung sperren
+
+### Federführung aus Ursprung ableiten
+
+- Wird ein Fund aufgegriffen und daraus ein **Ereignis** erzeugt, erhält dieses Ereignis zunächst die Federführung des bearbeitenden Redakteurs.
+- Entstehen aus einem Ereignis neue **Meldungen, Vorgänge oder Themen**, übernehmen diese initial die Federführung des Ereignisses.
+- Sobald an einem Zielobjekt erstmals eine eigene Federführung gespeichert wurde, wird sie **nicht mehr automatisch überschrieben**.
+- Die Federführung kann jederzeit manuell geändert oder abgegeben werden.
+- Werden Ereignisse mit Meldungen, Vorgängen oder Themen verknüpft, deren Federführung abweicht, zeigt FIB einen **Hinweis auf die unterschiedliche Federführung**.
+- Die App erzwingt keine Angleichung. Der Redakteur kann die Abweichung bewusst beibehalten oder eine Federführung ändern.
+
+### Schreibsperre
+
+Federführung bleibt organisatorisch weich. Die technische Bearbeitung kann dagegen exklusiv gesperrt werden.
+
+- Eine Sperre wird **nicht bereits beim Öffnen** eines Objekts gesetzt.
+- Die Sperre wird beim **ersten Editierversuch** gesetzt, also sobald ein Redakteur tatsächlich eine Änderung vornehmen möchte.
+- Betroffen sind mindestens **Funde, Ereignisse, Meldungen, Vorgänge und Themen**. Weitere bearbeitbare Objekttypen werden später nach demselben Prinzip geprüft.
+- Ist ein Objekt bereits durch einen anderen Redakteur gesperrt, bleibt die Ansicht lesbar; Änderungen sind bis zur Freigabe der Sperre nicht möglich.
+- Eigene Sperren und fremde Sperren werden überall dort angezeigt, wo ein Objekt bearbeitet werden kann.
+
+### Sperranzeige
+
+Die Anzeige bleibt bewusst kompakt:
+
+- eigene Sperre: **grünes Schloss + Rufname + Uhrzeit**, z. B. **🔒 Josef (09:14)**;
+- fremde Sperre: **rotes Schloss + Rufname + Uhrzeit**, z. B. **🔒 Maria (09:14)**.
+
+Die Farbe unterstützt die Bedeutung, das Schloss-Symbol bleibt der primäre Informationsträger.
+
+### Lebensdauer der Sperre
+
+- Die Sperre wird beim aktiven Bearbeiten regelmäßig erneuert.
+- Beim regulären Verlassen bzw. Beenden der Bearbeitung wird sie freigegeben.
+- Bleibt die Erneuerung aus, verfällt die Sperre nach einer kurzen Sicherheitsfrist automatisch.
+- Admins können offensichtlich verwaiste Sperren manuell aufheben.
+- Das Aufheben einer fremden Sperre wird protokolliert.
+
+### Getrennte Koordinationsinformationen
+
+FIB unterscheidet klar:
+
+- **Federführung** = wer behält den Sachverhalt hauptsächlich im Blick;
+- **Letzte Bearbeitung** = wer zuletzt fachlich daran gearbeitet hat;
+- **Bearbeitungssperre** = wer gerade exklusiven Schreibzugriff besitzt;
+- **Historie** = wer welchen konkreten Schritt wann ausgeführt hat.
+
+## 26. Nächste UI-Schritte
 
 Auf Basis dieses Konzepts werden schrittweise konkretisiert:
 
