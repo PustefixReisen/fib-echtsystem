@@ -628,6 +628,29 @@ Für die nächste Phase sind insbesondere technisch zu entscheiden:
 
 Diese Punkte verändern das fachliche Modell nicht und gehören in die anschließenden Gründungs-/Architekturphasen.
 
+## Recherche- und Relevanzregeln als operativer Regelbestand
+
+Recherche- und Relevanzregeln werden nicht nur dokumentiert, sondern als strukturierter, versionierter operativer Regelbestand in der FIB-Datenbank geführt.
+
+Konzeptionelles Objekt **RECHERCHE_RELEVANZREGEL** mit mindestens:
+
+- stabile Regel-ID;
+- Regelart;
+- Bezeichnung;
+- strukturierte Bedingung;
+- Anweisung bzw. Wirkung;
+- Geltungsbereich;
+- Priorität;
+- Ausnahmen bzw. Einschränkungen;
+- Status: Entwurf, geprüft, aktiv, ersetzt/zurückgenommen;
+- Versionsbezug;
+- Herkunft bzw. fachliche Begründung;
+- Zeitpunkt und verantwortliche Bestätigung.
+
+Ein Recherchelauf referenziert den tatsächlich verwendeten Regelstand. Dadurch bleibt nachvollziehbar, warum eine Fundstelle gefunden, nicht gefunden oder wie sie bewertet wurde.
+
+Nicht relevante Fundstellen werden nicht allein wegen ihrer Relevanzentscheidung gelöscht. Sie bleiben als fachlich abgeschlossene Fundstellen erhalten und können gemeinsam mit relevanten und unklaren Fällen als Regressionstestbestand verwendet werden.
+
 ## Änderungshistorie
 
 | Version | Datum | Änderung |
