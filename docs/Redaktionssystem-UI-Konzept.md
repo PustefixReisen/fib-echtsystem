@@ -747,7 +747,52 @@ Verbindlich:
 - Die Liste verwendet die allgemeinen UI-Standards: semantische Tabs, lokale Suche, Filter, kompakte Titel-/Ergebniszeile, Icon-Button und kontextbezogenen FIB-Assistenten.
 - Wirkungsdaten werden später in **Auswertung → Besucher & Wirkung** betrachtet; die Besucherführung selbst bleibt eine Steuerungsansicht.
 
-## 27. Nächste UI-Schritte
+## 27. Auswertung: Besucher & Wirkung
+
+Der Bereich **Besucher & Wirkung** beantwortet, ob FIB tatsächlich genutzt wird, welche Inhalte Interesse auslösen und über welche Wege Besucher erreicht werden. Er dient der redaktionellen Steuerung, nicht der möglichst vollständigen Webanalyse.
+
+Verbindlich:
+
+- Fokus auf wenige verständliche Kennzahlen mit redaktionellem Nutzen;
+- Reichweite und Bindung werden getrennt betrachtet;
+- persönliche und analoge Kontakte zu Multiplikatoren bleiben als eigener Wirkungskanal sichtbar;
+- Datenschutz und Datensparsamkeit haben Vorrang vor detailliertem Nutzertracking;
+- keine personenbezogenen Besucherprofile;
+- Zeiträume und Vergleichswerte müssen eindeutig beschriftet sein;
+- Kennzahlen werden immer mit fachlicher Bedeutung bzw. möglicher redaktioneller Konsequenz verknüpft.
+- Wertende oder unklare Etiketten wie **„stabile Nutzung“**, **„stabile Bindung“**, **„gut“** oder **„schwach“** werden vermieden, wenn stattdessen eine konkrete beobachtete Veränderung beschrieben werden kann.
+
+### Kernkennzahlen
+
+**Reichweite**
+- Besuche / Aufrufe im gewählten Zeitraum;
+- erreichte Inhalte bzw. meistgesehene Meldungen/Themen;
+- Zugangswege, z. B. Direktaufruf, geteilte Links und Social;
+- **persönliche Rückmeldungen** werden als eigener Wirkungskanal ausgewiesen und nicht mit technischen Zugangswegen vermischt;
+- PWA-Nutzung, soweit datenschutzkonform erfassbar.
+
+**Bindung**
+- wiederkehrende Nutzung;
+- **weiterführende Nutzung**, z. B. Aufruf von **„Mehr wissen?“**, Wechsel von einer Meldung zu Vorgang oder Thema, Öffnen einer Hintergrundfrage oder einer weiteren Quelle;
+- Nutzung von „neu seit letztem Besuch“;
+- wiederholte Nutzung innerhalb eines geeigneten Zeitraums.
+
+**Wirkung**
+- welche Inhalte führen zu **weiterführender Nutzung**;
+- welche Kommunikationswege bringen tatsächlich interessierte Besucher;
+- welche Besucherführungs-Hinweise werden genutzt oder ignoriert;
+- persönliche Rückmeldungen können manuell ergänzt werden, z. B. aus Vereinen, persönlichen Gesprächen, Telefonaten oder Veranstaltungen;
+- für persönliche Rückmeldungen wird die Art zahlenmäßig dargestellt, mindestens **Zustimmung**, **Kritik**, **Hinweis** und **Ergänzung**.
+
+### Darstellung
+
+- Überblick mit wenigen Kennzahlkarten und verständlicher Veränderung zum Vergleichszeitraum;
+- darunter tabellenartige Auswertung nach Inhalt, Kanal oder Besucherführung;
+- keine technische Analytics-Oberfläche im Stil eines Rohdaten-Dashboards;
+- auffällige Veränderungen werden konkret beschrieben, z. B. **„Aufrufe etwa auf Vorperiodenniveau“**, **„Wiederkehrende Nutzung +4 %“** oder **„hoher Aufruf, geringer Anteil weiterführender Nutzung“**; sie werden nicht automatisch als Erfolg oder Misserfolg bewertet;
+- der FIB-Assistent kann die sichtbaren Daten erläutern und Hypothesen anbieten, muss Unsicherheiten und geringe Fallzahlen ausdrücklich benennen.
+
+## 28. Nächste UI-Schritte
 
 Auf Basis dieses Konzepts werden schrittweise konkretisiert:
 
