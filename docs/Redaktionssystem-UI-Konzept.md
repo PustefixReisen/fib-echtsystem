@@ -1058,7 +1058,81 @@ Ein Laufdetail zeigt mindestens:
 
 Technische Logdetails dürfen ausführlicher sein als im normalen Redaktionssystem, bleiben aber auf das für Diagnose erforderliche Maß begrenzt.
 
-## 34. Nächste UI-Schritte
+## 34. Administration – KI & Kosten
+
+Der Bereich **KI & Kosten** bündelt die administrative Steuerung des KI-Betriebs. Er setzt die fachlichen Regeln aus `docs/KI-Betrieb-und-Kosten.md` sowie `docs/KI-Qualitaet-und-Modellunabhaengigkeit.md` um, ohne den redaktionellen Workflow an konkrete Anbieter oder Modelle zu koppeln.
+
+### Struktur
+
+Die Ansicht trennt vier Sichten:
+
+- **Übersicht** – aktueller Kostenstand, Warnungen, Eskalationsquote und Kontrollstichprobe;
+- **Routing** – Zuordnung von FIB-Aufgaben zu KI-Bedarf, Leistungsklasse, Primär- und Review-Modell;
+- **Provider & Modelle** – freigegebene Anbieter/Modelle, Betriebsstatus und Eignung je Leistungsklasse;
+- **Budgets & Limits** – Monatsbudget, Warnschwellen, harte Limits und optionale Kostenrahmen.
+
+### Übersicht
+
+Die Übersicht zeigt nur administrativ relevante Kennzahlen und Abweichungen:
+
+- bisherige Kosten im laufenden Monat;
+- Planungs-/Warnrahmen und ggf. Budgetstatus;
+- Kosten nach verpflichtender Eingangsanalyse, bedarfsgesteuerter Recherche und optionaler Redaktions-KI;
+- Anteil regulär eskalierter Fälle;
+- Anteil der Kontrollstichproben;
+- auffällige Kostenentwicklungen oder Fehlerloops;
+- ggf. Provider-/Modellstörungen.
+
+Konkrete Anbieterpreise werden nicht als dauerhafte fachliche Regel behandelt.
+
+### Routing
+
+Die Routing-Matrix ist konfigurierbar und wird **nicht im Anwendungscode fest verdrahtet**.
+
+Je FIB-Aufgabe werden mindestens gepflegt:
+
+- KI-Bedarf: verpflichtend / bedarfsgesteuert / optional;
+- erforderliche KI-Leistungsklasse A / B / C;
+- Primärmodell;
+- zulässiges Review-/Qualitätsmodell;
+- externe Recherche/Tools erlaubt oder nicht;
+- Fallback- bzw. Hochstufungsregel;
+- optionaler Kostenrahmen.
+
+Änderungen am Routing sind administrative Konfigurationsänderungen und werden auditiert.
+
+### Provider & Modelle
+
+Je Provider/Modell werden mindestens angezeigt:
+
+- Anbieter und Modellbezeichnung;
+- Freigabestatus;
+- unterstützte Leistungsklassen;
+- Rolle: Primär, Review oder beides;
+- Betriebsstatus / letzte technische Prüfung;
+- Ergebnis des letzten FIB-Modelltests bzw. Referenz darauf;
+- Datenresidenz-/Datenschutzhinweis, soweit relevant.
+
+Ein Modell darf produktiv nur verwendet werden, wenn es für die zugewiesene Aufgabe bzw. Leistungsklasse im FIB-Test als geeignet freigegeben ist.
+
+### Budgets & Limits
+
+Vorgesehen sind mindestens:
+
+- Monatsbudget bzw. Planungsrahmen;
+- Warnschwelle;
+- hartes Limit, soweit technisch durchsetzbar;
+- getrennte Kostenrahmen für verpflichtende, bedarfsgesteuerte und optionale KI;
+- Erkennung ungewöhnlicher Nutzung oder Fehlerloops;
+- verständliche Information, welche Funktionen bei Erreichen eines Limits betroffen wären.
+
+Kostensteuerung darf qualitätskritische Pflichtfunktionen nicht stillschweigend auf ein ungeeignetes Billigmodell umleiten.
+
+### Zwei-KI-Prinzip
+
+Die Oberfläche bildet die getrennten Rollen **Primärmodell** und **Review-/Qualitätsmodell** sichtbar ab. Eskalationen und Kontrollstichproben werden getrennt ausgewertet. Der Startwert der Kontrollstichprobe beträgt gemäß KI-Konzept 5 %, bleibt aber administrativ bzw. regelbasiert anpassbar.
+
+## 35. Nächste UI-Schritte
 
 Auf Basis dieses Konzepts werden schrittweise konkretisiert:
 
