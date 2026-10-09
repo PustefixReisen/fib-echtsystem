@@ -1189,7 +1189,92 @@ Das Referenzsystem folgt einem zurückhaltenden Pflegeprinzip:
 
 KI darf neue Referenzobjekte, Beziehungen oder Maßstäbe vorschlagen. Fachlich wirksam werden sie erst nach Bestätigung durch einen berechtigten Menschen. Änderungen und Rücknahmen werden historisiert bzw. auditiert.
 
-## 36. Nächste UI-Schritte
+## 36. Administration – System
+
+Der Bereich **System** bündelt die betriebliche Systemkonfiguration und den Zustand technischer Abhängigkeiten. Er dient der Administration und Diagnose, nicht der täglichen redaktionellen Arbeit.
+
+### Struktur
+
+Die Ansicht trennt mindestens:
+
+- **Dienste & Integrationen** – Datenbank/Auth, Datei- und Bildspeicher, öffentlicher Webserver und weitere angebundene Dienste;
+- **Speicher** – aktiver Storage-Adapter, Erreichbarkeit und letzter erfolgreicher Zugriff;
+- **Veröffentlichung & Deployment** – Zielsystem, letzter erfolgreicher Release und aktueller Deploy-Zustand;
+- **Backup & Wiederherstellung** – letzter Sicherungsstand und Stand des letzten Restore-Tests;
+- **Systemparameter** – technische, nicht fachliche Konfigurationen und Umgebungsinformationen.
+
+### Systemübersicht
+
+Die Startansicht zeigt nur administrativen Handlungsbedarf und wenige zentrale Zustände:
+
+- Datenbank/Fachservices erreichbar;
+- Storage erreichbar;
+- öffentlicher Webstand vorhanden und letzter Deploy erfolgreich;
+- Backup aktuell;
+- Restore-Test nicht überfällig;
+- ggf. Integrations- oder Konfigurationsfehler.
+
+Erfolgreiche Routinevorgänge werden kompakt dargestellt. Vollständige technische Laufdaten bleiben unter **Tasks & Läufe**.
+
+### Dienste & Integrationen
+
+Je Integration werden mindestens angezeigt:
+
+- Bezeichnung;
+- Funktion im FIB-System;
+- Umgebung;
+- Betriebsstatus;
+- Zeitpunkt der letzten erfolgreichen Prüfung;
+- Verbindungstyp bzw. Adapter;
+- ggf. Handlungsbedarf.
+
+### Speicher
+
+Der Dateispeicher bleibt über den in der Zielarchitektur vorgesehenen Storage-Adapter austauschbar.
+
+Die Systemansicht zeigt insbesondere:
+
+- aktuell verwendeten Storage-Typ;
+- Betriebsstatus;
+- letzte erfolgreiche Verbindung;
+- ggf. Speicherort-/Mandantenbezeichnung;
+- Sicherungsstatus;
+- technische Hinweise.
+
+Nextcloud kann dabei ein konkreter Storage sein, ist aber keine fest verdrahtete Voraussetzung des FIB-Systems.
+
+### Veröffentlichung & Deployment
+
+Angezeigt werden mindestens:
+
+- Zielumgebung;
+- letzter erfolgreicher Release;
+- Releasekennung;
+- letzter Deploy-Zeitpunkt;
+- aktueller Zustand;
+- ggf. letzter fehlgeschlagener Deploy mit Verweis auf **Tasks & Läufe**.
+
+Ein fehlgeschlagener Deploy darf den letzten funktionierenden öffentlichen Stand nicht ersetzen.
+
+### Backup & Wiederherstellung
+
+Die Systemansicht zeigt verdichtete Betriebsinformationen:
+
+- letzter erfolgreicher Datenbank-Sicherungsstand;
+- letzter erfolgreicher Dateisicherungsstand;
+- letzter Restore-Test;
+- nächster bzw. fälliger Restore-Test;
+- Warnung bei überschrittenen Schwellenwerten.
+
+Konkrete Backup-Läufe und Fehlerdetails werden unter **Tasks & Läufe** geöffnet.
+
+### Systemparameter
+
+Systemparameter sind technische Konfigurationen, keine fachlichen Regeln. Fachliche Schwellenwerte und Statusregeln bleiben im **Referenzsystem**, KI-Routing unter **KI & Kosten**.
+
+Sicherheitsrelevante Systemänderungen sind geschützte Adminaktionen und werden auditiert.
+
+## 37. Nächste UI-Schritte
 
 Auf Basis dieses Konzepts werden schrittweise konkretisiert:
 
