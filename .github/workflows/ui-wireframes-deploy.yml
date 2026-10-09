@@ -42,7 +42,9 @@ jobs:
                 set net:reconnect-interval-base 5;
                 set net:reconnect-interval-max 20;
                 set sftp:auto-confirm yes;
-                mkdir -p wireframes;
+                set cmd:fail-exit no;
+                mkdir wireframes;
+                set cmd:fail-exit yes;
                 mirror --reverse --delete --verbose docs/ui-wireframes/ wireframes/;
                 bye;
               '; then
