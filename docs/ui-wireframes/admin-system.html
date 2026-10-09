@@ -1,0 +1,30 @@
+<!doctype html><html lang="de"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>FIB – System</title><link rel="stylesheet" href="style.css">
+<style>
+.sysgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:14px 0}
+.syscard{background:#fff;border:1px solid #dce3e7;border-radius:12px;padding:14px}
+.syscard h2{margin:0 0 8px;font-size:15px}
+@media(max-width:850px){.sysgrid{grid-template-columns:1fr}}
+</style></head><body><main class="page">
+<div class="crumb">Administration › System</div>
+<h1>System</h1>
+<div class="meta">Betriebszustand, Integrationen, Speicher, Veröffentlichung und Wiederherstellbarkeit.</div>
+
+<div class="assistant"><b>Administrativer Handlungsbedarf</b><br>Keine kritischen Störungen. Restore-Test demnächst fällig.</div>
+
+<div class="sysgrid">
+<div class="syscard"><h2>Datenbank & Fachservices</h2><div><span class="ok status">Betriebsbereit</span></div><div class="meta">Letzte Prüfung: heute 17:54 · Umgebung: Pilot</div><div class="actions"><button class="btn">Öffnen</button></div></div>
+<div class="syscard"><h2>Datei- & Bildspeicher</h2><div><span class="ok status">Erreichbar</span></div><div class="meta">Storage-Adapter: Nextcloud · Letzter Zugriff: heute 17:51</div><div class="actions"><button class="btn">Öffnen</button></div></div>
+<div class="syscard"><h2>Öffentliche Veröffentlichung</h2><div><span class="ok status">Letzter Deploy erfolgreich</span></div><div class="meta">Release: 2026-10-09-4 · Ziel: öffentlicher Webserver</div><div class="actions"><button class="btn">Öffnen</button></div></div>
+<div class="syscard"><h2>Backup & Wiederherstellung</h2><div><span class="status">Prüfung demnächst fällig</span></div><div class="meta">DB-Sicherung: heute 03:12 · Restore-Test: 21.09.2026</div><div class="actions"><button class="btn">Öffnen</button></div></div>
+</div>
+
+<h2>Dienste & Integrationen</h2>
+<table class="table">
+<tr><th>Dienst</th><th>Funktion</th><th>Umgebung</th><th>Status</th><th>Letzte Prüfung</th><th></th></tr>
+<tr><td>Supabase</td><td>Datenbank & Auth</td><td>Pilot</td><td><span class="ok status">Betriebsbereit</span></td><td>heute 17:54</td><td><button class="btn">Öffnen</button></td></tr>
+<tr><td>Nextcloud</td><td>Datei-/Bildspeicher</td><td>Pilot</td><td><span class="ok status">Erreichbar</span></td><td>heute 17:51</td><td><button class="btn">Öffnen</button></td></tr>
+<tr><td>Öffentlicher Webserver</td><td>Besuchersystem</td><td>Pilot</td><td><span class="ok status">Betriebsbereit</span></td><td>heute 17:49</td><td><button class="btn">Öffnen</button></td></tr>
+</table>
+
+<div class="assistant"><b>ⓘ Abgrenzung</b><br>Technische Systemparameter werden hier gepflegt. Fachliche Schwellenwerte gehören ins Referenzsystem; KI-Routing und Modellkonfiguration unter KI & Kosten; vollständige Laufdetails unter Tasks & Läufe.</div>
+</main></body></html>
