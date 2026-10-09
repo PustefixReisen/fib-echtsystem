@@ -747,7 +747,50 @@ Verbindlich:
 - Die Liste verwendet die allgemeinen UI-Standards: semantische Tabs, lokale Suche, Filter, kompakte Titel-/Ergebniszeile, Icon-Button und kontextbezogenen FIB-Assistenten.
 - Wirkungsdaten werden später in **Auswertung → Besucher & Wirkung** betrachtet; die Besucherführung selbst bleibt eine Steuerungsansicht.
 
-## 27. Nächste UI-Schritte
+## 27. Auswertung: Besucher & Wirkung
+
+Der Bereich **Besucher & Wirkung** beantwortet, ob FIB tatsächlich genutzt wird, welche Inhalte Interesse auslösen und über welche Wege Besucher erreicht werden. Er dient der redaktionellen Steuerung, nicht der möglichst vollständigen Webanalyse.
+
+Verbindlich:
+
+- Fokus auf wenige verständliche Kennzahlen mit redaktionellem Nutzen;
+- Reichweite und Bindung werden getrennt betrachtet;
+- persönliche und analoge Kontakte zu Multiplikatoren bleiben als eigener Wirkungskanal sichtbar;
+- Datenschutz und Datensparsamkeit haben Vorrang vor detailliertem Nutzertracking;
+- keine personenbezogenen Besucherprofile;
+- Zeiträume und Vergleichswerte müssen eindeutig beschriftet sein;
+- Kennzahlen werden immer mit fachlicher Bedeutung bzw. möglicher redaktioneller Konsequenz verknüpft.
+
+### Kernkennzahlen
+
+**Reichweite**
+- Besuche / Aufrufe im gewählten Zeitraum;
+- erreichte Inhalte bzw. meistgesehene Meldungen/Themen;
+- Zugangswege, z. B. Direktaufruf, geteilte Links, Social, persönliche Kontakte / Multiplikatoren;
+- PWA-Nutzung, soweit datenschutzkonform erfassbar.
+
+**Bindung**
+- wiederkehrende Nutzung;
+- Nutzung von Vertiefungen wie **„Mehr wissen?“**;
+- Wechsel von Meldung zu Vorgang oder Thema;
+- Nutzung von „neu seit letztem Besuch“;
+- wiederholte Nutzung innerhalb eines geeigneten Zeitraums.
+
+**Wirkung**
+- welche Inhalte führen zu weiterer Beschäftigung;
+- welche Kommunikationswege bringen tatsächlich interessierte Besucher;
+- welche Besucherführungs-Hinweise werden genutzt oder ignoriert;
+- analoge Resonanz kann manuell ergänzt werden, z. B. Rückmeldungen aus Vereinen, persönlichen Gesprächen oder Veranstaltungen.
+
+### Darstellung
+
+- Überblick mit wenigen Kennzahlkarten und verständlicher Veränderung zum Vergleichszeitraum;
+- darunter tabellenartige Auswertung nach Inhalt, Kanal oder Besucherführung;
+- keine technische Analytics-Oberfläche im Stil eines Rohdaten-Dashboards;
+- auffällige Veränderungen werden als Hinweis dargestellt, nicht automatisch als Erfolg oder Misserfolg bewertet;
+- der FIB-Assistent kann die sichtbaren Daten erläutern und Hypothesen anbieten, muss Unsicherheiten und geringe Fallzahlen ausdrücklich benennen.
+
+## 28. Nächste UI-Schritte
 
 Auf Basis dieses Konzepts werden schrittweise konkretisiert:
 
