@@ -545,7 +545,33 @@ Damit werden Fachregeln, Rechte, Versionierung, Bestätigungen und Audit unabhä
 
 Direkte technische Datenbankzugriffe sind ausschließlich für technische Betriebsaufgaben wie Migration, Backup, Restore oder Wartung vorgesehen und kein alternativer fachlicher Arbeitsweg.
 
-## 17. Konsolidierte Beziehungsübersicht
+
+## 17. Fachliche Schwellenwert- und Statusregel
+
+Für systemweit konsistente Warn- und Hervorhebungslogik wird ein eigenes fachliches Konfigurationsobjekt **Schwellenwert-/Statusregel** vorgesehen.
+
+Es beschreibt mindestens:
+
+- stabilen Regeltyp bzw. technischen Schlüssel;
+- fachliche Bezeichnung und Beschreibung;
+- Geltungsbereich / Objekttyp;
+- Art der Regel: numerischer Schwellenwert oder semantischer Status;
+- Warnschwelle und kritische Schwelle, soweit numerisch;
+- Einheit;
+- Aktivstatus;
+- Änderungs-/Auditinformationen.
+
+Verbindlich gilt:
+
+- zulässige Regeltypen sind systemseitig definiert;
+- Admins ändern fachliche Parameter, nicht ausführbaren Code oder freie Regeldefinitionen;
+- Listen, Dashboard, Arbeitskorb und Auswertungen verwenden dieselben zentralen Regeln;
+- Änderungen an Regeln werden nachvollziehbar historisiert;
+- semantische Regeln wie „Medienrechte ungeklärt“ können ohne numerischen Grenzwert eine definierte Warnstufe auslösen.
+
+Die konkrete PostgreSQL-Tabelle, Datentypen und Indizes werden im physischen Modell festgelegt.
+
+## 18. Konsolidierte Beziehungsübersicht
 
 ```mermaid
 erDiagram
@@ -582,7 +608,7 @@ erDiagram
 
 Die Darstellung ist fachlich/logisch zu lesen. Ob eine n:m-Beziehung später über eine eigene technische Relationstabelle, eine normalisierte Zuordnung oder eine andere PostgreSQL-Struktur umgesetzt wird, wird erst im physischen Modell entschieden.
 
-## 18. Nach G3 offene technische/physische Modellierungsfragen
+## 19. Nach G3 offene technische/physische Modellierungsfragen
 
 Nach der fachlichen Konsolidierung bleiben keine bekannten offenen G3-Grundsatzfragen zurück.
 
