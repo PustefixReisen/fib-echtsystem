@@ -827,7 +827,49 @@ Die Darstellung folgt einer kompakten tabellenartigen Logik. Sinnvolle Spalten s
 - Veränderung zum Vergleichszeitraum;
 - beobachtbarer Hinweis.
 
-## 29. Nächste UI-Schritte
+## 29. Auswertung: Recherche
+
+Der Bereich **Recherche** zeigt, wie gut die Quellen- und Suchlogik von FIB relevante Sachverhalte findet und wie viel davon tatsächlich redaktionell verwertbar ist.
+
+Verbindlich:
+
+- ausgewählter Zeitraum und klarer Vergleichszeitraum;
+- Fokus auf redaktionell verständliche Qualitätskennzahlen statt technische Laufstatistik;
+- getrennte Betrachtung von **Quellenmonitor**, **offener Recherche** und **Beobachtungsaufträgen**;
+- Kennzahlen werden immer im Zusammenhang mit tatsächlicher redaktioneller Nutzung interpretiert;
+- technische Fehlerdetails bleiben im Admin-Bereich **Tasks & Läufe**.
+
+### Kernkennzahlen
+
+- **Gefundene Funde** im Zeitraum;
+- davon **relevant bestätigt**;
+- davon **nicht relevant**;
+- davon **zurückgestellt / ungeklärt**;
+- aus Funden entstandene **Ereignisse**;
+- daraus entstandene **Meldungen**;
+- Treffer je Rechercheweg bzw. Quelle;
+- Funde ohne redaktionelle Nutzung über längere Zeit;
+- Quellen oder Beobachtungsaufträge mit auffällig geringer oder hoher Ausbeute.
+
+### Qualitätsfragen
+
+Die Auswertung soll insbesondere helfen zu erkennen:
+
+- Finden wir relevante Entwicklungen früh genug?
+- Welche Pflicht- und Regelquellen liefern tatsächlich verwertbare Funde?
+- Welche Beobachtungsaufträge sind zu eng oder zu breit?
+- Wo entstehen viele Funde, aber kaum Ereignisse oder Meldungen?
+- Welche relevanten Entwicklungen wurden erst spät oder über Umwege entdeckt?
+
+### Darstellung
+
+- wenige Kennzahlkarten für den Gesamtüberblick;
+- darunter tabellenartige Auswertung nach Rechercheweg, Quelle oder Beobachtungsauftrag;
+- auffällige Muster werden konkret beschrieben, nicht automatisch bewertet;
+- geringe Fallzahlen werden kenntlich gemacht;
+- der FIB-Assistent kann Muster erläutern und mögliche Anpassungen der Recherchelogik vorschlagen, Änderungen aber nicht ohne redaktionelle Bestätigung ausführen.
+
+## 30. Nächste UI-Schritte
 
 Auf Basis dieses Konzepts werden schrittweise konkretisiert:
 
