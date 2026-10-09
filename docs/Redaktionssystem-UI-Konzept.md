@@ -863,8 +863,8 @@ Die Auswertung soll insbesondere helfen zu erkennen:
 
 ### Darstellung
 
-- wenige Kennzahlkarten für den Gesamtüberblick;
-- darunter tabellenartige Auswertung nach Rechercheweg, Quelle oder Beobachtungsauftrag;
+- auf separate Kennzahlkarten für einen Gesamtüberblick wird verzichtet, wenn dieselben Aussagen in der Auswertung nach Recherchewegen verständlicher und differenzierter sichtbar sind;
+- tabellenartige Auswertung nach Rechercheweg, Quelle oder Beobachtungsauftrag ist die zentrale Darstellung;
 - auffällige Muster werden konkret beschrieben, nicht automatisch bewertet;
 - geringe Fallzahlen werden kenntlich gemacht;
 - der FIB-Assistent kann Muster erläutern und mögliche Anpassungen der Recherchelogik vorschlagen, Änderungen aber nicht ohne redaktionelle Bestätigung ausführen.
