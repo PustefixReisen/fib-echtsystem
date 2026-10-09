@@ -133,6 +133,30 @@ Wirkungen gehören zur Sachinformation. Sie können unterschiedliche oder auch w
 
 Nicht zu verwechseln mit Bewertung. Wirkung beschreibt, was geschieht oder voraussichtlich geschieht; Bewertung beschreibt, wie die GRÜNEN Feldkirchen diese Wirkung politisch einordnen.
 
+### `Referenzobjekt`
+
+**Benutzer-Label in der App:** Referenzobjekt
+
+Ein dauerhaft geführtes FIB-spezifisches Bezugsobjekt mit stabiler fachlicher Identität, das Recherche, Erkennung oder Zuordnung unterstützt. Dazu gehören insbesondere Orte, Räume, Infrastruktur, Projekte oder andere wiederholt benötigte Bezugsobjekte.
+
+Ein Referenzobjekt kann Hauptbezeichnung, Aliase und fachlich nützliche Beziehungen zu anderen Referenzobjekten besitzen.
+
+Beispiele: `B471` mit dem lokalen Alias `Oberndorfer Straße`, `Kiesgrund` oder `Autobahnkreuz München-Ost`.
+
+### `Referenzrahmen`
+
+**Benutzer-Label in der App:** Referenzrahmen
+
+Die geordnete Gesamtheit der dokumentierten Maßstäbe, anhand derer FIB Recherche, Qualitätsprüfung, demokratisch-gesellschaftliche Einordnung und politische Einordnung ausrichtet.
+
+Der Referenzrahmen umfasst insbesondere:
+
+- allgemeine FIB-Qualitätsmaßstäbe,
+- demokratisch-gesellschaftliche Maßstäbe,
+- grün-politische Maßstäbe einschließlich dokumentierter lokaler Positionen.
+
+Ein einzelner fachlicher Maßstab innerhalb dieses Rahmens bleibt ein `Referenzmaßstab`.
+
 ### `Referenzmaßstab`
 
 **Benutzer-Label in der App:** Referenzmaßstab
@@ -149,7 +173,7 @@ FIB unterscheidet dabei drei Ebenen:
 
 Nur Maßstäbe, die für einen konkreten Recherche-, Prüf- oder Bewertungsschritt tatsächlich relevant sind, sollen dort referenziert werden; nicht der gesamte Referenzrahmen.
 
-Nicht zu verwechseln mit Referenzwissen: Referenzwissen hilft, Sachverhalte, Orte, Objekte, Akteure oder Zusammenhänge zu erkennen und zuzuordnen. Ein Referenzmaßstab beschreibt dagegen, **nach welchem Qualitäts-, demokratischen oder politischen Maßstab FIB prüft oder einordnet**.
+Ein Referenzmaßstab ist ein einzelner Bestandteil des **Referenzrahmens**. Referenzobjekte unterstützen dagegen Recherche, Erkennung und Zuordnung konkreter Bezugsobjekte.
 
 ### `Zielbereich`
 

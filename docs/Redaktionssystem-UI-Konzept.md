@@ -1140,13 +1140,13 @@ Der Bereich **Referenzsystem** bündelt dauerhaftes FIB-spezifisches Referenzwis
 
 Die Ansicht trennt drei Sichten:
 
-- **Referenzwissen** – Referenzobjekte, Bezeichnungen/Aliase und fachlich nützliche Beziehungen;
-- **Referenzmaßstäbe** – dokumentierte, versionierte Maßstäbe für Recherche, Relevanzprüfung, Qualität und politische Einordnung;
+- **Referenzobjekte** – stabile Bezugsobjekte, Bezeichnungen/Aliase und fachlich nützliche Beziehungen;
+- **Referenzrahmen** – dokumentierte, versionierte Qualitäts-, demokratisch-gesellschaftliche und politische Maßstäbe;
 - **Schwellenwerte & Statusregeln** – zentral administrierbare Warnschwellen und semantische Statusregeln.
 
-### Referenzwissen
+### Referenzobjekte
 
-Referenzwissen dient dazu, lokale oder FIB-spezifische Zusammenhänge zuverlässig und modellunabhängig verfügbar zu machen. Es enthält insbesondere:
+Referenzobjekte dienen dazu, lokale oder FIB-spezifische Bezugsobjekte und Zusammenhänge zuverlässig und modellunabhängig verfügbar zu machen. Es enthält insbesondere:
 
 - stabile Referenzobjekte, z. B. Orte, Räume, Infrastruktur oder Projekte;
 - Hauptbezeichnungen und Aliase;
@@ -1154,13 +1154,11 @@ Referenzwissen dient dazu, lokale oder FIB-spezifische Zusammenhänge zuverläss
 - Herkunft bzw. Begründung, soweit erforderlich;
 - Status: vorgeschlagen, bestätigt oder nicht mehr gültig/zurückgenommen.
 
-Nur bestätigtes Referenzwissen erweitert den verbindlichen Recherchekontext.
+Nur bestätigte Referenzobjekte und -beziehungen erweitern den verbindlichen Recherchekontext.
 
-Die Oberfläche muss deutlich zwischen **stabiler Identität** und **zeitabhängigem Sachstand** unterscheiden. Planungsstände, Entscheidungen oder Wirkungen gehören nicht in das Referenzwissen, sondern in Ereignisse, Vorgänge oder Themen.
+### Referenzrahmen
 
-### Referenzmaßstäbe
-
-Referenzmaßstäbe werden nach den drei Ebenen geführt:
+Der Referenzrahmen bündelt einzelne Referenzmaßstäbe. Diese werden nach drei Ebenen geführt:
 
 1. allgemeine FIB-Qualitätsmaßstäbe;
 2. demokratisch-gesellschaftliche Maßstäbe;
