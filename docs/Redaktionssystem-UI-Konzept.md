@@ -784,6 +784,17 @@ Verbindlich:
 - persönliche Rückmeldungen können manuell ergänzt werden, z. B. aus Vereinen, persönlichen Gesprächen, Telefonaten oder Veranstaltungen;
 - für persönliche Rückmeldungen wird die Art zahlenmäßig dargestellt, mindestens **Zustimmung**, **Kritik**, **Hinweis** und **Ergänzung**.
 
+### Klartextbezeichnungen der Aktionsstufen
+
+In der normalen Oberfläche werden die technischen Kürzel S0–S3 nicht als primäre Begriffe verwendet. Stattdessen gelten:
+
+- **S0 – Lesen / analysieren**
+- **S1 – Vorschlagen / entwerfen**
+- **S2 – Fachlich wirksam**
+- **S3 – Freigabe- bzw. veröffentlichungswirksam**
+
+Für gemeinsame Filter wird bevorzugt **Wirksame Änderungen** verwendet. Die technischen Kürzel können in Auditdetails ergänzend angezeigt werden.
+
 ### Darstellung
 
 - Überblick mit wenigen Kennzahlkarten und verständlicher Veränderung zum Vergleichszeitraum;
@@ -1301,7 +1312,7 @@ Sinnvolle Filter und Sichten sind:
 - Objektart;
 - Aktionsart;
 - Fachbereich;
-- S2 / S3 / besonders geschützte Adminaktion;
+- Wirksame Änderungen / Veröffentlichungen & Freigaben / besonders geschützte Adminaktion;
 - erfolgreich / abgelehnt / zurückgenommen;
 - nur sicherheitsrelevante Änderungen.
 
