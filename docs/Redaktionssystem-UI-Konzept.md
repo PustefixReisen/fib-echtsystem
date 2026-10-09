@@ -945,7 +945,47 @@ Unter **Administration → Referenzsystem → Schwellenwerte & Statusregeln** st
 
 Beispiel: Für „Wartende Freigabe“ kann fachlich gepflegt werden: neutral bis 3 Tage, gelb ab 4 Tagen, rot ab 8 Tagen. Diese Werte sind **Beispielwerte**, keine allgemein verbindlichen Standardgrenzen für andere Objekttypen.
 
-## 32. Nächste UI-Schritte
+## 32. Administration – Übersicht
+
+Die **Administration** ist Teil derselben Anwendung wie das Redaktionssystem, aber nur für Admins sichtbar. Sie bündelt technische, sicherheitsrelevante und normative Verwaltungsaufgaben, die nicht in den normalen redaktionellen Arbeitsfluss gehören.
+
+### Bereiche
+
+- **Tasks & Läufe** – technische und fachliche Hintergrundverarbeitungen, Fehler, Wiederholungen und Laufhistorie;
+- **KI & Kosten** – Provider, Modelle, Qualitätsklassen, Routing, Nutzung und Kostenkontrolle;
+- **Referenzsystem** – Referenzwissen, fachliche Systemparameter sowie **Schwellenwerte & Statusregeln**;
+- **Benutzer & Rollen** – Benutzer, Rufname, Rolle, Aktivstatus, MFA-/Zugangsstatus;
+- **System** – betriebliche Konfiguration, Integrationen und technische Zustände;
+- **Audit** – nachvollziehbare Änderungen, Freigaben, administrative Eingriffe und sicherheitsrelevante Aktionen.
+
+### Admin-Startansicht
+
+Die Admin-Startansicht ist **kein technisches Monitoring-Dashboard mit Rohlogs**, sondern ein kompakter Überblick über administrativen Handlungsbedarf.
+
+Sie zeigt insbesondere:
+
+- fehlgeschlagene oder blockierte Tasks/Läufe;
+- sicherheits- oder zugangsrelevante Hinweise;
+- ungewöhnliche KI-Kosten oder Budgethinweise;
+- offene bzw. problematische Systemkonfigurationen;
+- fällige Prüfungen im Referenzsystem;
+- aktuelle Audit-Hinweise, soweit administrativ relevant.
+
+Grundsatz:
+
+> **Zuerst administrativen Handlungsbedarf zeigen, Details erst nach Öffnen des jeweiligen Bereichs.**
+
+Erfolgreiche Routinevorgänge und vollständige Protokolle bleiben in den jeweiligen Detailansichten und dominieren die Übersicht nicht.
+
+### Navigation
+
+Die Administration folgt denselben Navigationsprinzipien wie das übrige Redaktionssystem:
+
+> Administration → Bereich → Liste/Auswahl → Detail/Bearbeitung
+
+Direkteinstiege aus Systemhinweisen sind erlaubt. Breadcrumbs bleiben verpflichtend.
+
+## 33. Nächste UI-Schritte
 
 Auf Basis dieses Konzepts werden schrittweise konkretisiert:
 
