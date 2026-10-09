@@ -1,0 +1,44 @@
+name: Deploy UI Wireframes
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'docs/ui-wireframes/**'
+      - '.github/workflows/ui-wireframes-deploy.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ui-wireframes
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install SFTP client
+        run: sudo apt-get update && sudo apt-get install -y lftp
+
+      - name: Deploy wireframes to IONOS
+        env:
+          IONOS_SFTP_HOST: ${{ secrets.IONOS_SFTP_HOST }}
+          IONOS_SFTP_USER: ${{ secrets.IONOS_SFTP_USER }}
+          IONOS_SFTP_PASSWORD: ${{ secrets.IONOS_SFTP_PASSWORD }}
+        run: |
+          lftp \
+            -u "$IONOS_SFTP_USER","$IONOS_SFTP_PASSWORD" \
+            "sftp://$IONOS_SFTP_HOST" \
+            -e '
+              set cmd:fail-exit yes;
+              set net:max-retries 2;
+              set net:timeout 20;
+              set sftp:auto-confirm yes;
+              mkdir -p wireframes;
+              mirror --reverse --delete --verbose docs/ui-wireframes/ wireframes/;
+              bye;
+            '
