@@ -719,7 +719,35 @@ FIB unterscheidet klar:
 - **Bearbeitungssperre** = wer gerade exklusiven Schreibzugriff besitzt;
 - **Historie** = wer welchen konkreten Schritt wann ausgeführt hat.
 
-## 26. Nächste UI-Schritte
+## 26. Veröffentlichung: Besucherführung
+
+Der Bereich **Besucherführung** steuert kontextbezogene Hinweise im öffentlichen FIB. Ziel ist Orientierung und Vertiefung ohne aufdringliche oder wiederholte Ansprache.
+
+Verbindlich:
+
+- Besucherführung basiert auf **Regeln und Ausspielbedingungen**, nicht auf frei schwebenden Marketinghinweisen.
+- Mögliche Anlässe sind insbesondere:
+  - **neu seit letztem Besuch**;
+  - erster oder wiederkehrender Besuch;
+  - Einstieg über einen extern geteilten Link;
+  - bereits erkennbare Nutzung eines Themas oder Vorgangs;
+  - PWA-Angebot nach erkennbarem Interesse;
+  - Hinweise auf passende Vertiefung oder „Mehr wissen?“.
+- Pro Besuch wird grundsätzlich höchstens **ein proaktiver Hinweis** gezeigt.
+- Hinweise besitzen einen **Cooldown**, damit sie nicht bei jedem Aufruf erneut erscheinen.
+- Die Besucherführung darf keine Anmeldung voraussetzen; gerätebezogene Informationen wie „neu seit letztem Besuch“ werden lokal bzw. gerätebezogen behandelt.
+- Jeder Hinweis besitzt mindestens:
+  - Anlass / Ausspielregel;
+  - Zielgruppe bzw. Kontext;
+  - Zielinhalt oder Aktion;
+  - Status;
+  - letzte Änderung;
+  - optionale Laufzeit.
+- Statusbeispiele: **Entwurf**, **Aktiv**, **Pausiert**, **Beendet**, **Hinweis prüfen**.
+- Die Liste verwendet die allgemeinen UI-Standards: semantische Tabs, lokale Suche, Filter, kompakte Titel-/Ergebniszeile, Icon-Button und kontextbezogenen FIB-Assistenten.
+- Wirkungsdaten werden später in **Auswertung → Besucher & Wirkung** betrachtet; die Besucherführung selbst bleibt eine Steuerungsansicht.
+
+## 27. Nächste UI-Schritte
 
 Auf Basis dieses Konzepts werden schrittweise konkretisiert:
 
