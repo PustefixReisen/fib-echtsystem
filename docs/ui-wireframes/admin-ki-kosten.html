@@ -1,0 +1,42 @@
+<!doctype html><html lang="de"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>FIB – KI & Kosten</title><link rel="stylesheet" href="style.css">
+<style>.summary{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:14px 0}@media(max-width:900px){.summary{grid-template-columns:repeat(2,1fr)}}.big{font-size:24px;font-weight:700;margin-top:4px}</style>
+</head><body><main class="page">
+<div class="crumb">Administration › KI & Kosten</div>
+<h1>KI & Kosten</h1>
+<div class="meta">Qualität, Routing und Kosten gemeinsam steuern – provider- und modellunabhängig.</div>
+
+<div class="tabs">
+<button class="tab active">Übersicht</button>
+<button class="tab">Routing</button>
+<button class="tab">Provider &amp; Modelle</button>
+<button class="tab">Budgets &amp; Limits</button>
+</div>
+
+<div class="summary">
+<div class="kpi"><b>Kosten laufender Monat</b><div class="big">6,80 €</div><div class="meta">Planungsrahmen: 15 €</div></div>
+<div class="kpi"><b>Eskalationen</b><div class="big">7 %</div><div class="meta">Primär → Review</div></div>
+<div class="kpi"><b>Kontrollstichprobe</b><div class="big">5 %</div><div class="meta">aktiver Startwert</div></div>
+<div class="kpi"><b>Providerstatus</b><div class="big">2 / 2</div><div class="meta">betriebsbereit</div></div>
+</div>
+
+<div class="assistant"><b>FIB-Assistent · Kontext: KI & Kosten</b><br>
+Zum Beispiel: „Welche Aufgaben verursachen aktuell die meisten Kosten?“, „Wo eskaliert das Primärmodell häufig?“ oder „Welche Routing-Änderung wäre fachlich vertretbar?“</div>
+
+<h2>Kosten nach KI-Kategorie</h2>
+<table class="table">
+<tr><th>Kategorie</th><th>Monat</th><th>Anteil</th><th>Beobachtung</th></tr>
+<tr><td>Verpflichtende Eingangsanalyse</td><td>4,20 €</td><td>62 %</td><td>im erwarteten Bereich</td></tr>
+<tr><td>Bedarfsgesteuerte Recherche</td><td>1,70 €</td><td>25 %</td><td>2 komplexe Recherchen</td></tr>
+<tr><td>Optionale Redaktions-KI</td><td>0,90 €</td><td>13 %</td><td>keine Auffälligkeit</td></tr>
+</table>
+
+<h2>Routing-Ausschnitt</h2>
+<table class="table">
+<tr><th>FIB-Aufgabe</th><th>KI-Bedarf</th><th>Klasse</th><th>Primärmodell</th><th>Review</th><th></th></tr>
+<tr><td>Fundstellenanalyse</td><td>verpflichtend</td><td>B – Analyse</td><td>Modell A</td><td>Modell C</td><td><button class="btn">Öffnen</button></td></tr>
+<tr><td>Ereigniserkennung</td><td>verpflichtend</td><td>B – Analyse</td><td>Modell A</td><td>Modell C</td><td><button class="btn">Öffnen</button></td></tr>
+<tr><td>Komplexe Einordnung</td><td>optional</td><td>C – komplexe Bewertung</td><td>Modell C</td><td>–</td><td><button class="btn">Öffnen</button></td></tr>
+</table>
+
+<div class="note">Beispieldaten zur strukturellen Orientierung. Konkrete Provider, Modelle und Preise werden administrativ konfiguriert und durch FIB-Modelltests abgesichert.</div>
+</main></body></html>
