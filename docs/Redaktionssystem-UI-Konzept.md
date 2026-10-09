@@ -1191,7 +1191,84 @@ Das Referenzsystem folgt einem zurückhaltenden Pflegeprinzip:
 
 KI darf neue Referenzobjekte, Beziehungen oder Maßstäbe vorschlagen. Fachlich wirksam werden sie erst nach Bestätigung durch einen berechtigten Menschen. Änderungen und Rücknahmen werden historisiert bzw. auditiert.
 
-## 36. Nächste UI-Schritte
+## 36. Administration – Benutzer & Rollen
+
+Der Bereich **Benutzer & Rollen** verwaltet interne menschliche FIB-Benutzer. Er dient der Zugangs- und Rollenverwaltung, nicht der Bewertung redaktioneller Leistung.
+
+### Benutzerliste
+
+Die Benutzerliste zeigt mindestens:
+
+- vollständigen Namen;
+- **Rufname** für kompakte Anzeigen in Arbeitskorb, Federführung und Übernahmeanfragen;
+- Login-Kennung;
+- Rolle: Redakteur oder Admin;
+- Kontostatus;
+- MFA-Status;
+- letzte erfolgreiche Anmeldung, soweit betrieblich erforderlich;
+- aktuellen Handlungsbedarf.
+
+Sinnvolle Filter sind:
+
+- Alle;
+- Aktiv;
+- Eingeladen / Einrichtung offen;
+- Deaktiviert;
+- MFA unvollständig;
+- Admins;
+- Redakteure.
+
+### Benutzerstatus
+
+Für interne Benutzer werden in Klartext mindestens unterschieden:
+
+- **Eingeladen** – Zugang angelegt, Einrichtung noch nicht abgeschlossen;
+- **Aktiv** – Zugang und Rolle sind wirksam;
+- **Deaktiviert** – fachliche Schreib- und Veröffentlichungsrechte sind serverseitig entzogen;
+- **Einrichtung erforderlich** – z. B. MFA-Einrichtung noch offen.
+
+Ein noch gültiges Browser-/JWT-Token darf eine Deaktivierung oder einen Rollenentzug nicht überstimmen. S2-/S3-Aktionen prüfen den aktuellen serverseitigen Benutzer- und Rollenstatus.
+
+### Rufname
+
+Der Rufname ist optional. Er dient ausschließlich der kompakten Anzeige im kooperativen Arbeitskontext.
+
+- Benutzerverwaltung und Audit zeigen weiterhin den vollständigen Namen.
+- Arbeitskorb, Federführung und Übernahmeanfragen verwenden bevorzugt den Rufnamen.
+- Fehlt ein Rufname, wird der vollständige Anzeigename verwendet.
+- Der Rufname ist weder Loginname noch Berechtigungsmerkmal.
+
+### Rollenänderung und Deaktivierung
+
+Rollenänderungen, Aktivierung/Deaktivierung und vergleichbare Rechteänderungen sind besonders geschützte Adminaktionen.
+
+Verbindlicher Ablauf:
+
+1. Änderung vorbereiten;
+2. Auswirkung verständlich anzeigen;
+3. ggf. betroffene Rechte benennen;
+4. aktuelle starke Authentifizierung / Step-up prüfen;
+5. ausdrückliche Bestätigung;
+6. serverseitig ausführen;
+7. Audit-Eintrag erzeugen.
+
+### MFA und Zugang
+
+Für Redakteure und Admins ist MFA/TOTP verpflichtend.
+
+Die Benutzeransicht zeigt deshalb mindestens:
+
+- MFA eingerichtet / Einrichtung offen;
+- ggf. ob eine erneute Einrichtung administrativ angestoßen werden muss;
+- ob der Benutzer derzeit zugangsberechtigt ist.
+
+Passwörter, TOTP-Geheimnisse oder Recovery-Secrets werden niemals angezeigt. Technische Authentifizierungsdetails werden nur soweit gezeigt, wie sie für eine konkrete Adminentscheidung erforderlich sind.
+
+### Neue Benutzer
+
+Die Aktion **Neuer Benutzer** legt keinen fachlich aktiven Zugang ohne kontrollierte Einrichtung an. Der neue Benutzer erhält einen definierten Einrichtungs-/Einladungsprozess; Rolle und Aktivstatus müssen nachvollziehbar gesetzt werden. Ein Adminzugang darf nicht versehentlich als Standardrolle entstehen.
+
+## 37. Nächste UI-Schritte
 
 Auf Basis dieses Konzepts werden schrittweise konkretisiert:
 
