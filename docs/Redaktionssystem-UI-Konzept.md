@@ -910,10 +910,42 @@ Die Auswertung soll insbesondere helfen zu erkennen:
 - konkrete beobachtbare Aussagen statt Werturteile, zum Beispiel „5 Freigaben warten länger als 7 Tage“ oder „3 Funde ohne Federführung“;
 - zentrale Darstellung nach Arbeitsschritt bzw. Entscheidungstyp;
 - auffällige Liegezeiten werden hervorgehoben;
+- **Alter offener Arbeit** wird bevorzugt als kompaktes Balkendiagramm nach Altersklassen dargestellt (z. B. 0–2, 3–7, 8–14, 15–30, >30 Tage);
 - geringe Fallzahlen werden kenntlich gemacht;
 - der FIB-Assistent kann Muster erläutern und organisatorische Verbesserungen vorschlagen, führt aber keine Änderungen ohne Bestätigung aus.
 
-## 31. Nächste UI-Schritte
+
+## 31. Zentrale Schwellenwerte und Statusregeln
+
+Farbige Hervorhebungen und Warnstufen werden **nicht dezentral in einzelnen Listen oder Komponenten hart codiert**. Sie werden aus zentral gepflegten fachlichen Regeln abgeleitet und gelten systemweit für Dashboard, Arbeitskorb, Listen und Auswertungen.
+
+### Grundsätze
+
+- die semantische Bedeutung der Farben ist fest: neutral = kein besonderer Hinweis, gelb/orange = Aufmerksamkeit, rot = kritischer Handlungsbedarf, grün = positiver/erledigter Zustand;
+- Farbe ist nie alleiniger Informationsträger; Text, Status oder Symbol bleibt zusätzlich sichtbar;
+- numerische Grenzwerte werden zentral gepflegt, z. B. Alter eines offenen Fundes, Wartezeit einer Freigabe oder Zeit seit letzter Quellenprüfung;
+- semantische Regeln ohne Zahlenwert bleiben davon getrennt, z. B. „Medienrechte ungeklärt“ oder „Prüfung fehlgeschlagen“;
+- dieselbe Regel liefert in allen Ansichten dieselbe Warnstufe;
+- zulässige Regeltypen werden durch das System vorgegeben; Admins pflegen nur fachliche Parameter und dürfen keine beliebige technische Logik definieren;
+- Änderungen sind zu historisieren/auditieren.
+
+### Administration
+
+Unter **Administration → Referenzsystem → Schwellenwerte & Statusregeln** steht eine Admin-Tabelle zur Verfügung. Sie enthält mindestens:
+
+- Regel / Bezeichnung;
+- Objekt bzw. Bereich;
+- Kennzahl oder Regeltyp;
+- Warnschwelle (gelb/orange), soweit numerisch;
+- kritische Schwelle (rot), soweit numerisch;
+- Einheit, z. B. Tage oder Anzahl;
+- Aktiv/Inaktiv;
+- verständliche Beschreibung der Wirkung;
+- Änderungsinformation.
+
+Beispiel: Für „Wartende Freigabe“ kann fachlich gepflegt werden: neutral bis 3 Tage, gelb ab 4 Tagen, rot ab 8 Tagen. Diese Werte sind **Beispielwerte**, keine allgemein verbindlichen Standardgrenzen für andere Objekttypen.
+
+## 32. Nächste UI-Schritte
 
 Auf Basis dieses Konzepts werden schrittweise konkretisiert:
 
