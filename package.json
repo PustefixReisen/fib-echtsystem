@@ -8,10 +8,12 @@
   ],
   "scripts": {
     "typecheck": "tsc -p tsconfig.base.json --noEmit",
-    "test:fachservices": "tsx tests/run-fachservices.ts"
+    "test:fachservices": "tsx tests/run-fachservices.ts",
+    "typecheck:core": "tsc -p tsconfig.core-services.json --noEmit"
   },
   "devDependencies": {
     "typescript": "^5.9.0",
-    "tsx": "^4.20.0"
+    "tsx": "^4.20.0",
+    "@types/node": "^24.0.0"
   }
 }
