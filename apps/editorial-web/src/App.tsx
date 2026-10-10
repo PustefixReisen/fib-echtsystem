@@ -3,6 +3,15 @@ import { supabase } from './supabase.js';
 
 type AuthState = 'signed_out' | 'aal1_no_factor' | 'aal1_factor_available' | 'aal2';
 
+type CoordinationState = {
+  lead: { userId: string; displayName: string; mine: boolean } | null;
+  lock: { userId: string; displayName: string; expiresAt: string; mine: boolean } | null;
+};
+
+type CoordinationResult =
+  | { ok: true; state: CoordinationState }
+  | { ok: false; error: string; state?: CoordinationState };
+
 type EventResult = {
   ok: true;
   event: {
@@ -27,6 +36,9 @@ export function App() {
   const [eventResult, setEventResult] = useState<EventResult['event'] | null>(null);
   const [serviceError, setServiceError] = useState<string | null>(null);
   const [serviceRunning, setServiceRunning] = useState(false);
+  const [coordination, setCoordination] = useState<CoordinationState | null>(null);
+  const [coordinationMessage, setCoordinationMessage] = useState<string | null>(null);
+  const [coordinationRunning, setCoordinationRunning] = useState(false);
 
   async function refreshAuthState() {
     const { data: sessionData } = await supabase.auth.getSession();
@@ -36,6 +48,8 @@ export function App() {
       setQrCode(null);
       setEventResult(null);
       setServiceError(null);
+      setCoordination(null);
+      setCoordinationMessage(null);
       return;
     }
 
@@ -155,11 +169,53 @@ export function App() {
     setEventResult(data.event);
   }
 
+  async function runCoordinationAction(action: 'get_state' | 'take_lead' | 'release_lead' | 'acquire_lock' | 'release_lock') {
+    setCoordinationRunning(true);
+    setCoordinationMessage(null);
+
+    const { data, error } = await supabase.functions.invoke<CoordinationResult>('fib-coordination', {
+      body: {
+        action,
+        objectType: 'event',
+        objectId: LIVE_TEST_EVENT_ID,
+      },
+    });
+
+    setCoordinationRunning(false);
+
+    if (error) {
+      setCoordinationMessage(error.message || 'Koordinationsfunktion konnte nicht aufgerufen werden.');
+      return;
+    }
+
+    if (!data?.ok) {
+      setCoordination(data?.state ?? null);
+      setCoordinationMessage(
+        data?.error === 'locked_by_other'
+          ? 'Bearbeitung derzeit durch eine andere Person gesperrt.'
+          : 'Koordinationsaktion konnte nicht ausgeführt werden.',
+      );
+      return;
+    }
+
+    setCoordination(data.state);
+    const messages: Record<typeof action, string> = {
+      get_state: 'Koordinationsstatus aktualisiert.',
+      take_lead: 'Federführung übernommen.',
+      release_lead: 'Federführung abgegeben.',
+      acquire_lock: 'Bearbeitungssperre gesetzt.',
+      release_lock: 'Bearbeitungssperre freigegeben.',
+    };
+    setCoordinationMessage(messages[action]);
+  }
+
   async function logout() {
     await supabase.auth.signOut();
     setMessage('');
     setEventResult(null);
     setServiceError(null);
+    setCoordination(null);
+    setCoordinationMessage(null);
   }
 
   return (
@@ -227,6 +283,41 @@ export function App() {
             </div>
           )}
           {serviceError && <p><strong>Live-Test fehlgeschlagen:</strong> {serviceError}</p>}
+
+          <hr style={{ margin: '2rem 0' }} />
+          <h2 style={{ fontSize: '1.15rem' }}>Redaktionelle Koordination</h2>
+          <p style={{ marginBottom: '.75rem' }}>
+            Testobjekt: <strong>{eventResult?.title ?? 'FIB-Testereignis'}</strong>
+          </p>
+
+          <div style={{ display: 'grid', gap: '.5rem', gridTemplateColumns: '1fr 1fr' }}>
+            <button onClick={() => runCoordinationAction('get_state')} disabled={coordinationRunning}>
+              Status laden
+            </button>
+            <button onClick={() => runCoordinationAction(coordination?.lead?.mine ? 'release_lead' : 'take_lead')} disabled={coordinationRunning}>
+              {coordination?.lead?.mine ? 'Federführung abgeben' : 'Federführung übernehmen'}
+            </button>
+            <button onClick={() => runCoordinationAction(coordination?.lock?.mine ? 'release_lock' : 'acquire_lock')} disabled={coordinationRunning}>
+              {coordination?.lock?.mine ? 'Bearbeitung beenden' : 'Bearbeitung starten'}
+            </button>
+          </div>
+
+          <div style={{ marginTop: '1rem', padding: '1rem', border: '1px solid #ccc', borderRadius: 8 }}>
+            <p style={{ marginTop: 0 }}>
+              <strong>Federführung:</strong>{' '}
+              {coordination?.lead ? (coordination.lead.mine ? 'Du' : coordination.lead.displayName) : 'niemand'}
+            </p>
+            <p style={{ marginBottom: 0 }}>
+              <strong>Bearbeitung:</strong>{' '}
+              {coordination?.lock
+                ? coordination.lock.mine
+                  ? 'von dir gesperrt'
+                  : `gesperrt durch ${coordination.lock.displayName}`
+                : 'frei'}
+            </p>
+          </div>
+
+          {coordinationMessage && <p aria-live="polite">{coordinationMessage}</p>}
         </section>
       )}
 
