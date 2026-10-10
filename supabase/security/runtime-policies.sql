@@ -29,6 +29,15 @@ create policy fib_runtime_all on fib.findings
 create policy fib_runtime_all on fib.event_findings
   for all to fib_runtime using (true) with check (true);
 
+create policy fib_runtime_all on fib.lead_responsibilities
+  for all to fib_runtime using (true) with check (true);
+
+create policy fib_runtime_all on fib.edit_locks
+  for all to fib_runtime using (true) with check (true);
+
+create policy fib_runtime_all on fib.handover_requests
+  for all to fib_runtime using (true) with check (true);
+
 create index if not exists idx_fib_events_merged_into_event_id
   on fib.events (merged_into_event_id)
   where merged_into_event_id is not null;

@@ -51,3 +51,17 @@ Die technische Sicherheitsgrenze wurde gegen das reale Shared-Apps-Projekt gepr�
 Für einen vollständigen realen Browser-/Session-End-to-End-Test muss der erste Admin zusätzlich einen verifizierten MFA-Faktor besitzen, damit der Auth-Kontext `aal2` erreicht. Dieser Schritt erfolgt über den normalen Supabase-Auth-MFA-Flow des Benutzers; MFA-Secrets werden nicht administrativ in der Datenbank erzeugt oder im Repository abgelegt.
 
 Die weiteren Fachfunktionen aus `docs/MVP-Fachfunktionen.md` werden schrittweise auf dieselbe gemeinsame Schranke aufgesetzt. Frontends dürfen keine eigene, abweichende Autorisierungslogik etablieren.
+
+## Koordination und Benutzerverwaltung
+
+Der erste kooperative Schreibpfad ist fachservice-seitig vorbereitet:
+
+- Federführung als organisatorische Zuordnung,
+- pessimistische Bearbeitungssperre ab erstem Bearbeitungsversuch,
+- Lock-Erneuerung und reguläre Freigabe,
+- Admin-Force-Release nur mit Step-up-MFA und Audit,
+- Übernahmeanfragen ohne automatische Zuständigkeitsänderung,
+- Benutzerprofil mit vollständigem Namen, Rufname, Rolle, Aktiv- und Setup-Status,
+- Benutzerdeaktivierung als geschützte Adminaktion.
+
+Die SQL-Arbeitsgrundlage liegt in `supabase/schema/core.sql`; die produktive DB-Migration erfolgt kontrolliert nach Review dieses Implementierungsschritts.

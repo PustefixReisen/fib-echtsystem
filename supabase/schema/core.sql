@@ -36,8 +36,12 @@ alter default privileges for role postgres in schema fib
 -- -----------------------------------------------------------------------------
 create table if not exists fib.app_users (
   user_id uuid primary key references auth.users(id) on delete restrict,
+  full_name text not null default '',
+  call_name text,
   role text not null check (role in ('editor', 'admin')),
   active boolean not null default true,
+  setup_status text not null default 'setup_pending'
+    check (setup_status in ('invited', 'setup_pending', 'active', 'deactivated')),
   created_at timestamptz not null default now(),
   updated_at timestamptz not null default now()
 );
@@ -182,6 +186,50 @@ create table if not exists fib.event_findings (
   primary key (event_id, finding_id)
 );
 
+
+-- -----------------------------------------------------------------------------
+-- Redaktionelle Koordination: Federführung, Bearbeitungssperren, Übernahmeanfragen
+-- -----------------------------------------------------------------------------
+create table if not exists fib.lead_responsibilities (
+  object_type text not null check (object_type in ('finding', 'event', 'message', 'process', 'topic')),
+  object_id uuid not null,
+  user_id uuid not null references fib.app_users(user_id) on delete restrict,
+  assigned_at timestamptz not null default now(),
+  primary key (object_type, object_id)
+);
+
+create table if not exists fib.edit_locks (
+  object_type text not null check (object_type in ('finding', 'event', 'message', 'process', 'topic')),
+  object_id uuid not null,
+  user_id uuid not null references fib.app_users(user_id) on delete restrict,
+  acquired_at timestamptz not null default now(),
+  renewed_at timestamptz not null default now(),
+  expires_at timestamptz not null,
+  primary key (object_type, object_id),
+  check (expires_at > renewed_at)
+);
+
+create table if not exists fib.handover_requests (
+  id uuid primary key default gen_random_uuid(),
+  object_type text not null check (object_type in ('finding', 'event', 'message', 'process', 'topic')),
+  object_id uuid not null,
+  requested_by_user_id uuid not null references fib.app_users(user_id) on delete restrict,
+  requested_user_id uuid not null references fib.app_users(user_id) on delete restrict,
+  message text,
+  status text not null default 'open'
+    check (status in ('open', 'accepted', 'declined', 'done', 'void')),
+  created_at timestamptz not null default now(),
+  responded_at timestamptz,
+  check (requested_by_user_id <> requested_user_id)
+);
+
+create index if not exists idx_fib_lead_responsibilities_user
+  on fib.lead_responsibilities (user_id);
+create index if not exists idx_fib_edit_locks_expires_at
+  on fib.edit_locks (expires_at);
+create index if not exists idx_fib_handover_requests_recipient_status
+  on fib.handover_requests (requested_user_id, status, created_at desc);
+
 -- -----------------------------------------------------------------------------
 -- Indizes
 -- -----------------------------------------------------------------------------
@@ -220,6 +268,9 @@ alter table fib.event_topics enable row level security;
 alter table fib.sources enable row level security;
 alter table fib.findings enable row level security;
 alter table fib.event_findings enable row level security;
+alter table fib.handover_requests enable row level security;
+alter table fib.edit_locks enable row level security;
+alter table fib.lead_responsibilities enable row level security;
 
 revoke all on all tables in schema fib from anon, authenticated, service_role;
 revoke all on all sequences in schema fib from anon, authenticated, service_role;

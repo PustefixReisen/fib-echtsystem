@@ -123,7 +123,11 @@ Parallel gilt für Storage gemäß ADR-011:
 - normaler FIB-Anwendungszugang erhält keinen Schreib-/Löschzugriff auf Backup-Dateien,
 - DB speichert logische Storage-Referenzen statt fest verdrahteter Nextcloud-URLs.
 
-### U1.4 Operative Vollständigkeit der Fachbereiche – querschnittlicher Gate
+### U1.4 Koordination/Benutzer – Implementierung begonnen
+
+Auf Basis des fachlichen Vertrags sind SQL-Strukturen und Fachservices für Benutzerprofil, Federführung, Bearbeitungssperren und Übernahmeanfragen vorbereitet. Vor Anwendung auf der produktiven Shared-Apps-Datenbank folgen Review, kontrollierte Migration und Integrationstests.
+
+### U1.5 Operative Vollständigkeit der Fachbereiche – querschnittlicher Gate
 
 Recherche-/Relevanzregeln werden als versionierter operativer Regelbestand umgesetzt. U4 muss sowohl Bewertungswirkung auf bekannten Fällen als auch Entdeckungswirkung durch Probe-Recherche unterstützen; U6 übernimmt die Abnahme gegen den Testkorpus.
 
