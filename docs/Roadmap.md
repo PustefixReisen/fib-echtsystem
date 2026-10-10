@@ -36,7 +36,7 @@ Es gelten die zentralen Status aus `PustefixReisen/pustivo/docs/governance/Dokum
 | G9 Migration | **Abgeschlossen** | Migrationsstrategie und ausführbares Runbook festgelegt; Umzug auf GRÜNEN-Infrastruktur ist optional, nicht zwingend |
 | G10 Go-live-Abnahme | **Abgeschlossen** | messbare Abnahmekriterien und harte Go-live-Blocker festgelegt |
 | Gründungsaudit | **Abgeschlossen** | G1–G10 übergreifend geprüft; keine blockierende Grundsatzfrage offen |
-| Umsetzungs-Vollständigkeitsaudit | **In Arbeit** | dokumentierte Fachregeln systematisch gegen Datenhaltung, Fachfunktionen, Ausführung/UI, Tests und Umsetzungsphase spiegeln; erkannte Lücken vor Umsetzung des jeweiligen Fachbereichs schließen |
+| Umsetzungs-Vollständigkeitsaudit | **In Arbeit** | erste Gesamtprüfung abgeschlossen; G2.5-Status bereinigt; Koordination/Benutzer in PR #45 fachlich operationalisiert; weitere rote/gelbe Befunde fachbereichsweise schließen |
 
 ## 2. Umsetzungsphasen
 
