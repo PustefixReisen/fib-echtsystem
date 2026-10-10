@@ -1,6 +1,7 @@
 const modules = [
   './fachservices/authenticated-get-event.spec.ts',
   './fachservices/coordination.spec.ts',
+  './fachservices/editorial-write.spec.ts',
   './fachservices/mfa.spec.ts',
   './fachservices/user-management.spec.ts',
 ];
