@@ -36,6 +36,7 @@ Es gelten die zentralen Status aus `PustefixReisen/pustivo/docs/governance/Dokum
 | G9 Migration | **Abgeschlossen** | Migrationsstrategie und ausführbares Runbook festgelegt; Umzug auf GRÜNEN-Infrastruktur ist optional, nicht zwingend |
 | G10 Go-live-Abnahme | **Abgeschlossen** | messbare Abnahmekriterien und harte Go-live-Blocker festgelegt |
 | Gründungsaudit | **Abgeschlossen** | G1–G10 übergreifend geprüft; keine blockierende Grundsatzfrage offen |
+| Umsetzungs-Vollständigkeitsaudit | **In Arbeit** | dokumentierte Fachregeln systematisch gegen Datenhaltung, Fachfunktionen, Ausführung/UI, Tests und Umsetzungsphase spiegeln; erkannte Lücken vor Umsetzung des jeweiligen Fachbereichs schließen |
 
 ## 2. Umsetzungsphasen
 
@@ -122,6 +123,14 @@ Parallel gilt für Storage gemäß ADR-011:
 - normaler FIB-Anwendungszugang erhält keinen Schreib-/Löschzugriff auf Backup-Dateien,
 - DB speichert logische Storage-Referenzen statt fest verdrahteter Nextcloud-URLs.
 
+### U1.4 Operative Vollständigkeit der Fachbereiche – querschnittlicher Gate
+
+Vor Implementierung eines Fachbereichs in U2–U4 wird anhand von `docs/Umsetzungs-Vollstaendigkeitsaudit.md` geprüft:
+
+`Fachregel → operative Speicherung → Fachfunktion → Auslöser/KI-Kontext → UI/Arbeitsprozess → Rechte/Audit → Test → Umsetzungsphase`.
+
+Offene rote Befunde sind für den jeweils betroffenen Fachbereich vor dessen Umsetzung zu schließen. Die technische U1-Basis kann parallel weitergeführt werden.
+
 ## 4. Verbindliche Abschlussquellen der Gründung und Architekturkonkretisierung
 
 - `docs/Projektgruendung.md` v1.5
@@ -136,6 +145,7 @@ Parallel gilt für Storage gemäß ADR-011:
 - `docs/Migrations-Runbook.md` v1.0
 - `docs/Go-live-Abnahmekriterien.md` v1.0
 - `docs/Regressionstests-Demonstratortransfer.md`
+- `docs/Umsetzungs-Vollstaendigkeitsaudit.md`
 - Architekturentscheidungen unter `docs/decisions/`, insbesondere ADR-011
 
 ## 5. Offene, aber nicht blockierende Folgepunkte
