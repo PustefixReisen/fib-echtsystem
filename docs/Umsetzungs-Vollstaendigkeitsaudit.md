@@ -4,6 +4,7 @@
 
 | Version | Stand | Status |
 |---|---|---|
+| 0.2 | 10.10.2026 | G2.5-Statusinkonsistenz bereinigt; UV-006 bis UV-010 nach PR #45 von rot auf gelb gesetzt, da fachliche Operationalisierung erfolgt und nur technische Umsetzung/Tests offen bleiben. |
 | 0.1 | 10.10.2026 | erste systematische Prüfung |
 
 ## 1. Zweck
@@ -47,11 +48,11 @@ Es handelt sich überwiegend nicht um fehlende Fachideen, sondern um fehlende Ve
 | UV-003 | Redaktionell eingebrachte Quellen/Dateien ohne öffentliche URL | Quelle/Fundstelle, Speicherort, Sichtbarkeit und Rechte sind modelliert | register_finding + manage_finding_access vorhanden | konkreter Einstieg „Quelle/Datei hinzufügen“ ist im UI-Konzept nicht ausreichend explizit | U2/U4 End-to-End-Test mit internem PDF ergänzen | **GELB** |
 | UV-004 | Beobachtungsaufträge | Beobachtungsauftrag + Recherchelauf modelliert | manage_observation_task + run_research | Recherche-UI vorhanden | U2/U4 zugeordnet, Roadmap sollte Objekt explizit nennen | **GELB** |
 | UV-005 | Offene Fragen / Wissenslücken | eigenes Datenobjekt vorhanden | manage_open_question vorhanden | fachlich beschrieben; im U2-Umfang nicht ausdrücklich genannt | Regression vorhanden/erweiterbar | **GELB** |
-| UV-006 | Federführung | im UI-Konzept verbindlich, aber im kanonischen Datenmodell nicht als eigenes operatives Merkmal verankert | keine explizite Fachfunktion | detailliert im UI-Konzept | kein eigener Test in Umsetzungsplanung | **ROT** |
-| UV-007 | Letzte Bearbeitung / Bearbeitungssperre / Lock | UI-Regeln vorhanden; physische/operative Datenstruktur und Lebenszyklus noch nicht vollständig im Datenmodell beschrieben | keine explizite Lock-Fachfunktion | detailliert im UI-Konzept | Konkurrenz-/Timeout-/Admin-Clear-Tests fehlen als Umsetzungsauftrag | **ROT** |
-| UV-008 | Übernahmeanfrage zwischen Redakteuren | UI-Ablauf inkl. Mail/Protokollierung beschrieben | keine eigene Fachfunktion | UI-Konzept vorhanden | Datenhaltung, Mailauslösung und Test fehlen | **ROT** |
-| UV-009 | Rufname | UI-/Benutzerkonzept vorhanden; app_users existiert technisch, kanonische fachliche Modellierung ist unvollständig | Benutzerverwaltungsfunktionen fehlen im MVP-Funktionskatalog | Benutzer & Rollen noch nicht vollständig ins Repository nachgezogen | U2/Admin-Test fehlt | **ROT** |
-| UV-010 | Benutzer anlegen/einladen/deaktivieren/löschen | app_users + Supabase Auth vorgesehen | explizite Admin-Fachfunktionen fehlen | Konzept abgestimmt, aber noch kein vollständiger UI-/Wireframe-Stand im Repository | Rollen-/Historien-/MFA-/Löschtests ergänzen | **ROT** |
+| UV-006 | Federführung | in PR #45 als operatives Koordinationsmerkmal im Datenmodell ergänzt | `manage_lead_responsibility` in PR #45 | UI-Regeln + Objektanzeige vorhanden | physische DB-Abbildung und Tests folgen in U1/U2 | **GELB – fachliche Lücke durch PR #45 geschlossen** |
+| UV-007 | Letzte Bearbeitung / Bearbeitungssperre / Lock | in PR #45 fachlich modelliert; physische DB-Abbildung folgt | Acquire/Renew/Release/Force-Release in PR #45 | detailliert im UI-Konzept | Konkurrenz-/Timeout-/Admin-Clear-Tests in U1/U2 noch umzusetzen | **GELB – fachliche Lücke durch PR #45 geschlossen** |
+| UV-008 | Übernahmeanfrage zwischen Redakteuren | in PR #45 als eigenes Koordinationsobjekt modelliert | `request_handover` / `respond_handover` in PR #45 | UI-Ablauf vorhanden | physische Speicherung, Mailauslösung und Tests folgen in U2 | **GELB – fachliche Lücke durch PR #45 geschlossen** |
+| UV-009 | Rufname | in PR #45 im FIB-Benutzermodell ergänzt | über `manage_app_user` pflegbar | Benutzer-&-Rollen-UI + Wireframe in PR #45 | DB-Spalte und U2/Admin-Test folgen | **GELB – fachliche Lücke durch PR #45 geschlossen** |
+| UV-010 | Benutzer anlegen/einladen/deaktivieren/löschen | Benutzerlebenszyklus in PR #45 fachlich ergänzt; `app_users` technisch vorhanden | `manage_app_user`, `deactivate_app_user`, `delete_app_user` in PR #45 | vollständiger UI-/Wireframe-Stand in PR #45 | technische Auth-Orchestrierung und Rollen-/Historien-/MFA-/Löschtests folgen | **GELB – fachliche Lücke durch PR #45 geschlossen** |
 | UV-011 | Referenzobjekte / Referenzrahmen | Datenmodell verwendet teilweise ältere Begriffe Referenzwissen/Referenzmaßstab | Fachfunktionen verwenden ebenfalls ältere Begriffe | UI verwendet neue Begriffe | Terminologie und Objektabbildung synchronisieren | **GELB** |
 | UV-012 | Schwellenwerte & Statusregeln | eigenes Fachobjekt vorhanden | Pflege-/Aktivierungsfunktion im MVP-Katalog nicht ausdrücklich ausgewiesen | Admin-UI vorhanden | Audit-/Versionstest nötig | **GELB** |
 | UV-013 | Kommunikation | detaillierter UI-Bereich vorhanden | kein klarer Fachfunktionsvertrag | UI vorhanden | Roadmap/Datenhaltung offen | **ROT – Klassifikation erforderlich:** operative FIB-Funktion oder nur redaktionelle Arbeitshilfe |
@@ -65,11 +66,11 @@ Es handelt sich überwiegend nicht um fehlende Fachideen, sondern um fehlende Ve
 | UV-021 | Audit | Auditbedarf fachlich und sicherheitsseitig beschrieben | querschnittliche Fachservice-/Auditlogik vorgesehen | Admin-Audit detailliert | U1/U2/U6 | **GELB**, konkrete Eventabdeckung beim Implementieren verifizieren |
 | UV-022 | FIB-Assistent | Kontext- und Bestätigungsprinzip dokumentiert | nutzt reguläre Fachfunktionen statt eigener Schreibrechte | global + kontextuell beschrieben | U2; End-to-End-Tests fehlen noch | **GELB** |
 
-## 4. Zusätzliche Dokumentationsinkonsistenz
+## 4. Konsistenzstatus G2.5
 
-Der Transfer-Audit `docs/Transfer-Audit-Demonstrator-Echtsystem.md` beschreibt G2.5 seit 04.10.2026 als **wieder geöffnet**, während `docs/Projektgruendung.md` und `docs/Roadmap.md` G2.5 als **abgeschlossen** führen.
+Die zuvor festgestellte Statusdifferenz bei G2.5 wurde am 10.10.2026 bereinigt. Die zweite Prüfschicht war laut ihrem Abschlussdokument bereits vollständig abgeschlossen; der übergeordnete Transfer-Audit war lediglich nicht auf diesen späteren Stand nachgezogen worden.
 
-Diese Statusdifferenz muss bereinigt werden. Für die Umsetzung ist nicht entscheidend, ob die historische Phase formal erneut geöffnet wird; entscheidend ist, dass die noch geltenden Transferanforderungen in der aktuellen Umsetzungsplanung nachweisbar abgedeckt werden.
+Damit führen `Transfer-Audit-Demonstrator-Echtsystem.md`, `Transfer-Audit-Inhaltsbausteine-und-Redaktionsfunktionen.md`, `Projektgruendung.md` und `Roadmap.md` G2.5 nun konsistent als fachlich abgeschlossen.
 
 ## 5. Konsequenzen für die weitere Umsetzung
 

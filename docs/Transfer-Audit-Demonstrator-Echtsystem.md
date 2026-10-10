@@ -4,6 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
+| 0.4 | 10.10.2026 | Abschlussstatus mit der vollständig abgeschlossenen zweiten Prüfschicht synchronisiert; TA-032 geschlossen und G2.5 erneut als abgeschlossen bestätigt. |
 | 0.3 | 04.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
 
 ## 1. Zweck
@@ -34,7 +35,7 @@ G2.5 gilt als abgeschlossen, wenn:
 8. eine abschließende Widerspruchs- und Terminologieprüfung erfolgt ist,
 9. die im Demonstrator sichtbaren Inhaltsbausteine und redaktionellen Funktionen vollständig inventarisiert und gegen Fachlogik, Datenmodell, Workflow und UX geprüft sind.
 
-**Status:** Am 03.10.2026 war das Transfer-Gate nach der ersten Prüfschicht als fachlich bestanden bewertet worden. Am 04.10.2026 wurde es nach einer Gegenprüfung sichtbarer Inhaltsbausteine und Redaktionsfunktionen **wieder geöffnet**. Die frühere Abschlussbewertung war insoweit zu weit gefasst.
+**Status:** Das Transfer-Gate wurde am 04.10.2026 nach einer zweiten Prüfschicht zunächst wieder geöffnet und nach vollständiger Abarbeitung der zusätzlichen Inhaltsbausteine und Redaktionsfunktionen am selben Tag **erneut abgeschlossen**. Maßgeblicher Abschlussnachweis ist `docs/Transfer-Audit-Inhaltsbausteine-und-Redaktionsfunktionen.md`.
 
 ## 3. Statuslegende
 
@@ -78,7 +79,7 @@ G2.5 gilt als abgeschlossen, wenn:
 | TA-029 | analoger + digitaler Raum für Reichweite/Bindung | `Marketing-und-Kommunikation.md` | **GESCHLOSSEN** | Multiplikatoren/persönliche Kontakte bleiben Bestandteil |
 | TA-030 | Modellunabhängigkeit / fester Testkorpus | `KI-Qualitaet-und-Modellunabhaengigkeit.md`, Regressionstests | **GESCHLOSSEN** | Transferfälle werden Testkorpus |
 | TA-031 | produktive Banner-/Navigations-/Mobile-Regeln | UX + visuelle Identität | **GESCHLOSSEN** | aktuelle Echtsystem-Regeln maßgeblich |
-| TA-032 | sichtbare Inhaltsbausteine und redaktionelle Funktionen vollständig gespiegelt | `Transfer-Audit-Inhaltsbausteine-und-Redaktionsfunktionen.md` + jeweilige Primärdokumente | **ERNEUT OFFEN** | u. a. offene Fragen bei Meldungen, verlinkter bisheriger Verlauf und Bildworkflow/-logik nachzuarbeiten |
+| TA-032 | sichtbare Inhaltsbausteine und redaktionelle Funktionen vollständig gespiegelt | `Transfer-Audit-Inhaltsbausteine-und-Redaktionsfunktionen.md` + jeweilige Primärdokumente | **GESCHLOSSEN** | zweite Prüfschicht vollständig abgearbeitet; Abschluss-Gegencheck und Regressionstest-Abdeckung dokumentiert |
 
 ## 5. Folgeaufträge aus dem Transfer-Audit
 
@@ -127,20 +128,16 @@ Die zweite Prüfschicht ergänzt weitere Referenzfälle, insbesondere zu Meldung
 
 ## 7. Aktuelle Bewertung
 
-Die erste Prüfschicht hatte wesentliche fachliche Transferregeln erfolgreich geschlossen. Die erneute Sichtung am 04.10.2026 hat jedoch gezeigt, dass der damalige Abschluss nicht ausreichend auf **sichtbare Inhaltsbausteine und redaktionelle Funktionen** geprüft hatte.
+Die erste Prüfschicht hatte wesentliche fachliche Transferregeln erfolgreich geschlossen. Die erneute Sichtung am 04.10.2026 zeigte zusätzliche Lücken bei **sichtbaren Inhaltsbausteinen und redaktionellen Funktionen**. Diese wurden in einer zweiten Prüfschicht systematisch abgearbeitet.
 
-Insbesondere wurden folgende Punkte erneut geöffnet:
+Der Abschluss-Gegencheck in `docs/Transfer-Audit-Inhaltsbausteine-und-Redaktionsfunktionen.md` bestätigt:
 
-- eigener Meldungsbaustein „Was bisher passiert ist“,
-- „Offene Fragen“ auf Meldungsebene und ihre persistente Modellierung,
-- explizite Sichtbarkeit relevanter Ereignisse aus Nachbargemeinden in Themen,
-- Bildaufnahme, Bildauswahl, Rechte-/Nachweisprüfung und Bildfreigabe im Redaktionsworkflow,
-- konkrete Verwendungslogik von Inhaltsbildern,
-- optionales Motivwissen/„Mehr zum Bild“ als noch zu treffende Übernahmeentscheidung.
+- die zusätzlich gefundenen Inhaltsbausteine sind fachlich verankert,
+- notwendige Datenmodell-/Workflow-/UX-Folgen sind dokumentiert,
+- bewusste spätere Produktentscheidungen sind ausdrücklich gekennzeichnet,
+- die Regressionstest-Abdeckung wurde erweitert.
 
-**G2.5 ist deshalb seit 04.10.2026 wieder offen.**
-
-Ein erneuter Abschluss erfolgt erst, wenn die zweite Transfer-Prüfschicht vollständig abgearbeitet, in den Primärdokumenten verankert und in Regressionstests abgesichert ist.
+**G2.5 ist damit erneut abgeschlossen.** Technische Umsetzungspunkte bleiben reguläre Aufgaben der Umsetzungsphasen und öffnen den fachlichen Transfer-Audit nicht erneut.
 
 ## Änderungshistorie
 

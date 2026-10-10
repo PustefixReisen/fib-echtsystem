@@ -43,21 +43,22 @@ Verbindliche Grundstruktur:
   - Vorgänge
   - Themen
   - Sitzungen
-- Recherche
-  - Funde
-  - Quellen
-  - Beobachtungsaufträge
-- Veröffentlichung
-  - Freigaben
-  - Medien & Dateien
-  - Kommunikation
-  - Besucherführung
-- Auswertung
-  - Besucher & Wirkung
-  - Inhalte
+- Redaktion
   - Recherche
-  - Redaktion
-- FIB-Assistent
+    - Funde
+    - Quellen
+    - Beobachtungsaufträge
+  - Veröffentlichung
+    - Freigaben
+    - Medien & Dateien
+    - Kommunikation
+    - Besucherführung
+  - Auswertung
+    - Besucher & Wirkung
+    - Inhalte
+    - Recherche
+    - Redaktion
+  - FIB-Assistent
 - Administration
   - Tasks & Läufe
   - KI & Kosten
@@ -161,7 +162,7 @@ Ein Fund wird dann im Hauptarbeitsbereich priorisiert, wenn daraus eine konkrete
 
 ### 6.5 Freigaben
 
-Zeigt Inhalte mit anstehender S2-/S3-Entscheidung.
+Zeigt Inhalte mit anstehender **fachlich wirksamer** oder **freigabe- bzw. veröffentlichungswirksamer** Entscheidung.
 
 Wesentlich sind:
 
@@ -1344,7 +1345,53 @@ Die Detailansicht zeigt den fachlich relevanten Vorher-/Nachher-Zustand. Technis
 
 Audit-Einträge werden nicht nachträglich redaktionell überschrieben. Korrekturen erfolgen durch neue nachvollziehbare Folgeereignisse. Zugriff auf das vollständige Audit ist Admins vorbehalten.
 
-## 38. Nächste UI-Schritte
+## 38. Administration – Benutzer & Rollen
+
+Der Bereich **Administration → Benutzer & Rollen** verwaltet interne FIB-Zugänge und deren FIB-spezifische Eigenschaften.
+
+### Übersicht
+
+Die Liste zeigt mindestens:
+
+- vollständigen Namen,
+- Rufname,
+- E-Mail / Login,
+- Rolle,
+- Aktivstatus,
+- Einrichtungs-/Einladungsstatus,
+- MFA-Status,
+- optional letzten erfolgreichen Login bzw. konkreten Handlungsbedarf.
+
+Filter mindestens:
+
+- Alle,
+- Aktiv,
+- Einrichtung offen / eingeladen,
+- Deaktiviert,
+- MFA unvollständig,
+- Admins,
+- Redakteure.
+
+### Neuer Benutzer
+
+Standardablauf:
+
+> Neuer Benutzer → Name, E-Mail, Rolle, optional Rufname → Einladung/Setup starten → Benutzer setzt Passwort und MFA → FIB-Zugang aktiv.
+
+Der Admin muss den Benutzer nicht zuvor manuell im Supabase-Dashboard anlegen. Die Anwendung orchestriert Auth-Identität und FIB-Anwendungsbenutzer.
+
+### Deaktivieren und Löschen
+
+- **Deaktivieren** ist der normale Weg beim Ausscheiden.
+- **Endgültig löschen** wird nur angeboten, wenn keine fachlich relevante Historie oder Referenz auf den Benutzer besteht.
+- Ist eine Löschung fachlich unzulässig, erklärt FIB den Grund und bietet Deaktivieren an.
+- Rollenänderung, Deaktivierung und endgültige Löschung verlangen eine besonders geschützte Adminbestätigung und werden im Audit protokolliert.
+
+### Federführung und Sperren
+
+Benutzer & Rollen ist nicht die primäre Oberfläche für Federführung oder Sperren. Diese erscheinen am jeweiligen Arbeitsobjekt. Die Benutzerverwaltung stellt nur sicher, dass aktive Benutzer, Rufname, Rolle und Status dafür eindeutig verfügbar sind.
+
+## 39. Nächste UI-Schritte
 
 Auf Basis dieses Konzepts werden schrittweise konkretisiert:
 

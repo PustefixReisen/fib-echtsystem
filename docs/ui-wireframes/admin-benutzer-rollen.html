@@ -1,0 +1,26 @@
+<!doctype html><html lang="de"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>FIB – Benutzer & Rollen</title><link rel="stylesheet" href="style.css"></head><body><main class="page">
+<div class="crumb">Administration › Benutzer &amp; Rollen</div>
+<h1>Benutzer &amp; Rollen</h1>
+<div class="meta">Interne FIB-Zugänge, Rollen, Rufnamen, Aktiv- und MFA-Status.</div>
+
+<div class="actions"><button class="btn primary">Neuer Benutzer</button></div>
+
+<div class="filters">
+<button class="pill active">Alle</button>
+<button class="pill">Aktiv</button>
+<button class="pill">Einrichtung offen</button>
+<button class="pill">Deaktiviert</button>
+<button class="pill">MFA unvollständig</button>
+<button class="pill">Admins</button>
+<button class="pill">Redakteure</button>
+</div>
+
+<table class="table">
+<tr><th>Name</th><th>Rufname</th><th>Login</th><th>Rolle</th><th>Status</th><th>MFA</th><th></th></tr>
+<tr><td>Josef Walter</td><td>Josef</td><td>josef@kjwalter.de</td><td>Admin</td><td><span class="ok status">Aktiv</span></td><td><span class="ok status">Eingerichtet</span></td><td><button class="btn">Öffnen</button></td></tr>
+<tr><td>Maria Beispiel</td><td>Maria</td><td>maria@example.org</td><td>Redakteur</td><td><span class="status">Einrichtung offen</span></td><td><span class="status">Ausstehend</span></td><td><button class="btn">Öffnen</button></td></tr>
+</table>
+
+<div class="note"><b>Deaktivieren</b> ist der normale Weg beim Ausscheiden. <b>Endgültig löschen</b> ist nur zulässig, wenn keine fachlich relevante Historie oder Referenz erhalten werden muss.</div>
+<div class="assistant"><b>FIB-Assistent · Kontext: Benutzer &amp; Rollen</b><br>Zum Beispiel: „Welche Benutzer haben ihre MFA-Einrichtung noch nicht abgeschlossen?“ oder „Warum kann dieser Benutzer nicht gelöscht werden?“</div>
+</main></body></html>

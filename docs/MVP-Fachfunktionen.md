@@ -155,6 +155,29 @@ Das fachliche Datenmodell für Vertiefungsfrage, Vertiefungsantwort, Quellenbind
 
 Die technische Ausführung und Orchestrierung eines AI Tasks ist Betriebslogik und keine zusätzliche redaktionelle Fachfunktion. Ein Task Run nutzt die ihm erlaubten Fachfunktionen und wird nachvollziehbar protokolliert.
 
+### 5.9 Redaktionelle Koordination und Benutzerverwaltung
+
+| Funktionsfamilie | Fachliche Kernaktion |
+|---|---|
+| `manage_lead_responsibility` | Federführung eines geeigneten Arbeitsobjekts setzen, ändern oder freigeben; Vererbungsregeln bei Neuanlage beachten |
+| `acquire_edit_lock` | beim ersten Bearbeitungsversuch eine exklusive Bearbeitungssperre erwerben oder verständlich melden, wer aktuell sperrt |
+| `renew_edit_lock` | eigene aktive Bearbeitungssperre während laufender Bearbeitung verlängern |
+| `release_edit_lock` | eigene Bearbeitungssperre regulär freigeben |
+| `force_release_edit_lock` | als Admin eine verwaiste fremde Sperre aufheben; immer auditiert |
+| `request_handover` | Übernahmeanfrage mit Zielbenutzer, Objektbezug und optionaler Nachricht erzeugen |
+| `respond_handover` | Übernahmeanfrage annehmen, ablehnen oder erledigen; eine Annahme ändert Federführung nur über die reguläre Federführungsfunktion |
+| `manage_app_user` | FIB-Benutzer anlegen/einladen, Namen/Rufnamen/Rolle/Aktivstatus verwalten und Einrichtungsstatus führen |
+| `deactivate_app_user` | Benutzerzugang deaktivieren, ohne historische Referenzen zu entfernen |
+| `delete_app_user` | Benutzer endgültig löschen, aber nur wenn keine fachlich relevante Historie oder Referenz besteht |
+
+Für Benutzerverwaltung gilt:
+
+- Das Auth-Konto und der FIB-Anwendungsbenutzer werden als zusammengehöriger Vorgang behandelt.
+- Es gibt keine öffentliche Selbstregistrierung.
+- Passwort, TOTP-Geheimnis oder Recovery-Secrets werden nicht in FIB angezeigt oder gespeichert.
+- Rollenänderung, Deaktivierung, endgültige Löschung und erzwungenes Aufheben fremder Sperren sind besonders geschützte Adminaktionen.
+- Eine bestehende Browser-/JWT-Sitzung darf Rollenentzug oder Deaktivierung nicht überstimmen; S2/S3 prüfen den aktuellen FIB-Benutzerstatus serverseitig.
+
 ## 6. Wichtige Abgrenzungen
 
 - `register_finding` arbeitet auf der konkreten Fundstelle; `manage_source` auf der Quelle selbst.

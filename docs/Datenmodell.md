@@ -628,6 +628,93 @@ Für die nächste Phase sind insbesondere technisch zu entscheiden:
 
 Diese Punkte verändern das fachliche Modell nicht und gehören in die anschließenden Gründungs-/Architekturphasen.
 
+## 20. Redaktionelle Koordination und Benutzer
+
+### 20.1 FIB-Benutzer
+
+Ein `FIB-Benutzer` verbindet die Supabase-Auth-Identität mit den FIB-spezifischen Eigenschaften der redaktionellen Anwendung.
+
+Mindestens zu führen sind:
+
+- eindeutige Auth-Identität,
+- vollständiger Anzeigename,
+- optionaler Rufname,
+- Rolle: `Redakteur` oder `Admin`,
+- Aktivstatus,
+- Einrichtungs-/Einladungsstatus,
+- MFA-/Zugangsstatus soweit für die Anwendung erforderlich,
+- Erstellungs- und Änderungszeitpunkt.
+
+Der Rufname ist ausschließlich Darstellungsinformation und besitzt keine Berechtigungswirkung.
+
+Ein deaktivierter Benutzer bleibt für Historie, Audit und bestehende fachliche Verweise erhalten.
+
+Eine endgültige Löschung ist nur zulässig, wenn keine fachlich relevante Historie oder Referenz auf den Benutzer besteht. Andernfalls wird deaktiviert.
+
+### 20.2 Federführung
+
+`Federführung` ist eine weiche organisatorische Zuordnung zu einem aktiven FIB-Benutzer. Sie ist keine Berechtigung und keine Schreibsperre.
+
+Federführung wird mindestens für Ereignis, Meldung, Vorgang und Thema geführt; für weitere Arbeitsobjekte kann sie bei Bedarf ergänzt werden.
+
+Regeln:
+
+- Wird aus einem Fund ein Ereignis erzeugt, erhält das Ereignis initial die Federführung des bearbeitenden Redakteurs.
+- Neu aus einem Ereignis erzeugte Meldungen, Vorgänge und Themen übernehmen initial dessen Federführung.
+- Sobald ein Zielobjekt erstmals eine eigene Federführung besitzt, wird sie durch spätere Änderungen am Ursprung nicht automatisch überschrieben.
+- Federführung kann manuell geändert oder freigegeben werden.
+- Abweichende Federführungen zwischen verbundenen Objekten erzeugen höchstens einen Hinweis, keine automatische Synchronisierung.
+
+### 20.3 Letzte Bearbeitung
+
+Die `Letzte Bearbeitung` ist abgeleitete Koordinationsinformation aus der letzten fachlich relevanten Änderung eines Objekts.
+
+Sie enthält mindestens Bearbeiter und Zeitpunkt. Sie erzeugt keine Exklusivität und keine Berechtigung.
+
+### 20.4 Bearbeitungssperre
+
+Eine `Bearbeitungssperre` ist ein kurzlebiges technisches Koordinationsobjekt für exklusiven Schreibzugriff.
+
+Sie enthält mindestens:
+
+- Objekttyp und Objekt-ID,
+- sperrenden FIB-Benutzer,
+- Beginn,
+- letzte Erneuerung,
+- Ablaufzeitpunkt.
+
+Verbindliche Regeln:
+
+- Lesen erzeugt keine Sperre.
+- Die Sperre wird erst beim ersten tatsächlichen Bearbeitungsversuch angefordert.
+- Pro Objekt darf höchstens eine aktive Sperre bestehen.
+- Während der Bearbeitung wird die Sperre regelmäßig erneuert.
+- Beim regulären Ende wird sie freigegeben; ohne Erneuerung verfällt sie automatisch.
+- Ein Admin kann eine offensichtlich verwaiste fremde Sperre aufheben; dies wird auditiert.
+
+Die Sperre ist kein fachlicher Dauerzustand und gehört nicht in die fachliche Versionshistorie des Objekts.
+
+### 20.5 Übernahmeanfrage
+
+Eine `Übernahmeanfrage` ist eine kooperative Nachricht zwischen Redakteuren zu einem konkreten Arbeitsobjekt.
+
+Sie enthält mindestens:
+
+- anfragenden Benutzer,
+- angefragten Benutzer,
+- Zielobjekt,
+- optionale Nachricht,
+- Zeitpunkt,
+- Status: `offen`, `angenommen`, `abgelehnt`, `erledigt` bzw. `gegenstandslos`.
+
+Die Anfrage ändert weder Federführung noch Rechte automatisch. Eine tatsächliche Übernahme erfolgt durch eine separate bewusste Aktion.
+
+## 21. Operative Umsetzungspflicht
+
+Für die in diesem Datenmodell beschriebenen Koordinations- und Benutzerobjekte gilt die projektweite Umsetzungsregel:
+
+> Datenhaltung, Fachfunktion, Arbeits-/KI-Prozess, Rechte/Audit und Test müssen vor Implementierung des jeweiligen UI-Bereichs vollständig zugeordnet sein.
+
 ## Änderungshistorie
 
 | Version | Datum | Änderung |

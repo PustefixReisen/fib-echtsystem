@@ -177,6 +177,35 @@ Rollenentzug bzw. Deaktivierung muss serverseitig kurzfristig wirksam werden. Ei
 
 Jede S2-/S3-Aktion prüft deshalb den aktuellen serverseitigen Benutzer-/Rollenstatus erneut.
 
+## 9.1 Benutzerlebenszyklus
+
+FIB besitzt keine öffentliche Selbstregistrierung.
+
+Ein Admin kann einen internen FIB-Benutzer in der Anwendung anlegen und den Einrichtungsprozess starten. Fachlich umfasst dies:
+
+1. vollständigen Namen und E-Mail erfassen,
+2. optional Rufname erfassen,
+3. Rolle `Redakteur` oder `Admin` festlegen,
+4. Auth-Identität erzeugen bzw. Einladungs-/Setup-Prozess starten,
+5. FIB-Anwendungsbenutzer anlegen,
+6. Passwort- und MFA-Einrichtung durch den Benutzer abschließen,
+7. Zugang erst bei gültigem Aktivstatus und erfüllter MFA-Anforderung vollständig freigeben.
+
+Normaler Austritt erfolgt durch **Deaktivieren**.
+
+**Endgültig löschen** ist nur zulässig, wenn keine fachlich relevante Historie, Auditspur oder Objektreferenz erhalten werden muss. Andernfalls blockiert FIB die Löschung und bietet Deaktivieren an.
+
+Rollenänderung, Deaktivierung und endgültige Löschung sind besonders geschützte Adminaktionen und werden auditiert.
+
+## 9.2 Federführung, Sperren und Übernahmeanfragen
+
+- Federführung ist organisatorisch und niemals Berechtigung.
+- Letzte Bearbeitung ist reine Historien-/Koordinationsinformation.
+- Bearbeitungssperren begrenzen nur den gleichzeitigen Schreibzugriff.
+- Übernahmeanfragen ändern weder Rechte noch Federführung automatisch.
+- Admins dürfen fremde verwaiste Sperren aufheben; dies ist auditpflichtig.
+- Redakteure dürfen andere fachlich geeignete Objekte bearbeiten, sofern keine aktive Sperre entgegensteht und ihre Rolle die betreffende Fachfunktion erlaubt.
+
 ## 10. MFA und Step-up-Authentifizierung
 
 Für den produktiven FIB-Betrieb gilt verbindlich:
