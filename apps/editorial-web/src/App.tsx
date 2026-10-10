@@ -31,6 +31,7 @@ export function App() {
   const [code, setCode] = useState('');
   const [factorId, setFactorId] = useState<string | null>(null);
   const [qrCode, setQrCode] = useState<string | null>(null);
+  const [totpSecret, setTotpSecret] = useState<string | null>(null);
   const [state, setState] = useState<AuthState>('signed_out');
   const [message, setMessage] = useState('');
   const [eventResult, setEventResult] = useState<EventResult['event'] | null>(null);
@@ -46,6 +47,7 @@ export function App() {
       setState('signed_out');
       setFactorId(null);
       setQrCode(null);
+      setTotpSecret(null);
       setEventResult(null);
       setServiceError(null);
       setCoordination(null);
@@ -123,7 +125,18 @@ export function App() {
 
     setFactorId(data.id);
     setQrCode(data.totp.qr_code);
-    setMessage('QR-Code mit der Authenticator-App scannen und anschließend den sechsstelligen Code eingeben.');
+    setTotpSecret(data.totp.secret);
+    setMessage('Authenticator einrichten: QR-Code scannen oder auf demselben Gerät den Schlüssel manuell in Aegis bzw. einer anderen Authenticator-App eintragen.');
+  }
+
+  async function copyTotpSecret() {
+    if (!totpSecret) return;
+    try {
+      await navigator.clipboard.writeText(totpSecret);
+      setMessage('Einrichtungsschlüssel kopiert. Jetzt in Aegis als TOTP-Schlüssel einfügen.');
+    } catch {
+      setMessage('Kopieren war nicht möglich. Den angezeigten Schlüssel bitte manuell in Aegis eingeben.');
+    }
   }
 
   async function verifyTotp() {
@@ -142,6 +155,7 @@ export function App() {
     }
 
     setQrCode(null);
+    setTotpSecret(null);
     await refreshAuthState();
   }
 
@@ -216,6 +230,7 @@ export function App() {
     setServiceError(null);
     setCoordination(null);
     setCoordinationMessage(null);
+    setTotpSecret(null);
   }
 
   return (
@@ -245,6 +260,19 @@ export function App() {
           <p>Die erste Anmeldung ist erfolgt. Für den Redaktionszugang ist zusätzlich MFA erforderlich.</p>
           {!qrCode && <button onClick={enrollTotp}>Authenticator einrichten</button>}
           {qrCode && <img src={qrCode} alt="QR-Code für FIB-TOTP" style={{ display: 'block', maxWidth: 260, margin: '1rem 0' }} />}
+          {totpSecret && (
+            <div style={{ margin: '1rem 0', padding: '1rem', border: '1px solid #ccc', borderRadius: 8 }}>
+              <p style={{ marginTop: 0 }}><strong>Auf diesem Gerät einrichten</strong></p>
+              <p>In Aegis: <strong>+ → Manuelle Eingabe → TOTP</strong>. Danach diesen Schlüssel einfügen:</p>
+              <p>
+                <code style={{ overflowWrap: 'anywhere', userSelect: 'all' }}>{totpSecret}</code>
+              </p>
+              <button type="button" onClick={copyTotpSecret}>Schlüssel kopieren</button>
+              <p style={{ marginBottom: 0, fontSize: '.9rem' }}>
+                Der Schlüssel ist geheim. Nicht weitergeben oder außerhalb des Passwort-/Authenticator-Systems speichern.
+              </p>
+            </div>
+          )}
           {qrCode && (
             <p>
               <label>
