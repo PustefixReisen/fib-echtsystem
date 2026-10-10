@@ -2,6 +2,8 @@ import type { FibActorContext } from '@fib/domain-contracts';
 import {
   acquireEditLock,
   forceReleaseEditLock,
+  manageLeadResponsibility,
+  requestHandover,
   type FibAuditSink,
   type FibSqlExecutor,
 } from '../../packages/fachservices/src/index.js';
@@ -28,8 +30,18 @@ const admin: FibActorContext = {
 
 class FakeDb implements FibSqlExecutor {
   lockOwner: string | null = null;
+  activeUsers = new Set(['editor-1', 'editor-2', 'admin-1']);
+  leadOwner: string | null = null;
 
   async queryOne<T>(sql: string, params: readonly unknown[]): Promise<T | null> {
+    if (sql.includes('from fib.app_users')) {
+      const userId = String(params[0]);
+      return this.activeUsers.has(userId) ? ({ user_id: userId } as T) : null;
+    }
+    if (sql.includes('insert into fib.lead_responsibilities')) {
+      this.leadOwner = String(params[2]);
+      return { object_id: params[1] } as T;
+    }
     if (sql.includes('insert into fib.edit_locks')) {
       const userId = String(params[2]);
       if (this.lockOwner && this.lockOwner !== userId) return null;
@@ -89,4 +101,41 @@ export async function caseOnlyAdminWithMfaCanForceRelease() {
   const released = await forceReleaseEditLock(admin, { objectType: 'topic', objectId: 't1' }, db, audit);
   assert(released.ok && released.removed, 'admin with aal2 must force release');
   assert(audit.actions.includes('force_release_edit_lock'), 'force release must be audited');
+}
+
+
+export async function caseLeadCannotBeAssignedToInactiveUser() {
+  const db = new FakeDb();
+  const result = await manageLeadResponsibility(
+    editor,
+    { objectType: 'event', objectId: 'e1' },
+    'inactive-user',
+    db,
+  );
+  assert(!result.ok && result.reason === 'target_user_not_active', 'inactive user must not receive lead');
+  assert(db.leadOwner === null, 'lead must remain unchanged');
+}
+
+export async function caseHandoverCannotTargetInactiveUser() {
+  const db = new FakeDb();
+  const result = await requestHandover(
+    editor,
+    { objectType: 'event', objectId: 'e1' },
+    'inactive-user',
+    'Bitte übernehmen',
+    db,
+  );
+  assert(!result.ok && result.reason === 'target_user_not_active', 'inactive user must not receive handover request');
+}
+
+export async function caseHandoverCannotTargetRequester() {
+  const db = new FakeDb();
+  const result = await requestHandover(
+    editor,
+    { objectType: 'event', objectId: 'e1' },
+    'editor-1',
+    null,
+    db,
+  );
+  assert(!result.ok && result.reason === 'cannot_request_self', 'handover request to self must be rejected');
 }
