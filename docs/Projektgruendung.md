@@ -281,7 +281,7 @@ G3 bis G10 sind abgeschlossen. Die verbindlichen Detailentscheidungen stehen aus
 - **G9 – Migration:** abgeschlossen; `docs/Migrationsstrategie.md` v1.1, `docs/Migrations-Runbook.md` v1.0 und `docs/G9-Gesamtaudit.md`.
 - **G10 – Go-live-Abnahme:** abgeschlossen; `docs/Go-live-Abnahmekriterien.md` v1.0 und `docs/G10-Gesamtaudit.md`.
 
-Der nächste Schritt ist der übergreifende **Gründungsaudit**. Erst nach dessen Bestehen beginnt die technische Umsetzung U1–U6.
+Nach dem Gründungsaudit wird zusätzlich ein **Umsetzungs-Vollständigkeitsaudit** geführt. Es prüft dokumentierte Fachregeln nicht erneut fachlich, sondern auf vollständige operative Übertragung in Datenhaltung, Fachfunktionen, Ausführung/UI und Tests. Die technische Umsetzung darf parallel dort fortgesetzt werden, wo keine offene fachbereichsspezifische Lücke besteht.
 
 ## 8. Dokumentationsübernahme Demonstrator → Echtsystem
 
