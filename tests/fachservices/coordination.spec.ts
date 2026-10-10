@@ -2,7 +2,9 @@ import type { FibActorContext } from '@fib/domain-contracts';
 import {
   acquireEditLock,
   forceReleaseEditLock,
+  initializeLeadResponsibility,
   manageLeadResponsibility,
+  recordLastEdit,
   requestHandover,
   type FibAuditSink,
   type FibSqlExecutor,
@@ -32,15 +34,35 @@ class FakeDb implements FibSqlExecutor {
   lockOwner: string | null = null;
   activeUsers = new Set(['editor-1', 'editor-2', 'admin-1']);
   leadOwner: string | null = null;
+  eventLeadOwner: string | null = null;
+  lastEditUser: string | null = null;
 
   async queryOne<T>(sql: string, params: readonly unknown[]): Promise<T | null> {
     if (sql.includes('from fib.app_users')) {
       const userId = String(params[0]);
       return this.activeUsers.has(userId) ? ({ user_id: userId } as T) : null;
     }
+    if (sql.includes("where lr.object_type = 'event'")) {
+      return this.eventLeadOwner ? ({ user_id: this.eventLeadOwner } as T) : null;
+    }
     if (sql.includes('insert into fib.lead_responsibilities')) {
+      if (sql.includes('do nothing') && this.leadOwner) return null;
       this.leadOwner = String(params[2]);
-      return { object_id: params[1] } as T;
+      return {
+        object_type: params[0],
+        object_id: params[1],
+        user_id: params[2],
+        assigned_at: '2026-10-10T19:00:00Z',
+      } as T;
+    }
+    if (sql.includes('insert into fib.object_last_edits')) {
+      this.lastEditUser = String(params[2]);
+      return {
+        object_type: params[0],
+        object_id: params[1],
+        user_id: params[2],
+        edited_at: '2026-10-10T19:30:00Z',
+      } as T;
     }
     if (sql.includes('insert into fib.edit_locks')) {
       const userId = String(params[2]);
@@ -138,4 +160,59 @@ export async function caseHandoverCannotTargetRequester() {
     db,
   );
   assert(!result.ok && result.reason === 'cannot_request_self', 'handover request to self must be rejected');
+}
+
+
+export async function caseEventInheritsCreatingEditorFromFinding() {
+  const db = new FakeDb();
+  const result = await initializeLeadResponsibility(
+    editor,
+    { objectType: 'event', objectId: 'event-1' },
+    { objectType: 'finding', objectId: 'finding-1' },
+    db,
+  );
+  assert(result.ok && result.assigned && result.userId === 'editor-1', 'new event must receive creating editor as lead');
+  assert(db.leadOwner === 'editor-1', 'event lead must be persisted');
+}
+
+export async function caseMessageInheritsLeadFromEvent() {
+  const db = new FakeDb();
+  db.eventLeadOwner = 'editor-2';
+
+  const result = await initializeLeadResponsibility(
+    editor,
+    { objectType: 'message', objectId: 'message-1' },
+    { objectType: 'event', objectId: 'event-1' },
+    db,
+  );
+  assert(result.ok && result.assigned && result.userId === 'editor-2', 'message must inherit active event lead');
+  assert(db.leadOwner === 'editor-2', 'inherited lead must be persisted');
+}
+
+export async function caseInheritedLeadNeverOverwritesOwnLead() {
+  const db = new FakeDb();
+  db.eventLeadOwner = 'editor-2';
+  db.leadOwner = 'admin-1';
+
+  const result = await initializeLeadResponsibility(
+    editor,
+    { objectType: 'topic', objectId: 'topic-1' },
+    { objectType: 'event', objectId: 'event-1' },
+    db,
+  );
+  assert(result.ok && !result.assigned && result.reason === 'target_already_has_lead', 'existing target lead must win');
+  assert(db.leadOwner === 'admin-1', 'existing target lead must not be overwritten');
+}
+
+export async function caseLastEditRecordsHumanAndTime() {
+  const db = new FakeDb();
+  const result = await recordLastEdit(
+    editor,
+    { objectType: 'process', objectId: 'process-1' },
+    db,
+  );
+  assert(result.ok, 'last edit must be recorded');
+  assert(result.lastEdit.userId === 'editor-1', 'last edit must identify editor');
+  assert(result.lastEdit.editedAt === '2026-10-10T19:30:00Z', 'last edit must contain edit timestamp');
+  assert(db.lastEditUser === 'editor-1', 'last edit must be persisted');
 }
