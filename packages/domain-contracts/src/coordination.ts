@@ -24,7 +24,7 @@ export interface FibEditLock {
   expiresAt: string;
 }
 
-export type FibHandoverStatus = 'open' | 'accepted' | 'declined' | 'done' | 'void';
+export type FibHandoverStatus = 'open' | 'accepted' | 'declined' | 'completed' | 'obsolete';
 
 export interface FibHandoverRequest {
   id: string;
