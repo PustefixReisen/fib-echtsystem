@@ -7,3 +7,4 @@ export * from './authenticated-get-event.js';
 export * from './mfa.js';
 export * from './coordination.js';
 export * from './user-management.js';
+export * from './editorial-write.js';
