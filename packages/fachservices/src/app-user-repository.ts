@@ -6,8 +6,11 @@ export interface FibSqlExecutor {
 
 interface FibAppUserRow {
   user_id: string;
+  full_name: string;
+  call_name: string | null;
   role: 'editor' | 'admin';
   active: boolean;
+  setup_status: 'invited' | 'setup_pending' | 'active' | 'deactivated';
 }
 
 export class SqlFibAppUserRepository implements FibAppUserRepository {
@@ -15,7 +18,7 @@ export class SqlFibAppUserRepository implements FibAppUserRepository {
 
   async findByUserId(userId: string): Promise<FibAppUserRecord | null> {
     const row = await this.db.queryOne<FibAppUserRow>(
-      `select user_id, role, active
+      `select user_id, full_name, call_name, role, active, setup_status
          from fib.app_users
         where user_id = $1`,
       [userId],
