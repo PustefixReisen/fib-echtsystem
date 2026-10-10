@@ -125,7 +125,7 @@ Parallel gilt für Storage gemäß ADR-011:
 
 ### U1.4 Koordination/Benutzer – Implementierung begonnen
 
-Auf Basis des fachlichen Vertrags sind SQL-Strukturen und Fachservices für Benutzerprofil, Federführung, Bearbeitungssperren und Übernahmeanfragen vorbereitet. Vor Anwendung auf der produktiven Shared-Apps-Datenbank folgen Review, kontrollierte Migration und Integrationstests.
+Auf Basis des fachlichen Vertrags sind SQL-Strukturen und Fachservices für Benutzerprofil, Federführung, Bearbeitungssperren und Übernahmeanfragen umgesetzt. Die Migration `20261010074421_fib_coordination_users_locks` wurde am 10.10.2026 auf Shared-Apps angewendet und anschließend geprüft: drei neue Benutzerprofilfelder, drei Koordinationstabellen und drei Runtime-RLS-Policies sind vorhanden; `authenticated` und `service_role` besitzen weiterhin keinen direkten Tabellenzugriff. Offen bleiben Integrationstests und die UI-Anbindung.
 
 ### U1.5 Operative Vollständigkeit der Fachbereiche – querschnittlicher Gate
 
