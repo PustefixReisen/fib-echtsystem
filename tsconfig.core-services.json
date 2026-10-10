@@ -1,0 +1,16 @@
+{
+  "extends": "./tsconfig.base.json",
+  "compilerOptions": {
+    "types": ["node"]
+  },
+  "include": [
+    "packages/domain-contracts/src/**/*.ts",
+    "packages/fachservices/src/**/*.ts",
+    "tests/fachservices/**/*.ts",
+    "tests/run-fachservices.ts"
+  ],
+  "exclude": [
+    "apps/**",
+    "supabase/functions/**"
+  ]
+}

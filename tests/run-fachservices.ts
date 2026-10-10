@@ -1,3 +1,5 @@
+export {};
+
 const modules = [
   './fachservices/authenticated-get-event.spec.ts',
   './fachservices/coordination.spec.ts',
