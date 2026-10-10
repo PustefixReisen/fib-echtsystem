@@ -43,21 +43,22 @@ Verbindliche Grundstruktur:
   - Vorgänge
   - Themen
   - Sitzungen
-- Recherche
-  - Funde
-  - Quellen
-  - Beobachtungsaufträge
-- Veröffentlichung
-  - Freigaben
-  - Medien & Dateien
-  - Kommunikation
-  - Besucherführung
-- Auswertung
-  - Besucher & Wirkung
-  - Inhalte
+- Redaktion
   - Recherche
-  - Redaktion
-- FIB-Assistent
+    - Funde
+    - Quellen
+    - Beobachtungsaufträge
+  - Veröffentlichung
+    - Freigaben
+    - Medien & Dateien
+    - Kommunikation
+    - Besucherführung
+  - Auswertung
+    - Besucher & Wirkung
+    - Inhalte
+    - Recherche
+    - Redaktion
+  - FIB-Assistent
 - Administration
   - Tasks & Läufe
   - KI & Kosten
@@ -161,7 +162,7 @@ Ein Fund wird dann im Hauptarbeitsbereich priorisiert, wenn daraus eine konkrete
 
 ### 6.5 Freigaben
 
-Zeigt Inhalte mit anstehender S2-/S3-Entscheidung.
+Zeigt Inhalte mit anstehender **fachlich wirksamer** oder **freigabe- bzw. veröffentlichungswirksamer** Entscheidung.
 
 Wesentlich sind:
 
