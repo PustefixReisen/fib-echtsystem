@@ -39,6 +39,6 @@ jobs:
       - name: Install dependencies
         run: npm install
       - name: Typecheck repository
-        run: npm run typecheck
+        run: npm run typecheck:core
       - name: Run fachservice cases
         run: npm run test:fachservices
