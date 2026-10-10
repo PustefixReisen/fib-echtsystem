@@ -16,6 +16,12 @@ export interface FibLeadResponsibility {
   assignedAt: string;
 }
 
+export interface FibLastEdit {
+  object: FibObjectRef;
+  userId: string;
+  editedAt: string;
+}
+
 export interface FibEditLock {
   object: FibObjectRef;
   userId: string;

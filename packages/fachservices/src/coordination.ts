@@ -3,6 +3,7 @@ import type {
   FibEditLock,
   FibHandoverRequest,
   FibHandoverStatus,
+  FibLastEdit,
   FibObjectRef,
 } from '@fib/domain-contracts';
 import { authorize } from './authorization.js';
@@ -25,6 +26,20 @@ interface LockRow {
   acquired_at: string;
   renewed_at: string;
   expires_at: string;
+}
+
+interface LeadRow {
+  object_type: FibObjectRef['objectType'];
+  object_id: string;
+  user_id: string;
+  assigned_at: string;
+}
+
+interface LastEditRow {
+  object_type: FibObjectRef['objectType'];
+  object_id: string;
+  user_id: string;
+  edited_at: string;
 }
 
 interface HandoverRow {
@@ -95,6 +110,80 @@ export async function manageLeadResponsibility(
   }
 
   return { ok: true as const };
+}
+
+export async function initializeLeadResponsibility(
+  actor: FibActorContext,
+  target: FibObjectRef,
+  source: FibObjectRef,
+  db: FibSqlExecutor,
+) {
+  if (!requireHuman(actor) || !actor.userId) return { ok: false as const, reason: 'forbidden' as const };
+
+  let candidateUserId: string | null = null;
+
+  if (source.objectType === 'finding' && target.objectType === 'event') {
+    candidateUserId = actor.userId;
+  } else if (
+    source.objectType === 'event'
+    && (target.objectType === 'message' || target.objectType === 'process' || target.objectType === 'topic')
+  ) {
+    const sourceLead = await db.queryOne<{ user_id: string }>(
+      `select lr.user_id
+         from fib.lead_responsibilities lr
+         join fib.app_users au on au.user_id = lr.user_id
+        where lr.object_type = 'event'
+          and lr.object_id = $1
+          and au.active = true
+          and au.setup_status = 'active'`,
+      [source.objectId],
+    );
+    candidateUserId = sourceLead?.user_id ?? null;
+  } else {
+    return { ok: false as const, reason: 'unsupported_inheritance' as const };
+  }
+
+  if (!candidateUserId) {
+    return { ok: true as const, assigned: false as const, reason: 'source_has_no_active_lead' as const };
+  }
+
+  const row = await db.queryOne<LeadRow>(
+    `insert into fib.lead_responsibilities(object_type, object_id, user_id)
+     values ($1, $2, $3)
+     on conflict (object_type, object_id) do nothing
+     returning object_type, object_id, user_id, assigned_at`,
+    [target.objectType, target.objectId, candidateUserId],
+  );
+
+  return row
+    ? { ok: true as const, assigned: true as const, userId: row.user_id }
+    : { ok: true as const, assigned: false as const, reason: 'target_already_has_lead' as const };
+}
+
+export async function recordLastEdit(
+  actor: FibActorContext,
+  object: FibObjectRef,
+  db: FibSqlExecutor,
+) {
+  if (!requireHuman(actor) || !actor.userId) return { ok: false as const, reason: 'forbidden' as const };
+
+  const row = await db.queryOne<LastEditRow>(
+    `insert into fib.object_last_edits(object_type, object_id, user_id, edited_at)
+     values ($1, $2, $3, now())
+     on conflict (object_type, object_id)
+     do update set user_id = excluded.user_id, edited_at = excluded.edited_at
+     returning object_type, object_id, user_id, edited_at`,
+    [object.objectType, object.objectId, actor.userId],
+  );
+
+  if (!row) return { ok: false as const, reason: 'write_failed' as const };
+
+  const lastEdit: FibLastEdit = {
+    object: { objectType: row.object_type, objectId: row.object_id },
+    userId: row.user_id,
+    editedAt: row.edited_at,
+  };
+  return { ok: true as const, lastEdit };
 }
 
 export async function acquireEditLock(
