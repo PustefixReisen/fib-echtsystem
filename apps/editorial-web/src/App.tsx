@@ -113,6 +113,30 @@ export function App() {
   }
 
   async function enrollTotp() {
+    setFactorId(null);
+    setQrCode(null);
+    setTotpSecret(null);
+    setCode('');
+    setMessage('MFA-Einrichtung wird vorbereitet …');
+
+    const { data: factors, error: factorsError } = await supabase.auth.mfa.listFactors();
+    if (factorsError) {
+      setMessage('Vorhandene MFA-Faktoren konnten nicht geprüft werden.');
+      return;
+    }
+
+    const unfinishedFibFactors = factors.totp.filter(
+      (factor) => factor.status === 'unverified' && factor.friendly_name === 'FIB Redaktionszugang',
+    );
+
+    for (const factor of unfinishedFibFactors) {
+      const { error: unenrollError } = await supabase.auth.mfa.unenroll({ factorId: factor.id });
+      if (unenrollError) {
+        setMessage('Eine frühere, nicht abgeschlossene MFA-Einrichtung konnte nicht bereinigt werden.');
+        return;
+      }
+    }
+
     const { data, error } = await supabase.auth.mfa.enroll({
       factorType: 'totp',
       friendlyName: 'FIB Redaktionszugang',
@@ -142,18 +166,36 @@ export function App() {
   async function verifyTotp() {
     if (!factorId || !code.trim()) return;
 
+    const activeFactorId = factorId;
+    const { data: factors, error: factorsError } = await supabase.auth.mfa.listFactors();
+    if (factorsError) {
+      setMessage('MFA-Faktor konnte vor der Bestätigung nicht geprüft werden.');
+      return;
+    }
+
+    const activeFactor = factors.totp.find((factor) => factor.id === activeFactorId);
+    if (!activeFactor) {
+      setFactorId(null);
+      setQrCode(null);
+      setTotpSecret(null);
+      setCode('');
+      setMessage('Die MFA-Einrichtung ist nicht mehr gültig. Bitte Authenticator erneut einrichten.');
+      return;
+    }
+
     const { error } = await supabase.auth.mfa.challengeAndVerify({
-      factorId,
+      factorId: activeFactorId,
       code: code.trim(),
     });
 
     setCode('');
 
     if (error) {
-      setMessage('Der MFA-Code konnte nicht bestätigt werden.');
+      setMessage('Der MFA-Code konnte nicht bestätigt werden. Bitte einen aktuellen Code aus genau diesem Aegis-Eintrag verwenden.');
       return;
     }
 
+    setFactorId(null);
     setQrCode(null);
     setTotpSecret(null);
     await refreshAuthState();
