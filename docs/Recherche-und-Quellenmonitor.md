@@ -270,6 +270,47 @@ Wo KI fachlich erforderlich ist, hat die geforderte Ergebnisqualität Vorrang vo
 - spätere technische Architektur: G5 / Architekturdokumentation
 - konkrete Datenstrukturen: G3 / Datenmodell
 
+## Regelverwaltung und Regeltests
+
+Die fachliche Recherche- und Relevanzlogik wird im Echtsystem als strukturierter, versionierter Regelbestand betrieben. GitHub-Dokumente begründen und dokumentieren die Regeln; der operative Regelstand liegt in der FIB-Datenbank und wird bei Rechercheläufen gezielt in den KI-Kontext eingebracht.
+
+Änderungen und neue Regeln werden bevorzugt über einen geführten KI-Dialog vorbereitet. Die KI:
+
+1. analysiert den Änderungswunsch;
+2. prüft vorhandene Regeln auf Überschneidungen oder Widersprüche;
+3. erzeugt einen strukturierten Regelentwurf;
+4. zeigt erwartete Auswirkungen und Beispiele;
+5. führt vor Aktivierung Regeltests durch;
+6. legt die Regel erst nach menschlicher Bestätigung als aktive Version fest.
+
+Für Regeltests werden zwei Wirkungsarten getrennt geprüft:
+
+### Bewertungswirkung
+
+Bereits bekannte Fundstellen werden mit bisherigem und neuem Regelstand verglichen. Der Testbestand umfasst möglichst relevante, nicht relevante und unklare bzw. grenzwertige Fälle. Besonders wichtig sind frühere Fundstellen mit Entscheidung **nicht relevant**; sie bleiben deshalb persistent erhalten.
+
+Der Test zeigt insbesondere:
+
+- welche bekannten Fundstellen ihre Einstufung ändern;
+- welche neu relevant würden;
+- welche nicht mehr relevant wären;
+- welche Grenzfälle entstehen.
+
+### Entdeckungswirkung
+
+Zusätzlich wird eine Probe-Recherche mit dem neuen Regelentwurf durchgeführt. Sie untersucht, welche Fundstellen aufgrund des veränderten Suchraums, Suchkontexts oder der geänderten Suchstrategie **zusätzlich entdeckt** werden.
+
+Die Differenzansicht zeigt mindestens:
+
+- nur mit bisherigem Regelstand gefundene Fundstellen;
+- mit beiden Regelständen gefundene Fundstellen;
+- nur mit neuem Regelstand gefundene Fundstellen;
+- Relevanzeinschätzung der zusätzlich entdeckten Fundstellen.
+
+Erst die Kombination aus Bewertungswirkung und Entdeckungswirkung erlaubt eine belastbare Beurteilung, ob eine neue Regel zu eng, passend oder unbeabsichtigt zu weit wirkt.
+
+Ein Regeltest verändert keine regulären Fachobjekte und erzeugt keinen normalen Arbeitskorb-Eintrag. Erst nach Aktivierung gilt die neue Regel für produktive Rechercheläufe.
+
 ## Änderungshistorie
 
 | Version | Datum | Änderung |
