@@ -164,6 +164,19 @@ Die Fachfunktionen werden in `docs/MVP-Fachfunktionen.md` definiert. Dieses Teil
 - `register_finding`,
 - zugehörige `get_*`-/`list_*`-Zugriffe.
 
+## Regelstand je Recherchelauf und Testläufe
+
+Jeder produktive Recherchelauf speichert den verwendeten Recherche- und Relevanzregelstand.
+
+Regeltests sind von produktiven Rechercheläufen getrennt. Ein Regeltest kann zwei Teile enthalten:
+
+- Regression über einen historischen Testbestand mit relevanten, nicht relevanten und unklaren Fundstellen;
+- Probe-Recherche mit altem und neuem Regelstand zur Ermittlung der Entdeckungsdifferenz.
+
+Fundstellen, die fachlich als nicht relevant abgeschlossen wurden, bleiben für diese Regression verfügbar und werden nicht allein wegen dieser Einstufung gelöscht.
+
+Testergebnisse werden dem Regelentwurf zugeordnet. Sie verändern weder den Status historischer Fundstellen noch erzeugen sie ohne gesonderte Bestätigung neue produktive Recherchekandidaten.
+
 ## Änderungshistorie
 
 | Version | Datum | Änderung |
