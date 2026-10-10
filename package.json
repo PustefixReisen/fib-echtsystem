@@ -7,9 +7,11 @@
     "packages/*"
   ],
   "scripts": {
-    "typecheck": "tsc -p tsconfig.base.json --noEmit"
+    "typecheck": "tsc -p tsconfig.base.json --noEmit",
+    "test:fachservices": "tsx tests/run-fachservices.ts"
   },
   "devDependencies": {
-    "typescript": "^5.9.0"
+    "typescript": "^5.9.0",
+    "tsx": "^4.20.0"
   }
 }
