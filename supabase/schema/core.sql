@@ -217,7 +217,7 @@ create table if not exists fib.handover_requests (
   requested_user_id uuid not null references fib.app_users(user_id) on delete restrict,
   message text,
   status text not null default 'open'
-    check (status in ('open', 'accepted', 'declined', 'done', 'void')),
+    check (status in ('open', 'accepted', 'declined', 'completed', 'obsolete')),
   created_at timestamptz not null default now(),
   responded_at timestamptz,
   check (requested_by_user_id <> requested_user_id)

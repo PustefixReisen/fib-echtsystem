@@ -54,6 +54,16 @@ function requireHuman(actor: FibActorContext) {
   return decision.allowed && actor.actorKind === 'human' && !!actor.userId;
 }
 
+async function isActiveFibUser(userId: string, db: FibSqlExecutor) {
+  const row = await db.queryOne<{ user_id: string }>(
+    `select user_id
+       from fib.app_users
+      where user_id = $1 and active = true and setup_status = 'active'`,
+    [userId],
+  );
+  return !!row;
+}
+
 export async function manageLeadResponsibility(
   actor: FibActorContext,
   object: FibObjectRef,
@@ -61,6 +71,10 @@ export async function manageLeadResponsibility(
   db: FibSqlExecutor,
 ) {
   if (!requireHuman(actor)) return { ok: false as const, reason: 'forbidden' as const };
+
+  if (userId !== null && !(await isActiveFibUser(userId, db))) {
+    return { ok: false as const, reason: 'target_user_not_active' as const };
+  }
 
   if (userId === null) {
     await db.queryOne(
@@ -196,6 +210,12 @@ export async function requestHandover(
   db: FibSqlExecutor,
 ) {
   if (!requireHuman(actor) || !actor.userId) return { ok: false as const, reason: 'forbidden' as const };
+  if (!(await isActiveFibUser(requestedUserId, db))) {
+    return { ok: false as const, reason: 'target_user_not_active' as const };
+  }
+  if (requestedUserId === actor.userId) {
+    return { ok: false as const, reason: 'cannot_request_self' as const };
+  }
 
   const row = await db.queryOne<HandoverRow>(
     `insert into fib.handover_requests(
@@ -223,7 +243,7 @@ export async function requestHandover(
 export async function respondHandover(
   actor: FibActorContext,
   requestId: string,
-  status: Exclude<FibHandoverStatus, 'open'>,
+  status: Extract<FibHandoverStatus, 'accepted' | 'declined'>,
   db: FibSqlExecutor,
 ) {
   if (!requireHuman(actor) || !actor.userId) return { ok: false as const, reason: 'forbidden' as const };
