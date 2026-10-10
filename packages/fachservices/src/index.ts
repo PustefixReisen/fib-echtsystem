@@ -5,3 +5,5 @@ export * from './get-event.js';
 export * from './supabase-auth.js';
 export * from './authenticated-get-event.js';
 export * from './mfa.js';
+export * from './coordination.js';
+export * from './user-management.js';
