@@ -119,27 +119,9 @@ export function App() {
     setCode('');
     setMessage('MFA-Einrichtung wird vorbereitet …');
 
-    const { data: factors, error: factorsError } = await supabase.auth.mfa.listFactors();
-    if (factorsError) {
-      setMessage('Vorhandene MFA-Faktoren konnten nicht geprüft werden.');
-      return;
-    }
-
-    const unfinishedFibFactors = factors.totp.filter(
-      (factor) => factor.status === 'unverified' && factor.friendly_name === 'FIB Redaktionszugang',
-    );
-
-    for (const factor of unfinishedFibFactors) {
-      const { error: unenrollError } = await supabase.auth.mfa.unenroll({ factorId: factor.id });
-      if (unenrollError) {
-        setMessage('Eine frühere, nicht abgeschlossene MFA-Einrichtung konnte nicht bereinigt werden.');
-        return;
-      }
-    }
-
     const { data, error } = await supabase.auth.mfa.enroll({
       factorType: 'totp',
-      friendlyName: 'FIB Redaktionszugang',
+      friendlyName: `FIB Redaktionszugang ${new Date().toISOString()}`,
     });
 
     if (error || !data.totp) {
@@ -151,6 +133,21 @@ export function App() {
     setQrCode(data.totp.qr_code);
     setTotpSecret(data.totp.secret);
     setMessage('Authenticator einrichten: QR-Code scannen oder auf demselben Gerät den Schlüssel manuell in Aegis bzw. einer anderen Authenticator-App eintragen.');
+  }
+
+  async function restartTotpEnrollment() {
+    const currentFactorId = factorId;
+
+    setFactorId(null);
+    setQrCode(null);
+    setTotpSecret(null);
+    setCode('');
+
+    if (currentFactorId) {
+      await supabase.auth.mfa.unenroll({ factorId: currentFactorId });
+    }
+
+    await enrollTotp();
   }
 
   async function copyTotpSecret() {
@@ -167,22 +164,6 @@ export function App() {
     if (!factorId || !code.trim()) return;
 
     const activeFactorId = factorId;
-    const { data: factors, error: factorsError } = await supabase.auth.mfa.listFactors();
-    if (factorsError) {
-      setMessage('MFA-Faktor konnte vor der Bestätigung nicht geprüft werden.');
-      return;
-    }
-
-    const activeFactor = factors.totp.find((factor) => factor.id === activeFactorId);
-    if (!activeFactor) {
-      setFactorId(null);
-      setQrCode(null);
-      setTotpSecret(null);
-      setCode('');
-      setMessage('Die MFA-Einrichtung ist nicht mehr gültig. Bitte Authenticator erneut einrichten.');
-      return;
-    }
-
     const { error } = await supabase.auth.mfa.challengeAndVerify({
       factorId: activeFactorId,
       code: code.trim(),
@@ -191,7 +172,7 @@ export function App() {
     setCode('');
 
     if (error) {
-      setMessage('Der MFA-Code konnte nicht bestätigt werden. Bitte einen aktuellen Code aus genau diesem Aegis-Eintrag verwenden.');
+      setMessage('Der MFA-Code konnte nicht bestätigt werden. Bitte einen aktuellen Code aus genau diesem Aegis-Eintrag verwenden. Falls die Einrichtung unterbrochen wurde, bitte „Einrichtung neu starten“ wählen.');
       return;
     }
 
@@ -309,7 +290,8 @@ export function App() {
               <p>
                 <code style={{ overflowWrap: 'anywhere', userSelect: 'all' }}>{totpSecret}</code>
               </p>
-              <button type="button" onClick={copyTotpSecret}>Schlüssel kopieren</button>
+              <button type="button" onClick={copyTotpSecret}>Schlüssel kopieren</button>{' '}
+              <button type="button" onClick={restartTotpEnrollment}>Einrichtung neu starten</button>
               <p style={{ marginBottom: 0, fontSize: '.9rem' }}>
                 Der Schlüssel ist geheim. Nicht weitergeben oder außerhalb des Passwort-/Authenticator-Systems speichern.
               </p>
