@@ -198,6 +198,14 @@ create table if not exists fib.lead_responsibilities (
   primary key (object_type, object_id)
 );
 
+create table if not exists fib.object_last_edits (
+  object_type text not null check (object_type in ('finding', 'event', 'message', 'process', 'topic')),
+  object_id uuid not null,
+  user_id uuid not null references fib.app_users(user_id) on delete restrict,
+  edited_at timestamptz not null default now(),
+  primary key (object_type, object_id)
+);
+
 create table if not exists fib.edit_locks (
   object_type text not null check (object_type in ('finding', 'event', 'message', 'process', 'topic')),
   object_id uuid not null,
@@ -225,6 +233,8 @@ create table if not exists fib.handover_requests (
 
 create index if not exists idx_fib_lead_responsibilities_user
   on fib.lead_responsibilities (user_id);
+create index if not exists idx_fib_object_last_edits_user
+  on fib.object_last_edits (user_id, edited_at desc);
 create index if not exists idx_fib_edit_locks_expires_at
   on fib.edit_locks (expires_at);
 create index if not exists idx_fib_handover_requests_recipient_status
@@ -271,6 +281,7 @@ alter table fib.event_findings enable row level security;
 alter table fib.handover_requests enable row level security;
 alter table fib.edit_locks enable row level security;
 alter table fib.lead_responsibilities enable row level security;
+alter table fib.object_last_edits enable row level security;
 
 revoke all on all tables in schema fib from anon, authenticated, service_role;
 revoke all on all sequences in schema fib from anon, authenticated, service_role;
