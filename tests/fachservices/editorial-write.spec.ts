@@ -1,6 +1,7 @@
 import type { FibActorContext } from '@fib/domain-contracts';
 import {
   confirmEvent,
+  editEvent,
   editMessageDraft,
   manageProcess,
   type FibSqlExecutor,
@@ -23,6 +24,8 @@ class FakeDb implements FibSqlExecutor {
   inheritedLeadUser: string | null = null;
   eventLeadOwner: string | null = 'editor-2';
   processUpdated = false;
+  eventUpdated = false;
+  ownsEventLock = true;
 
   async queryOne<T>(sql: string, params: readonly unknown[]): Promise<T | null> {
     if (sql.includes('select id from fib.findings')) return { id: params[0] } as T;
@@ -40,6 +43,13 @@ class FakeDb implements FibSqlExecutor {
         user_id: params[2],
         assigned_at: '2026-10-10T20:00:00Z',
       } as T;
+    }
+    if (sql.includes('from fib.edit_locks')) {
+      return this.ownsEventLock ? ({ user_id: 'editor-1' } as T) : null;
+    }
+    if (sql.includes('update fib.events')) {
+      this.eventUpdated = true;
+      return { id: params[0] } as T;
     }
     if (sql.includes('insert into fib.object_last_edits')) {
       this.lastEditUser = String(params[2]);
@@ -110,4 +120,37 @@ export async function caseProcessUpdateRecordsLastEditWithoutLeadReassignment() 
   assert(db.processUpdated, 'process update must reach persistence layer');
   assert(db.lastEditUser === 'editor-1', 'process update must record last editor');
   assert(db.inheritedLeadUser === 'existing-owner', 'process update must not reassign lead');
+}
+
+export async function caseEventEditRequiresOwnedActiveLock() {
+  const db = new FakeDb();
+  db.ownsEventLock = false;
+
+  const result = await editEvent(
+    editor,
+    { eventId: 'event-1', title: 'Geänderter Titel' },
+    db,
+  );
+
+  assert(!result.ok && result.reason === 'active_edit_lock_required', 'event edit must require an owned active lock');
+  assert(!db.eventUpdated, 'event must not be written without active lock');
+}
+
+export async function caseEventEditRecordsLastEdit() {
+  const db = new FakeDb();
+
+  const result = await editEvent(
+    editor,
+    {
+      eventId: 'event-1',
+      title: 'Geänderter Titel',
+      summary: 'Neue Zusammenfassung',
+      occurredAt: '2026-10-11T05:00:00Z',
+    },
+    db,
+  );
+
+  assert(result.ok, 'event edit with owned lock must succeed');
+  assert(db.eventUpdated, 'event update must reach persistence layer');
+  assert(db.lastEditUser === 'editor-1', 'event edit must record last editor');
 }
