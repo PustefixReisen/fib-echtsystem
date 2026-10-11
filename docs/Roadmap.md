@@ -150,6 +150,7 @@ Der Arbeitskorb bleibt nach dem Fachkonzept ein nachgeordneter Ort für offene o
 Erster sichtbarer Stand:
 
 - produktionsnaher Redaktionsrahmen nach erfolgreicher MFA-Anmeldung,
+- vollständiger sichtbarer Anwendungskontext mit Kopfzeile, globaler Suche, rollenabhängiger Benutzeranzeige und der im UI-Konzept festgelegten Hauptnavigation,
 - Dashboard mit den konzeptionell vorgesehenen Statusbereichen,
 - reales Ereignis aus dem bestehenden FIB-Fachservice als erster Arbeitsfall,
 - Ereignisdetail mit Breadcrumb, getrenntem Zustand/Status und nächstem Schritt,
