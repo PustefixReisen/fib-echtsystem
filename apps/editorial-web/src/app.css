@@ -208,3 +208,16 @@ h3 { margin-bottom: .45rem; }
   .brand-logo { width: 122px; }
   .app-label { font-size: .85rem; }
 }
+
+.dashboard-secondary {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+.dashboard-secondary .panel p:last-child { margin-bottom: 0; color: #68746c; }
+.dashboard-workbasket { margin-top: 1rem; }
+
+@media (max-width: 760px) {
+  .dashboard-secondary { grid-template-columns: 1fr; }
+}
