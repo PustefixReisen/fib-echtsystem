@@ -4,7 +4,7 @@
 
 | Version | Stand | Status |
 |---|---|---|
-| 0.1 | 08.10.2026 | abgestimmter Konzeptstand |
+| 0.2 | 11.10.2026 | Benutzerkontext, Dashboard-Reichweiten und Navigations-/Zurückverhalten präzisiert |
 
 ## 1. Zweck
 
@@ -103,7 +103,8 @@ Enthält:
 - FIB-Logo
 - Kennzeichnung „Redaktionssystem“
 - globale interne Suche
-- Benutzer und Rolle
+
+Benutzerkontext und Sitzungshandlungen stehen nicht dauerhaft in der Kopfzeile, sondern am unteren Ende der primären Navigation. Dort werden **Name bzw. Rufname, Rolle und „Abmelden“** gemeinsam angezeigt. Der technische Sicherheitszustand „MFA aktiv“ wird im normalen Arbeitskontext nicht dauerhaft eingeblendet; MFA wird nur dort thematisiert, wo Einrichtung, erneute Bestätigung oder Administration dies erfordern.
 
 Die Suche ist ausdrücklich als **„In FIB suchen …“** gekennzeichnet.
 
@@ -130,6 +131,15 @@ Vier kompakte Statuskarten:
 - Systemhinweise
 
 Die Karten zeigen nur handlungsrelevante Mengen und Zustände.
+
+Die Reichweite der vier Karten ist verbindlich unterschiedlich:
+
+- **Neue Funde** zeigt alle aktuell neuen Funde, die für die angemeldete Rolle sichtbar sind; keine automatische Einschränkung auf die angemeldete Person.
+- **Meine Aufgaben** ist die standardmäßig personenbezogene Karte. Sie zeigt nur Arbeitsbedarf, der der angemeldeten Person konkret zugeordnet ist, insbesondere über Federführung, persönliche Übernahmeanfrage oder eine andere ausdrückliche Aufgaben-Zuordnung.
+- **Freigaben** zeigt alle anstehenden Freigaben, die die angemeldete Rolle bearbeiten darf; keine automatische Einschränkung auf die angemeldete Person.
+- **Systemhinweise** zeigt alle für die angemeldete Rolle relevanten Handlungs- oder Störungshinweise.
+
+In Listen und Auswertungen dürfen später zusätzliche optionale Filter wie „nur meine“ angeboten werden. Diese ändern nicht die Grundbedeutung der Dashboard-Karten.
 
 ### 6.3 „Als Nächstes bearbeiten“
 
@@ -306,7 +316,16 @@ Damit trotz Direkteinstieg jederzeit erkennbar bleibt, **wo sich die Redaktion b
 
 > Inhalte › Vorgänge › Ausbau BAB Kreuz München Ost
 
-Die Breadcrumbs dienen sowohl der Orientierung als auch dem direkten Rücksprung auf übergeordnete Ebenen. Zusätzlich soll der Rückweg zur jeweiligen Listen-/Auswahlansicht klar erreichbar bleiben.
+Die Breadcrumbs dienen sowohl der Orientierung als auch dem direkten Rücksprung auf übergeordnete Ebenen. **Alle übergeordneten Breadcrumb-Einträge sind anklickbar**; der aktuelle Eintrag ist nicht anklickbar.
+
+Breadcrumb und Zurück-Funktion haben unterschiedliche Aufgaben:
+
+- **Breadcrumb** = fachlich-logischer Ort im System; ein Klick führt gezielt zu der gewählten übergeordneten Ebene.
+- **Zurück** = tatsächlicher vorheriger Anwendungskontext; die Aktion verwendet die interne Browser-/App-Historie und soll dadurch möglichst genau zur vorherigen Ansicht einschließlich später vorhandener Filter-, Auswahl- und Scrollzustände zurückkehren.
+- Gibt es bei einem Direkteinstieg keinen vorherigen internen Anwendungskontext, führt „Zurück“ auf den fachlich sinnvollen Elternbereich.
+- unspezifische Aktionen wie **„Zur Übersicht“** werden in Detailansichten vermieden, weil unklar ist, welche Übersicht gemeint ist.
+
+Zusätzlich soll der Rückweg zur jeweiligen Listen-/Auswahlansicht klar erreichbar bleiben.
 
 ## 10. Objektkopf: Zustand/Status und nächste Schritte trennen
 
