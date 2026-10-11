@@ -1,5 +1,6 @@
 import { FormEvent, useEffect, useState } from 'react';
 import { supabase } from './supabase.js';
+import fibLogo from '../../../assets/brand/logo/fib-logo-primary-approved.png';
 import './app.css';
 
 type AuthState = 'signed_out' | 'aal1_no_factor' | 'aal1_factor_available' | 'aal2';
@@ -67,6 +68,13 @@ export function App() {
   const [sessionContext, setSessionContext] = useState<SessionContext | null>(null);
   const [navigationOpen, setNavigationOpen] = useState(false);
 
+  function navigateTo(nextView: EditorialView) {
+    if (nextView === view) return;
+    window.history.pushState({ fibView: nextView }, '', window.location.href);
+    setView(nextView);
+    setNavigationOpen(false);
+  }
+
   async function refreshAuthState() {
     const { data: sessionData } = await supabase.auth.getSession();
     if (!sessionData.session) {
@@ -115,9 +123,20 @@ export function App() {
   }
 
   useEffect(() => {
+    window.history.replaceState({ ...(window.history.state ?? {}), fibView: 'dashboard' }, '', window.location.href);
+    const onPopState = (event: PopStateEvent) => {
+      const nextView = event.state?.fibView === 'event' ? 'event' : 'dashboard';
+      setView(nextView);
+      setNavigationOpen(false);
+    };
+    window.addEventListener('popstate', onPopState);
+
     void refreshAuthState();
     const { data } = supabase.auth.onAuthStateChange(() => void refreshAuthState());
-    return () => data.subscription.unsubscribe();
+    return () => {
+      window.removeEventListener('popstate', onPopState);
+      data.subscription.unsubscribe();
+    };
   }, []);
 
   useEffect(() => {
@@ -407,31 +426,20 @@ export function App() {
       <header className="topbar">
         <div className="brand-block">
           <button className="menu-toggle" onClick={() => setNavigationOpen((open) => !open)} aria-label="Navigation öffnen oder schließen">☰</button>
-          <div className="brand-mark" aria-hidden="true">FIB</div>
-          <div>
-            <p className="eyebrow">Feldkirchen im Blick</p>
-            <strong>Redaktionssystem</strong>
-          </div>
+          <img src={fibLogo} alt="Feldkirchen im Blick" className="brand-logo" />
+          <strong className="app-label">Redaktionssystem</strong>
         </div>
 
         <label className="global-search">
           <span className="sr-only">In FIB suchen</span>
           <input type="search" placeholder="In FIB suchen …" disabled title="Die globale Suche wird in einem späteren Slice angebunden." />
         </label>
-
-        <div className="topbar-actions">
-          <div className="user-context">
-            <strong>{sessionContext?.displayName ?? 'FIB-Redaktion'}</strong>
-            <span>{isAdmin ? 'Admin' : 'Redakteur'} · MFA aktiv</span>
-          </div>
-          <button onClick={logout}>Abmelden</button>
-        </div>
       </header>
 
       <div className="app-layout">
         <aside className={`side-nav ${navigationOpen ? 'open' : ''}`} aria-label="Hauptnavigation">
           <div className="nav-section">
-            <button className={view === 'dashboard' ? 'nav-item active' : 'nav-item'} onClick={() => { setView('dashboard'); setNavigationOpen(false); }}>Dashboard</button>
+            <button className={view === 'dashboard' ? 'nav-item active' : 'nav-item'} onClick={() => navigateTo('dashboard')}>Dashboard</button>
             <button className="nav-item" disabled>Arbeitskorb <span>folgt</span></button>
           </div>
 
@@ -479,6 +487,14 @@ export function App() {
               <button className="nav-item" disabled>Audit</button>
             </div>
           )}
+
+          <div className="nav-user">
+            <div>
+              <strong>{sessionContext?.displayName ?? 'FIB-Redaktion'}</strong>
+              <span>{isAdmin ? 'Admin' : 'Redakteur'}</span>
+            </div>
+            <button onClick={logout}>Abmelden</button>
+          </div>
         </aside>
 
         {navigationOpen && <button className="nav-backdrop" aria-label="Navigation schließen" onClick={() => setNavigationOpen(false)} />}
@@ -519,7 +535,7 @@ export function App() {
                     {eventResult.summary && <p>{eventResult.summary}</p>}
                     <p className="meta">Zustand: {eventStatusLabel(eventResult.status)} · Federführung: {coordination?.lead ? (coordination.lead.mine ? 'Du' : coordination.lead.displayName) : 'niemand'}</p>
                   </div>
-                  <button className="primary" onClick={() => setView('event')}>Öffnen</button>
+                  <button className="primary" onClick={() => navigateTo('event')}>Öffnen</button>
                 </article>
               )}
             </section>
@@ -534,11 +550,9 @@ export function App() {
         {view === 'event' && eventResult && (
           <>
             <nav className="breadcrumbs" aria-label="Brotkrumen">
-              <button onClick={() => setView('dashboard')}>Dashboard</button>
+              <button onClick={() => navigateTo('dashboard')}>Dashboard</button>
               <span>›</span>
-              <span>Ereignisse</span>
-              <span>›</span>
-              <span aria-current="page">{eventResult.title}</span>
+              <span aria-current="page">Ereignis</span>
             </nav>
 
             <div className="page-heading event-heading">
@@ -547,7 +561,7 @@ export function App() {
                 <h1>{eventResult.title}</h1>
                 {eventResult.summary && <p>{eventResult.summary}</p>}
               </div>
-              <button onClick={() => setView('dashboard')}>Zur Übersicht</button>
+              <button onClick={() => window.history.back()}>Zurück</button>
             </div>
 
             <section className="object-status">
