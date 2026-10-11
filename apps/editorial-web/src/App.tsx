@@ -237,7 +237,7 @@ export function App() {
 
     if (error) {
       if (!quiet) setCoordinationMessage(error.message || 'Koordinationsfunktion konnte nicht aufgerufen werden.');
-      return;
+      return false;
     }
 
     if (!data?.ok) {
@@ -249,7 +249,7 @@ export function App() {
             ? 'Die Bearbeitungssperre ist abgelaufen. Bitte Bearbeitung neu starten.'
             : 'Koordinationsaktion konnte nicht ausgeführt werden.',
       );
-      return;
+      return false;
     }
 
     setCoordination(data.state);
@@ -262,12 +262,13 @@ export function App() {
       release_lock: 'Bearbeitung beendet.',
     };
     if (!quiet) setCoordinationMessage(messages[action]);
+    return true;
   }
 
   async function startEventEditing() {
     if (!eventResult) return;
-    await runCoordinationAction('acquire_lock');
-    await loadCoordinationState();
+    const acquired = await runCoordinationAction('acquire_lock');
+    if (!acquired) return;
     setEditTitle(eventResult.title);
     setEditSummary(eventResult.summary ?? '');
     setEditOccurredAt(eventResult.occurredAt ? eventResult.occurredAt.slice(0, 10) : '');
