@@ -73,6 +73,7 @@ export function App() {
     window.history.pushState({ fibView: nextView }, '', window.location.href);
     setView(nextView);
     setNavigationOpen(false);
+    if (nextView === 'dashboard') void loadEditorialStart();
   }
 
   async function refreshAuthState() {
@@ -128,6 +129,7 @@ export function App() {
       const nextView = event.state?.fibView === 'event' ? 'event' : 'dashboard';
       setView(nextView);
       setNavigationOpen(false);
+      if (nextView === 'dashboard') void loadEditorialStart();
     };
     window.addEventListener('popstate', onPopState);
 
@@ -533,7 +535,7 @@ export function App() {
                     <span className="tag">Ereignis</span>
                     <h3>{eventResult.title}</h3>
                     {eventResult.summary && <p>{eventResult.summary}</p>}
-                    <p className="meta">Zustand: {eventStatusLabel(eventResult.status)} · Federführung: {coordination?.lead ? (coordination.lead.mine ? 'Du' : coordination.lead.displayName) : 'niemand'}</p>
+                    <p className="meta">Zustand: {eventStatusLabel(eventResult.status)} · Federführung: {coordination?.lead ? (coordination.lead.mine ? (sessionContext?.displayName ?? 'angemeldeter Benutzer') : coordination.lead.displayName) : 'niemand'}</p>
                   </div>
                   <button className="primary" onClick={() => navigateTo('event')}>Öffnen</button>
                 </article>
@@ -635,7 +637,7 @@ export function App() {
 
               <aside className="panel">
                 <h2>Redaktionelle Koordination</h2>
-                <p><strong>Federführung:</strong> {coordination?.lead ? (coordination.lead.mine ? 'Du' : coordination.lead.displayName) : 'niemand'}</p>
+                <p><strong>Federführung:</strong> {coordination?.lead ? (coordination.lead.mine ? (sessionContext?.displayName ?? 'angemeldeter Benutzer') : coordination.lead.displayName) : 'niemand'}</p>
                 <p><strong>Bearbeitung:</strong> {coordination?.lock ? (coordination.lock.mine ? 'von dir gesperrt' : `gesperrt durch ${coordination.lock.displayName}`) : 'frei'}</p>
                 <p><strong>Letzte Bearbeitung:</strong> {coordination?.lastEdit ? `${coordination.lastEdit.displayName} · ${new Date(coordination.lastEdit.editedAt).toLocaleString('de-DE')}` : 'noch nicht erfasst'}</p>
 
