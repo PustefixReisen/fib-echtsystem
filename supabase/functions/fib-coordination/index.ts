@@ -61,11 +61,17 @@ export default {
         "select l.user_id, coalesce(nullif(u.call_name,''), nullif(u.full_name,''), 'Unbekannt') display_name, l.expires_at from fib.edit_locks l join fib.app_users u on u.user_id=l.user_id where l.object_type=$1 and l.object_id=$2::uuid and l.expires_at>now()",
         [objectType, objectId]
       );
+      const lastEdit = await sql.unsafe(
+        "select e.user_id, coalesce(nullif(u.call_name,''), nullif(u.full_name,''), 'Unbekannt') display_name, e.edited_at from fib.object_last_edits e join fib.app_users u on u.user_id=e.user_id where e.object_type=$1 and e.object_id=$2::uuid",
+        [objectType, objectId]
+      );
       const l1 = lead[0] as any;
       const l2 = lock[0] as any;
+      const l3 = lastEdit[0] as any;
       return {
         lead: l1 ? { userId: l1.user_id, displayName: l1.display_name, mine: l1.user_id === uid } : null,
         lock: l2 ? { userId: l2.user_id, displayName: l2.display_name, expiresAt: l2.expires_at, mine: l2.user_id === uid } : null,
+        lastEdit: l3 ? { userId: l3.user_id, displayName: l3.display_name, editedAt: l3.edited_at } : null,
       };
     }
 
@@ -88,6 +94,12 @@ export default {
       if (action === 'acquire_lock') {
         const rows = await sql.unsafe("insert into fib.edit_locks(object_type,object_id,user_id,acquired_at,renewed_at,expires_at) values ($1,$2::uuid,$3,now(),now(),now()+interval '2 minutes') on conflict (object_type,object_id) do update set user_id=excluded.user_id,acquired_at=case when fib.edit_locks.user_id=excluded.user_id then fib.edit_locks.acquired_at else now() end,renewed_at=now(),expires_at=excluded.expires_at where fib.edit_locks.user_id=excluded.user_id or fib.edit_locks.expires_at<=now() returning user_id", [objectType,objectId,uid]);
         if (rows.length === 0) return json({ ok:false, error:'locked_by_other', state: await state() }, 409);
+        return json({ ok:true, state: await state() });
+      }
+
+      if (action === 'renew_lock') {
+        const rows = await sql.unsafe("update fib.edit_locks set renewed_at=now(),expires_at=now()+interval '2 minutes' where object_type=$1 and object_id=$2::uuid and user_id=$3 and expires_at>now() returning user_id", [objectType,objectId,uid]);
+        if (rows.length === 0) return json({ ok:false, error:'lock_missing_or_not_owned', state: await state() }, 409);
         return json({ ok:true, state: await state() });
       }
 
