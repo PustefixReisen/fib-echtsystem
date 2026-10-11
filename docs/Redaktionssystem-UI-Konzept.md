@@ -367,6 +367,12 @@ Für Objektlisten gelten folgende UI-Regeln:
 - Neben Filtern besitzt jede Objektliste eine **auf diese Liste beschränkte Suche**. Sie durchsucht nur die aktuell angezeigte Objektart und ist von der globalen Suche **„In FIB suchen …“** zu unterscheiden.
 - Aktionen zum Anlegen eines neuen Objekts werden systemweit nach dem Muster **„Neue/Neuer/Neues <Objekt>“** beschriftet, z. B. **„Neues Thema“**, **„Neue Meldung“**, **„Neuer Vorgang“**. Dies ist kürzer und über alle Bereiche konsistent.
 
+### 11.1 Benennung des angemeldeten Benutzers
+
+Wo die Oberfläche eine konkrete Person nennt, wird auch für die angemeldete Person der **Rufname** verwendet. Generische Selbstbezüge wie „Du“, „deine Bearbeitung“ oder ähnliche Ersatzbezeichnungen werden vermieden, wenn der Benutzer eindeutig als Person angezeigt werden kann.
+
+Ist kein Rufname gepflegt, wird der vollständige Name verwendet.
+
 ## 12. UI-Statusbegriffe
 
 Technische Workflowstufen wie S0–S3 bleiben Teil des internen Regelwerks, der Fachlogik und des Audits. In der normalen Redaktionsoberfläche werden stattdessen verständliche Klartextbegriffe verwendet.
