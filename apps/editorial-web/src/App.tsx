@@ -8,6 +8,7 @@ type EditorialView = 'dashboard' | 'event';
 type CoordinationState = {
   lead: { userId: string; displayName: string; mine: boolean } | null;
   lock: { userId: string; displayName: string; expiresAt: string; mine: boolean } | null;
+  lastEdit: { userId: string; displayName: string; editedAt: string } | null;
 };
 
 type CoordinationResult =
@@ -48,6 +49,12 @@ export function App() {
   const [coordination, setCoordination] = useState<CoordinationState | null>(null);
   const [coordinationMessage, setCoordinationMessage] = useState<string | null>(null);
   const [coordinationRunning, setCoordinationRunning] = useState(false);
+  const [editingEvent, setEditingEvent] = useState(false);
+  const [editTitle, setEditTitle] = useState('');
+  const [editSummary, setEditSummary] = useState('');
+  const [editOccurredAt, setEditOccurredAt] = useState('');
+  const [editSaving, setEditSaving] = useState(false);
+  const [editMessage, setEditMessage] = useState<string | null>(null);
 
   async function refreshAuthState() {
     const { data: sessionData } = await supabase.auth.getSession();
@@ -105,6 +112,16 @@ export function App() {
       void loadEditorialStart();
     }
   }, [state]);
+
+  useEffect(() => {
+    if (!editingEvent || !coordination?.lock?.mine) return;
+
+    const timer = window.setInterval(() => {
+      void runCoordinationAction('renew_lock', true);
+    }, 60_000);
+
+    return () => window.clearInterval(timer);
+  }, [editingEvent, coordination?.lock?.mine]);
 
   async function login(event: FormEvent) {
     event.preventDefault();
@@ -208,27 +225,29 @@ export function App() {
     await Promise.all([loadEvent(), loadCoordinationState()]);
   }
 
-  async function runCoordinationAction(action: 'get_state' | 'take_lead' | 'release_lead' | 'acquire_lock' | 'release_lock') {
-    setCoordinationRunning(true);
-    setCoordinationMessage(null);
+  async function runCoordinationAction(action: 'get_state' | 'take_lead' | 'release_lead' | 'acquire_lock' | 'renew_lock' | 'release_lock', quiet = false) {
+    if (!quiet) setCoordinationRunning(true);
+    if (!quiet) setCoordinationMessage(null);
 
     const { data, error } = await supabase.functions.invoke<CoordinationResult>('fib-coordination', {
       body: { action, objectType: 'event', objectId: LIVE_TEST_EVENT_ID },
     });
 
-    setCoordinationRunning(false);
+    if (!quiet) setCoordinationRunning(false);
 
     if (error) {
-      setCoordinationMessage(error.message || 'Koordinationsfunktion konnte nicht aufgerufen werden.');
+      if (!quiet) setCoordinationMessage(error.message || 'Koordinationsfunktion konnte nicht aufgerufen werden.');
       return;
     }
 
     if (!data?.ok) {
       setCoordination(data?.state ?? null);
-      setCoordinationMessage(
+      if (!quiet) setCoordinationMessage(
         data?.error === 'locked_by_other'
           ? 'Bearbeitung derzeit durch eine andere Person gesperrt.'
-          : 'Koordinationsaktion konnte nicht ausgeführt werden.',
+          : data?.error === 'lock_missing_or_not_owned'
+            ? 'Die Bearbeitungssperre ist abgelaufen. Bitte Bearbeitung neu starten.'
+            : 'Koordinationsaktion konnte nicht ausgeführt werden.',
       );
       return;
     }
@@ -239,9 +258,56 @@ export function App() {
       take_lead: 'Federführung übernommen.',
       release_lead: 'Federführung abgegeben.',
       acquire_lock: 'Bearbeitung gestartet.',
+      renew_lock: 'Bearbeitungssperre erneuert.',
       release_lock: 'Bearbeitung beendet.',
     };
-    setCoordinationMessage(messages[action]);
+    if (!quiet) setCoordinationMessage(messages[action]);
+  }
+
+  async function startEventEditing() {
+    if (!eventResult) return;
+    await runCoordinationAction('acquire_lock');
+    await loadCoordinationState();
+    setEditTitle(eventResult.title);
+    setEditSummary(eventResult.summary ?? '');
+    setEditOccurredAt(eventResult.occurredAt ? eventResult.occurredAt.slice(0, 10) : '');
+    setEditMessage(null);
+    setEditingEvent(true);
+  }
+
+  async function cancelEventEditing() {
+    setEditingEvent(false);
+    setEditMessage(null);
+    if (coordination?.lock?.mine) await runCoordinationAction('release_lock');
+  }
+
+  async function saveEventEdit(event: FormEvent) {
+    event.preventDefault();
+    if (!eventResult || !editTitle.trim()) return;
+
+    setEditSaving(true);
+    setEditMessage(null);
+    const { data, error } = await supabase.functions.invoke<EventResult>('fib-editorial-write', {
+      body: {
+        action: 'edit_event',
+        eventId: eventResult.id,
+        title: editTitle.trim(),
+        summary: editSummary.trim() || null,
+        occurredAt: editOccurredAt ? `${editOccurredAt}T00:00:00` : null,
+      },
+    });
+    setEditSaving(false);
+
+    if (error || !data?.ok) {
+      setEditMessage(error?.message || 'Änderungen konnten nicht gespeichert werden.');
+      return;
+    }
+
+    setEventResult(data.event);
+    setEditingEvent(false);
+    setEditMessage('Änderungen gespeichert.');
+    await runCoordinationAction('release_lock', true);
+    await loadCoordinationState();
   }
 
   async function logout() {
@@ -252,6 +318,7 @@ export function App() {
     setCoordination(null);
     setCoordinationMessage(null);
     setTotpSecret(null);
+    setEditingEvent(false);
     setView('dashboard');
   }
 
@@ -404,27 +471,54 @@ export function App() {
 
             <div className="detail-grid">
               <section className="panel">
-                <h2>Ereignisdaten</h2>
-                <dl className="data-list">
-                  <div><dt>Titel</dt><dd>{eventResult.title}</dd></div>
-                  <div><dt>Zusammenfassung</dt><dd>{eventResult.summary ?? 'Noch keine Zusammenfassung'}</dd></div>
-                  <div><dt>Ereignisdatum</dt><dd>{eventResult.occurredAt ? new Date(eventResult.occurredAt).toLocaleDateString('de-DE') : 'Noch nicht gesetzt'}</dd></div>
-                </dl>
-                <p className="implementation-note">Die Schreibfunktion ist im Fachservice vorhanden. Die UI-Anbindung für tatsächliches Bearbeiten und Speichern folgt im nächsten Teil dieses Slices.</p>
+                <div className="section-heading">
+                  <div><h2>Ereignisdaten</h2></div>
+                  {!editingEvent && (
+                    <button className="primary" onClick={startEventEditing} disabled={coordinationRunning || !!(coordination?.lock && !coordination.lock.mine)}>
+                      Bearbeiten
+                    </button>
+                  )}
+                </div>
+
+                {editingEvent ? (
+                  <form className="stack edit-form" onSubmit={saveEventEdit}>
+                    <label>Titel
+                      <input value={editTitle} onChange={(e) => setEditTitle(e.target.value)} required />
+                    </label>
+                    <label>Zusammenfassung
+                      <textarea value={editSummary} onChange={(e) => setEditSummary(e.target.value)} rows={6} />
+                    </label>
+                    <label>Ereignisdatum
+                      <input type="date" value={editOccurredAt} onChange={(e) => setEditOccurredAt(e.target.value)} />
+                    </label>
+                    <div className="button-row">
+                      <button type="submit" className="primary" disabled={editSaving}>{editSaving ? 'Speichert …' : 'Speichern'}</button>
+                      <button type="button" onClick={cancelEventEditing} disabled={editSaving}>Abbrechen</button>
+                    </div>
+                  </form>
+                ) : (
+                  <dl className="data-list">
+                    <div><dt>Titel</dt><dd>{eventResult.title}</dd></div>
+                    <div><dt>Zusammenfassung</dt><dd>{eventResult.summary ?? 'Noch keine Zusammenfassung'}</dd></div>
+                    <div><dt>Ereignisdatum</dt><dd>{eventResult.occurredAt ? new Date(eventResult.occurredAt).toLocaleDateString('de-DE') : 'Noch nicht gesetzt'}</dd></div>
+                  </dl>
+                )}
+                {editMessage && <p aria-live="polite" className="status-message">{editMessage}</p>}
               </section>
 
               <aside className="panel">
                 <h2>Redaktionelle Koordination</h2>
                 <p><strong>Federführung:</strong> {coordination?.lead ? (coordination.lead.mine ? 'Du' : coordination.lead.displayName) : 'niemand'}</p>
                 <p><strong>Bearbeitung:</strong> {coordination?.lock ? (coordination.lock.mine ? 'von dir gesperrt' : `gesperrt durch ${coordination.lock.displayName}`) : 'frei'}</p>
+                <p><strong>Letzte Bearbeitung:</strong> {coordination?.lastEdit ? `${coordination.lastEdit.displayName} · ${new Date(coordination.lastEdit.editedAt).toLocaleString('de-DE')}` : 'noch nicht erfasst'}</p>
 
                 <div className="stack compact">
                   <button onClick={() => runCoordinationAction(coordination?.lead?.mine ? 'release_lead' : 'take_lead')} disabled={coordinationRunning}>
                     {coordination?.lead?.mine ? 'Federführung abgeben' : 'Federführung übernehmen'}
                   </button>
-                  <button className="primary" onClick={() => runCoordinationAction(coordination?.lock?.mine ? 'release_lock' : 'acquire_lock')} disabled={coordinationRunning}>
+                  {!editingEvent && <button className="primary" onClick={() => runCoordinationAction(coordination?.lock?.mine ? 'release_lock' : 'acquire_lock')} disabled={coordinationRunning}>
                     {coordination?.lock?.mine ? 'Bearbeitung beenden' : 'Bearbeitung starten'}
-                  </button>
+                  </button>}
                   <button onClick={() => runCoordinationAction('get_state')} disabled={coordinationRunning}>Status aktualisieren</button>
                 </div>
 
