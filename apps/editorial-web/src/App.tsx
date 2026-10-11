@@ -540,9 +540,36 @@ export function App() {
               )}
             </section>
 
-            <section className="panel muted-panel">
+            <div className="dashboard-secondary">
+              <section className="panel">
+                <h2>Neue Funde</h2>
+                <p>Alle neuen Funde der Redaktion. Datenanbindung folgt.</p>
+              </section>
+              <section className="panel">
+                <h2>Freigaben</h2>
+                <p>Alle für deine Rolle bearbeitbaren Freigaben. Datenanbindung folgt.</p>
+              </section>
+              <section className="panel">
+                <h2>Recherche-Status</h2>
+                <p>Nur handlungsrelevante Recherchehinweise. Datenanbindung folgt.</p>
+              </section>
+              <section className="panel">
+                <h2>FIB-Assistent</h2>
+                <p>„Was möchtest du klären?“ – die Assistenten-Anbindung folgt.</p>
+              </section>
+              <section className="panel">
+                <h2>Zuletzt verändert</h2>
+                <p>Schneller Wiedereinstieg in zuletzt bearbeitete Inhalte. Datenanbindung folgt.</p>
+              </section>
+              <section className="panel">
+                <h2>Systemhinweise</h2>
+                <p>{serviceError ? 'Es gibt aktuell einen technischen Handlungsbedarf.' : 'Aktuell kein technischer Hinweis aus dem angebundenen Ereignis-Service.'}</p>
+              </section>
+            </div>
+
+            <section className="panel muted-panel dashboard-workbasket">
               <h2>Arbeitskorb</h2>
-              <p>Der Arbeitskorb bleibt bewusst nachgeordnet. Er nimmt später offene oder zurückgestellte Entscheidungen auf; er ist kein Pflicht-Zwischenschritt für jede Bearbeitung.</p>
+              <p>Offene oder bewusst zurückgestellte Entscheidungen. Er bleibt nachgeordnet und ist kein Pflicht-Zwischenschritt für jede Bearbeitung.</p>
             </section>
           </>
         )}
