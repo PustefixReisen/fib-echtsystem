@@ -1,7 +1,9 @@
 import { FormEvent, useEffect, useState } from 'react';
 import { supabase } from './supabase.js';
+import './app.css';
 
 type AuthState = 'signed_out' | 'aal1_no_factor' | 'aal1_factor_available' | 'aal2';
+type EditorialView = 'dashboard' | 'event';
 
 type CoordinationState = {
   lead: { userId: string; displayName: string; mine: boolean } | null;
@@ -12,18 +14,23 @@ type CoordinationResult =
   | { ok: true; state: CoordinationState }
   | { ok: false; error: string; state?: CoordinationState };
 
-type EventResult = {
-  ok: true;
-  event: {
-    id: string;
-    title: string;
-    summary: string | null;
-    status: 'confirmed' | 'withdrawn' | 'merged';
-    occurredAt: string | null;
-  };
+type EventData = {
+  id: string;
+  title: string;
+  summary: string | null;
+  status: 'confirmed' | 'withdrawn' | 'merged';
+  occurredAt: string | null;
 };
 
+type EventResult = { ok: true; event: EventData };
+
 const LIVE_TEST_EVENT_ID = 'ff02ffad-e2a5-4724-a94b-073a1483051d';
+
+function eventStatusLabel(status: EventData['status']) {
+  if (status === 'confirmed') return 'Bestätigt';
+  if (status === 'withdrawn') return 'Zurückgezogen';
+  return 'Zusammengeführt';
+}
 
 export function App() {
   const [email, setEmail] = useState('josef@kjwalter.de');
@@ -34,7 +41,8 @@ export function App() {
   const [totpSecret, setTotpSecret] = useState<string | null>(null);
   const [state, setState] = useState<AuthState>('signed_out');
   const [message, setMessage] = useState('');
-  const [eventResult, setEventResult] = useState<EventResult['event'] | null>(null);
+  const [view, setView] = useState<EditorialView>('dashboard');
+  const [eventResult, setEventResult] = useState<EventData | null>(null);
   const [serviceError, setServiceError] = useState<string | null>(null);
   const [serviceRunning, setServiceRunning] = useState(false);
   const [coordination, setCoordination] = useState<CoordinationState | null>(null);
@@ -52,6 +60,7 @@ export function App() {
       setServiceError(null);
       setCoordination(null);
       setCoordinationMessage(null);
+      setView('dashboard');
       return;
     }
 
@@ -63,7 +72,7 @@ export function App() {
 
     if (aal.currentLevel === 'aal2') {
       setState('aal2');
-      setMessage('Anmeldung mit MFA erfolgreich.');
+      setMessage('');
       return;
     }
 
@@ -87,28 +96,25 @@ export function App() {
 
   useEffect(() => {
     void refreshAuthState();
-
-    const { data } = supabase.auth.onAuthStateChange(() => {
-      void refreshAuthState();
-    });
-
+    const { data } = supabase.auth.onAuthStateChange(() => void refreshAuthState());
     return () => data.subscription.unsubscribe();
   }, []);
+
+  useEffect(() => {
+    if (state === 'aal2' && !eventResult && !serviceRunning) {
+      void loadEditorialStart();
+    }
+  }, [state]);
 
   async function login(event: FormEvent) {
     event.preventDefault();
     setMessage('Anmeldung wird geprüft …');
-    setEventResult(null);
-    setServiceError(null);
-
     const { error } = await supabase.auth.signInWithPassword({ email, password });
     setPassword('');
-
     if (error) {
       setMessage('Anmeldung fehlgeschlagen.');
       return;
     }
-
     await refreshAuthState();
   }
 
@@ -132,21 +138,16 @@ export function App() {
     setFactorId(data.id);
     setQrCode(data.totp.qr_code);
     setTotpSecret(data.totp.secret);
-    setMessage('Authenticator einrichten: QR-Code scannen oder auf demselben Gerät den Schlüssel manuell in Aegis bzw. einer anderen Authenticator-App eintragen.');
+    setMessage('Authenticator einrichten: QR-Code scannen oder den Schlüssel manuell in Aegis eintragen.');
   }
 
   async function restartTotpEnrollment() {
     const currentFactorId = factorId;
-
     setFactorId(null);
     setQrCode(null);
     setTotpSecret(null);
     setCode('');
-
-    if (currentFactorId) {
-      await supabase.auth.mfa.unenroll({ factorId: currentFactorId });
-    }
-
+    if (currentFactorId) await supabase.auth.mfa.unenroll({ factorId: currentFactorId });
     await enrollTotp();
   }
 
@@ -154,25 +155,22 @@ export function App() {
     if (!totpSecret) return;
     try {
       await navigator.clipboard.writeText(totpSecret);
-      setMessage('Einrichtungsschlüssel kopiert. Jetzt in Aegis als TOTP-Schlüssel einfügen.');
+      setMessage('Einrichtungsschlüssel kopiert.');
     } catch {
-      setMessage('Kopieren war nicht möglich. Den angezeigten Schlüssel bitte manuell in Aegis eingeben.');
+      setMessage('Kopieren war nicht möglich. Bitte den Schlüssel manuell übernehmen.');
     }
   }
 
   async function verifyTotp() {
     if (!factorId || !code.trim()) return;
-
-    const activeFactorId = factorId;
     const { error } = await supabase.auth.mfa.challengeAndVerify({
-      factorId: activeFactorId,
+      factorId,
       code: code.trim(),
     });
-
     setCode('');
 
     if (error) {
-      setMessage('Der MFA-Code konnte nicht bestätigt werden. Bitte einen aktuellen Code aus genau diesem Aegis-Eintrag verwenden. Falls die Einrichtung unterbrochen wurde, bitte „Einrichtung neu starten“ wählen.');
+      setMessage('Der MFA-Code konnte nicht bestätigt werden. Bitte einen aktuellen Code verwenden.');
       return;
     }
 
@@ -182,28 +180,32 @@ export function App() {
     await refreshAuthState();
   }
 
-  async function runLiveServiceTest() {
+  async function loadEvent() {
     setServiceRunning(true);
-    setEventResult(null);
     setServiceError(null);
-
     const { data, error } = await supabase.functions.invoke<EventResult>('fib-get-event', {
       body: { eventId: LIVE_TEST_EVENT_ID },
     });
-
     setServiceRunning(false);
 
-    if (error) {
-      setServiceError(error.message || 'FIB-Fachservice konnte nicht aufgerufen werden.');
-      return;
-    }
-
-    if (!data?.ok) {
-      setServiceError('FIB-Fachservice lieferte kein gültiges Ergebnis.');
-      return;
+    if (error || !data?.ok) {
+      setServiceError(error?.message || 'Ereignis konnte nicht geladen werden.');
+      return null;
     }
 
     setEventResult(data.event);
+    return data.event;
+  }
+
+  async function loadCoordinationState() {
+    const { data, error } = await supabase.functions.invoke<CoordinationResult>('fib-coordination', {
+      body: { action: 'get_state', objectType: 'event', objectId: LIVE_TEST_EVENT_ID },
+    });
+    if (!error && data?.ok) setCoordination(data.state);
+  }
+
+  async function loadEditorialStart() {
+    await Promise.all([loadEvent(), loadCoordinationState()]);
   }
 
   async function runCoordinationAction(action: 'get_state' | 'take_lead' | 'release_lead' | 'acquire_lock' | 'release_lock') {
@@ -211,11 +213,7 @@ export function App() {
     setCoordinationMessage(null);
 
     const { data, error } = await supabase.functions.invoke<CoordinationResult>('fib-coordination', {
-      body: {
-        action,
-        objectType: 'event',
-        objectId: LIVE_TEST_EVENT_ID,
-      },
+      body: { action, objectType: 'event', objectId: LIVE_TEST_EVENT_ID },
     });
 
     setCoordinationRunning(false);
@@ -240,8 +238,8 @@ export function App() {
       get_state: 'Koordinationsstatus aktualisiert.',
       take_lead: 'Federführung übernommen.',
       release_lead: 'Federführung abgegeben.',
-      acquire_lock: 'Bearbeitungssperre gesetzt.',
-      release_lock: 'Bearbeitungssperre freigegeben.',
+      acquire_lock: 'Bearbeitung gestartet.',
+      release_lock: 'Bearbeitung beendet.',
     };
     setCoordinationMessage(messages[action]);
   }
@@ -254,127 +252,188 @@ export function App() {
     setCoordination(null);
     setCoordinationMessage(null);
     setTotpSecret(null);
+    setView('dashboard');
+  }
+
+  if (state !== 'aal2') {
+    return (
+      <main className="auth-shell">
+        <section className="auth-card">
+          <p className="eyebrow">Feldkirchen im Blick</p>
+          <h1>Redaktionssystem</h1>
+
+          {state === 'signed_out' && (
+            <form onSubmit={login} className="stack">
+              <label>E-Mail<input type="email" value={email} onChange={(e) => setEmail(e.target.value)} required /></label>
+              <label>Passwort<input type="password" value={password} onChange={(e) => setPassword(e.target.value)} required /></label>
+              <button type="submit" className="primary">Anmelden</button>
+            </form>
+          )}
+
+          {state === 'aal1_no_factor' && (
+            <div className="stack">
+              <p>Für den Redaktionszugang ist zusätzlich MFA erforderlich.</p>
+              {!qrCode && <button onClick={enrollTotp} className="primary">Authenticator einrichten</button>}
+              {qrCode && <img src={qrCode} alt="QR-Code für FIB-TOTP" className="qr" />}
+              {totpSecret && (
+                <div className="notice">
+                  <strong>Auf diesem Gerät einrichten</strong>
+                  <p>In Aegis: + → Manuelle Eingabe → TOTP.</p>
+                  <code>{totpSecret}</code>
+                  <div className="button-row">
+                    <button type="button" onClick={copyTotpSecret}>Schlüssel kopieren</button>
+                    <button type="button" onClick={restartTotpEnrollment}>Neu starten</button>
+                  </div>
+                </div>
+              )}
+              {qrCode && (
+                <label>Code aus der Authenticator-App
+                  <input inputMode="numeric" autoComplete="one-time-code" value={code} onChange={(e) => setCode(e.target.value)} />
+                  <button onClick={verifyTotp} className="primary">Bestätigen</button>
+                </label>
+              )}
+            </div>
+          )}
+
+          {state === 'aal1_factor_available' && (
+            <div className="stack">
+              <p>Bitte den aktuellen Code aus deiner Authenticator-App eingeben.</p>
+              <input inputMode="numeric" autoComplete="one-time-code" value={code} onChange={(e) => setCode(e.target.value)} />
+              <button onClick={verifyTotp} className="primary">MFA bestätigen</button>
+            </div>
+          )}
+
+          {state !== 'signed_out' && <button onClick={logout} className="link-button">Abmelden</button>}
+          {message && <p aria-live="polite" className="status-message">{message}</p>}
+        </section>
+      </main>
+    );
   }
 
   return (
-    <main style={{ maxWidth: 520, margin: '3rem auto', fontFamily: 'system-ui, sans-serif', padding: '0 1rem' }}>
-      <h1>FIB Redaktion</h1>
+    <div className="editorial-shell">
+      <header className="topbar">
+        <div>
+          <p className="eyebrow">Feldkirchen im Blick</p>
+          <strong>Redaktionssystem</strong>
+        </div>
+        <div className="topbar-actions">
+          <span className="role-pill">Redaktion · MFA aktiv</span>
+          <button onClick={logout}>Abmelden</button>
+        </div>
+      </header>
 
-      {state === 'signed_out' && (
-        <form onSubmit={login}>
-          <p>
-            <label>
-              E-Mail<br />
-              <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
-            </label>
-          </p>
-          <p>
-            <label>
-              Passwort<br />
-              <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
-            </label>
-          </p>
-          <button type="submit">Anmelden</button>
-        </form>
-      )}
+      <nav className="main-nav" aria-label="Hauptnavigation">
+        <button className={view === 'dashboard' ? 'active' : ''} onClick={() => setView('dashboard')}>Dashboard</button>
+        <button disabled>Recherche</button>
+        <button disabled>Inhalte</button>
+        <button disabled>Veröffentlichung</button>
+      </nav>
 
-      {state === 'aal1_no_factor' && (
-        <section>
-          <p>Die erste Anmeldung ist erfolgt. Für den Redaktionszugang ist zusätzlich MFA erforderlich.</p>
-          {!qrCode && <button onClick={enrollTotp}>Authenticator einrichten</button>}
-          {qrCode && <img src={qrCode} alt="QR-Code für FIB-TOTP" style={{ display: 'block', maxWidth: 260, margin: '1rem 0' }} />}
-          {totpSecret && (
-            <div style={{ margin: '1rem 0', padding: '1rem', border: '1px solid #ccc', borderRadius: 8 }}>
-              <p style={{ marginTop: 0 }}><strong>Auf diesem Gerät einrichten</strong></p>
-              <p>In Aegis: <strong>+ → Manuelle Eingabe → TOTP</strong>. Danach diesen Schlüssel einfügen:</p>
-              <p>
-                <code style={{ overflowWrap: 'anywhere', userSelect: 'all' }}>{totpSecret}</code>
-              </p>
-              <button type="button" onClick={copyTotpSecret}>Schlüssel kopieren</button>{' '}
-              <button type="button" onClick={restartTotpEnrollment}>Einrichtung neu starten</button>
-              <p style={{ marginBottom: 0, fontSize: '.9rem' }}>
-                Der Schlüssel ist geheim. Nicht weitergeben oder außerhalb des Passwort-/Authenticator-Systems speichern.
-              </p>
+      <main className="content-shell">
+        {view === 'dashboard' && (
+          <>
+            <div className="page-heading">
+              <div>
+                <p className="eyebrow">Übersicht</p>
+                <h1>Dashboard</h1>
+                <p>Was braucht als Nächstes redaktionelle Aufmerksamkeit?</p>
+              </div>
             </div>
-          )}
-          {qrCode && (
-            <p>
-              <label>
-                Code aus der Authenticator-App<br />
-                <input inputMode="numeric" autoComplete="one-time-code" value={code} onChange={(e) => setCode(e.target.value)} />
-              </label>{' '}
-              <button onClick={verifyTotp}>Bestätigen</button>
-            </p>
-          )}
-        </section>
-      )}
 
-      {state === 'aal1_factor_available' && (
-        <section>
-          <p>Bitte den aktuellen Code aus deiner Authenticator-App eingeben.</p>
-          <p>
-            <input inputMode="numeric" autoComplete="one-time-code" value={code} onChange={(e) => setCode(e.target.value)} />{' '}
-            <button onClick={verifyTotp}>MFA bestätigen</button>
-          </p>
-        </section>
-      )}
+            <section className="status-grid" aria-label="Redaktionsstatus">
+              <article><span>Neue Funde</span><strong>–</strong><small>noch nicht angebunden</small></article>
+              <article><span>Meine Aufgaben</span><strong>–</strong><small>noch nicht angebunden</small></article>
+              <article><span>Freigaben</span><strong>–</strong><small>noch nicht angebunden</small></article>
+              <article><span>Systemhinweise</span><strong>{serviceError ? '1' : '0'}</strong><small>{serviceError ? 'Handlungsbedarf' : 'keine'}</small></article>
+            </section>
 
-      {state === 'aal2' && (
-        <section>
-          <p><strong>MFA bestätigt.</strong> Der Redaktionszugang kann jetzt den FIB-Fachservice verwenden.</p>
-          <p>
-            <button onClick={runLiveServiceTest} disabled={serviceRunning}>
-              {serviceRunning ? 'Live-Test läuft …' : 'FIB-Fachservice live testen'}
-            </button>
-          </p>
-          {eventResult && (
-            <div>
-              <p><strong>Live-Test erfolgreich.</strong></p>
-              <p>{eventResult.title}</p>
-              {eventResult.summary && <p>{eventResult.summary}</p>}
+            <section className="panel main-work">
+              <div className="section-heading">
+                <div>
+                  <h2>Als Nächstes bearbeiten</h2>
+                  <p>Im ersten UI-Slice wird hier ein reales Ereignis aus dem FIB-Fachservice verwendet.</p>
+                </div>
+              </div>
+
+              {serviceRunning && <p>Ereignis wird geladen …</p>}
+              {serviceError && <p className="error">{serviceError}</p>}
+              {eventResult && (
+                <article className="work-item">
+                  <div>
+                    <span className="tag">Ereignis</span>
+                    <h3>{eventResult.title}</h3>
+                    {eventResult.summary && <p>{eventResult.summary}</p>}
+                    <p className="meta">Zustand: {eventStatusLabel(eventResult.status)} · Federführung: {coordination?.lead ? (coordination.lead.mine ? 'Du' : coordination.lead.displayName) : 'niemand'}</p>
+                  </div>
+                  <button className="primary" onClick={() => setView('event')}>Öffnen</button>
+                </article>
+              )}
+            </section>
+
+            <section className="panel muted-panel">
+              <h2>Arbeitskorb</h2>
+              <p>Der Arbeitskorb bleibt bewusst nachgeordnet. Er nimmt später offene oder zurückgestellte Entscheidungen auf; er ist kein Pflicht-Zwischenschritt für jede Bearbeitung.</p>
+            </section>
+          </>
+        )}
+
+        {view === 'event' && eventResult && (
+          <>
+            <nav className="breadcrumbs" aria-label="Brotkrumen">
+              <button onClick={() => setView('dashboard')}>Dashboard</button>
+              <span>›</span>
+              <span>Ereignisse</span>
+              <span>›</span>
+              <span aria-current="page">{eventResult.title}</span>
+            </nav>
+
+            <div className="page-heading event-heading">
+              <div>
+                <p className="eyebrow">Ereignis</p>
+                <h1>{eventResult.title}</h1>
+                {eventResult.summary && <p>{eventResult.summary}</p>}
+              </div>
+              <button onClick={() => setView('dashboard')}>Zur Übersicht</button>
             </div>
-          )}
-          {serviceError && <p><strong>Live-Test fehlgeschlagen:</strong> {serviceError}</p>}
 
-          <hr style={{ margin: '2rem 0' }} />
-          <h2 style={{ fontSize: '1.15rem' }}>Redaktionelle Koordination</h2>
-          <p style={{ marginBottom: '.75rem' }}>
-            Testobjekt: <strong>{eventResult?.title ?? 'FIB-Testereignis'}</strong>
-          </p>
+            <section className="object-status">
+              <div><span>Zustand / Status</span><strong>{eventStatusLabel(eventResult.status)}</strong></div>
+              <div><span>Nächster Schritt</span><strong>Bearbeitung im Ereignis fortsetzen</strong></div>
+            </section>
 
-          <div style={{ display: 'grid', gap: '.5rem', gridTemplateColumns: '1fr 1fr' }}>
-            <button onClick={() => runCoordinationAction('get_state')} disabled={coordinationRunning}>
-              Status laden
-            </button>
-            <button onClick={() => runCoordinationAction(coordination?.lead?.mine ? 'release_lead' : 'take_lead')} disabled={coordinationRunning}>
-              {coordination?.lead?.mine ? 'Federführung abgeben' : 'Federführung übernehmen'}
-            </button>
-            <button onClick={() => runCoordinationAction(coordination?.lock?.mine ? 'release_lock' : 'acquire_lock')} disabled={coordinationRunning}>
-              {coordination?.lock?.mine ? 'Bearbeitung beenden' : 'Bearbeitung starten'}
-            </button>
-          </div>
+            <div className="detail-grid">
+              <section className="panel">
+                <h2>Ereignisdaten</h2>
+                <dl className="data-list">
+                  <div><dt>Titel</dt><dd>{eventResult.title}</dd></div>
+                  <div><dt>Zusammenfassung</dt><dd>{eventResult.summary ?? 'Noch keine Zusammenfassung'}</dd></div>
+                  <div><dt>Ereignisdatum</dt><dd>{eventResult.occurredAt ? new Date(eventResult.occurredAt).toLocaleDateString('de-DE') : 'Noch nicht gesetzt'}</dd></div>
+                </dl>
+                <p className="implementation-note">Die Schreibfunktion ist im Fachservice vorhanden. Die UI-Anbindung für tatsächliches Bearbeiten und Speichern folgt im nächsten Teil dieses Slices.</p>
+              </section>
 
-          <div style={{ marginTop: '1rem', padding: '1rem', border: '1px solid #ccc', borderRadius: 8 }}>
-            <p style={{ marginTop: 0 }}>
-              <strong>Federführung:</strong>{' '}
-              {coordination?.lead ? (coordination.lead.mine ? 'Du' : coordination.lead.displayName) : 'niemand'}
-            </p>
-            <p style={{ marginBottom: 0 }}>
-              <strong>Bearbeitung:</strong>{' '}
-              {coordination?.lock
-                ? coordination.lock.mine
-                  ? 'von dir gesperrt'
-                  : `gesperrt durch ${coordination.lock.displayName}`
-                : 'frei'}
-            </p>
-          </div>
+              <aside className="panel">
+                <h2>Redaktionelle Koordination</h2>
+                <p><strong>Federführung:</strong> {coordination?.lead ? (coordination.lead.mine ? 'Du' : coordination.lead.displayName) : 'niemand'}</p>
+                <p><strong>Bearbeitung:</strong> {coordination?.lock ? (coordination.lock.mine ? 'von dir gesperrt' : `gesperrt durch ${coordination.lock.displayName}`) : 'frei'}</p>
 
-          {coordinationMessage && <p aria-live="polite">{coordinationMessage}</p>}
-        </section>
-      )}
+                <div className="stack compact">
+                  <button onClick={() => runCoordinationAction(coordination?.lead?.mine ? 'release_lead' : 'take_lead')} disabled={coordinationRunning}>
+                    {coordination?.lead?.mine ? 'Federführung abgeben' : 'Federführung übernehmen'}
+                  </button>
+                  <button className="primary" onClick={() => runCoordinationAction(coordination?.lock?.mine ? 'release_lock' : 'acquire_lock')} disabled={coordinationRunning}>
+                    {coordination?.lock?.mine ? 'Bearbeitung beenden' : 'Bearbeitung starten'}
+                  </button>
+                  <button onClick={() => runCoordinationAction('get_state')} disabled={coordinationRunning}>Status aktualisieren</button>
+                </div>
 
-      {state !== 'signed_out' && <p><button onClick={logout}>Abmelden</button></p>}
-      {message && <p aria-live="polite">{message}</p>}
-    </main>
+                {coordinationMessage && <p aria-live="polite" className="status-message">{coordinationMessage}</p>}
+              </aside>
+            </div>
+          </>
+        )}
+      </main>
+    </div>
   );
 }
