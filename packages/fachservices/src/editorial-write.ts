@@ -1,7 +1,7 @@
 import type { FibActorContext, FibObjectRef } from '@fib/domain-contracts';
 import { authorize } from './authorization.js';
 import type { FibSqlExecutor } from './app-user-repository.js';
-import { initializeLeadResponsibility, recordLastEdit } from './coordination.js';
+import { hasOwnedActiveEditLock, initializeLeadResponsibility, recordLastEdit } from './coordination.js';
 
 function humanWriteAllowed(actor: FibActorContext, level: 'S1' | 'S2') {
   const decision = authorize(actor, { actionLevel: level });
@@ -67,6 +67,43 @@ export async function confirmEvent(
   if (!coordination.ok) return { ...coordination, eventId: event.id };
 
   return { ok: true as const, eventId: event.id, coordination };
+}
+
+export async function editEvent(
+  actor: FibActorContext,
+  input: {
+    eventId: string;
+    title: string;
+    summary?: string | null;
+    occurredAt?: string | null;
+  },
+  db: FibSqlExecutor,
+) {
+  if (!humanWriteAllowed(actor, 'S2')) return { ok: false as const, reason: 'forbidden' as const };
+
+  const lock = await hasOwnedActiveEditLock(
+    actor,
+    { objectType: 'event', objectId: input.eventId },
+    db,
+  );
+  if (!lock.ok) return lock;
+
+  const updated = await db.queryOne<{ id: string }>(
+    `update fib.events
+        set title = $2,
+            summary = $3,
+            occurred_at = $4,
+            updated_at = now()
+      where id = $1 and status = 'confirmed'
+      returning id`,
+    [input.eventId, input.title, input.summary ?? null, input.occurredAt ?? null],
+  );
+  if (!updated) return { ok: false as const, reason: 'event_not_editable' as const };
+
+  const lastEdit = await recordLastEdit(actor, { objectType: 'event', objectId: updated.id }, db);
+  if (!lastEdit.ok) return { ok: false as const, reason: 'last_edit_failed' as const, eventId: updated.id };
+
+  return { ok: true as const, eventId: updated.id, lastEdit: lastEdit.lastEdit };
 }
 
 export async function editMessageDraft(

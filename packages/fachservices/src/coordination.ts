@@ -186,6 +186,28 @@ export async function recordLastEdit(
   return { ok: true as const, lastEdit };
 }
 
+export async function hasOwnedActiveEditLock(
+  actor: FibActorContext,
+  object: FibObjectRef,
+  db: FibSqlExecutor,
+) {
+  if (!requireHuman(actor) || !actor.userId) return { ok: false as const, reason: 'forbidden' as const };
+
+  const row = await db.queryOne<{ user_id: string }>(
+    `select user_id
+       from fib.edit_locks
+      where object_type = $1
+        and object_id = $2
+        and user_id = $3
+        and expires_at > now()`,
+    [object.objectType, object.objectId, actor.userId],
+  );
+
+  return row
+    ? { ok: true as const }
+    : { ok: false as const, reason: 'active_edit_lock_required' as const };
+}
+
 export async function acquireEditLock(
   actor: FibActorContext,
   object: FibObjectRef,
