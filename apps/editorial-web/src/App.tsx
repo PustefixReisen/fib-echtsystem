@@ -25,6 +25,15 @@ type EventData = {
 
 type EventResult = { ok: true; event: EventData };
 
+type SessionContext = {
+  id: string;
+  displayName: string;
+  fullName: string;
+  role: 'editor' | 'admin';
+};
+
+type SessionContextResult = { ok: true; user: SessionContext };
+
 const LIVE_TEST_EVENT_ID = 'ff02ffad-e2a5-4724-a94b-073a1483051d';
 
 function eventStatusLabel(status: EventData['status']) {
@@ -55,6 +64,8 @@ export function App() {
   const [editOccurredAt, setEditOccurredAt] = useState('');
   const [editSaving, setEditSaving] = useState(false);
   const [editMessage, setEditMessage] = useState<string | null>(null);
+  const [sessionContext, setSessionContext] = useState<SessionContext | null>(null);
+  const [navigationOpen, setNavigationOpen] = useState(false);
 
   async function refreshAuthState() {
     const { data: sessionData } = await supabase.auth.getSession();
@@ -67,6 +78,8 @@ export function App() {
       setServiceError(null);
       setCoordination(null);
       setCoordinationMessage(null);
+      setSessionContext(null);
+      setNavigationOpen(false);
       setView('dashboard');
       return;
     }
@@ -221,8 +234,15 @@ export function App() {
     if (!error && data?.ok) setCoordination(data.state);
   }
 
+  async function loadSessionContext() {
+    const { data, error } = await supabase.functions.invoke<SessionContextResult>('fib-session-context', {
+      body: {},
+    });
+    if (!error && data?.ok) setSessionContext(data.user);
+  }
+
   async function loadEditorialStart() {
-    await Promise.all([loadEvent(), loadCoordinationState()]);
+    await Promise.all([loadEvent(), loadCoordinationState(), loadSessionContext()]);
   }
 
   async function runCoordinationAction(action: 'get_state' | 'take_lead' | 'release_lead' | 'acquire_lock' | 'renew_lock' | 'release_lock', quiet = false) {
@@ -320,6 +340,8 @@ export function App() {
     setCoordinationMessage(null);
     setTotpSecret(null);
     setEditingEvent(false);
+    setSessionContext(null);
+    setNavigationOpen(false);
     setView('dashboard');
   }
 
@@ -378,27 +400,90 @@ export function App() {
     );
   }
 
+  const isAdmin = sessionContext?.role === 'admin';
+
   return (
     <div className="editorial-shell">
       <header className="topbar">
-        <div>
-          <p className="eyebrow">Feldkirchen im Blick</p>
-          <strong>Redaktionssystem</strong>
+        <div className="brand-block">
+          <button className="menu-toggle" onClick={() => setNavigationOpen((open) => !open)} aria-label="Navigation öffnen oder schließen">☰</button>
+          <div className="brand-mark" aria-hidden="true">FIB</div>
+          <div>
+            <p className="eyebrow">Feldkirchen im Blick</p>
+            <strong>Redaktionssystem</strong>
+          </div>
         </div>
+
+        <label className="global-search">
+          <span className="sr-only">In FIB suchen</span>
+          <input type="search" placeholder="In FIB suchen …" disabled title="Die globale Suche wird in einem späteren Slice angebunden." />
+        </label>
+
         <div className="topbar-actions">
-          <span className="role-pill">Redaktion · MFA aktiv</span>
+          <div className="user-context">
+            <strong>{sessionContext?.displayName ?? 'FIB-Redaktion'}</strong>
+            <span>{isAdmin ? 'Admin' : 'Redakteur'} · MFA aktiv</span>
+          </div>
           <button onClick={logout}>Abmelden</button>
         </div>
       </header>
 
-      <nav className="main-nav" aria-label="Hauptnavigation">
-        <button className={view === 'dashboard' ? 'active' : ''} onClick={() => setView('dashboard')}>Dashboard</button>
-        <button disabled>Recherche</button>
-        <button disabled>Inhalte</button>
-        <button disabled>Veröffentlichung</button>
-      </nav>
+      <div className="app-layout">
+        <aside className={`side-nav ${navigationOpen ? 'open' : ''}`} aria-label="Hauptnavigation">
+          <div className="nav-section">
+            <button className={view === 'dashboard' ? 'nav-item active' : 'nav-item'} onClick={() => { setView('dashboard'); setNavigationOpen(false); }}>Dashboard</button>
+            <button className="nav-item" disabled>Arbeitskorb <span>folgt</span></button>
+          </div>
 
-      <main className="content-shell">
+          <div className="nav-section">
+            <p className="nav-heading">Inhalte</p>
+            <button className="nav-item" disabled>Meldungen <span>folgt</span></button>
+            <button className="nav-item" disabled>Vorgänge <span>folgt</span></button>
+            <button className="nav-item" disabled>Themen <span>folgt</span></button>
+            <button className="nav-item" disabled>Sitzungen <span>folgt</span></button>
+          </div>
+
+          <div className="nav-section">
+            <p className="nav-heading">Redaktion</p>
+            <details>
+              <summary>Recherche</summary>
+              <button className="nav-subitem" disabled>Funde</button>
+              <button className="nav-subitem" disabled>Quellen</button>
+              <button className="nav-subitem" disabled>Beobachtungsaufträge</button>
+            </details>
+            <details>
+              <summary>Veröffentlichung</summary>
+              <button className="nav-subitem" disabled>Freigaben</button>
+              <button className="nav-subitem" disabled>Medien & Dateien</button>
+              <button className="nav-subitem" disabled>Kommunikation</button>
+              <button className="nav-subitem" disabled>Besucherführung</button>
+            </details>
+            <details>
+              <summary>Auswertung</summary>
+              <button className="nav-subitem" disabled>Besucher & Wirkung</button>
+              <button className="nav-subitem" disabled>Inhalte</button>
+              <button className="nav-subitem" disabled>Recherche</button>
+              <button className="nav-subitem" disabled>Redaktion</button>
+            </details>
+            <button className="nav-item" disabled>FIB-Assistent <span>folgt</span></button>
+          </div>
+
+          {isAdmin && (
+            <div className="nav-section admin-section">
+              <p className="nav-heading">Administration</p>
+              <button className="nav-item" disabled>Tasks & Läufe</button>
+              <button className="nav-item" disabled>KI & Kosten</button>
+              <button className="nav-item" disabled>Referenzsystem</button>
+              <button className="nav-item" disabled>Benutzer & Rollen</button>
+              <button className="nav-item" disabled>System</button>
+              <button className="nav-item" disabled>Audit</button>
+            </div>
+          )}
+        </aside>
+
+        {navigationOpen && <button className="nav-backdrop" aria-label="Navigation schließen" onClick={() => setNavigationOpen(false)} />}
+
+        <main className="content-shell">
         {view === 'dashboard' && (
           <>
             <div className="page-heading">
@@ -528,7 +613,8 @@ export function App() {
             </div>
           </>
         )}
-      </main>
+        </main>
+      </div>
     </div>
   );
 }
