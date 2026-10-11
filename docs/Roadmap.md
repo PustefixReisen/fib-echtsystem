@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 4.5 | 06.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
+| 4.6 | 11.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
 
 ## Statusmodell
 
@@ -43,7 +43,7 @@ Es gelten die zentralen Status aus `PustefixReisen/pustivo/docs/governance/Dokum
 | Umsetzungsphase | Status | Ziel / Produkt |
 |---|---|---|
 | U1 Technischer FIB-Kern | **In Arbeit** | Datenbankschema, Migrationen, gemeinsame Fachservice-Schicht, Auth-/RLS-Grundlage, Datei-/Bildspeicher-Anbindung, KI-Router-Grundlage, gemeinsame Konfiguration und Testbasis |
-| U2 Redaktions-App | **Geplant** | interne Web-App für Rechercheeingang, Ereignisse/Meldungen, Vorgänge, Themen, Sitzungen, Bilder, „Mehr wissen?“, Freigaben, FIB-Chat und Administration |
+| U2 Redaktions-App | **In Arbeit** | vertikale Umsetzung begonnen: erster echter UI-Slice `Dashboard → Ereignisdetail → Koordination`; weitere Fachfunktionen werden jeweils zusammen mit ihrem UI-Arbeitsablauf angebunden |
 | U3 Öffentliche FIB-Seite / PWA | **Geplant** | Besucheroberfläche mit `Neues | Im Blick | Sitzungen | Suche`, Detailseiten, PWA, Teilen, Transparenz und Neuigkeitsstatus |
 | U4 Recherche / AI Tasks / KI-Funktionen | **Geplant** | Quellenbeobachtung, Quellenentdeckung, Rechercheläufe, Ereigniserkennung, Entwurfserstellung, Routing und Qualitätskontrollen |
 | U5 Veröffentlichung / Deployment / Betrieb | **Geplant** | S3-Publish-Prozess, statischer Build, Deployment, Monitoring, Backup/Restore und betriebliche Automatisierung |
@@ -123,9 +123,9 @@ Parallel gilt für Storage gemäß ADR-011:
 - normaler FIB-Anwendungszugang erhält keinen Schreib-/Löschzugriff auf Backup-Dateien,
 - DB speichert logische Storage-Referenzen statt fest verdrahteter Nextcloud-URLs.
 
-### U1.4 Koordination/Benutzer – Implementierung begonnen
+### U1.4 Koordination/Benutzer – weitgehend umgesetzt, UI-Integration läuft
 
-Auf Basis des fachlichen Vertrags sind SQL-Strukturen und Fachservices für Benutzerprofil, Federführung, Bearbeitungssperren und Übernahmeanfragen umgesetzt. Die Migration `20261010074421_fib_coordination_users_locks` wurde am 10.10.2026 auf Shared-Apps angewendet und anschließend geprüft: drei neue Benutzerprofilfelder, drei Koordinationstabellen und drei Runtime-RLS-Policies sind vorhanden; `authenticated` und `service_role` besitzen weiterhin keinen direkten Tabellenzugriff. Offen bleiben Integrationstests und die UI-Anbindung.
+Auf Basis des fachlichen Vertrags sind SQL-Strukturen und Fachservices für Benutzerprofil, Federführung, Bearbeitungssperren, Übernahmeanfragen und `Letzte Bearbeitung` umgesetzt. Die produktiven Migrationen sind auf Shared-Apps angewendet. Federführung und Bearbeitungssperre wurden mobil gegen die Live-Redaktionsanwendung geprüft; Core-Services-Typecheck und Fachservice-Tests laufen automatisiert in GitHub Actions. Die Federführungsvererbung und `Letzte Bearbeitung` sind an erste konkrete Schreib-Fachfunktionen (`confirmEvent`, `editMessageDraft`, `manageProcess`, `manageTopic`) angebunden. Offen bleiben insbesondere der vollständige Übernahmeanfrage-Workflow, die automatische Lock-Erneuerung im echten Editor sowie weitere UI-/Integrationstests.
 
 ### U1.5 Operative Vollständigkeit der Fachbereiche – querschnittlicher Gate
 
@@ -137,6 +137,26 @@ Vor Implementierung eines Fachbereichs in U2–U4 wird anhand von `docs/Umsetzun
 `Fachregel → operative Speicherung → Fachfunktion → Auslöser/KI-Kontext → UI/Arbeitsprozess → Rechte/Audit → Test → Umsetzungsphase`.
 
 Offene rote Befunde sind für den jeweils betroffenen Fachbereich vor dessen Umsetzung zu schließen. Die technische U1-Basis kann parallel weitergeführt werden.
+
+
+### U2.1 Erster vertikaler Redaktions-Slice – begonnen
+
+Die Redaktions-App wird ab jetzt vertikal aus Anwendersicht entwickelt. Der erste Slice setzt die vorhandene UI-Konzeption bewusst nicht als isolierten Arbeitskorb um, sondern folgt der verbindlichen Informationshierarchie:
+
+`Dashboard → konkreter Arbeitsbedarf → Fachobjekt/Detailansicht`.
+
+Der Arbeitskorb bleibt nach dem Fachkonzept ein nachgeordneter Ort für offene oder zurückgestellte Entscheidungen und ist kein Pflicht-Zwischenschritt.
+
+Erster sichtbarer Stand:
+
+- produktionsnaher Redaktionsrahmen nach erfolgreicher MFA-Anmeldung,
+- Dashboard mit den konzeptionell vorgesehenen Statusbereichen,
+- reales Ereignis aus dem bestehenden FIB-Fachservice als erster Arbeitsfall,
+- Ereignisdetail mit Breadcrumb, getrenntem Zustand/Status und nächstem Schritt,
+- bestehende Federführungs- und Lock-Funktionen im Ereigniskontext statt als separater Techniktest,
+- mobile/responsive Grundstruktur.
+
+Noch bewusst nicht vorgetäuscht werden Funktionen, deren Fachservice-/Datenweg noch fehlt. Insbesondere Statuskarten ohne operative Datenquelle bleiben als noch nicht angebunden gekennzeichnet. Der nächste Teil dieses Slices bindet tatsächliches Bearbeiten/Speichern und den Meldungsentwurf über die gemeinsame Fachservice-Schicht an.
 
 ## 4. Verbindliche Abschlussquellen der Gründung und Architekturkonkretisierung
 
@@ -186,6 +206,7 @@ Offene rote Befunde sind für den jeweils betroffenen Fachbereich vor dessen Ums
 
 | Version | Datum | Änderung |
 |---|---|---|
+| 4.6 | 11.10.2026 | U2 auf `In Arbeit` gesetzt; vertikale Entwicklung aus Anwendersicht begonnen und ersten Slice `Dashboard → Ereignisdetail → Koordination` aufgenommen. U1.4 auf aktuellen Koordinations-/Teststand nach PR #54–#59 nachgezogen. |
 | 4.5 | 06.10.2026 | U1.3 begonnen: Runtime-Konfigurationsvertrag, Secret-Regeln, Domain-Contracts und zentrale Fachservice-Autorisierungsbasis angelegt; pustivo-Live-Credentialtest als konkreten manuellen Schritt dokumentiert. |
 | 4.4 | 06.10.2026 | `fib` in Shared-Apps angelegt; Runtime-Rollen, RLS-Policies, Default Privileges und Isolation praktisch geprüft; Advisor-Nacharbeiten durchgeführt; Legacy-Tabelle des Demonstrators über Issue #5 abgegrenzt. |
 | 4.3 | 06.10.2026 | ADR-011 übernommen: Shared-Apps mit eigenem Schema `fib`, gemeinsames Supabase Auth bei FIB-eigener Autorisierung, getrennte Nextcloud-/Backup-Zugänge, pustivo als möglicher Dauerbetrieb; `core.sql` auf `fib` umgestellt. |
