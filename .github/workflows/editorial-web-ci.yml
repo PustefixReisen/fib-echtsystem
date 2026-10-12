@@ -4,6 +4,7 @@ on:
   pull_request:
     paths:
       - 'apps/editorial-web/**'
+      - 'tests/profile-security.test.mjs'
       - 'package.json'
       - 'tsconfig.base.json'
       - '.github/workflows/editorial-web-ci.yml'
@@ -11,6 +12,7 @@ on:
     branches: [main]
     paths:
       - 'apps/editorial-web/**'
+      - 'tests/profile-security.test.mjs'
       - 'package.json'
       - 'tsconfig.base.json'
       - '.github/workflows/editorial-web-ci.yml'
@@ -30,5 +32,7 @@ jobs:
           cache-dependency-path: apps/editorial-web/package.json
       - name: Install dependencies
         run: npm install
+      - name: Test profile security handlers
+        run: node --test tests/profile-security.test.mjs
       - name: Build editorial web
         run: npm run build --workspace @fib/editorial-web

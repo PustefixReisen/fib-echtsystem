@@ -186,6 +186,15 @@ export function App() {
   }, [state]);
 
   useEffect(() => {
+    if (state !== 'aal2' || view !== 'profile') {
+      setNewPassword('');
+      setConfirmPassword('');
+      setNewAccountEmail('');
+      setSecurityMessage('');
+    }
+  }, [state, view]);
+
+  useEffect(() => {
     if (!editingEvent || !coordination?.lock?.mine) return;
 
     const timer = window.setInterval(() => {
@@ -420,35 +429,47 @@ export function App() {
 
   async function updateEmail(event: FormEvent) {
     event.preventDefault();
-    if (!(await ensureSecureProfileSession())) return;
+    if (securitySaving) return;
     const desired = newAccountEmail.trim();
     if (!desired || desired === accountEmail) return;
     setSecuritySaving(true);
     setSecurityMessage('');
-    const { error } = await supabase.auth.updateUser({ email: desired });
-    setSecuritySaving(false);
-    setSecurityMessage(error
-      ? 'E-Mail-Änderung fehlgeschlagen. Bitte Anmeldung und Adresse prüfen.'
-      : 'Änderung angefordert. Bitte die Bestätigungs-E-Mail(s) prüfen. Wann die neue Adresse aktiv wird, hängt von den Auth-Einstellungen ab.');
-    if (!error) setNewAccountEmail('');
+    try {
+      if (!(await ensureSecureProfileSession())) return;
+      const { error } = await supabase.auth.updateUser({ email: desired });
+      setSecurityMessage(error
+        ? 'E-Mail-Änderung fehlgeschlagen. Bitte Anmeldung und Adresse prüfen.'
+        : 'Änderung angefordert. Bitte die Bestätigungs-E-Mail(s) prüfen. Wann die neue Adresse aktiv wird, hängt von den Auth-Einstellungen ab.');
+      if (!error) setNewAccountEmail('');
+    } catch {
+      setSecurityMessage('E-Mail-Änderung konnte nicht bestätigt werden. Bitte Verbindung und Kontostand prüfen.');
+    } finally {
+      setSecuritySaving(false);
+    }
   }
 
   async function updatePassword(event: FormEvent) {
     event.preventDefault();
-    if (!(await ensureSecureProfileSession())) return;
+    if (securitySaving) return;
     if (newPassword.length < 12 || newPassword !== confirmPassword) {
       setSecurityMessage('Bitte ein Passwort mit mindestens 12 Zeichen eingeben und identisch wiederholen.');
       return;
     }
     setSecuritySaving(true);
     setSecurityMessage('');
-    const { error } = await supabase.auth.updateUser({ password: newPassword });
-    setNewPassword('');
-    setConfirmPassword('');
-    setSecuritySaving(false);
-    setSecurityMessage(error
-      ? 'Passwort konnte nicht geändert werden. Gegebenenfalls ist eine erneute Anmeldung erforderlich.'
-      : 'Passwort aktualisiert. Für andere Geräte kann eine erneute Anmeldung erforderlich sein.');
+    try {
+      if (!(await ensureSecureProfileSession())) return;
+      const { error } = await supabase.auth.updateUser({ password: newPassword });
+      setSecurityMessage(error
+        ? 'Passwort konnte nicht geändert werden. Gegebenenfalls ist eine erneute Anmeldung erforderlich.'
+        : 'Passwort aktualisiert. Für andere Geräte kann eine erneute Anmeldung erforderlich sein.');
+    } catch {
+      setSecurityMessage('Passwortänderung konnte nicht bestätigt werden. Bitte Verbindung und Anmeldung prüfen.');
+    } finally {
+      setNewPassword('');
+      setConfirmPassword('');
+      setSecuritySaving(false);
+    }
   }
 
   async function logout() {

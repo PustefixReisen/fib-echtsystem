@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 4.6 | 11.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
+| 4.7 | 12.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
 
 ## Statusmodell
 
@@ -159,6 +159,10 @@ Erster sichtbarer Stand:
 
 Noch bewusst nicht vorgetäuscht werden Funktionen, deren Fachservice-/Datenweg noch fehlt. Insbesondere Statuskarten ohne operative Datenquelle bleiben als noch nicht angebunden gekennzeichnet. Der nächste Teil dieses Slices bindet tatsächliches Bearbeiten/Speichern und den Meldungsentwurf über die gemeinsame Fachservice-Schicht an.
 
+### U2.2 Persönlicher Kontoselbstservice – teilweise umgesetzt, Abnahme blockiert
+
+PR #74 ergänzt E-Mail-/Passwortänderung im persönlichen Profil. Isolierte Handler-Prüfung und Fehlernachbesserung sind abgeschlossen; reale Auth-Vorschau, Bestätigungs-/Recovery-Tests und serverseitige Sicherheitsprüfung fehlen. Merge und Produktivfreigabe bleiben blockiert. Der nächste Schritt ist die Abnahme mit separatem Testkonto und kontrollierten Test-Mailboxen, danach die ausdrückliche Freigabe für die Sicherheits-/UI-Änderung. Prüfergebnis und Abnahmekriterien: `docs/tests/PR-74-Sicherheits-und-Funktionstest.md`.
+
 ## 4. Verbindliche Abschlussquellen der Gründung und Architekturkonkretisierung
 
 - `docs/Projektgruendung.md` v1.5
@@ -207,6 +211,7 @@ Noch bewusst nicht vorgetäuscht werden Funktionen, deren Fachservice-/Datenweg 
 
 | Version | Datum | Änderung |
 |---|---|---|
+| 4.7 | 12.10.2026 | PR #74 Kontoselbstservice mit Handler-Tests nachgebessert; Auth-Live-Abnahme und ausdrückliche Freigabe als Merge-Blocker dokumentiert. |
 | 4.6 | 11.10.2026 | U2 auf `In Arbeit` gesetzt; vertikale Entwicklung aus Anwendersicht begonnen und ersten Slice `Dashboard → Ereignisdetail → Koordination` aufgenommen. U1.4 auf aktuellen Koordinations-/Teststand nach PR #54–#59 nachgezogen. |
 | 4.5 | 06.10.2026 | U1.3 begonnen: Runtime-Konfigurationsvertrag, Secret-Regeln, Domain-Contracts und zentrale Fachservice-Autorisierungsbasis angelegt; pustivo-Live-Credentialtest als konkreten manuellen Schritt dokumentiert. |
 | 4.4 | 06.10.2026 | `fib` in Shared-Apps angelegt; Runtime-Rollen, RLS-Policies, Default Privileges und Isolation praktisch geprüft; Advisor-Nacharbeiten durchgeführt; Legacy-Tabelle des Demonstrators über Issue #5 abgegrenzt. |
