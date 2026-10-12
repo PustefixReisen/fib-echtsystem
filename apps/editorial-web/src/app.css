@@ -264,3 +264,9 @@ h3 { margin-bottom: .45rem; }
 @media (max-width: 980px) { .brand-logo { margin-right: -24px; } }
 @media (max-width: 430px) { .brand-logo { margin-right: -19px; } }
 .action-icon { stroke-width: 2.3; }
+
+/* Persönliche Einstellungen */
+.profile-panel { max-width: 720px; margin-bottom: 1rem; }
+.profile-panel form { max-width: 540px; }
+.profile-panel .meta { margin: -.3rem 0 0; }
+.nav-user .action-button { justify-content: flex-start; }
