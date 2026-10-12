@@ -535,11 +535,15 @@ export function App() {
           )}
 
           <div className="nav-user">
-            <div>
-              <strong>{sessionContext?.displayName ?? 'FIB-Redaktion'}</strong>
-              <span>{isAdmin ? 'Admin' : 'Redakteur'}</span>
+            <div className="nav-user-identity">
+              <div className="nav-user-details">
+                <strong>{sessionContext?.displayName ?? 'FIB-Redaktion'}</strong>
+                <span>{isAdmin ? 'Admin' : 'Redakteur'}</span>
+              </div>
+              <button className="profile-gear" type="button" title="Mein Profil" aria-label="Mein Profil öffnen" aria-current={view === 'profile' ? 'page' : undefined} onClick={() => { setProfileMessage(null); navigateTo('profile'); }}>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M12 8.5a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7Z"/><path d="M19.4 15a1.6 1.6 0 0 0 .3 1.8l.1.1-2.8 2.8-.1-.1a1.6 1.6 0 0 0-1.8-.3 1.6 1.6 0 0 0-1 1.5V21h-4v-.2a1.6 1.6 0 0 0-1-1.5 1.6 1.6 0 0 0-1.8.3l-.1.1-2.8-2.8.1-.1a1.6 1.6 0 0 0 .3-1.8 1.6 1.6 0 0 0-1.5-1H3v-4h.2a1.6 1.6 0 0 0 1.5-1 1.6 1.6 0 0 0-.3-1.8l-.1-.1 2.8-2.8.1.1a1.6 1.6 0 0 0 1.8.3 1.6 1.6 0 0 0 1-1.5V3h4v.2a1.6 1.6 0 0 0 1 1.5 1.6 1.6 0 0 0 1.8-.3l.1-.1 2.8 2.8-.1.1a1.6 1.6 0 0 0-.3 1.8 1.6 1.6 0 0 0 1.5 1h.2v4h-.2a1.6 1.6 0 0 0-1.5 1Z"/></svg>
+              </button>
             </div>
-            <button className="action-button" onClick={() => { setProfileMessage(null); navigateTo('profile'); }} aria-current={view === 'profile' ? 'page' : undefined}><span aria-hidden="true">⚙</span> Mein Profil</button>
             <button onClick={logout}>Abmelden</button>
           </div>
         </aside>
