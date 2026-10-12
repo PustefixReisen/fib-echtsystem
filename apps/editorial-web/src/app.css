@@ -264,3 +264,19 @@ h3 { margin-bottom: .45rem; }
 @media (max-width: 980px) { .brand-logo { margin-right: -24px; } }
 @media (max-width: 430px) { .brand-logo { margin-right: -19px; } }
 .action-icon { stroke-width: 2.3; }
+
+/* Persönliche Einstellungen */
+.profile-panel { max-width: 720px; margin-bottom: 1rem; }
+.profile-panel form { max-width: 540px; }
+.profile-panel .meta { margin: -.3rem 0 0; }
+.nav-user .action-button { justify-content: flex-start; }
+
+/* Profilzugang als Icon auf Höhe von Rufname und Rolle */
+.nav-user-identity { display: flex !important; align-items: center; justify-content: space-between; gap: .5rem; }
+.nav-user-details { display: grid; gap: .15rem; min-width: 0; }
+.nav-user .profile-gear { width: 46px; height: 46px; min-width: 46px; display: grid; place-items: center; padding: .5rem; border-radius: 10px; }
+.profile-gear svg { width: 25px; height: 25px; }
+.profile-gear[aria-current="page"] { color: var(--fib-dark); background: #eaf5ed; }
+
+.profile-page-title { display: flex; align-items: center; gap: .65rem; }
+.profile-page-title svg { width: 32px; height: 32px; flex: none; color: var(--fib-dark); }

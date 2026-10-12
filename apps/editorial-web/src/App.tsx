@@ -12,7 +12,7 @@ import assistantIcon from '../../../assets/brand/icons/fib-assistent.svg';
 import './app.css';
 
 type AuthState = 'signed_out' | 'aal1_no_factor' | 'aal1_factor_available' | 'aal2';
-type EditorialView = 'dashboard' | 'event';
+type EditorialView = 'dashboard' | 'event' | 'profile';
 
 type CoordinationState = {
   lead: { userId: string; displayName: string; mine: boolean } | null;
@@ -56,6 +56,10 @@ function ActionIcon({ name }: { name: ActionName }) {
   };
   return <svg className="action-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">{paths[name]}</svg>;
 }
+function ProfileIcon() {
+  return (<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path strokeLinecap="round" strokeLinejoin="round" d="M9.594 3.94c.09-.542.56-.94 1.11-.94h2.593c.55 0 1.02.398 1.11.94l.213 1.281c.063.374.313.686.645.87.074.04.147.083.22.127.325.196.72.257 1.075.124l1.217-.456a1.125 1.125 0 0 1 1.37.49l1.296 2.247a1.125 1.125 0 0 1-.26 1.431l-1.003.827c-.293.241-.438.613-.43.992a7.723 7.723 0 0 1 0 .255c-.008.378.137.75.43.991l1.004.827c.424.35.534.955.26 1.43l-1.298 2.247a1.125 1.125 0 0 1-1.369.491l-1.217-.456c-.355-.133-.75-.072-1.076.124a6.47 6.47 0 0 1-.22.128c-.331.183-.581.495-.644.869l-.213 1.281c-.09.543-.56.94-1.11.94h-2.594c-.55 0-1.019-.398-1.11-.94l-.213-1.281c-.062-.374-.312-.686-.644-.87a6.52 6.52 0 0 1-.22-.127c-.325-.196-.72-.257-1.076-.124l-1.217.456a1.125 1.125 0 0 1-1.369-.49l-1.297-2.247a1.125 1.125 0 0 1 .26-1.431l1.004-.827c.292-.24.437-.613.43-.991a6.932 6.932 0 0 1 0-.255c.007-.38-.138-.751-.43-.992l-1.004-.827a1.125 1.125 0 0 1-.26-1.43l1.297-2.247a1.125 1.125 0 0 1 1.37-.491l1.216.456c.356.133.751.072 1.076-.124.072-.044.146-.086.22-.128.332-.183.582-.495.644-.869l.214-1.28Z"/><path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/></svg>);
+}
+
 function NavIcon({ src }: { src: string }) {
   return <img className="nav-icon" src={src} alt="" aria-hidden="true" />;
 }
@@ -90,6 +94,9 @@ export function App() {
   const [editMessage, setEditMessage] = useState<string | null>(null);
   const [sessionContext, setSessionContext] = useState<SessionContext | null>(null);
   const [navigationOpen, setNavigationOpen] = useState(false);
+  const [profileCallName, setProfileCallName] = useState('');
+  const [profileSaving, setProfileSaving] = useState(false);
+  const [profileMessage, setProfileMessage] = useState<string | null>(null);
 
   function navigateTo(nextView: EditorialView) {
     if (nextView === view) return;
@@ -149,7 +156,7 @@ export function App() {
   useEffect(() => {
     window.history.replaceState({ ...(window.history.state ?? {}), fibView: 'dashboard' }, '', window.location.href);
     const onPopState = (event: PopStateEvent) => {
-      const nextView = event.state?.fibView === 'event' ? 'event' : 'dashboard';
+      const nextView = event.state?.fibView === 'event' ? 'event' : event.state?.fibView === 'profile' ? 'profile' : 'dashboard';
       setView(nextView);
       setNavigationOpen(false);
       if (nextView === 'dashboard') void loadEditorialStart();
@@ -282,7 +289,7 @@ export function App() {
     const { data, error } = await supabase.functions.invoke<SessionContextResult>('fib-session-context', {
       body: {},
     });
-    if (!error && data?.ok) setSessionContext(data.user);
+    if (!error && data?.ok) { setSessionContext(data.user); setProfileCallName(data.user.displayName === data.user.fullName ? '' : data.user.displayName); }
   }
 
   async function loadEditorialStart() {
@@ -372,6 +379,24 @@ export function App() {
     setEditingEvent(false);
     setEditMessage('Änderungen gespeichert.');
     await runCoordinationAction('release_lock', true);
+    await loadCoordinationState();
+  }
+
+  async function saveProfile(event: FormEvent) {
+    event.preventDefault();
+    setProfileSaving(true);
+    setProfileMessage(null);
+    const { data, error } = await supabase.functions.invoke<SessionContextResult>('fib-session-context', {
+      body: { action: 'update_call_name', callName: profileCallName },
+    });
+    setProfileSaving(false);
+    if (error || !data?.ok) {
+      setProfileMessage('Rufname konnte nicht gespeichert werden. Bitte erneut versuchen.');
+      return;
+    }
+    setSessionContext(data.user);
+    setProfileCallName(data.user.displayName === data.user.fullName ? '' : data.user.displayName);
+    setProfileMessage('Rufname gespeichert.');
     await loadCoordinationState();
   }
 
@@ -514,9 +539,14 @@ export function App() {
           )}
 
           <div className="nav-user">
-            <div>
-              <strong>{sessionContext?.displayName ?? 'FIB-Redaktion'}</strong>
-              <span>{isAdmin ? 'Admin' : 'Redakteur'}</span>
+            <div className="nav-user-identity">
+              <div className="nav-user-details">
+                <strong>{sessionContext?.displayName ?? 'FIB-Redaktion'}</strong>
+                <span>{isAdmin ? 'Admin' : 'Redakteur'}</span>
+              </div>
+              <button className="profile-gear" type="button" title="Mein Profil" aria-label="Mein Profil öffnen" aria-current={view === 'profile' ? 'page' : undefined} onClick={() => { setProfileMessage(null); navigateTo('profile'); }}>
+                <ProfileIcon />
+              </button>
             </div>
             <button onClick={logout}>Abmelden</button>
           </div>
@@ -595,6 +625,36 @@ export function App() {
             <section className="panel muted-panel dashboard-workbasket card-headed">
               <h2>Arbeitskorb</h2>
               <p>Offene oder bewusst zurückgestellte Entscheidungen. Er bleibt nachgeordnet und ist kein Pflicht-Zwischenschritt für jede Bearbeitung.</p>
+            </section>
+          </>
+        )}
+
+        {view === 'profile' && (
+          <>
+            <nav className="breadcrumbs" aria-label="Brotkrumen">
+              <button onClick={() => navigateTo('dashboard')}>Dashboard</button>
+              <span>›</span><span aria-current="page">Mein Profil</span>
+            </nav>
+            <div className="page-heading"><div><p className="eyebrow">Persönliche Einstellungen</p><h1 className="profile-page-title"><ProfileIcon />Mein Profil</h1></div></div>
+            <section className="panel card-headed profile-panel">
+              <h2>Benutzerdaten</h2>
+              <p><strong>Vollständiger Name:</strong> {sessionContext?.fullName ?? '–'}</p>
+              <p><strong>Rolle:</strong> {isAdmin ? 'Admin' : 'Redakteur'}</p>
+              <form className="stack" onSubmit={saveProfile}>
+                <label>Rufname (optional)
+                  <input value={profileCallName} onChange={e => setProfileCallName(e.target.value)} maxLength={60} autoComplete="nickname" />
+                </label>
+                <p className="meta">Ohne Rufnamen wird dein vollständiger Name angezeigt.</p>
+                <div className="button-row">
+                  <button className="primary action-button" type="submit" disabled={profileSaving}><ActionIcon name="save" />{profileSaving ? 'Speichert …' : 'Speichern'}</button>
+                  <button type="button" onClick={() => navigateTo('dashboard')}>Zurück</button>
+                </div>
+              </form>
+              {profileMessage && <p className="status-message" role="status">{profileMessage}</p>}
+            </section>
+            <section className="panel card-headed profile-panel">
+              <h2>Zugangssicherheit</h2>
+              <p>Passwortänderung und MFA-Verwaltung werden im nächsten Sicherheitsschritt ergänzt.</p>
             </section>
           </>
         )}
