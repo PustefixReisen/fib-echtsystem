@@ -16,7 +16,7 @@ services:
     ports: ["127.0.0.1:54324:8025"]
     networks: [isolated]
   auth:
-    image: supabase/gotrue:v2.196.0
+    image: supabase/gotrue:v2.197.0
     depends_on:
       db:
         condition: service_healthy

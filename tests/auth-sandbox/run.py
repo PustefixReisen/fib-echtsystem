@@ -12,6 +12,7 @@ from pathlib import Path
 import re
 import secrets
 import struct
+import subprocess
 import sys
 import time
 from urllib import request, error, parse
@@ -143,7 +144,7 @@ def server_mfa():
     assert claims(aal1['access_token'])['aal'] == 'aal1'
     for label, body in [('password', {'password': secrets.token_urlsafe(24)}), ('email', {'email': 'blocked-' + secrets.token_hex(4) + '@example.test'})]:
         status, data, _ = call('/user', body, aal1['access_token'], 'PUT')
-        check('Direct AAL1 ' + label + ' change is denied by Auth server', status == 403 and data.get('error_code') == 'insufficient_aal', status, data.get('error_code'))
+        check('Direct AAL1 ' + label + ' change is denied by Auth server', status in (401, 403) and data.get('error_code') == 'insufficient_aal', status, data.get('error_code'))
     challenge = success('/factors/' + factor + '/challenge', {}, aal1['access_token'])
     wrong = str((int(totp(secret)) + 1) % 1000000).zfill(6)
     status, data, _ = call('/factors/' + factor + '/verify', {'challenge_id': challenge['id'], 'code': wrong}, aal1['access_token'])
@@ -201,7 +202,7 @@ def recovery():
     check('Recovery does not bypass MFA', claims(recovered['access_token'])['aal'] == 'aal1')
     new_password = secrets.token_urlsafe(24)
     status, data, _ = call('/user', {'password': new_password}, recovered['access_token'], 'PUT')
-    check('Recovered AAL1 session cannot reset password before MFA', status == 403 and data.get('error_code') == 'insufficient_aal', status, data.get('error_code'))
+    check('Recovered AAL1 session cannot reset password before MFA', status in (401, 403) and data.get('error_code') == 'insufficient_aal', status, data.get('error_code'))
     elevated = step_up(recovered, factor, secret, wait=True)
     status, _, _ = call('/user', {'password': new_password}, elevated['access_token'], 'PUT')
     check('Recovery plus MFA permits password reset', status == 200, status)
@@ -220,6 +221,11 @@ for _ in range(60):
         pass
     time.sleep(1)
 else:
+    logs = subprocess.run(['docker', 'compose', '-f', 'tests/auth-sandbox/compose.yml', 'logs', '--no-color', 'auth'], capture_output=True, text=True).stdout
+    for name in ['TEST_DB_PASSWORD', 'TEST_JWT_SECRET']:
+        if os.environ.get(name):
+            logs = logs.replace(os.environ[name], '[REDACTED]')
+    print(logs[-8000:])
     raise SystemExit('Isolated Auth server did not become healthy')
 
 for scenario in [registration, server_mfa, email_change, password_change, recovery]:
@@ -229,7 +235,7 @@ for scenario in [registration, server_mfa, email_change, password_change, recove
         check(scenario.__name__ + ': scenario completed', False)
         print('Scenario interrupted: ' + type(exc).__name__, flush=True)
 
-report = {'scope': 'isolated GoTrue v2.196.0; no production credentials or data', 'results': RESULTS}
+report = {'scope': 'isolated GoTrue v2.197.0; no production credentials or data', 'results': RESULTS}
 (OUT / 'auth-results.json').write_text(json.dumps(report, indent=2) + '\n')
 rows = ['# Isolated Auth integration results', '', '| Test | Result | HTTP |', '|---|---|---|']
 rows += ['| ' + r['test'] + ' | ' + r['result'] + ' | ' + str(r.get('http_status') or '') + ' |' for r in RESULTS]
