@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 0.2 | 06.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
+| 0.3 | 12.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
 
 ## 1. Zweck und Geltung
 
@@ -272,6 +272,20 @@ Bei Limit/Eskalation werden zuerst optionale bzw. wiederholbare KI-Aufgaben gest
 - Providerfreigaben und Regionen sind versionierte Betriebskonfiguration,
 - mindestens zwei Admins müssen Zugriff auf notwendige Wiederherstellungs-/Providerinformationen haben.
 
+### 12.1 Persönlicher Kontoselbstservice und Passwortwiederherstellung
+
+Im Implementierungsstand von PR #74 (noch nicht produktiv freigegeben) gilt:
+
+- E-Mail-/Passwortänderungen erfolgen im persönlichen Profil über das gemeinsame Auth-Konto. Die Oberfläche weist darauf hin, dass auch andere Anwendungen mit diesem Konto betroffen sind.
+- „Passwort vergessen?“ auf der Anmeldeseite fordert einen Wiederherstellungslink an. Die Antwort gibt keinen Rückschluss darauf, ob ein Konto existiert.
+- Nach dem Recovery-Link ist bei eingerichtetem TOTP-Faktor weiterhin MFA erforderlich. Erst danach wird das Profil zur Passwortneuvergabe geöffnet.
+- Passwortverlust bei vorhandenem zweiten Faktor ist damit abgedeckt. Verlust des zweiten Faktors benötigt ein gesondertes, identitätsgeprüftes Notfallverfahren; der Recovery-Link hebt MFA nicht auf.
+- Bei verlangter erneuter Authentifizierung muss eine neue Anmeldung einschließlich MFA erfolgen. Eine produktiv aktivierte zusätzliche Current-password-Anforderung muss vor Freigabe mit dem Clientablauf abgeglichen werden.
+- Site URL, Redirect-Allowlist, E-Mail-Templates, Secure Email Change, Passwortpolicy, Reauthentifizierung und tatsächliche Zustellbarkeit müssen vor produktiver Freigabe nachgewiesen werden.
+- Änderungen an projektweiten Shared-Apps-Auth-Einstellungen erfordern eine Bewertung aller betroffenen Anwendungen.
+
+Die technische Abnahme wird ohne Produktivdaten im kurzlebigen Auth-/SMTP-Testaufbau wiederholt. Ausführung, Ergebnisse und verbleibende Freigabegrenzen stehen in `docs/tests/PR-74-Sicherheits-und-Funktionstest.md`. Die MFA-/Rechtegrundsätze bleiben ausschließlich in `docs/Rollen-Rechte-und-Workflow.md` verbindlich.
+
 ## 13. Regelmäßige Betriebsprüfungen
 
 ### Automatisch / laufend
@@ -310,5 +324,6 @@ Die konkreten Empfängeradressen, Provider-/Tarifentscheidung und gegebenenfalls
 
 | Version | Datum | Änderung |
 |---|---|---|
+| 0.3 | 12.10.2026 | Kontoselbstservice und Passwort-Recovery aus PR #74 betrieblich eingeordnet; MFA-Grenze und produktive Konfigurations-/Zustellprüfung festgehalten. |
 | 0.2 | 06.10.2026 | Pilot-Backupkette Supabase → Nextcloud → PC → Back In Time integriert; RPO/RTO und technische Retentionwerte bestätigt; Monitoring-/Warnweg Redaktionsübersicht + E-Mail konkretisiert; offene G7-Punkte auf Schlussaudit reduziert. |
 | 0.1 | 06.10.2026 | G7 gestartet; Betriebsprinzipien, Verfügbarkeitsklassen, Backup/Restore, Free-Plan-Pausierung, Monitoring, Störungsprioritäten, Retention, KI-Kosten-/Providerbetrieb und regelmäßige Prüfungen konsolidiert. |

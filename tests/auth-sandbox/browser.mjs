@@ -68,8 +68,10 @@ try{
   await page.getByText('Änderung angefordert.',{exact:false}).waitFor();
   check('Browser requests actual email change without premature activation',await page.getByText(fixture.email,{exact:false}).count()>0&&!(await page.getByLabel('Neue E-Mail-Adresse').inputValue()));
   await page.setViewportSize({width:390,height:844});
-  check('Profile fits mobile width',await page.evaluate(()=>document.documentElement.scrollWidth<=window.innerWidth));
-  await page.screenshot({path:'auth-test-results/profile-mobile.png',fullPage:true});
+  await page.waitForFunction(()=>document.querySelector('.side-nav').getBoundingClientRect().right<=0);
+  await page.evaluate(()=>window.scrollTo(0,0));
+  check('Profile fits mobile width with navigation closed',await page.evaluate(()=>document.documentElement.scrollWidth<=window.innerWidth&&document.querySelector('.side-nav').getBoundingClientRect().right<=0));
+  await page.screenshot({path:'auth-test-results/profile-mobile.png',fullPage:true,animations:'disabled'});
   await page.getByRole('button',{name:'Navigation öffnen oder schließen'}).click();
   await page.getByRole('button',{name:'Abmelden',exact:true}).click();
   await page.getByRole('button',{name:'Anmelden',exact:true}).waitFor();

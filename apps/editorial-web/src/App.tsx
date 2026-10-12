@@ -761,6 +761,7 @@ export function App() {
             </section>
             <section className="panel card-headed profile-panel">
               <h2>Zugangssicherheit</h2>
+              <p className="meta">Die Änderung deiner E-Mail-Adresse oder deines Passworts gilt für alle Anwendungen, die du mit diesem gemeinsamen Konto nutzt.</p>
               {passwordRecovery && <p className="notice" role="status">Deine Wiederherstellung ist mit MFA bestätigt. Bitte jetzt ein neues Passwort festlegen.</p>}
               <p><strong>Aktuelle E-Mail-Adresse:</strong> {accountEmail || '–'}</p>
               <form className="stack" onSubmit={updateEmail}>
@@ -768,7 +769,7 @@ export function App() {
                   <input type="email" autoComplete="email" value={newAccountEmail} onChange={e => setNewAccountEmail(e.target.value)} required />
                 </label>
                 <div className="button-row"><button type="submit" disabled={securitySaving || !newAccountEmail.trim()}>E-Mail-Änderung anfordern</button></div>
-                <p className="meta">Supabase Auth verschickt Bestätigungs-E-Mails. Die Änderung ist erst nach erfolgreicher Verifizierung abgeschlossen.</p>
+                <p className="meta">Du erhältst Bestätigungs-E-Mails. Die Änderung ist erst nach erfolgreicher Verifizierung abgeschlossen.</p>
               </form>
               <form className="stack security-form" onSubmit={updatePassword}>
                 <h3>Passwort ändern</h3>

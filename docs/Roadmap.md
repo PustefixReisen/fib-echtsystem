@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 4.7 | 12.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
+| 4.8 | 12.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
 
 ## Statusmodell
 
@@ -159,9 +159,11 @@ Erster sichtbarer Stand:
 
 Noch bewusst nicht vorgetäuscht werden Funktionen, deren Fachservice-/Datenweg noch fehlt. Insbesondere Statuskarten ohne operative Datenquelle bleiben als noch nicht angebunden gekennzeichnet. Der nächste Teil dieses Slices bindet tatsächliches Bearbeiten/Speichern und den Meldungsentwurf über die gemeinsame Fachservice-Schicht an.
 
-### U2.2 Persönlicher Kontoselbstservice – teilweise umgesetzt, Abnahme blockiert
+### U2.2 Persönlicher Kontoselbstservice – teilweise umgesetzt, Produktionsabgleich blockiert
 
-PR #74 ergänzt E-Mail-/Passwortänderung im persönlichen Profil. Isolierte Handler-Prüfung und Fehlernachbesserung sind abgeschlossen; reale Auth-Vorschau, Bestätigungs-/Recovery-Tests und serverseitige Sicherheitsprüfung fehlen. Merge und Produktivfreigabe bleiben blockiert. Der nächste Schritt ist die Abnahme mit separatem Testkonto und kontrollierten Test-Mailboxen, danach die ausdrückliche Freigabe für die Sicherheits-/UI-Änderung. Prüfergebnis und Abnahmekriterien: `docs/tests/PR-74-Sicherheits-und-Funktionstest.md`.
+PR #74 enthält E-Mail-/Passwortänderung und den ergänzten Recovery-Weg mit verpflichtender MFA. Die isolierte Abnahme ist erfolgreich: 16 Handler-Regressionen, 31 echte Auth-/SMTP-Prüfungen und 13 Chromium-Prüfungen. Testkonten, Mailbox und Datenbank werden pro Lauf neu erzeugt und danach gelöscht; das Administratorkonto und Shared-Apps bleiben unverändert.
+
+Der Merge ist vom Nutzer bedingt autorisiert, bleibt aber bis zum Nachweis der produktiven Auth-Parameter, Callback-/E-Mail-Konfiguration und Zustellbarkeit blockiert. Hierfür fehlt der angemeldete Dashboard-Zugriff. Anschließend ist der sichere MFA-Faktorwechsel mit Notfallwiederherstellung der nächste Entwicklungsschritt. Verbindlicher Prüfstand und Restpunkte: `docs/tests/PR-74-Sicherheits-und-Funktionstest.md`.
 
 ## 4. Verbindliche Abschlussquellen der Gründung und Architekturkonkretisierung
 
@@ -211,6 +213,7 @@ PR #74 ergänzt E-Mail-/Passwortänderung im persönlichen Profil. Isolierte Han
 
 | Version | Datum | Änderung |
 |---|---|---|
+| 4.8 | 12.10.2026 | PR #74 mit realer isolierter Auth-/SMTP- und Browserabnahme; Recovery-Weg ergänzt. Nur produktiver Konfigurations-/Zustellnachweis bleibt als Merge-Blocker. |
 | 4.7 | 12.10.2026 | PR #74 Kontoselbstservice mit Handler-Tests nachgebessert; Auth-Live-Abnahme und ausdrückliche Freigabe als Merge-Blocker dokumentiert. |
 | 4.6 | 11.10.2026 | U2 auf `In Arbeit` gesetzt; vertikale Entwicklung aus Anwendersicht begonnen und ersten Slice `Dashboard → Ereignisdetail → Koordination` aufgenommen. U1.4 auf aktuellen Koordinations-/Teststand nach PR #54–#59 nachgezogen. |
 | 4.5 | 06.10.2026 | U1.3 begonnen: Runtime-Konfigurationsvertrag, Secret-Regeln, Domain-Contracts und zentrale Fachservice-Autorisierungsbasis angelegt; pustivo-Live-Credentialtest als konkreten manuellen Schritt dokumentiert. |
