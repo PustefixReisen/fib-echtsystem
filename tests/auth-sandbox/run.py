@@ -250,6 +250,21 @@ def expired_confirmation():
     _, params, _ = verify_link(link)
     check('Expired email confirmation cannot issue a session', not params.get('access_token') and params.get('error_code') == 'otp_expired')
 
+def expired_recovery():
+    address, _, session = new_account('expired-recovery')
+    success('/recover', {'email': address})
+    link = mail_link(address, 'recovery')
+    user_id = str(uuid.UUID(session['user']['id']))
+    local_sql("update auth.users set recovery_sent_at = now() - interval '2 hours' where id = '" + user_id + "'")
+    _, params, _ = verify_link(link)
+    check('Expired recovery link cannot issue a session', not params.get('access_token') and params.get('error_code') == 'otp_expired')
+
+def untrusted_redirect():
+    address = 'fib-redirect-' + secrets.token_hex(4) + '@example.test'
+    success('/signup?redirect_to=https%3A%2F%2Funtrusted.example.test', {'email':address,'password':secrets.token_urlsafe(24)})
+    _, params, location = verify_link(mail_link(address, 'signup'))
+    check('Unapproved redirect is replaced by allowed site callback', bool(params.get('access_token')) and location.startswith('http://127.0.0.1:4173'))
+
 for _ in range(60):
     try:
         if call('/health')[0] == 200:
@@ -266,7 +281,7 @@ else:
     print(subprocess.run(['docker', 'compose', '-f', 'tests/auth-sandbox/compose.yml', 'ps', '-a'], capture_output=True, text=True).stdout)
     raise SystemExit('Isolated Auth server did not become healthy')
 
-for scenario in [registration, server_mfa, email_change, password_change, recovery, stale_session, expired_confirmation]:
+for scenario in [registration, server_mfa, email_change, password_change, recovery, stale_session, expired_confirmation, expired_recovery, untrusted_redirect]:
     try:
         scenario()
     except Exception as exc:
