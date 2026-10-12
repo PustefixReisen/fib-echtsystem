@@ -26,3 +26,7 @@ Technische Entwicklung, CI-Prüfung und Merge erfolgen durch die KI eigenständi
 Preview/Sichtprüfung wird bei sichtbaren oder riskanten UI-Änderungen nach Ermessen vorgesehen; es ist keine generelle Merge-Sperre für kleine Gestaltungsanpassungen mehr. Das etablierte FIB-Fachkonzept und dessen Primärdokumente werden durch diese Prozessregel nicht ersetzt.
 
 **Wichtig:** Separates Preview-Verzeichnis bedeutet derzeit noch keine isolierte Supabase-Datenbank. Änderungen an Backend, MFA und Schreibprozessen erfordern besondere Sicherheitsprüfung vor produktiver Bereitstellung. Bei externen produktiven Aktionen bleibt die jeweils nötige Berechtigung bestehen.
+
+## Arbeitsfluss ohne unnötige Bestätigungen (12.10.2026)
+
+Der Projektverantwortliche hat ausdrücklich vereinbart, dass die KI definierte Arbeitspakete eigenständig bis zu einem sinnvollen Abschluss bearbeitet. Ein bloßes „OK“ als Zwischenfreigabe wird nicht angefordert. Statusmeldungen bündeln die Ergebnisse abgeschlossener Arbeitsabschnitte statt nach jedem Commit zu unterbrechen. Rückfragen erfolgen nur bei tatsächlich erforderlicher menschlicher Entscheidung oder Mitwirkung (zum Beispiel MFA, nicht ausführbarer manueller Workflow), bei erheblichem Risiko oder bei Kosten/irreversiblen Eingriffen. Diese Regel erweitert den eigenständigen Arbeitsfluss, hebt aber die Klärungspflichten im vorigen Abschnitt nicht auf.
