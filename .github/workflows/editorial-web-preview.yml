@@ -1,0 +1,86 @@
+name: Preview Editorial Web
+
+on:
+  workflow_dispatch:
+    inputs:
+      preview_ref:
+        description: 'Repository branch to preview (e.g. u2/user-label-dashboard-refresh)'
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+concurrency:
+  group: editorial-web-preview
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout requested branch
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.preview_ref }}
+          persist-credentials: false
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: apps/editorial-web/package.json
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build preview at separate URL
+        env:
+          VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
+          VITE_SUPABASE_PUBLISHABLE_KEY: ${{ secrets.VITE_SUPABASE_PUBLISHABLE_KEY }}
+        run: |
+          test -n "$VITE_SUPABASE_URL" && test -n "$VITE_SUPABASE_PUBLISHABLE_KEY" || {
+            echo "::error::Missing existing VITE_SUPABASE_* repository secrets for the preview build."
+            exit 1
+          }
+          npm run build --workspace @fib/editorial-web -- --base=/redaktion-preview/
+
+      - name: Store static preview build
+        uses: actions/upload-artifact@v4
+        with:
+          name: editorial-preview
+          path: apps/editorial-web/dist/
+          if-no-files-found: error
+          retention-days: 1
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment: fib-editorial-preview
+    steps:
+      - name: Retrieve static build (no source code execution)
+        uses: actions/download-artifact@v4
+        with:
+          name: editorial-preview
+          path: preview-dist/
+
+      - name: Install SFTP client
+        run: sudo apt-get update && sudo apt-get install -y lftp
+
+      - name: Publish preview without touching production directory
+        env:
+          IONOS_SFTP_HOST: ${{ secrets.IONOS_SFTP_HOST }}
+          IONOS_SFTP_USER: ${{ secrets.IONOS_SFTP_USER }}
+          IONOS_SFTP_PASSWORD: ${{ secrets.IONOS_SFTP_PASSWORD }}
+        run: |
+          set -euo pipefail
+          lftp -u "$IONOS_SFTP_USER","$IONOS_SFTP_PASSWORD" "sftp://$IONOS_SFTP_HOST" -e '
+            set cmd:fail-exit yes;
+            set net:max-retries 2;
+            set net:timeout 20;
+            set sftp:auto-confirm yes;
+            mkdir -p redaktion-preview;
+            cd redaktion-preview;
+            mirror --reverse --delete --verbose preview-dist/ ./;
+            bye;
+          '
