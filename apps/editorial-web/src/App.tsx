@@ -96,6 +96,12 @@ export function App() {
   const [navigationOpen, setNavigationOpen] = useState(false);
   const [profileCallName, setProfileCallName] = useState('');
   const [profileSaving, setProfileSaving] = useState(false);
+  const [accountEmail, setAccountEmail] = useState('');
+  const [newAccountEmail, setNewAccountEmail] = useState('');
+  const [newPassword, setNewPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [securitySaving, setSecuritySaving] = useState(false);
+  const [securityMessage, setSecurityMessage] = useState('');
   const [profileMessage, setProfileMessage] = useState<string | null>(null);
 
   function navigateTo(nextView: EditorialView) {
@@ -110,6 +116,7 @@ export function App() {
     const { data: sessionData } = await supabase.auth.getSession();
     if (!sessionData.session) {
       setState('signed_out');
+      setAccountEmail('');
       setFactorId(null);
       setQrCode(null);
       setTotpSecret(null);
@@ -123,6 +130,7 @@ export function App() {
       return;
     }
 
+    setAccountEmail(sessionData.session.user.email ?? '');
     const { data: aal, error: aalError } = await supabase.auth.mfa.getAuthenticatorAssuranceLevel();
     if (aalError || !aal) {
       setMessage('MFA-Status konnte nicht geprüft werden.');
@@ -400,6 +408,37 @@ export function App() {
     await loadCoordinationState();
   }
 
+  async function updateEmail(event: FormEvent) {
+    event.preventDefault();
+    const desired = newAccountEmail.trim();
+    if (!desired || desired === accountEmail) return;
+    setSecuritySaving(true);
+    setSecurityMessage('');
+    const { error } = await supabase.auth.updateUser({ email: desired });
+    setSecuritySaving(false);
+    setSecurityMessage(error
+      ? 'E-Mail-Änderung fehlgeschlagen. Bitte Anmeldung und Adresse prüfen.'
+      : 'Änderung angefordert. Bitte die Bestätigungs-E-Mail(s) prüfen. Bis zur Verifizierung bleibt die bisherige Adresse gültig.');
+    if (!error) setNewAccountEmail('');
+  }
+
+  async function updatePassword(event: FormEvent) {
+    event.preventDefault();
+    if (newPassword.length < 12 || newPassword !== confirmPassword) {
+      setSecurityMessage('Bitte ein Passwort mit mindestens 12 Zeichen eingeben und identisch wiederholen.');
+      return;
+    }
+    setSecuritySaving(true);
+    setSecurityMessage('');
+    const { error } = await supabase.auth.updateUser({ password: newPassword });
+    setNewPassword('');
+    setConfirmPassword('');
+    setSecuritySaving(false);
+    setSecurityMessage(error
+      ? 'Passwort konnte nicht geändert werden. Gegebenenfalls ist eine erneute Anmeldung erforderlich.'
+      : 'Passwort aktualisiert. Für andere Geräte kann eine erneute Anmeldung erforderlich sein.');
+  }
+
   async function logout() {
     await supabase.auth.signOut();
     setMessage('');
@@ -654,7 +693,26 @@ export function App() {
             </section>
             <section className="panel card-headed profile-panel">
               <h2>Zugangssicherheit</h2>
-              <p>Passwortänderung und MFA-Verwaltung werden im nächsten Sicherheitsschritt ergänzt.</p>
+              <p><strong>Aktuelle E-Mail-Adresse:</strong> {accountEmail || '–'}</p>
+              <form className="stack" onSubmit={updateEmail}>
+                <label>Neue E-Mail-Adresse
+                  <input type="email" autoComplete="email" value={newAccountEmail} onChange={e => setNewAccountEmail(e.target.value)} required />
+                </label>
+                <div className="button-row"><button type="submit" disabled={securitySaving || !newAccountEmail.trim()}>E-Mail-Änderung anfordern</button></div>
+                <p className="meta">Supabase Auth verschickt Bestätigungs-E-Mails. Die Änderung ist erst nach erfolgreicher Verifizierung abgeschlossen.</p>
+              </form>
+              <form className="stack security-form" onSubmit={updatePassword}>
+                <h3>Passwort ändern</h3>
+                <label>Neues Passwort
+                  <input type="password" autoComplete="new-password" minLength={12} value={newPassword} onChange={e => setNewPassword(e.target.value)} required />
+                </label>
+                <label>Neues Passwort wiederholen
+                  <input type="password" autoComplete="new-password" minLength={12} value={confirmPassword} onChange={e => setConfirmPassword(e.target.value)} required />
+                </label>
+                <div className="button-row"><button type="submit" disabled={securitySaving || !newPassword}>Passwort ändern</button></div>
+              </form>
+              <p className="meta">Die Verwaltung und der sichere Wechsel von MFA-Faktoren folgen als gesonderter Schritt.</p>
+              {securityMessage && <p className="status-message" role="status">{securityMessage}</p>
             </section>
           </>
         )}
