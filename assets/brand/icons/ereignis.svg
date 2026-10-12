@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-label="Ereignis">
+  <g fill="none" stroke="#16355F" stroke-width="7" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="17" y="25" width="94" height="88" rx="10"/>
+    <path d="M17 48h94M40 16v20M88 16v20"/>
+  </g>
+  <circle cx="69" cy="78" r="19" fill="#FFD84D" opacity=".28"/>
+  <circle cx="69" cy="78" r="11" fill="#FFD84D"/>
+</svg>

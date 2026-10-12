@@ -221,3 +221,46 @@ h3 { margin-bottom: .45rem; }
 @media (max-width: 760px) {
   .dashboard-secondary { grid-template-columns: 1fr; }
 }
+
+
+/* U3: durchgehende Objekt-, Navigations- und Aktionssymbole */
+.brand-block { gap: .45rem; }
+.app-label { font-size: clamp(1.03rem, 1.5vw, 1.22rem); font-weight: 800; letter-spacing: -.015em; }
+.nav-item { align-items: center; justify-content: flex-start; gap: .7rem; }
+.nav-item > span:last-child { margin-left: auto; }
+.nav-icon { width: 23px; height: 23px; flex: 0 0 23px; object-fit: contain; }
+.object-title { display: flex; align-items: center; gap: .6rem; }
+.object-icon { width: 31px; height: 31px; flex: none; object-fit: contain; }
+.work-item .object-icon { width: 24px; height: 24px; }
+.action-button { display: inline-flex; align-items: center; justify-content: center; gap: .5rem; }
+.action-icon { width: 18px; height: 18px; flex: none; }
+.card-headed { padding-top: 0; overflow: hidden; }
+.card-headed > h2:first-child, .card-headed > .section-heading:first-child {
+  margin: 0 -1.2rem 1.2rem;
+  padding: .85rem 1.2rem;
+  background: #eaf5ed;
+  border-bottom: 1px solid #d1e5d7;
+  color: var(--fib-dark);
+}
+.card-headed > h2:first-child { font-weight: 780; }
+.card-headed > .section-heading:first-child { align-items: center; }
+.card-headed > .section-heading:first-child h2 { margin: 0; font-weight: 780; }
+.card-headed > .section-heading:first-child p { color: #516359; margin-top: .25rem; }
+@media (max-width: 430px) {
+  .brand-block { gap: .4rem; }
+  .app-label { font-size: 1rem; white-space: normal; }
+  .object-icon { width: 26px; height: 26px; }
+}
+
+/* U3 review: align title immediately after the visible brand mark */
+.brand-logo { width: 112px; }
+.brand-block { gap: .2rem; }
+@media (max-width: 980px) { .brand-logo { width: 104px; } }
+@media (max-width: 430px) { .brand-logo { width: 90px; } }
+
+/* Das Markenbild enthält rechts transparenten Freiraum; Abstand optisch ausgleichen,
+   ohne das Logo selbst zu verkleinern. */
+.brand-logo { margin-right: -27px; }
+@media (max-width: 980px) { .brand-logo { margin-right: -24px; } }
+@media (max-width: 430px) { .brand-logo { margin-right: -19px; } }
+.action-icon { stroke-width: 2.3; }
