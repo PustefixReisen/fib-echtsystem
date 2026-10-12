@@ -5,6 +5,8 @@ services:
     environment:
       POSTGRES_PASSWORD: ${TEST_DB_PASSWORD:?ephemeral password required}
       POSTGRES_DB: auth_test
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/01-auth.sql:ro
     healthcheck:
       test: [CMD-SHELL, pg_isready -U postgres -d auth_test]
       interval: 2s

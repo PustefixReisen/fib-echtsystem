@@ -15,6 +15,7 @@ import struct
 import subprocess
 import sys
 import time
+import uuid
 from urllib import request, error, parse
 
 AUTH = 'http://127.0.0.1:9999'
@@ -92,6 +93,13 @@ def verify_link(link):
 
 def login(address, password):
     return success('/token?grant_type=password', {'email': address, 'password': password})
+
+def local_sql(statement):
+    result = subprocess.run(['docker', 'compose', '-f', 'tests/auth-sandbox/compose.yml', 'exec', '-T', 'db',
+                             'psql', '-U', 'postgres', '-d', 'auth_test', '-v', 'ON_ERROR_STOP=1', '-c', statement],
+                            capture_output=True, text=True)
+    if result.returncode:
+        raise RuntimeError('Isolated database fixture setup failed')
 
 def new_account(label):
     address = 'fib-' + label + '-' + secrets.token_hex(4) + '@example.test'
@@ -213,6 +221,24 @@ def recovery():
     _, replay, _ = verify_link(link)
     check('Recovery link cannot be replayed', not replay.get('access_token') and bool(replay.get('error_code')))
 
+def stale_session():
+    address, password, session = new_account('reauth')
+    elevated, _, _ = enroll(session)
+    token = elevated['access_token']
+    session_id = str(uuid.UUID(claims(token)['session_id']))
+    local_sql("update auth.sessions set created_at = now() - interval '25 hours' where id = '" + session_id + "'")
+    status, data, _ = call('/user', {'password': secrets.token_urlsafe(24)}, token, 'PUT')
+    check('AAL2 session older than 24 hours requires reauthentication', status == 400 and data.get('error_code') == 'reauthentication_needed', status, data.get('error_code'))
+
+def expired_confirmation():
+    address = 'fib-expired-' + secrets.token_hex(4) + '@example.test'
+    data = success('/signup', {'email': address, 'password': secrets.token_urlsafe(24)})
+    link = mail_link(address, 'signup')
+    user_id = str(uuid.UUID(data['id']))
+    local_sql("update auth.users set confirmation_sent_at = now() - interval '2 hours' where id = '" + user_id + "'")
+    _, params, _ = verify_link(link)
+    check('Expired email confirmation cannot issue a session', not params.get('access_token') and params.get('error_code') == 'otp_expired')
+
 for _ in range(60):
     try:
         if call('/health')[0] == 200:
@@ -228,7 +254,7 @@ else:
     print(logs[-8000:])
     raise SystemExit('Isolated Auth server did not become healthy')
 
-for scenario in [registration, server_mfa, email_change, password_change, recovery]:
+for scenario in [registration, server_mfa, email_change, password_change, recovery, stale_session, expired_confirmation]:
     try:
         scenario()
     except Exception as exc:
