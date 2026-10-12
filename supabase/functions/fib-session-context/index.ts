@@ -52,6 +52,23 @@ export default {
     const databaseUrl = Deno.env.get('FIB_DATABASE_URL');
     if (!databaseUrl) return json({ error: 'runtime_not_configured' }, 503);
 
+    let action: 'get_context' | 'update_call_name' = 'get_context';
+    let nextCallName: string | null = null;
+    try {
+      const body = await req.json() as { action?: string; callName?: unknown };
+      if (body.action === 'update_call_name') {
+        action = 'update_call_name';
+        if (typeof body.callName !== 'string' || body.callName.length > 80) return json({ error: 'invalid_call_name' }, 400);
+        const trimmed = body.callName.trim();
+        if (trimmed.length > 60 || /[<>\x00-\x1F\x7F]/.test(trimmed)) return json({ error: 'invalid_call_name' }, 400);
+        nextCallName = trimmed || null;
+      } else if (body.action && body.action !== 'get_context') {
+        return json({ error: 'invalid_action' }, 400);
+      }
+    } catch {
+      return json({ error: 'invalid_json' }, 400);
+    }
+
     const sql = postgres(databaseUrl, { max: 1, prepare: false, idle_timeout: 5, connect_timeout: 5 });
 
     try {
@@ -62,6 +79,15 @@ export default {
       const row = rows[0] as any;
       if (!row || !row.active || row.setup_status !== 'active') {
         return json({ error: 'fib_membership_missing_or_inactive' }, 403);
+      }
+
+      if (action === 'update_call_name') {
+        const updated = await sql.unsafe(
+          "update fib.app_users set call_name=$2 where user_id=$1 and active=true and setup_status='active' returning user_id, full_name, call_name, role",
+          [userId, nextCallName],
+        );
+        if (!updated.length) return json({ error: 'fib_membership_missing_or_inactive' }, 403);
+        Object.assign(row, updated[0]);
       }
 
       return json({
