@@ -252,6 +252,7 @@ else:
         if os.environ.get(name):
             logs = logs.replace(os.environ[name], '[REDACTED]')
     print(logs[-8000:])
+    print(subprocess.run(['docker', 'compose', '-f', 'tests/auth-sandbox/compose.yml', 'ps', '-a'], capture_output=True, text=True).stdout)
     raise SystemExit('Isolated Auth server did not become healthy')
 
 for scenario in [registration, server_mfa, email_change, password_change, recovery, stale_session, expired_confirmation]:
@@ -259,12 +260,18 @@ for scenario in [registration, server_mfa, email_change, password_change, recove
         scenario()
     except Exception as exc:
         check(scenario.__name__ + ': scenario completed', False)
-        print('Scenario interrupted: ' + type(exc).__name__, flush=True)
+        print('Scenario interrupted: ' + (str(exc) if isinstance(exc, RuntimeError) else type(exc).__name__), flush=True)
 
 report = {'scope': 'isolated GoTrue v2.197.0; no production credentials or data', 'results': RESULTS}
 (OUT / 'auth-results.json').write_text(json.dumps(report, indent=2) + '\n')
 rows = ['# Isolated Auth integration results', '', '| Test | Result | HTTP |', '|---|---|---|']
 rows += ['| ' + r['test'] + ' | ' + r['result'] + ' | ' + str(r.get('http_status') or '') + ' |' for r in RESULTS]
 (OUT / 'auth-results.md').write_text('\n'.join(rows) + '\n')
+if os.environ.get('RUNNER_TEMP'):
+    address, password, session = new_account('browser')
+    _, factor, secret = enroll(session)
+    fixture = Path(os.environ['RUNNER_TEMP']) / 'fib-auth-browser.json'
+    fixture.write_text(json.dumps({'email': address, 'password': password, 'factor': factor, 'secret': secret}))
+    fixture.chmod(0o600)
 if any(r['result'] != 'PASS' for r in RESULTS):
     sys.exit(1)

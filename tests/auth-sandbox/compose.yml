@@ -62,5 +62,4 @@ services:
       GOTRUE_LOG_LEVEL: error
     networks: [isolated]
 networks:
-  isolated:
-    internal: true
+  isolated: {}
