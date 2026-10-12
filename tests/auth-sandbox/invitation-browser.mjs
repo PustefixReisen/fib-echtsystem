@@ -33,7 +33,6 @@ try{
  let dataRequests=0,updates=0;
  page.on('request',r=>{if(r.url().includes('/functions/v1/'))dataRequests++;if(r.method()==='PUT'&&r.url().endsWith('/auth/v1/user'))updates++;});
  await page.goto(link);await page.getByRole('heading',{name:'Passwort festlegen',exact:true}).waitFor();
- console.log('Invitation entry diagnostic '+JSON.stringify({identityMatches:await page.getByText(email,{exact:true}).count(),dataRequests}));
  check('Real invitation opens initial password form for the invited identity',await page.getByText(email,{exact:true}).count()===1);
  check('No FIB service is called before initial password and MFA',dataRequests===0);
  check('Invitation callback tokens are removed from the URL',!(new URL(page.url())).hash);
@@ -68,7 +67,7 @@ try{
  await page.locator('input[autocomplete="one-time-code"]').fill(totp(secret));await page.getByRole('button',{name:'Bestätigen',exact:true}).click();
  await page.getByRole('heading',{name:'Freischaltung ausstehend'}).waitFor();
  check('Verified MFA without membership shows pending activation',await page.getByRole('button',{name:'Mein Profil öffnen'}).count()===0);
- const token=await page.evaluate(()=>JSON.parse(sessionStorage.getItem('fib-invitation-auth')).access_token);
+ const token=await page.evaluate(()=>JSON.parse(sessionStorage.getItem(sessionStorage.getItem('fib-invitation-storage-key'))).access_token);
  check('Real server handler denies AAL2 without FIB membership',(await gate(token)).data.error==='fib_membership_missing_or_inactive');
  await auth('/user',{data:{role:'admin',active:true,setup_status:'active'}},token,'PUT');
  check('Self-edited metadata cannot grant FIB membership',(await gate(token)).status===403);
@@ -84,6 +83,13 @@ try{
  check('Even activated membership cannot use AAL1',(await gate(aal1.data.access_token)).status===403);
  await page.getByRole('button',{name:'Freischaltung erneut prüfen'}).click();await page.getByRole('heading',{name:'Dashboard',exact:true}).waitFor();
  check('UI opens editorial dashboard only after separate activation',true);
+ const normal=await browser.newPage();
+ await normal.goto(base);await normal.getByLabel('E-Mail',{exact:true}).fill(email);await normal.getByLabel('Passwort',{exact:true}).fill(password);await normal.getByRole('button',{name:'Anmelden',exact:true}).click();
+ await normal.getByRole('button',{name:'MFA bestätigen'}).waitFor();
+ check('First normal password login still requires enrolled MFA',await normal.getByRole('heading',{name:'Dashboard',exact:true}).count()===0);
+ await new Promise(r=>setTimeout(r,31000-Date.now()%30000));
+ await normal.locator('input[autocomplete="one-time-code"]').fill(totp(secret));await normal.getByRole('button',{name:'MFA bestätigen'}).click();await normal.getByRole('heading',{name:'Dashboard',exact:true}).waitFor();
+ check('Normal login completes after password and MFA without invitation loop',true);
  sql(`update fib.app_users set active=false where user_id='${userId}'`);
  check('Server immediately rejects deactivated membership',(await gate(token)).status===403);
  const existingLogin=await auth('/token?grant_type=password',{email:existingEmail,password:existingPassword});

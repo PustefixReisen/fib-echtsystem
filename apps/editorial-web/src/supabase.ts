@@ -10,12 +10,15 @@ if (!supabaseUrl || !supabasePublishableKey) {
 // authenticated identity and FIB membership are always checked independently.
 const entry = new URL(window.location.href);
 const fragment = new URLSearchParams(entry.hash.slice(1));
-export const authLinkError = fragment.has('error') || fragment.has('error_code') || entry.searchParams.has('error');
+export const authLinkError = fragment.has('error') || fragment.has('error_code') || entry.searchParams.has('error') || entry.searchParams.has('error_code');
 export const invitationMode = fragment.get('type') === 'invite' || entry.searchParams.get('onboarding') === 'invite';
+let invitationStorageKey: string | undefined;
 if (invitationMode) {
+  invitationStorageKey = sessionStorage.getItem('fib-invitation-storage-key') ?? `fib-invitation-${crypto.randomUUID()}`;
+  sessionStorage.setItem('fib-invitation-storage-key', invitationStorageKey);
   entry.searchParams.set('onboarding', 'invite');
   // A new link must not fall back to a previous invitation's session on failure.
-  if (entry.hash) sessionStorage.removeItem('fib-invitation-auth');
+  if (entry.hash) sessionStorage.removeItem(invitationStorageKey);
 }
 if (authLinkError) {
   entry.hash = '';
@@ -26,7 +29,7 @@ window.history.replaceState(window.history.state, '', entry);
 // Invites use tab-scoped storage separate from the existing account's session.
 // No administrator credential or existing normal session is overwritten.
 export const supabase = createClient(supabaseUrl, supabasePublishableKey, invitationMode ? {
-  auth: { storageKey: 'fib-invitation-auth', storage: sessionStorage },
+  auth: { storageKey: invitationStorageKey, storage: sessionStorage },
 } : undefined);
 
 export function invitationPasswordDone(userId: string): boolean {

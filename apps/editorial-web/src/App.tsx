@@ -214,7 +214,8 @@ export function App() {
       const nextView = event.state?.fibView === 'event' ? 'event' : event.state?.fibView === 'profile' ? 'profile' : 'dashboard';
       setView(nextView);
       setNavigationOpen(false);
-      if (nextView === 'dashboard') void loadEditorialStart();
+      // Auth callback fragment cleanup can emit popstate before setup finishes.
+      // Navigation alone must never start protected service calls.
     };
     window.addEventListener('popstate', onPopState);
 
@@ -402,6 +403,7 @@ export function App() {
   }
 
   async function loadEditorialStart() {
+    if (state !== 'aal2' || invitationPasswordPending) return;
     if (await loadSessionContext()) await Promise.all([loadEvent(), loadCoordinationState()]);
   }
 
