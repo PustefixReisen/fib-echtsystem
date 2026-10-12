@@ -33,7 +33,9 @@ try{
  let dataRequests=0,updates=0;
  page.on('request',r=>{if(r.url().includes('/functions/v1/'))dataRequests++;if(r.method()==='PUT'&&r.url().endsWith('/auth/v1/user'))updates++;});
  await page.goto(link);await page.getByRole('heading',{name:'Passwort festlegen',exact:true}).waitFor();
- check('Real invitation opens initial password form for the invited identity',await page.getByText(email,{exact:true}).count()===1&&dataRequests===0);
+ console.log('Invitation entry diagnostic '+JSON.stringify({identityMatches:await page.getByText(email,{exact:true}).count(),dataRequests}));
+ check('Real invitation opens initial password form for the invited identity',await page.getByText(email,{exact:true}).count()===1);
+ check('No FIB service is called before initial password and MFA',dataRequests===0);
  check('Invitation callback tokens are removed from the URL',!(new URL(page.url())).hash);
  check('Invitation leaves normal session storage unchanged',(await page.evaluate(()=>JSON.stringify(localStorage)))===before);
  await page.reload();await page.getByRole('heading',{name:'Passwort festlegen',exact:true}).waitFor();
@@ -54,7 +56,12 @@ try{
  const gate=async token=>{const r=await fetch('http://127.0.0.1:54321/functions/v1/fib-session-context',{method:'POST',headers:{authorization:'Bearer '+token,'content-type':'application/json'},body:'{}'});return {status:r.status,data:await r.json()};};
  check('Actual session-context handler rejects invitation AAL1',(await gate(aal1.data.access_token)).status===403);
  await page.getByRole('button',{name:'Authenticator einrichten'}).click();
- await page.locator('.notice code').waitFor();const secret=await page.locator('.notice code').innerText();
+ await page.locator('.notice code').waitFor();
+ const abandoned=(await auth('/user',null,aal1.data.access_token)).data.factors.find(f=>f.status==='unverified').id;
+ await page.reload();await page.getByRole('button',{name:'Authenticator einrichten'}).click();await page.locator('.notice code').waitFor();
+ const resumedFactors=(await auth('/user',null,aal1.data.access_token)).data.factors;
+ check('Interrupted MFA setup replaces only its own unverified factor',resumedFactors.length===1&&resumedFactors[0].id!==abandoned&&resumedFactors[0].status==='unverified');
+ const secret=await page.locator('.notice code').innerText();
  const wrong=((Number(totp(secret))+1)%1000000).toString().padStart(6,'0');
  await page.locator('input[autocomplete="one-time-code"]').fill(wrong);await page.getByRole('button',{name:'Bestätigen',exact:true}).click();
  await page.getByText('Der MFA-Code konnte nicht bestätigt werden.',{exact:false}).waitFor();check('Wrong enrollment code does not unlock FIB',dataRequests===0);

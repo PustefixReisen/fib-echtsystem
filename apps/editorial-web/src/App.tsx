@@ -281,6 +281,21 @@ export function App() {
     setCode('');
     setMessage('MFA-Einrichtung wird vorbereitet …');
 
+    const identity = await supabase.auth.getUser();
+    if (identity.error || !identity.data.user) throw new Error('identity unavailable');
+    const pendingKey = `fib-pending-totp-${identity.data.user.id}`;
+    const pendingId = sessionStorage.getItem(pendingKey);
+    if (pendingId) {
+      const factors = await supabase.auth.mfa.listFactors();
+      if (factors.error) throw factors.error;
+      const pending = factors.data.all.find(factor => factor.id === pendingId);
+      if (pending?.status === 'verified') { await refreshAuthState(); return; }
+      if (pending?.status === 'unverified') {
+        const removed = await supabase.auth.mfa.unenroll({ factorId: pendingId });
+        if (removed.error) throw removed.error;
+      }
+      sessionStorage.removeItem(pendingKey);
+    }
     const { data, error } = await supabase.auth.mfa.enroll({
       factorType: 'totp',
       friendlyName: `FIB Redaktionszugang ${new Date().toISOString()}`,
@@ -291,6 +306,7 @@ export function App() {
       return;
     }
 
+    sessionStorage.setItem(pendingKey, data.id);
     setFactorId(data.id);
     setQrCode(data.totp.qr_code);
     setTotpSecret(data.totp.secret);
@@ -300,12 +316,7 @@ export function App() {
   }
 
   async function restartTotpEnrollment() {
-    const currentFactorId = factorId;
-    setFactorId(null);
-    setQrCode(null);
-    setTotpSecret(null);
-    setCode('');
-    if (currentFactorId) await supabase.auth.mfa.unenroll({ factorId: currentFactorId });
+    // Only the unverified factor created by this tab may be replaced.
     await enrollTotp();
   }
 
@@ -334,6 +345,7 @@ export function App() {
       return;
     }
 
+    if (activeUserId.current) sessionStorage.removeItem(`fib-pending-totp-${activeUserId.current}`);
     setFactorId(null);
     setQrCode(null);
     setTotpSecret(null);
