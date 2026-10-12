@@ -51,7 +51,7 @@ function ActionIcon({ name }: { name: ActionName }) {
     open: <><path d="M5 19 19 5M10 5h9v9" /></>,
     edit: <><path d="m4 20 4.5-1 11-11-3.5-3.5-11 11zM14 6l4 4" /></>,
     save: <><path d="M4 3h14l3 3v15H3V3zM7 3v7h10V3M7 21v-8h10v8" /></>,
-    refresh: <><path d="M20 11a8 8 0 1 0-2.4 5.7" /><path d="m14 4 6 0 0 7" /><path d="m20 11-6-6" /></>,
+    refresh: <><path d="M20 11a8 8 0 1 0-2.6 5.9" /><path d="M20 4v7h-7" /></>,
     back: <><path d="m14 4-8 8 8 8M6 12h15" /></>,
   };
   return <svg className="action-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">{paths[name]}</svg>;
