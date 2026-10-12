@@ -1,4 +1,4 @@
-import { FormEvent, useEffect, useState } from 'react';
+import { FormEvent, useEffect, useState, type ReactNode } from 'react';
 import { supabase } from './supabase.js';
 import fibLogo from '../../../assets/brand/logo/fib-logo-primary-approved.png';
 import eventIcon from '../../../assets/brand/icons/ereignis.svg';
@@ -47,7 +47,7 @@ const LIVE_TEST_EVENT_ID = 'ff02ffad-e2a5-4724-a94b-073a1483051d';
 
 type ActionName = 'open' | 'edit' | 'save' | 'refresh' | 'back';
 function ActionIcon({ name }: { name: ActionName }) {
-  const paths: Record<ActionName, React.ReactNode> = {
+  const paths: Record<ActionName, ReactNode> = {
     open: <><path d="M6 18 18 6M8 6h10v10" /></>,
     edit: <><path d="m4 20 4.5-1 11-11-3.5-3.5-11 11zM14 6l4 4" /></>,
     save: <><path d="M4 3h14l3 3v15H3V3zM7 3v7h10V3M7 21v-8h10v8" /></>,
