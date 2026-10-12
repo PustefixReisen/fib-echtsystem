@@ -35,7 +35,7 @@ jobs:
         if: always()
         run: |
           test -f "$RUNNER_TEMP/fib-auth-browser.json"
-          npm install --no-save --ignore-scripts playwright@1.56.1
+          npm install --no-save --ignore-scripts playwright@1.56.1 postgres@3.4.7
           npx playwright install --with-deps chromium
           python3 - <<'PY'
           import base64,hashlib,hmac,json,os,time
@@ -55,6 +55,9 @@ jobs:
           npm exec --workspace @fib/editorial-web -- vite preview --host 127.0.0.1 --port 4173 > "$RUNNER_TEMP/auth-preview.log" 2>&1 &
           for i in $(seq 1 30); do curl --silent --fail http://127.0.0.1:4173 > /dev/null && break; sleep 1; done
           node tests/auth-sandbox/browser.mjs
+      - name: Test invitation onboarding and real membership gate
+        if: always()
+        run: node tests/auth-sandbox/invitation-browser.mjs
       - name: Publish sanitized test summary
         if: always()
         run: |
@@ -63,6 +66,9 @@ jobs:
           fi
           if [ -f auth-test-results/browser-results.md ]; then
             cat auth-test-results/browser-results.md >> "$GITHUB_STEP_SUMMARY"
+          fi
+          if [ -f auth-test-results/invitation-results.md ]; then
+            cat auth-test-results/invitation-results.md >> "$GITHUB_STEP_SUMMARY"
           fi
       - uses: actions/upload-artifact@v4
         if: always()

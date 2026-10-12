@@ -2,6 +2,7 @@ name: fib-pr74-auth-test
 services:
   db:
     image: postgres:17.6-alpine
+    ports: ["127.0.0.1:54323:5432"]
     environment:
       POSTGRES_PASSWORD: ${TEST_DB_PASSWORD:?ephemeral password required}
       POSTGRES_DB: auth_test
@@ -54,6 +55,7 @@ services:
       GOTRUE_RATE_LIMIT_VERIFY: 1000
       GOTRUE_RATE_LIMIT_TOKEN_REFRESH: 1000
       GOTRUE_RATE_LIMIT_SIGN_IN_SIGN_UPS: 1000
+      GOTRUE_MAILER_URLPATHS_INVITE: /auth/v1/verify
       GOTRUE_MAILER_URLPATHS_CONFIRMATION: /auth/v1/verify
       GOTRUE_MAILER_URLPATHS_RECOVERY: /auth/v1/verify
       GOTRUE_MAILER_URLPATHS_EMAIL_CHANGE: /auth/v1/verify

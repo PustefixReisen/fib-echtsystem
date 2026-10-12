@@ -265,6 +265,42 @@ def untrusted_redirect():
     _, params, location = verify_link(mail_link(address, 'signup'))
     check('Unapproved redirect is replaced by allowed site callback', bool(params.get('access_token')) and location.startswith('http://127.0.0.1:4173'))
 
+def admin_token():
+    def enc(value):
+        return base64.urlsafe_b64encode(json.dumps(value, separators=(',', ':')).encode()).decode().rstrip('=')
+    value = enc({'alg': 'HS256', 'typ': 'JWT'}) + '.' + enc({'role': 'service_role', 'exp': int(time.time()) + 3600})
+    return value + '.' + base64.urlsafe_b64encode(hmac.new(os.environ['TEST_JWT_SECRET'].encode(), value.encode(), hashlib.sha256).digest()).decode().rstrip('=')
+
+def invitations():
+    address = 'fib-invite-' + secrets.token_hex(4) + '@example.test'
+    invited = success('/invite', {'email': address}, admin_token())
+    status, _, _ = call('/token?grant_type=password', {'email': address, 'password': secrets.token_urlsafe(24)})
+    check('Invited user cannot sign in with an unset password', status == 400, status)
+    link = mail_link(address, 'invite')
+    _, session, location = verify_link(link)
+    check('Invitation verifies email and creates AAL1 at allowed callback', bool(session.get('access_token')) and session.get('type') == 'invite' and claims(session['access_token'])['aal'] == 'aal1' and location.startswith('http://127.0.0.1:4173'))
+    status, _, _ = call('/user', {'password': 'short'}, session['access_token'], 'PUT')
+    check('Initial invitation password policy is enforced by server', status == 422, status)
+    password = secrets.token_urlsafe(24)
+    status, _, _ = call('/user', {'password': password}, session['access_token'], 'PUT')
+    check('Initial password can be set before first MFA enrollment', status == 200, status)
+    signed = login(address, password)
+    check('Initial password works but grants only AAL1', claims(signed['access_token'])['aal'] == 'aal1')
+    elevated, _, _ = enroll(signed)
+    check('Invited user must verify enrolled MFA to reach AAL2', claims(elevated['access_token'])['aal'] == 'aal2')
+    _, replay, _ = verify_link(link)
+    check('Consumed invitation cannot create another session', not replay.get('access_token') and bool(replay.get('error_code')))
+    status, _, _ = call('/invite', {'email': address}, admin_token())
+    check('Invitation to existing confirmed account is rejected', status >= 400, status)
+    check('Rejected reinvitation leaves existing password intact', bool(login(address, password).get('access_token')))
+    expired_address = 'fib-expired-invite-' + secrets.token_hex(4) + '@example.test'
+    expired = success('/invite', {'email': expired_address}, admin_token())
+    expired_link = mail_link(expired_address, 'invite')
+    user_id = str(uuid.UUID(expired['id']))
+    local_sql("update auth.users set confirmation_sent_at = now() - interval '2 hours' where id = '" + user_id + "'")
+    _, params, _ = verify_link(expired_link)
+    check('Expired invitation cannot issue a session', not params.get('access_token') and params.get('error_code') == 'otp_expired')
+
 for _ in range(60):
     try:
         if call('/health')[0] == 200:
@@ -281,7 +317,7 @@ else:
     print(subprocess.run(['docker', 'compose', '-f', 'tests/auth-sandbox/compose.yml', 'ps', '-a'], capture_output=True, text=True).stdout)
     raise SystemExit('Isolated Auth server did not become healthy')
 
-for scenario in [registration, server_mfa, email_change, password_change, recovery, stale_session, expired_confirmation, expired_recovery, untrusted_redirect]:
+for scenario in [registration, server_mfa, email_change, password_change, recovery, stale_session, expired_confirmation, expired_recovery, untrusted_redirect, invitations]:
     try:
         scenario()
     except Exception as exc:
@@ -296,6 +332,7 @@ rows += ['| ' + r['test'] + ' | ' + r['result'] + ' | ' + str(r.get('http_status
 if os.environ.get('RUNNER_TEMP'):
     address, password, session = new_account('browser')
     _, factor, secret = enroll(session)
+    local_sql("insert into fib.app_users(user_id,full_name,role,active,setup_status) values ('" + str(uuid.UUID(session['user']['id'])) + "','Testredaktion','editor',true,'active')")
     fixture = Path(os.environ['RUNNER_TEMP']) / 'fib-auth-browser.json'
     fixture.write_text(json.dumps({'email': address, 'password': password, 'factor': factor, 'secret': secret}))
     fixture.chmod(0o600)

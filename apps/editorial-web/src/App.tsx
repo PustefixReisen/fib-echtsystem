@@ -1,5 +1,5 @@
-import { FormEvent, useEffect, useState, type ReactNode } from 'react';
-import { supabase } from './supabase.js';
+import { FormEvent, useEffect, useRef, useState, type ReactNode } from 'react';
+import { supabase, invitationMode, authLinkError, invitationPasswordDone, rememberInvitationPassword } from './supabase.js';
 import fibLogo from '../../../assets/brand/logo/fib-logo-primary-approved.png';
 import eventIcon from '../../../assets/brand/icons/ereignis.svg';
 import dashboardIcon from '../../../assets/brand/icons/redaktion-dashboard.svg';
@@ -11,7 +11,7 @@ import sessionIcon from '../../../assets/brand/icons/nav-sitzungen.svg';
 import assistantIcon from '../../../assets/brand/icons/fib-assistent.svg';
 import './app.css';
 
-type AuthState = 'signed_out' | 'aal1_no_factor' | 'aal1_factor_available' | 'aal2';
+type AuthState = 'checking' | 'auth_error' | 'signed_out' | 'aal1_no_factor' | 'aal1_factor_available' | 'aal2';
 type EditorialView = 'dashboard' | 'event' | 'profile';
 
 type CoordinationState = {
@@ -71,14 +71,14 @@ function eventStatusLabel(status: EventData['status']) {
 }
 
 export function App() {
-  const [email, setEmail] = useState('josef@kjwalter.de');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [code, setCode] = useState('');
   const [factorId, setFactorId] = useState<string | null>(null);
   const [qrCode, setQrCode] = useState<string | null>(null);
   const [totpSecret, setTotpSecret] = useState<string | null>(null);
-  const [state, setState] = useState<AuthState>('signed_out');
-  const [message, setMessage] = useState('');
+  const [state, setState] = useState<AuthState>('checking');
+  const [message, setMessage] = useState(authLinkError ? 'Dieser Link ist ungültig oder abgelaufen. Bitte fordere einen neuen Link an.' : '');
   const [view, setView] = useState<EditorialView>('dashboard');
   const [eventResult, setEventResult] = useState<EventData | null>(null);
   const [serviceError, setServiceError] = useState<string | null>(null);
@@ -106,6 +106,18 @@ export function App() {
   const [recoverySending, setRecoverySending] = useState(false);
   const [profileMessage, setProfileMessage] = useState<string | null>(null);
 
+  const [invitationUserId, setInvitationUserId] = useState<string | null>(null);
+  const [invitationPasswordPending, setInvitationPasswordPending] = useState(invitationMode);
+  const [initialPassword, setInitialPassword] = useState('');
+  const [initialPasswordConfirm, setInitialPasswordConfirm] = useState('');
+  const [invitationSaving, setInvitationSaving] = useState(false);
+  const [membershipStatus, setMembershipStatus] = useState<'checking' | 'pending' | 'error' | 'active'>('checking');
+  const [authenticatedUserId, setAuthenticatedUserId] = useState<string | null>(null);
+  const activeUserId = useRef<string | null>(null);
+  const authRevision = useRef(0);
+  const mfaBusy = useRef(false);
+  const invitationBusy = useRef(false);
+
   function navigateTo(nextView: EditorialView) {
     if (nextView === view) return;
     window.history.pushState({ fibView: nextView }, '', window.location.href);
@@ -115,9 +127,19 @@ export function App() {
   }
 
   async function refreshAuthState() {
-    const { data: sessionData } = await supabase.auth.getSession();
+    const revision = ++authRevision.current;
+    try {
+    const { data: sessionData, error: sessionError } = await supabase.auth.getSession();
+    if (revision !== authRevision.current) return;
+    if (sessionError) throw sessionError;
     if (!sessionData.session) {
+      activeUserId.current = null;
+      setAuthenticatedUserId(null);
       setState('signed_out');
+      setInvitationUserId(null);
+      setInitialPassword('');
+      setInitialPasswordConfirm('');
+      setMembershipStatus('checking');
       setAccountEmail('');
       setPasswordRecovery(false);
       setFactorId(null);
@@ -133,12 +155,29 @@ export function App() {
       return;
     }
 
-    setAccountEmail(sessionData.session.user.email ?? '');
-    const { data: aal, error: aalError } = await supabase.auth.mfa.getAuthenticatorAssuranceLevel();
-    if (aalError || !aal) {
-      setMessage('MFA-Status konnte nicht geprüft werden.');
-      return;
+    const { data: userData, error: userError } = await supabase.auth.getUser();
+    if (revision !== authRevision.current) return;
+    if (userError || !userData.user || userData.user.id !== sessionData.session.user.id) throw new Error('invalid identity');
+    if (activeUserId.current !== userData.user.id) {
+      activeUserId.current = userData.user.id;
+      setAuthenticatedUserId(userData.user.id);
+      setSessionContext(null);
+      setEventResult(null);
+      setCoordination(null);
+      setInitialPassword('');
+      setInitialPasswordConfirm('');
+      setNewPassword('');
+      setConfirmPassword('');
     }
+    if (invitationMode && !userData.user.invited_at) throw new Error('not an invited account');
+    if (invitationMode) {
+      setInvitationUserId(userData.user.id);
+      setInvitationPasswordPending(!invitationPasswordDone(userData.user.id));
+    }
+    setAccountEmail(userData.user.email ?? '');
+    const { data: aal, error: aalError } = await supabase.auth.mfa.getAuthenticatorAssuranceLevel();
+    if (revision !== authRevision.current) return;
+    if (aalError || !aal) throw new Error('MFA status unavailable');
 
     if (aal.currentLevel === 'aal2') {
       setState('aal2');
@@ -147,10 +186,8 @@ export function App() {
     }
 
     const { data: factors, error: factorsError } = await supabase.auth.mfa.listFactors();
-    if (factorsError) {
-      setMessage('MFA-Faktoren konnten nicht gelesen werden.');
-      return;
-    }
+    if (revision !== authRevision.current) return;
+    if (factorsError) throw factorsError;
 
     const verifiedTotp = factors?.totp.find((factor) => factor.status === 'verified');
     if (verifiedTotp) {
@@ -161,10 +198,17 @@ export function App() {
     }
 
     setState('aal1_no_factor');
-    setMessage('Für FIB muss zuerst TOTP-MFA eingerichtet werden.');
+    setMessage(invitationMode && !invitationPasswordDone(userData.user.id) ? '' : 'Für FIB muss zuerst TOTP-MFA eingerichtet werden.');
+    } catch {
+      if (revision !== authRevision.current) return;
+      setState('auth_error');
+      setSessionContext(null);
+      setMessage('Der Kontozugang konnte nicht sicher geprüft werden. Bitte erneut versuchen oder neu anmelden.');
+    }
   }
 
   useEffect(() => {
+    if (authLinkError) return;
     window.history.replaceState({ ...(window.history.state ?? {}), fibView: 'dashboard' }, '', window.location.href);
     const onPopState = (event: PopStateEvent) => {
       const nextView = event.state?.fibView === 'event' ? 'event' : event.state?.fibView === 'profile' ? 'profile' : 'dashboard';
@@ -177,7 +221,8 @@ export function App() {
     void refreshAuthState();
     const { data } = supabase.auth.onAuthStateChange((event) => {
       if (event === 'PASSWORD_RECOVERY') setPasswordRecovery(true);
-      void refreshAuthState();
+      // Do not re-enter Auth while its event callback holds the session lock.
+      window.setTimeout(() => { void refreshAuthState(); }, 0);
     });
     return () => {
       window.removeEventListener('popstate', onPopState);
@@ -186,10 +231,10 @@ export function App() {
   }, []);
 
   useEffect(() => {
-    if (state === 'aal2' && !eventResult && !serviceRunning) {
+    if (state === 'aal2' && !invitationPasswordPending) {
       void loadEditorialStart();
     }
-  }, [state]);
+  }, [state, invitationPasswordPending, authenticatedUserId]);
 
   useEffect(() => {
     if (state === 'aal2' && passwordRecovery) setView('profile');
@@ -227,6 +272,9 @@ export function App() {
   }
 
   async function enrollTotp() {
+    if (mfaBusy.current) return;
+    mfaBusy.current = true;
+    try {
     setFactorId(null);
     setQrCode(null);
     setTotpSecret(null);
@@ -247,6 +295,8 @@ export function App() {
     setQrCode(data.totp.qr_code);
     setTotpSecret(data.totp.secret);
     setMessage('Authenticator einrichten: QR-Code scannen oder den Schlüssel manuell in Aegis eintragen.');
+    } catch { setMessage('MFA-Einrichtung nicht erreichbar. Bitte erneut versuchen.'); }
+    finally { mfaBusy.current = false; }
   }
 
   async function restartTotpEnrollment() {
@@ -270,7 +320,9 @@ export function App() {
   }
 
   async function verifyTotp() {
-    if (!factorId || !code.trim()) return;
+    if (!factorId || !code.trim() || mfaBusy.current) return;
+    mfaBusy.current = true;
+    try {
     const { error } = await supabase.auth.mfa.challengeAndVerify({
       factorId,
       code: code.trim(),
@@ -286,6 +338,8 @@ export function App() {
     setQrCode(null);
     setTotpSecret(null);
     await refreshAuthState();
+    } catch { setMessage('MFA konnte nicht geprüft werden. Bitte erneut versuchen.'); }
+    finally { setCode(''); mfaBusy.current = false; }
   }
 
   async function loadEvent() {
@@ -313,14 +367,30 @@ export function App() {
   }
 
   async function loadSessionContext() {
-    const { data, error } = await supabase.functions.invoke<SessionContextResult>('fib-session-context', {
-      body: {},
-    });
-    if (!error && data?.ok) { setSessionContext(data.user); setProfileCallName(data.user.displayName === data.user.fullName ? '' : data.user.displayName); }
+    const revision = authRevision.current;
+    setMembershipStatus('checking');
+    try {
+      const { data, error } = await supabase.functions.invoke<SessionContextResult>('fib-session-context', { body: {} });
+      if (revision !== authRevision.current) return false;
+      if (error || !data?.ok || !['editor', 'admin'].includes(data.user.role)) {
+        const failure = error?.context instanceof Response ? await error.context.json().catch(() => null) : null;
+        if (revision !== authRevision.current) return false;
+        setSessionContext(null);
+        setMembershipStatus(failure?.error === 'fib_membership_missing_or_inactive' ? 'pending' : 'error');
+        return false;
+      }
+      setSessionContext(data.user);
+      setMembershipStatus('active');
+      setProfileCallName(data.user.displayName === data.user.fullName ? '' : data.user.displayName);
+      return true;
+    } catch {
+      if (revision === authRevision.current) { setSessionContext(null); setMembershipStatus('error'); }
+      return false;
+    }
   }
 
   async function loadEditorialStart() {
-    await Promise.all([loadEvent(), loadCoordinationState(), loadSessionContext()]);
+    if (await loadSessionContext()) await Promise.all([loadEvent(), loadCoordinationState()]);
   }
 
   async function runCoordinationAction(action: 'get_state' | 'take_lead' | 'release_lead' | 'acquire_lock' | 'renew_lock' | 'release_lock', quiet = false) {
@@ -503,8 +573,45 @@ export function App() {
     }
   }
 
+  async function setInvitationPassword(event: FormEvent) {
+    event.preventDefault();
+    if (!invitationMode || !invitationUserId || invitationBusy.current) return;
+    if (initialPassword.length < 12 || initialPassword !== initialPasswordConfirm) {
+      setMessage('Bitte mindestens 12 Zeichen eingeben und das Passwort identisch wiederholen.');
+      return;
+    }
+    invitationBusy.current = true;
+    setInvitationSaving(true);
+    try {
+      const { data, error } = await supabase.auth.getUser();
+      if (error || data.user?.id !== invitationUserId || !data.user.invited_at) throw new Error('identity changed');
+      // Auth itself enforces AAL2 if this account already has a verified factor.
+      const result = await supabase.auth.updateUser({ password: initialPassword });
+      if (result.error) {
+        setMessage('Passwort konnte nicht festgelegt werden. Bitte die Passwortregeln prüfen; bei abgelaufener Sitzung einen neuen Link anfordern.');
+        return;
+      }
+      rememberInvitationPassword(invitationUserId);
+      setInvitationPasswordPending(false);
+      await refreshAuthState();
+    } catch {
+      setMessage('Die Passwortfestlegung konnte nicht sicher abgeschlossen werden. Bitte erneut versuchen.');
+    } finally {
+      setInitialPassword('');
+      setInitialPasswordConfirm('');
+      setInvitationSaving(false);
+      invitationBusy.current = false;
+    }
+  }
+
   async function logout() {
-    await supabase.auth.signOut();
+    ++authRevision.current;
+    const { error } = await supabase.auth.signOut({ scope: 'local' });
+    if (error) { setMessage('Abmelden fehlgeschlagen. Bitte erneut versuchen.'); return; }
+    if (invitationMode) sessionStorage.removeItem('fib-invitation-password-user');
+    setInitialPassword('');
+    setInitialPasswordConfirm('');
+    await refreshAuthState();
     setMessage('');
     setEventResult(null);
     setServiceError(null);
@@ -517,6 +624,49 @@ export function App() {
     setView('dashboard');
   }
 
+  if (authLinkError) {
+    return <main className="auth-shell"><section className="auth-card">
+      <h1>Link nicht verwendbar</h1>
+      <p>Dieser Link ist ungültig oder abgelaufen. Bitte fordere einen neuen Link an.</p>
+      <a href={window.location.pathname}>Zur Anmeldung</a>
+    </section></main>;
+  }
+
+  const showInvitationPassword = invitationMode && invitationPasswordPending && invitationUserId && (state === 'aal1_no_factor' || state === 'aal2');
+  if (showInvitationPassword) {
+    return <main className="auth-shell"><section className="auth-card">
+      <p className="eyebrow">Feldkirchen im Blick · Einladung</p>
+      <h1>Passwort festlegen</h1>
+      <p>Deine Einladung gilt für <strong>{accountEmail}</strong>.</p>
+      <p>Lege zuerst dein Passwort fest. Danach richtest du deinen Authenticator ein. Die Freischaltung als FIB-Redakteur erfolgt getrennt durch einen Administrator.</p>
+      <form className="stack" onSubmit={setInvitationPassword}>
+        <label>Erstes Passwort<input type="password" autoComplete="new-password" minLength={12} value={initialPassword} onChange={e => setInitialPassword(e.target.value)} required disabled={invitationSaving} /></label>
+        <label>Erstes Passwort wiederholen<input type="password" autoComplete="new-password" minLength={12} value={initialPasswordConfirm} onChange={e => setInitialPasswordConfirm(e.target.value)} required disabled={invitationSaving} /></label>
+        <button className="primary" disabled={invitationSaving}>{invitationSaving ? 'Wird gespeichert …' : 'Passwort festlegen'}</button>
+      </form>
+      <p role="status">{message}</p>
+      <button onClick={logout} disabled={invitationSaving}>Abmelden</button>
+    </section></main>;
+  }
+
+  if (state === 'aal2' && !sessionContext) {
+    return <main className="auth-shell"><section className="auth-card">
+      <p className="eyebrow">Feldkirchen im Blick</p>
+      <h1>{membershipStatus === 'pending' ? 'Freischaltung ausstehend' : membershipStatus === 'error' ? 'Freischaltung nicht prüfbar' : 'Freischaltung wird geprüft'}</h1>
+      <p>Angemeldet als <strong>{accountEmail}</strong>. Dein zweiter Faktor ist bestätigt.</p>
+      <p>Ein eingerichtetes Konto allein gibt dir noch keine Redaktionsrechte. Ein FIB-Administrator muss dich gesondert als aktiven Redakteur freischalten.</p>
+      {passwordRecovery && <form className="stack" onSubmit={updatePassword}>
+        <p>Deine Wiederherstellung ist mit MFA bestätigt. Lege jetzt ein neues Passwort fest.</p>
+        <label>Neues Passwort<input type="password" autoComplete="new-password" minLength={12} value={newPassword} onChange={e=>setNewPassword(e.target.value)} required /></label>
+        <label>Neues Passwort wiederholen<input type="password" autoComplete="new-password" minLength={12} value={confirmPassword} onChange={e=>setConfirmPassword(e.target.value)} required /></label>
+        <button disabled={securitySaving}>Passwort ändern</button>
+      </form>}
+      <p role="status">{securityMessage}</p>
+      <button onClick={() => void loadEditorialStart()} disabled={membershipStatus === 'checking'}>Freischaltung erneut prüfen</button>
+      <button onClick={logout}>Abmelden</button>
+    </section></main>;
+  }
+
   if (state !== 'aal2') {
     return (
       <main className="auth-shell">
@@ -524,7 +674,13 @@ export function App() {
           <p className="eyebrow">Feldkirchen im Blick</p>
           <h1>Redaktionssystem</h1>
 
-          {state === 'signed_out' && (
+          {state === 'checking' && <p>Kontozugang wird geprüft …</p>}
+          {state === 'auth_error' && <button onClick={() => void refreshAuthState()}>Erneut prüfen</button>}
+          {state === 'signed_out' && invitationMode && <div className="stack">
+            <p>Die Einladung ist ungültig, abgelaufen oder bereits verwendet. Bitte fordere bei deinem Administrator einen neuen Einladungslink an. Hast du bereits ein Passwort festgelegt, nutze die normale Anmeldung.</p>
+            <a href={window.location.pathname}>Zur Anmeldung</a>
+          </div>}
+          {state === 'signed_out' && !invitationMode && (
             <form onSubmit={login} className="stack">
               <label>E-Mail<input type="email" value={email} onChange={(e) => setEmail(e.target.value)} required /></label>
               <label>Passwort<input type="password" value={password} onChange={(e) => setPassword(e.target.value)} required /></label>
