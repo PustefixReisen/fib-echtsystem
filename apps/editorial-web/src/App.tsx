@@ -48,11 +48,11 @@ const LIVE_TEST_EVENT_ID = 'ff02ffad-e2a5-4724-a94b-073a1483051d';
 type ActionName = 'open' | 'edit' | 'save' | 'refresh' | 'back';
 function ActionIcon({ name }: { name: ActionName }) {
   const paths: Record<ActionName, ReactNode> = {
-    open: <><path d="M6 18 18 6M8 6h10v10" /></>,
+    open: <><path d="M5 19 19 5M10 5h9v9" /></>,
     edit: <><path d="m4 20 4.5-1 11-11-3.5-3.5-11 11zM14 6l4 4" /></>,
     save: <><path d="M4 3h14l3 3v15H3V3zM7 3v7h10V3M7 21v-8h10v8" /></>,
-    refresh: <><path d="M20 11a8 8 0 1 0-2.4 5.7" /><path d="M20 4v7h-7" /></>,
-    back: <><path d="m15 5-7 7 7 7M8 12h13" /></>,
+    refresh: <><path d="M20 11a8 8 0 1 0-2.4 5.7" /><path d="m14 4 6 0 0 7" /><path d="m20 11-6-6" /></>,
+    back: <><path d="m14 4-8 8 8 8M6 12h15" /></>,
   };
   return <svg className="action-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">{paths[name]}</svg>;
 }
@@ -626,7 +626,8 @@ export function App() {
                 <div className="section-heading">
                   <div><h2>Ereignisdaten</h2></div>
                   {!editingEvent && (
-                    <button className="primary action-button" onClick={startEventEditing} disabled={coordinationRunning || !!(coordination?.lock && !coordination.lock.mine)}>\n                      <ActionIcon name="edit" />
+                    <button className="primary action-button" onClick={startEventEditing} disabled={coordinationRunning || !!(coordination?.lock && !coordination.lock.mine)}>
+                      <ActionIcon name="edit" />
                       Bearbeiten
                     </button>
                   )}
