@@ -712,7 +712,7 @@ export function App() {
                 <div className="button-row"><button type="submit" disabled={securitySaving || !newPassword}>Passwort ändern</button></div>
               </form>
               <p className="meta">Die Verwaltung und der sichere Wechsel von MFA-Faktoren folgen als gesonderter Schritt.</p>
-              {securityMessage && <p className="status-message" role="status">{securityMessage}</p>
+              {securityMessage && <p className="status-message" role="status">{securityMessage}</p>}
             </section>
           </>
         )}
