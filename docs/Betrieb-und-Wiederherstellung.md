@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 0.3 | 12.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
+| 0.4 | 12.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
 
 ## 1. Zweck und Geltung
 
@@ -286,6 +286,21 @@ Im Implementierungsstand von PR #74 (noch nicht produktiv freigegeben) gilt:
 
 Die technische Abnahme wird ohne Produktivdaten im kurzlebigen Auth-/SMTP-Testaufbau wiederholt. Ausführung, Ergebnisse und verbleibende Freigabegrenzen stehen in `docs/tests/PR-74-Sicherheits-und-Funktionstest.md`. Die MFA-/Rechtegrundsätze bleiben ausschließlich in `docs/Rollen-Rechte-und-Workflow.md` verbindlich.
 
+### 12.2 Einladung annehmen und Konto erstmals einrichten
+
+Implementiert in PR #74; produktive Freigabe weiterhin vom vollständigen Sicherheitsnachweis abhängig. Die verbindliche Rechteabgrenzung steht in `docs/Rollen-Rechte-und-Workflow.md`, Abschnitt 9.1.
+
+1. **Vorbereiten (Admin):** Prüfen, ob die Person bereits ein Shared-Apps-Auth-Konto besitzt. Bestehende Konten wiederverwenden; keine neue Einladung als Passwort-Reset missbrauchen. Neue Auth-Einladungen nur über einen berechtigten serverseitigen/Admin-Zugang versenden. Der Browser enthält keinen Service-Role-Schlüssel und kann keine Einladungen oder Freischaltungen erzeugen.
+2. **Linkziel prüfen:** Einladung muss zum freigegebenen FIB-Ursprung und exakten Anwendungspfad führen. Der Standard-ConfirmationURL-Link mit `type=invite` wird unterstützt. Individuell abweichende Token-Hash-/PKCE-Templates sind nicht stillschweigend gleichwertig und brauchen eine eigene Abnahme. Site URL, Allowlist, Einladungsvorlage, Ablaufzeit und tatsächliche Zustellung vor Produktivfreigabe kontrollieren.
+3. **Passwort setzen (eingeladene Person):** Der verifizierte Link öffnet eine Kontoeinrichtung mit sichtbarer E-Mail-Adresse. Mindestens zwölf Zeichen und identische Wiederholung sind erforderlich; die serverseitige Policy bleibt maßgeblich. Der Browser prüft vor der Änderung erneut die eingeladene Auth-Identität. Eine bestehende normale Browsersitzung wird durch die separate, tabgebundene Einladungssitzung nicht überschrieben.
+4. **MFA einrichten:** Erst nach erfolgreicher Passwortfestlegung Authenticator hinzufügen und aktuellen Code bestätigen. QR-Code/Schlüssel sind vertraulich. Besteht bereits ein bestätigter Faktor, bleibt dessen Prüfung erforderlich. Bei Neuladen während der Einrichtung darf nur der von diesem Tab angelegte, noch unbestätigte Faktor ersetzt werden, nie ein bestätigter oder fremder Faktor.
+5. **Getrennte Freischaltung:** Nach MFA zeigt die Anwendung bei fehlender/inaktiver FIB-Zuordnung „Freischaltung ausstehend“. Ein berechtigter Admin prüft die Person und abgeschlossene Einrichtung, ordnet die richtige Auth-ID zu und aktiviert die FIB-Mitgliedschaft im bestätigten, auditierten Verwaltungsprozess. PR #74 führt keine automatische Aktivierung und keine neue Adminoberfläche ein. „Freischaltung erneut prüfen“ liest lediglich den Serverstatus.
+6. **Abbruch/Wiederaufnahme:** Innerhalb desselben Tabs bleibt der Einrichtungsfortschritt kontogebunden erhalten; kein Passwort oder TOTP-Secret wird dafür gespeichert. Nach Schließen des Tabs kann sich die Person mit bereits gesetztem Passwort normal anmelden und MFA abschließen. Ohne gesetztes Passwort einen neuen Link beim Admin anfordern beziehungsweise den gesonderten Recovery-Prozess nutzen. Abgelaufene/verbrauchte Links erzeugen eine verständliche Fehlermeldung, keine Passwortmaske für eine bereits angemeldete andere Person.
+
+Die Einladungssitzung selbst enthält die üblichen Auth-Tokens in separatem Session Storage und endet durch lokales Abmelden oder Schließen des Tabs. Einrichtungsmarker sind reine Benutzerführung, niemals serverseitiger Berechtigungsnachweis. Passwortfestlegung und MFA-Registrierung werden an Supabase Auth delegiert. Die Freischaltung wird nicht aus `user_metadata` oder einer clientseitigen „fertig“-Markierung abgeleitet.
+
+Tests verwenden ausschließlich zufällig erzeugte Konten unter `example.test`, Mailpit und eine eigene Datenbank. Der echte `fib-session-context`-Handler prüft dort fehlende, inaktive und aktivierte synthetische Mitgliedschaften. Dies ersetzt keine vollständige produktive RLS-/Deploymentabnahme. Ergebnisse: `docs/tests/PR-74-Sicherheits-und-Funktionstest.md`.
+
 ## 13. Regelmäßige Betriebsprüfungen
 
 ### Automatisch / laufend
@@ -324,6 +339,7 @@ Die konkreten Empfängeradressen, Provider-/Tarifentscheidung und gegebenenfalls
 
 | Version | Datum | Änderung |
 |---|---|---|
+| 0.4 | 12.10.2026 | Sichere Einladungsannahme mit Passwort, MFA, Sitzungsisolation und getrennter FIB-Freischaltung beschrieben; Wiederaufnahme und produktive Einladungsnachweise ergänzt. |
 | 0.3 | 12.10.2026 | Kontoselbstservice und Passwort-Recovery aus PR #74 betrieblich eingeordnet; MFA-Grenze und produktive Konfigurations-/Zustellprüfung festgehalten. |
 | 0.2 | 06.10.2026 | Pilot-Backupkette Supabase → Nextcloud → PC → Back In Time integriert; RPO/RTO und technische Retentionwerte bestätigt; Monitoring-/Warnweg Redaktionsübersicht + E-Mail konkretisiert; offene G7-Punkte auf Schlussaudit reduziert. |
 | 0.1 | 06.10.2026 | G7 gestartet; Betriebsprinzipien, Verfügbarkeitsklassen, Backup/Restore, Free-Plan-Pausierung, Monitoring, Störungsprioritäten, Retention, KI-Kosten-/Providerbetrieb und regelmäßige Prüfungen konsolidiert. |

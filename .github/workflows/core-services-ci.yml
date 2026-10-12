@@ -35,9 +35,9 @@ jobs:
         with:
           node-version: '22'
           cache: npm
-          cache-dependency-path: package.json
+          cache-dependency-path: package-lock.json
       - name: Install dependencies
-        run: npm install
+        run: npm ci
       - name: Typecheck repository
         run: npm run typecheck:core
       - name: Run fachservice cases

@@ -6,6 +6,7 @@ on:
       - 'apps/editorial-web/**'
       - 'tests/profile-security.test.mjs'
       - 'package.json'
+      - 'package-lock.json'
       - 'tsconfig.base.json'
       - '.github/workflows/editorial-web-ci.yml'
   push:
@@ -14,6 +15,7 @@ on:
       - 'apps/editorial-web/**'
       - 'tests/profile-security.test.mjs'
       - 'package.json'
+      - 'package-lock.json'
       - 'tsconfig.base.json'
       - '.github/workflows/editorial-web-ci.yml'
 
@@ -29,9 +31,9 @@ jobs:
         with:
           node-version: '22'
           cache: npm
-          cache-dependency-path: apps/editorial-web/package.json
+          cache-dependency-path: package-lock.json
       - name: Install dependencies
-        run: npm install
+        run: npm ci
       - name: Test profile security handlers
         run: node --test tests/profile-security.test.mjs
       - name: Build editorial web

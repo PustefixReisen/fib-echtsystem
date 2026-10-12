@@ -69,8 +69,8 @@ try{
  check('Verified MFA without membership shows pending activation',await page.getByRole('button',{name:'Mein Profil öffnen'}).count()===0);
  const token=await page.evaluate(()=>JSON.parse(sessionStorage.getItem(sessionStorage.getItem('fib-invitation-storage-key'))).access_token);
  check('Real server handler denies AAL2 without FIB membership',(await gate(token)).data.error==='fib_membership_missing_or_inactive');
- await auth('/user',{data:{role:'admin',active:true,setup_status:'active'}},token,'PUT');
- check('Self-edited metadata cannot grant FIB membership',(await gate(token)).status===403);
+ const manipulated=await auth('/user',{data:{role:'admin',active:true,setup_status:'active'}},token,'PUT');
+ check('Self-edited metadata cannot grant FIB membership',manipulated.status===200&&(await gate(token)).status===403);
  sql(`insert into fib.app_users(user_id,full_name,role,active,setup_status) values ('${userId}','Eingeladene Testredaktion','editor',false,'invited')`);
  check('Real server handler denies inactive invited membership',(await gate(token)).status===403);
  sql(`update fib.app_users set active=true where user_id='${userId}'`);
@@ -80,7 +80,8 @@ try{
  // Explicit test fixture operation simulates administrator approval; no client grant endpoint exists.
  sql(`update fib.app_users set setup_status='active' where user_id='${userId}'`);
  const allowed=await gate(token);check('Separate active editor membership permits AAL2 access',allowed.status===200&&allowed.data.user.role==='editor');
- check('Even activated membership cannot use AAL1',(await gate(aal1.data.access_token)).status===403);
+ const activeAal1=await auth('/token?grant_type=password',{email,password});
+ check('Even activated membership cannot use AAL1',activeAal1.status===200&&(await gate(activeAal1.data.access_token)).status===403);
  await page.getByRole('button',{name:'Freischaltung erneut prüfen'}).click();await page.getByRole('heading',{name:'Dashboard',exact:true}).waitFor();
  check('UI opens editorial dashboard only after separate activation',true);
  const normal=await browser.newPage();
