@@ -12,7 +12,7 @@ import assistantIcon from '../../../assets/brand/icons/fib-assistent.svg';
 import './app.css';
 
 type AuthState = 'signed_out' | 'aal1_no_factor' | 'aal1_factor_available' | 'aal2';
-type EditorialView = 'dashboard' | 'event';
+type EditorialView = 'dashboard' | 'event' | 'profile';
 
 type CoordinationState = {
   lead: { userId: string; displayName: string; mine: boolean } | null;
@@ -90,6 +90,9 @@ export function App() {
   const [editMessage, setEditMessage] = useState<string | null>(null);
   const [sessionContext, setSessionContext] = useState<SessionContext | null>(null);
   const [navigationOpen, setNavigationOpen] = useState(false);
+  const [profileCallName, setProfileCallName] = useState('');
+  const [profileSaving, setProfileSaving] = useState(false);
+  const [profileMessage, setProfileMessage] = useState<string | null>(null);
 
   function navigateTo(nextView: EditorialView) {
     if (nextView === view) return;
@@ -149,7 +152,7 @@ export function App() {
   useEffect(() => {
     window.history.replaceState({ ...(window.history.state ?? {}), fibView: 'dashboard' }, '', window.location.href);
     const onPopState = (event: PopStateEvent) => {
-      const nextView = event.state?.fibView === 'event' ? 'event' : 'dashboard';
+      const nextView = event.state?.fibView === 'event' ? 'event' : event.state?.fibView === 'profile' ? 'profile' : 'dashboard';
       setView(nextView);
       setNavigationOpen(false);
       if (nextView === 'dashboard') void loadEditorialStart();
@@ -282,7 +285,7 @@ export function App() {
     const { data, error } = await supabase.functions.invoke<SessionContextResult>('fib-session-context', {
       body: {},
     });
-    if (!error && data?.ok) setSessionContext(data.user);
+    if (!error && data?.ok) { setSessionContext(data.user); setProfileCallName(data.user.displayName === data.user.fullName ? '' : data.user.displayName); }
   }
 
   async function loadEditorialStart() {
@@ -372,6 +375,24 @@ export function App() {
     setEditingEvent(false);
     setEditMessage('Änderungen gespeichert.');
     await runCoordinationAction('release_lock', true);
+    await loadCoordinationState();
+  }
+
+  async function saveProfile(event: FormEvent) {
+    event.preventDefault();
+    setProfileSaving(true);
+    setProfileMessage(null);
+    const { data, error } = await supabase.functions.invoke<SessionContextResult>('fib-session-context', {
+      body: { action: 'update_call_name', callName: profileCallName },
+    });
+    setProfileSaving(false);
+    if (error || !data?.ok) {
+      setProfileMessage('Rufname konnte nicht gespeichert werden. Bitte erneut versuchen.');
+      return;
+    }
+    setSessionContext(data.user);
+    setProfileCallName(data.user.displayName === data.user.fullName ? '' : data.user.displayName);
+    setProfileMessage('Rufname gespeichert.');
     await loadCoordinationState();
   }
 
@@ -518,6 +539,7 @@ export function App() {
               <strong>{sessionContext?.displayName ?? 'FIB-Redaktion'}</strong>
               <span>{isAdmin ? 'Admin' : 'Redakteur'}</span>
             </div>
+            <button className="action-button" onClick={() => { setProfileMessage(null); navigateTo('profile'); }} aria-current={view === 'profile' ? 'page' : undefined}><span aria-hidden="true">⚙</span> Mein Profil</button>
             <button onClick={logout}>Abmelden</button>
           </div>
         </aside>
@@ -595,6 +617,36 @@ export function App() {
             <section className="panel muted-panel dashboard-workbasket card-headed">
               <h2>Arbeitskorb</h2>
               <p>Offene oder bewusst zurückgestellte Entscheidungen. Er bleibt nachgeordnet und ist kein Pflicht-Zwischenschritt für jede Bearbeitung.</p>
+            </section>
+          </>
+        )}
+
+        {view === 'profile' && (
+          <>
+            <nav className="breadcrumbs" aria-label="Brotkrumen">
+              <button onClick={() => navigateTo('dashboard')}>Dashboard</button>
+              <span>›</span><span aria-current="page">Mein Profil</span>
+            </nav>
+            <div className="page-heading"><div><p className="eyebrow">Persönliche Einstellungen</p><h1>Mein Profil</h1></div></div>
+            <section className="panel card-headed profile-panel">
+              <h2>Benutzerdaten</h2>
+              <p><strong>Vollständiger Name:</strong> {sessionContext?.fullName ?? '–'}</p>
+              <p><strong>Rolle:</strong> {isAdmin ? 'Admin' : 'Redakteur'}</p>
+              <form className="stack" onSubmit={saveProfile}>
+                <label>Rufname (optional)
+                  <input value={profileCallName} onChange={e => setProfileCallName(e.target.value)} maxLength={60} autoComplete="nickname" />
+                </label>
+                <p className="meta">Ohne Rufnamen wird dein vollständiger Name angezeigt.</p>
+                <div className="button-row">
+                  <button className="primary action-button" type="submit" disabled={profileSaving}><ActionIcon name="save" />{profileSaving ? 'Speichert …' : 'Speichern'}</button>
+                  <button type="button" onClick={() => navigateTo('dashboard')}>Zurück</button>
+                </div>
+              </form>
+              {profileMessage && <p className="status-message" role="status">{profileMessage}</p>}
+            </section>
+            <section className="panel card-headed profile-panel">
+              <h2>Zugangssicherheit</h2>
+              <p>Passwortänderung und MFA-Verwaltung werden im nächsten Sicherheitsschritt ergänzt.</p>
             </section>
           </>
         )}
