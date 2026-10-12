@@ -1,0 +1,45 @@
+name: Isolated Auth Security
+on:
+  pull_request:
+    paths:
+      - 'tests/auth-sandbox/**'
+      - 'apps/editorial-web/**'
+      - '.github/workflows/auth-security.yml'
+permissions:
+  contents: read
+jobs:
+  auth-security:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Generate isolated runtime secrets
+        run: |
+          python3 - <<'PY'
+          import os, secrets
+          with open(os.environ['GITHUB_ENV'], 'a') as f:
+              for name in ['TEST_DB_PASSWORD', 'TEST_JWT_SECRET']:
+                  value = secrets.token_hex(32)
+                  print('::add-mask::' + value)
+                  f.write(name + '=' + value + '\n')
+          PY
+      - name: Start isolated Auth, database and SMTP capture
+        run: docker compose -f tests/auth-sandbox/compose.yml up -d
+      - name: Run real Auth integration tests
+        run: python3 tests/auth-sandbox/run.py
+      - name: Publish sanitized test summary
+        if: always()
+        run: |
+          if [ -f auth-test-results/auth-results.md ]; then
+            cat auth-test-results/auth-results.md >> "$GITHUB_STEP_SUMMARY"
+          fi
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: isolated-auth-security-results
+          path: auth-test-results/
+          retention-days: 7
+          if-no-files-found: ignore
+      - name: Destroy test accounts, mail and database
+        if: always()
+        run: docker compose -f tests/auth-sandbox/compose.yml down --volumes --remove-orphans
