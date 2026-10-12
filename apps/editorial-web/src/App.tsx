@@ -408,8 +408,19 @@ export function App() {
     await loadCoordinationState();
   }
 
+  async function ensureSecureProfileSession(): Promise<boolean> {
+    const { data, error } = await supabase.auth.mfa.getAuthenticatorAssuranceLevel();
+    if (error || data?.currentLevel !== 'aal2') {
+      setSecurityMessage('Bitte erneut mit MFA anmelden, bevor du Zugangsdaten änderst.');
+      await refreshAuthState();
+      return false;
+    }
+    return true;
+  }
+
   async function updateEmail(event: FormEvent) {
     event.preventDefault();
+    if (!(await ensureSecureProfileSession())) return;
     const desired = newAccountEmail.trim();
     if (!desired || desired === accountEmail) return;
     setSecuritySaving(true);
@@ -418,12 +429,13 @@ export function App() {
     setSecuritySaving(false);
     setSecurityMessage(error
       ? 'E-Mail-Änderung fehlgeschlagen. Bitte Anmeldung und Adresse prüfen.'
-      : 'Änderung angefordert. Bitte die Bestätigungs-E-Mail(s) prüfen. Bis zur Verifizierung bleibt die bisherige Adresse gültig.');
+      : 'Änderung angefordert. Bitte die Bestätigungs-E-Mail(s) prüfen. Wann die neue Adresse aktiv wird, hängt von den Auth-Einstellungen ab.');
     if (!error) setNewAccountEmail('');
   }
 
   async function updatePassword(event: FormEvent) {
     event.preventDefault();
+    if (!(await ensureSecureProfileSession())) return;
     if (newPassword.length < 12 || newPassword !== confirmPassword) {
       setSecurityMessage('Bitte ein Passwort mit mindestens 12 Zeichen eingeben und identisch wiederholen.');
       return;
