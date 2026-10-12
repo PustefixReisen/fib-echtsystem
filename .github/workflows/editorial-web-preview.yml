@@ -79,7 +79,6 @@ jobs:
             set net:max-retries 2;
             set net:timeout 20;
             set sftp:auto-confirm yes;
-            mkdir -p redaktion-preview;
             cd redaktion-preview;
             mirror --reverse --delete --verbose preview-dist/ ./;
             bye;
