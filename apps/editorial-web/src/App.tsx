@@ -1,6 +1,14 @@
 import { FormEvent, useEffect, useState } from 'react';
 import { supabase } from './supabase.js';
 import fibLogo from '../../../assets/brand/logo/fib-logo-primary-approved.png';
+import eventIcon from '../../../assets/brand/icons/ereignis.svg';
+import dashboardIcon from '../../../assets/brand/icons/redaktion-dashboard.svg';
+import workbasketIcon from '../../../assets/brand/icons/redaktion-arbeitskorb.svg';
+import reportIcon from '../../../assets/brand/icons/meldung.svg';
+import processIcon from '../../../assets/brand/icons/vorgang.svg';
+import topicIcon from '../../../assets/brand/icons/thema.svg';
+import sessionIcon from '../../../assets/brand/icons/nav-sitzungen.svg';
+import assistantIcon from '../../../assets/brand/icons/fib-assistent.svg';
 import './app.css';
 
 type AuthState = 'signed_out' | 'aal1_no_factor' | 'aal1_factor_available' | 'aal2';
@@ -36,6 +44,21 @@ type SessionContext = {
 type SessionContextResult = { ok: true; user: SessionContext };
 
 const LIVE_TEST_EVENT_ID = 'ff02ffad-e2a5-4724-a94b-073a1483051d';
+
+type ActionName = 'open' | 'edit' | 'save' | 'refresh' | 'back';
+function ActionIcon({ name }: { name: ActionName }) {
+  const paths: Record<ActionName, React.ReactNode> = {
+    open: <><path d="M6 18 18 6M8 6h10v10" /></>,
+    edit: <><path d="m4 20 4.5-1 11-11-3.5-3.5-11 11zM14 6l4 4" /></>,
+    save: <><path d="M4 3h14l3 3v15H3V3zM7 3v7h10V3M7 21v-8h10v8" /></>,
+    refresh: <><path d="M20 7v5h-5M4 17v-5h5M5 9a8 8 0 0 1 14-2l1 5M4 12l1 5a8 8 0 0 0 14-2" /></>,
+    back: <><path d="m15 5-7 7 7 7M8 12h13" /></>,
+  };
+  return <svg className="action-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">{paths[name]}</svg>;
+}
+function NavIcon({ src }: { src: string }) {
+  return <img className="nav-icon" src={src} alt="" aria-hidden="true" />;
+}
 
 function eventStatusLabel(status: EventData['status']) {
   if (status === 'confirmed') return 'Bestätigt';
@@ -441,16 +464,16 @@ export function App() {
       <div className="app-layout">
         <aside className={`side-nav ${navigationOpen ? 'open' : ''}`} aria-label="Hauptnavigation">
           <div className="nav-section">
-            <button className={view === 'dashboard' ? 'nav-item active' : 'nav-item'} onClick={() => navigateTo('dashboard')}>Dashboard</button>
-            <button className="nav-item" disabled>Arbeitskorb <span>folgt</span></button>
+            <button className={view === 'dashboard' ? 'nav-item active' : 'nav-item'} onClick={() => navigateTo('dashboard')}><NavIcon src={dashboardIcon} />Dashboard</button>
+            <button className="nav-item" disabled><NavIcon src={workbasketIcon} />Arbeitskorb <span>folgt</span></button>
           </div>
 
           <div className="nav-section">
             <p className="nav-heading">Inhalte</p>
-            <button className="nav-item" disabled>Meldungen <span>folgt</span></button>
-            <button className="nav-item" disabled>Vorgänge <span>folgt</span></button>
-            <button className="nav-item" disabled>Themen <span>folgt</span></button>
-            <button className="nav-item" disabled>Sitzungen <span>folgt</span></button>
+            <button className="nav-item" disabled><NavIcon src={reportIcon} />Meldungen <span>folgt</span></button>
+            <button className="nav-item" disabled><NavIcon src={processIcon} />Vorgänge <span>folgt</span></button>
+            <button className="nav-item" disabled><NavIcon src={topicIcon} />Themen <span>folgt</span></button>
+            <button className="nav-item" disabled><NavIcon src={sessionIcon} />Sitzungen <span>folgt</span></button>
           </div>
 
           <div className="nav-section">
@@ -475,7 +498,7 @@ export function App() {
               <button className="nav-subitem" disabled>Recherche</button>
               <button className="nav-subitem" disabled>Redaktion</button>
             </details>
-            <button className="nav-item" disabled>FIB-Assistent <span>folgt</span></button>
+            <button className="nav-item" disabled><NavIcon src={assistantIcon} />FIB-Assistent <span>folgt</span></button>
           </div>
 
           {isAdmin && (
@@ -519,7 +542,7 @@ export function App() {
               <article><span>Systemhinweise</span><strong>{serviceError ? '1' : '0'}</strong><small>{serviceError ? 'Handlungsbedarf' : 'keine'}</small></article>
             </section>
 
-            <section className="panel main-work">
+            <section className="panel main-work card-headed">
               <div className="section-heading">
                 <div>
                   <h2>Als Nächstes bearbeiten</h2>
@@ -533,43 +556,43 @@ export function App() {
                 <article className="work-item">
                   <div>
                     <span className="tag">Ereignis</span>
-                    <h3>{eventResult.title}</h3>
+                    <h3 className="object-title"><img className="object-icon" src={eventIcon} alt="" aria-hidden="true" />{eventResult.title}</h3>
                     {eventResult.summary && <p>{eventResult.summary}</p>}
                     <p className="meta">Zustand: {eventStatusLabel(eventResult.status)} · Federführung: {coordination?.lead ? (coordination.lead.mine ? (sessionContext?.displayName ?? coordination.lead.displayName) : coordination.lead.displayName) : 'niemand'}</p>
                   </div>
-                  <button className="primary" onClick={() => navigateTo('event')}>Öffnen</button>
+                  <button className="primary action-button" onClick={() => navigateTo('event')}><ActionIcon name="open" />Öffnen</button>
                 </article>
               )}
             </section>
 
             <div className="dashboard-secondary">
-              <section className="panel">
+              <section className="panel card-headed">
                 <h2>Neue Funde</h2>
                 <p>Alle neuen Funde der Redaktion. Datenanbindung folgt.</p>
               </section>
-              <section className="panel">
+              <section className="panel card-headed">
                 <h2>Freigaben</h2>
                 <p>Alle für deine Rolle bearbeitbaren Freigaben. Datenanbindung folgt.</p>
               </section>
-              <section className="panel">
+              <section className="panel card-headed">
                 <h2>Recherche-Status</h2>
                 <p>Nur handlungsrelevante Recherchehinweise. Datenanbindung folgt.</p>
               </section>
-              <section className="panel">
+              <section className="panel card-headed">
                 <h2>FIB-Assistent</h2>
                 <p>„Was möchtest du klären?“ – die Assistenten-Anbindung folgt.</p>
               </section>
-              <section className="panel">
+              <section className="panel card-headed">
                 <h2>Zuletzt verändert</h2>
                 <p>Schneller Wiedereinstieg in zuletzt bearbeitete Inhalte. Datenanbindung folgt.</p>
               </section>
-              <section className="panel">
+              <section className="panel card-headed">
                 <h2>Systemhinweise</h2>
                 <p>{serviceError ? 'Es gibt aktuell einen technischen Handlungsbedarf.' : 'Aktuell kein technischer Hinweis aus dem angebundenen Ereignis-Service.'}</p>
               </section>
             </div>
 
-            <section className="panel muted-panel dashboard-workbasket">
+            <section className="panel muted-panel dashboard-workbasket card-headed">
               <h2>Arbeitskorb</h2>
               <p>Offene oder bewusst zurückgestellte Entscheidungen. Er bleibt nachgeordnet und ist kein Pflicht-Zwischenschritt für jede Bearbeitung.</p>
             </section>
@@ -587,10 +610,10 @@ export function App() {
             <div className="page-heading event-heading">
               <div>
                 <p className="eyebrow">Ereignis</p>
-                <h1>{eventResult.title}</h1>
+                <h1 className="object-title"><img className="object-icon" src={eventIcon} alt="" aria-hidden="true" />{eventResult.title}</h1>
                 {eventResult.summary && <p>{eventResult.summary}</p>}
               </div>
-              <button onClick={() => window.history.back()}>Zurück</button>
+              <button className="action-button" onClick={() => window.history.back()}><ActionIcon name="back" />Zurück</button>
             </div>
 
             <section className="object-status">
@@ -599,11 +622,11 @@ export function App() {
             </section>
 
             <div className="detail-grid">
-              <section className="panel">
+              <section className="panel card-headed">
                 <div className="section-heading">
                   <div><h2>Ereignisdaten</h2></div>
                   {!editingEvent && (
-                    <button className="primary" onClick={startEventEditing} disabled={coordinationRunning || !!(coordination?.lock && !coordination.lock.mine)}>
+                    <button className="primary action-button" onClick={startEventEditing} disabled={coordinationRunning || !!(coordination?.lock && !coordination.lock.mine)}>\n                      <ActionIcon name="edit" />
                       Bearbeiten
                     </button>
                   )}
@@ -621,7 +644,7 @@ export function App() {
                       <input type="date" value={editOccurredAt} onChange={(e) => setEditOccurredAt(e.target.value)} />
                     </label>
                     <div className="button-row">
-                      <button type="submit" className="primary" disabled={editSaving}>{editSaving ? 'Speichert …' : 'Speichern'}</button>
+                      <button type="submit" className="primary action-button" disabled={editSaving}><ActionIcon name="save" />{editSaving ? 'Speichert …' : 'Speichern'}</button>
                       <button type="button" onClick={cancelEventEditing} disabled={editSaving}>Abbrechen</button>
                     </div>
                   </form>
@@ -635,8 +658,8 @@ export function App() {
                 {editMessage && <p aria-live="polite" className="status-message">{editMessage}</p>}
               </section>
 
-              <aside className="panel">
-                <h2>Redaktionelle Koordination</h2>
+              <aside className="panel card-headed">
+                <div className="section-heading"><h2>Redaktionelle Koordination</h2></div>
                 <p><strong>Federführung:</strong> {coordination?.lead ? (coordination.lead.mine ? (sessionContext?.displayName ?? coordination.lead.displayName) : coordination.lead.displayName) : 'niemand'}</p>
                 <p><strong>Bearbeitung:</strong> {coordination?.lock ? (coordination.lock.mine ? `gesperrt durch ${sessionContext?.displayName ?? coordination.lock.displayName}` : `gesperrt durch ${coordination.lock.displayName}`) : 'frei'}</p>
                 <p><strong>Letzte Bearbeitung:</strong> {coordination?.lastEdit ? `${coordination.lastEdit.displayName} · ${new Date(coordination.lastEdit.editedAt).toLocaleString('de-DE')}` : 'noch nicht erfasst'}</p>
@@ -648,7 +671,7 @@ export function App() {
                   {!editingEvent && <button className="primary" onClick={() => runCoordinationAction(coordination?.lock?.mine ? 'release_lock' : 'acquire_lock')} disabled={coordinationRunning}>
                     {coordination?.lock?.mine ? 'Bearbeitung beenden' : 'Bearbeitung starten'}
                   </button>}
-                  <button onClick={() => runCoordinationAction('get_state')} disabled={coordinationRunning}>Status aktualisieren</button>
+                  <button className="action-button" onClick={() => runCoordinationAction('get_state')} disabled={coordinationRunning}><ActionIcon name="refresh" />Status aktualisieren</button>
                 </div>
 
                 {coordinationMessage && <p aria-live="polite" className="status-message">{coordinationMessage}</p>}
