@@ -102,6 +102,8 @@ export function App() {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [securitySaving, setSecuritySaving] = useState(false);
   const [securityMessage, setSecurityMessage] = useState('');
+  const [passwordRecovery, setPasswordRecovery] = useState(false);
+  const [recoverySending, setRecoverySending] = useState(false);
   const [profileMessage, setProfileMessage] = useState<string | null>(null);
 
   function navigateTo(nextView: EditorialView) {
@@ -117,6 +119,7 @@ export function App() {
     if (!sessionData.session) {
       setState('signed_out');
       setAccountEmail('');
+      setPasswordRecovery(false);
       setFactorId(null);
       setQrCode(null);
       setTotpSecret(null);
@@ -172,7 +175,10 @@ export function App() {
     window.addEventListener('popstate', onPopState);
 
     void refreshAuthState();
-    const { data } = supabase.auth.onAuthStateChange(() => void refreshAuthState());
+    const { data } = supabase.auth.onAuthStateChange((event) => {
+      if (event === 'PASSWORD_RECOVERY') setPasswordRecovery(true);
+      void refreshAuthState();
+    });
     return () => {
       window.removeEventListener('popstate', onPopState);
       data.subscription.unsubscribe();
@@ -184,6 +190,10 @@ export function App() {
       void loadEditorialStart();
     }
   }, [state]);
+
+  useEffect(() => {
+    if (state === 'aal2' && passwordRecovery) setView('profile');
+  }, [state, passwordRecovery]);
 
   useEffect(() => {
     if (state !== 'aal2' || view !== 'profile') {
@@ -427,6 +437,26 @@ export function App() {
     return true;
   }
 
+  async function requestPasswordRecovery() {
+    if (recoverySending) return;
+    const desired = email.trim();
+    if (!desired) {
+      setMessage('Bitte zuerst deine E-Mail-Adresse eingeben.');
+      return;
+    }
+    setRecoverySending(true);
+    try {
+      await supabase.auth.resetPasswordForEmail(desired, {
+        redirectTo: window.location.origin + window.location.pathname,
+      });
+      setMessage('Wenn die Adresse registriert ist und die Anfrage verarbeitet werden kann, erhältst du eine E-Mail zur Passwortwiederherstellung. Bitte auch den Spamordner prüfen.');
+    } catch {
+      setMessage('Die Anfrage konnte nicht abgeschlossen werden. Bitte die Verbindung prüfen und später erneut versuchen.');
+    } finally {
+      setRecoverySending(false);
+    }
+  }
+
   async function updateEmail(event: FormEvent) {
     event.preventDefault();
     if (securitySaving) return;
@@ -460,6 +490,7 @@ export function App() {
     try {
       if (!(await ensureSecureProfileSession())) return;
       const { error } = await supabase.auth.updateUser({ password: newPassword });
+      if (!error) setPasswordRecovery(false);
       setSecurityMessage(error
         ? 'Passwort konnte nicht geändert werden. Gegebenenfalls ist eine erneute Anmeldung erforderlich.'
         : 'Passwort aktualisiert. Für andere Geräte kann eine erneute Anmeldung erforderlich sein.');
@@ -498,6 +529,10 @@ export function App() {
               <label>E-Mail<input type="email" value={email} onChange={(e) => setEmail(e.target.value)} required /></label>
               <label>Passwort<input type="password" value={password} onChange={(e) => setPassword(e.target.value)} required /></label>
               <button type="submit" className="primary">Anmelden</button>
+              <button type="button" disabled={recoverySending} onClick={(event) => {
+                const emailInput = event.currentTarget.form?.querySelector<HTMLInputElement>('input[type="email"]');
+                if (emailInput?.reportValidity()) void requestPasswordRecovery();
+              }}>{recoverySending ? 'Anfrage wird verarbeitet …' : 'Passwort vergessen?'}</button>
             </form>
           )}
 
@@ -726,6 +761,7 @@ export function App() {
             </section>
             <section className="panel card-headed profile-panel">
               <h2>Zugangssicherheit</h2>
+              {passwordRecovery && <p className="notice" role="status">Deine Wiederherstellung ist mit MFA bestätigt. Bitte jetzt ein neues Passwort festlegen.</p>}
               <p><strong>Aktuelle E-Mail-Adresse:</strong> {accountEmail || '–'}</p>
               <form className="stack" onSubmit={updateEmail}>
                 <label>Neue E-Mail-Adresse

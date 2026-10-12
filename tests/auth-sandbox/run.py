@@ -57,6 +57,17 @@ def check(name, condition, status=None, code=None):
 def success(path, body=None, token=None, method=None):
     status, data, _ = call(path, body, token, method)
     if not 200 <= status < 300:
+        if status >= 500:
+            logs = subprocess.run(['docker', 'compose', '-f', 'tests/auth-sandbox/compose.yml', 'logs', '--no-color', '--tail', '10', 'auth'], capture_output=True, text=True).stdout
+            for line in logs.splitlines():
+                try:
+                    details = json.loads(line.split(' | ', 1)[-1])
+                    diagnostic = str(details.get('error', ''))
+                    for key in ['TEST_DB_PASSWORD', 'TEST_JWT_SECRET']:
+                        diagnostic = diagnostic.replace(os.environ.get(key, 'not-set'), '[REDACTED]')
+                    if diagnostic: print('Auth diagnostic: ' + diagnostic[:1000])
+                except ValueError:
+                    pass
         # Never embed request data, response data or tokens in exceptions.
         raise RuntimeError('Auth operation failed: ' + path.split('?')[0] + ' HTTP ' + str(status))
     return data

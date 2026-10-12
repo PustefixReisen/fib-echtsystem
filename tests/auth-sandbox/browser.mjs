@@ -13,6 +13,22 @@ function totp(secret){
   const digest=createHmac('sha1',key).update(counter).digest(),offset=digest[19]&15;
   return ((digest.readUInt32BE(offset)&0x7fffffff)%1000000).toString().padStart(6,'0');
 }
+async function recoveryLink(address){
+  for(let n=0;n<40;n++){
+    const list=await (await fetch('http://127.0.0.1:54324/api/v1/messages')).json();
+    for(const item of list.messages??[]){
+      if(!(item.To??[]).some(to=>to.Address===address))continue;
+      const mail=await(await fetch('http://127.0.0.1:54324/api/v1/message/'+item.ID)).json();
+      const text=((mail.HTML??'')+'\n'+(mail.Text??'')).replaceAll('&amp;','&');
+      for(const candidate of text.match(/https?:\/\/[^\s<>"']+/g)??[]){
+        const url=new URL(candidate);
+        if(url.hostname==='127.0.0.1'&&url.port==='54321'&&url.searchParams.get('type')==='recovery')return candidate;
+      }
+    }
+    await new Promise(resolve=>setTimeout(resolve,500));
+  }
+  throw Error('Captured recovery email missing');
+}
 const browser=await chromium.launch();
 try{
   const page=await browser.newPage({viewport:{width:1280,height:900}});
@@ -58,6 +74,25 @@ try{
   await page.getByRole('button',{name:'Abmelden',exact:true}).click();
   await page.getByRole('button',{name:'Anmelden',exact:true}).waitFor();
   check('Signout returns to login and hides profile',await page.getByRole('heading',{name:'Mein Profil',exact:true}).count()===0);
+  await page.getByLabel('E-Mail',{exact:true}).fill(fixture.email);
+  await page.getByRole('button',{name:'Passwort vergessen?',exact:true}).click();
+  await page.getByText('Wenn die Adresse registriert ist',{exact:false}).waitFor();
+  check('Recovery request gives a non-enumerating response',true);
+  await page.goto(await recoveryLink(fixture.email));
+  await page.getByRole('button',{name:'MFA bestätigen'}).waitFor();
+  check('Recovery link in browser still requires MFA',await page.getByRole('heading',{name:'Mein Profil',exact:true}).count()===0);
+  await new Promise(resolve=>setTimeout(resolve,31000-(Date.now()%30000)));
+  await page.locator('input[autocomplete="one-time-code"]').fill(totp(fixture.secret));
+  await page.getByRole('button',{name:'MFA bestätigen'}).click();
+  await page.getByText('Deine Wiederherstellung ist mit MFA bestätigt.',{exact:false}).waitFor();
+  const recoveredPassword=randomBytes(24).toString('base64url');
+  await newPass.fill(recoveredPassword);await repeat.fill(recoveredPassword);
+  await page.getByRole('button',{name:'Passwort ändern',exact:true}).click();
+  await page.getByText('Passwort aktualisiert.',{exact:false}).waitFor();
+  check('Browser recovery completes through MFA and profile password form',!(await newPass.inputValue())&&!(await repeat.inputValue()));
+  const oldLogin=await fetch('http://127.0.0.1:9999/token?grant_type=password',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({email:fixture.email,password:replacement})});
+  const newLogin=await fetch('http://127.0.0.1:9999/token?grant_type=password',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({email:fixture.email,password:recoveredPassword})});
+  check('Browser-reset password replaces previous password',oldLogin.status===400&&newLogin.status===200);
 }catch(error){check('Browser scenario completed',false);console.log('Browser scenario interrupted: '+error.name);}
 finally{
   await browser.close();

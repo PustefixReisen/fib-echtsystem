@@ -7,7 +7,7 @@ const source = readFileSync(new URL('../apps/editorial-web/src/App.tsx', import.
 const functions = source.slice(source.indexOf('  async function ensureSecureProfileSession'), source.indexOf('  async function logout'))
   .replace(': Promise<boolean>', '').replaceAll('event: FormEvent', 'event');
 function setup({level = 'aal2', error = null, throws = false} = {}) {
-  const values = {newAccountEmail:' new@example.test ', accountEmail:'old@example.test', newPassword:'example-pass-123', confirmPassword:'example-pass-123', securitySaving:false, securityMessage:''};
+  const values = {newAccountEmail:' new@example.test ', accountEmail:'old@example.test', newPassword:'example-pass-123', confirmPassword:'example-pass-123', securitySaving:false, securityMessage:'', passwordRecovery:false};
   const calls = [];
   const ctx = {...values, refreshAuthState:async()=>{}, supabase:{auth:{mfa:{getAuthenticatorAssuranceLevel:async()=>({data:{currentLevel:level}, error})}, updateUser:async args=>{calls.push(args); if(throws) throw Error('network'); return {error};}}}};
   for(const key of Object.keys(values)) ctx['set'+key[0].toUpperCase()+key.slice(1)] = value => { ctx[key] = value; };
