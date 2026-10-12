@@ -73,6 +73,7 @@ export function App() {
     window.history.pushState({ fibView: nextView }, '', window.location.href);
     setView(nextView);
     setNavigationOpen(false);
+    if (nextView === 'dashboard') void loadEditorialStart();
   }
 
   async function refreshAuthState() {
@@ -128,6 +129,7 @@ export function App() {
       const nextView = event.state?.fibView === 'event' ? 'event' : 'dashboard';
       setView(nextView);
       setNavigationOpen(false);
+      if (nextView === 'dashboard') void loadEditorialStart();
     };
     window.addEventListener('popstate', onPopState);
 
