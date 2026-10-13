@@ -12,7 +12,7 @@ import assistantIcon from '../../../assets/brand/icons/fib-assistent.svg';
 import './app.css';
 
 type AuthState = 'signed_out' | 'aal1_no_factor' | 'aal1_factor_available' | 'aal2';
-type EditorialView = 'dashboard' | 'event' | 'profile';
+type EditorialView = 'dashboard' | 'event' | 'events' | 'profile';
 
 type CoordinationState = {
   lead: { userId: string; displayName: string; mine: boolean } | null;
@@ -33,6 +33,7 @@ type EventData = {
 };
 
 type EventResult = { ok: true; event: EventData };
+type EventListResult = { ok: true; events: EventData[]; hasMore: boolean };
 
 type SessionContext = {
   id: string;
@@ -81,6 +82,11 @@ export function App() {
   const [message, setMessage] = useState('');
   const [view, setView] = useState<EditorialView>('dashboard');
   const [eventResult, setEventResult] = useState<EventData | null>(null);
+  const [eventList, setEventList] = useState<EventData[]>([]);
+  const [eventSearch, setEventSearch] = useState('');
+  const [eventListBusy, setEventListBusy] = useState(false);
+  const [eventListError, setEventListError] = useState<string | null>(null);
+  const [eventListHasMore, setEventListHasMore] = useState(false);
   const [serviceError, setServiceError] = useState<string | null>(null);
   const [serviceRunning, setServiceRunning] = useState(false);
   const [coordination, setCoordination] = useState<CoordinationState | null>(null);
@@ -104,6 +110,7 @@ export function App() {
     setView(nextView);
     setNavigationOpen(false);
     if (nextView === 'dashboard') void loadEditorialStart();
+    if (nextView === 'events') void loadEventList();
   }
 
   async function refreshAuthState() {
@@ -156,10 +163,11 @@ export function App() {
   useEffect(() => {
     window.history.replaceState({ ...(window.history.state ?? {}), fibView: 'dashboard' }, '', window.location.href);
     const onPopState = (event: PopStateEvent) => {
-      const nextView = event.state?.fibView === 'event' ? 'event' : event.state?.fibView === 'profile' ? 'profile' : 'dashboard';
+      const nextView = event.state?.fibView === 'event' ? 'event' : event.state?.fibView === 'events' ? 'events' : event.state?.fibView === 'profile' ? 'profile' : 'dashboard';
       setView(nextView);
       setNavigationOpen(false);
       if (nextView === 'dashboard') void loadEditorialStart();
+      if (nextView === 'events') void loadEventList();
     };
     window.addEventListener('popstate', onPopState);
 
@@ -176,6 +184,10 @@ export function App() {
       void loadEditorialStart();
     }
   }, [state]);
+
+  useEffect(() => {
+    if (view === 'event' && eventResult) void loadCoordinationState();
+  }, [view, eventResult?.id]);
 
   useEffect(() => {
     if (!editingEvent || !coordination?.lock?.mine) return;
@@ -261,6 +273,38 @@ export function App() {
     await refreshAuthState();
   }
 
+  async function loadEventList(search = '') {
+    setEventListBusy(true);
+    setEventListError(null);
+    const { data, error } = await supabase.functions.invoke<EventListResult>('fib-get-event', {
+      body: { action: 'list_events', search },
+    });
+    setEventListBusy(false);
+    if (error || !data?.ok) {
+      setEventListError('Ereignisse konnten nicht geladen werden.');
+      return;
+    }
+    setEventList(data.events);
+    setEventListHasMore(data.hasMore);
+  }
+
+  async function openListedEvent(eventId: string) {
+    setServiceRunning(true);
+    setServiceError(null);
+    const { data, error } = await supabase.functions.invoke<EventResult>('fib-get-event', {
+      body: { eventId },
+    });
+    setServiceRunning(false);
+    if (error || !data?.ok) {
+      setEventListError('Dieses Ereignis konnte nicht geöffnet werden.');
+      return;
+    }
+    setEventResult(data.event);
+    setCoordination(null);
+    setEditingEvent(false);
+    navigateTo('event');
+  }
+
   async function loadEvent() {
     setServiceRunning(true);
     setServiceError(null);
@@ -280,7 +324,7 @@ export function App() {
 
   async function loadCoordinationState() {
     const { data, error } = await supabase.functions.invoke<CoordinationResult>('fib-coordination', {
-      body: { action: 'get_state', objectType: 'event', objectId: LIVE_TEST_EVENT_ID },
+      body: { action: 'get_state', objectType: 'event', objectId: eventResult?.id ?? LIVE_TEST_EVENT_ID },
     });
     if (!error && data?.ok) setCoordination(data.state);
   }
@@ -507,7 +551,7 @@ export function App() {
               <summary>Recherche</summary>
               <button className="nav-subitem" disabled>Rechercheaufträge</button>
               <button className="nav-subitem" disabled>Funde</button>
-              <button className="nav-subitem" disabled>Ereignisse</button>
+              <button className={view === 'events' ? 'nav-subitem active' : 'nav-subitem'} onClick={() => navigateTo('events')}>Ereignisse</button>
               <button className="nav-subitem" disabled>Quellen</button>
             </details>
             <details>
@@ -556,6 +600,40 @@ export function App() {
         {navigationOpen && <button className="nav-backdrop" aria-label="Navigation schließen" onClick={() => setNavigationOpen(false)} />}
 
         <main className="content-shell">
+        {view === 'events' && (
+          <>
+            <nav className="breadcrumbs" aria-label="Brotkrumen">
+              <button onClick={() => navigateTo('dashboard')}>Dashboard</button>
+              <span>›</span><span>Redaktion</span><span>›</span><span>Recherche</span><span>›</span><span aria-current="page">Ereignisse</span>
+            </nav>
+            <div className="page-heading">
+              <div><p className="eyebrow">Redaktion · Recherche</p><h1 className="object-title"><img className="object-icon" src={eventIcon} alt="" aria-hidden="true" />Ereignisse</h1></div>
+            </div>
+            <section className="panel card-headed">
+              <h2>Ereignisse suchen und öffnen</h2>
+              <form className="button-row" onSubmit={(e) => { e.preventDefault(); void loadEventList(eventSearch); }}>
+                <label className="event-list-search">Suche nach Titel oder Beschreibung
+                  <input type="search" value={eventSearch} onChange={(e) => setEventSearch(e.target.value)} maxLength={120} placeholder="Suchbegriff" />
+                </label>
+                <button type="submit" disabled={eventListBusy}>Suchen</button>
+                <button type="button" disabled={eventListBusy} onClick={() => { setEventSearch(''); void loadEventList(''); }}><ActionIcon name="refresh" />Alle anzeigen</button>
+              </form>
+              {eventListBusy && <p role="status">Ereignisse werden geladen …</p>}
+              {eventListError && <p className="error" role="alert">{eventListError}</p>}
+              {!eventListBusy && !eventListError && eventList.length === 0 && <p>Keine Ereignisse gefunden.</p>}
+              {!eventListBusy && eventList.map((item) => (
+                <article className="work-item" key={item.id}>
+                  <div><h3>{item.title}</h3>{item.summary && <p>{item.summary}</p>}
+                    <p className="meta">Status: {eventStatusLabel(item.status)} · Zeitpunkt: {item.occurredAt ? new Date(item.occurredAt).toLocaleDateString('de-DE') : 'nicht angegeben'}</p>
+                  </div>
+                  <button className="action-button" disabled={serviceRunning} onClick={() => void openListedEvent(item.id)}><ActionIcon name="open" />Öffnen</button>
+                </article>
+              ))}
+              {eventListHasMore && <p className="meta">Es werden maximal 100 Ereignisse angezeigt. Bitte die Suche eingrenzen.</p>}
+            </section>
+          </>
+        )}
+
         {view === 'dashboard' && (
           <>
             <div className="page-heading">

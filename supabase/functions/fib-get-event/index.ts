@@ -92,15 +92,22 @@ export default {
       return json({ error: 'runtime_not_configured' }, 503);
     }
 
-    let payload: { eventId?: unknown };
+    let payload: { action?: unknown; eventId?: unknown; search?: unknown };
     try {
       payload = await req.json();
     } catch {
       return json({ error: 'invalid_json' }, 400);
     }
 
-    if (typeof payload.eventId !== 'string' || payload.eventId.length === 0) {
+    const listing = payload.action === 'list_events';
+    if (payload.action !== undefined && !listing && payload.action !== 'get_event') {
+      return json({ error: 'invalid_action' }, 400);
+    }
+    if (!listing && (typeof payload.eventId !== 'string' || payload.eventId.length === 0)) {
       return json({ error: 'event_id_required' }, 400);
+    }
+    if (listing && (payload.search !== undefined && (typeof payload.search !== 'string' || payload.search.length > 120))) {
+      return json({ error: 'invalid_search' }, 400);
     }
 
     const sql = postgres(databaseUrl, {
@@ -125,7 +132,24 @@ export default {
         return json({ error: actorResolution.reason }, 403);
       }
 
-      const result = await getEvent(actorResolution.actor, payload.eventId, db);
+      if (listing) {
+        const search = typeof payload.search === 'string' ? payload.search.trim() : '';
+        const rows = await sql.unsafe(
+          `select id, title, summary, status, occurred_at from fib.events
+           where ($1::text = '' or title ilike '%' || $1 || '%' or coalesce(summary, '') ilike '%' || $1 || '%')
+           order by occurred_at desc nulls last, id desc limit 101`,
+          [search.replace(/[\\%_]/g, '\\      const result = await getEvent(actorResolution.actor, payload.eventId, db);')],
+        );
+        return json({
+          ok: true,
+          events: rows.slice(0, 100).map((row) => ({
+            id: row.id, title: row.title, summary: row.summary, status: row.status, occurredAt: row.occurred_at,
+          })),
+          hasMore: rows.length > 100,
+        });
+      }
+
+      const result = await getEvent(actorResolution.actor, payload.eventId as string, db);
 
       if (!result.ok) {
         return json(
