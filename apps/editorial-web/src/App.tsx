@@ -688,6 +688,10 @@ export function App() {
           <p className="eyebrow">Feldkirchen im Blick</p>
           <h1>Redaktionssystem</h1>
 
+          {(state === 'aal1_no_factor' || state === 'aal1_factor_available') && <p>
+            Angemeldet als <strong>{accountEmail}</strong>. Prüfe vor dem Fortfahren, ob dies das gewünschte Konto ist.
+          </p>}
+
           {state === 'checking' && <p>Kontozugang wird geprüft …</p>}
           {state === 'auth_error' && <button onClick={() => void refreshAuthState()}>Erneut prüfen</button>}
           {state === 'signed_out' && invitationMode && <div className="stack">

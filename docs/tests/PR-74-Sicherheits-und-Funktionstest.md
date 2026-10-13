@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 0.6 | 13.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
+| 0.7 | 13.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
 
 ## Ergebnis
 
@@ -205,6 +205,14 @@ Automatisch bei einschlägigen PR-Änderungen: `Isolated Auth Security`, `Editor
 
 Lokal mit Docker: ausschließlich die Dateien unter `tests/auth-sandbox/` verwenden und die im Workflow dokumentierten Schritte ausführen. Der Testcode akzeptiert keine externen Auth-Endpunkte. Kein `supabase link`, keine Produktivmigration und kein Produktionssecret erforderlich.
 
+## Live-Beobachtung und Kontozuordnung am 13.10.2026
+
+- Rein lesender Metadatenabgleich um 11:43 Europe/Berlin: Das ausschließlich verwendete Testkonto wurde um 11:40:50 bestätigt; im selben Zeitpunkt wurde eine Anmeldung registriert. Kein verifizierter MFA-Faktor, keine FIB-Mitgliedschaft. Dies belegt die serverseitige Verwendung der Einladung, jedoch weder den auslösenden Browser noch eine erfolgreiche Erstpasswortfestlegung.
+- Nutzer-Screenshots 11:52/11:55: „Link nicht verwendbar“ beziehungsweise keine nutzbare isolierte Einladungssitzung. Nach „Zur Anmeldung“ erschien um 11:56 dagegen die MFA-Einrichtung einer normalen Sitzung. Deren Identität ist aus dem bisherigen Bildschirm nicht erkennbar. Die Annahme, alle Sitzungen seien verloren, ist damit widerlegt; eine Zuordnung zum Testkonto ist noch nicht belegt.
+- Vor einer MFA-Schreibaktion wird die Kontoadresse sichtbar gemacht. Der Client zeigt in beiden AAL1-MFA-Ansichten die bereits durch `auth.getUser()` serverseitig geprüfte E-Mail-Adresse an. Keine neue Auth-Anfrage, keine Änderung der Sitzungsablage, MFA-Prüfung, Mitgliedschaft oder Berechtigung. Bei abweichender Adresse nicht fortfahren.
+- TypeScript und Produktionsbuild dieser Anzeigeänderung lokal erfolgreich mit isolierten Platzhalter-Einstellungen geprüft. Die Änderung am Client begründet neue CI-Prüfungen; die bisherigen 127 erfolgreichen Fälle bleiben Nachweise des Stands `7b67129`. Vorschauaktualisierung und aktuelle CI-Ergebnisse gesondert prüfen, keine vollständige Sicherheitsabnahme behaupten.
+- Noch kein Recovery-Link angefordert und keine MFA eingerichtet. Wiederherstellung wäre ein eigener Test und ersetzt nicht den offenen vollständigen Einladungstest. Keine erneute Einladung an das inzwischen bestätigte Konto; kein Löschen oder Zurücksetzen des Kontos.
+
 ## Nächster Schritt
 
 Die bereitgestellte Vorschau für den verbliebenen Testkonto-Liveablauf nutzen, einen frischen Einladungslink mit explizitem Vorschauziel und sichere manuelle Passwort-/MFA-Einrichtung ermöglichen und die Memorix-Kompatibilitätsgrenze schließen. Erst nach vollständiger Abnahme PR #74 mergen. Danach die gesicherte Administratoroberfläche für Einladen und getrenntes Freischalten mit Bestätigung und Audit ergänzen; anschließend sicherer MFA-Faktorwechsel und dokumentierte Notfallwiederherstellung, ohne die verpflichtende MFA abzusenken.
@@ -213,6 +221,7 @@ Die bereitgestellte Vorschau für den verbliebenen Testkonto-Liveablauf nutzen, 
 
 | Version | Datum | Änderung |
 |---|---|---|
+| 0.7 | 13.10.2026 | Verbrauchte Einladung und getrennte Sitzungszustände dokumentiert; serverseitig geprüfte Kontoadresse vor MFA sichtbar gemacht, Identitätsprüfung bleibt vor Live-Schreibaktion erforderlich. |
 | 0.6 | 13.10.2026 | Testkonto durch Nutzer bestätigt, Einladung ausschließlich dafür erneuert; Versandmetadaten und manuellen Vorschau-Testweg ohne Änderung der Site URL dokumentiert. |
 | 0.5 | 13.10.2026 | Preview #14 mit geprüftem Commit bereitgestellt und verifiziert; MFA-/Current-password-Parameter ergänzt; verbleibende Einladungsziel- und sichere Übernahmegrenzen dokumentiert. |
 | 0.4 | 13.10.2026 | Nutzer-Nachweise zur produktiven Auth-/SMTP-Konfiguration übernommen; produktiven Handler, Mitgliedschaftsgrenzen, ausgelieferten Client und Memorix-Einstiege lesend abgeglichen; konkrete Live-Blocker statt überholter SMTP-/Konfigurationsblocker festgehalten. |
