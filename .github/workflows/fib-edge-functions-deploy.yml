@@ -3,9 +3,24 @@ name: Deploy FIB Edge Functions
 on:
   workflow_dispatch:
     inputs:
-      confirmation:
-        description: 'Enter DEPLOY to publish the three approved FIB Edge Functions to Shared-Apps'
+      operation:
+        description: 'Separate administrative operation; invitation never deploys functions'
         required: true
+        default: deploy-functions
+        type: choice
+        options:
+          - deploy-functions
+          - check-invite-access
+          - invite-preview-test
+      confirmation:
+        description: 'DEPLOY, CHECK_ACCESS, or INVITE_PREVIEW_TEST for the selected operation'
+        required: true
+        type: string
+      expected_sha:
+        description: 'Invitation operations only: exact reviewed 40-character workflow commit'
+        type: string
+      test_email:
+        description: 'Send only: owner-confirmed NEW test address; never an existing account'
         type: string
 
 permissions:
@@ -17,7 +32,7 @@ concurrency:
 
 jobs:
   deploy:
-    if: ${{ inputs.confirmation == 'DEPLOY' }}
+    if: ${{ (inputs.operation == 'deploy-functions' || inputs.operation == '') && inputs.confirmation == 'DEPLOY' }}
     runs-on: ubuntu-latest
     environment: fib-shared-apps
     steps:
@@ -48,3 +63,23 @@ jobs:
           SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
         run: |
           supabase functions list --project-ref apaubomxffcwtzjimori
+
+  preview-invitation:
+    if: ${{ (inputs.operation == 'check-invite-access' && inputs.confirmation == 'CHECK_ACCESS') || (inputs.operation == 'invite-preview-test' && inputs.confirmation == 'INVITE_PREVIEW_TEST') }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    environment: fib-shared-apps
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Run bounded invitation operator (no dependency installation)
+        env:
+          # Optional dedicated, project-scoped operator credential. Never broaden
+          # or replace the existing deployment credential as a side effect.
+          SUPABASE_ACCESS_TOKEN: ${{ secrets.FIB_INVITE_ACCESS_TOKEN || secrets.SUPABASE_ACCESS_TOKEN }}
+        run: node scripts/admin/preview-invite.mjs

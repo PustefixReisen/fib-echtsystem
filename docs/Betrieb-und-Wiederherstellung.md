@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 0.2 | 06.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
+| 0.7 | 13.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
 
 ## 1. Zweck und Geltung
 
@@ -272,6 +272,67 @@ Bei Limit/Eskalation werden zuerst optionale bzw. wiederholbare KI-Aufgaben gest
 - Providerfreigaben und Regionen sind versionierte Betriebskonfiguration,
 - mindestens zwei Admins müssen Zugriff auf notwendige Wiederherstellungs-/Providerinformationen haben.
 
+### 12.1 Persönlicher Kontoselbstservice und Passwortwiederherstellung
+
+Im Implementierungsstand von PR #74 (noch nicht produktiv freigegeben) gilt:
+
+- E-Mail-/Passwortänderungen erfolgen im persönlichen Profil über das gemeinsame Auth-Konto. Die Oberfläche weist darauf hin, dass auch andere Anwendungen mit diesem Konto betroffen sind.
+- „Passwort vergessen?“ auf der Anmeldeseite fordert einen Wiederherstellungslink an. Die Antwort gibt keinen Rückschluss darauf, ob ein Konto existiert.
+- Nach dem Recovery-Link ist bei eingerichtetem TOTP-Faktor weiterhin MFA erforderlich. Erst danach wird das Profil zur Passwortneuvergabe geöffnet.
+- Passwortverlust bei vorhandenem zweiten Faktor ist damit abgedeckt. Verlust des zweiten Faktors benötigt ein gesondertes, identitätsgeprüftes Notfallverfahren; der Recovery-Link hebt MFA nicht auf.
+- Bei verlangter erneuter Authentifizierung muss eine neue Anmeldung einschließlich MFA erfolgen. Eine produktiv aktivierte zusätzliche Current-password-Anforderung muss vor Freigabe mit dem Clientablauf abgeglichen werden.
+- Site URL, Redirect-Allowlist, E-Mail-Templates, Secure Email Change, Passwortpolicy, Reauthentifizierung und tatsächliche Zustellbarkeit müssen vor produktiver Freigabe nachgewiesen werden.
+- Änderungen an projektweiten Shared-Apps-Auth-Einstellungen erfordern eine Bewertung aller betroffenen Anwendungen.
+
+Die technische Abnahme wird ohne Produktivdaten im kurzlebigen Auth-/SMTP-Testaufbau wiederholt. Ausführung, Ergebnisse und verbleibende Freigabegrenzen stehen in `docs/tests/PR-74-Sicherheits-und-Funktionstest.md`. Die MFA-/Rechtegrundsätze bleiben ausschließlich in `docs/Rollen-Rechte-und-Workflow.md` verbindlich.
+
+### 12.2 Einladung annehmen und Konto erstmals einrichten
+
+Implementiert in PR #74; produktive Freigabe weiterhin vom vollständigen Sicherheitsnachweis abhängig. Die verbindliche Rechteabgrenzung steht in `docs/Rollen-Rechte-und-Workflow.md`, Abschnitt 9.1.
+
+1. **Vorbereiten (Admin):** Prüfen, ob die Person bereits ein Shared-Apps-Auth-Konto besitzt. Bestehende Konten wiederverwenden; keine neue Einladung als Passwort-Reset missbrauchen. Neue Auth-Einladungen nur über einen berechtigten serverseitigen/Admin-Zugang versenden. Der Browser enthält keinen Service-Role-Schlüssel und kann keine Einladungen oder Freischaltungen erzeugen.
+2. **Linkziel prüfen:** Einladung muss zum freigegebenen FIB-Ursprung und exakten Anwendungspfad führen. Der Standard-ConfirmationURL-Link mit `type=invite` wird unterstützt. Individuell abweichende Token-Hash-/PKCE-Templates sind nicht stillschweigend gleichwertig und brauchen eine eigene Abnahme. Site URL, Allowlist, Einladungsvorlage, Ablaufzeit und tatsächliche Zustellung vor Produktivfreigabe kontrollieren.
+3. **Passwort setzen (eingeladene Person):** Der verifizierte Link öffnet eine Kontoeinrichtung mit sichtbarer E-Mail-Adresse. Mindestens zwölf Zeichen und identische Wiederholung sind erforderlich; die serverseitige Policy bleibt maßgeblich. Der Browser prüft vor der Änderung erneut die eingeladene Auth-Identität. Eine bestehende normale Browsersitzung wird durch die separate, tabgebundene Einladungssitzung nicht überschrieben.
+4. **MFA einrichten:** Erst nach erfolgreicher Passwortfestlegung Authenticator hinzufügen und aktuellen Code bestätigen. QR-Code/Schlüssel sind vertraulich. Besteht bereits ein bestätigter Faktor, bleibt dessen Prüfung erforderlich. Bei Neuladen während der Einrichtung darf nur der von diesem Tab angelegte, noch unbestätigte Faktor ersetzt werden, nie ein bestätigter oder fremder Faktor.
+5. **Getrennte Freischaltung:** Nach MFA zeigt die Anwendung bei fehlender/inaktiver FIB-Zuordnung „Freischaltung ausstehend“. Ein berechtigter Admin prüft die Person und abgeschlossene Einrichtung, ordnet die richtige Auth-ID zu und aktiviert die FIB-Mitgliedschaft im bestätigten, auditierten Verwaltungsprozess. PR #74 führt keine automatische Aktivierung und keine neue Adminoberfläche ein. „Freischaltung erneut prüfen“ liest lediglich den Serverstatus.
+6. **Abbruch/Wiederaufnahme:** Innerhalb desselben Tabs bleibt der Einrichtungsfortschritt kontogebunden erhalten; kein Passwort oder TOTP-Secret wird dafür gespeichert. Nach Schließen des Tabs kann sich die Person mit bereits gesetztem Passwort normal anmelden und MFA abschließen. Ohne gesetztes Passwort einen neuen Link beim Admin anfordern beziehungsweise den gesonderten Recovery-Prozess nutzen. Abgelaufene/verbrauchte Links erzeugen eine verständliche Fehlermeldung, keine Passwortmaske für eine bereits angemeldete andere Person.
+
+Die Einladungssitzung selbst enthält die üblichen Auth-Tokens in separatem Session Storage und endet durch lokales Abmelden oder Schließen des Tabs. Einrichtungsmarker sind reine Benutzerführung, niemals serverseitiger Berechtigungsnachweis. Passwortfestlegung und MFA-Registrierung werden an Supabase Auth delegiert. Die Freischaltung wird nicht aus `user_metadata` oder einer clientseitigen „fertig“-Markierung abgeleitet.
+
+Automatisierte Tests verwenden ausschließlich zufällig erzeugte Konten unter `example.test`, Mailpit und eine eigene Datenbank. Der echte `fib-session-context`-Handler prüft dort fehlende, inaktive und aktivierte synthetische Mitgliedschaften. Dies ersetzt keine vollständige produktive RLS-/Deploymentabnahme. Ergebnisse: `docs/tests/PR-74-Sicherheits-und-Funktionstest.md`.
+
+Für die ergänzende Produktionsabnahme zuerst den bereits geprüften PR-Commit über `Preview Editorial Web` (`preview_ref` = vollständiger Commit-SHA) in `/redaktion-preview/` bereitstellen und den ausgelieferten Stand prüfen. Diese Vorschau trennt die Webdateien, verwendet aber weiterhin Shared-Apps; sie ist keine isolierte Auth-Datenbank. Nur das eindeutig bestätigte Testkonto verwenden. Eine frische Einladung muss ausdrücklich auf die erlaubte Vorschau-URL zeigen; die projektweite Site URL dafür nicht umstellen. Das Testkonto bleibt ohne aktive FIB-Mitgliedschaft. Die positive Redakteur-Aktivierung wird weiterhin ausschließlich isoliert getestet. Bereits bestätigte Auth-/SMTP-Einstellungen und Zustellnachweise gelten gemäß Testbericht weiter; nur begründete Resttests ausführen. Keine Links, Tokens, Passwörter oder TOTP-Secrets in Nachweisen speichern.
+
+### Dashboard-Einladung für die Live-Abnahme (PR #74)
+
+Aktuelle Betreiberentscheidung: keine weiteren Supabase-Administratoren, Schlüssel oder Berechtigungen. Der vorhandene Dashboard-Dialog wird bevorzugt. Die 403-Analyse, Code-/Produktionsnachweise und Testresultate stehen ausschließlich im Testbericht v1.3.
+
+1. Neue empfangbare Testadresse vom Betreiber bestätigen lassen; in Shared-Apps rein lesend auf Nichtvorhandensein prüfen. Bei bestehendem Konto stoppen. Keine Aliasse erraten und kein Bestandskonto zurücksetzen.
+2. Authentication → Users → Add user → Send invitation genau einmal für diese neue Adresse verwenden. Der Dialog hat kein Redirect-Feld; globale Site-URL und Templates bleiben unverändert. Versandzeit und neue Auth-ID geschützt zuordnen, nicht die Adresse im öffentlichen Bericht.
+3. Original-Link **nicht öffnen**. Ausschließlich privat im Browser den Parameter `redirect_to` auf `https://fib.pustivo.de/redaktion-preview/` setzen. Supabase-Origin `https://apaubomxffcwtzjimori.supabase.co`, Pfad `/auth/v1/verify`, Token und `type=invite` unverändert lassen. Keine fremden Linkbearbeiter, keine Veröffentlichung in Chat, Logs oder Screenshots. Das Verfahren ist mit echter isolierter Auth und Mailpit geprüft; der erste Live-Nachweis steht aus.
+4. Erst den korrigierten Link aufrufen. Vorschauadresse und servergeprüfte neue Testadresse vor Passwort/MFA kontrollieren. Bei falscher Adresse, Ablauf oder Verbrauch stoppen. Erstpasswort und MFA führt die Testperson privat aus. FIB-Mitgliedschaft bleibt unverändert gesperrt.
+5. Direkte AAL1-/AAL2-Sperren und die Reauth-Matrix gemäß Testbericht nachweisen. Für die gealterte Anmeldung mindestens die produktive 24-Stunden-Grenze abwarten; weder Datenbankzeiten noch projektweite Einstellungen verändern. Separate Freischaltung positiv nur isoliert testen.
+
+Das Öffnen des Original-Links an `/redaktion/` mit anschließendem manuellen Wechsel zur Vorschau ist nicht freigegeben: Der alte normale Client kann die Sitzung schon übernommen haben. Eine Weiterleitung im FIB-Bootstrap wäre eine alternative geprüfte Softwareänderung, wird für diesen Test aber nicht eingeführt. Vorhandenes Testkonto und Administratoren bleiben unverändert. Keine Memorix-Schreibtests oder Änderungen an appübergreifenden Auth-Einstellungen. Cleanup nur für eindeutig zugeordnete neue Testidentität und mit gesonderter Löschfreigabe.
+
+### Administrativer Preview-Einladungsversand (PR #74, derzeit nicht freigegeben)
+
+**Historischer Implementierungsstand; keine aktuelle Ausführungsanweisung.** Der Schlüsselzugriff scheiterte mit HTTP 403. Der Betreiber hat zusätzliche administrative Zugänge/Berechtigungen ausgeschlossen. Die folgenden technischen Angaben dokumentieren den vorhandenen, isoliert geprüften Code; weder den optionalen PAT einrichten noch den Operator erneut ausführen. Für diese Abnahme gilt der Dashboard-Weg oben.
+
+Der bestehende Workflow `Deploy FIB Edge Functions` enthält getrennte Operationen. `deploy-functions` bleibt unverändert an `DEPLOY` gebunden. `check-invite-access` mit `CHECK_ACCESS` prüft den bestehenden Admin-Zugang rein lesend. `invite-preview-test` mit `INVITE_PREVIEW_TEST` erstellt genau ein neues Testkonto und verschickt anschließend eine Einladung. Diese beiden Operationen deployen keine Edge Function und ändern keine Fachinhalte oder FIB-Mitgliedschaften.
+
+Voraussetzungen: geprüfter vollständiger Workflow-Commit unter `expected_sha`, separates optionales Secret `FIB_INVITE_ACCESS_TOKEN` (sonst vorhandenes `SUPABASE_ACCESS_TOKEN`) in der bereits verwendeten Umgebung `fib-shared-apps`, für Versand eine ausdrücklich bestätigte unbenutzte Testadresse unter `test_email`. Die Eingabe bleibt Teil des GitHub-Workflow-Auftrags; keine Adresse im Run-Namen, Log, Bericht oder Artifact ausgeben. Zugangsdaten niemals als Workflow-Eingabe oder im Chat übermitteln.
+
+`scripts/admin/preview-invite.mjs` nutzt ausschließlich Node-Bordmittel, feste HTTPS-Endpunkte des Shared-Apps-Projekts und das feste Redirect `https://fib.pustivo.de/redaktion-preview/`. Das vorhandene privilegierte API-Key-Material wird mit dem bestehenden Management-Zugang im kurzlebigen Runner gelesen und ausschließlich dort im Speicher verwendet. Keine Schlüsselerzeugung/-rotation, keine Ausgabe/Persistenz, keine Paketinstallation mit Secret, kein neuer öffentlich erreichbarer Admin-Endpunkt. HTTP-Weiterleitungen werden verweigert.
+
+Bei HTTP 403 am Schlüsselzugriff stoppen. Die aktuelle Supabase-Referenz nennt für `GET /projects/{ref}/api-keys?reveal=true` **API Keys – Read** und **API Key Secrets – Read**. Die konkrete Ablehnungsursache ist nicht abschließend bestimmt. Kein Token- oder Rollenwechsel zur Fehlerumgehung. Der frühere Vorschlag eines zusätzlichen PAT ist durch die aktuelle Betreiberentscheidung verworfen. Bestehender Deployment-Zugang und seine Berechtigungen bleiben unverändert; das optionale Secret wurde nicht eingerichtet.
+
+Schutz bestehender Konten: Zuerst atomarer Auth-Admin-Create ohne Passwort und mit `email_confirm:false`. Bestehende bestätigte oder unbestätigte Konten müssen hier abgewiesen werden. Erst nach Prüfung der zurückgegebenen neuen Identität und Testfallmarkierung wird die Einladung versandt. Kein Invite-first, kein Resend, keine automatische Wiederholung, Löschung, Rücksetzung oder Rollenvergabe. Der Versandweg wird separat gegen dieselbe isolierte GoTrue-Version und Mailpit geprüft; die vorhandenen 138 Tests müssen dafür nicht erneut durchlaufen.
+
+Cleanup-Nachweis: Die Auth-App-Metadaten tragen die zufällige `fib_pr74_test_case`-Kennung, die der Workflow ohne E-Mail/Token protokolliert. Nach Versand-/Transportfehlern kann ein neu angelegtes Konto vorhanden sein; bei `created-review-required` oder `unknown-after-create-attempt` ausschließlich anhand dieser Kennung lesend nachprüfen, nicht erneut senden. Das Konto bleibt ohne Erstpasswort, bis die Testperson den Mail-Link nutzt. Eine spätere Löschung erfordert gesonderte Freigabe; vorhandene Konten sind niemals Cleanup-Ziele. Kein automatischer Cleanup in Shared-Apps. Isolierte CI-Konten und Mails werden dagegen durch Container-/Volume-Cleanup entfernt.
+
+Aktueller Ausführungs-/Abnahmestand einschließlich offener Voraussetzungen: `docs/tests/PR-74-Sicherheits-und-Funktionstest.md`.
+
 ## 13. Regelmäßige Betriebsprüfungen
 
 ### Automatisch / laufend
@@ -310,5 +371,10 @@ Die konkreten Empfängeradressen, Provider-/Tarifentscheidung und gegebenenfalls
 
 | Version | Datum | Änderung |
 |---|---|---|
+| 0.7 | 13.10.2026 | Dashboard-Weg ohne neue Rechte festgelegt; Linkziel ausschließlich vor Erstverbrauch ändern; bisherigen Operator zurückgestellt und Schutz-/Reauth-Grenzen präzisiert. |
+| 0.6 | 13.10.2026 | Begrenzten administrativen Preview-Einladungsweg im bestehenden geschützten Workflow und Cleanup-Verfahren dokumentiert. |
+| 0.5 | 13.10.2026 | Ergänzende Testkonto-Abnahme in separater Webvorschau beschrieben; Shared-Apps-Grenze und Verbot produktiver Testkonto-Freischaltung präzisiert. |
+| 0.4 | 12.10.2026 | Sichere Einladungsannahme mit Passwort, MFA, Sitzungsisolation und getrennter FIB-Freischaltung beschrieben; Wiederaufnahme und produktive Einladungsnachweise ergänzt. |
+| 0.3 | 12.10.2026 | Kontoselbstservice und Passwort-Recovery aus PR #74 betrieblich eingeordnet; MFA-Grenze und produktive Konfigurations-/Zustellprüfung festgehalten. |
 | 0.2 | 06.10.2026 | Pilot-Backupkette Supabase → Nextcloud → PC → Back In Time integriert; RPO/RTO und technische Retentionwerte bestätigt; Monitoring-/Warnweg Redaktionsübersicht + E-Mail konkretisiert; offene G7-Punkte auf Schlussaudit reduziert. |
 | 0.1 | 06.10.2026 | G7 gestartet; Betriebsprinzipien, Verfügbarkeitsklassen, Backup/Restore, Free-Plan-Pausierung, Monitoring, Störungsprioritäten, Retention, KI-Kosten-/Providerbetrieb und regelmäßige Prüfungen konsolidiert. |

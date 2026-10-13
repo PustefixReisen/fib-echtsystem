@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 1.0 | 06.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
+| 1.1 | 12.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
 
 ## 1. Zweck und Geltung
 
@@ -191,6 +191,12 @@ Ein Admin kann einen internen FIB-Benutzer in der Anwendung anlegen und den Einr
 6. Passwort- und MFA-Einrichtung durch den Benutzer abschließen,
 7. Zugang erst bei gültigem Aktivstatus und erfüllter MFA-Anforderung vollständig freigeben.
 
+Die **Annahme einer Supabase-Auth-Einladung** bestätigt den Kontozugang. Sie erzeugt keine FIB-Mitgliedschaft und aktiviert keinen FIB-Benutzer. Passwort-Erstfestlegung und TOTP-Einrichtung müssen auch ohne Redaktionsrechte erreichbar sein.
+
+Die gesonderte Freischaltung erfolgt durch einen berechtigten Admin nach abgeschlossener Einrichtung. Maßgeblich sind die serverseitige Zuordnung zur Auth-Benutzer-ID, die Rolle `editor` oder `admin`, `active=true` und `setup_status='active'` sowie eine gültige Sitzung mit `aal2`. `invited`, `setup_pending`, `deactivated` und fehlende Mitgliedschaften geben keine Redaktionsrechte. E-Mail-Adresse, URL-Parameter, lokaler Einrichtungsfortschritt oder benutzerveränderbare `user_metadata` ersetzen diese Prüfung nicht.
+
+Ein bereits vorhandenes gemeinsames Auth-Konto wird für eine FIB-Freischaltung wiederverwendet; sein Passwort oder seine MFA-Faktoren werden dabei nicht administrativ überschrieben. Die Betriebsfolge einschließlich Einladungslinks und Abbruch/Wiederaufnahme steht in `docs/Betrieb-und-Wiederherstellung.md`, Abschnitt 12.2.
+
 Normaler Austritt erfolgt durch **Deaktivieren**.
 
 **Endgültig löschen** ist nur zulässig, wenn keine fachlich relevante Historie, Auditspur oder Objektreferenz erhalten werden muss. Andernfalls blockiert FIB die Löschung und bietet Deaktivieren an.
@@ -311,5 +317,6 @@ Die konkrete SQL-/RLS-Policy-Implementierung erfolgt in U1. Betriebsparameter wi
 
 | Version | Datum | Änderung |
 |---|---|---|
+| 1.1 | 12.10.2026 | Auth-Einladungsannahme und Kontoeinrichtung von administrativer FIB-Freischaltung getrennt; serverseitige Aktivierungsbedingungen konkretisiert. |
 | 1.0 | 06.10.2026 | MFA für Redakteure/Admins verpflichtend festgelegt; kein Step-up bei normalen Veröffentlichungen, Step-up für kritische Adminaktionen; RLS-/Fachservice-Aufgabenteilung konsolidiert; G6-Grundsatzfragen abgeschlossen. |
 | 0.1 | 06.10.2026 | G6 gestartet; Rollen-/Aktionsmatrix, Fachfunktionsrechte, Bestätigungslogik, Adminvorbehalte, AI-Task-Grenzen und MFA-Entscheidungspunkt konsolidiert. |

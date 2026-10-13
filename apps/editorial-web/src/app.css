@@ -20,6 +20,12 @@ button.primary:hover:not(:disabled) { background: var(--fib-dark); }
 input, textarea { width: 100%; margin-top: .35rem; border: 1px solid #aeb9b1; border-radius: 8px; padding: .7rem .8rem; background: #fff; }
 textarea { resize: vertical; min-height: 7rem; }
 label { display: grid; gap: .25rem; font-weight: 600; }
+.password-control { position: relative; }
+.password-control input { padding-right: 3.5rem; }
+.password-toggle { position: absolute; right: .15rem; top: .5rem; bottom: .15rem; width: 2.75rem; padding: .5rem; border: 0; color: #16355F; }
+.password-toggle:focus-visible { outline: 3px solid var(--fib-primary); outline-offset: 2px; }
+.password-eye { display: block; position: relative; width: 1.5rem; height: 1.5rem; }
+.password-eye img, .password-eye svg { position: absolute; inset: 0; width: 100%; height: 100%; }
 h1, h2, h3, p { margin-top: 0; }
 h1 { margin-bottom: .5rem; font-size: clamp(1.7rem, 3vw, 2.4rem); }
 h2 { font-size: 1.2rem; }
@@ -280,3 +286,6 @@ h3 { margin-bottom: .45rem; }
 
 .profile-page-title { display: flex; align-items: center; gap: .65rem; }
 .profile-page-title svg { width: 32px; height: 32px; flex: none; color: var(--fib-dark); }
+
+.security-form { border-top: 1px solid #dce3de; padding-top: 1rem; margin-top: 1.3rem; }
+.security-form h3 { margin: 0; }

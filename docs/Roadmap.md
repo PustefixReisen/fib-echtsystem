@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 4.6 | 11.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
+| 4.17 | 13.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
 
 ## Statusmodell
 
@@ -159,6 +159,12 @@ Erster sichtbarer Stand:
 
 Noch bewusst nicht vorgetäuscht werden Funktionen, deren Fachservice-/Datenweg noch fehlt. Insbesondere Statuskarten ohne operative Datenquelle bleiben als noch nicht angebunden gekennzeichnet. Der nächste Teil dieses Slices bindet tatsächliches Bearbeiten/Speichern und den Meldungsentwurf über die gemeinsame Fachservice-Schicht an.
 
+### U2.2 Kontoselbstservice und Einladungsannahme – teilweise umgesetzt, Live-Abnahme blockiert
+
+PR #74 enthält einheitliche zugängliche Passwortanzeige-Schalter für sämtliche Passwortfelder, E-Mail-/Passwortänderung, Recovery sowie einen getrennten Einladungsablauf mit Passwort-Erstfestlegung, MFA-Einrichtung und gesonderter FIB-Freischaltung. Die Einladung aktiviert keine FIB-Mitgliedschaft. Die Sicherheitsabnahme umfasst echte Auth-/SMTP-Aufrufe, den produktiven Session-Context-Handler mit synthetischen Mitgliedschaften und Chromium-Tests; der verbindliche Ausführungsstand steht im Testbericht. Testkonten, Mailbox und Datenbank werden pro Lauf neu erzeugt und danach gelöscht; das Administratorkonto bleibt unverändert. Die anschließende produktive Auth-Abnahme verändert ausschließlich das ausdrücklich bestätigte Testkonto (Einladung, MFA und Passwort); FIB-Mitgliedschaften und Fachinhalte bleiben unverändert.
+
+Der Merge ist vom Nutzer bedingt autorisiert. Die produktive Auth-/SMTP-Grundkonfiguration und tatsächliche Einladungszustellung sind durch den Nutzerkommentar vom 13.10.2026 nachgewiesen; diese Tests werden nicht erneut angefordert. Produktiver Session-Context-Code und Mitgliedschaftsgrenzen wurden lesend abgeglichen. Preview #16 stellt den geprüften Stand ff40282 mit Passwortanzeige bereit; Editorial Web CI #64, Core Services CI #27 und Isolated Auth Security #15 sind mit insgesamt 138 Prüfungen erfolgreich. Der Testbericht dokumentiert auch zwei fehlgeschlagene Zwischenläufe und die anschließend ergänzte Zustands-Synchronisierung der Browserprüfung. Die servergeprüfte Kontoadresse vor MFA bleibt enthalten. Am Testkonto sind Live-MFA, Warteansicht ohne FIB-Mitgliedschaft und Recovery einschließlich Passwortänderung und erneuter Anmeldung mit MFA nachgewiesen. Noch offen: vollständige Live-Ersteinladung mit Erstpasswort vor MFA, gealterte Reauth-Sitzung, direkte produktive API-Negativnachweise und verbleibende Memorix-Kompatibilität (zweiter Auth-Einstieg unter app/ mit Registrierung ohne explizites Redirect und ohne MFA-Challenge). Neue Testadresse bestätigt, Nichtvorhandensein geprüft und genau eine Dashboard-Einladung am 13.10.2026 um 14:06 Europe/Berlin ausgelöst. Live-Annahme am 13.10.2026 um 14:16 bestätigt: E-Mail bestätigt, Passwort gesetzt, ein verifizierter MFA-Faktor, AAL2 und Warteansicht ohne FIB-Mitgliedschaft. Direkte API-Sperrtests bleiben offen; gealterte Reauth mit erhaltener Sitzung frühestens 14.10.2026 nach 14:13 Uhr. Der Standarddialog mit vor Erstverbrauch privat gesetztem erlaubtem Vorschauziel ist mit zwei zusätzlichen echten Auth-Fällen isoliert geprüft (154 Nachweise einschließlich bisheriger Tests). Original-Link nicht erst an der regulären alten FIB-Anwendung verbrauchen. Keine neuen Supabase-Administratoren, Schlüssel oder Berechtigungen; der administrative Operator bleibt nach HTTP 403 zurückgestellt. Die genaue Ablehnungsursache ist nicht bewiesen; der Fehler lag vor Kontoanlage/Versand am Schlüsselzugriff. Live-Erstpasswort/MFA, direkte API-Sperren und Reauth einer tatsächlich über 24 Stunden alten Anmeldung bleiben Merge-Voraussetzungen. Memorix-Regelabgleich: eigene Logbücher sind bereits für authentifizierte Shared-Apps-Konten zulässig; fremde Bestände bleiben über Eigentümer/Freigaben geschützt. Die Aussage einer generellen Memorix-Zugangssperre durch fehlende FIB-Freischaltung ist daher falsch. Keine Änderung an Memorix. Das Testkonto wird produktiv nicht als Redakteur aktiviert. Erst danach Sicherheitsabnahme und Merge; anschließend getrennte Redakteur-Freischaltung mit Bestätigung/Audit abschließen, danach MFA-Faktorwechsel/Notfallwiederherstellung. Verbindliche Nachweise und konkrete Restmatrix: `docs/tests/PR-74-Sicherheits-und-Funktionstest.md`.
+
 ## 4. Verbindliche Abschlussquellen der Gründung und Architekturkonkretisierung
 
 - `docs/Projektgruendung.md` v1.5
@@ -167,7 +173,7 @@ Noch bewusst nicht vorgetäuscht werden Funktionen, deren Fachservice-/Datenweg 
 - `docs/Datenmodell.md` v3.0
 - `docs/Schutzbedarf-Datenschutz-und-Offline.md` v1.0
 - `docs/Zielarchitektur.md` v1.0
-- `docs/Rollen-Rechte-und-Workflow.md` v1.0
+- `docs/Rollen-Rechte-und-Workflow.md` v1.1
 - `docs/Betrieb-und-Wiederherstellung.md`
 - `docs/Migrationsstrategie.md` v1.1
 - `docs/Migrations-Runbook.md` v1.0
@@ -207,6 +213,17 @@ Noch bewusst nicht vorgetäuscht werden Funktionen, deren Fachservice-/Datenweg 
 
 | Version | Datum | Änderung |
 |---|---|---|
+| 4.17 | 13.10.2026 | Live-Ersteinladung bis Passwort/MFA/AAL2 und gesperrte Warteansicht nachgewiesen; direkte API-Sperren und gealterte Reauth verbleiben. |
+| 4.16 | 13.10.2026 | Neue Testidentität einmalig eingeladen, ohne MFA/FIB-Mitgliedschaft; private Live-Annahme als nächsten Schritt festgehalten. |
+| 4.15 | 13.10.2026 | Keine neuen Admin-Rechte; isoliert belegten Dashboard-Linkweg bevorzugt, neue Testadresse als nächste Mitwirkung und echte Reauth-Wartezeit dokumentiert. |
+| 4.14 | 13.10.2026 | Admin-Einladungsweg und 14 neue Tests ergänzt; realen Berechtigungsblock und konkret bewertete Memorix-Kopplung dokumentiert, Merge weiterhin gesperrt. |
+| 4.13 | 13.10.2026 | Passwortanzeige umgesetzt und isoliert geprüft; 138 erfolgreiche Prüfungen, konkrete Memorix-Auth-Grenzen und unveränderte Merge-Sperre dokumentiert. |
+| 4.12 | 13.10.2026 | Live-MFA, getrennte Freischaltung und Recovery erfolgreich; noch offene Ersteinladungs-/API-/Reauth-/Memorix-Abnahme konkretisiert. |
+| 4.11 | 13.10.2026 | Vorschau-Bereitstellung für PR #74 abgeschlossen; verbliebene Testkonto-, Einladungsziel- und sichere Übernahmegrenzen aktualisiert. |
+| 4.10 | 13.10.2026 | Produktive Auth-/SMTP-Nachweise für PR #74 anerkannt; verbleibende Vorschau-, Testzugangs-, Live- und Memorix-Abnahmegrenzen präzisiert. |
+| 4.9 | 12.10.2026 | PR #74 um sichere Einladungsannahme, Passwort-Erstfestlegung, MFA-Wiederaufnahme und getrennte FIB-Freischaltung erweitert; Produktionsnachweise bleiben Merge-Bedingung. |
+| 4.8 | 12.10.2026 | PR #74 mit realer isolierter Auth-/SMTP- und Browserabnahme; Recovery-Weg ergänzt. Nur produktiver Konfigurations-/Zustellnachweis bleibt als Merge-Blocker. |
+| 4.7 | 12.10.2026 | PR #74 Kontoselbstservice mit Handler-Tests nachgebessert; Auth-Live-Abnahme und ausdrückliche Freigabe als Merge-Blocker dokumentiert. |
 | 4.6 | 11.10.2026 | U2 auf `In Arbeit` gesetzt; vertikale Entwicklung aus Anwendersicht begonnen und ersten Slice `Dashboard → Ereignisdetail → Koordination` aufgenommen. U1.4 auf aktuellen Koordinations-/Teststand nach PR #54–#59 nachgezogen. |
 | 4.5 | 06.10.2026 | U1.3 begonnen: Runtime-Konfigurationsvertrag, Secret-Regeln, Domain-Contracts und zentrale Fachservice-Autorisierungsbasis angelegt; pustivo-Live-Credentialtest als konkreten manuellen Schritt dokumentiert. |
 | 4.4 | 06.10.2026 | `fib` in Shared-Apps angelegt; Runtime-Rollen, RLS-Policies, Default Privileges und Isolation praktisch geprüft; Advisor-Nacharbeiten durchgeführt; Legacy-Tabelle des Demonstrators über Issue #5 abgegrenzt. |

@@ -1,0 +1,6 @@
+services:
+  auth:
+    environment:
+      # A different default makes a missing redirect detectable. No external mail.
+      GOTRUE_SITE_URL: http://127.0.0.1:4173/production
+      GOTRUE_URI_ALLOW_LIST: https://fib.pustivo.de/redaktion-preview/

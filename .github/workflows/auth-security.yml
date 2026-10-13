@@ -1,0 +1,86 @@
+name: Isolated Auth Security
+on:
+  pull_request:
+    paths:
+      - 'tests/auth-sandbox/**'
+      - 'supabase/functions/fib-session-context/**'
+      - 'package.json'
+      - 'package-lock.json'
+      - 'apps/editorial-web/**'
+      - '.github/workflows/auth-security.yml'
+permissions:
+  contents: read
+jobs:
+  auth-security:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Generate isolated runtime secrets
+        run: |
+          python3 - <<'PY'
+          import os, secrets
+          with open(os.environ['GITHUB_ENV'], 'a') as f:
+              for name in ['TEST_DB_PASSWORD', 'TEST_JWT_SECRET']:
+                  value = secrets.token_hex(32)
+                  print('::add-mask::' + value)
+                  f.write(name + '=' + value + '\n')
+          PY
+      - name: Start isolated Auth, database and SMTP capture
+        run: docker compose -f tests/auth-sandbox/compose.yml up -d
+      - name: Run real Auth integration tests
+        run: python3 tests/auth-sandbox/run.py
+      - uses: actions/setup-node@v4
+        if: always()
+        with:
+          node-version: '22'
+      - name: Build isolated browser preview
+        if: always()
+        run: |
+          test -f "$RUNNER_TEMP/fib-auth-browser.json"
+          npm ci --ignore-scripts
+          npm install --no-save --ignore-scripts playwright@1.56.1 postgres@3.4.7
+          npx playwright install --with-deps chromium
+          python3 - <<'PY'
+          import base64,hashlib,hmac,json,os,time
+          def enc(data): return base64.urlsafe_b64encode(json.dumps(data,separators=(',',':')).encode()).decode().rstrip('=')
+          body=enc({'alg':'HS256','typ':'JWT'})+'.'+enc({'role':'anon','iss':'supabase','iat':int(time.time()),'exp':int(time.time())+3600})
+          token=body+'.'+base64.urlsafe_b64encode(hmac.new(os.environ['TEST_JWT_SECRET'].encode(),body.encode(),hashlib.sha256).digest()).decode().rstrip('=')
+          print('::add-mask::'+token)
+          with open(os.environ['GITHUB_ENV'],'a') as f:
+            f.write('VITE_SUPABASE_URL=http://127.0.0.1:54321\nVITE_SUPABASE_PUBLISHABLE_KEY='+token+'\n')
+          PY
+      - name: Test profile in Chromium against isolated Auth
+        if: always()
+        run: |
+          test -f "$RUNNER_TEMP/fib-auth-browser.json"
+          npm run build --workspace @fib/editorial-web
+          node tests/auth-sandbox/proxy.mjs > "$RUNNER_TEMP/auth-proxy.log" 2>&1 &
+          npm exec --workspace @fib/editorial-web -- vite preview --host 127.0.0.1 --port 4173 > "$RUNNER_TEMP/auth-preview.log" 2>&1 &
+          for i in $(seq 1 30); do curl --silent --fail http://127.0.0.1:4173 > /dev/null && break; sleep 1; done
+          node tests/auth-sandbox/browser.mjs
+      - name: Test invitation onboarding and real membership gate
+        if: always()
+        run: node tests/auth-sandbox/invitation-browser.mjs
+      - name: Publish sanitized test summary
+        if: always()
+        run: |
+          if [ -f auth-test-results/auth-results.md ]; then
+            cat auth-test-results/auth-results.md >> "$GITHUB_STEP_SUMMARY"
+          fi
+          if [ -f auth-test-results/browser-results.md ]; then
+            cat auth-test-results/browser-results.md >> "$GITHUB_STEP_SUMMARY"
+          fi
+          if [ -f auth-test-results/invitation-results.md ]; then
+            cat auth-test-results/invitation-results.md >> "$GITHUB_STEP_SUMMARY"
+          fi
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: isolated-auth-security-results
+          path: auth-test-results/
+          retention-days: 7
+          if-no-files-found: ignore
+      - name: Destroy test accounts, mail and database
+        if: always()
+        run: docker compose -f tests/auth-sandbox/compose.yml down --volumes --remove-orphans
