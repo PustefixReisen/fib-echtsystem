@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 0.5 | 13.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
+| 0.6 | 13.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
 
 ## Ergebnis
 
@@ -12,7 +12,7 @@
 
 Der Nutzer hat den Merge am 12.10.2026 unter der Bedingung autorisiert, dass sämtliche Sicherheitsanforderungen erfüllt sind. Diese Bedingung ist derzeit noch nicht vollständig nachgewiesen. Eine weitere pauschale Merge-Freigabe wird nicht verlangt.
 
-Geprüfter Implementierungsstand: `7b67129f1fa54aca827e79c246e5f4a42992cd1c`. Am 13.10.2026 erneut lesend bestätigt: Isolated Auth Security #11, Editorial Web CI #60 und Core Services CI #23 sind erfolgreich. Die Fortschreibungen v0.4 und v0.5 ändern ausschließlich Dokumentation; Anwendung, Tests, Abhängigkeiten und Workflows bleiben unverändert. Bestehende erfolgreiche Tests wurden nicht erneut gestartet. Vor einem späteren Merge sind aktueller Head, geltende Pflichtchecks und abgeschlossene Live-Nachweise erneut abzugleichen.
+Geprüfter Implementierungsstand: `7b67129f1fa54aca827e79c246e5f4a42992cd1c`. Am 13.10.2026 erneut lesend bestätigt: Isolated Auth Security #11, Editorial Web CI #60 und Core Services CI #23 sind erfolgreich. Die Fortschreibungen v0.4 bis v0.6 ändern ausschließlich Dokumentation; Anwendung, Tests, Abhängigkeiten und Workflows bleiben unverändert. Bestehende erfolgreiche Tests wurden nicht erneut gestartet. Vor einem späteren Merge sind aktueller Head, geltende Pflichtchecks und abgeschlossene Live-Nachweise erneut abzugleichen.
 
 ## Nachweise
 
@@ -24,7 +24,7 @@ Geprüfter Implementierungsstand: `7b67129f1fa54aca827e79c246e5f4a42992cd1c`. Am
 | Einladungs-/Freischaltungsprüfungen | 27/27 erfolgreich | gleicher Run; tatsächlicher Session-Context-Handler |
 | Build und TypeScript | erfolgreich | Editorial Web CI #60; Core Services CI #23, Run 38283422045 |
 | Vorhandene Fachservice-Fälle | 23/23 erfolgreich | Core Services CI #23 |
-| Bestehendes Administratorkonto | unverändert | keine schreibenden Aufrufe an produktive Auth oder Datenbank |
+| Bestehendes Administratorkonto | unverändert | keine Änderungen am Admin-Konto; einzige Auth-Schreibaktion ist die unten dokumentierte Testkonto-Einladung |
 | Auth-/SMTP-Grundkonfiguration | nachgewiesen | Nutzerkommentar vom 13.10.2026 zu Dashboard-/Zustellnachweisen vom 12.10.2026; Details unten |
 | Produktiver Session-Context-Code | identisch zum geprüften Handler | Edge Function Version 2, SHA-256 unten |
 | Live-Einladung / MFA / Recovery / Reauth | **offen** | PR #74 jetzt in Vorschau bereitgestellt; frischer Testkonto-Einladungszugang noch offen |
@@ -150,7 +150,7 @@ Projekt: `Shared-Apps`, Ref `apaubomxffcwtzjimori`. Keine produktiven Einstellun
 
 - Der produktiv aktive `fib-session-context` Version 2 ist bytegleich zum isoliert geprüften Repository-Handler. SHA-256 beider Quellen: `4c7ac02776e798c7b27cdd94cee1c4d7e8dd9852b60ce3304119cc0ca8e9350f`. Er validiert das Token über Auth `/user`, prüft passende Benutzer-ID und AAL2 und verlangt anschließend `active=true` und `setup_status='active'`. Die eigene Prüfung ist relevant, da `verify_jwt=false` gesetzt ist.
 - `fib.app_users`: RLS aktiviert; keine in den geprüften Grants ausgewiesenen Tabellenrechte für `anon` oder `authenticated`. `fib_runtime` besitzt SELECT/INSERT/UPDATE/DELETE und eine ALL-Policy. Die Edge-Funktion muss daher ihre eigene Identitäts-/MFA-/Mitgliedschaftsprüfung erzwingen. Rollenconstraint erlaubt ausschließlich `editor` und `admin`; Setup-Constraint umfasst `invited`, `setup_pending`, `active`, `deactivated`. Dies ist ein gezielter Katalogabgleich, keine vollständige Prüfung aller Funktionen, vererbten Rechte oder FIB-Fachservices.
-- Unter den seit 12.10.2026 eingeladenen Benutzern ist genau ein Kandidat vorhanden: Einladung am 12.10.2026 um 16:54 UTC, E-Mail unbestätigt, keine Anmeldung, kein bestätigter MFA-Faktor, keine FIB-Mitgliedschaft. Die Metadaten enthalten keinen Nachweis, dass es sich verbindlich um das freigegebene Testkonto handelt; vor schreibenden Tests muss die Empfängeridentität anhand des Testpostfachs bestätigt werden. Keine E-Mail-Adresse oder Auth-ID wird öffentlich dokumentiert.
+- Unter den seit 12.10.2026 eingeladenen Benutzern ist genau ein Kandidat vorhanden: Einladung am 12.10.2026 um 16:54 UTC, E-Mail unbestätigt, keine Anmeldung, kein bestätigter MFA-Faktor, keine FIB-Mitgliedschaft. Die Metadaten allein belegten die Testidentität nicht; sie wurde anschließend vom Nutzer ausdrücklich bestätigt (siehe unten). Keine E-Mail-Adresse oder Auth-ID wird öffentlich dokumentiert.
 - Frühere Bestandsaufnahme vor Bereitstellung: Ausgelieferte Assets: `/redaktion/assets/index-CVyBjoDX.js` und `/redaktion-preview/assets/index-Bk0EhNRQ.js`. Beide enthalten weder die neue Einladungssitzung (`fib-invitation-storage-key`) noch die Warteansicht „Freischaltung ausstehend“. Zu diesem Prüfzeitpunkt war die Vorschau noch keine PR-74-Testoberfläche; dieser Blocker ist durch den unten belegten Preview-Lauf inzwischen geschlossen.
 - Der vorhandene Workflow `.github/workflows/editorial-web-preview.yml` kann den geprüften Commit über `preview_ref` ausschließlich in `redaktion-preview` bereitstellen. Er wird manuell gestartet. Die verfügbare GitHub-Anbindung bietet keinen Workflow-Dispatch. Die ausdrückliche Browser-Erlaubnis des Nutzers vom 13.10.2026 liegt inzwischen vor; der Workflow wurde über die GitHub-Oberfläche gestartet. Kein alternativer Trigger oder produktiver Merge wurde eingerichtet.
 - Die zielgerichtete Suche im verbundenen Gmail nach Einladungen vom dokumentierten Absender am 12.–13.10. lieferte keinen Treffer. Daraus folgt keine Aussage über die bereits nachgewiesene Zustellung an das andere Testpostfach. Ein verwendbarer Link beziehungsweise eine Testkonto-Sitzung liegt hier nicht vor. Der gestrige Link ist bei der dokumentierten Gültigkeitsdauer für den anstehenden Test zu alt; er wurde nicht verbraucht oder aus der Datenbank rekonstruiert.
@@ -161,8 +161,14 @@ Projekt: `Shared-Apps`, Ref `apaubomxffcwtzjimori`. Keine produktiven Einstellun
 - [Preview Editorial Web #14](https://github.com/PustefixReisen/fib-echtsystem/actions/runs/38375232331), gestartet am 13.10.2026 um 09:17 UTC: Build und Deploy erfolgreich, insgesamt 36 Sekunden. Der Build-Job `115221829796` bestätigt Checkout des geprüften Anwendungscommits `7b67129f1fa54aca827e79c246e5f4a42992cd1c`. Der in der Laufübersicht angezeigte `main`-Commit `52a81b6` bezeichnet den Workflowstand, nicht den über `preview_ref` ausgecheckten Anwendungscode.
 - Die geöffnete Vorschau `https://fib.pustivo.de/redaktion-preview/` zeigt die Anmeldemaske einschließlich Recovery-Einstieg und lädt `/redaktion-preview/assets/index-BZhdxKli.js`, identisch zum Build-Log. Nur der bestehende Vorschau-Workflow wurde ausgeführt; kein Produktionsdeploy, keine Änderung von Auth oder Fachdaten. Die Vorschau verwendet weiterhin Shared-Apps als Backend.
 - Dashboard-MFA: TOTP **Enabled**, maximal 10 Faktoren pro Benutzer, SMS-MFA deaktiviert, „Limit duration of AAL1 sessions“ **an**; angegebene Grenze 15 Minuten bis zur Faktorbestätigung. Das Aktivieren von TOTP allein ist keine appweite Zugriffsfreigabe; der FIB-Handler erzwingt weiterhin AAL2. Die 15-Minuten-Grenze ist ein zusätzlicher Produktionsparameter, dessen Zeitablauf nicht durch die bisherigen isolierten Tests nachgewiesen ist. Bei der Live-Einrichtung auf Wiederanmeldung nach Ablauf achten; keine künstliche Alterung produktiver Sessions.
-- Im Dashboard-Einladungsdialog sind ausschließlich Empfänger-E-Mail, Abbrechen und Einladen vorhanden, kein `redirectTo`-Feld. Der Versand wurde nicht ausgelöst: Mit der nachgewiesenen Standard-Site-URL würde die Einladung die noch nicht freigegebene Produktionsoberfläche statt der Vorschau öffnen. Site URL/Templates wurden nicht verändert. Ein autorisierter Einladungsweg mit explizitem Vorschauziel beziehungsweise eine sichere manuelle Übergabe dieses Links ist weiterhin erforderlich.
+- Im Dashboard-Einladungsdialog sind ausschließlich Empfänger-E-Mail, Abbrechen und Einladen vorhanden, kein `redirectTo`-Feld. In diesem ersten Prüfschritt wurde der Versand nicht ausgelöst: Mit der nachgewiesenen Standard-Site-URL würde die Einladung die noch nicht freigegebene Produktionsoberfläche statt der Vorschau öffnen. Site URL/Templates wurden nicht verändert. Ein autorisierter Einladungsweg mit explizitem Vorschauziel beziehungsweise eine sichere manuelle Übergabe dieses Links ist weiterhin erforderlich.
 - Neue Passwörter und MFA-Zugangsmittel dürfen nach der Browser-Sicherheitsregel nicht durch den Agenten im Browser festgelegt werden. Die erstmalige Festlegung muss durch die Testperson bei einer funktionsfähigen sicheren Übernahme erfolgen; `browserAuth` ist nur für bestehende Anmeldung vorgesehen. Der fehlgeschlagene manuelle Eingabeweg ist für diesen Schritt noch nicht als behoben nachgewiesen.
+
+### Bestätigtes Testkonto und erneuerte Einladung
+
+Am 13.10.2026 hat der Nutzer das gestern eingeladene Googlemail-Konto ausdrücklich als Testkonto bestätigt. Damit ist die Empfängerzuordnung abgeschlossen. Über den Dashboard-Einladungsdialog wurde ausschließlich für dieses bestehende, noch unbestätigte Testkonto eine neue Einladung ausgelöst. Rein lesender Nachweis: `invited_at` und `confirmation_sent_at` sind nun **13.10.2026, 09:36:53 UTC (11:36:53 Europe/Berlin)**; E-Mail weiterhin unbestätigt, keine Anmeldung, keine FIB-Mitgliedschaft. Kein neues Konto, keine Rollenvergabe, keine Änderung an bestehenden Administratorkonten oder projektweiten Einstellungen. Die tatsächliche Ankunft dieser neuen Nachricht ist noch nicht durch das Testpostfach bestätigt.
+
+Der Dashboard-Versand verwendet weiterhin das Produktions-Rücksprungziel. Für die begrenzte Vorschau-Abnahme übernimmt die Testperson die Navigation selbst: Link aus der neuen E-Mail in die Adresszeile kopieren, **vor dem Aufruf** nur den Zielpfad im `redirect_to`-Parameter von `/redaktion/` auf `/redaktion-preview/` ändern (bei URL-Encoding entsprechend `%2Fredaktion%2F` auf `%2Fredaktion-preview%2F`). Auth-Host, Token und `type=invite` unverändert lassen. Nur ausführen, wenn das Ziel eindeutig erkennbar ist; bei abweichendem Linkformat abbrechen. Keine Links oder Secrets im Chat übergeben. Erst auf der erkennbaren Vorschau das Passwort festlegen und anschließend MFA selbst einrichten. Dies ist ein manueller Vorschau-Testweg, keine Abnahme einer automatisch mit Preview-Redirect erzeugten Einladung und keine dauerhafte Benutzeranleitung für den Produktivbetrieb.
 
 ### Memorix-Auswirkungen
 
@@ -178,7 +184,7 @@ Rein lesende Prüfung des Memorix-Stands `522d1380fd807ac3d38464a470f1616f70e3c7
 | Punkt | Konkreter Restnachweis | Status |
 |---|---|---|
 | Prüfoberfläche | geprüften PR-Commit in separater Vorschau bereitstellen; ausgelieferten Stand verifizieren | **erledigt**, Preview #14 und ausgeliefertes Asset belegt |
-| Testidentität | vorhandenes Testkonto anhand des richtigen Postfachs eindeutig bestätigen; frische Einladung mit Vorschau-Redirect, ohne FIB-Aktivierung | Mitwirkung/Zugang erforderlich |
+| Testidentität | Testkonto bestätigt, Einladung um 11:36 erneuert; manuelle sichere Navigation zur Vorschau ohne FIB-Aktivierung | Identität und Versandmetadaten erledigt; Zustellung/Navigation offen |
 | Einladung und erstes Passwort | gültiger Link → isolierte Einladungssitzung → Passwort setzen → normale Anmeldung; keine Bestandskontositzung ersetzen | Live offen; isoliert bestanden |
 | MFA und serverseitige Sperre | MFA einrichten; gültige AAL1-Sitzung des Testkontos am Session-Context abweisen; AAL2 ohne FIB-Mitgliedschaft ebenfalls abweisen | Live offen; Codeabgleich und isolierte Prüfung bestanden |
 | Getrennte Freischaltung | Warteansicht und fehlende Mitgliedschaft vor/nach Setup bestätigen; Testkonto produktiv **nicht** zum Redakteur aktivieren | Ausgangszustand geprüft; Live-Warteansicht offen; positive Aktivierung bereits isoliert bestanden |
@@ -201,12 +207,13 @@ Lokal mit Docker: ausschließlich die Dateien unter `tests/auth-sandbox/` verwen
 
 ## Nächster Schritt
 
-Die bereitgestellte Vorschau für den verbliebenen Testkonto-Liveablauf nutzen, einen frischen Einladungslink mit explizitem Vorschauziel und sichere manuelle Passwort-/MFA-Einrichtung ermöglichen, und die Memorix-Kompatibilitätsgrenze schließen und erst nach vollständiger Abnahme PR #74 mergen. Danach die gesicherte Administratoroberfläche für Einladen und getrenntes Freischalten mit Bestätigung und Audit ergänzen; anschließend sicherer MFA-Faktorwechsel und dokumentierte Notfallwiederherstellung, ohne die verpflichtende MFA abzusenken.
+Die bereitgestellte Vorschau für den verbliebenen Testkonto-Liveablauf nutzen, einen frischen Einladungslink mit explizitem Vorschauziel und sichere manuelle Passwort-/MFA-Einrichtung ermöglichen und die Memorix-Kompatibilitätsgrenze schließen. Erst nach vollständiger Abnahme PR #74 mergen. Danach die gesicherte Administratoroberfläche für Einladen und getrenntes Freischalten mit Bestätigung und Audit ergänzen; anschließend sicherer MFA-Faktorwechsel und dokumentierte Notfallwiederherstellung, ohne die verpflichtende MFA abzusenken.
 
 ## Änderungshistorie
 
 | Version | Datum | Änderung |
 |---|---|---|
+| 0.6 | 13.10.2026 | Testkonto durch Nutzer bestätigt, Einladung ausschließlich dafür erneuert; Versandmetadaten und manuellen Vorschau-Testweg ohne Änderung der Site URL dokumentiert. |
 | 0.5 | 13.10.2026 | Preview #14 mit geprüftem Commit bereitgestellt und verifiziert; MFA-/Current-password-Parameter ergänzt; verbleibende Einladungsziel- und sichere Übernahmegrenzen dokumentiert. |
 | 0.4 | 13.10.2026 | Nutzer-Nachweise zur produktiven Auth-/SMTP-Konfiguration übernommen; produktiven Handler, Mitgliedschaftsgrenzen, ausgelieferten Client und Memorix-Einstiege lesend abgeglichen; konkrete Live-Blocker statt überholter SMTP-/Konfigurationsblocker festgehalten. |
 | 0.3 | 12.10.2026 | Einladungsannahme, Passwort-Erstfestlegung, MFA-Wiederaufnahme und tatsächliche serverseitige Mitgliedschaftsprüfung in isolierter Umgebung ergänzt; produktive Einladungsnachweise als Merge-Bedingung festgehalten. |
