@@ -31,8 +31,12 @@ async function recoveryLink(address){
   throw Error('Captured recovery email missing');
 }
 const browser=await chromium.launch();
+let phase='initialization';
+let recoveryMfaStatus=null;
+let diagnosticPage;
 try{
   const page=await browser.newPage({viewport:{width:1280,height:900}});
+  diagnosticPage=page;
   await page.route('**/*',route=>new URL(route.request().url()).hostname==='127.0.0.1'?route.continue():route.abort());
   await page.goto('http://127.0.0.1:4173');
   await checkPasswordVisibility(page, ['Passwort'], check, 'Login');
@@ -86,9 +90,12 @@ try{
   await page.goto(await recoveryLink(fixture.email));
   await page.getByRole('button',{name:'MFA bestätigen'}).waitFor();
   check('Recovery link in browser still requires MFA',await page.getByRole('heading',{name:'Mein Profil',exact:true}).count()===0);
+  phase='recovery MFA';
+  page.on('response',response=>{if(new URL(response.url()).pathname.endsWith('/verify'))recoveryMfaStatus=response.status();});
   await new Promise(resolve=>setTimeout(resolve,31000-(Date.now()%30000)));
   await page.locator('input[autocomplete="one-time-code"]').fill(totp(fixture.secret));
   await page.getByRole('button',{name:'MFA bestätigen'}).click();
+  phase='recovery form after MFA';
   await page.getByText('Deine Wiederherstellung ist mit MFA bestätigt.',{exact:false}).waitFor();
   await checkPasswordVisibility(page, ['Neues Passwort', 'Neues Passwort wiederholen'], check, 'Recovery');
   const recoveredPassword=randomBytes(24).toString('base64url');
@@ -99,7 +106,17 @@ try{
   const oldLogin=await fetch('http://127.0.0.1:9999/token?grant_type=password',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({email:fixture.email,password:replacement})});
   const newLogin=await fetch('http://127.0.0.1:9999/token?grant_type=password',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({email:fixture.email,password:recoveredPassword})});
   check('Browser-reset password replaces previous password',oldLogin.status===400&&newLogin.status===200);
-}catch(error){check('Browser scenario completed',false);console.log('Browser scenario interrupted: '+error.name);}
+}catch(error){
+  check('Browser scenario completed',false);
+  // Allowlisted state only: never output a page dump, URL, input, or Auth payload.
+  console.log('Browser scenario interrupted: '+error.name+'; phase='+phase+'; MFA HTTP='+recoveryMfaStatus);
+  if(diagnosticPage)console.log('Recovery state: '+JSON.stringify({
+    mfaPrompt:await diagnosticPage.getByRole('button',{name:'MFA bestätigen'}).count(),
+    rejectedCode:await diagnosticPage.getByText('Der MFA-Code konnte nicht bestätigt werden. Bitte einen aktuellen Code verwenden.',{exact:true}).count(),
+    profile:await diagnosticPage.getByRole('heading',{name:'Mein Profil',exact:true}).count(),
+    recoveryNotice:await diagnosticPage.getByText('Deine Wiederherstellung ist mit MFA bestätigt.',{exact:false}).count(),
+  }));
+}
 finally{
   await browser.close();
   writeFileSync('auth-test-results/browser-results.json',JSON.stringify({scope:'real isolated Auth; synthetic FIB data services',results},null,2)+'\n');
