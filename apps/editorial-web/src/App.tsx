@@ -186,6 +186,10 @@ export function App() {
   }, [state]);
 
   useEffect(() => {
+    if (view === 'event' && eventResult) void loadCoordinationState();
+  }, [view, eventResult?.id]);
+
+  useEffect(() => {
     if (!editingEvent || !coordination?.lock?.mine) return;
 
     const timer = window.setInterval(() => {
@@ -298,7 +302,6 @@ export function App() {
     setEventResult(data.event);
     setCoordination(null);
     setEditingEvent(false);
-    await loadCoordinationState();
     navigateTo('event');
   }
 
@@ -321,7 +324,7 @@ export function App() {
 
   async function loadCoordinationState() {
     const { data, error } = await supabase.functions.invoke<CoordinationResult>('fib-coordination', {
-      body: { action: 'get_state', objectType: 'event', objectId: LIVE_TEST_EVENT_ID },
+      body: { action: 'get_state', objectType: 'event', objectId: eventResult?.id ?? LIVE_TEST_EVENT_ID },
     });
     if (!error && data?.ok) setCoordination(data.state);
   }
