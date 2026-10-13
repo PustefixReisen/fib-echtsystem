@@ -50,6 +50,35 @@ try {
   await assert.rejects(inviteNewTestAccount({email,apiKey,caseId:randomUUID(),fetcher:localFetch}));
   assert.equal((await mailCount(email)).length,1);
   console.log('PASS Repeated operation stops without resending or modifying the new test account');
+  // Dashboard-equivalent invite: no redirect at creation. Only synthetic mail,
+  // never follow the verification redirect or print its credentials.
+  phase='dashboard-invite-preview-before-consumption';
+  const dashboardEmail='dashboard-'+randomUUID()+'@example.test';
+  const invited=await local('/invite',{method:'POST',body:JSON.stringify({email:dashboardEmail})});
+  assert.ok(invited.ok); const invitedUser=await invited.json();
+  const dashboardMessages=await mailCount(dashboardEmail);assert.equal(dashboardMessages.length,1);
+  const dashboardMail=await(await fetch('http://127.0.0.1:54324/api/v1/message/'+dashboardMessages[0].ID)).json();
+  const dashboardLinks=((dashboardMail.HTML??'')+'\n'+(dashboardMail.Text??'')).replaceAll('&amp;','&').match(/https?:\/\/[^\s<>"']+/g)??[];
+  const original=dashboardLinks.map(link=>new URL(link)).find(u=>u.pathname==='/auth/v1/verify'&&u.searchParams.get('type')==='invite');
+  assert.ok(original);assert.equal(original.origin,'http://127.0.0.1:54321');
+  assert.equal(original.searchParams.get('redirect_to'),'http://127.0.0.1:4173/production');
+  const adjusted=new URL(original);adjusted.searchParams.set('redirect_to',REDIRECT);
+  assert.equal(adjusted.searchParams.get('token'),original.searchParams.get('token'));
+  const verified=await fetch('http://127.0.0.1:9999/verify'+adjusted.search,{redirect:'manual'});
+  assert.ok([302,303].includes(verified.status));
+  const target=new URL(verified.headers.get('location'));
+  assert.equal(target.origin+target.pathname,REDIRECT);
+  const credentials=new URLSearchParams(target.hash.slice(1));
+  assert.equal(credentials.get('type'),'invite');assert.ok(credentials.get('access_token'));assert.ok(credentials.get('refresh_token'));
+  const confirmed=await(await local('/admin/users/'+invitedUser.id)).json();
+  assert.equal(confirmed.id,invitedUser.id);assert.ok(confirmed.email_confirmed_at);
+  console.log('PASS Dashboard-style invitation accepts allowlisted preview redirect before first use; same identity confirmed');
+  phase='dashboard-invite-replay';
+  const replay=await fetch('http://127.0.0.1:9999/verify'+adjusted.search,{redirect:'manual'});
+  const rejected=new URL(replay.headers.get('location'));
+  const rejection=new URLSearchParams(rejected.hash.slice(1));
+  assert.ok(rejection.get('error'));assert.equal(rejection.has('access_token'),false);
+  console.log('PASS Consumed dashboard invitation cannot issue another session');
 }catch{
   console.log('FAIL Isolated invitation operator: '+phase);process.exitCode=1;
 }
