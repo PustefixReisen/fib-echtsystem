@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 0.9 | 13.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
+| 1.0 | 13.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
 
 ## Ergebnis
 
@@ -236,6 +236,14 @@ Ergebnis: positiver Live-Recovery-Ablauf einschließlich MFA, Passwortänderung 
 
 Der Arbeitsblock endet ohne Merge. Offen bleiben vollständige Live-Ersteinladung mit Erstpasswort vor MFA, produktiver Reauth-Nachweis mit gealterter Sitzung, direkte produktive AAL1/AAL2-Negativnachweise und die Memorix-Kompatibilitätsgrenze. Keine erneute Einladung, Löschung oder Rücksetzung des inzwischen bestätigten und MFA-gesicherten Testkontos. Keine weiteren erfolgreichen Tests ohne konkreten Grund wiederholen.
 
+## Passwortanzeige aus PR-Kommentar vom 13.10.2026
+
+Anforderung: https://github.com/PustefixReisen/fib-echtsystem/pull/74#issuecomment-6143409528
+
+Alle sieben Passwortfelder verwenden eine gemeinsame Komponente: Anmeldung, beide Erstpasswortfelder, beide Recovery-Felder ohne FIB-Mitgliedschaft sowie beide Profilfelder für Passwortänderung/Recovery. Voreinstellung verdeckt; Auge aus dem bestehenden FIB-Asset `nav-im-blick.svg`, bei sichtbarem Passwort mit Durchstreichung. Der Schalter besitzt `type=button`, dynamisches feldbezogenes `aria-label`/`title`, `aria-controls`, `aria-pressed` und sichtbaren Tastaturfokus. Die Umschaltung verändert nur den lokalen Input-Typ; keine Speicherung, kein Logging und keine Auth-Anfrage. Leeren, deaktivieren oder erneutes Einblenden eines Formulars setzt die Anzeige zurück auf verdeckt.
+
+TypeScript/Build lokal erfolgreich. Die bestehende isolierte Browserabnahme wurde um Funktionstests in Login, Profil, Recovery und Einladung erweitert: Mausklick, Leertaste/Enter, Feldunabhängigkeit, erhaltene Eingabe, Verbergen nach Leeren sowie unveränderte Browserablage und keine Auth-Anfrage beim Umschalten. CI-Ausführung steht für diese Änderung noch aus. Wegen der geänderten Passwortfelder ist diese gezielte Erweiterung der bestehenden Abnahme erforderlich; keine erneuten manuellen Produktions-Recoverytests allein für das Auge-Icon.
+
 ## Nächster Schritt
 
 Einen verlässlichen Einladungs-Testweg mit explizitem Vorschauziel ohne manuelles Bearbeiten von Einmallinks herstellen, dafür eine unbenutzte bestätigte Testadresse verwenden und die vollständige Erstpasswortkette nachweisen. Parallel im nächsten Arbeitsblock die verbleibenden API-/Reauth-Nachweise und Memorix-Kompatibilitätsgrenze schließen. Erst nach vollständiger Abnahme PR #74 mergen. Danach die gesicherte Administratoroberfläche für Einladen und getrenntes Freischalten mit Bestätigung und Audit ergänzen; anschließend sicherer MFA-Faktorwechsel und dokumentierte Notfallwiederherstellung, ohne die verpflichtende MFA abzusenken.
@@ -244,6 +252,7 @@ Einen verlässlichen Einladungs-Testweg mit explizitem Vorschauziel ohne manuell
 
 | Version | Datum | Änderung |
 |---|---|---|
+| 1.0 | 13.10.2026 | Einheitliche Passwortanzeige gemäß PR-Kommentar umgesetzt; isolierte Browserprüfungen für Maus-/Tastaturumschaltung und erneutes Verbergen ergänzt. |
 | 0.9 | 13.10.2026 | Live-Recovery nach MFA, Passwortaktualisierung und erfolgreiche Neuanmeldung durch Nutzer belegt; Restmatrix und Abschluss ohne Merge präzisiert. |
 | 0.8 | 13.10.2026 | Testkontozuordnung durch Nutzer bestätigt; Live-MFA und ausstehende getrennte Freischaltung per Screenshot und lesenden Metadaten belegt; Vorschau #15 und drei erfolgreiche CI-Läufe dokumentiert. |
 | 0.7 | 13.10.2026 | Verbrauchte Einladung und getrennte Sitzungszustände dokumentiert; serverseitig geprüfte Kontoadresse vor MFA sichtbar gemacht, Identitätsprüfung bleibt vor Live-Schreibaktion erforderlich. |

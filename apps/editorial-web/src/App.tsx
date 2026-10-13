@@ -1,3 +1,4 @@
+import { PasswordField } from './PasswordField.js';
 import { FormEvent, useEffect, useRef, useState, type ReactNode } from 'react';
 import { supabase, invitationMode, authLinkError, invitationPasswordDone, rememberInvitationPassword } from './supabase.js';
 import fibLogo from '../../../assets/brand/logo/fib-logo-primary-approved.png';
@@ -654,8 +655,8 @@ export function App() {
       <p>Deine Einladung gilt für <strong>{accountEmail}</strong>.</p>
       <p>Lege zuerst dein Passwort fest. Danach richtest du deinen Authenticator ein. Die Freischaltung als FIB-Redakteur erfolgt getrennt durch einen Administrator.</p>
       <form className="stack" onSubmit={setInvitationPassword}>
-        <label>Erstes Passwort<input type="password" autoComplete="new-password" minLength={12} value={initialPassword} onChange={e => setInitialPassword(e.target.value)} required disabled={invitationSaving} /></label>
-        <label>Erstes Passwort wiederholen<input type="password" autoComplete="new-password" minLength={12} value={initialPasswordConfirm} onChange={e => setInitialPasswordConfirm(e.target.value)} required disabled={invitationSaving} /></label>
+        <PasswordField label="Erstes Passwort" autoComplete="new-password" minLength={12} value={initialPassword} onChange={e => setInitialPassword(e.target.value)} required disabled={invitationSaving} />
+        <PasswordField label="Erstes Passwort wiederholen" autoComplete="new-password" minLength={12} value={initialPasswordConfirm} onChange={e => setInitialPasswordConfirm(e.target.value)} required disabled={invitationSaving} />
         <button className="primary" disabled={invitationSaving}>{invitationSaving ? 'Wird gespeichert …' : 'Passwort festlegen'}</button>
       </form>
       <p role="status">{message}</p>
@@ -671,8 +672,8 @@ export function App() {
       <p>Ein eingerichtetes Konto allein gibt dir noch keine Redaktionsrechte. Ein FIB-Administrator muss dich gesondert als aktiven Redakteur freischalten.</p>
       {passwordRecovery && <form className="stack" onSubmit={updatePassword}>
         <p>Deine Wiederherstellung ist mit MFA bestätigt. Lege jetzt ein neues Passwort fest.</p>
-        <label>Neues Passwort<input type="password" autoComplete="new-password" minLength={12} value={newPassword} onChange={e=>setNewPassword(e.target.value)} required /></label>
-        <label>Neues Passwort wiederholen<input type="password" autoComplete="new-password" minLength={12} value={confirmPassword} onChange={e=>setConfirmPassword(e.target.value)} required /></label>
+        <PasswordField label="Neues Passwort" autoComplete="new-password" minLength={12} value={newPassword} onChange={e=>setNewPassword(e.target.value)} required />
+        <PasswordField label="Neues Passwort wiederholen" autoComplete="new-password" minLength={12} value={confirmPassword} onChange={e=>setConfirmPassword(e.target.value)} required />
         <button disabled={securitySaving}>Passwort ändern</button>
       </form>}
       <p role="status">{securityMessage}</p>
@@ -701,7 +702,7 @@ export function App() {
           {state === 'signed_out' && !invitationMode && (
             <form onSubmit={login} className="stack">
               <label>E-Mail<input type="email" value={email} onChange={(e) => setEmail(e.target.value)} required /></label>
-              <label>Passwort<input type="password" value={password} onChange={(e) => setPassword(e.target.value)} required /></label>
+              <PasswordField label="Passwort" autoComplete="current-password" value={password} onChange={(e) => setPassword(e.target.value)} required />
               <button type="submit" className="primary">Anmelden</button>
               <button type="button" disabled={recoverySending} onClick={(event) => {
                 const emailInput = event.currentTarget.form?.querySelector<HTMLInputElement>('input[type="email"]');
@@ -947,12 +948,8 @@ export function App() {
               </form>
               <form className="stack security-form" onSubmit={updatePassword}>
                 <h3>Passwort ändern</h3>
-                <label>Neues Passwort
-                  <input type="password" autoComplete="new-password" minLength={12} value={newPassword} onChange={e => setNewPassword(e.target.value)} required />
-                </label>
-                <label>Neues Passwort wiederholen
-                  <input type="password" autoComplete="new-password" minLength={12} value={confirmPassword} onChange={e => setConfirmPassword(e.target.value)} required />
-                </label>
+                <PasswordField label="Neues Passwort" autoComplete="new-password" minLength={12} value={newPassword} onChange={e => setNewPassword(e.target.value)} required />
+                <PasswordField label="Neues Passwort wiederholen" autoComplete="new-password" minLength={12} value={confirmPassword} onChange={e => setConfirmPassword(e.target.value)} required />
                 <div className="button-row"><button type="submit" disabled={securitySaving || !newPassword}>Passwort ändern</button></div>
               </form>
               <p className="meta">Die Verwaltung und der sichere Wechsel von MFA-Faktoren folgen als gesonderter Schritt.</p>

@@ -1,4 +1,5 @@
 import {chromium} from 'playwright';
+import {checkPasswordVisibility} from './password-visibility.mjs';
 import {readFileSync,writeFileSync} from 'node:fs';
 import {createHmac,randomBytes} from 'node:crypto';
 import path from 'node:path';
@@ -34,6 +35,7 @@ try{
   const page=await browser.newPage({viewport:{width:1280,height:900}});
   await page.route('**/*',route=>new URL(route.request().url()).hostname==='127.0.0.1'?route.continue():route.abort());
   await page.goto('http://127.0.0.1:4173');
+  await checkPasswordVisibility(page, ['Passwort'], check, 'Login');
   check('Recovery request entry is available when signed out',await page.getByRole('button',{name:/Passwort vergessen|Passwort zurücksetzen|Passwort wiederherstellen/i}).count()>0);
   await page.getByLabel('E-Mail',{exact:true}).fill(fixture.email);
   await page.getByLabel('Passwort',{exact:true}).fill(fixture.password);
@@ -46,6 +48,7 @@ try{
   await page.getByRole('button',{name:'Mein Profil öffnen'}).click();
   await page.getByRole('heading',{name:'Mein Profil',exact:true}).waitFor();
   check('Profile loads after actual TOTP verification',true);
+  await checkPasswordVisibility(page, ['Neues Passwort', 'Neues Passwort wiederholen'], check, 'Profile');
   let mutations=0;
   page.on('request',req=>{if(req.method()==='PUT'&&req.url().endsWith('/auth/v1/user'))mutations++;});
   const newPass=page.getByLabel('Neues Passwort',{exact:true});
@@ -87,6 +90,7 @@ try{
   await page.locator('input[autocomplete="one-time-code"]').fill(totp(fixture.secret));
   await page.getByRole('button',{name:'MFA bestätigen'}).click();
   await page.getByText('Deine Wiederherstellung ist mit MFA bestätigt.',{exact:false}).waitFor();
+  await checkPasswordVisibility(page, ['Neues Passwort', 'Neues Passwort wiederholen'], check, 'Recovery');
   const recoveredPassword=randomBytes(24).toString('base64url');
   await newPass.fill(recoveredPassword);await repeat.fill(recoveredPassword);
   await page.getByRole('button',{name:'Passwort ändern',exact:true}).click();

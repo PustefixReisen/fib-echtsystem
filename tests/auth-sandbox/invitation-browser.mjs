@@ -1,5 +1,6 @@
 // Disposable loopback accounts only. No token, password, email body or TOTP secret in output.
 import {chromium} from 'playwright';
+import {checkPasswordVisibility} from './password-visibility.mjs';
 import {createHmac,randomBytes} from 'node:crypto';
 import {writeFileSync} from 'node:fs';
 import {execFileSync} from 'node:child_process';
@@ -40,6 +41,7 @@ try{
  await page.reload();await page.getByRole('heading',{name:'Passwort festlegen',exact:true}).waitFor();
  check('Reload resumes password setup without granting FIB access',dataRequests===0);
  const pass=page.getByLabel('Erstes Passwort',{exact:true}),confirm=page.getByLabel('Erstes Passwort wiederholen',{exact:true});
+ await checkPasswordVisibility(page, ['Erstes Passwort', 'Erstes Passwort wiederholen'], check, 'Invitation');
  await pass.fill('Long-test-password-1');await confirm.fill('Long-test-password-2');await page.getByRole('button',{name:'Passwort festlegen',exact:true}).click();
  await page.getByText('Bitte mindestens 12 Zeichen',{exact:false}).waitFor();check('Mismatching first passwords do not reach Auth',updates===0);
  await page.route('**/auth/v1/user',async route=>route.request().method()==='PUT'?route.fulfill({status:422,contentType:'application/json',body:JSON.stringify({code:422,error_code:'weak_password',msg:'rejected test password'})}):route.continue());
