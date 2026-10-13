@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 0.6 | 13.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
+| 0.7 | 13.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
 
 ## 1. Zweck und Geltung
 
@@ -303,7 +303,21 @@ Automatisierte Tests verwenden ausschließlich zufällig erzeugte Konten unter `
 
 Für die ergänzende Produktionsabnahme zuerst den bereits geprüften PR-Commit über `Preview Editorial Web` (`preview_ref` = vollständiger Commit-SHA) in `/redaktion-preview/` bereitstellen und den ausgelieferten Stand prüfen. Diese Vorschau trennt die Webdateien, verwendet aber weiterhin Shared-Apps; sie ist keine isolierte Auth-Datenbank. Nur das eindeutig bestätigte Testkonto verwenden. Eine frische Einladung muss ausdrücklich auf die erlaubte Vorschau-URL zeigen; die projektweite Site URL dafür nicht umstellen. Das Testkonto bleibt ohne aktive FIB-Mitgliedschaft. Die positive Redakteur-Aktivierung wird weiterhin ausschließlich isoliert getestet. Bereits bestätigte Auth-/SMTP-Einstellungen und Zustellnachweise gelten gemäß Testbericht weiter; nur begründete Resttests ausführen. Keine Links, Tokens, Passwörter oder TOTP-Secrets in Nachweisen speichern.
 
-### Administrativer Preview-Einladungsversand (PR #74)
+### Dashboard-Einladung für die Live-Abnahme (PR #74)
+
+Aktuelle Betreiberentscheidung: keine weiteren Supabase-Administratoren, Schlüssel oder Berechtigungen. Der vorhandene Dashboard-Dialog wird bevorzugt. Die 403-Analyse, Code-/Produktionsnachweise und Testresultate stehen ausschließlich im Testbericht v1.3.
+
+1. Neue empfangbare Testadresse vom Betreiber bestätigen lassen; in Shared-Apps rein lesend auf Nichtvorhandensein prüfen. Bei bestehendem Konto stoppen. Keine Aliasse erraten und kein Bestandskonto zurücksetzen.
+2. Authentication → Users → Add user → Send invitation genau einmal für diese neue Adresse verwenden. Der Dialog hat kein Redirect-Feld; globale Site-URL und Templates bleiben unverändert. Versandzeit und neue Auth-ID geschützt zuordnen, nicht die Adresse im öffentlichen Bericht.
+3. Original-Link **nicht öffnen**. Ausschließlich privat im Browser den Parameter `redirect_to` auf `https://fib.pustivo.de/redaktion-preview/` setzen. Supabase-Origin `https://apaubomxffcwtzjimori.supabase.co`, Pfad `/auth/v1/verify`, Token und `type=invite` unverändert lassen. Keine fremden Linkbearbeiter, keine Veröffentlichung in Chat, Logs oder Screenshots. Das Verfahren ist mit echter isolierter Auth und Mailpit geprüft; der erste Live-Nachweis steht aus.
+4. Erst den korrigierten Link aufrufen. Vorschauadresse und servergeprüfte neue Testadresse vor Passwort/MFA kontrollieren. Bei falscher Adresse, Ablauf oder Verbrauch stoppen. Erstpasswort und MFA führt die Testperson privat aus. FIB-Mitgliedschaft bleibt unverändert gesperrt.
+5. Direkte AAL1-/AAL2-Sperren und die Reauth-Matrix gemäß Testbericht nachweisen. Für die gealterte Anmeldung mindestens die produktive 24-Stunden-Grenze abwarten; weder Datenbankzeiten noch projektweite Einstellungen verändern. Separate Freischaltung positiv nur isoliert testen.
+
+Das Öffnen des Original-Links an `/redaktion/` mit anschließendem manuellen Wechsel zur Vorschau ist nicht freigegeben: Der alte normale Client kann die Sitzung schon übernommen haben. Eine Weiterleitung im FIB-Bootstrap wäre eine alternative geprüfte Softwareänderung, wird für diesen Test aber nicht eingeführt. Vorhandenes Testkonto und Administratoren bleiben unverändert. Keine Memorix-Schreibtests oder Änderungen an appübergreifenden Auth-Einstellungen. Cleanup nur für eindeutig zugeordnete neue Testidentität und mit gesonderter Löschfreigabe.
+
+### Administrativer Preview-Einladungsversand (PR #74, derzeit nicht freigegeben)
+
+**Historischer Implementierungsstand; keine aktuelle Ausführungsanweisung.** Der Schlüsselzugriff scheiterte mit HTTP 403. Der Betreiber hat zusätzliche administrative Zugänge/Berechtigungen ausgeschlossen. Die folgenden technischen Angaben dokumentieren den vorhandenen, isoliert geprüften Code; weder den optionalen PAT einrichten noch den Operator erneut ausführen. Für diese Abnahme gilt der Dashboard-Weg oben.
 
 Der bestehende Workflow `Deploy FIB Edge Functions` enthält getrennte Operationen. `deploy-functions` bleibt unverändert an `DEPLOY` gebunden. `check-invite-access` mit `CHECK_ACCESS` prüft den bestehenden Admin-Zugang rein lesend. `invite-preview-test` mit `INVITE_PREVIEW_TEST` erstellt genau ein neues Testkonto und verschickt anschließend eine Einladung. Diese beiden Operationen deployen keine Edge Function und ändern keine Fachinhalte oder FIB-Mitgliedschaften.
 
@@ -311,7 +325,7 @@ Voraussetzungen: geprüfter vollständiger Workflow-Commit unter `expected_sha`,
 
 `scripts/admin/preview-invite.mjs` nutzt ausschließlich Node-Bordmittel, feste HTTPS-Endpunkte des Shared-Apps-Projekts und das feste Redirect `https://fib.pustivo.de/redaktion-preview/`. Das vorhandene privilegierte API-Key-Material wird mit dem bestehenden Management-Zugang im kurzlebigen Runner gelesen und ausschließlich dort im Speicher verwendet. Keine Schlüsselerzeugung/-rotation, keine Ausgabe/Persistenz, keine Paketinstallation mit Secret, kein neuer öffentlich erreichbarer Admin-Endpunkt. HTTP-Weiterleitungen werden verweigert.
 
-Bei HTTP 403 am Schlüsselzugriff stoppen. Die aktuelle Supabase-Referenz nennt für `GET /projects/{ref}/api-keys?reveal=true` **API Keys – Read** und **API Key Secrets – Read**. Ein ggf. erforderlicher separater PAT muss auf das Shared-Apps-Projekt beschränkt und vom Eigentümer ausdrücklich freigegeben werden; kein Classic-/organisationsweiter Vollzugriff. Der Zugriff auf privilegierte Schlüssel vermittelt trotzdem umfassende Daten-/Auth-Rechte innerhalb dieses Projekts, auch auf Memorix. Deshalb ist er kein harmloser reiner Lesezugriff. Bestehenden Deployment-PAT nicht erweitern/ersetzen. Neue Berechtigungen oder Secrets nicht eigenmächtig einrichten. Secret-Werte ausschließlich direkt über die geschützten Anbieteroberflächen eingeben, nie im Chat; nach Abschluss dedizierten PAT widerrufen und den nicht mehr benötigten Secret-Eintrag entfernen. Vor Speicherung darf der Benutzer den konkreten Berechtigungsumfang prüfen.
+Bei HTTP 403 am Schlüsselzugriff stoppen. Die aktuelle Supabase-Referenz nennt für `GET /projects/{ref}/api-keys?reveal=true` **API Keys – Read** und **API Key Secrets – Read**. Die konkrete Ablehnungsursache ist nicht abschließend bestimmt. Kein Token- oder Rollenwechsel zur Fehlerumgehung. Der frühere Vorschlag eines zusätzlichen PAT ist durch die aktuelle Betreiberentscheidung verworfen. Bestehender Deployment-Zugang und seine Berechtigungen bleiben unverändert; das optionale Secret wurde nicht eingerichtet.
 
 Schutz bestehender Konten: Zuerst atomarer Auth-Admin-Create ohne Passwort und mit `email_confirm:false`. Bestehende bestätigte oder unbestätigte Konten müssen hier abgewiesen werden. Erst nach Prüfung der zurückgegebenen neuen Identität und Testfallmarkierung wird die Einladung versandt. Kein Invite-first, kein Resend, keine automatische Wiederholung, Löschung, Rücksetzung oder Rollenvergabe. Der Versandweg wird separat gegen dieselbe isolierte GoTrue-Version und Mailpit geprüft; die vorhandenen 138 Tests müssen dafür nicht erneut durchlaufen.
 
@@ -357,6 +371,7 @@ Die konkreten Empfängeradressen, Provider-/Tarifentscheidung und gegebenenfalls
 
 | Version | Datum | Änderung |
 |---|---|---|
+| 0.7 | 13.10.2026 | Dashboard-Weg ohne neue Rechte festgelegt; Linkziel ausschließlich vor Erstverbrauch ändern; bisherigen Operator zurückgestellt und Schutz-/Reauth-Grenzen präzisiert. |
 | 0.6 | 13.10.2026 | Begrenzten administrativen Preview-Einladungsweg im bestehenden geschützten Workflow und Cleanup-Verfahren dokumentiert. |
 | 0.5 | 13.10.2026 | Ergänzende Testkonto-Abnahme in separater Webvorschau beschrieben; Shared-Apps-Grenze und Verbot produktiver Testkonto-Freischaltung präzisiert. |
 | 0.4 | 12.10.2026 | Sichere Einladungsannahme mit Passwort, MFA, Sitzungsisolation und getrennter FIB-Freischaltung beschrieben; Wiederaufnahme und produktive Einladungsnachweise ergänzt. |
