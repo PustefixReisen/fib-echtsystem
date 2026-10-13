@@ -1,0 +1,39 @@
+name: Preview Invitation Operator Tests
+on:
+  pull_request:
+    paths:
+      - 'scripts/admin/**'
+      - '.github/workflows/preview-invite-tests.yml'
+      - '.github/workflows/fib-edge-functions-deploy.yml'
+permissions:
+  contents: read
+jobs:
+  bounded-invitation:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Test operator guards without network
+        run: node --test scripts/admin/preview-invite.test.mjs
+      - name: Generate isolated runtime secrets
+        run: |
+          python3 - <<'PY'
+          import os,secrets
+          with open(os.environ['GITHUB_ENV'],'a') as f:
+              for name in ['TEST_DB_PASSWORD','TEST_JWT_SECRET']:
+                  value=secrets.token_hex(32)
+                  print('::add-mask::'+value)
+                  f.write(name+'='+value+'\n')
+          PY
+      - name: Start isolated Auth and SMTP capture
+        run: docker compose -f tests/auth-sandbox/compose.yml -f scripts/admin/compose.invite-test.yml up -d
+      - name: Test actual create-and-invite semantics and account protection
+        run: node scripts/admin/preview-invite.integration.mjs
+      - name: Destroy isolated accounts and captured mail
+        if: always()
+        run: docker compose -f tests/auth-sandbox/compose.yml -f scripts/admin/compose.invite-test.yml down --volumes --remove-orphans

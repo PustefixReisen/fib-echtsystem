@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 0.5 | 13.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
+| 0.6 | 13.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
 
 ## 1. Zweck und Geltung
 
@@ -303,6 +303,20 @@ Automatisierte Tests verwenden ausschließlich zufällig erzeugte Konten unter `
 
 Für die ergänzende Produktionsabnahme zuerst den bereits geprüften PR-Commit über `Preview Editorial Web` (`preview_ref` = vollständiger Commit-SHA) in `/redaktion-preview/` bereitstellen und den ausgelieferten Stand prüfen. Diese Vorschau trennt die Webdateien, verwendet aber weiterhin Shared-Apps; sie ist keine isolierte Auth-Datenbank. Nur das eindeutig bestätigte Testkonto verwenden. Eine frische Einladung muss ausdrücklich auf die erlaubte Vorschau-URL zeigen; die projektweite Site URL dafür nicht umstellen. Das Testkonto bleibt ohne aktive FIB-Mitgliedschaft. Die positive Redakteur-Aktivierung wird weiterhin ausschließlich isoliert getestet. Bereits bestätigte Auth-/SMTP-Einstellungen und Zustellnachweise gelten gemäß Testbericht weiter; nur begründete Resttests ausführen. Keine Links, Tokens, Passwörter oder TOTP-Secrets in Nachweisen speichern.
 
+### Administrativer Preview-Einladungsversand (PR #74)
+
+Der bestehende Workflow `Deploy FIB Edge Functions` enthält getrennte Operationen. `deploy-functions` bleibt unverändert an `DEPLOY` gebunden. `check-invite-access` mit `CHECK_ACCESS` prüft den bestehenden Admin-Zugang rein lesend. `invite-preview-test` mit `INVITE_PREVIEW_TEST` erstellt genau ein neues Testkonto und verschickt anschließend eine Einladung. Diese beiden Operationen deployen keine Edge Function und ändern keine Fachinhalte oder FIB-Mitgliedschaften.
+
+Voraussetzungen: geprüfter vollständiger Workflow-Commit unter `expected_sha`, vorhandenes Secret `SUPABASE_ACCESS_TOKEN` in der bereits verwendeten Umgebung `fib-shared-apps`, für Versand eine ausdrücklich bestätigte unbenutzte Testadresse unter `test_email`. Die Eingabe bleibt Teil des GitHub-Workflow-Auftrags; keine Adresse im Run-Namen, Log, Bericht oder Artifact ausgeben. Zugangsdaten niemals als Workflow-Eingabe oder im Chat übermitteln.
+
+`scripts/admin/preview-invite.mjs` nutzt ausschließlich Node-Bordmittel, feste HTTPS-Endpunkte des Shared-Apps-Projekts und das feste Redirect `https://fib.pustivo.de/redaktion-preview/`. Das vorhandene privilegierte API-Key-Material wird mit dem bestehenden Management-Zugang im kurzlebigen Runner gelesen und ausschließlich dort im Speicher verwendet. Keine Schlüsselerzeugung/-rotation, keine Ausgabe/Persistenz, keine Paketinstallation mit Secret, kein neuer öffentlich erreichbarer Admin-Endpunkt. HTTP-Weiterleitungen werden verweigert.
+
+Schutz bestehender Konten: Zuerst atomarer Auth-Admin-Create ohne Passwort und mit `email_confirm:false`. Bestehende bestätigte oder unbestätigte Konten müssen hier abgewiesen werden. Erst nach Prüfung der zurückgegebenen neuen Identität und Testfallmarkierung wird die Einladung versandt. Kein Invite-first, kein Resend, keine automatische Wiederholung, Löschung, Rücksetzung oder Rollenvergabe. Der Versandweg wird separat gegen dieselbe isolierte GoTrue-Version und Mailpit geprüft; die vorhandenen 138 Tests müssen dafür nicht erneut durchlaufen.
+
+Cleanup-Nachweis: Die Auth-App-Metadaten tragen die zufällige `fib_pr74_test_case`-Kennung, die der Workflow ohne E-Mail/Token protokolliert. Nach Versand-/Transportfehlern kann ein neu angelegtes Konto vorhanden sein; bei `created-review-required` oder `unknown-after-create-attempt` ausschließlich anhand dieser Kennung lesend nachprüfen, nicht erneut senden. Das Konto bleibt ohne Erstpasswort, bis die Testperson den Mail-Link nutzt. Eine spätere Löschung erfordert gesonderte Freigabe; vorhandene Konten sind niemals Cleanup-Ziele. Kein automatischer Cleanup in Shared-Apps. Isolierte CI-Konten und Mails werden dagegen durch Container-/Volume-Cleanup entfernt.
+
+Aktueller Ausführungs-/Abnahmestand einschließlich offener Voraussetzungen: `docs/tests/PR-74-Sicherheits-und-Funktionstest.md`.
+
 ## 13. Regelmäßige Betriebsprüfungen
 
 ### Automatisch / laufend
@@ -341,6 +355,7 @@ Die konkreten Empfängeradressen, Provider-/Tarifentscheidung und gegebenenfalls
 
 | Version | Datum | Änderung |
 |---|---|---|
+| 0.6 | 13.10.2026 | Begrenzten administrativen Preview-Einladungsweg im bestehenden geschützten Workflow und Cleanup-Verfahren dokumentiert. |
 | 0.5 | 13.10.2026 | Ergänzende Testkonto-Abnahme in separater Webvorschau beschrieben; Shared-Apps-Grenze und Verbot produktiver Testkonto-Freischaltung präzisiert. |
 | 0.4 | 12.10.2026 | Sichere Einladungsannahme mit Passwort, MFA, Sitzungsisolation und getrennter FIB-Freischaltung beschrieben; Wiederaufnahme und produktive Einladungsnachweise ergänzt. |
 | 0.3 | 12.10.2026 | Kontoselbstservice und Passwort-Recovery aus PR #74 betrieblich eingeordnet; MFA-Grenze und produktive Konfigurations-/Zustellprüfung festgehalten. |
