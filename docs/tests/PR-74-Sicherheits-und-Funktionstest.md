@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 1.0 | 13.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
+| 1.1 | 13.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
 
 ## Ergebnis
 
@@ -12,25 +12,25 @@
 
 Der Nutzer hat den Merge am 12.10.2026 unter der Bedingung autorisiert, dass sämtliche Sicherheitsanforderungen erfüllt sind. Diese Bedingung ist derzeit noch nicht vollständig nachgewiesen. Eine weitere pauschale Merge-Freigabe wird nicht verlangt.
 
-Geprüfter Implementierungsstand: `7b67129f1fa54aca827e79c246e5f4a42992cd1c`. Am 13.10.2026 erneut lesend bestätigt: Isolated Auth Security #11, Editorial Web CI #60 und Core Services CI #23 sind erfolgreich. Die Fortschreibungen v0.4 bis v0.6 ändern ausschließlich Dokumentation; Anwendung, Tests, Abhängigkeiten und Workflows bleiben unverändert. Bestehende erfolgreiche Tests wurden nicht erneut gestartet. Vor einem späteren Merge sind aktueller Head, geltende Pflichtchecks und abgeschlossene Live-Nachweise erneut abzugleichen.
+Aktuell geprüfter Anwendungs-/Teststand: `ff40282cb50097a9e0c57b03ec63f6fa6792c7d6`. Isolated Auth Security #15, Editorial Web CI #64 und Core Services CI #27 sind erfolgreich: 138 Prüfungen insgesamt. Die Passwortanzeige erforderte eine gezielte Erweiterung und erneute isolierte Prüfung. Die nachfolgende Ergebnisdokumentation ändert nur Dokumente; keine weiteren erfolgreichen Live-Tests wurden wiederholt. Vor einem Merge sind aktueller Head, geltende Pflichtchecks und abgeschlossene Live-Nachweise erneut abzugleichen.
 
 ## Nachweise
 
 | Prüfung | Ergebnis | Nachweis |
 |---|---|---|
-| Handler-Regressionen | 23/23 erfolgreich | Editorial Web CI #60, Run 38283422023 |
-| Echte Auth-API und abgefangene SMTP-Mails | 41/41 erfolgreich | Isolated Auth Security #11, Run 38283422018 |
-| Profil-/Recovery-Browserprüfungen | 13/13 erfolgreich | gleicher Run |
-| Einladungs-/Freischaltungsprüfungen | 27/27 erfolgreich | gleicher Run; tatsächlicher Session-Context-Handler |
-| Build und TypeScript | erfolgreich | Editorial Web CI #60; Core Services CI #23, Run 38283422045 |
-| Vorhandene Fachservice-Fälle | 23/23 erfolgreich | Core Services CI #23 |
+| Handler-Regressionen | 23/23 erfolgreich | Editorial Web CI #64, Run 38384360113 |
+| Echte Auth-API und abgefangene SMTP-Mails | 41/41 erfolgreich | Isolated Auth Security #15, Run 38384360164 |
+| Profil-/Recovery-Browserprüfungen | 21/21 erfolgreich | gleicher Run |
+| Einladungs-/Freischaltungsprüfungen | 30/30 erfolgreich | gleicher Run; tatsächlicher Session-Context-Handler |
+| Build und TypeScript | erfolgreich | Editorial Web CI #64; Core Services CI #27, Run 38384360120 |
+| Vorhandene Fachservice-Fälle | 23/23 erfolgreich | Core Services CI #27 |
 | Bestehendes Administratorkonto | unverändert | keine Änderungen am Admin-Konto; einzige Auth-Schreibaktion ist die unten dokumentierte Testkonto-Einladung |
 | Auth-/SMTP-Grundkonfiguration | nachgewiesen | Nutzerkommentar vom 13.10.2026 zu Dashboard-/Zustellnachweisen vom 12.10.2026; Details unten |
 | Produktiver Session-Context-Code | identisch zum geprüften Handler | Edge Function Version 2, SHA-256 unten |
 | Live-MFA / Recovery / Warteansicht | **bestanden im dokumentierten Umfang** | Nutzer-Screenshots, Metadaten und erneute Anmeldung; siehe Live-Nachweise unten |
 | Live-Ersteinladung / Reauth / direkte API-Negativtests | **offen** | vollständige Erstpasswortkette und verbleibende Restmatrix noch nicht nachgewiesen |
 
-Run: https://github.com/PustefixReisen/fib-echtsystem/actions/runs/38283422018
+Run: https://github.com/PustefixReisen/fib-echtsystem/actions/runs/38384360164
 
 Der Workflow erzeugt `auth-results.json/md`, `browser-results.json/md`, `invitation-results.json/md`, `profile-mobile.png` und `invitation-pending.png` als auf sieben Tage begrenztes GitHub-Artifact. Dieser Prüfbericht und die reproduzierbaren Tests bleiben im Repository erhalten. Keine Passwörter, JWTs, TOTP-Secrets oder E-Mail-Linktokens werden als Artifact gespeichert.
 
@@ -167,6 +167,8 @@ Projekt: `Shared-Apps`, Ref `apaubomxffcwtzjimori`. Keine produktiven Einstellun
 
 ### Bestätigtes Testkonto und erneuerte Einladung
 
+**Historischer Versuch; nicht erneut anwenden:** Der nachfolgende manuelle Vorschau-Linkweg lieferte keinen vollständigen Erstpasswortnachweis. Neue Einladungen müssen bereits beim Erzeugen das erlaubte Preview-Redirect enthalten. Verbrauchte Links nicht bearbeiten oder erneut öffnen; das inzwischen bestätigte MFA-Testkonto nicht zurücksetzen oder löschen.
+
 Am 13.10.2026 hat der Nutzer das gestern eingeladene Googlemail-Konto ausdrücklich als Testkonto bestätigt. Damit ist die Empfängerzuordnung abgeschlossen. Über den Dashboard-Einladungsdialog wurde ausschließlich für dieses bestehende, noch unbestätigte Testkonto eine neue Einladung ausgelöst. Rein lesender Nachweis: `invited_at` und `confirmation_sent_at` sind nun **13.10.2026, 09:36:53 UTC (11:36:53 Europe/Berlin)**; E-Mail weiterhin unbestätigt, keine Anmeldung, keine FIB-Mitgliedschaft. Kein neues Konto, keine Rollenvergabe, keine Änderung an bestehenden Administratorkonten oder projektweiten Einstellungen. Die tatsächliche Ankunft dieser neuen Nachricht ist noch nicht durch das Testpostfach bestätigt.
 
 Der Dashboard-Versand verwendet weiterhin das Produktions-Rücksprungziel. Für die begrenzte Vorschau-Abnahme übernimmt die Testperson die Navigation selbst: Link aus der neuen E-Mail in die Adresszeile kopieren, **vor dem Aufruf** nur den Zielpfad im `redirect_to`-Parameter von `/redaktion/` auf `/redaktion-preview/` ändern (bei URL-Encoding entsprechend `%2Fredaktion%2F` auf `%2Fredaktion-preview%2F`). Auth-Host, Token und `type=invite` unverändert lassen. Nur ausführen, wenn das Ziel eindeutig erkennbar ist; bei abweichendem Linkformat abbrechen. Keine Links oder Secrets im Chat übergeben. Erst auf der erkennbaren Vorschau das Passwort festlegen und anschließend MFA selbst einrichten. Dies ist ein manueller Vorschau-Testweg, keine Abnahme einer automatisch mit Preview-Redirect erzeugten Einladung und keine dauerhafte Benutzeranleitung für den Produktivbetrieb.
@@ -178,6 +180,8 @@ Rein lesende Prüfung des Memorix-Stands `522d1380fd807ac3d38464a470f1616f70e3c7
 - `docs/02-sicherheit-und-datenschutz.md`: gemeinsame Authentifizierung ersetzt keine appbezogene Autorisierung; Memorix bleibt im Schema `public`. Keine Memorix-Daten oder -Policies wurden für diese Abnahme verändert.
 - `src/services/supabase-client.ts`: regulärer und ephemerer Client verwenden `detectSessionInUrl:false`. `src/services/supabase-metadata-smoke-test.ts` meldet den Testbenutzer direkt mit `signInWithPassword` an; dieser geprüfte Einstieg nutzt keinen E-Mail-Redirect. Die Site URL ist daher für genau diesen Passwortlogin kein Rücksprungziel. Das ist eine Codebewertung, kein ausgeführter Android-/Memorix-Livetest.
 - Projektweite Passwort-, E-Mail- und MFA-Kontoeigenschaften gelten auch bei Verwendung desselben Auth-Kontos durch Memorix. Passwortänderungen können andere Sitzungen betreffen. Ein neues Konto erhält durch FIB-Einladung keine Memorix-Freigabe.
+- Ergänzender Codeabgleich am 13.10.2026: Zusätzlich existiert ein eigenständiges Expo-Router-Paket unter `app/`. `app/src/lib/supabase.ts` erzeugt einen Client ohne explizite Auth-Optionen; `app/src/app/index.tsx` ruft `signUp({ email, password })` ohne `emailRedirectTo` sowie `signInWithPassword` auf. Dieser Registrierungsweg hat somit kein eigenes Memorix-Rücksprungziel und fällt bei der gemeinsamen Konfiguration auf die FIB-Site-URL zurück. Die Aussage zum Root-Client mit `detectSessionInUrl:false` gilt ausdrücklich nicht für dieses zweite Paket. In dem geprüften Formular ist keine MFA-Challenge implementiert.
+- `docs/01-architektur.md` bezeichnet den Repository-Stand ausdrücklich als Entwicklungs-/Testbetrieb, nicht Produktivbetrieb; `docs/08-betrieb-und-reproduzierbarkeit.md` gibt produktive geräteübergreifende Synchronisation weiterhin nicht frei. Root-`package.json`/`App.tsx` starten `expo/AppEntry.js` mit `EventsScreen`, während `app/package.json` einen zweiten Router-Einstieg enthält. Daraus lässt sich der tatsächlich installierte Test-Build nicht sicher bestimmen. Vor einer gemeinsamen Auth-Freigabe muss dieser Einstieg abgegrenzt und ein unterstützter E-Mail-/MFA-Weg festgelegt werden. Kein Memorix-Smoke-Test wurde ausgeführt, weil diese Tests Remote-Daten schreiben würden.
 - Ein E-Mail-Flow ohne explizites erlaubtes Memorix-Ziel würde auf die FIB-Site-URL zurückfallen. Der geprüfte Defaultclient verarbeitet solche URL-Sitzungen nicht. Deshalb ist keine pauschale Freigabe von Memorix-Bestätigung/Recovery/Einladung ableitbar. Vor Abschluss ist der tatsächlich unterstützte Memorix-Auth-Umfang einschließlich benötigter Callback-Ziele zu bestätigen; andernfalls bleibt diese Kompatibilitätsgrenze offen. Keine projektweite Einstellung allein für FIB ändern.
 
 ### Noch ausstehende Sicherheitsabnahme
@@ -242,9 +246,27 @@ Anforderung: https://github.com/PustefixReisen/fib-echtsystem/pull/74#issuecomme
 
 Alle sieben Passwortfelder verwenden eine gemeinsame Komponente: Anmeldung, beide Erstpasswortfelder, beide Recovery-Felder ohne FIB-Mitgliedschaft sowie beide Profilfelder für Passwortänderung/Recovery. Voreinstellung verdeckt; Auge aus dem bestehenden FIB-Asset `nav-im-blick.svg`, bei sichtbarem Passwort mit Durchstreichung. Der Schalter besitzt `type=button`, dynamisches feldbezogenes `aria-label`/`title`, `aria-controls`, `aria-pressed` und sichtbaren Tastaturfokus. Die Umschaltung verändert nur den lokalen Input-Typ; keine Speicherung, kein Logging und keine Auth-Anfrage. Leeren, deaktivieren oder erneutes Einblenden eines Formulars setzt die Anzeige zurück auf verdeckt.
 
-TypeScript/Build lokal erfolgreich. Die bestehende isolierte Browserabnahme wurde um Funktionstests in Login, Profil, Recovery und Einladung erweitert: Mausklick, Leertaste/Enter, Feldunabhängigkeit, erhaltene Eingabe, Verbergen nach Leeren sowie unveränderte Browserablage und keine Auth-Anfrage beim Umschalten. CI-Ausführung steht für diese Änderung noch aus. Wegen der geänderten Passwortfelder ist diese gezielte Erweiterung der bestehenden Abnahme erforderlich; keine erneuten manuellen Produktions-Recoverytests allein für das Auge-Icon.
+TypeScript/Build lokal erfolgreich. Die bestehende isolierte Browserabnahme wurde um Funktionstests in Login, Profil, Recovery und Einladung erweitert: Mausklick, Leertaste/Enter, Feldunabhängigkeit, erhaltene Eingabe, Verbergen nach Leeren sowie unveränderte Browserablage und keine Auth-Anfrage beim Umschalten. Abschlusslauf #15 ist erfolgreich: 21 Profil-/Recovery- und 30 Einladungsprüfungen, einschließlich elf zusätzlicher Anzeigenachweise; 41 Auth-/SMTP-Prüfungen ebenfalls erfolgreich. Beide anderen CI-Workflows sind grün; Cleanup erfolgreich. Wegen der geänderten Passwortfelder ist diese gezielte Erweiterung der bestehenden Abnahme erforderlich; keine erneuten manuellen Produktions-Recoverytests allein für das Auge-Icon.
+
+### Bereitgestellte Vorschau
+
+Preview #16 (Run 38384743011) hat exakt `ff40282cb50097a9e0c57b03ec63f6fa6792c7d6` ausgecheckt und erfolgreich ausschließlich nach `/redaktion-preview/` bereitgestellt. Das im Browser geladene `assets/index-Da3-QLGj.js` stimmt mit dem Build-Log überein. Am leeren Loginfeld wurden Voreinstellung `password`, Mausklick zu `text` und Leertaste zurück zu `password` sowie sichtbarer Tastaturfokus geprüft. Kein Passwort wurde dafür eingegeben und keine Anmeldung ausgelöst. Produktionsverzeichnis, bestehende Konten, Auth-Einstellungen, Mitgliedschaften und Fachdaten wurden in diesem Arbeitsblock nicht verändert.
+
+### Einordnung der fehlgeschlagenen Zwischenläufe
+
+- Auth Security #13 (`a44a007`, Run 38383244363): Timeout nach der Recovery-MFA; die damalige Diagnose enthielt nur die Fehlerklasse, daher ist die genaue Ursache nicht belegt. Keine Vorschau dieses ungeprüften Stands deployed.
+- #14 (`cec56aa`, Run 38384001413): Recovery einschließlich Passwortwechsel und anschließendem Login erfolgreich; eine unmittelbare Anzeigeabfrage im neuen Test meldete FAIL. Der Test wartet seither ausdrücklich auf den gerenderten Input-Typ nach jeder Umschaltung (maximal fünf Sekunden), ohne Auth-/MFA-Prüfungen zu entfernen oder Fehler zu ignorieren. Allowlist-Diagnosen geben nur Prüfphase, HTTP-Status und boolesche UI-Zustände aus, keine Secrets.
+- #15 (`ff40282`): sämtliche 92 Auth-/Browserprüfungen erfolgreich, darunter vollständige Recovery und Einladung. Zusammen mit 23 Handler- und 23 Fachservice-Prüfungen sind 138 Prüfungen erfolgreich. Der erste Timeout wurde in den beiden folgenden Läufen nicht reproduziert; er ist keine nachgewiesene serverseitige Sicherheitslücke. Kein zusätzlicher Lauf nur zur Erhöhung der Zahl grüner Ergebnisse.
 
 ## Nächster Schritt
+
+### Konkreter Einladungs-Testweg und verbleibende Voraussetzung
+
+Die vorhandene Supabase-Admin-API unterstützt `inviteUserByEmail(testEmail, { redirectTo: 'https://fib.pustivo.de/redaktion-preview/' })`; die Option wurde zusätzlich im installierten `@supabase/auth-js` (`GoTrueAdminApi.ts`) geprüft. Der Versand muss in einem bestehenden vertrauenswürdigen administrativen Server-/Operator-Kontext erfolgen. Der privilegierte Schlüssel gehört weder in den Webclient noch in Chat, Repository, Shell-History oder Build-Logs. Die Einladungsantwort nicht vollständig protokollieren; Erfolgscode und anonymisierte Testfallkennung genügen.
+
+Vor dem einmaligen Versand: Nutzer bestätigt eine weitere, bisher unbenutzte Testadresse; rein lesend prüfen, dass dafür noch kein Auth-Konto existiert. Bei bestehendem Konto abbrechen. Keine Wiederherstellung, Löschung oder erneute Einladung des bereits bestätigten MFA-Testkontos. Explizites Preview-Ziel setzen; Site URL und Templates unverändert lassen. Testperson öffnet den unveränderten Mail-Link in einem separaten Browserprofil und legt Passwort/MFA selbst fest. Anschließend nur die vereinbarten Negativnachweise und fehlende FIB-Mitgliedschaft prüfen; keine produktive Redakteursfreischaltung.
+
+**Noch nicht ausführbar:** Der beobachtete Dashboard-Dialog bietet kein Redirect-Feld; die verfügbaren Supabase-Werkzeuge bieten keinen Auth-Admin-Versand mit Redirect. Ein vorhandener sicherer Operator-Kontext für diesen Aufruf ist in diesem Arbeitsblock nicht zugänglich. Deshalb wurde kein privilegierter Schlüssel ausgelesen, kein neuer öffentlicher Admin-Endpunkt angelegt und keine weitere Einladung versandt. Benötigt werden die neue bestätigte Testadresse und die sichere Ausführung dieses eng begrenzten Admin-Aufrufs. Die Architektur eines dauerhaften Einladungsdiensts bleibt dem gesonderten Administrator-Arbeitsblock vorbehalten.
 
 Einen verlässlichen Einladungs-Testweg mit explizitem Vorschauziel ohne manuelles Bearbeiten von Einmallinks herstellen, dafür eine unbenutzte bestätigte Testadresse verwenden und die vollständige Erstpasswortkette nachweisen. Parallel im nächsten Arbeitsblock die verbleibenden API-/Reauth-Nachweise und Memorix-Kompatibilitätsgrenze schließen. Erst nach vollständiger Abnahme PR #74 mergen. Danach die gesicherte Administratoroberfläche für Einladen und getrenntes Freischalten mit Bestätigung und Audit ergänzen; anschließend sicherer MFA-Faktorwechsel und dokumentierte Notfallwiederherstellung, ohne die verpflichtende MFA abzusenken.
 
@@ -252,6 +274,7 @@ Einen verlässlichen Einladungs-Testweg mit explizitem Vorschauziel ohne manuell
 
 | Version | Datum | Änderung |
 |---|---|---|
+| 1.1 | 13.10.2026 | 138 erfolgreiche Prüfungen, fehlgeschlagene Zwischenläufe und Test-Synchronisierung dokumentiert; zweiten Memorix-Auth-Einstieg und konkrete Redirect-/MFA-Grenzen ergänzt. |
 | 1.0 | 13.10.2026 | Einheitliche Passwortanzeige gemäß PR-Kommentar umgesetzt; isolierte Browserprüfungen für Maus-/Tastaturumschaltung und erneutes Verbergen ergänzt. |
 | 0.9 | 13.10.2026 | Live-Recovery nach MFA, Passwortaktualisierung und erfolgreiche Neuanmeldung durch Nutzer belegt; Restmatrix und Abschluss ohne Merge präzisiert. |
 | 0.8 | 13.10.2026 | Testkontozuordnung durch Nutzer bestätigt; Live-MFA und ausstehende getrennte Freischaltung per Screenshot und lesenden Metadaten belegt; Vorschau #15 und drei erfolgreiche CI-Läufe dokumentiert. |
