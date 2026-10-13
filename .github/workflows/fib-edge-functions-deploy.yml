@@ -79,5 +79,7 @@ jobs:
           node-version: '22'
       - name: Run bounded invitation operator (no dependency installation)
         env:
-          SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
+          # Optional dedicated, project-scoped operator credential. Never broaden
+          # or replace the existing deployment credential as a side effect.
+          SUPABASE_ACCESS_TOKEN: ${{ secrets.FIB_INVITE_ACCESS_TOKEN || secrets.SUPABASE_ACCESS_TOKEN }}
         run: node scripts/admin/preview-invite.mjs
