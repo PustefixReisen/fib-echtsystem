@@ -4,11 +4,11 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 1.4 | 13.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
+| 1.5 | 13.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
 
 ## Ergebnis
 
-**152 vorhandene Prüfungen bleiben anerkannt; zwei gezielte zusätzliche Auth-Prüfungen bestanden. Standarddialog mit vor dem ersten Aufruf angepasst zulässigem Vorschauziel isoliert nachgewiesen. Keine neuen Administratoren, Schlüssel oder Berechtigungen. Live-Ersteinladung, direkte API-Sperren und gealterte Reauth weiterhin offen; PR #74 nicht gemergt.**
+**152 vorhandene Prüfungen bleiben anerkannt; zwei gezielte zusätzliche Auth-Prüfungen bestanden. Standarddialog mit vor dem ersten Aufruf angepasst zulässigem Vorschauziel isoliert nachgewiesen. Keine neuen Administratoren, Schlüssel oder Berechtigungen. Live-Ersteinladung bis Erstpasswort, bestätigter MFA und gesperrter Warteansicht nachgewiesen. Direkte API-Sperren und gealterte Reauth weiterhin offen; PR #74 nicht gemergt.**
 
 Der Nutzer hat den Merge am 12.10.2026 unter der Bedingung autorisiert, dass sämtliche Sicherheitsanforderungen erfüllt sind. Diese Bedingung ist derzeit noch nicht vollständig nachgewiesen. Eine weitere pauschale Merge-Freigabe wird nicht verlangt.
 
@@ -322,10 +322,21 @@ Damit ist die administrative Einladung im Echtsystem ausgelöst und die neue, ni
 
 Nutzerhinweis vor Versand: Original-Link nicht öffnen. Fortsetzung nur über das isoliert geprüfte private Setzen des Vorschau-Redirects vor Erstverbrauch; keine Tokens/Links im Chat. Live-Passwort/MFA, direkte API-Sperren und gealterte Reauth bleiben offen. Testberichtfortschreibung ist ausschließlich Dokumentation, kein neuer Entwicklungs-/Testzyklus und keine Merge-Freigabe.
 
+### Live-Annahme und MFA bestätigt – 13.10.2026, 14:16 Europe/Berlin
+
+Nutzerbild `image(20261013-121621).png` erfolgreich gelesen trotz vorangestellter Dateifehlermeldung. Es zeigt für die ausdrücklich bestätigte neue Testadresse „Freischaltung ausstehend“, „Dein zweiter Faktor ist bestätigt“ und den Hinweis auf gesonderte Freischaltung durch einen FIB-Administrator. Kein Secret im Bild.
+
+Zusätzliche gezielte SELECT-Prüfung ausschließlich dieser neuen Identität: E-Mail bestätigt, Anmeldung erfolgt, Passwort gesetzt (nur boolesches Vorhandensein geprüft, kein Hash ausgelesen), genau ein bestätigter MFA-Faktor, eine aktuelle AAL2-Sitzung, null FIB-Mitgliedschaften. Damit sind die neue Einladung bis Passwortfestlegung/MFA und die getrennte fehlende FIB-Freischaltung live belegt. Die Kombination ersetzt weiterhin keine direkten AAL1-/AAL2-HTTP-Negativnachweise.
+
+Älteste aktuelle Testsitzung angelegt am 13.10.2026 um 14:13:16 Europe/Berlin. Gealterte Reauth frühestens am 14.10.2026 nach 14:13:16, mit Sicherheitsabstand ab 14:20 Uhr, sofern dieselbe Anmeldung erhalten bleibt; vor Durchführung Alter erneut lesend prüfen. Nutzer gebeten, den Einladungstab offenzuhalten und diese Sitzung nicht abzumelden. Keine Zeitstempel verändert, kein automatischer zukünftiger Test zugesagt.
+
+Agentenseitig in diesem Schritt ausschließlich lesende Datenbankprüfung; Passwort und Faktor wurden von der Testperson eingerichtet. Keine Freischaltung, keine anderen Konten, keine Memorix-Daten verändert. Noch offen: direkte API-Sperrtests mit dieser Testidentität und echte gealterte Reauth. Kein Merge.
+
 ## Änderungshistorie
 
 | Version | Datum | Änderung |
 |---|---|---|
+| 1.5 | 13.10.2026 | Live-Annahme bis Erstpasswort, bestätigter MFA/AAL2 und Warteansicht ohne FIB-Mitgliedschaft durch Nutzerbild und Metadaten nachgewiesen; Reauth-Zeitfenster festgehalten. |
 | 1.4 | 13.10.2026 | Einmalige Dashboard-Einladung an ausdrücklich bestätigte neue Testadresse und nicht freigeschaltete Auth-Identität nachgewiesen; private Annahme weiterhin offen. |
 | 1.3 | 13.10.2026 | Betreiberentscheidung ohne neue Admin-Rechte übernommen; 403 präzisiert, regulären Callback abgegrenzt und zwei erfolgreiche isolierte Dashboard-Linkprüfungen ergänzt; Live-Restmatrix und tatsächliche Reauth-Wartezeit festgehalten. |
 | 1.2 | 13.10.2026 | Admin-Einladungsweg implementiert und mit 14 neuen Fällen geprüft; realen HTTP-403-Berechtigungsblock und erforderliche Mitwirkung dokumentiert; Memorix-Policies/Trigger abgeglichen und zu weitgehende Zugangsaussage korrigiert. |
