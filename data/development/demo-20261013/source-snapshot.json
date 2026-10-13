@@ -1,0 +1,1747 @@
+{
+  "repository": "PustefixReisen/presseschau-feldkirchen-demo",
+  "commit": "4ed213ef04dfde97984a29c9f6ec0a8b8f7af781",
+  "files": {
+    "data/beitraege.json": "037f6d4e2667518639b7ba7fa8cc7928c9199259547fdb4f378d3b63435f065b",
+    "data/themen.json": "67c20f3a6e7fef4b1fb0ec52f90692da6af49d80e0b9f7ec7079c71c956d552c",
+    "data/sitzungen.json": "b58d07638cad89ed57daec84a6e59ee86caf8fd22682282a1ea24f9d4aff4b43",
+    "data/bezuege.json": "12516960e8e5c7a5d5037dac948fc2178ed8ade5489777d573c03cdea7dedae9",
+    "index.html": "010f84e4b5a99118890aaab801bf237fd08127f7e9d858dd218c94f0d8b1214f",
+    "assets/app.js": "4504341ec683e1c7f65ebf7d31d0e74ddfe616784d90835d5855c2dd6ae7d0b7",
+    "assets/app-base-20260831.js": "a7f8400fa82d7211e808648371c819cabc05be513175d0ae94c6725be2a1ef07",
+    "assets/standard-update-20261008.js": "a21f3ade840bcfb27227db4aafa55a49e1db7b6711d7e40bf58a801059355adc"
+  },
+  "contributions": [
+    {
+      "id": "R069",
+      "date": "2026-09-15",
+      "publication_date": "2026-09-15",
+      "category": "Natur & Umwelt",
+      "topic_candidates": [
+        "Hundewiese",
+        "Grünfläche östlich des Friedhofs"
+      ],
+      "title": "Hundewiese: Neue Vorlage nennt Schallschutzkosten und Park-Alternative",
+      "subtitle": "Die öffentlich freigegebene Vorlage konkretisiert Schallschutz, Kosten und Betriebsfragen und stellt einer eingezäunten Hundewiese eine offene Park- und Freilauffläche als Alternative gegenüber.",
+      "sachinformation": "Der Gemeinderat hatte am 26. März 2026 mehrheitlich beschlossen, an einer Hundewiese östlich des Friedhofs festzuhalten und dafür etwa 1.000 m² vorzusehen. Die schalltechnische Untersuchung kam anschließend zu dem Ergebnis, dass eine uneingeschränkte Nutzung ohne Schutzmaßnahmen nicht möglich wäre. Vorgesehen wären unter anderem eine auf etwa 85 × 12 Meter zugeschnittene Fläche, zeitliche Nutzungsbeschränkungen und eine rund 50 Meter lange sowie 1,5 Meter hohe schalldichte Abschirmung. Für diese Abschirmung nennt die Verwaltung nach einer Markterkundung Angebote von etwa 15.200 bis 30.000 Euro; ein deutlich höheres Angebot lag bei rund 115.000 Euro.\n\nZusätzlich zu den Investitionskosten nennt die Vorlage offene Betriebsfragen: Wer die Anlage täglich auf- und zusperrt, wie die Nutzungszeiten kontrolliert und Verstöße behandelt werden, ist noch nicht geklärt. Die Verwaltung weist außerdem darauf hin, dass ihr keine belastbaren Zahlen zum konkreten Bedarf einer Hundewiese vorliegen; im Gemeindegebiet sind 372 Hunde gemeldet.\n\nDie Vorlage dokumentiert zugleich Einwände aus der Bürgerschaft, insbesondere der Initiative „Lebenswertes Feldkirchen – Pfoten weg vom Wohngebiet“. Diese betreffen unter anderem Bedarf, Kosten, Nähe zu Wohnbebauung und Friedhof, Nutzung durch Kinder sowie zusätzlichen Parkdruck. Die Verwaltung beantwortet einzelne Punkte, ohne damit die politische Abwägung vorwegzunehmen.\n\nAls Alternative wird die Prüfung einer offenen Park- und Freilauffläche beschrieben, in die auch Hundebesitzer einbezogen werden könnten. Genannt werden als mögliche Gestaltungselemente unter anderem Tiny Forest, Biodiversitätsgarten und ein öffentlicher Trinkwasserbrunnen. Dabei handelt es sich um eine Prüf- und Gestaltungsoption, nicht um eine bereits beschlossene Planung.\n\nDie fortgeschriebene Beschlussvorlage wurde im RIS öffentlich freigegeben. Ein zugehöriger Tagesordnungspunkt bzw. bestätigter Sitzungstermin ist in der veröffentlichten Tagesordnung derzeit nicht nachgewiesen.",
+      "sources": [
+        {
+          "name": "RIS Feldkirchen – Beschlussvorlage 5283/2026",
+          "url": "https://buergerinfo-feldkirchen.digitalfabrix.de/getfile.asp?id=74647&type=do",
+          "type": "primary_official",
+          "date": "2026-09-15",
+          "date_basis": "public_release_in_RIS",
+          "date_status": "verified"
+        },
+        {
+          "name": "RIS Feldkirchen – Dokumente mit Freigabe",
+          "url": "https://buergerinfo-feldkirchen.digitalfabrix.de/do0040.asp?smcadat=2461011",
+          "type": "primary_official_index",
+          "date": "2026-09-15",
+          "date_basis": "RIS_release_listing",
+          "date_status": "verified"
+        },
+        {
+          "name": "RIS Feldkirchen – öffentliche Niederschrift Gemeinderat 23.07.2026",
+          "url": "https://buergerinfo-feldkirchen.digitalfabrix.de/getfile.asp?id=74927&type=do",
+          "type": "primary_official_minutes",
+          "date": "2026-09-22",
+          "date_basis": "public_release_in_RIS",
+          "date_status": "verified"
+        }
+      ],
+      "bisheriger_verlauf": [
+        {
+          "id": "S020-T05",
+          "date": "2026-07-23",
+          "title": "Gemeinderat berät Schallgutachten; weitere Beratung wird bis zur Ermittlung der Schallschutzkosten zurückgestellt, eine Abstimmung erfolgt nicht."
+        }
+      ],
+      "unsere_einordnung": "Positiv ist zunächst, wie ausführlich die Verwaltung den Stand der Diskussion dokumentiert. Die Vorlage macht Gutachten, Kosten und praktische Betriebsfragen sichtbar, greift Einwände aus der Bürgerschaft auf und stellt verschiedene Nutzungsmöglichkeiten gegenüber. Gerade bei einem kontroversen lokalen Thema schafft eine solche transparente Entscheidungsgrundlage gute Voraussetzungen dafür, unterschiedliche Interessen nachvollziehen und abwägen zu können.\n\nAuch die von der Verwaltung eingebrachte Alternative verdient aus grüner Sicht Aufmerksamkeit. Eine offen zugängliche Grünfläche, die beispielsweise einen Tiny Forest, einen Biodiversitätsgarten und einen Trinkwasserbrunnen miteinander verbindet und zugleich Möglichkeiten für Hundehalter berücksichtigt, könnte mehrere Funktionen auf derselben Fläche zusammenbringen: Erholung und Begegnung, Artenvielfalt und Klimaanpassung. Solche Grünflächen, Bäume, Biodiversitätsmaßnahmen und Trinkbrunnen entsprechen wichtigen Zielen grüner Kommunalpolitik.\n\nDamit ist noch keine Entscheidung über die konkrete Gestaltung der Fläche vorweggenommen. Entscheidend wäre, die unterschiedlichen Nutzungsinteressen und die ökologischen Möglichkeiten in der weiteren Planung gemeinsam zu betrachten.",
+      "council": null,
+      "research_refs": [
+        "R069"
+      ],
+      "ortsbezug": {
+        "display_place": "Feldkirchen",
+        "related_places": [
+          "Feldkirchen"
+        ],
+        "scope": "feldkirchen_direct",
+        "verification_status": "verified_2026-09-20"
+      },
+      "established_topic_refs": [],
+      "stage_update_meta": {
+        "created_at": "2026-09-20",
+        "source_status": "verified_public_release_without_confirmed_agenda_item",
+        "corrected_at": "2026-09-20",
+        "updated_at": "2026-09-23",
+        "history_confirmed_by_minutes": true
+      },
+      "einordnung_meta": {
+        "basis": "RIS-Beschlussvorlage 5283/2026; GRÜNE Bayern Kommunalwahl-Leitlinien 2026",
+        "editorial_status": "selected_contribution_assessment",
+        "reference_urls": [
+          "https://www.gruene-bayern.de/dateien/Leitlinien-zur-Kommunalwahl-26_Deutsch.pdf"
+        ]
+      },
+      "search_tags": [
+        "Hundewiese",
+        "Grünfläche östlich des Friedhofs"
+      ]
+    },
+    {
+      "id": "R068",
+      "date": "2026-09-09",
+      "publication_date": "2026-09-09",
+      "category": "Mobilität & Verkehr",
+      "topic_candidates": [
+        "Parkraumkonzept"
+      ],
+      "title": "Gemeinde veröffentlicht beschlossenes Parkraumkonzept",
+      "subtitle": "Das Konzept zum ruhenden Verkehr ist jetzt als PDF öffentlich abrufbar.",
+      "sachinformation": "Die Gemeinde hat am 9. September das gemeinsam mit dem Stadt- und Verkehrsplanungsbüro Kaulen erarbeitete Parkraumkonzept veröffentlicht. Die am 22. September freigegebene öffentliche Niederschrift bestätigt nun den Beschluss vom 23. Juli: Der Gemeinderat nahm das Parkraumkonzept in der Fassung vom 26. März einstimmig an und beauftragte die Verwaltung mit der Umsetzung. Mit der Überwachung des ruhenden Verkehrs soll spätestens zum 1. Januar 2027 begonnen werden; die dafür nötigen Mittel sollen im Haushalt 2027 eingestellt werden.",
+      "sources": [
+        {
+          "name": "Gemeinde Feldkirchen – Neues Parkraumkonzept in Feldkirchen",
+          "url": "https://www.feldkirchen.de/bauen/nachrichten-aus-dem-bauamt/neues-parkraumkonzept-in-feldkirchen",
+          "type": "primary_official",
+          "date": "2026-09-09",
+          "date_basis": "publication_date",
+          "date_status": "verified"
+        },
+        {
+          "name": "Gemeinde Feldkirchen – Parkraumkonzept 2026 (PDF)",
+          "url": "https://www.feldkirchen.de/_Resources/Persistent/d/3/d/e/d3dee38ce3c4a9ad01384ca6ed314a2a8f8bcc12/2026%20Parkraumkonzept%20gem%20GR-Beschluss.pdf",
+          "type": "primary_official_document",
+          "date": "2026-09-09",
+          "date_basis": "publication_context",
+          "date_status": "verified"
+        },
+        {
+          "name": "RIS Feldkirchen – öffentliche Niederschrift Gemeinderat 23.07.2026",
+          "url": "https://buergerinfo-feldkirchen.digitalfabrix.de/getfile.asp?id=74927&type=do",
+          "type": "primary_official_minutes",
+          "date": "2026-09-22",
+          "date_basis": "public_release_in_RIS",
+          "date_status": "verified"
+        }
+      ],
+      "bisheriger_verlauf": [
+        {
+          "id": "R026",
+          "date": "2026-03-12",
+          "title": "Gemeinderat fordert Ergänzungen am Parkraumkonzept"
+        },
+        {
+          "id": "R039",
+          "date": "2026-08-18",
+          "title": "Anwohner protestieren gegen neue Parkregelung am Friedhof"
+        }
+      ],
+      "unsere_einordnung": null,
+      "council": "S020",
+      "research_refs": [
+        "R068"
+      ],
+      "ortsbezug": {
+        "display_place": "Feldkirchen",
+        "related_places": [
+          "Feldkirchen"
+        ],
+        "scope": "feldkirchen_direct",
+        "verification_status": "verified_2026-09-20"
+      },
+      "established_topic_refs": [
+        {
+          "id": "T006",
+          "title": "Parkraumkonzept"
+        }
+      ],
+      "stage_update_meta": {
+        "created_at": "2026-09-20",
+        "source_status": "official_minutes_added",
+        "updated_at": "2026-09-23"
+      },
+      "search_tags": [
+        "Parkraumkonzept"
+      ]
+    },
+    {
+      "id": "R026",
+      "date": "2026-03-12",
+      "publication_date": "2026-04-18",
+      "category": "Mobilität & Verkehr",
+      "topic_candidates": [
+        "Parkraumkonzept"
+      ],
+      "title": "Gemeinderat fordert Ergänzungen am Parkraumkonzept",
+      "subtitle": "Nach der Vorstellung des Entwurfs sollen weitere Straßen und konkrete Maßnahmen in die Planung aufgenommen werden.",
+      "sachinformation": "Das beauftragte Planungsbüro stellte dem Gemeinderat am 12. März 2026 den Entwurf des Parkraumkonzepts vor. In der Diskussion wurde Kritik an fehlenden konkreten Maßnahmen geäußert. Der Gemeinderat verlangte Ergänzungen für weitere Straßen und Bereiche; anschließend sollte das Konzept erneut zur Beschlussfassung vorgelegt werden.",
+      "sources": [
+        {
+          "name": "RIS Feldkirchen – Parkraumkonzept, Vorlage 5159/2026",
+          "url": "https://buergerinfo-feldkirchen.digitalfabrix.de/getfile.asp?id=72371&type=do",
+          "type": "primary_official",
+          "date": "2026-04-18",
+          "date_basis": "publication_date",
+          "date_status": "migrated_unique"
+        },
+        {
+          "name": "RIS Feldkirchen – Sitzung 12.03.2026",
+          "url": "https://buergerinfo-feldkirchen.digitalfabrix.de/si0057.asp?__ksinr=1017",
+          "type": "primary_official",
+          "date": "2026-04-18",
+          "date_basis": "publication_date",
+          "date_status": "migrated_unique"
+        },
+        {
+          "name": "Münchner Merkur – Kritik an Parkraumkonzept",
+          "url": "https://www.merkur.de/lokales/muenchen-lk/feldkirchen-ort28673/opposition-kritisiert-parkraumkonzept-als-blosse-bestandsaufnahme-94266885.html",
+          "type": "press",
+          "date": "2026-04-18",
+          "date_basis": "publication_date",
+          "date_status": "migrated_unique"
+        }
+      ],
+      "bisheriger_verlauf": [],
+      "unsere_einordnung": null,
+      "council": {
+        "date": "2026-03-12",
+        "proposal_no": "5159/2026",
+        "session_id": "S011"
+      },
+      "research_refs": [
+        "R026"
+      ],
+      "ortsbezug": {
+        "display_place": "Feldkirchen",
+        "related_places": [
+          "Feldkirchen"
+        ],
+        "scope": "feldkirchen_relevance_existing",
+        "verification_status": "verified_for_stage_E_from_research_basis",
+        "note": "Strukturell ergänzt; konkreter Ortskopf wird in Vollständigkeits-/Nachbarschaftsaudit verifiziert."
+      },
+      "established_topic_refs": [
+        {
+          "id": "T006",
+          "title": "Parkraumkonzept"
+        }
+      ],
+      "search_tags": [
+        "Parkraumkonzept"
+      ]
+    },
+    {
+      "id": "R008",
+      "date": "2025-10-30",
+      "publication_date": null,
+      "category": "Mobilität & Verkehr",
+      "topic_candidates": [
+        "A99/Kreuz München-Ost",
+        "M18/EBE4"
+      ],
+      "title": "Gemeinderat stimmt Variante 5 für die Verlegung von M18/EBE4 zu",
+      "subtitle": "Die Kreisstraßenplanung ist Teil der Neuordnung im Umfeld des geplanten A99-Ausbaus am Kreuz München-Ost.",
+      "sachinformation": "Im Zusammenhang mit dem geplanten Ausbau der A99 stimmte der Gemeinderat am 30. Oktober 2025 der Planvariante 5 für die Verlegung der Kreisstraße M18/EBE4 einstimmig zu.",
+      "sources": [
+        {
+          "name": "RIS Feldkirchen – Beschlussvorlage 5055/2025",
+          "url": "https://buergerinfo-feldkirchen.digitalfabrix.de/getfile.asp?id=71104&type=do",
+          "type": "primary_official",
+          "date": "2025-10-30",
+          "date_basis": "event_or_session_date",
+          "date_status": "migrated_fallback_needs_source_date_check"
+        },
+        {
+          "name": "RIS Feldkirchen – Sitzung 30.10.2025",
+          "url": "https://buergerinfo-feldkirchen.digitalfabrix.de/si0057.asp?__ksinr=1000",
+          "type": "primary_official",
+          "date": "2025-10-30",
+          "date_basis": "event_or_session_date",
+          "date_status": "migrated_fallback_needs_source_date_check"
+        }
+      ],
+      "bisheriger_verlauf": [
+        {
+          "id": "R052",
+          "date": "2025-09-25",
+          "title": "Haar lehnt vorgestellte M18/EBE4-Verlegung beim A99-Ausbau ab"
+        }
+      ],
+      "unsere_einordnung": null,
+      "council": {
+        "date": "2025-10-30",
+        "proposal_no": "5055/2025",
+        "session_id": "S004"
+      },
+      "research_refs": [
+        "R008"
+      ],
+      "ortsbezug": {
+        "display_place": "Feldkirchen",
+        "related_places": [
+          "Feldkirchen"
+        ],
+        "scope": "feldkirchen_relevance_existing",
+        "verification_status": "verified_for_stage_E_from_research_basis",
+        "note": "Strukturell ergänzt; konkreter Ortskopf wird in Vollständigkeits-/Nachbarschaftsaudit verifiziert."
+      },
+      "stage_E_meta": {
+        "editorial_action": "updated_history_from_stage_C",
+        "updated_at": "2026-08-28"
+      },
+      "established_topic_refs": [
+        {
+          "id": "T002",
+          "title": "Ortsentwicklung und Bauleitplanung"
+        },
+        {
+          "id": "T012",
+          "title": "A99-Ausbau und M18/EBE4"
+        }
+      ],
+      "search_tags": [
+        "A99/Kreuz München-Ost",
+        "M18/EBE4"
+      ]
+    },
+    {
+      "id": "R052",
+      "date": "2025-09-25",
+      "publication_date": "2025-09-25",
+      "category": "Mobilität & Verkehr",
+      "topic_candidates": [
+        "A99-Ausbau",
+        "M18/EBE4",
+        "Südumfahrung"
+      ],
+      "title": "Haar lehnt vorgestellte M18/EBE4-Verlegung beim A99-Ausbau ab",
+      "subtitle": "Die diskutierte Führung der Kreisstraße betrifft die Verbindung zwischen Weißenfeld und Feldkirchen.",
+      "sachinformation": "Im Zusammenhang mit dem geplanten achtstreifigen Ausbau der A99 bis Haar wurde eine neue Führung der Kreisstraße M18/EBE4 zwischen Weißenfeld und Feldkirchen vorgestellt. Der Haarer Bauausschuss lehnte die vorgestellte Variante ab. Der Vorgang ist unmittelbare Vorgeschichte der späteren Feldkirchner Entscheidung zur Variante 5 und betrifft die überörtliche Straßenverbindung nach Feldkirchen.",
+      "sources": [
+        {
+          "name": "Münchner Merkur – Wegen A99-Ausbau: Kreisstraße bei Feldkirchen wird verlegt",
+          "url": "https://www.merkur.de/lokales/muenchen-lk/haar-ort104496/wegen-a99-ausbau-kreisstrasse-bei-feldkirchen-wird-verlegt-so-soll-sie-verlaufen-93953871.html",
+          "type": "press",
+          "date": "2025-09-25",
+          "date_basis": "source_publication_date",
+          "date_status": "verified"
+        }
+      ],
+      "bisheriger_verlauf": [],
+      "unsere_einordnung": null,
+      "council": null,
+      "research_refs": [
+        "R052"
+      ],
+      "ortsbezug": {
+        "display_place": "Haar",
+        "related_places": [
+          "Haar",
+          "Feldkirchen"
+        ],
+        "scope": "neighbor_planning_direct_Feldkirchen_relation",
+        "verification_status": "verified_for_stage_E_from_research_basis",
+        "note": "Betroffen ist die Kreisstraße M18/EBE4 zwischen Weißenfeld und Feldkirchen im A99-Projektumgriff."
+      },
+      "stage_E_meta": {
+        "editorial_action": "new_from_verified_research",
+        "created_at": "2026-08-28"
+      },
+      "established_topic_refs": [
+        {
+          "id": "T012",
+          "title": "A99-Ausbau und M18/EBE4"
+        }
+      ],
+      "search_tags": [
+        "A99-Ausbau",
+        "M18/EBE4",
+        "Südumfahrung"
+      ]
+    },
+    {
+      "id": "R094",
+      "date": "2026-07-15",
+      "publication_date": "2026-07-15",
+      "category": "Mobilität & Verkehr",
+      "topic_candidates": [
+        "Tempo 30",
+        "B471",
+        "Schulwegsicherheit",
+        "Verkehrssicherheit"
+      ],
+      "search_tags": [
+        "Tempo 30",
+        "B471",
+        "Schulwegsicherheit",
+        "Verkehrssicherheit",
+        "Bürgerantrag"
+      ],
+      "title": "Tempo 30 an der B471: Landratsamt sieht Voraussetzungen nicht erfüllt",
+      "subtitle": "Die Prüfung eines Bürgerantrags konzentriert sich auf den Schulweg entlang der Aschheimer Straße; nach Ortstermin und Stellungnahme soll dort Tempo 50 bleiben.",
+      "sachinformation": "Ausgangspunkt war ein Antrag aus der Bürgerversammlung vom 22. Oktober 2025 auf Tempo 30 an stark frequentierten Schulwegen. Die Antragstellerin konkretisierte den Antrag später auf den Abschnitt der B471/Aschheimer Straße zwischen Zeppelinstraße und Ortsausgang Richtung Aschheim. Nach einem Ortstermin mit Landratsamt, Polizei, Staatlichem Bauamt Freising und Gemeinde kam das Landratsamt zu dem Ergebnis, dass der Geh- und Radweg dort ausreichend breit und weitgehend von der Fahrbahn getrennt sei. Auch die Unfalllage wurde als unauffällig bewertet. Deshalb soll auf B471 und M18 die Regelgeschwindigkeit von 50 km/h bestehen bleiben. Für die Fußgängerampel B471/Ottostraße wurde dagegen eine Verlängerung der Alles-Rot-Zeit auf vier Sekunden in Aussicht gestellt, sofern die Verkehrstechnik keine Einwände hat.",
+      "sources": [
+        {
+          "name": "RIS Feldkirchen – Beschlussvorlage 5275/2026",
+          "url": "https://buergerinfo-feldkirchen.digitalfabrix.de/getfile.asp?id=74581&type=do",
+          "type": "primary_official",
+          "date": "2026-07-15",
+          "date_basis": "public_release_in_RIS",
+          "date_status": "verified"
+        }
+      ],
+      "bisheriger_verlauf": [
+        {
+          "id": "R007",
+          "date": "2025-10-22",
+          "title": "Bürgerversammlung bringt Anträge zu Radwegen, Tempo 30 und Klimazielen"
+        },
+        {
+          "id": "R012",
+          "date": "2025-12-04",
+          "title": "Gemeinderat greift mehrere Anträge aus der Bürgerversammlung auf"
+        }
+      ],
+      "unsere_einordnung": null,
+      "council": {
+        "date": "2026-07-23",
+        "proposal_no": "5275/2026",
+        "session_id": "S020"
+      },
+      "research_refs": [
+        "R094"
+      ],
+      "ortsbezug": {
+        "display_place": "Feldkirchen",
+        "related_places": [
+          "Feldkirchen"
+        ],
+        "scope": "local",
+        "verification_status": "verified_2026-09-27"
+      },
+      "established_topic_refs": [
+        {
+          "id": "T015",
+          "title": "Verkehrssicherheit an B471 und M18"
+        }
+      ]
+    }
+  ],
+  "themen": [
+    {
+      "id": "T002",
+      "title": "Ortsentwicklung und Bauleitplanung",
+      "first_created": "2025-10-02",
+      "last_substantive_update": "2026-09-24",
+      "contribution_refs": [
+        "R001",
+        "R004",
+        "R009",
+        "R025",
+        "R036",
+        "R096"
+      ],
+      "summary": "Im Untersuchungszeitraum wurden mehrere Bausteine der räumlichen Entwicklung Feldkirchens parallel weitergeführt. Im September 2025 befasste sich der Gemeinderat mit der 20. Änderung des Flächennutzungsplans für Flächen östlich der M1 und nördlich der M18, unter anderem für Gewerbe, Bauhof und Wertstoffhof. Anfang Oktober folgte die weitere Planung zur Umgestaltung der Fußgängerunterführung im Rathausbereich; Ende Oktober wurde die vierte Änderung des Bebauungsplans Nr. 32 als Satzung beschlossen.\n\n2026 setzte sich diese Entwicklung fort. Im März wurde die vierte Änderung des Bebauungsplans Nr. 91 „Ortsmitte Nordost – Fl.Nr. 64 T“ eingeleitet. Im Juli befasste sich der Gemeinderat mit einer möglichen Fortführung des Ortsentwicklungskonzepts für Bahnhofsumfeld und Kirchenvorplatz. Die am 22. September veröffentlichte Niederschrift zeigt jedoch, dass beide Maßnahmen einstimmig zunächst zurückgestellt wurden; zunächst soll die weitere wirtschaftliche Entwicklung der Gemeinde beobachtet werden. Die einzelnen Verfahren unterscheiden sich in Gegenstand und Rechtsform, stehen aber gemeinsam für eine schrittweise Weiterentwicklung von Siedlungsstruktur, öffentlichen Räumen und kommunalen Nutzungen.\n\nFür das Gewerbegebiet an der Weißenfelder Straße liegt inzwischen die Auswertung der frühzeitigen Beteiligung zur 1. Teiländerung und Erweiterung des Bebauungsplans Nr. 102 vor. Vorgesehen sind zusätzliche Lagerflächen für einen ansässigen Betrieb. Die Planung wird nach Behördenhinweisen angepasst; im südlichen Bereich wirkt sich auch die geplante achtstreifige Erweiterung der A99 auf die vorgesehene Eingrünung aus. Der Gemeinderat soll am 29. September über die Stellungnahmen und die Billigung beraten.",
+      "open_questions": [
+        "Welche der angestoßenen Maßnahmen aus dem Ortsentwicklungskonzept werden als nächste in konkrete Planungen und Haushaltsentscheidungen überführt?",
+        "Wie werden Verkehrsflächen, Aufenthaltsqualität, Klimaanpassung, Grünstrukturen und Nutzungsansprüche in Bahnhofsumfeld und Ortsmitte aufeinander abgestimmt?",
+        "Wird ein dauerhaftes oder befristetes Beteiligungsformat geschaffen, das die vorhandenen Planungen frühzeitig miteinander verknüpft?",
+        "Welche zeitliche Reihenfolge ergibt sich für die parallel laufenden Bauleitplanverfahren?"
+      ],
+      "sources": [
+        {
+          "name": "RIS Feldkirchen – Beschlussvorlage 5021/2025",
+          "url": "https://buergerinfo-feldkirchen.digitalfabrix.de/getfile.asp?id=70759&type=do",
+          "type": "primary_official",
+          "source_refs": [
+            "R001"
+          ],
+          "date": "2025-09-18",
+          "date_basis": "event_or_session_date",
+          "date_status": "migrated_fallback_needs_source_date_check"
+        },
+        {
+          "name": "RIS Feldkirchen – Beschlussvorlage 5044/2025",
+          "url": "https://buergerinfo-feldkirchen.digitalfabrix.de/getfile.asp?id=71007&type=do",
+          "type": "primary_official",
+          "source_refs": [
+            "R004"
+          ],
+          "date": "2025-10-02",
+          "date_basis": "event_or_session_date",
+          "date_status": "migrated_fallback_needs_source_date_check"
+        },
+        {
+          "name": "RIS Feldkirchen – Beschlussvorlage 5064/2025",
+          "url": "https://buergerinfo-feldkirchen.digitalfabrix.de/getfile.asp?id=71224&type=do",
+          "type": "primary_official",
+          "source_refs": [
+            "R009"
+          ],
+          "date": "2025-10-30",
+          "date_basis": "event_or_session_date",
+          "date_status": "migrated_fallback_needs_source_date_check"
+        },
+        {
+          "name": "RIS Feldkirchen – Sitzung 30.10.2025",
+          "url": "https://buergerinfo-feldkirchen.digitalfabrix.de/si0057.asp?__ksinr=1000",
+          "type": "primary_official",
+          "source_refs": [
+            "R008",
+            "R009"
+          ],
+          "date": "2025-10-30",
+          "date_basis": "event_or_session_date",
+          "date_status": "migrated_fallback_needs_source_date_check"
+        },
+        {
+          "name": "RIS Feldkirchen – Beschlussvorlage 5187/2026: Bebauungsplan Nr. 91, 4. Änderung",
+          "url": "https://buergerinfo-feldkirchen.digitalfabrix.de/getfile.asp?id=72600&type=do",
+          "type": "primary_official",
+          "source_refs": [
+            "R025"
+          ],
+          "date": "2026-03-26",
+          "date_basis": "event_or_session_date",
+          "date_status": "migrated_fallback_needs_source_date_check"
+        },
+        {
+          "name": "RIS Feldkirchen – Beschlussvorlage 5281/2026",
+          "url": "https://buergerinfo-feldkirchen.digitalfabrix.de/getfile.asp?id=74606&type=do",
+          "type": "primary_official",
+          "source_refs": [
+            "R036"
+          ],
+          "date": "2026-07-23",
+          "date_basis": "event_or_session_date",
+          "date_status": "migrated_fallback_needs_source_date_check"
+        },
+        {
+          "name": "RIS Feldkirchen – Sitzung 23.07.2026",
+          "url": "https://buergerinfo-feldkirchen.digitalfabrix.de/si0057.asp?__ksinr=1026",
+          "type": "primary_official",
+          "source_refs": [
+            "R035",
+            "R036"
+          ],
+          "date": "2026-07-23",
+          "date_basis": "event_or_session_date",
+          "date_status": "migrated_fallback_needs_source_date_check"
+        },
+        {
+          "name": "RIS Feldkirchen – öffentliche Niederschrift Gemeinderat 23.07.2026",
+          "url": "https://buergerinfo-feldkirchen.digitalfabrix.de/getfile.asp?id=74927&type=do",
+          "type": "primary_official_minutes",
+          "source_refs": [
+            "R036"
+          ],
+          "date": "2026-09-22",
+          "date_basis": "public_release_in_RIS",
+          "date_status": "verified"
+        },
+        {
+          "name": "RIS Feldkirchen – Beschlussvorlage 5154/2026",
+          "url": "https://buergerinfo-feldkirchen.digitalfabrix.de/getfile.asp?id=72299&type=do",
+          "type": "primary_official",
+          "source_refs": [
+            "R096"
+          ],
+          "date": "2026-09-24",
+          "date_basis": "public_release_in_RIS",
+          "date_status": "verified"
+        }
+      ],
+      "unsere_einordnung": "Feldkirchen hat inzwischen viele Planungsgrundlagen. Die zentrale Aufgabe ist deshalb, aus einzelnen Verfahren ein erkennbares Gesamtbild der Ortsentwicklung zu machen. Bahnhofsumfeld, Kirchenvorplatz, Ortsmitte, neue Wohn- und Gewerbeflächen, Verkehr und Klimaanpassung beeinflussen sich gegenseitig. Werden sie isoliert behandelt, entstehen leicht neue Zielkonflikte.\n\nAus grüner Sicht sollten Innenentwicklung, kurze Wege, Aufenthaltsqualität, Barrierefreiheit, Klimaanpassung, Mobilität und der Erhalt wertvoller Grünstrukturen gemeinsam betrachtet werden. Die Grünen Feldkirchen haben dafür als lokalen Ansatz einen beratenden Arbeitskreis Grünplanung & Mobilität vorgeschlagen, der vorhandene Planungen zusammenführt, Zielkonflikte früh sichtbar macht und Politik, Verwaltung sowie engagierte örtliche Organisationen einbindet. Der Gemeinderat behält dabei die politische Entscheidung.",
+      "status": "topic_established",
+      "einordnung_meta": {
+        "local_basis_status": "local_green_application_used_as_internal_background_not_publicly_linkable",
+        "internal_reference_ids": [
+          "Antrag Arbeitskreis Grünplanung & Mobilität, Stand 23.08.2026"
+        ],
+        "editorial_status": "redaktioneller_vorschlag_mit_lokalem_antragswissen",
+        "reference_basis": [
+          {
+            "name": "GRÜNE Bayern – Kommunalpolitische Leitlinien",
+            "url": "https://www.gruene-bayern.de/kommunalpolitische-leitlinien-2020/",
+            "level": "state_municipal"
+          }
+        ]
+      }
+    },
+    {
+      "id": "T006",
+      "title": "Parkraumkonzept",
+      "first_created": "2026-08-18",
+      "last_substantive_update": "2026-09-22",
+      "contribution_refs": [
+        "R026",
+        "R039",
+        "R068"
+      ],
+      "summary": "Das Parkraumkonzept entwickelte sich 2026 von einer Bestands- und Planungsgrundlage zu konkreten Regelungen und Nutzungskonflikten. Im März stellte das beauftragte Planungsbüro den Entwurf im Gemeinderat vor; im Juli fasste der Gemeinderat den Beschluss zum Konzept. Im August zeigte sich am Friedhof ein konkreter Konflikt um eine Zwei-Stunden-Parkregelung, die für diesen Bereich auf drei Stunden verlängert werden sollte.\n\nAm 9. September veröffentlichte die Gemeinde das beschlossene Parkraumkonzept einschließlich PDF. Nach ihrer Darstellung soll es insbesondere Probleme des ruhenden Kfz-Verkehrs an klassifizierten Straßen und in Teilen des Gewerbegebiets adressieren. Damit liegt nun eine öffentlich abrufbare Grundlage vor, an der die weitere Umsetzung und spätere Wirkungskontrolle nachvollzogen werden können.\n\nDie am 22. September veröffentlichte Niederschrift bestätigt den Beschluss vom 23. Juli: Das Parkraumkonzept wurde einstimmig beschlossen; die Verwaltung soll die Umsetzung vorbereiten und spätestens zum 1. Januar 2027 mit der Überwachung des ruhenden Verkehrs beginnen.",
+      "open_questions": [
+        "Welche weiteren Regelungen aus dem Parkraumkonzept werden umgesetzt?",
+        "Wie werden die Wirkungen neuer Parkzeitbegrenzungen ausgewertet?",
+        "In welchen Straßen oder Bereichen sind weitere Anpassungen nach praktischen Erfahrungen erforderlich?"
+      ],
+      "sources": [
+        {
+          "name": "RIS Feldkirchen – Parkraumkonzept, Vorlage 5159/2026",
+          "url": "https://buergerinfo-feldkirchen.digitalfabrix.de/getfile.asp?id=72371&type=do",
+          "type": "primary_official",
+          "source_refs": [
+            "R026"
+          ],
+          "date": "2026-04-18",
+          "date_basis": "publication_date",
+          "date_status": "migrated_unique"
+        },
+        {
+          "name": "RIS Feldkirchen – Sitzung 12.03.2026",
+          "url": "https://buergerinfo-feldkirchen.digitalfabrix.de/si0057.asp?__ksinr=1017",
+          "type": "primary_official",
+          "source_refs": [
+            "R026"
+          ],
+          "date": "2026-04-18",
+          "date_basis": "publication_date",
+          "date_status": "migrated_unique"
+        },
+        {
+          "name": "Münchner Merkur – Kritik an Parkraumkonzept",
+          "url": "https://www.merkur.de/lokales/muenchen-lk/feldkirchen-ort28673/opposition-kritisiert-parkraumkonzept-als-blosse-bestandsaufnahme-94266885.html",
+          "type": "press",
+          "source_refs": [
+            "R026"
+          ],
+          "date": "2026-04-18",
+          "date_basis": "publication_date",
+          "date_status": "migrated_unique"
+        },
+        {
+          "name": "Münchner Merkur – Anwohner-Protest gegen Parkregeln",
+          "url": "https://www.merkur.de/lokales/muenchen-lk/feldkirchen-ort28673/feldkirchen-aerger-ueber-neue-parkregeln-anwohner-protest-gegen-konzept-der-gemeinde-94447851.html",
+          "type": "press",
+          "source_refs": [
+            "R039"
+          ],
+          "date": "2026-08-18",
+          "date_basis": "publication_date",
+          "date_status": "migrated_unique"
+        },
+        {
+          "name": "Gemeinde Feldkirchen – Neues Parkraumkonzept in Feldkirchen",
+          "url": "https://www.feldkirchen.de/bauen/nachrichten-aus-dem-bauamt/neues-parkraumkonzept-in-feldkirchen",
+          "type": "primary_official",
+          "source_refs": [
+            "R068"
+          ],
+          "date": "2026-09-09",
+          "date_basis": "publication_date",
+          "date_status": "verified"
+        },
+        {
+          "name": "Gemeinde Feldkirchen – Parkraumkonzept 2026 (PDF)",
+          "url": "https://www.feldkirchen.de/_Resources/Persistent/d/3/d/e/d3dee38ce3c4a9ad01384ca6ed314a2a8f8bcc12/2026%20Parkraumkonzept%20gem%20GR-Beschluss.pdf",
+          "type": "primary_official_document",
+          "source_refs": [
+            "R068"
+          ],
+          "date": "2026-09-09",
+          "date_basis": "publication_context",
+          "date_status": "verified"
+        },
+        {
+          "name": "RIS Feldkirchen – öffentliche Niederschrift Gemeinderat 23.07.2026",
+          "url": "https://buergerinfo-feldkirchen.digitalfabrix.de/getfile.asp?id=74927&type=do",
+          "type": "primary_official_minutes",
+          "source_refs": [
+            "R068"
+          ],
+          "date": "2026-09-22",
+          "date_basis": "public_release_in_RIS",
+          "date_status": "verified"
+        }
+      ],
+      "unsere_einordnung": "Parkraummanagement sollte mehr leisten als Parkplätze zu zählen und Höchstparkzeiten festzulegen. Öffentlicher Straßenraum ist begrenzt und muss zwischen Anwohnern, Besuchern, Gewerbe, Fuß- und Radverkehr, Grün und anderen Nutzungen fair verteilt werden.\n\nAus grüner Sicht sollte Feldkirchen deshalb für einzelne Bereiche klare Ziele formulieren und anschließend prüfen, ob die Regeln diese Ziele tatsächlich erreichen. Die Auseinandersetzung am Friedhof zeigt, dass Wirkungskontrolle wichtig ist: Anpassungen können sinnvoll sein, sollten aber auf nachvollziehbaren Kriterien beruhen und nicht nur auf dem lautesten Einzelkonflikt.",
+      "status": "topic_established",
+      "einordnung_meta": {
+        "local_basis_status": "no_documented_local_position_used",
+        "editorial_status": "redaktioneller_vorschlag_auf_uebergeordneter_gruener_basis",
+        "reference_basis": [
+          {
+            "name": "GRÜNE Bayern – Lebenswerte Städte, attraktives Land: Den öffentlichen Raum zurückerobern",
+            "url": "https://www.gruene-bayern.de/lebenswerte-staedte-attraktives-land-den-oeffentlichen-raum-zurueckerobern/",
+            "level": "state_municipal"
+          },
+          {
+            "name": "GRÜNE Bayern – Kommunalpolitische Leitlinien",
+            "url": "https://www.gruene-bayern.de/kommunalpolitische-leitlinien-2020/",
+            "level": "state_municipal"
+          }
+        ]
+      }
+    },
+    {
+      "id": "T012",
+      "title": "A99-Ausbau und M18/EBE4",
+      "first_created": "2025-09-25",
+      "last_substantive_update": "2026-09-24",
+      "contribution_refs": [
+        "R052",
+        "R008",
+        "R059",
+        "R096"
+      ],
+      "summary": "Der Ausbau des Autobahnrings im Münchner Osten verändert auch die regionalen Straßenverbindungen rund um Feldkirchen. Im September 2025 lehnte der Haarer Bauausschuss eine vorgestellte Führung der M18/EBE4 zwischen Weißenfeld und Feldkirchen ab. Ende Oktober stimmte der Feldkirchner Gemeinderat im Zusammenhang mit dem A99-Ausbau der Planvariante 5 für die Verlegung der Kreisstraße zu. Im August 2026 wurde an der Anschlussstelle Haar der Verkehr auf eine Behelfsbrücke der B304 umgelegt; für den Abbruch der alten Brücke ist im November eine mehrtägige Vollsperrung der A99 angekündigt. Damit umfasst das Thema sowohl langfristige Trassenplanung als auch konkrete Bau- und Umleitungsfolgen.\n\nAuch in der kommunalen Bauleitplanung an der Weißenfelder Straße wird der Autobahnausbau konkret sichtbar: In der Vorlage zur Erweiterung des Gewerbegebiets Nr. 102 entfällt im südlichen Bereich eine vorgesehene Schutz- und Leitpflanzung mit Verweis auf die Planung der achtstreifigen A99-Erweiterung und die dortige Anbauverbotszone.",
+      "open_questions": [
+        "Wie wird die endgültige Führung der M18/EBE4 im weiteren Planungs- und Genehmigungsverfahren festgelegt?",
+        "Welche Verkehrsverlagerungen und Belastungen entstehen während der Bauphasen für Feldkirchen und die Nachbargemeinden?",
+        "Welche Maßnahmen sichern während und nach dem Ausbau gute Bedingungen für ÖPNV, Rad- und Fußverkehr?"
+      ],
+      "sources": [
+        {
+          "name": "Münchner Merkur – Wegen A99-Ausbau: Kreisstraße bei Feldkirchen wird verlegt",
+          "url": "https://www.merkur.de/lokales/muenchen-lk/haar-ort104496/wegen-a99-ausbau-kreisstrasse-bei-feldkirchen-wird-verlegt-so-soll-sie-verlaufen-93953871.html",
+          "type": "press",
+          "date": "2025-09-25",
+          "date_basis": "source_publication_date",
+          "date_status": "verified",
+          "source_refs": [
+            "R052"
+          ]
+        },
+        {
+          "name": "RIS Feldkirchen – Beschlussvorlage 5055/2025",
+          "url": "https://buergerinfo-feldkirchen.digitalfabrix.de/getfile.asp?id=71104&type=do",
+          "type": "primary_official",
+          "date": "2025-10-30",
+          "date_basis": "event_or_session_date",
+          "date_status": "migrated_fallback_needs_source_date_check",
+          "source_refs": [
+            "R008"
+          ]
+        },
+        {
+          "name": "RIS Feldkirchen – Sitzung 30.10.2025",
+          "url": "https://buergerinfo-feldkirchen.digitalfabrix.de/si0057.asp?__ksinr=1000",
+          "type": "primary_official",
+          "date": "2025-10-30",
+          "date_basis": "event_or_session_date",
+          "date_status": "migrated_fallback_needs_source_date_check",
+          "source_refs": [
+            "R008"
+          ]
+        },
+        {
+          "name": "Landkreis München / Autobahn GmbH – Ersatzneubau der Brücke an der Anschlussstelle Haar",
+          "url": "https://www.landkreis-muenchen.de/artikel/a99-autobahnring-b304-ersatzneubau-der-bruecke-an-der-anschlussstelle-haar-1/",
+          "type": "primary_official_republished",
+          "date": "2026-08-04",
+          "date_basis": "source_publication_date",
+          "date_status": "verified",
+          "source_refs": [
+            "R059"
+          ]
+        },
+        {
+          "name": "Münchner Merkur – A99 bei Haar wird für drei Tage voll gesperrt",
+          "url": "https://www.merkur.de/lokales/muenchen-lk/haar-ort104496/gesperrt-a99-bei-haar-wird-fuer-drei-tage-voll-94459646.html",
+          "type": "press",
+          "date": "2026-08-27",
+          "date_basis": "source_publication_date",
+          "date_status": "verified",
+          "source_refs": [
+            "R059"
+          ]
+        },
+        {
+          "name": "RIS Feldkirchen – Beschlussvorlage 5154/2026",
+          "url": "https://buergerinfo-feldkirchen.digitalfabrix.de/getfile.asp?id=72299&type=do",
+          "type": "primary_official",
+          "source_refs": [
+            "R096"
+          ],
+          "date": "2026-09-24",
+          "date_basis": "public_release_in_RIS",
+          "date_status": "verified"
+        }
+      ],
+      "unsere_einordnung": "Bei einem Ausbau dieser Größenordnung reicht es nicht, nur den Autobahnquerschnitt zu betrachten. Für Feldkirchen sind die Folgewirkungen auf Kreisstraßen, Ortsverkehr, Flächen und regionale Verbindungen entscheidend. Varianten und Bauphasen sollten deshalb danach beurteilt werden, ob sie Belastungen nachvollziehbar minimieren, zusätzliche Flächeninanspruchnahme begrenzen und nachhaltige Mobilitätsverbindungen nicht verschlechtern.",
+      "status": "topic_established",
+      "einordnung_meta": {
+        "local_basis_status": "no_specific_local_position_asserted",
+        "editorial_status": "redaktionelle_ableitung_aus_verbindlichem_werte_und_ziele_register",
+        "reference_basis": [
+          {
+            "document": "Gruene_Werte_und_politische_Ziele.md",
+            "version": "0.3",
+            "goals": [
+              7,
+              8,
+              9,
+              13
+            ]
+          }
+        ]
+      },
+      "stage_E_meta": {
+        "created_at": "2026-08-28",
+        "reason": "promoted after Stage B/C completeness audit"
+      }
+    },
+    {
+      "id": "T015",
+      "title": "Verkehrssicherheit an B471 und M18",
+      "first_created": "2026-09-27",
+      "last_substantive_update": "2026-07-15",
+      "contribution_refs": [
+        "R007",
+        "R012",
+        "R094"
+      ],
+      "summary": "Mehrere Anträge aus der Bürgerversammlung 2025 betreffen die Verkehrssicherheit an den Hauptverkehrsachsen B471 und M18. Ein Antrag zielte auf Tempo 30 an stark frequentierten Schulwegen; die Antragstellerin konkretisierte ihn später auf die Aschheimer Straße/B471 zwischen Zeppelinstraße und Ortsausgang Richtung Aschheim. Ein weiterer Antrag verlangte Radfahr- oder Schutzstreifen an B471 und M18.\n\nDie Gemeinde ließ beide Anliegen durch die zuständigen Stellen prüfen. Beim Tempo-30-Antrag kam das Landratsamt nach einem Ortstermin mit Polizei, Staatlichem Bauamt und Gemeinde zu dem Ergebnis, dass die vorhandene Geh- und Radwegführung sowie die unauffällige Unfalllage eine Absenkung auf Tempo 30 nicht begründen. Die Regelgeschwindigkeit von 50 km/h soll deshalb bestehen bleiben; an der Fußgängerampel B471/Ottostraße wurde stattdessen eine längere Alles-Rot-Zeit in Aussicht gestellt.\n\nAuch Schutz- oder Radfahrstreifen wurden im vorhandenen Straßenquerschnitt von B471 und M18 wegen der verfügbaren Breiten, des Verkehrsaufkommens und des Schwerverkehrsanteils nicht befürwortet. Damit bleibt offen, welche anderen Maßnahmen die Sicherheit für Fuß- und Radverkehr entlang dieser stark belasteten Achsen verbessern können.",
+      "open_questions": [
+        "Wird die angekündigte Verlängerung der Alles-Rot-Zeit an der Fußgängerampel B471/Ottostraße umgesetzt?",
+        "Welche anderen Maßnahmen können die Schulwegsicherheit entlang der B471 verbessern, wenn Tempo 30 dort nicht angeordnet wird?",
+        "Welche Alternativen zu Schutz- oder Radfahrstreifen sind an B471 und M18 möglich?",
+        "Wie können die Anliegen aus der Bürgerversammlung für Fuß- und Radverkehr in die weitere Verkehrs- und Ortsentwicklung einfließen?"
+      ],
+      "sources": [
+        {
+          "name": "RIS Feldkirchen – Beschlussvorlage 5275/2026",
+          "url": "https://buergerinfo-feldkirchen.digitalfabrix.de/getfile.asp?id=74581&type=do",
+          "type": "primary_official",
+          "source_refs": [
+            "R094"
+          ],
+          "date": "2026-07-15",
+          "date_basis": "public_release_in_RIS",
+          "date_status": "verified"
+        },
+        {
+          "name": "RIS Feldkirchen – Beschlussvorlage 5277/2026",
+          "url": "https://buergerinfo-feldkirchen.digitalfabrix.de/getfile.asp?id=74590&type=do",
+          "type": "primary_official",
+          "source_refs": [
+            "R007",
+            "R012"
+          ],
+          "date": "2026-07-15",
+          "date_basis": "public_release_in_RIS",
+          "date_status": "verified"
+        },
+        {
+          "name": "RIS Feldkirchen – Gemeinderat 23.07.2026",
+          "url": "https://buergerinfo-feldkirchen.digitalfabrix.de/si0057.asp?__ksinr=1026",
+          "type": "primary_official",
+          "source_refs": [
+            "R094"
+          ],
+          "date": "2026-07-23",
+          "date_basis": "session_date",
+          "date_status": "verified"
+        }
+      ],
+      "unsere_einordnung": null,
+      "status": "topic_established"
+    }
+  ],
+  "sitzungen": [
+    {
+      "id": "S004",
+      "date": "2025-10-30",
+      "body": "Gemeinderat",
+      "session_ref": "GR/417/2025",
+      "session_url": "https://buergerinfo-feldkirchen.digitalfabrix.de/si0057.asp?__ksinr=1000",
+      "legacy_important_items": "5055/2025 | 5064/2025",
+      "important_items": [
+        {
+          "item_id": "S004-T02",
+          "legacy_label": "5055/2025",
+          "proposal_no": "5055/2025",
+          "title": "Verlegung Kreisstraße M18/EBE4 im Zusammenhang mit A99 – Planvariante 5",
+          "research_or_contribution_refs": [
+            "R008"
+          ],
+          "documents": [
+            {
+              "label": "RIS Feldkirchen – Sitzung 30.10.2025",
+              "url": "https://buergerinfo-feldkirchen.digitalfabrix.de/si0057.asp?__ksinr=1000",
+              "type": "primary_official",
+              "verification_status": "legacy_link_preserved"
+            },
+            {
+              "label": "RIS Feldkirchen – Beschlussvorlage 5055/2025",
+              "url": "https://buergerinfo-feldkirchen.digitalfabrix.de/getfile.asp?id=71104&type=do",
+              "type": "primary_official",
+              "verification_status": "legacy_link_preserved"
+            }
+          ],
+          "decision_status": "public_result_verified",
+          "decision_evidence": [
+            {
+              "type": "official_sessionnet",
+              "url": "https://buergerinfo-feldkirchen.digitalfabrix.de/si0057.asp?__ksinr=1000"
+            }
+          ],
+          "needs_full_agenda_audit": true,
+          "decision_result": "einstimmig angenommen",
+          "selected_after_full_agenda_review": true,
+          "agenda_no": 2
+        },
+        {
+          "item_id": "S004-T03",
+          "legacy_label": "5064/2025",
+          "proposal_no": "5064/2025",
+          "title": "Bebauungsplan Nr. 32, 4. Änderung – Satzungsbeschluss",
+          "research_or_contribution_refs": [
+            "R009"
+          ],
+          "documents": [
+            {
+              "label": "RIS Feldkirchen – Sitzung 30.10.2025",
+              "url": "https://buergerinfo-feldkirchen.digitalfabrix.de/si0057.asp?__ksinr=1000",
+              "type": "primary_official",
+              "verification_status": "legacy_link_preserved"
+            },
+            {
+              "label": "RIS Feldkirchen – Beschlussvorlage 5064/2025",
+              "url": "https://buergerinfo-feldkirchen.digitalfabrix.de/getfile.asp?id=71224&type=do",
+              "type": "primary_official",
+              "verification_status": "legacy_link_preserved"
+            }
+          ],
+          "decision_status": "public_result_verified",
+          "decision_evidence": [
+            {
+              "type": "official_sessionnet",
+              "url": "https://buergerinfo-feldkirchen.digitalfabrix.de/si0057.asp?__ksinr=1000"
+            }
+          ],
+          "needs_full_agenda_audit": true,
+          "decision_result": "einstimmig angenommen",
+          "selected_after_full_agenda_review": true,
+          "agenda_no": 3
+        }
+      ],
+      "other_public_items_note": "Weitere öffentliche TOPs wurden vollständig geprüft und nicht einzeln als wichtig ausgewiesen.",
+      "agenda_audit_status": "full_public_agenda_verified",
+      "decision_audit_status": "completed_for_selected_items_public_evidence_only",
+      "minutes": {
+        "status": "approved_not_published",
+        "approval_status": "approved",
+        "approval_date": "2025-11-13",
+        "approval_evidence_session_id": "S005",
+        "publication_status": "not_publicly_found",
+        "publication_date": null,
+        "direct_public_minutes_url": null,
+        "link_status": "no_link",
+        "evidence": [
+          {
+            "type": "later_public_agenda_approval_item",
+            "session_id": "S005",
+            "url": "https://buergerinfo-feldkirchen.digitalfabrix.de/do0040.asp?smcadat=2460984"
+          }
+        ]
+      },
+      "legacy_verification_status": "agenda and decisions verified",
+      "full_public_agenda": [
+        {
+          "no": 1,
+          "title": "Genehmigung der Niederschrift vom 16.10.2025",
+          "agenda_item_id": "S004-A01"
+        },
+        {
+          "no": 2,
+          "proposal": "5055/2025",
+          "title": "Verlegung Kreisstraße M18/EBE4 im Zusammenhang mit A99 – Planvariante 5",
+          "result": "einstimmig angenommen",
+          "agenda_item_id": "S004-A02"
+        },
+        {
+          "no": 3,
+          "proposal": "5064/2025",
+          "title": "Bebauungsplan Nr. 32, 4. Änderung – Satzungsbeschluss",
+          "result": "einstimmig angenommen",
+          "agenda_item_id": "S004-A03"
+        },
+        {
+          "no": 4,
+          "proposal": "5066/2025",
+          "title": "Doppelhaus Philipp-Holy-Str. 8/8a",
+          "result": "einstimmig angenommen",
+          "agenda_item_id": "S004-A04"
+        },
+        {
+          "no": 5,
+          "title": "Bekanntgaben und Berichte",
+          "result": "zur Kenntnis genommen",
+          "agenda_item_id": "S004-A05"
+        },
+        {
+          "no": 6,
+          "title": "Anfragen",
+          "agenda_item_id": "S004-A06"
+        }
+      ],
+      "important_selection_status": "completed_after_full_agenda_review"
+    },
+    {
+      "id": "S011",
+      "date": "2026-03-12",
+      "body": "Gemeinderat",
+      "session_ref": "GR/427/2026",
+      "session_url": "https://buergerinfo-feldkirchen.digitalfabrix.de/si0057.asp?__ksinr=1017",
+      "legacy_important_items": "5159/2026 | 5157/2026",
+      "important_items": [
+        {
+          "item_id": "S011-T02",
+          "legacy_label": "5159/2026",
+          "proposal_no": "5159/2026",
+          "title": "Parkraumkonzept der Gemeinde Feldkirchen – Ergebnisse und weiteres Vorgehen",
+          "research_or_contribution_refs": [
+            "R026"
+          ],
+          "documents": [
+            {
+              "label": "RIS Feldkirchen – Parkraumkonzept, Vorlage 5159/2026",
+              "url": "https://buergerinfo-feldkirchen.digitalfabrix.de/getfile.asp?id=72371&type=do",
+              "type": "primary_official",
+              "verification_status": "legacy_link_preserved"
+            },
+            {
+              "label": "RIS Feldkirchen – Sitzung 12.03.2026",
+              "url": "https://buergerinfo-feldkirchen.digitalfabrix.de/si0057.asp?__ksinr=1017",
+              "type": "primary_official",
+              "verification_status": "legacy_link_preserved"
+            }
+          ],
+          "decision_status": "decision_not_publicly_documented_in_audit",
+          "decision_evidence": [],
+          "needs_full_agenda_audit": true,
+          "decision_result": null,
+          "selected_after_full_agenda_review": true,
+          "agenda_no": 2
+        },
+        {
+          "item_id": "S011-T03",
+          "legacy_label": "5157/2026",
+          "proposal_no": "5157/2026",
+          "title": "21. Änderung Flächennutzungsplan Weißenfelder Straße",
+          "research_or_contribution_refs": [],
+          "documents": [],
+          "decision_status": "decision_not_publicly_documented_in_audit",
+          "decision_evidence": [],
+          "needs_full_agenda_audit": true,
+          "decision_result": null,
+          "selected_after_full_agenda_review": true,
+          "agenda_no": 3
+        }
+      ],
+      "other_public_items_note": "Weitere öffentliche TOPs wurden vollständig geprüft und nicht einzeln als wichtig ausgewiesen.",
+      "agenda_audit_status": "full_public_agenda_verified",
+      "decision_audit_status": "completed_for_selected_items_public_evidence_only",
+      "minutes": {
+        "status": "approved_not_published",
+        "approval_status": "approved",
+        "approval_date": "2026-03-26",
+        "approval_evidence_session_id": "S012",
+        "publication_status": "not_publicly_found",
+        "publication_date": null,
+        "direct_public_minutes_url": null,
+        "link_status": "no_link",
+        "evidence": [
+          {
+            "type": "later_public_agenda_approval_item",
+            "session_id": "S012",
+            "url": "https://buergerinfo-feldkirchen.digitalfabrix.de/do0040.asp?smcadat=2461110"
+          }
+        ]
+      },
+      "legacy_verification_status": "agenda and decisions verified",
+      "full_public_agenda": [
+        {
+          "no": 1,
+          "title": "Genehmigung der Niederschrift vom 26.02.2026",
+          "agenda_item_id": "S011-A01"
+        },
+        {
+          "no": 2,
+          "proposal": "5159/2026",
+          "title": "Parkraumkonzept der Gemeinde Feldkirchen – Ergebnisse und weiteres Vorgehen",
+          "agenda_item_id": "S011-A02"
+        },
+        {
+          "no": 3,
+          "proposal": "5157/2026",
+          "title": "21. Änderung Flächennutzungsplan Weißenfelder Straße",
+          "agenda_item_id": "S011-A03"
+        },
+        {
+          "no": 4,
+          "title": "Bekanntgaben und Berichte",
+          "agenda_item_id": "S011-A04"
+        },
+        {
+          "no": 5,
+          "title": "Anfragen",
+          "agenda_item_id": "S011-A05"
+        }
+      ],
+      "important_selection_status": "completed_after_full_agenda_review"
+    },
+    {
+      "id": "S020",
+      "date": "2026-07-23",
+      "body": "Gemeinderat",
+      "session_ref": "GR/436/2026",
+      "session_url": "https://buergerinfo-feldkirchen.digitalfabrix.de/si0057.asp?__ksinr=1026",
+      "legacy_important_items": "5293/2026 | 5285/2026 | 5287/2026 | 5283/2026 | 5275/2026 | 5277/2026 | 5278/2026 | 5281/2026",
+      "important_items": [
+        {
+          "item_id": "S020-T02",
+          "legacy_label": "5293/2026",
+          "proposal_no": "5293/2026",
+          "title": "Wahl dreier Generationenbeauftragten aus dem Gemeinderat",
+          "research_or_contribution_refs": [
+            "R035"
+          ],
+          "documents": [
+            {
+              "label": "RIS Feldkirchen – Beschlussvorlage 5293/2026",
+              "url": "https://buergerinfo-feldkirchen.digitalfabrix.de/getfile.asp?id=74768&type=do",
+              "type": "primary_official",
+              "verification_status": "direct_link_verified_2026-08-29"
+            }
+          ],
+          "decision_status": "official_decision",
+          "decision_evidence": [
+            {
+              "type": "public_minutes",
+              "url": "https://buergerinfo-feldkirchen.digitalfabrix.de/getfile.asp?id=74927&type=do"
+            }
+          ],
+          "needs_full_agenda_audit": true,
+          "decision_result": "Drei Generationenbeauftragte benannt; einstimmig angenommen (20:0)",
+          "selected_after_full_agenda_review": true,
+          "agenda_no": 2,
+          "document_audit_note": "Fehlzuordnung der Parkraumkonzept-Vorlage 5285/2026 am 28.08.2026 entfernt; kein Ersatzlink, solange kein direkter öffentlicher Vorlagenlink verifiziert ist."
+        },
+        {
+          "item_id": "S020-T03",
+          "legacy_label": "5285/2026",
+          "proposal_no": "5285/2026",
+          "title": "Parkraumkonzept der Gemeinde Feldkirchen",
+          "research_or_contribution_refs": [
+            "R035"
+          ],
+          "documents": [
+            {
+              "label": "Vorlage",
+              "source_name": "RIS Feldkirchen – Parkraumkonzept, Vorlage 5285/2026",
+              "url": "https://buergerinfo-feldkirchen.digitalfabrix.de/getfile.asp?id=74670&type=do",
+              "type": "primary_official",
+              "verification_status": "verified_from_research_basis"
+            }
+          ],
+          "decision_status": "official_decision",
+          "decision_evidence": [
+            {
+              "type": "public_minutes",
+              "url": "https://buergerinfo-feldkirchen.digitalfabrix.de/getfile.asp?id=74927&type=do"
+            }
+          ],
+          "needs_full_agenda_audit": true,
+          "decision_result": "Parkraumkonzept beschlossen; Umsetzung und Beginn der Parkraumüberwachung ab 01.01.2027 beauftragt (20:0)",
+          "selected_after_full_agenda_review": true,
+          "agenda_no": 3
+        },
+        {
+          "item_id": "S020-T04",
+          "legacy_label": "5287/2026",
+          "proposal_no": "5287/2026",
+          "title": "Instandsetzungskonzept Feuerwehrgerätehaus Feldkirchen",
+          "research_or_contribution_refs": [
+            "R035"
+          ],
+          "documents": [
+            {
+              "label": "RIS Feldkirchen – Beschlussvorlage 5287/2026",
+              "url": "https://buergerinfo-feldkirchen.digitalfabrix.de/getfile.asp?id=74697&type=do",
+              "type": "primary_official",
+              "verification_status": "direct_link_verified_2026-08-29"
+            }
+          ],
+          "decision_status": "official_decision",
+          "decision_evidence": [
+            {
+              "type": "public_minutes",
+              "url": "https://buergerinfo-feldkirchen.digitalfabrix.de/getfile.asp?id=74927&type=do"
+            }
+          ],
+          "needs_full_agenda_audit": true,
+          "decision_result": "Sanierung des Feuerwehrgerätehauses bis auf weiteres zurückgestellt (20:0)",
+          "selected_after_full_agenda_review": true,
+          "agenda_no": 4,
+          "document_audit_note": "Fehlzuordnung der Parkraumkonzept-Vorlage 5285/2026 am 28.08.2026 entfernt; kein Ersatzlink, solange kein direkter öffentlicher Vorlagenlink verifiziert ist."
+        },
+        {
+          "item_id": "S020-T05",
+          "legacy_label": "5283/2026",
+          "proposal_no": "5283/2026",
+          "title": "Errichtung einer Hundewiese östlich des Friedhofs – weiteres Vorgehen nach schalltechnischer Stellungnahme",
+          "research_or_contribution_refs": [
+            "R035"
+          ],
+          "documents": [],
+          "decision_status": "official_no_decision",
+          "decision_evidence": [
+            {
+              "type": "public_minutes",
+              "url": "https://buergerinfo-feldkirchen.digitalfabrix.de/getfile.asp?id=74927&type=do"
+            }
+          ],
+          "needs_full_agenda_audit": true,
+          "decision_result": "Beratung bis zur Ermittlung der Schallschutzkosten zurückgestellt; keine Abstimmung",
+          "selected_after_full_agenda_review": true,
+          "agenda_no": 5,
+          "document_audit_note": "Die konkrete RIS-Sitzungsseite weist TOP 5 und Vorlage 5283/2026 aus. Der dort hinterlegte Direktlink getfile.asp?id=74647&type=do war bei der abschließenden Erreichbarkeitsprüfung nicht funktionsfähig und wird deshalb öffentlich nicht als „Vorlage“ verlinkt. Die Sitzungsseite bleibt als belastbare RIS-Quelle verfügbar.",
+          "direct_document_status": "listed_in_session_but_direct_link_unreachable_2026-08-29"
+        },
+        {
+          "item_id": "S020-T06",
+          "legacy_label": "5275/2026",
+          "proposal_no": "5275/2026",
+          "title": "Bürgerversammlung: Tempo 30 auf stark frequentierten Schulwegen",
+          "research_or_contribution_refs": [],
+          "documents": [
+            {
+              "label": "RIS Feldkirchen – Beschlussvorlage 5275/2026",
+              "url": "https://buergerinfo-feldkirchen.digitalfabrix.de/getfile.asp?id=74581&type=do",
+              "type": "primary_official",
+              "verification_status": "direct_link_verified_2026-08-29"
+            }
+          ],
+          "decision_status": "official_no_decision",
+          "decision_evidence": [
+            {
+              "type": "public_minutes",
+              "url": "https://buergerinfo-feldkirchen.digitalfabrix.de/getfile.asp?id=74927&type=do"
+            }
+          ],
+          "needs_full_agenda_audit": true,
+          "decision_result": "Sachvortrag ohne Beschluss zur Kenntnis genommen; Gemeinde nicht zuständig",
+          "selected_after_full_agenda_review": true,
+          "agenda_no": 6
+        },
+        {
+          "item_id": "S020-T07",
+          "legacy_label": "5277/2026",
+          "proposal_no": "5277/2026",
+          "title": "Bürgerversammlung: Radfahr-/Schutzstreifen B471 und M18",
+          "research_or_contribution_refs": [],
+          "documents": [
+            {
+              "label": "RIS Feldkirchen – Beschlussvorlage 5277/2026",
+              "url": "https://buergerinfo-feldkirchen.digitalfabrix.de/getfile.asp?id=74590&type=do",
+              "type": "primary_official",
+              "verification_status": "direct_link_verified_2026-08-29"
+            }
+          ],
+          "decision_status": "official_no_decision",
+          "decision_evidence": [
+            {
+              "type": "public_minutes",
+              "url": "https://buergerinfo-feldkirchen.digitalfabrix.de/getfile.asp?id=74927&type=do"
+            }
+          ],
+          "needs_full_agenda_audit": true,
+          "decision_result": "Sachvortrag ohne Beschluss zur Kenntnis genommen; Gemeinde nicht zuständig",
+          "selected_after_full_agenda_review": true,
+          "agenda_no": 7
+        },
+        {
+          "item_id": "S020-T08",
+          "legacy_label": "5278/2026",
+          "proposal_no": "5278/2026",
+          "title": "Bürgerversammlung: große Schließfächer Dreifachturnhalle",
+          "research_or_contribution_refs": [],
+          "documents": [
+            {
+              "label": "RIS Feldkirchen – Beschlussvorlage 5278/2026",
+              "url": "https://buergerinfo-feldkirchen.digitalfabrix.de/getfile.asp?id=74594&type=do",
+              "type": "primary_official",
+              "verification_status": "direct_link_verified_2026-08-29"
+            }
+          ],
+          "decision_status": "official_implemented",
+          "decision_evidence": [
+            {
+              "type": "public_minutes",
+              "url": "https://buergerinfo-feldkirchen.digitalfabrix.de/getfile.asp?id=74927&type=do"
+            }
+          ],
+          "needs_full_agenda_audit": true,
+          "decision_result": "Schließfach-Antrag bereits umgesetzt: 34 Fächer, 4.757,98 Euro; kein weiterer Beschluss erforderlich",
+          "selected_after_full_agenda_review": true,
+          "agenda_no": 8
+        },
+        {
+          "item_id": "S020-T09",
+          "legacy_label": "5281/2026",
+          "proposal_no": "5281/2026",
+          "title": "Ortsentwicklungskonzept – Rahmenplan Bahnhof/Bahnhofstraße/Emeranstraße und Kirchenvorplatz",
+          "research_or_contribution_refs": [
+            "R036"
+          ],
+          "documents": [
+            {
+              "label": "RIS Feldkirchen – Sitzung 23.07.2026",
+              "url": "https://buergerinfo-feldkirchen.digitalfabrix.de/si0057.asp?__ksinr=1026",
+              "type": "primary_official",
+              "verification_status": "legacy_link_preserved"
+            },
+            {
+              "label": "RIS Feldkirchen – Beschlussvorlage 5281/2026",
+              "url": "https://buergerinfo-feldkirchen.digitalfabrix.de/getfile.asp?id=74606&type=do",
+              "type": "primary_official",
+              "verification_status": "legacy_link_preserved"
+            }
+          ],
+          "decision_status": "official_decision",
+          "decision_evidence": [
+            {
+              "type": "public_minutes",
+              "url": "https://buergerinfo-feldkirchen.digitalfabrix.de/getfile.asp?id=74927&type=do"
+            }
+          ],
+          "needs_full_agenda_audit": true,
+          "decision_result": "Rahmenplan Bahnhofsumfeld und Umgestaltung Kirchenvorplatz zunächst nicht umgesetzt; wirtschaftliche Entwicklung abwarten (20:0)",
+          "selected_after_full_agenda_review": true,
+          "agenda_no": 9
+        }
+      ],
+      "other_public_items_note": "Weitere öffentliche TOPs wurden vollständig geprüft und nicht einzeln als wichtig ausgewiesen.",
+      "agenda_audit_status": "full_public_agenda_verified",
+      "decision_audit_status": "official_public_minutes_verified_2026-09-23",
+      "minutes": {
+        "status": "approved_and_published",
+        "approval_status": "approved",
+        "approval_date": "2026-08-20",
+        "publication_status": "published",
+        "publication_date": "2026-09-22",
+        "direct_public_minutes_url": "https://buergerinfo-feldkirchen.digitalfabrix.de/getfile.asp?id=74927&type=do",
+        "link_status": "direct_link_verified",
+        "evidence": [
+          {
+            "type": "public_minutes",
+            "url": "https://buergerinfo-feldkirchen.digitalfabrix.de/getfile.asp?id=74927&type=do"
+          }
+        ]
+      },
+      "legacy_verification_status": "agenda/proposal numbers verified",
+      "full_public_agenda": [
+        {
+          "no": 1,
+          "title": "Genehmigung der Niederschrift vom 25.06.2026",
+          "agenda_item_id": "S020-A01"
+        },
+        {
+          "no": 2,
+          "proposal": "5293/2026",
+          "title": "Wahl dreier Generationenbeauftragten aus dem Gemeinderat",
+          "agenda_item_id": "S020-A02"
+        },
+        {
+          "no": 3,
+          "proposal": "5285/2026",
+          "title": "Parkraumkonzept der Gemeinde Feldkirchen",
+          "agenda_item_id": "S020-A03"
+        },
+        {
+          "no": 4,
+          "proposal": "5287/2026",
+          "title": "Instandsetzungskonzept Feuerwehrgerätehaus Feldkirchen",
+          "agenda_item_id": "S020-A04"
+        },
+        {
+          "no": 5,
+          "proposal": "5283/2026",
+          "title": "Errichtung einer Hundewiese östlich des Friedhofs – weiteres Vorgehen nach schalltechnischer Stellungnahme",
+          "agenda_item_id": "S020-A05"
+        },
+        {
+          "no": 6,
+          "proposal": "5275/2026",
+          "title": "Bürgerversammlung: Tempo 30 auf stark frequentierten Schulwegen",
+          "agenda_item_id": "S020-A06"
+        },
+        {
+          "no": 7,
+          "proposal": "5277/2026",
+          "title": "Bürgerversammlung: Radfahr-/Schutzstreifen B471 und M18",
+          "agenda_item_id": "S020-A07"
+        },
+        {
+          "no": 8,
+          "proposal": "5278/2026",
+          "title": "Bürgerversammlung: große Schließfächer Dreifachturnhalle",
+          "agenda_item_id": "S020-A08"
+        },
+        {
+          "no": 9,
+          "proposal": "5281/2026",
+          "title": "Ortsentwicklungskonzept – Rahmenplan Bahnhof/Bahnhofstraße/Emeranstraße und Kirchenvorplatz",
+          "agenda_item_id": "S020-A09"
+        },
+        {
+          "no": 10,
+          "proposal": "5291/2026",
+          "title": "Bestellung des Ersten Bürgermeisters zum Eheschließungsstandesbeamten",
+          "agenda_item_id": "S020-A10"
+        },
+        {
+          "no": 11,
+          "proposal": "5249/2026",
+          "title": "Bekanntgabe nichtöffentlich gefasster Beschlüsse nach Wegfall des Geheimhaltungsgrundes",
+          "agenda_item_id": "S020-A11"
+        },
+        {
+          "no": 12,
+          "proposal": "5303/2026",
+          "title": "Stellungnahme zur Bauleitplanung der Gemeinde Poing, Bebauungsplan Nr. 54.1, 1. Änderung",
+          "agenda_item_id": "S020-A12"
+        },
+        {
+          "no": 13,
+          "title": "Bekanntgaben und Berichte",
+          "agenda_item_id": "S020-A13"
+        },
+        {
+          "no": 14,
+          "title": "Anfragen",
+          "agenda_item_id": "S020-A14"
+        }
+      ],
+      "important_selection_status": "completed_after_full_agenda_review"
+    }
+  ],
+  "bezuege": [
+    {
+      "id": "OBJ001",
+      "canonical_name": "B471",
+      "type": "infrastructure",
+      "display_name": "B471",
+      "aliases": [
+        {
+          "name": "Bundesstraße 471",
+          "kind": "official_long_form"
+        },
+        {
+          "name": "Aschheimer Straße",
+          "kind": "local_road_name",
+          "scope": "Feldkirchen"
+        },
+        {
+          "name": "Oberndorfer Straße",
+          "kind": "local_road_name",
+          "scope": "Feldkirchen"
+        }
+      ],
+      "public_description": "Zur B471 werden weitere Beiträge und Themen verknüpft, wenn sie inhaltlich relevant sind.",
+      "contribution_refs": [
+        {
+          "id": "R051",
+          "relation": "route_and_cycle_safety"
+        },
+        {
+          "id": "R007",
+          "relation": "citizen_requests"
+        },
+        {
+          "id": "R012",
+          "relation": "council_follow_up"
+        },
+        {
+          "id": "R094",
+          "relation": "speed_limit_and_school_route"
+        },
+        {
+          "id": "R074",
+          "relation": "regional_corridor_planning"
+        }
+      ],
+      "topic_refs": [
+        {
+          "id": "T003",
+          "relation": "cycle_network"
+        },
+        {
+          "id": "T015",
+          "relation": "traffic_safety"
+        }
+      ]
+    },
+    {
+      "id": "OBJ002",
+      "canonical_name": "A94",
+      "type": "infrastructure",
+      "display_name": "A94",
+      "aliases": [
+        {
+          "name": "Bundesautobahn 94",
+          "kind": "official_long_form"
+        },
+        {
+          "name": "Autobahn A94",
+          "kind": "common_form"
+        }
+      ],
+      "public_description": "Zur A94 werden weitere Beiträge und Themen verknüpft, wenn sie inhaltlich relevant sind.",
+      "contribution_refs": [
+        {
+          "id": "R005",
+          "relation": "cycle_connection_toward_crossing"
+        },
+        {
+          "id": "R021",
+          "relation": "new_cycle_and_pedestrian_bridge"
+        }
+      ],
+      "topic_refs": [
+        {
+          "id": "T003",
+          "relation": "cycle_network_and_crossing"
+        }
+      ]
+    },
+    {
+      "id": "OBJ003",
+      "canonical_name": "A99",
+      "type": "infrastructure",
+      "display_name": "A99",
+      "aliases": [
+        {
+          "name": "Bundesautobahn 99",
+          "kind": "official_long_form"
+        },
+        {
+          "name": "Autobahnring München",
+          "kind": "common_form"
+        }
+      ],
+      "public_description": "Zur A99 werden weitere Beiträge und Themen verknüpft, wenn sie inhaltlich relevant sind.",
+      "contribution_refs": [
+        {
+          "id": "R059",
+          "relation": "construction_and_closure"
+        },
+        {
+          "id": "R008",
+          "relation": "expansion_and_M18_relocation"
+        },
+        {
+          "id": "R052",
+          "relation": "expansion_and_M18_relocation"
+        },
+        {
+          "id": "R074",
+          "relation": "regional_relief_planning"
+        }
+      ],
+      "topic_refs": [
+        {
+          "id": "T012",
+          "relation": "expansion"
+        }
+      ]
+    },
+    {
+      "id": "OBJ004",
+      "canonical_name": "M18/EBE4",
+      "type": "infrastructure",
+      "display_name": "M18/EBE4",
+      "aliases": [
+        {
+          "name": "M18",
+          "kind": "district_road_number",
+          "scope": "Landkreis München"
+        },
+        {
+          "name": "EBE4",
+          "kind": "district_road_number",
+          "scope": "Landkreis Ebersberg"
+        },
+        {
+          "name": "Kreisstraße M18",
+          "kind": "official_long_form",
+          "scope": "Landkreis München"
+        },
+        {
+          "name": "Kreisstraße EBE4",
+          "kind": "official_long_form",
+          "scope": "Landkreis Ebersberg"
+        }
+      ],
+      "public_description": "Zur Kreisstraßenverbindung M18/EBE4 werden weitere Beiträge und Themen verknüpft, wenn sie inhaltlich relevant sind.",
+      "contribution_refs": [
+        {
+          "id": "R008",
+          "relation": "relocation_variant"
+        },
+        {
+          "id": "R052",
+          "relation": "relocation_planning"
+        },
+        {
+          "id": "R012",
+          "relation": "cycle_lane_review"
+        },
+        {
+          "id": "R094",
+          "relation": "traffic_safety"
+        }
+      ],
+      "topic_refs": [
+        {
+          "id": "T012",
+          "relation": "A99_expansion_and_relocation"
+        },
+        {
+          "id": "T015",
+          "relation": "traffic_safety"
+        }
+      ]
+    },
+    {
+      "id": "OBJ005",
+      "canonical_name": "Heimstettener See",
+      "type": "place",
+      "display_name": "Heimstettener See",
+      "aliases": [],
+      "public_description": "Zum Heimstettener See werden weitere Beiträge und Themen verknüpft, wenn sie inhaltlich relevant sind.",
+      "contribution_refs": [
+        {
+          "id": "R045",
+          "relation": "parking_management"
+        },
+        {
+          "id": "R048",
+          "relation": "water_quality_and_health"
+        },
+        {
+          "id": "R056",
+          "relation": "camping_project"
+        }
+      ],
+      "topic_refs": [
+        {
+          "id": "T013",
+          "relation": "use_recreation_health"
+        }
+      ]
+    },
+    {
+      "id": "OBJ006",
+      "canonical_name": "MobilityHub München Ost",
+      "type": "project",
+      "display_name": "MobilityHub München Ost",
+      "aliases": [
+        {
+          "name": "MobilityHub",
+          "kind": "short_form",
+          "scope": "München Ost"
+        }
+      ],
+      "public_description": "Zum MobilityHub München Ost werden weitere Beiträge und Themen verknüpft, wenn sie inhaltlich relevant sind.",
+      "contribution_refs": [
+        {
+          "id": "R053",
+          "relation": "study_and_site_selection"
+        },
+        {
+          "id": "R055",
+          "relation": "concept_study"
+        }
+      ],
+      "topic_refs": [
+        {
+          "id": "T011",
+          "relation": "intermunicipal_mobility"
+        }
+      ]
+    },
+    {
+      "id": "OBJ007",
+      "canonical_name": "Radschnellverbindung München–Markt Schwaben",
+      "type": "project",
+      "display_name": "Radschnellverbindung München–Markt Schwaben",
+      "aliases": [
+        {
+          "name": "Radschnellweg München–Markt Schwaben",
+          "kind": "common_form"
+        },
+        {
+          "name": "Radschnellverbindung München-Markt Schwaben",
+          "kind": "spelling_variant"
+        }
+      ],
+      "public_description": "Zur Radschnellverbindung München–Markt Schwaben werden weitere Beiträge und Themen verknüpft, wenn sie inhaltlich relevant sind.",
+      "contribution_refs": [
+        {
+          "id": "R093",
+          "relation": "funding_and_route_status"
+        }
+      ],
+      "topic_refs": [
+        {
+          "id": "T003",
+          "relation": "regional_cycle_network"
+        }
+      ]
+    },
+    {
+      "id": "OBJ008",
+      "canonical_name": "Fuß- und Radwegbrücke über die A94",
+      "type": "project",
+      "display_name": "Fuß- und Radwegbrücke über die A94",
+      "aliases": [
+        {
+          "name": "A94-Querung",
+          "kind": "short_form"
+        }
+      ],
+      "public_description": "Zur Fuß- und Radwegbrücke über die A94 werden weitere Beiträge und Themen verknüpft, wenn sie inhaltlich relevant sind.",
+      "contribution_refs": [
+        {
+          "id": "R021",
+          "relation": "construction"
+        }
+      ],
+      "topic_refs": [
+        {
+          "id": "T003",
+          "relation": "cycle_connection"
+        }
+      ]
+    }
+  ],
+  "html_cards": {
+    "R069": "<article class=\"card contribution\" data-place=\"Feldkirchen\" data-search=\"15. september 2026 feldkirchen natur &amp; umwelt hundewiese: neue vorlage nennt schallschutzkosten und park-alternative die öffentlich freigegebene vorlage konkretisiert schallschutz, kosten und betriebsfragen und stellt einer eingezäunten hundewiese eine offene park- und freilauffläche als alternative gegenüber. der gemeinderat hatte am 26. märz 2026 mehrheitlich beschlossen, an einer hundewiese östlich des friedhofs festzuhalten und dafür etwa 1.000 m² vorzusehen. die schalltechnische untersuchung kam anschließend zu dem ergebnis, dass eine uneingeschränkte nutzung ohne schutzmaßnahmen nicht möglich wäre. vorgesehen wären unter anderem eine auf etwa 85 × 12 meter zugeschnittene fläche, zeitliche nutzungsbeschränkungen und eine rund 50 meter lange sowie 1,5 meter hohe schalldichte abschirmung. für diese abschirmung nennt die verwaltung nach einer markterkundung angebote von etwa 15.200 bis 30.000 euro; ein deutlich höheres angebot lag bei rund 115.000 euro.\n\nzusätzlich zu den investitionskosten nennt die vorlage offene betriebsfragen: wer die anlage täglich auf- und zusperrt, wie die nutzungszeiten kontrolliert und verstöße behandelt werden, ist noch nicht geklärt. die verwaltung weist außerdem darauf hin, dass ihr keine belastbaren zahlen zum konkreten bedarf einer hundewiese vorliegen; im gemeindegebiet sind 372 hunde gemeldet.\n\ndie vorlage dokumentiert zugleich einwände aus der bürgerschaft, insbesondere der initiative „lebenswertes feldkirchen – pfoten weg vom wohngebiet“. diese betreffen unter anderem bedarf, kosten, nähe zu wohnbebauung und friedhof, nutzung durch kinder sowie zusätzlichen parkdruck. die verwaltung beantwortet einzelne punkte, ohne damit die politische abwägung vorwegzunehmen.\n\nals alternative wird die prüfung einer offenen park- und freilauffläche beschrieben, in die auch hundebesitzer einbezogen werden könnten. genannt werden als mögliche gestaltungselemente unter anderem tiny forest, biodiversitätsgarten und ein öffentlicher trinkwasserbrunnen. dabei handelt es sich um eine prüf- und gestaltungsoption, nicht um eine bereits beschlossene planung.\n\ndie fortgeschriebene beschlussvorlage wurde im ris öffentlich freigegeben. ein zugehöriger tagesordnungspunkt bzw. bestätigter sitzungstermin ist in der veröffentlichten tagesordnung derzeit nicht nachgewiesen. positiv ist zunächst, wie ausführlich die verwaltung den stand der diskussion dokumentiert. die vorlage macht gutachten, kosten und praktische betriebsfragen sichtbar, greift einwände aus der bürgerschaft auf und stellt verschiedene nutzungsmöglichkeiten gegenüber. gerade bei einem kontroversen lokalen thema schafft eine solche transparente entscheidungsgrundlage gute voraussetzungen dafür, unterschiedliche interessen nachvollziehen und abwägen zu können.\n\nauch die von der verwaltung eingebrachte alternative verdient aus grüner sicht aufmerksamkeit. eine offen zugängliche grünfläche, die beispielsweise einen tiny forest, einen biodiversitätsgarten und einen trinkwasserbrunnen miteinander verbindet und zugleich möglichkeiten für hundehalter berücksichtigt, könnte mehrere funktionen auf derselben fläche zusammenbringen: erholung und begegnung, artenvielfalt und klimaanpassung. solche grünflächen, bäume, biodiversitätsmaßnahmen und trinkbrunnen entsprechen wichtigen zielen grüner kommunalpolitik.\n\ndamit ist noch keine entscheidung über die konkrete gestaltung der fläche vorweggenommen. entscheidend wäre, die unterschiedlichen nutzungsinteressen und die ökologischen möglichkeiten in der weiteren planung gemeinsam zu betrachten. ris feldkirchen – beschlussvorlage 5283/2026 ris feldkirchen – dokumente mit freigabe\" data-tags=\"Hundewiese Grünfläche östlich des Friedhofs\" id=\"R069\">\n<div class=\"meta-row\">\n<span class=\"date\">15. September 2026</span>\n<span class=\"place\">Feldkirchen</span>\n<span class=\"category\">Natur &amp; Umwelt</span>\n</div>\n<h3>Hundewiese: Neue Vorlage nennt Schallschutzkosten und Park-Alternative</h3>\n<p class=\"subtitle\">Die öffentlich freigegebene Vorlage konkretisiert Schallschutz, Kosten und Betriebsfragen und stellt einer eingezäunten Hundewiese eine offene Park- und Freilauffläche als Alternative gegenüber.</p>\n<div class=\"body\"><p>Der Gemeinderat hatte am 26. März 2026 mehrheitlich beschlossen, an einer Hundewiese östlich des Friedhofs festzuhalten und dafür etwa 1.000 m² vorzusehen. Die schalltechnische Untersuchung kam anschließend zu dem Ergebnis, dass eine uneingeschränkte Nutzung ohne Schutzmaßnahmen nicht möglich wäre. Vorgesehen wären unter anderem eine auf etwa 85 × 12 Meter zugeschnittene Fläche, zeitliche Nutzungsbeschränkungen und eine rund 50 Meter lange sowie 1,5 Meter hohe schalldichte Abschirmung. Für diese Abschirmung nennt die Verwaltung nach einer Markterkundung Angebote von etwa 15.200 bis 30.000 Euro; ein deutlich höheres Angebot lag bei rund 115.000 Euro.</p><p>Zusätzlich zu den Investitionskosten nennt die Vorlage offene Betriebsfragen: Wer die Anlage täglich auf- und zusperrt, wie die Nutzungszeiten kontrolliert und Verstöße behandelt werden, ist noch nicht geklärt. Die Verwaltung weist außerdem darauf hin, dass ihr keine belastbaren Zahlen zum konkreten Bedarf einer Hundewiese vorliegen; im Gemeindegebiet sind 372 Hunde gemeldet.</p><p>Die Vorlage dokumentiert zugleich Einwände aus der Bürgerschaft, insbesondere der Initiative „Lebenswertes Feldkirchen – Pfoten weg vom Wohngebiet“. Diese betreffen unter anderem Bedarf, Kosten, Nähe zu Wohnbebauung und Friedhof, Nutzung durch Kinder sowie zusätzlichen Parkdruck. Die Verwaltung beantwortet einzelne Punkte, ohne damit die politische Abwägung vorwegzunehmen.</p><p>Als Alternative wird die Prüfung einer offenen Park- und Freilauffläche beschrieben, in die auch Hundebesitzer einbezogen werden könnten. Genannt werden als mögliche Gestaltungselemente unter anderem Tiny Forest, Biodiversitätsgarten und ein öffentlicher Trinkwasserbrunnen. Dabei handelt es sich um eine Prüf- und Gestaltungsoption, nicht um eine bereits beschlossene Planung.</p><p>Die fortgeschriebene Beschlussvorlage wurde im RIS öffentlich freigegeben. Ein zugehöriger Tagesordnungspunkt bzw. bestätigter Sitzungstermin ist in der veröffentlichten Tagesordnung derzeit nicht nachgewiesen.</p></div>\n<h4>Quellen</h4>\n<ul class=\"sources\"><li><a href=\"https://buergerinfo-feldkirchen.digitalfabrix.de/getfile.asp?id=74647&amp;type=do\" rel=\"noopener noreferrer\" target=\"_blank\">RIS Feldkirchen – Beschlussvorlage 5283/2026</a> · 15. September 2026</li><li><a href=\"https://buergerinfo-feldkirchen.digitalfabrix.de/do0040.asp?smcadat=2461011\" rel=\"noopener noreferrer\" target=\"_blank\">RIS Feldkirchen – Dokumente mit Freigabe</a> · 15. September 2026</li></ul>\n<section class=\"assessment\"><h4>Unsere Einordnung</h4><p>Positiv ist zunächst, wie ausführlich die Verwaltung den Stand der Diskussion dokumentiert. Die Vorlage macht Gutachten, Kosten und praktische Betriebsfragen sichtbar, greift Einwände aus der Bürgerschaft auf und stellt verschiedene Nutzungsmöglichkeiten gegenüber. Gerade bei einem kontroversen lokalen Thema schafft eine solche transparente Entscheidungsgrundlage gute Voraussetzungen dafür, unterschiedliche Interessen nachvollziehen und abwägen zu können.</p><p>Auch die von der Verwaltung eingebrachte Alternative verdient aus grüner Sicht Aufmerksamkeit. Eine offen zugängliche Grünfläche, die beispielsweise einen Tiny Forest, einen Biodiversitätsgarten und einen Trinkwasserbrunnen miteinander verbindet und zugleich Möglichkeiten für Hundehalter berücksichtigt, könnte mehrere Funktionen auf derselben Fläche zusammenbringen: Erholung und Begegnung, Artenvielfalt und Klimaanpassung. Solche Grünflächen, Bäume, Biodiversitätsmaßnahmen und Trinkbrunnen entsprechen wichtigen Zielen grüner Kommunalpolitik.</p><p>Damit ist noch keine Entscheidung über die konkrete Gestaltung der Fläche vorweggenommen. Entscheidend wäre, die unterschiedlichen Nutzungsinteressen und die ökologischen Möglichkeiten in der weiteren Planung gemeinsam zu betrachten.</p></section>\n</article>",
+    "R068": "<article class=\"card contribution\" data-place=\"Feldkirchen\" data-search=\"9. september 2026 feldkirchen mobilität &amp; verkehr gemeinde veröffentlicht beschlossenes parkraumkonzept das konzept zum ruhenden verkehr ist jetzt als pdf öffentlich abrufbar. die gemeinde hat am 9. september das gemeinsam mit dem stadt- und verkehrsplanungsbüro kaulen erarbeitete parkraumkonzept veröffentlicht. sie verweist dabei auf den gemeinderatsbeschluss vom 23. juli. nach angaben der gemeinde richtet sich das konzept insbesondere auf probleme des ruhenden kfz-verkehrs an klassifizierten straßen und in teilen des gewerbegebiets. das vollständige konzept steht als pdf zur verfügung. gemeinde feldkirchen – neues parkraumkonzept in feldkirchen gemeinde feldkirchen – parkraumkonzept 2026 (pdf)\" data-tags=\"Parkraumkonzept\" id=\"R068\">\n<div class=\"meta-row\">\n<span class=\"date\">9. September 2026</span>\n<span class=\"place\">Feldkirchen</span>\n<span class=\"category\">Mobilität &amp; Verkehr</span>\n</div>\n<h3>Gemeinde veröffentlicht beschlossenes Parkraumkonzept</h3>\n<p class=\"subtitle\">Das Konzept zum ruhenden Verkehr ist jetzt als PDF öffentlich abrufbar.</p>\n<div class=\"body\"><p>Die Gemeinde hat am 9. September das gemeinsam mit dem Stadt- und Verkehrsplanungsbüro Kaulen erarbeitete Parkraumkonzept veröffentlicht. Die am 22. September freigegebene öffentliche Niederschrift bestätigt nun den Beschluss vom 23. Juli: Der Gemeinderat nahm das Parkraumkonzept in der Fassung vom 26. März einstimmig an und beauftragte die Verwaltung mit der Umsetzung.</p><p>Mit der Überwachung des ruhenden Verkehrs soll spätestens zum 1. Januar 2027 begonnen werden; die dafür nötigen Mittel sollen im Haushalt 2027 eingestellt werden.</p></div><h4>Quellen</h4>\n<ul class=\"sources\"><li><a href=\"https://www.feldkirchen.de/bauen/nachrichten-aus-dem-bauamt/neues-parkraumkonzept-in-feldkirchen\" rel=\"noopener noreferrer\" target=\"_blank\">Gemeinde Feldkirchen – Neues Parkraumkonzept in Feldkirchen</a> · 9. September 2026</li><li><a href=\"https://www.feldkirchen.de/_Resources/Persistent/d/3/d/e/d3dee38ce3c4a9ad01384ca6ed314a2a8f8bcc12/2026%20Parkraumkonzept%20gem%20GR-Beschluss.pdf\" rel=\"noopener noreferrer\" target=\"_blank\">Gemeinde Feldkirchen – Parkraumkonzept 2026 (PDF)</a> · 9. September 2026</li><li><a href=\"https://buergerinfo-feldkirchen.digitalfabrix.de/getfile.asp?id=74927&type=do\" rel=\"noopener noreferrer\" target=\"_blank\">RIS Feldkirchen – öffentliche Niederschrift Gemeinderat 23.07.2026</a> · veröffentlicht 22. September 2026</li></ul>\n<details><summary>Was bisher passiert ist (2)</summary><ul class=\"history\"><li><a href=\"#R026\">12. März 2026 · Gemeinderat fordert Ergänzungen am Parkraumkonzept</a></li><li><a href=\"#R039\">18. August 2026 · Anwohner protestieren gegen neue Parkregelung am Friedhof</a></li></ul></details>\n<a class=\"minor-link\" href=\"#S020\">Zur zugehörigen Sitzung</a>\n<div class=\"topic-link\"><a href=\"#T006\" rel=\"noopener\" target=\"_blank\">Mehr zum Thema: Parkraumkonzept</a></div></article>",
+    "R026": "<article class=\"card contribution\" data-place=\"Feldkirchen\" data-search=\"12. märz 2026 feldkirchen mobilität &amp; verkehr gemeinderat fordert ergänzungen am parkraumkonzept nach der vorstellung des entwurfs sollen weitere straßen und konkrete maßnahmen in die planung aufgenommen werden. das beauftragte planungsbüro stellte dem gemeinderat am 12. märz 2026 den entwurf des parkraumkonzepts vor. in der diskussion wurde kritik an fehlenden konkreten maßnahmen geäußert. der gemeinderat verlangte ergänzungen für weitere straßen und bereiche; anschließend sollte das konzept erneut zur beschlussfassung vorgelegt werden. quellen ris feldkirchen – parkraumkonzept, vorlage 5159/2026 · 18. april 2026 ris feldkirchen – sitzung 12.03.2026 · 18. april 2026 münchner merkur – kritik an parkraumkonzept · 18. april 2026 zur zugehörigen sitzung mehr zum thema: parkraumkonzept\" data-tags=\"Parkraumkonzept\" id=\"R026\">\n<div class=\"meta-row\">\n<span class=\"date\">12. März 2026</span>\n<span class=\"place\">Feldkirchen</span>\n<span class=\"category\">Mobilität &amp; Verkehr</span>\n</div>\n<h3>Gemeinderat fordert Ergänzungen am Parkraumkonzept</h3>\n<p class=\"subtitle\">Nach der Vorstellung des Entwurfs sollen weitere Straßen und konkrete Maßnahmen in die Planung aufgenommen werden.</p>\n<div class=\"body\"><p>Das beauftragte Planungsbüro stellte dem Gemeinderat am 12. März 2026 den Entwurf des Parkraumkonzepts vor. In der Diskussion wurde Kritik an fehlenden konkreten Maßnahmen geäußert. Der Gemeinderat verlangte Ergänzungen für weitere Straßen und Bereiche; anschließend sollte das Konzept erneut zur Beschlussfassung vorgelegt werden.</p></div>\n<h4>Quellen</h4>\n<ul class=\"sources\"><li><a href=\"https://buergerinfo-feldkirchen.digitalfabrix.de/getfile.asp?id=72371&amp;type=do\" rel=\"noopener noreferrer\" target=\"_blank\">RIS Feldkirchen – Parkraumkonzept, Vorlage 5159/2026</a> · 18. April 2026</li><li><a href=\"https://buergerinfo-feldkirchen.digitalfabrix.de/si0057.asp?__ksinr=1017\" rel=\"noopener noreferrer\" target=\"_blank\">RIS Feldkirchen – Sitzung 12.03.2026</a> · 18. April 2026</li><li><a href=\"https://www.merkur.de/lokales/muenchen-lk/feldkirchen-ort28673/opposition-kritisiert-parkraumkonzept-als-blosse-bestandsaufnahme-94266885.html\" rel=\"noopener noreferrer\" target=\"_blank\">Münchner Merkur – Kritik an Parkraumkonzept</a> · 18. April 2026</li></ul>\n<a class=\"minor-link\" href=\"#S011\">Zur zugehörigen Sitzung</a>\n<div class=\"topic-link\"><a href=\"#T006\" rel=\"noopener\" target=\"_blank\">Mehr zum Thema: Parkraumkonzept</a></div></article>",
+    "R008": "<article class=\"card contribution\" data-place=\"Feldkirchen\" data-search=\"30. oktober 2025 feldkirchen mobilität &amp; verkehr gemeinderat stimmt variante 5 für die verlegung von m18/ebe4 zu die kreisstraßenplanung ist teil der neuordnung im umfeld des geplanten a99-ausbaus am kreuz münchen-ost. im zusammenhang mit dem geplanten ausbau der a99 stimmte der gemeinderat am 30. oktober 2025 der planvariante 5 für die verlegung der kreisstraße m18/ebe4 einstimmig zu. quellen ris feldkirchen – beschlussvorlage 5055/2025 · 30. oktober 2025 ris feldkirchen – sitzung 30.10.2025 · 30. oktober 2025 was bisher passiert ist (1) 25. september 2025 · haar lehnt vorgestellte m18/ebe4-verlegung beim a99-ausbau ab zur zugehörigen sitzung mehr zum thema: ortsentwicklung und bauleitplanung · a99-ausbau und m18/ebe4\" data-tags=\"A99/Kreuz München-Ost M18/EBE4\" id=\"R008\">\n<div class=\"meta-row\">\n<span class=\"date\">30. Oktober 2025</span>\n<span class=\"place\">Feldkirchen</span>\n<span class=\"category\">Mobilität &amp; Verkehr</span>\n</div>\n<h3>Gemeinderat stimmt Variante 5 für die Verlegung von M18/EBE4 zu</h3>\n<p class=\"subtitle\">Die Kreisstraßenplanung ist Teil der Neuordnung im Umfeld des geplanten A99-Ausbaus am Kreuz München-Ost.</p>\n<div class=\"body\"><p>Im Zusammenhang mit dem geplanten Ausbau der A99 stimmte der Gemeinderat am 30. Oktober 2025 der Planvariante 5 für die Verlegung der Kreisstraße M18/EBE4 einstimmig zu.</p></div>\n<h4>Quellen</h4>\n<ul class=\"sources\"><li><a href=\"https://buergerinfo-feldkirchen.digitalfabrix.de/getfile.asp?id=71104&amp;type=do\" rel=\"noopener noreferrer\" target=\"_blank\">RIS Feldkirchen – Beschlussvorlage 5055/2025</a> · 30. Oktober 2025</li><li><a href=\"https://buergerinfo-feldkirchen.digitalfabrix.de/si0057.asp?__ksinr=1000\" rel=\"noopener noreferrer\" target=\"_blank\">RIS Feldkirchen – Sitzung 30.10.2025</a> · 30. Oktober 2025</li></ul>\n<details><summary>Was bisher passiert ist (1)</summary><ul class=\"history\"><li><a href=\"#R052\">25. September 2025 · Haar lehnt vorgestellte M18/EBE4-Verlegung beim A99-Ausbau ab</a></li></ul></details>\n<a class=\"minor-link\" href=\"#S004\">Zur zugehörigen Sitzung</a>\n<div class=\"topic-link\"><span>Mehr zum Thema: </span><a href=\"#T002\" rel=\"noopener\" target=\"_blank\">Ortsentwicklung und Bauleitplanung</a> · <a href=\"#T012\" rel=\"noopener\" target=\"_blank\">A99-Ausbau und M18/EBE4</a></div></article>",
+    "R052": "<article class=\"card contribution\" data-place=\"Haar\" data-search=\"25. september 2025 haar mobilität &amp; verkehr haar lehnt vorgestellte m18/ebe4-verlegung beim a99-ausbau ab die diskutierte führung der kreisstraße betrifft die verbindung zwischen weißenfeld und feldkirchen. im zusammenhang mit dem geplanten achtstreifigen ausbau der a99 bis haar wurde eine neue führung der kreisstraße m18/ebe4 zwischen weißenfeld und feldkirchen vorgestellt. der haarer bauausschuss lehnte die vorgestellte variante ab. der vorgang ist unmittelbare vorgeschichte der späteren feldkirchner entscheidung zur variante 5 und betrifft die überörtliche straßenverbindung nach feldkirchen. quellen münchner merkur – wegen a99-ausbau: kreisstraße bei feldkirchen wird verlegt · 25. september 2025 mehr zum thema: a99-ausbau und m18/ebe4\" data-tags=\"A99-Ausbau M18/EBE4 Südumfahrung\" id=\"R052\">\n<div class=\"meta-row\">\n<span class=\"date\">25. September 2025</span>\n<span class=\"place\">Haar</span>\n<span class=\"category\">Mobilität &amp; Verkehr</span>\n</div>\n<h3>Haar lehnt vorgestellte M18/EBE4-Verlegung beim A99-Ausbau ab</h3>\n<p class=\"subtitle\">Die diskutierte Führung der Kreisstraße betrifft die Verbindung zwischen Weißenfeld und Feldkirchen.</p>\n<div class=\"body\"><p>Im Zusammenhang mit dem geplanten achtstreifigen Ausbau der A99 bis Haar wurde eine neue Führung der Kreisstraße M18/EBE4 zwischen Weißenfeld und Feldkirchen vorgestellt. Der Haarer Bauausschuss lehnte die vorgestellte Variante ab. Der Vorgang ist unmittelbare Vorgeschichte der späteren Feldkirchner Entscheidung zur Variante 5 und betrifft die überörtliche Straßenverbindung nach Feldkirchen.</p></div>\n<h4>Quellen</h4>\n<ul class=\"sources\"><li><a href=\"https://www.merkur.de/lokales/muenchen-lk/haar-ort104496/wegen-a99-ausbau-kreisstrasse-bei-feldkirchen-wird-verlegt-so-soll-sie-verlaufen-93953871.html\" rel=\"noopener noreferrer\" target=\"_blank\">Münchner Merkur – Wegen A99-Ausbau: Kreisstraße bei Feldkirchen wird verlegt</a> · 25. September 2025</li></ul>\n<div class=\"topic-link\"><a href=\"#T012\" rel=\"noopener\" target=\"_blank\">Mehr zum Thema: A99-Ausbau und M18/EBE4</a></div></article>",
+    "R094": "<article class=\"card contribution\" data-place=\"Feldkirchen\" data-tags=\"Tempo 30 B471 Schulwegsicherheit Verkehrssicherheit Bürgerantrag\" id=\"R094\">\n<div class=\"meta-row\"><span class=\"date\">15. Juli 2026</span><span class=\"place\">Feldkirchen</span><span class=\"category\">Mobilität &amp; Verkehr</span></div>\n<h3>Tempo 30 an der B471: Landratsamt sieht Voraussetzungen nicht erfüllt</h3>\n<p class=\"subtitle\">Die Prüfung eines Bürgerantrags konzentriert sich auf den Schulweg entlang der Aschheimer Straße; nach Ortstermin und Stellungnahme soll dort Tempo 50 bleiben.</p>\n<div class=\"body\"><p>Ausgangspunkt war ein Antrag aus der Bürgerversammlung vom 22. Oktober 2025 auf Tempo 30 an stark frequentierten Schulwegen. Die Antragstellerin konkretisierte ihn später auf den Abschnitt der B471/Aschheimer Straße zwischen Zeppelinstraße und Ortsausgang Richtung Aschheim.</p><p>Nach einem Ortstermin mit Landratsamt, Polizei, Staatlichem Bauamt Freising und Gemeinde kam das Landratsamt zu dem Ergebnis, dass der Geh- und Radweg dort ausreichend breit und weitgehend von der Fahrbahn getrennt sei. Auch die Unfalllage wurde als unauffällig bewertet. Deshalb soll auf B471 und M18 die Regelgeschwindigkeit von 50 km/h bestehen bleiben. Für die Fußgängerampel B471/Ottostraße wurde dagegen eine Verlängerung der Alles-Rot-Zeit auf vier Sekunden in Aussicht gestellt, sofern die Verkehrstechnik keine Einwände hat.</p></div>\n<h4>Quellen</h4>\n<ul class=\"sources\"><li><a href=\"https://buergerinfo-feldkirchen.digitalfabrix.de/getfile.asp?id=74581&amp;type=do\" target=\"_blank\" rel=\"noopener noreferrer\">RIS Feldkirchen – Beschlussvorlage 5275/2026</a> · 15. Juli 2026</li></ul>\n<details><summary>Was bisher passiert ist (2)</summary><ul class=\"history\"><li><a href=\"#R007\">22. Oktober 2025 · Bürgerversammlung bringt Anträge zu Radwegen, Tempo 30 und Klimazielen</a></li><li><a href=\"#R012\">4. Dezember 2025 · Gemeinderat greift mehrere Anträge aus der Bürgerversammlung auf</a></li></ul></details>\n<div class=\"topic-link\"><a href=\"#T015\" rel=\"noopener\" target=\"_blank\">Mehr zum Thema: Verkehrssicherheit an B471 und M18</a></div></article>",
+    "T012": "<article class=\"card topic-card\" data-search=\"a99-ausbau und m18/ebe4 der ausbau des autobahnrings im münchner osten verändert auch die regionalen straßenverbindungen rund um feldkirchen. im september 2025 lehnte der haarer bauausschuss eine vorgestellte führung der m18/ebe4 zwischen weißenfeld und feldkirchen ab. ende oktober stimmte der feldkirchner gemeinderat im zusammenhang mit dem a99-ausbau der planvariante 5 für die verlegung der kreisstraße zu. im august 2026 wurde an der anschlussstelle haar der verkehr auf eine behelfsbrücke der b304 umgelegt; für den abbruch der alten brücke ist im november eine mehrtägige vollsperrung der a99 angekündigt. damit umfasst das thema sowohl langfristige trassenplanung als auch konkrete bau- und umleitungsfolgen.\n\nauch in der kommunalen bauleitplanung an der weißenfelder straße wird der autobahnausbau konkret sichtbar: in der vorlage zur erweiterung des gewerbegebiets nr. 102 entfällt im südlichen bereich eine vorgesehene schutz- und leitpflanzung mit verweis auf die planung der achtstreifigen a99-erweiterung und die dortige anbauverbotszone. bei einem ausbau dieser größenordnung reicht es nicht, nur den autobahnquerschnitt zu betrachten. für feldkirchen sind die folgewirkungen auf kreisstraßen, ortsverkehr, flächen und regionale verbindungen entscheidend. varianten und bauphasen sollten deshalb danach beurteilt werden, ob sie belastungen nachvollziehbar minimieren, zusätzliche flächeninanspruchnahme begrenzen und nachhaltige mobilitätsverbindungen nicht verschlechtern. wie wird die endgültige führung der m18/ebe4 im weiteren planungs- und genehmigungsverfahren festgelegt? welche verkehrsverlagerungen und belastungen entstehen während der bauphasen für feldkirchen und die nachbargemeinden? welche maßnahmen sichern während und nach dem ausbau gute bedingungen für öpnv, rad- und fußverkehr?\" id=\"T012\">\n<div class=\"meta-row\">\n<span class=\"date\">Aktualisiert: 24. September 2026</span>\n<span class=\"category\">topic_established</span>\n</div>\n<h3>A99-Ausbau und M18/EBE4</h3>\n<div class=\"body\"><p>Der Ausbau des Autobahnrings im Münchner Osten verändert auch die regionalen Straßenverbindungen rund um Feldkirchen. Im September 2025 lehnte der Haarer Bauausschuss eine vorgestellte Führung der M18/EBE4 zwischen Weißenfeld und Feldkirchen ab. Ende Oktober stimmte der Feldkirchner Gemeinderat im Zusammenhang mit dem A99-Ausbau der Planvariante 5 für die Verlegung der Kreisstraße zu. Im August 2026 wurde an der Anschlussstelle Haar der Verkehr auf eine Behelfsbrücke der B304 umgelegt; für den Abbruch der alten Brücke ist im November eine mehrtägige Vollsperrung der A99 angekündigt. Damit umfasst das Thema sowohl langfristige Trassenplanung als auch konkrete Bau- und Umleitungsfolgen.</p><p>Auch in der kommunalen Bauleitplanung an der Weißenfelder Straße wird der Autobahnausbau konkret sichtbar: In der Vorlage zur Erweiterung des Gewerbegebiets Nr. 102 entfällt im südlichen Bereich eine vorgesehene Schutz- und Leitpflanzung mit Verweis auf die Planung der achtstreifigen A99-Erweiterung und die dortige Anbauverbotszone.</p></div>\n<section class=\"assessment\"><h4>Unsere Einordnung</h4><p>Bei einem Ausbau dieser Größenordnung reicht es nicht, nur den Autobahnquerschnitt zu betrachten. Für Feldkirchen sind die Folgewirkungen auf Kreisstraßen, Ortsverkehr, Flächen und regionale Verbindungen entscheidend. Varianten und Bauphasen sollten deshalb danach beurteilt werden, ob sie Belastungen nachvollziehbar minimieren, zusätzliche Flächeninanspruchnahme begrenzen und nachhaltige Mobilitätsverbindungen nicht verschlechtern.</p></section>\n<details>\n<summary>Offene Fragen (3)</summary>\n<ul><li>Wie wird die endgültige Führung der M18/EBE4 im weiteren Planungs- und Genehmigungsverfahren festgelegt?</li><li>Welche Verkehrsverlagerungen und Belastungen entstehen während der Bauphasen für Feldkirchen und die Nachbargemeinden?</li><li>Welche Maßnahmen sichern während und nach dem Ausbau gute Bedingungen für ÖPNV, Rad- und Fußverkehr?</li></ul>\n</details>\n<details>\n<summary>Quellen (6)</summary>\n<ul class=\"sources\"><li><a href=\"https://www.merkur.de/lokales/muenchen-lk/haar-ort104496/wegen-a99-ausbau-kreisstrasse-bei-feldkirchen-wird-verlegt-so-soll-sie-verlaufen-93953871.html\" rel=\"noopener noreferrer\" target=\"_blank\"><span class=\"source-date\">25. September 2025</span> · Münchner Merkur – Wegen A99-Ausbau: Kreisstraße bei Feldkirchen wird verlegt</a></li><li><a href=\"https://buergerinfo-feldkirchen.digitalfabrix.de/getfile.asp?id=71104&amp;type=do\" rel=\"noopener noreferrer\" target=\"_blank\"><span class=\"source-date\">30. Oktober 2025</span> · RIS Feldkirchen – Beschlussvorlage 5055/2025</a></li><li><a href=\"https://buergerinfo-feldkirchen.digitalfabrix.de/si0057.asp?__ksinr=1000\" rel=\"noopener noreferrer\" target=\"_blank\"><span class=\"source-date\">30. Oktober 2025</span> · RIS Feldkirchen – Sitzung 30.10.2025</a></li><li><a href=\"https://www.landkreis-muenchen.de/artikel/a99-autobahnring-b304-ersatzneubau-der-bruecke-an-der-anschlussstelle-haar-1/\" rel=\"noopener noreferrer\" target=\"_blank\"><span class=\"source-date\">4. August 2026</span> · Landkreis München / Autobahn GmbH – Ersatzneubau der Brücke an der Anschlussstelle Haar</a></li><li><a href=\"https://www.merkur.de/lokales/muenchen-lk/haar-ort104496/gesperrt-a99-bei-haar-wird-fuer-drei-tage-voll-94459646.html\" rel=\"noopener noreferrer\" target=\"_blank\"><span class=\"source-date\">27. August 2026</span> · Münchner Merkur – A99 bei Haar wird für drei Tage voll gesperrt</a></li><li><a href=\"https://buergerinfo-feldkirchen.digitalfabrix.de/getfile.asp?id=72299&amp;type=do\" rel=\"noopener noreferrer\" target=\"_blank\"><span class=\"source-date\">24. September 2026</span> · RIS Feldkirchen – Beschlussvorlage 5154/2026</a></li></ul>\n</details>\n<div class=\"minor\">Erstmals angelegt: 25. September 2025</div>\n</article>"
+  },
+  "script_excerpts": {
+    "a99_context": " neue Zusammenhangs-, Handlungsspielraum- und Impulsregel.\n(function updateA99TestTopic(){\n const card=document.getElementById('T012');\n if(!card) return;\n const date=card.querySelector('.date');\n if(date) date.textContent='Aktualisiert: 29. August 2026';\n const body=card.querySelector('.body');\n if(body) body.innerHTML='<p>Der Ausbau im Münchner Osten betrifft nicht nur zusätzliche Fahrstreifen auf der A99. Zum Bauabschnitt zwischen Kirchheim und Haar gehört als Kernstück der Umbau des Autobahnkreuzes München-Ost; zugleich soll die A94 im Umfeld des Kreuzes auf rund vier Kilometern erweitert und die Anschlussstellen Feldkirchen-Ost und Haar angepasst werden. Die M18/EBE4 ist unmittelbar mit diesem Gesamtvorhaben verknüpft: Weil sie A99 und A94 in ungünstigen Winkeln quert, müssen Straße und Kreuzungsbauwerke im Zuge der Erweiterung angepasst werden. Für eine dauerhafte Verlegung wurden mehrere Varianten untersucht; Feldkirchens Gemeinderat stimmte im Oktober 2025 der Planvariante 5 zu. Damit hängen Autobahnausbau, Umbau des Kreuzes, A94-Erweiterung und die künftige Führung der Kreisstraße planerisch und räumlich eng zusammen.</p>';\n const assessment=card.querySelector('.assessment p');\n if(assessment) assessment.textContent='Für Feldkirchen lohnt sich deshalb ein breiterer Blick als nur auf Fahrstreifenzahl oder Trassenverlauf. Gerade weil mehrere große Eingriffe zusammenkommen, stellt sich die Frage, welche kommunalen Gestaltungsmöglichkeiten in Planung und Begleitmaßnahmen noch genutzt werden können. Ökologische Qualität, Flächenverbrauch, Lärm, sichere Wege und die Vernetzung von Grün- und Mobilitätsstrukturen sollten dabei gemeinsam betrachtet werden. Solche Fragen legen noch keine fertige Lösung fest, können aber helfen, Verbesserungen früh in die weitere Planung einzubringen.';\n const details=[...card.querySelectorAll('details')];\n const questions=details.find(d=>d.querySelector('summary')?.textContent.includes('Offene Fragen'));\n if(questions){\n   questions.querySelector('summary').textContent='Offene Fragen (5)';\n   questions.querySelector('ul').innerHTML='<li>Wie verändern der Umbau des Autobahnkreuzes München-Ost, die Erweiterungen von A99 und A94 und die Verlegung der M18/EBE4 zusammen Flächenverbrauch, Zerschneidung, Lärm und Verkehrsströme rund um Feldkirchen?</li><li>Welche Möglichkeiten hat Feldkirchen im weiteren Planungs- und Genehmigungsverfahren, eigene Hinweise und Anforderungen zur Ausgestaltung des Gesamtvorhabens einzubringen?</li><li>Lässt sich die ohnehin notwendige Neuplanung nutzen, um Grün- und Biotopstrukturen besser zu verbinden, zusätzliche Bäume oder andere ökologische Begleitstrukturen vorzusehen und Eingriffe möglichst gering zu halten?</li><li>Wie können Rad- und Fußverbindungen sowie sichere Querungen so geplant werden, dass der vergrößerte Straßenkorridor bestehende Verbindungen nicht weiter erschwert und möglichst sogar Verbesserungen ermöglicht?</li><li>Welche Lösungen für Entwässerung, Versickerung und Begrünung können dazu beitragen, die Folgen großer versiegelter Flächen für Klima und Wasserhaushalt zu begrenzen?</li>';\n }\n const sources=details.find(d=>d.querySelector('summary')?.textContent.includes('Quellen'));\n if(sources){\n   sources.querySelector('summary').textContent='Quellen (7)';\n   const ul=sources.querySelector('ul');\n   if(ul) ul.innerHTML='<li><a href=\"https://a99-ost.de/\" rel=\"noopener noreferrer\" target=\"_blank\"><span class=\"source-date\">29. August 2026</span> · Autobahn GmbH – Erweiterung der A99 Ost: Bau- und Planungsabschnitte</a></li><li><a href=\"https://a99-ost.de/varianten/\" rel=\"noopener noreferrer\" target=\"_blank\"><span class=\"source-date\">29. August 2026</span> · Autobahn GmbH – Variantenvergleich M18/EBE4</a></li><li><a href=\"https://www.merkur.de/lokales/muenchen-lk/haar-ort104496/wegen-a99-ausbau-kreisstrasse-bei-feldkirchen-wird-verlegt-so-soll-sie-verlaufen-93953871.html\" rel=\"noopener noreferrer\" target=\"_blank\"><span class=\"source-date\">25. September 2025</span> · Münchner Merkur – Wegen A99-Ausbau: Kreisstraße bei Feldkirchen wird verlegt</a></li><li><a href=\"https://buergerinfo-feldkirchen.digitalfabrix.de/getfile.asp?id=71104&type=do\" rel=\"noopener noreferrer\" target=\"_blank\"><span class=\"source-date\">30. Oktober 2025</span> · RIS Feldkirchen – Beschlussvorlage 5055/2025</a></li><li><a href=\"https://buergerinfo-feldkirchen.digitalfabrix.de/si0057.asp?__ksinr=1000\" rel=\"noopener noreferrer\" target=\"_blank\"><span class=\"source-date\">30. Oktober 2025</span> · RIS Feldkirchen – Sitzung 30.10.2025</a></li><li><a href=\"https://www.landkreis-muenchen.de/artikel/a99-autobahnring-b304-ersatzneubau-der-bruecke-an-der-anschlussstelle-haar-1/\" rel=\"noopener noreferrer\" target=\"_blank\"><span class=\"source-date\">4. August 2026</span> · Landkreis München / Autobahn GmbH – Ersatzneubau der Brücke an der Anschlussstelle Haar</a></li><li><a href=\"https://www.merkur.de/lokales/muenchen-lk/haar-ort104496/gesperrt-a99-bei-haar-wird-fuer-drei-tage-voll-94459646.html\" rel=\"noopener noreferrer\" target=\"_blank\"><span class=\"source-date\">27. August 2026</span> · Münchner Merkur – A99 bei Haar wird für drei Tage voll gesperrt</a></li>';\n }\n card.dataset.search=(card.textContent||'').toLowerCase();\n})();\n\n",
+    "parkraum_collision": " 2026-08-31: räumlicher Zusammenhang Kirchenstraße 4.\n(function updateKirchenstrasseContext(){\n const postDirectory='https://www.kaufda.de/Filialen/Feldkirchen-Kr-Muenchen/Postfiliale-579-Kirchenstrasse-Deutsche-Post/v-f342416777';\n const contribution=document.getElementById('R068');\n if(contribution){\n   const body=contribution.querySelector('.body');\n   if(body) body.innerHTML='<p>Nach zwei früheren Ablehnungen stimmte der Ferienausschuss am 20. August 2026 der Nutzungsänderung des Kiosks in der Kirchenstraße 4 zu einer SB-Bäckerei zu. Nach dem Bericht des Münchner Merkur ist die Zustimmung daran geknüpft, dass der Betreiber der Verwaltung Verträge über fünf Stellplätze vorlegt.</p><p>Am selben Standort wird in aktuellen Verzeichnissen wieder eine Deutsche-Post-Filiale geführt. Damit treffen an der Kirchenstraße 4 zwei für die örtliche Versorgung relevante Nutzungen zusammen. Ob und wie Postfiliale und geplante SB-Bäckerei organisatorisch oder wirtschaftlich miteinander verbunden sind, ist in den bislang gefundenen öffentlichen Quellen nicht belastbar dokumentiert.</p>';\n   const ul=contribution.querySelector('ul.sources');\n   if(ul && !ul.querySelector('a[href*=\"f342416777\"]')) ul.insertAdjacentHTML('beforeend','<li><a href=\"'+postDirectory+'\" rel=\"noopener noreferrer\" target=\"_blank\">Aktuelles Filialverzeichnis – Deutsche Post, Kirchenstraße 4</a> · abgerufen 31. August 2026</li>');\n   contribution.dataset.search=(contribution.textContent||'').toLowerCase();\n }\n const topic=document.getElementById('T010');\n if(topic){\n   const date=topic.querySelector('.date');\n   if(date) date.textContent='Aktualisiert: 31. August 2026';\n   const body=topic.querySelector('.body');\n   if(body) body.innerHTML='<p>Bei der Nahversorgung im Ortszentrum gab es im Untersuchungszeitraum mehrere Veränderungen. Die Gemeinde kündigte 2025 an, dass die Poststelle in der Kirchenstraße zum 30. September schließen und die Postabwicklung ab Oktober vollständig an den Wolfgangsplatz verlagert werden sollte. Aktuelle Filialverzeichnisse führen inzwischen wieder eine Deutsche-Post-Filiale in der Kirchenstraße 4.</p><p>Genau für diese Adresse wurde zugleich die Nutzungsänderung eines Kiosks zu einer SB-Bäckerei beantragt. Nach zwei Ablehnungen stimmte der Ferienausschuss dem Vorhaben am 20. August 2026 unter der Voraussetzung zu, dass fünf Stellplatzverträge nachgewiesen werden. Die gemeinsame Adresse verbindet damit zwei zunächst getrennt erscheinende Entwicklungen der örtlichen Versorgung. Öffentlich noch nicht belastbar geklärt ist, wann und unter welchen Bedingungen die Postfiliale an die Kirchenstraße zurückkehrte und ob zwischen Postfiliale und SB-Bäckerei eine organisatorische oder wirtschaftliche Verbindung besteht.</p>';\n   const assessment=topic.querySelector('.assessment');\n   if(assessment) assessment.innerHTML='<h4>Unsere Einordnung</h4><p>Für die Ortsmitte ist nicht nur die einzelne Genehmigung einer SB-Bäckerei relevant. Wenn am selben Standort zugleich wieder Postdienstleistungen angeboten werden, kann die Kirchenstraße 4 mehrere Funktionen der Nahversorgung bündeln. Gerade solche räumlichen Zusammenhänge sind für die Entwicklung eines lebendigen Ortszentrums wichtig.</p><p>Bevor aus der gemeinsamen Adresse weitergehende Schlüsse gezogen werden, muss jedoch geklärt werden, wie die beiden Angebote tatsächlich zusammenhängen. Für Feldkirchen bleibt darüber hinaus die Frage, wie Nahversorgung, Dienstleistungen, kurze Wege, Aufenthaltsqualität und gute Erreichbarkeit gemeinsam gestärkt werden können.</p>';\n   const details=[...topic.querySelectorAll('details')];\n   const questions=details.find(d=>d.querySelector('summary')?.textContent.includes('Offene Fragen'));\n   if(questions){\n     questions.querySelector('ul').innerHTML='<li>Wann und unter welchen Bedingungen ist die Postfiliale an die Kirchenstraße 4 zurückgekehrt?</li><li>Besteht zwischen Postfiliale und geplanter SB-Bäckerei eine organisatorische, wirtschaftliche oder betriebliche Verbindung?</li><li>Welche Nahversorgungs- und Dienstleistungsangebote sollen die Feldkirchner Ortsmitte langfristig stärken?</li><li>Wie lassen sich bei neuen Nutzungen gute Erreichbarkeit, kurze Wege, Stellplatzanforderungen sowie Fuß- und Radverkehr sinnvoll zusammenbringen?</li>';\n     questions.querySelector('summary').textContent='Offene Fragen (4)';\n   }\n   const sources=details.find(d=>d.querySelector('summary')?.textContent.includes('Quellen'));\n   if(sources){\n     const ul=sources.querySelector('ul');\n     if(ul && !ul.querySelector('a[href*=\"f342416777\"]')) ul.insertAdjacentHTML('beforeend','<li><a href=\"'+postDirectory+'\" rel=\"noopener noreferrer\" target=\"_blank\"><span class=\"source-date\">31. August 2026</span> · Aktuelles Filialverzeichnis – Deutsche Post, Kirchenstraße 4</a></li>');\n     if(ul) sources.querySelector('summary').textContent='Quellen ('+ul.children.length+')';\n   }\n   topic.dataset.search=(topic.textContent||'').toLowerCase();\n }\n const note=document.querySelector('.demo-note');\n if(note && note.textContent.includes('Stand ')) note.textContent='Stand 31. August 2026 · Öffentlicher Demonstrator';\n})();",
+    "hundewiese_update": " neuer, nun terminierter Beratungsstand.\n  const r069=document.getElementById('R069');\n  if(r069 && !r069.dataset.updated20261008){\n    r069.dataset.updated20261008='true';\n    const subtitle=r069.querySelector('.subtitle');\n    if(subtitle) subtitle.textContent='Aktualisierung vom 7.10.2026: Die Hundewiese steht am 15. Oktober erneut zur Entscheidung im Gemeinderat. '+subtitle.textContent;\n    const body=r069.querySelector('.body');\n    if(body) body.insertAdjacentHTML('beforeend','<p><strong>Neuer Stand:</strong> Die öffentliche Tagesordnung des Gemeinderats vom 15. Oktober führt die Hundewiese unter TOP 2 erneut auf. Damit ist der zuvor noch offene Sitzungstermin nun bestätigt; eine neue Sachentscheidung liegt noch nicht vor.</p>');\n    const sources=r069.querySelector('.sources');\n    if(sources) sources.insertAdjacentHTML('beforeend','<li><a href=\"'+sessionUrl+'\" target=\"_blank\" rel=\"noopener noreferrer\">RIS Feldkirchen – Gemeinderat 15.10.2026, TOP 2 / Vorlage 5283/2026</a> · 7. Oktober 2026</li>');\n  }\n\n  "
+  }
+}

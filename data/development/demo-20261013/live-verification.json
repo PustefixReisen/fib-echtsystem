@@ -1,0 +1,141 @@
+{
+  "date": "2026-10-13",
+  "environment": "Shared-Apps / fib",
+  "batch": "demo-20261013",
+  "dry_run": "executed and rolled back; events=1, messages=0, sources=0",
+  "import": "committed",
+  "repeat": "successful; identical manifest rows accepted without update",
+  "counts": [
+    {
+      "table_name": "sources",
+      "imported_count": 3,
+      "expected_count": 3
+    },
+    {
+      "table_name": "findings",
+      "imported_count": 13,
+      "expected_count": 13
+    },
+    {
+      "table_name": "processes",
+      "imported_count": 4,
+      "expected_count": 4
+    },
+    {
+      "table_name": "events",
+      "imported_count": 7,
+      "expected_count": 7
+    },
+    {
+      "table_name": "messages",
+      "imported_count": 7,
+      "expected_count": 7
+    },
+    {
+      "table_name": "event_processes",
+      "imported_count": 7,
+      "expected_count": 7
+    },
+    {
+      "table_name": "event_findings",
+      "imported_count": 14,
+      "expected_count": 14
+    }
+  ],
+  "preservation_comparison": [
+    {
+      "table_name": "sources",
+      "preserved_count": 0,
+      "unchanged": true
+    },
+    {
+      "table_name": "findings",
+      "preserved_count": 0,
+      "unchanged": true
+    },
+    {
+      "table_name": "processes",
+      "preserved_count": 0,
+      "unchanged": true
+    },
+    {
+      "table_name": "events",
+      "preserved_count": 1,
+      "unchanged": true
+    },
+    {
+      "table_name": "messages",
+      "preserved_count": 0,
+      "unchanged": true
+    },
+    {
+      "table_name": "event_processes",
+      "preserved_count": 0,
+      "unchanged": true
+    },
+    {
+      "table_name": "event_findings",
+      "preserved_count": 0,
+      "unchanged": true
+    },
+    {
+      "table_name": "topics",
+      "preserved_count": 0,
+      "unchanged": true
+    },
+    {
+      "table_name": "event_topics",
+      "preserved_count": 0,
+      "unchanged": true
+    },
+    {
+      "table_name": "process_topics",
+      "preserved_count": 0,
+      "unchanged": true
+    },
+    {
+      "table_name": "app_users",
+      "preserved_count": 1,
+      "unchanged": true
+    },
+    {
+      "table_name": "lead_responsibilities",
+      "preserved_count": 1,
+      "unchanged": true
+    },
+    {
+      "table_name": "object_last_edits",
+      "preserved_count": 1,
+      "unchanged": true
+    },
+    {
+      "table_name": "edit_locks",
+      "preserved_count": 1,
+      "unchanged": true
+    },
+    {
+      "table_name": "handover_requests",
+      "preserved_count": 0,
+      "unchanged": true
+    }
+  ],
+  "checks": [
+    {
+      "checks": {
+        "fib_triggers": 0,
+        "draft_messages": 7,
+        "sources_inactive": 3,
+        "anon_schema_access": false,
+        "unpublished_findings": 13,
+        "fib_tables_without_rls": 0,
+        "authenticated_schema_access": false
+      }
+    }
+  ],
+  "boundaries": [
+    "No auth schema read/write, no session or MFA change",
+    "No public/Memorix data read/write",
+    "No schema/role/policy change",
+    "No preview or application deployment"
+  ]
+}
