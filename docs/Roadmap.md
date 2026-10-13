@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 4.9 | 12.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
+| 4.10 | 13.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
 
 ## Statusmodell
 
@@ -159,11 +159,11 @@ Erster sichtbarer Stand:
 
 Noch bewusst nicht vorgetäuscht werden Funktionen, deren Fachservice-/Datenweg noch fehlt. Insbesondere Statuskarten ohne operative Datenquelle bleiben als noch nicht angebunden gekennzeichnet. Der nächste Teil dieses Slices bindet tatsächliches Bearbeiten/Speichern und den Meldungsentwurf über die gemeinsame Fachservice-Schicht an.
 
-### U2.2 Kontoselbstservice und Einladungsannahme – teilweise umgesetzt, Produktionsabgleich blockiert
+### U2.2 Kontoselbstservice und Einladungsannahme – teilweise umgesetzt, Live-Abnahme blockiert
 
 PR #74 enthält E-Mail-/Passwortänderung, Recovery sowie einen getrennten Einladungsablauf mit Passwort-Erstfestlegung, MFA-Einrichtung und gesonderter FIB-Freischaltung. Die Einladung aktiviert keine FIB-Mitgliedschaft. Die Sicherheitsabnahme umfasst echte Auth-/SMTP-Aufrufe, den produktiven Session-Context-Handler mit synthetischen Mitgliedschaften und Chromium-Tests; der verbindliche Ausführungsstand steht im Testbericht. Testkonten, Mailbox und Datenbank werden pro Lauf neu erzeugt und danach gelöscht; das Administratorkonto und Shared-Apps bleiben unverändert.
 
-Der Merge ist vom Nutzer bedingt autorisiert, bleibt aber bis zum Nachweis der produktiven Auth-Parameter, Callback-/E-Mail-Konfiguration und Zustellbarkeit blockiert. Hierfür fehlt ein vollständiger produktiver Nachweis einschließlich Einladungsziel, Einladungstemplate und Zustellung. Anschließend folgt die gesicherte Administratoroberfläche für Einladung und getrennte Freischaltung mit Bestätigung/Audit; danach der sichere MFA-Faktorwechsel mit Notfallwiederherstellung. Verbindlicher Prüfstand und Restpunkte: `docs/tests/PR-74-Sicherheits-und-Funktionstest.md`.
+Der Merge ist vom Nutzer bedingt autorisiert. Die produktive Auth-/SMTP-Grundkonfiguration und tatsächliche Einladungszustellung sind durch den Nutzerkommentar vom 13.10.2026 nachgewiesen; diese Tests werden nicht erneut angefordert. Produktiver Session-Context-Code und Mitgliedschaftsgrenzen wurden lesend abgeglichen. Noch offen: geprüften PR-Stand in der Vorschau bereitstellen, eindeutiger Testkonto-Zugang mit frischer Einladung, Live-Annahme/Passwort/MFA/Warteansicht sowie Recovery/Reauth und die verbleibende Memorix-Callback-Kompatibilität. Das Testkonto wird produktiv nicht als Redakteur aktiviert. Erst danach Sicherheitsabnahme und Merge; anschließend gesicherte Administratoroberfläche für Einladung und getrennte Freischaltung mit Bestätigung/Audit, danach MFA-Faktorwechsel/Notfallwiederherstellung. Verbindliche Nachweise und konkrete Restmatrix: `docs/tests/PR-74-Sicherheits-und-Funktionstest.md`.
 
 ## 4. Verbindliche Abschlussquellen der Gründung und Architekturkonkretisierung
 
@@ -213,6 +213,7 @@ Der Merge ist vom Nutzer bedingt autorisiert, bleibt aber bis zum Nachweis der p
 
 | Version | Datum | Änderung |
 |---|---|---|
+| 4.10 | 13.10.2026 | Produktive Auth-/SMTP-Nachweise für PR #74 anerkannt; verbleibende Vorschau-, Testzugangs-, Live- und Memorix-Abnahmegrenzen präzisiert. |
 | 4.9 | 12.10.2026 | PR #74 um sichere Einladungsannahme, Passwort-Erstfestlegung, MFA-Wiederaufnahme und getrennte FIB-Freischaltung erweitert; Produktionsnachweise bleiben Merge-Bedingung. |
 | 4.8 | 12.10.2026 | PR #74 mit realer isolierter Auth-/SMTP- und Browserabnahme; Recovery-Weg ergänzt. Nur produktiver Konfigurations-/Zustellnachweis bleibt als Merge-Blocker. |
 | 4.7 | 12.10.2026 | PR #74 Kontoselbstservice mit Handler-Tests nachgebessert; Auth-Live-Abnahme und ausdrückliche Freigabe als Merge-Blocker dokumentiert. |
