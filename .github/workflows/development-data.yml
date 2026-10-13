@@ -1,0 +1,36 @@
+name: Development data import
+on:
+  pull_request:
+    paths:
+      - 'data/development/**'
+      - 'scripts/development-data/**'
+      - '.github/workflows/development-data.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'data/development/**'
+      - 'scripts/development-data/**'
+      - '.github/workflows/development-data.yml'
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Rebuild and check committed sample
+        run: |
+          python scripts/development-data/build.py
+          git diff --exit-code -- data/development/
+      - name: Install embedded PostgreSQL in scratch
+        run: npm install --prefix "$RUNNER_TEMP/fib-data-test" --no-audit --no-fund @electric-sql/pglite@0.3.14
+      - name: Verify transaction and import behavior
+        env:
+          PGLITE_MODULE: ${{ runner.temp }}/fib-data-test/node_modules/@electric-sql/pglite/dist/index.js
+        run: node scripts/development-data/test.mjs
