@@ -505,9 +505,10 @@ export function App() {
             <p className="nav-heading">Redaktion</p>
             <details>
               <summary>Recherche</summary>
+              <button className="nav-subitem" disabled>Rechercheaufträge</button>
               <button className="nav-subitem" disabled>Funde</button>
+              <button className="nav-subitem" disabled>Ereignisse</button>
               <button className="nav-subitem" disabled>Quellen</button>
-              <button className="nav-subitem" disabled>Beobachtungsaufträge</button>
             </details>
             <details>
               <summary>Veröffentlichung</summary>
