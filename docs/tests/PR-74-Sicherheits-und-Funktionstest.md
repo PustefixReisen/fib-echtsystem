@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 0.7 | 13.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
+| 0.8 | 13.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
 
 ## Ergebnis
 
@@ -213,6 +213,14 @@ Lokal mit Docker: ausschließlich die Dateien unter `tests/auth-sandbox/` verwen
 - TypeScript und Produktionsbuild dieser Anzeigeänderung lokal erfolgreich mit isolierten Platzhalter-Einstellungen geprüft. Die Änderung am Client begründet neue CI-Prüfungen; die bisherigen 127 erfolgreichen Fälle bleiben Nachweise des Stands `7b67129`. Vorschauaktualisierung und aktuelle CI-Ergebnisse gesondert prüfen, keine vollständige Sicherheitsabnahme behaupten.
 - Noch kein Recovery-Link angefordert und keine MFA eingerichtet. Wiederherstellung wäre ein eigener Test und ersetzt nicht den offenen vollständigen Einladungstest. Keine erneute Einladung an das inzwischen bestätigte Konto; kein Löschen oder Zurücksetzen des Kontos.
 
+## Live-Nachweis MFA und getrennte Freischaltung, 12:05 Europe/Berlin
+
+Der Nutzer bestätigte um 12:03 die angezeigte Testadresse nach Bereitstellung der Identitätsanzeige. Anschließend richtete er den Authenticator selbst ein. Sein Screenshot um 12:05 zeigt am Testkonto „Freischaltung ausstehend“, „Dein zweiter Faktor ist bestätigt“ und den Hinweis auf die gesonderte Administratorfreischaltung. Rein lesender Abgleich um 12:05:56: genau ein verifizierter MFA-Faktor, E-Mail bestätigt, weiterhin keine FIB-Mitgliedschaft. Damit sind Live-MFA-Einrichtung und die Warteansicht ohne automatische Redaktionsfreischaltung nachgewiesen. Es wurden keine Mitgliedschaft, Rolle oder Produktivdaten geändert. Der Agent hat keine MFA-Secrets oder Codes erfasst.
+
+Die normale Testsitzung wurde genutzt; die vollständige Kette Einladung → Erstpasswort → MFA bleibt daher offen. Ein separat aufgezeichneter direkter produktiver AAL1/AAL2-API-Negativtest ist damit nicht ersetzt. Nächster interaktiver Test: ausschließlich das Testkonto lokal abmelden, über die Vorschau einen Recovery-Link anfordern und Passwortneuvergabe erst nach bestehender MFA prüfen. Kein Kontolöschen oder Admin-Reset.
+
+Vorschau #15 (Run 38380411833) hat Commit `a359ea51922fee53fe71502c5138c718d0697588` erfolgreich gebaut und bereitgestellt; Asset `index-CUeT6dDR.js` anhand Browser-DOM und Buildlog abgeglichen. Alle drei zugehörigen CI-Läufe sind erfolgreich: Editorial Web CI #61 (38380357657), Core Services CI #24 (38380357598), Isolated Auth Security #12 (38380357597). Die erneute CI war durch die Änderung der MFA-Kontoanzeige begründet. Keine vollständige Sicherheitsabnahme, kein Merge.
+
 ## Nächster Schritt
 
 Die bereitgestellte Vorschau für den verbliebenen Testkonto-Liveablauf nutzen, einen frischen Einladungslink mit explizitem Vorschauziel und sichere manuelle Passwort-/MFA-Einrichtung ermöglichen und die Memorix-Kompatibilitätsgrenze schließen. Erst nach vollständiger Abnahme PR #74 mergen. Danach die gesicherte Administratoroberfläche für Einladen und getrenntes Freischalten mit Bestätigung und Audit ergänzen; anschließend sicherer MFA-Faktorwechsel und dokumentierte Notfallwiederherstellung, ohne die verpflichtende MFA abzusenken.
@@ -221,6 +229,7 @@ Die bereitgestellte Vorschau für den verbliebenen Testkonto-Liveablauf nutzen, 
 
 | Version | Datum | Änderung |
 |---|---|---|
+| 0.8 | 13.10.2026 | Testkontozuordnung durch Nutzer bestätigt; Live-MFA und ausstehende getrennte Freischaltung per Screenshot und lesenden Metadaten belegt; Vorschau #15 und drei erfolgreiche CI-Läufe dokumentiert. |
 | 0.7 | 13.10.2026 | Verbrauchte Einladung und getrennte Sitzungszustände dokumentiert; serverseitig geprüfte Kontoadresse vor MFA sichtbar gemacht, Identitätsprüfung bleibt vor Live-Schreibaktion erforderlich. |
 | 0.6 | 13.10.2026 | Testkonto durch Nutzer bestätigt, Einladung ausschließlich dafür erneuert; Versandmetadaten und manuellen Vorschau-Testweg ohne Änderung der Site URL dokumentiert. |
 | 0.5 | 13.10.2026 | Preview #14 mit geprüftem Commit bereitgestellt und verifiziert; MFA-/Current-password-Parameter ergänzt; verbleibende Einladungsziel- und sichere Übernahmegrenzen dokumentiert. |
