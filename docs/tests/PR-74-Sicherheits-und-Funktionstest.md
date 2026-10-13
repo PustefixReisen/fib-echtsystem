@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 0.8 | 13.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
+| 0.9 | 13.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
 
 ## Ergebnis
 
@@ -27,7 +27,8 @@ Geprüfter Implementierungsstand: `7b67129f1fa54aca827e79c246e5f4a42992cd1c`. Am
 | Bestehendes Administratorkonto | unverändert | keine Änderungen am Admin-Konto; einzige Auth-Schreibaktion ist die unten dokumentierte Testkonto-Einladung |
 | Auth-/SMTP-Grundkonfiguration | nachgewiesen | Nutzerkommentar vom 13.10.2026 zu Dashboard-/Zustellnachweisen vom 12.10.2026; Details unten |
 | Produktiver Session-Context-Code | identisch zum geprüften Handler | Edge Function Version 2, SHA-256 unten |
-| Live-Einladung / MFA / Recovery / Reauth | **offen** | PR #74 jetzt in Vorschau bereitgestellt; frischer Testkonto-Einladungszugang noch offen |
+| Live-MFA / Recovery / Warteansicht | **bestanden im dokumentierten Umfang** | Nutzer-Screenshots, Metadaten und erneute Anmeldung; siehe Live-Nachweise unten |
+| Live-Ersteinladung / Reauth / direkte API-Negativtests | **offen** | vollständige Erstpasswortkette und verbleibende Restmatrix noch nicht nachgewiesen |
 
 Run: https://github.com/PustefixReisen/fib-echtsystem/actions/runs/38283422018
 
@@ -184,11 +185,11 @@ Rein lesende Prüfung des Memorix-Stands `522d1380fd807ac3d38464a470f1616f70e3c7
 | Punkt | Konkreter Restnachweis | Status |
 |---|---|---|
 | Prüfoberfläche | geprüften PR-Commit in separater Vorschau bereitstellen; ausgelieferten Stand verifizieren | **erledigt**, Preview #14 und ausgeliefertes Asset belegt |
-| Testidentität | Testkonto bestätigt, Einladung um 11:36 erneuert; manuelle sichere Navigation zur Vorschau ohne FIB-Aktivierung | Identität und Versandmetadaten erledigt; Zustellung/Navigation offen |
+| Testidentität | Testkonto bestätigt, Einladung um 11:36 erneuert; manuelle sichere Navigation zur Vorschau ohne FIB-Aktivierung | Identität, Zustellung und verwendeter Link belegt; vollständige Erstpasswortkette offen |
 | Einladung und erstes Passwort | gültiger Link → isolierte Einladungssitzung → Passwort setzen → normale Anmeldung; keine Bestandskontositzung ersetzen | Live offen; isoliert bestanden |
-| MFA und serverseitige Sperre | MFA einrichten; gültige AAL1-Sitzung des Testkontos am Session-Context abweisen; AAL2 ohne FIB-Mitgliedschaft ebenfalls abweisen | Live offen; Codeabgleich und isolierte Prüfung bestanden |
-| Getrennte Freischaltung | Warteansicht und fehlende Mitgliedschaft vor/nach Setup bestätigen; Testkonto produktiv **nicht** zum Redakteur aktivieren | Ausgangszustand geprüft; Live-Warteansicht offen; positive Aktivierung bereits isoliert bestanden |
-| Recovery / Reauth | Recovery nur am Testkonto bis Passwortneuvergabe mit MFA; neue Anmeldung nach Reauth-Ablehnung belegen; Current-password-Konfiguration abgeglichen | Live offen; Current-password-Schalter aus; isoliert bestanden |
+| MFA und serverseitige Sperre | MFA einrichten; gültige AAL1-Sitzung des Testkontos am Session-Context abweisen; AAL2 ohne FIB-Mitgliedschaft ebenfalls abweisen | Live-MFA bestanden; direkte produktive API-Negativtests offen; Codeabgleich und isolierte Prüfung bestanden |
+| Getrennte Freischaltung | Warteansicht und fehlende Mitgliedschaft vor/nach Setup bestätigen; Testkonto produktiv **nicht** zum Redakteur aktivieren | Live-Warteansicht und weiterhin fehlende Mitgliedschaft belegt; positive Aktivierung bereits isoliert bestanden |
+| Recovery / Reauth | Recovery nur am Testkonto bis Passwortneuvergabe mit MFA; neue Anmeldung nach Reauth-Ablehnung belegen; Current-password-Konfiguration abgeglichen | Live-Recovery einschließlich Neuanmeldung bestanden; gealterte Reauth-Sitzung live offen; Current-password-Schalter aus; isoliert bestanden |
 | Memorix | unterstützte Auth-Einstiege und Rücksprungziele bestätigen, keine unbeabsichtigte FIB-Umleitung eines unterstützten Memorix-Flows | gezielte Codebewertung erfolgt; vollständige Kompatibilität offen |
 
 Erfolgreiche isolierte Fehler-, Replay-, Ablauf-, SMTP- und Freischaltungstests werden ohne Codeänderung oder konkrete Abweichung nicht wiederholt. Für Live-Nachweise nur Ergebniscode, Zeitpunkt, Buildstand und anonymisierte Testfallkennung dokumentieren; keine Einladungslinks, Passwörter, Tokens oder QR-Secrets in Chat/Repository/Artifacts. Bestehendes Admin-Konto und produktive Freischaltungen bleiben unberührt. Die bedingte Merge-Erlaubnis wird erst nach vollständigem Abschluss dieser Matrix genutzt.
@@ -221,14 +222,29 @@ Die normale Testsitzung wurde genutzt; die vollständige Kette Einladung → Ers
 
 Vorschau #15 (Run 38380411833) hat Commit `a359ea51922fee53fe71502c5138c718d0697588` erfolgreich gebaut und bereitgestellt; Asset `index-CUeT6dDR.js` anhand Browser-DOM und Buildlog abgeglichen. Alle drei zugehörigen CI-Läufe sind erfolgreich: Editorial Web CI #61 (38380357657), Core Services CI #24 (38380357598), Isolated Auth Security #12 (38380357597). Die erneute CI war durch die Änderung der MFA-Kontoanzeige begründet. Keine vollständige Sicherheitsabnahme, kein Merge.
 
+## Live-Nachweis Passwortwiederherstellung, 12:10–12:16 Europe/Berlin
+
+Ausschließlich am bestätigten Testkonto, Vorschau mit Anwendungsstand `a359ea5`:
+
+1. Nutzer wurde zum lokalen Abmelden und Anfordern eines Recovery-Links über „Passwort vergessen?“ angeleitet.
+2. Screenshot 12:10: identifiziertes Testkonto, bestehende MFA wird vor der Passwortneuvergabe abgefragt.
+3. Screenshot 12:12: nach MFA-Bestätigung erscheinen die Felder zur Passwortneuvergabe in „Freischaltung ausstehend“.
+4. Screenshot 12:14: „Passwort aktualisiert“; Passwortfelder entfernt, keine Redaktionsfreischaltung.
+5. Nutzer bestätigt um 12:16 nach erneutem Abmelden die erfolgreiche Anmeldung mit neuem Passwort plus Authenticator und Rückkehr zur Warteansicht.
+
+Ergebnis: positiver Live-Recovery-Ablauf einschließlich MFA, Passwortänderung und anschließender Neuanmeldung bestanden. Die Screenshots und Nutzerbestätigung sind UI-/Funktionsnachweise; sie ersetzen keinen separat protokollierten direkten API-Negativtest. Passwort, Recovery-Link und TOTP-Code wurden nicht über den Chat übermittelt. Vor der Passwortänderung wurde die Reichweite erläutert: Das Passwort gehört zum Shared-Apps-Auth-Konto und kann bei Nutzung derselben Identität auch andere angeschlossene Apps betreffen; es ist weder ein Googlemail-Passwort noch eine Änderung am separaten Administratorkonto.
+
+Der Arbeitsblock endet ohne Merge. Offen bleiben vollständige Live-Ersteinladung mit Erstpasswort vor MFA, produktiver Reauth-Nachweis mit gealterter Sitzung, direkte produktive AAL1/AAL2-Negativnachweise und die Memorix-Kompatibilitätsgrenze. Keine erneute Einladung, Löschung oder Rücksetzung des inzwischen bestätigten und MFA-gesicherten Testkontos. Keine weiteren erfolgreichen Tests ohne konkreten Grund wiederholen.
+
 ## Nächster Schritt
 
-Die bereitgestellte Vorschau für den verbliebenen Testkonto-Liveablauf nutzen, einen frischen Einladungslink mit explizitem Vorschauziel und sichere manuelle Passwort-/MFA-Einrichtung ermöglichen und die Memorix-Kompatibilitätsgrenze schließen. Erst nach vollständiger Abnahme PR #74 mergen. Danach die gesicherte Administratoroberfläche für Einladen und getrenntes Freischalten mit Bestätigung und Audit ergänzen; anschließend sicherer MFA-Faktorwechsel und dokumentierte Notfallwiederherstellung, ohne die verpflichtende MFA abzusenken.
+Einen verlässlichen Einladungs-Testweg mit explizitem Vorschauziel ohne manuelles Bearbeiten von Einmallinks herstellen, dafür eine unbenutzte bestätigte Testadresse verwenden und die vollständige Erstpasswortkette nachweisen. Parallel im nächsten Arbeitsblock die verbleibenden API-/Reauth-Nachweise und Memorix-Kompatibilitätsgrenze schließen. Erst nach vollständiger Abnahme PR #74 mergen. Danach die gesicherte Administratoroberfläche für Einladen und getrenntes Freischalten mit Bestätigung und Audit ergänzen; anschließend sicherer MFA-Faktorwechsel und dokumentierte Notfallwiederherstellung, ohne die verpflichtende MFA abzusenken.
 
 ## Änderungshistorie
 
 | Version | Datum | Änderung |
 |---|---|---|
+| 0.9 | 13.10.2026 | Live-Recovery nach MFA, Passwortaktualisierung und erfolgreiche Neuanmeldung durch Nutzer belegt; Restmatrix und Abschluss ohne Merge präzisiert. |
 | 0.8 | 13.10.2026 | Testkontozuordnung durch Nutzer bestätigt; Live-MFA und ausstehende getrennte Freischaltung per Screenshot und lesenden Metadaten belegt; Vorschau #15 und drei erfolgreiche CI-Läufe dokumentiert. |
 | 0.7 | 13.10.2026 | Verbrauchte Einladung und getrennte Sitzungszustände dokumentiert; serverseitig geprüfte Kontoadresse vor MFA sichtbar gemacht, Identitätsprüfung bleibt vor Live-Schreibaktion erforderlich. |
 | 0.6 | 13.10.2026 | Testkonto durch Nutzer bestätigt, Einladung ausschließlich dafür erneuert; Versandmetadaten und manuellen Vorschau-Testweg ohne Änderung der Site URL dokumentiert. |
