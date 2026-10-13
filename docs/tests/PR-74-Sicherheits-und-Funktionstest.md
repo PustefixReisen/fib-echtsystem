@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 1.3 | 13.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
+| 1.4 | 13.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
 
 ## Ergebnis
 
@@ -312,12 +312,21 @@ Auf Testcommit `f5bd6b5` sind alle vier automatisch gestarteten Workflows grün:
 
 **Memorix-Schutzmaßnahmen:** Keine Änderung an globaler Site-URL, SMTP, Templates, MFA-/Sessiongrenzen, bestehenden Identitäten, Memorix-Code/Policies oder Daten. Die neue Identität wird ausschließlich für FIB getestet; keine Memorix-API-Schreibtests. FIB-Mitgliedschaft ist keine Memorix-Zugangssperre: eigene Logbücher sind laut vorhandenen Regeln möglich. Gemeinsame Konten/Passwörter/Faktoren und fehlende app-eigene Callback-/MFA-Behandlung bleiben vor appübergreifendem Regelbetrieb gesondert zu lösen. Die technische Bewertung ist erfolgt; eine uneingeschränkte Memorix-Kompatibilitätsfreigabe wird nicht behauptet.
 
-**Eine nächste erforderliche Nutzerhandlung:** eine neue, bisher in Shared-Apps unbenutzte und tatsächlich empfangbare Testadresse bestätigen. Erst dann lesend auf Nichtvorhandensein prüfen und genau eine Dashboard-Einladung vorbereiten. Keine neue Admin-Berechtigung erforderlich. Bis zur vollständigen Restabnahme kein Merge, auch bei grüner CI. Danach als nächster FIB-Entwicklungsschritt getrennte Redakteur-Freischaltung mit Bestätigung/Audit fachlich und technisch abschließen; keine neue administrative Infrastruktur als Voraussetzung dieses Tests.
+**Nächster interaktiver Schritt:** Die inzwischen bestätigte neue Testadresse hat genau eine Dashboard-Einladung erhalten. Die Testperson muss den noch ungeöffneten Link gemäß Betriebsverfahren privat auf das Vorschauziel setzen und dort Erstpasswort/MFA ausführen. Keine neue Admin-Berechtigung erforderlich. Bis zur vollständigen Restabnahme kein Merge, auch bei grüner CI. Danach als nächster FIB-Entwicklungsschritt getrennte Redakteur-Freischaltung mit Bestätigung/Audit fachlich und technisch abschließen; keine neue administrative Infrastruktur als Voraussetzung dieses Tests.
+
+### Live-Ersteinladung vorbereitet – 13.10.2026, 14:06 Europe/Berlin
+
+Der Betreiber hat eine neue Testadresse ausdrücklich benannt. Die genaue lesende Suche in `auth.users` ergab vor Versand null Konten. Über den bestehenden Supabase-Dialog wurde einmal `Invite user` ausgeführt, ohne Redirect-Feld und ohne Änderung globaler Einstellungen. Anschließender Auth-Metadatennachweis: `invited_at=2026-10-13T12:06:20.020812Z`, E-Mail unbestätigt, keine Anmeldung, null bestätigte MFA-Faktoren, null Einträge in `fib.app_users`. Neue Identität für den Cleanup über bestätigte Testadresse und exakten Einladungstimestamp zuordnen; persönliche Adresse und Auth-ID werden nicht im Repository veröffentlicht.
+
+Damit ist die administrative Einladung im Echtsystem ausgelöst und die neue, nicht freigeschaltete Testidentität belegt. Der Mail-Eingang und die Annahme sind noch nicht bestätigt. Kein zweiter Versand, kein privilegierter Schlüssel ausgelesen, kein Bestandskonto geändert. Eine zunächst falsch benannte Mitgliedschaftsspalte führte nur zum Abbruch einer SELECT-Abfrage; die korrigierte Abfrage auf `user_id` belegt null Mitgliedschaften. Keine Datenänderung durch diese Prüfung.
+
+Nutzerhinweis vor Versand: Original-Link nicht öffnen. Fortsetzung nur über das isoliert geprüfte private Setzen des Vorschau-Redirects vor Erstverbrauch; keine Tokens/Links im Chat. Live-Passwort/MFA, direkte API-Sperren und gealterte Reauth bleiben offen. Testberichtfortschreibung ist ausschließlich Dokumentation, kein neuer Entwicklungs-/Testzyklus und keine Merge-Freigabe.
 
 ## Änderungshistorie
 
 | Version | Datum | Änderung |
 |---|---|---|
+| 1.4 | 13.10.2026 | Einmalige Dashboard-Einladung an ausdrücklich bestätigte neue Testadresse und nicht freigeschaltete Auth-Identität nachgewiesen; private Annahme weiterhin offen. |
 | 1.3 | 13.10.2026 | Betreiberentscheidung ohne neue Admin-Rechte übernommen; 403 präzisiert, regulären Callback abgegrenzt und zwei erfolgreiche isolierte Dashboard-Linkprüfungen ergänzt; Live-Restmatrix und tatsächliche Reauth-Wartezeit festgehalten. |
 | 1.2 | 13.10.2026 | Admin-Einladungsweg implementiert und mit 14 neuen Fällen geprüft; realen HTTP-403-Berechtigungsblock und erforderliche Mitwirkung dokumentiert; Memorix-Policies/Trigger abgeglichen und zu weitgehende Zugangsaussage korrigiert. |
 | 1.1 | 13.10.2026 | 138 erfolgreiche Prüfungen, fehlgeschlagene Zwischenläufe und Test-Synchronisierung dokumentiert; zweiten Memorix-Auth-Einstieg und konkrete Redirect-/MFA-Grenzen ergänzt. |
