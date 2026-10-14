@@ -158,7 +158,25 @@ export default {
         );
       }
 
-      return json(result);
+      const sources = await sql.unsafe(
+        `select distinct f.id as finding_id, f.title as finding_title, f.original_url,
+                s.name as source_name
+         from fib.event_findings ef
+         join fib.findings f on f.id = ef.finding_id
+         join fib.sources s on s.id = f.source_id
+         where ef.event_id = $1::uuid
+         order by s.name, f.title`,
+        [payload.eventId],
+      );
+      return json({
+        ...result,
+        sources: sources.map((row) => ({
+          findingId: row.finding_id,
+          findingTitle: row.finding_title,
+          originalUrl: row.original_url,
+          sourceName: row.source_name,
+        })),
+      });
     } catch (error) {
       console.error('fib-get-event failed', error);
       return json({ error: 'internal_error' }, 500);
