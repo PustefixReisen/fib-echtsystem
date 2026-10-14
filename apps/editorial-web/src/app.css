@@ -312,3 +312,9 @@ h3 { margin-bottom: .45rem; }
 .finding-filter label { flex: 1 1 220px; min-width: 0; font-weight: 650; }
 .finding-filter input { width: 100%; margin-top: .3rem; }
 .finding-filter button { height: 40px; min-height: 40px; padding: .45rem .8rem; }
+
+/* Einfache, eindeutig bezeichnete Fundstellenansichten */
+.finding-view-tabs { display: flex; flex-wrap: wrap; gap: .4rem; margin: .6rem 0 1rem; }
+.finding-view-tabs button { background: #fff; }
+.finding-view-tabs button.active { background: #eaf5ed; border-color: #7eae94; color: var(--fib-dark); font-weight: 750; }
+.event-source-list li button { display: block; margin-top: .4rem; }
