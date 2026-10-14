@@ -1,4 +1,4 @@
-import { FormEvent, useEffect, useState, type ReactNode } from 'react';
+import { FormEvent, useEffect, useState, useRef, type ReactNode } from 'react';
 import { supabase } from './supabase.js';
 import fibLogo from '../../../assets/brand/logo/fib-logo-primary-approved.png';
 import eventIcon from '../../../assets/brand/icons/ereignis.svg';
@@ -98,14 +98,49 @@ export function App() {
   const [editOccurredAt, setEditOccurredAt] = useState('');
   const [editSaving, setEditSaving] = useState(false);
   const [editMessage, setEditMessage] = useState<string | null>(null);
+  const [editFailed, setEditFailed] = useState(false);
+  const [editSaved, setEditSaved] = useState(false);
+  const leaveGuardRef = useRef(false);
+  const currentViewRef = useRef<EditorialView>('dashboard');
+  const historyLeaveRef = useRef<() => boolean>(() => true);
   const [sessionContext, setSessionContext] = useState<SessionContext | null>(null);
   const [navigationOpen, setNavigationOpen] = useState(false);
   const [profileCallName, setProfileCallName] = useState('');
   const [profileSaving, setProfileSaving] = useState(false);
   const [profileMessage, setProfileMessage] = useState<string | null>(null);
 
+  const eventDirty = editingEvent && !!eventResult && (
+    editTitle !== eventResult.title ||
+    (editSummary.trim() || null) !== (eventResult.summary?.trim() || null) ||
+    editOccurredAt !== (eventResult.occurredAt?.slice(0, 10) ?? '')
+  );
+  leaveGuardRef.current = eventDirty || editSaving;
+  currentViewRef.current = view;
+
+  function confirmLeave(): boolean {
+    if (editSaving) return false;
+    return !eventDirty || window.confirm('Ungespeicherte Änderungen\\n\\nÄnderungen verwerfen und den Bereich verlassen?');
+  }
+
+  useEffect(() => {
+    const beforeUnload = (event: BeforeUnloadEvent) => {
+      if (!leaveGuardRef.current) return;
+      event.preventDefault();
+      event.returnValue = '';
+    };
+    window.addEventListener('beforeunload', beforeUnload);
+    return () => window.removeEventListener('beforeunload', beforeUnload);
+  }, []);
+
+  historyLeaveRef.current = () => {
+    if (!confirmLeave()) return false;
+    if (editingEvent) { setEditingEvent(false); void runCoordinationAction('release_lock', true); }
+    return true;
+  };
+
   function navigateTo(nextView: EditorialView) {
-    if (nextView === view) return;
+    if (nextView === view || !confirmLeave()) return;
+    if (editingEvent) { setEditingEvent(false); void runCoordinationAction('release_lock', true); }
     window.history.pushState({ fibView: nextView }, '', window.location.href);
     setView(nextView);
     setNavigationOpen(false);
@@ -164,6 +199,10 @@ export function App() {
     window.history.replaceState({ ...(window.history.state ?? {}), fibView: 'dashboard' }, '', window.location.href);
     const onPopState = (event: PopStateEvent) => {
       const nextView = event.state?.fibView === 'event' ? 'event' : event.state?.fibView === 'events' ? 'events' : event.state?.fibView === 'profile' ? 'profile' : 'dashboard';
+      if (!historyLeaveRef.current()) {
+        window.history.pushState({ fibView: currentViewRef.current }, '', window.location.href);
+        return;
+      }
       setView(nextView);
       setNavigationOpen(false);
       if (nextView === 'dashboard') void loadEditorialStart();
@@ -400,10 +439,13 @@ export function App() {
     setEditSummary(eventResult.summary ?? '');
     setEditOccurredAt(eventResult.occurredAt ? eventResult.occurredAt.slice(0, 10) : '');
     setEditMessage(null);
+    setEditFailed(false);
+    setEditSaved(false);
     setEditingEvent(true);
   }
 
   async function cancelEventEditing() {
+    if (!confirmLeave()) return;
     setEditingEvent(false);
     setEditMessage(null);
     if (coordination?.lock?.mine) await runCoordinationAction('release_lock');
@@ -411,9 +453,10 @@ export function App() {
 
   async function saveEventEdit(event: FormEvent) {
     event.preventDefault();
-    if (!eventResult || !editTitle.trim()) return;
+    if (!eventResult || !editTitle.trim() || !eventDirty) return;
 
     setEditSaving(true);
+    setEditFailed(false);
     setEditMessage(null);
     const { data, error } = await supabase.functions.invoke<EventResult>('fib-editorial-write', {
       body: {
@@ -427,13 +470,15 @@ export function App() {
     setEditSaving(false);
 
     if (error || !data?.ok) {
+      setEditFailed(true);
       setEditMessage(error?.message || 'Änderungen konnten nicht gespeichert werden.');
       return;
     }
 
     setEventResult(data.event);
     setEditingEvent(false);
-    setEditMessage('Änderungen gespeichert.');
+    setEditSaved(true);
+    setEditMessage(null);
     await runCoordinationAction('release_lock', true);
     await loadCoordinationState();
   }
@@ -457,6 +502,7 @@ export function App() {
   }
 
   async function logout() {
+    if (!confirmLeave()) return;
     await supabase.auth.signOut();
     setMessage('');
     setEventResult(null);
@@ -765,7 +811,7 @@ export function App() {
                 <h1 className="object-title"><img className="object-icon" src={eventIcon} alt="" aria-hidden="true" />{eventResult.title}</h1>
                 {eventResult.summary && <p>{eventResult.summary}</p>}
               </div>
-              <button className="action-button" onClick={() => window.history.back()}><ActionIcon name="back" />Zurück</button>
+              <button className="action-button" onClick={() => navigateTo('events')}><ActionIcon name="back" />Zurück</button>
             </div>
 
             <section className="object-status">
@@ -777,6 +823,8 @@ export function App() {
               <section className="panel card-headed">
                 <div className="section-heading">
                   <div><h2>Ereignisdaten</h2></div>
+                  {editingEvent && <span className={editFailed ? 'card-edit-state error' : eventDirty ? 'card-edit-state dirty' : 'card-edit-state'} role="status">{editSaving ? 'Speichern läuft …' : editFailed ? 'Änderung nicht gespeichert' : eventDirty ? '● Ungespeicherte Änderungen' : 'Unverändert'}</span>}
+                  {!editingEvent && editSaved && <span className="card-edit-state saved" role="status">✓ Gespeichert</span>}
                   {!editingEvent && (
                     <button className="primary action-button" onClick={startEventEditing} disabled={coordinationRunning || !!(coordination?.lock && !coordination.lock.mine)}>
                       <ActionIcon name="edit" />
@@ -797,7 +845,7 @@ export function App() {
                       <input type="date" value={editOccurredAt} onChange={(e) => setEditOccurredAt(e.target.value)} />
                     </label>
                     <div className="button-row">
-                      <button type="submit" className="primary action-button" disabled={editSaving}><ActionIcon name="save" />{editSaving ? 'Speichert …' : 'Speichern'}</button>
+                      <button type="submit" className="primary action-button" disabled={editSaving || !eventDirty}><ActionIcon name="save" />{editSaving ? 'Speichert …' : 'Speichern'}</button>
                       <button type="button" onClick={cancelEventEditing} disabled={editSaving}>Abbrechen</button>
                     </div>
                   </form>
