@@ -63,7 +63,7 @@ export default {
       return json({ error: 'invalid_json' }, 400);
     }
 
-    if (body.action !== 'edit_event' && body.action !== 'link_finding') return json({ error: 'unknown_action' }, 400);
+    if (body.action !== 'edit_event' && body.action !== 'link_finding' && body.action !== 'unlink_finding') return json({ error: 'unknown_action' }, 400);
     if (!body.eventId || (body.action === 'edit_event' && (typeof body.title !== 'string' || body.title.trim().length === 0))) {
       return json({ error: 'invalid_event_input' }, 400);
     }
@@ -90,6 +90,27 @@ export default {
         [body.eventId, userId],
       );
       if (lock.length === 0) return json({ error: 'active_edit_lock_required' }, 409);
+
+      if (body.action === 'unlink_finding') {
+        if (typeof body.findingId !== 'string' || !/^[0-9a-f-]{36}$/i.test(body.findingId)) return json({ error: 'invalid_finding_id' }, 400);
+        const removed = await sql.begin(async tx => {
+          const rows = await tx.unsafe(
+            "delete from fib.event_findings where event_id=$1::uuid and finding_id=$2::uuid returning evidence_role,note",
+            [body.eventId, body.findingId],
+          );
+          if (rows.length === 0) return false;
+          await tx.unsafe(
+            "insert into fib.event_finding_change_log (event_id,finding_id,action,actor_id,previous_evidence_role,previous_note) values ($1::uuid,$2::uuid,'unlinked',$3::uuid,$4,$5)",
+            [body.eventId, body.findingId, userId, rows[0].evidence_role, rows[0].note],
+          );
+          await tx.unsafe(
+            "insert into fib.object_last_edits (object_type,object_id,user_id,edited_at) values ('event',$1::uuid,$2,now()) on conflict (object_type,object_id) do update set user_id=excluded.user_id,edited_at=excluded.edited_at",
+            [body.eventId, userId],
+          );
+          return true;
+        });
+        return removed ? json({ ok: true }) : json({ error: 'association_not_found' }, 404);
+      }
 
       if (body.action === 'link_finding') {
         if (typeof body.findingId !== 'string' || !/^[0-9a-f-]{36}$/i.test(body.findingId)) return json({ error: 'invalid_finding_id' }, 400);
