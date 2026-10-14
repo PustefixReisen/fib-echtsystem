@@ -100,6 +100,7 @@ export function App() {
   const [sourceBusy, setSourceBusy] = useState(false);
   const [sourceMessage, setSourceMessage] = useState<string | null>(null);
   const sourceRequestRef = useRef(0);
+  const eventListRequestRef = useRef(0);
   const [eventList, setEventList] = useState<EventData[]>([]);
   const [eventSearch, setEventSearch] = useState('');
   const [eventListBusy, setEventListBusy] = useState(false);
@@ -330,12 +331,20 @@ export function App() {
     await refreshAuthState();
   }
 
+  useEffect(() => {
+    if (view !== 'events') return;
+    const timer = window.setTimeout(() => { void loadEventList(eventSearch); }, 300);
+    return () => window.clearTimeout(timer);
+  }, [view, eventSearch]);
+
   async function loadEventList(search = '') {
+    const request = ++eventListRequestRef.current;
     setEventListBusy(true);
     setEventListError(null);
     const { data, error } = await supabase.functions.invoke<EventListResult>('fib-get-event', {
       body: { action: 'list_events', search },
     });
+    if (request !== eventListRequestRef.current) return;
     setEventListBusy(false);
     if (error || !data?.ok) {
       let detail = 'Unbekannte Serverantwort';
@@ -742,13 +751,12 @@ export function App() {
             </div>
             <section className="panel card-headed">
               <h2>Ereignisse suchen und öffnen</h2>
-              <form className="button-row event-list-controls" onSubmit={(e) => { e.preventDefault(); void loadEventList(eventSearch); }}>
-                <label className="event-list-search">Suche nach Titel oder Beschreibung
-                  <input type="search" value={eventSearch} onChange={(e) => setEventSearch(e.target.value)} maxLength={120} placeholder="Suchbegriff" />
+              <div className="finding-filter">
+                <label>Ereignisse filtern – Titel oder Beschreibung
+                  <input type="search" value={eventSearch} onChange={e => setEventSearch(e.target.value)} maxLength={120} placeholder="Suchbegriff eingeben …" />
                 </label>
-                <button type="submit" disabled={eventListBusy}>Suchen</button>
-                <button type="button" disabled={eventListBusy} onClick={() => { setEventSearch(''); void loadEventList(''); }} className="action-button"><ActionIcon name="refresh" />Alle anzeigen</button>
-              </form>
+                <button type="button" disabled={!eventSearch} onClick={() => setEventSearch('')}>Filter löschen</button>
+              </div>
               {eventListBusy && <p role="status">Ereignisse werden geladen …</p>}
               {eventListError && <p className="error" role="alert">{eventListError}</p>}
               {!eventListBusy && !eventListError && eventList.length === 0 && <p>Keine Ereignisse gefunden.</p>}
@@ -950,9 +958,10 @@ export function App() {
                     setSourcePickerOpen(open => !open);
                     setSourceMessage(null);
 
-                  }}>{sourcePickerOpen ? 'Auswahl schließen' : 'Fundstelle zuordnen'}</button>
+                  }}>{sourcePickerOpen ? 'Zurück zu den zugeordneten Fundstellen' : 'Weitere Fundstelle zuordnen'}</button>
                 </div>
                 {sourcePickerOpen && <div className="stack">
+                  <p className="meta">Auswahl aus bereits erfassten Fundstellen. Bestehende Zuordnungen bleiben oben sichtbar.</p>
                   <div className="finding-filter">
                     <label>Fundstellen filtern – Titel oder Quelle
                       <input type="search" value={sourceSearch} onChange={event => setSourceSearch(event.target.value)} maxLength={120} placeholder="Suchbegriff eingeben …" />
