@@ -100,13 +100,14 @@ export default {
     }
 
     const listing = payload.action === 'list_events';
-    if (payload.action !== undefined && !listing && payload.action !== 'get_event') {
+    const findingsListing = payload.action === 'list_findings';
+    if (payload.action !== undefined && !listing && !findingsListing && payload.action !== 'get_event') {
       return json({ error: 'invalid_action' }, 400);
     }
-    if (!listing && (typeof payload.eventId !== 'string' || payload.eventId.length === 0)) {
+    if (!listing && !findingsListing && (typeof payload.eventId !== 'string' || payload.eventId.length === 0)) {
       return json({ error: 'event_id_required' }, 400);
     }
-    if (listing && (payload.search !== undefined && (typeof payload.search !== 'string' || payload.search.length > 120))) {
+    if ((listing || findingsListing) && (payload.search !== undefined && (typeof payload.search !== 'string' || payload.search.length > 120))) {
       return json({ error: 'invalid_search' }, 400);
     }
 
@@ -132,6 +133,23 @@ export default {
         return json({ error: actorResolution.reason }, 403);
       }
 
+      if (findingsListing) {
+        const search = typeof payload.search === 'string' ? payload.search.trim() : '';
+        const rows = await sql.unsafe(
+          `select f.id, f.title, f.original_url, s.name as source_name
+             from fib.findings f join fib.sources s on s.id = f.source_id
+             where $1::text = '' or f.title ilike '%' || $1 || '%' or s.name ilike '%' || $1 || '%'
+             order by f.discovered_at desc nulls last, f.id desc limit 101`,
+          [search],
+        );
+        return json({
+          ok: true,
+          findings: rows.slice(0, 100).map(row => ({
+            findingId: row.id, findingTitle: row.title, originalUrl: row.original_url, sourceName: row.source_name,
+          })),
+          hasMore: rows.length > 100,
+        });
+      }
       if (listing) {
         const search = typeof payload.search === 'string' ? payload.search.trim() : '';
         const rows = await sql.unsafe(
