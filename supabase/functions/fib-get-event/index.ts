@@ -138,7 +138,7 @@ export default {
           `select id, title, summary, status, occurred_at from fib.events
            where ($1::text = '' or title ilike '%' || $1 || '%' or coalesce(summary, '') ilike '%' || $1 || '%')
            order by occurred_at desc nulls last, id desc limit 101`,
-          [search.replace(/[\\%_]/g, '\\      const result = await getEvent(actorResolution.actor, payload.eventId, db);')],
+          [search],
         );
         return json({
           ok: true,
