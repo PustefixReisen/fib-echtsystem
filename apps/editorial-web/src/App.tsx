@@ -615,7 +615,7 @@ export function App() {
           <>
             <nav className="breadcrumbs" aria-label="Brotkrumen">
               <button onClick={() => navigateTo('dashboard')}>Dashboard</button>
-              <span>›</span><span>Recherche</span><span>›</span><span aria-current="page">Ereignisse</span>
+              <span>›</span><span aria-current="page">Ereignisse</span>
             </nav>
             <div className="page-heading">
               <div><p className="eyebrow">Redaktion · Recherche</p><h1 className="object-title"><img className="object-icon" src={eventIcon} alt="" aria-hidden="true" />Ereignisse</h1></div>
@@ -627,7 +627,7 @@ export function App() {
                   <input type="search" value={eventSearch} onChange={(e) => setEventSearch(e.target.value)} maxLength={120} placeholder="Suchbegriff" />
                 </label>
                 <button type="submit" disabled={eventListBusy}>Suchen</button>
-                <button type="button" disabled={eventListBusy} onClick={() => { setEventSearch(''); void loadEventList(''); }}><ActionIcon name="refresh" />Alle anzeigen</button>
+                <button type="button" disabled={eventListBusy} onClick={() => { setEventSearch(''); void loadEventList(''); }} className="action-button"><ActionIcon name="refresh" />Alle anzeigen</button>
               </form>
               {eventListBusy && <p role="status">Ereignisse werden geladen …</p>}
               {eventListError && <p className="error" role="alert">{eventListError}</p>}
