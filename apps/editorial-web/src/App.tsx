@@ -281,7 +281,18 @@ export function App() {
     });
     setEventListBusy(false);
     if (error || !data?.ok) {
-      setEventListError('Ereignisse konnten nicht geladen werden.');
+      let detail = 'Unbekannte Serverantwort';
+      if (error && 'context' in error && error.context instanceof Response) {
+        const response = error.context;
+        let code = '';
+        try { const body = await response.clone().json() as { error?: string }; code = body.error ?? ''; } catch { /* keine gültige JSON-Antwort */ }
+        detail = `HTTP ${response.status}${code ? ` · ${code}` : ''}`;
+      } else if (error) {
+        detail = error.name === 'FunctionsFetchError' ? 'Verbindung zum Ereignisdienst fehlgeschlagen' : 'Aufruf des Ereignisdienstes fehlgeschlagen';
+      } else if (data && 'error' in data) {
+        detail = String(data.error);
+      }
+      setEventListError(`Ereignisse konnten nicht geladen werden (${detail}).`);
       return;
     }
     setEventList(data.events);
@@ -604,7 +615,7 @@ export function App() {
           <>
             <nav className="breadcrumbs" aria-label="Brotkrumen">
               <button onClick={() => navigateTo('dashboard')}>Dashboard</button>
-              <span>›</span><button type="button" onClick={() => { const section = document.getElementById("nav-recherche") as HTMLDetailsElement | null; if (section) { section.open = true; section.querySelector("summary")?.focus(); } setNavigationOpen(true); }}>Recherche</button><span>›</span><span aria-current="page">Ereignisse</span>
+              <span>›</span><span>Recherche</span><span>›</span><span aria-current="page">Ereignisse</span>
             </nav>
             <div className="page-heading">
               <div><p className="eyebrow">Redaktion · Recherche</p><h1 className="object-title"><img className="object-icon" src={eventIcon} alt="" aria-hidden="true" />Ereignisse</h1></div>
