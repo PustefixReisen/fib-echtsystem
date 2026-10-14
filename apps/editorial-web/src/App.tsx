@@ -975,24 +975,24 @@ export function App() {
               </section>
 
               <section className="panel card-headed">
-                <h2>Quellen und Fundstellen</h2>
-                <div className="finding-view-tabs" role="group" aria-label="Fundstellenansicht">
-                  <button type="button" aria-pressed={!sourcePickerOpen} className={!sourcePickerOpen ? 'active' : ''} onClick={() => setSourcePickerOpen(false)}>Zugeordnet ({eventSources.length})</button>
-                  <button type="button" aria-pressed={sourcePickerOpen} className={sourcePickerOpen ? 'active' : ''} onClick={() => setSourcePickerOpen(true)}>Fundstelle hinzufügen</button>
+                <div className="section-heading">
+                  <h2>Quellen und Fundstellen</h2>
+                  {!sourcePickerOpen && <button type="button" className="primary action-button" onClick={() => { setSourcePickerOpen(true); setSourceMessage(null); }}>Fundstelle hinzufügen</button>}
                 </div>
-                {!sourcePickerOpen && (eventSources.length === 0 ? <p>Für dieses Ereignis sind noch keine Fundstellen zugeordnet.</p> : (
+                {sourcePickerOpen && <button type="button" className="action-button finding-back" onClick={() => { setSourcePickerOpen(false); setSourceMessage(null); }}><ActionIcon name="back" />Zurück</button>}
+                {eventSources.length === 0 ? <p>Für dieses Ereignis sind noch keine Fundstellen zugeordnet.</p> : (
                   <ul className="event-source-list">
                     {eventSources.map((source) => (
                       <li key={source.findingId}>
                         <strong>{readableSourceName(source.sourceName)}</strong>
                         <span>{source.originalUrl && /^https?:\/\//i.test(source.originalUrl) ? <a href={source.originalUrl} target="_blank" rel="noopener noreferrer">{source.findingTitle}</a> : source.findingTitle}</span>
-                        <button type="button" disabled={sourceBusy} onClick={() => void unlinkFinding(source.findingId)}>Zuordnung aufheben</button>
+                        {sourcePickerOpen && <button type="button" disabled={sourceBusy} onClick={() => void unlinkFinding(source.findingId)}>Zuordnung aufheben</button>}
                       </li>
                     ))}
                   </ul>
-                ))}
+                )}
                 {sourcePickerOpen && <div className="stack">
-                  <p className="meta">Bereits erfasste Fundstellen suchen und diesem Ereignis zuordnen. Bestehende Zuordnungen findest du unter „Zugeordnet“.</p>
+                  <p className="meta">Weitere Fundstellen suchen und direkt zuordnen. Änderungen werden sofort gespeichert; „Zurück“ beendet nur diesen Modus.</p>
                   <div className="finding-filter">
                     <label>Fundstellen filtern – Titel oder Quelle
                       <input type="search" value={sourceSearch} onChange={event => setSourceSearch(event.target.value)} maxLength={120} placeholder="Suchbegriff eingeben …" />
