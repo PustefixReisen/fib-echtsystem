@@ -287,3 +287,13 @@ h3 { margin-bottom: .45rem; }
 .event-list-controls .event-list-search input { width: 100%; }
 .event-list-controls > button { height: 40px; min-height: 40px; padding: .45rem .8rem; align-self: flex-end; }
 .nav-subitem.active { color: var(--fib-dark); background: #eef7f2; font-weight: 750; }
+
+/* Änderungszustand pro bearbeitbarer Karte im Kartenkopf */
+.card-edit-state { margin-left: auto; font-size: .86rem; font-weight: 650; color: #5d6a61; }
+.card-edit-state.dirty { color: #a55a08; }
+.card-edit-state.error { color: #a02525; }
+.card-edit-state.saved { color: #126849; }
+.card-headed > .section-heading:first-child { flex-wrap: wrap; gap: .5rem; }
+@media (max-width: 520px) {
+  .card-edit-state { flex: 1 1 100%; margin-left: 0; }
+}
