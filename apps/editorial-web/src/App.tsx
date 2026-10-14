@@ -123,6 +123,7 @@ export function App() {
   const currentViewRef = useRef<EditorialView>('dashboard');
   const historyLeaveRef = useRef<() => boolean>(() => true);
   const [sessionContext, setSessionContext] = useState<SessionContext | null>(null);
+  const [membershipStatus, setMembershipStatus] = useState<'checking' | 'pending' | 'error' | 'active'>('checking');
   const [navigationOpen, setNavigationOpen] = useState(false);
   const [profileCallName, setProfileCallName] = useState('');
   const [profileSaving, setProfileSaving] = useState(false);
@@ -179,6 +180,7 @@ export function App() {
       setCoordination(null);
       setCoordinationMessage(null);
       setSessionContext(null);
+      setMembershipStatus('checking');
       setNavigationOpen(false);
       setView('dashboard');
       return;
@@ -409,14 +411,25 @@ export function App() {
   }
 
   async function loadSessionContext() {
+    setMembershipStatus('checking');
+    setSessionContext(null);
     const { data, error } = await supabase.functions.invoke<SessionContextResult>('fib-session-context', {
       body: {},
     });
-    if (!error && data?.ok) { setSessionContext(data.user); setProfileCallName(data.user.displayName === data.user.fullName ? '' : data.user.displayName); }
+    if (error || !data?.ok) {
+      const response = error && 'context' in error && error.context instanceof Response ? error.context : null;
+      const details = response ? await response.clone().json().catch(() => null) as {error?: string} | null : null;
+      setMembershipStatus(details?.error === 'fib_membership_missing_or_inactive' ? 'pending' : 'error');
+      return false;
+    }
+    setSessionContext(data.user);
+    setProfileCallName(data.user.displayName === data.user.fullName ? '' : data.user.displayName);
+    setMembershipStatus('active');
+    return true;
   }
 
   async function loadEditorialStart() {
-    await Promise.all([loadEvent(), loadCoordinationState(), loadSessionContext()]);
+    if (await loadSessionContext()) await Promise.all([loadEvent(), loadCoordinationState()]);
   }
 
   async function runCoordinationAction(action: 'get_state' | 'take_lead' | 'release_lead' | 'acquire_lock' | 'renew_lock' | 'release_lock', quiet = false) {
@@ -638,6 +651,18 @@ export function App() {
     setSessionContext(null);
     setNavigationOpen(false);
     setView('dashboard');
+  }
+
+  if (state === 'aal2' && membershipStatus !== 'active') {
+    return <main className="auth-shell"><section className="auth-card">
+      <p className="eyebrow">Feldkirchen im Blick</p>
+      <h1>{membershipStatus === 'pending' ? 'Freischaltung ausstehend' : membershipStatus === 'error' ? 'Freischaltung nicht prüfbar' : 'Freischaltung wird geprüft'}</h1>
+      <p>Dein zweiter Faktor ist bestätigt. Das FIB-Redaktionssystem ist erst nach gesonderter Freischaltung zugänglich.</p>
+      {membershipStatus === 'pending' && <p>Bitte wende dich an einen FIB-Administrator. Die Einrichtung deines Kontos allein verleiht keine Redaktionsrechte.</p>}
+      {membershipStatus === 'error' && <p>Deine Berechtigung konnte nicht sicher überprüft werden. Bis zur erfolgreichen Prüfung bleibt der Zugang gesperrt.</p>}
+      <button type="button" disabled={membershipStatus === 'checking'} onClick={() => void loadEditorialStart()}>Freischaltung erneut prüfen</button>
+      <button type="button" onClick={logout}>Abmelden</button>
+    </section></main>;
   }
 
   if (state !== 'aal2') {
