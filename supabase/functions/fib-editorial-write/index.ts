@@ -55,6 +55,7 @@ export default {
       title?: string;
       summary?: string | null;
       occurredAt?: string | null;
+      findingId?: string;
     };
     try {
       body = await req.json();
@@ -62,8 +63,8 @@ export default {
       return json({ error: 'invalid_json' }, 400);
     }
 
-    if (body.action !== 'edit_event') return json({ error: 'unknown_action' }, 400);
-    if (!body.eventId || typeof body.title !== 'string' || body.title.trim().length === 0) {
+    if (body.action !== 'edit_event' && body.action !== 'link_finding') return json({ error: 'unknown_action' }, 400);
+    if (!body.eventId || (body.action === 'edit_event' && (typeof body.title !== 'string' || body.title.trim().length === 0))) {
       return json({ error: 'invalid_event_input' }, 400);
     }
 
@@ -90,8 +91,32 @@ export default {
       );
       if (lock.length === 0) return json({ error: 'active_edit_lock_required' }, 409);
 
+      if (body.action === 'link_finding') {
+        if (typeof body.findingId !== 'string' || !/^[0-9a-f-]{36}$/i.test(body.findingId)) return json({ error: 'invalid_finding_id' }, 400);
+        const linked = await sql.unsafe(
+          `insert into fib.event_findings (event_id, finding_id, evidence_role)
+           select $1::uuid, f.id, 'editorial_reference' from fib.findings f
+           where f.id=$2::uuid and exists (select 1 from fib.events e where e.id=$1::uuid and e.status='confirmed')
+           on conflict (event_id, finding_id) do nothing returning finding_id`,
+          [body.eventId, body.findingId],
+        );
+        if (!linked.length) return json({ error: 'finding_missing_or_already_linked' }, 409);
+        await sql.unsafe(
+          "insert into fib.object_last_edits (object_type,object_id,user_id,edited_at) values ('event',$1::uuid,$2,now()) on conflict (object_type,object_id) do update set user_id=excluded.user_id, edited_at=excluded.edited_at",
+          [body.eventId, userId],
+        );
+        return json({ ok: true });
+      }
+
       const updated = await sql.unsafe(
-        "update fib.events set title=$2, summary=$3, occurred_at=$4, updated_at=now() where id=$1::uuid and status='confirmed' returning id,title,summary,status,occurred_at",
+        `update fib.events set title=$2,
+         summary = case
+           when summary like 'Entwicklungsdaten; Import %' and strpos(summary, E'\\n\\n') > 0
+           then left(summary, strpos(summary, E'\\n\\n') + 1) || coalesce($3::text, '')
+           else $3::text end,
+         occurred_at=$4, updated_at=now()
+         where id=$1::uuid and status='confirmed'
+         returning id,title,summary,status,occurred_at`,
         [body.eventId, body.title.trim(), body.summary ?? null, body.occurredAt ?? null],
       );
       const row = updated[0] as any;
