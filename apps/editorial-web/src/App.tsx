@@ -832,6 +832,7 @@ export function App() {
             </section>
 
             <div className="detail-grid">
+              <div className="detail-content-column">
               <section className="panel card-headed">
                 <div className="section-heading">
                   <div><h2>Ereignisdaten</h2></div>
@@ -884,6 +885,8 @@ export function App() {
                   </ul>
                 )}
               </section>
+
+                            </div>
 
               <aside className="panel card-headed">
                 <div className="section-heading"><h2>Redaktionelle Koordination</h2></div>
