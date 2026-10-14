@@ -280,3 +280,10 @@ h3 { margin-bottom: .45rem; }
 
 .profile-page-title { display: flex; align-items: center; gap: .65rem; }
 .profile-page-title svg { width: 32px; height: 32px; flex: none; color: var(--fib-dark); }
+
+/* Ereignisliste: kompakte Aktionsbuttons auf Höhe des Suchfelds */
+.event-list-controls { align-items: flex-end; }
+.event-list-controls .event-list-search { flex: 0 1 310px; min-width: min(100%, 210px); }
+.event-list-controls .event-list-search input { width: 100%; }
+.event-list-controls > button { height: 40px; min-height: 40px; padding: .45rem .8rem; align-self: flex-end; }
+.nav-subitem.active { color: var(--fib-dark); background: #eef7f2; font-weight: 750; }

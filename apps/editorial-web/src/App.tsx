@@ -547,7 +547,7 @@ export function App() {
 
           <div className="nav-section">
             <p className="nav-heading">Redaktion</p>
-            <details>
+            <details id="nav-recherche">
               <summary>Recherche</summary>
               <button className="nav-subitem" disabled>Rechercheaufträge</button>
               <button className="nav-subitem" disabled>Funde</button>
@@ -604,14 +604,14 @@ export function App() {
           <>
             <nav className="breadcrumbs" aria-label="Brotkrumen">
               <button onClick={() => navigateTo('dashboard')}>Dashboard</button>
-              <span>›</span><span>Redaktion</span><span>›</span><span>Recherche</span><span>›</span><span aria-current="page">Ereignisse</span>
+              <span>›</span><button type="button" onClick={() => { const section = document.getElementById("nav-recherche") as HTMLDetailsElement | null; if (section) { section.open = true; section.querySelector("summary")?.focus(); } setNavigationOpen(true); }}>Recherche</button><span>›</span><span aria-current="page">Ereignisse</span>
             </nav>
             <div className="page-heading">
               <div><p className="eyebrow">Redaktion · Recherche</p><h1 className="object-title"><img className="object-icon" src={eventIcon} alt="" aria-hidden="true" />Ereignisse</h1></div>
             </div>
             <section className="panel card-headed">
               <h2>Ereignisse suchen und öffnen</h2>
-              <form className="button-row" onSubmit={(e) => { e.preventDefault(); void loadEventList(eventSearch); }}>
+              <form className="button-row event-list-controls" onSubmit={(e) => { e.preventDefault(); void loadEventList(eventSearch); }}>
                 <label className="event-list-search">Suche nach Titel oder Beschreibung
                   <input type="search" value={eventSearch} onChange={(e) => setEventSearch(e.target.value)} maxLength={120} placeholder="Suchbegriff" />
                 </label>
@@ -742,6 +742,7 @@ export function App() {
           <>
             <nav className="breadcrumbs" aria-label="Brotkrumen">
               <button onClick={() => navigateTo('dashboard')}>Dashboard</button>
+              <span>›</span><button onClick={() => navigateTo('events')}>Ereignisse</button>
               <span>›</span>
               <span aria-current="page">Ereignis</span>
             </nav>
