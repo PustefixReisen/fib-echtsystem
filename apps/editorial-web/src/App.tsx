@@ -32,7 +32,17 @@ type EventData = {
   occurredAt: string | null;
 };
 
-type EventResult = { ok: true; event: EventData };
+type EventSource = { findingId: string; findingTitle: string; originalUrl: string | null; sourceName: string };
+type EventResult = { ok: true; event: EventData; sources?: EventSource[] };
+function readableSummary(summary: string | null): string | null {
+  if (!summary) return null;
+  if (!summary.startsWith('Entwicklungsdaten; Import ')) return summary;
+  const split = summary.indexOf('\n\n');
+  return split >= 0 ? summary.slice(split + 2) : summary;
+}
+function readableSourceName(name: string): string {
+  return name.replace(/^\[ENTWICKLUNG [^\]]+\]\s*/, '');
+}
 type EventListResult = { ok: true; events: EventData[]; hasMore: boolean };
 
 type SessionContext = {
@@ -82,6 +92,7 @@ export function App() {
   const [message, setMessage] = useState('');
   const [view, setView] = useState<EditorialView>('dashboard');
   const [eventResult, setEventResult] = useState<EventData | null>(null);
+  const [eventSources, setEventSources] = useState<EventSource[]>([]);
   const [eventList, setEventList] = useState<EventData[]>([]);
   const [eventSearch, setEventSearch] = useState('');
   const [eventListBusy, setEventListBusy] = useState(false);
@@ -350,6 +361,7 @@ export function App() {
       return;
     }
     setEventResult(data.event);
+    setEventSources(data.sources ?? []);
     setCoordination(null);
     setCoordinationMessage(null);
     setEditingEvent(false);
@@ -681,7 +693,7 @@ export function App() {
               {!eventListBusy && !eventListError && eventList.length === 0 && <p>Keine Ereignisse gefunden.</p>}
               {!eventListBusy && eventList.map((item) => (
                 <article className="work-item" key={item.id}>
-                  <div><h3>{item.title}</h3>{item.summary && <p>{item.summary}</p>}
+                  <div><h3>{item.title}</h3>{readableSummary(item.summary) && <p>{readableSummary(item.summary)}</p>}
                     <p className="meta">Status: {eventStatusLabel(item.status)} · Zeitpunkt: {item.occurredAt ? new Date(item.occurredAt).toLocaleDateString('de-DE') : 'nicht angegeben'}</p>
                   </div>
                   <button className="action-button" disabled={serviceRunning} onClick={() => void openListedEvent(item.id)}><ActionIcon name="open" />Öffnen</button>
@@ -724,7 +736,7 @@ export function App() {
                   <div>
                     <span className="tag">Ereignis</span>
                     <h3 className="object-title"><img className="object-icon" src={eventIcon} alt="" aria-hidden="true" />{eventResult.title}</h3>
-                    {eventResult.summary && <p>{eventResult.summary}</p>}
+                    {readableSummary(eventResult.summary) && <p>{readableSummary(eventResult.summary)}</p>}
                     <p className="meta">Zustand: {eventStatusLabel(eventResult.status)} · Federführung: {coordination?.lead ? (coordination.lead.mine ? (sessionContext?.displayName ?? coordination.lead.displayName) : coordination.lead.displayName) : 'niemand'}</p>
                   </div>
                   <button className="primary action-button" onClick={() => navigateTo('event')}><ActionIcon name="open" />Öffnen</button>
@@ -852,11 +864,25 @@ export function App() {
                 ) : (
                   <dl className="data-list">
                     <div><dt>Titel</dt><dd>{eventResult.title}</dd></div>
-                    <div><dt>Zusammenfassung</dt><dd>{eventResult.summary ?? 'Noch keine Zusammenfassung'}</dd></div>
+                    <div><dt>Zusammenfassung</dt><dd>{readableSummary(eventResult.summary) ?? 'Noch keine Zusammenfassung'}</dd></div>
                     <div><dt>Ereignisdatum</dt><dd>{eventResult.occurredAt ? new Date(eventResult.occurredAt).toLocaleDateString('de-DE') : 'Noch nicht gesetzt'}</dd></div>
                   </dl>
                 )}
                 {editMessage && <p aria-live="polite" className="status-message">{editMessage}</p>}
+              </section>
+
+              <section className="panel card-headed">
+                <h2>Quellen und Fundstellen</h2>
+                {eventSources.length === 0 ? <p>Für dieses Ereignis sind noch keine Fundstellen zugeordnet.</p> : (
+                  <ul className="event-source-list">
+                    {eventSources.map((source) => (
+                      <li key={source.findingId}>
+                        <strong>{readableSourceName(source.sourceName)}</strong>
+                        <span>{source.originalUrl && /^https?:\/\//i.test(source.originalUrl) ? <a href={source.originalUrl} target="_blank" rel="noopener noreferrer">{source.findingTitle}</a> : source.findingTitle}</span>
+                      </li>
+                    ))}
+                  </ul>
+                )}
               </section>
 
               <aside className="panel card-headed">
