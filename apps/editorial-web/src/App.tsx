@@ -101,6 +101,8 @@ export function App() {
   const [editFailed, setEditFailed] = useState(false);
   const [editSaved, setEditSaved] = useState(false);
   const leaveGuardRef = useRef(false);
+  const currentViewRef = useRef<EditorialView>('dashboard');
+  const historyLeaveRef = useRef<() => boolean>(() => true);
   const [sessionContext, setSessionContext] = useState<SessionContext | null>(null);
   const [navigationOpen, setNavigationOpen] = useState(false);
   const [profileCallName, setProfileCallName] = useState('');
@@ -113,6 +115,7 @@ export function App() {
     editOccurredAt !== (eventResult.occurredAt?.slice(0, 10) ?? '')
   );
   leaveGuardRef.current = eventDirty || editSaving;
+  currentViewRef.current = view;
 
   function confirmLeave(): boolean {
     if (editSaving) return false;
@@ -128,6 +131,12 @@ export function App() {
     window.addEventListener('beforeunload', beforeUnload);
     return () => window.removeEventListener('beforeunload', beforeUnload);
   }, []);
+
+  historyLeaveRef.current = () => {
+    if (!confirmLeave()) return false;
+    if (editingEvent) { setEditingEvent(false); void runCoordinationAction('release_lock', true); }
+    return true;
+  };
 
   function navigateTo(nextView: EditorialView) {
     if (nextView === view || !confirmLeave()) return;
@@ -190,11 +199,10 @@ export function App() {
     window.history.replaceState({ ...(window.history.state ?? {}), fibView: 'dashboard' }, '', window.location.href);
     const onPopState = (event: PopStateEvent) => {
       const nextView = event.state?.fibView === 'event' ? 'event' : event.state?.fibView === 'events' ? 'events' : event.state?.fibView === 'profile' ? 'profile' : 'dashboard';
-      if (leaveGuardRef.current && !window.confirm('Ungespeicherte Änderungen\\n\\nÄnderungen verwerfen und den Bereich verlassen?')) {
-        window.history.pushState({ fibView: view }, '', window.location.href);
+      if (!historyLeaveRef.current()) {
+        window.history.pushState({ fibView: currentViewRef.current }, '', window.location.href);
         return;
       }
-      if (leaveGuardRef.current) { setEditingEvent(false); void runCoordinationAction('release_lock', true); }
       setView(nextView);
       setNavigationOpen(false);
       if (nextView === 'dashboard') void loadEditorialStart();
@@ -494,6 +502,7 @@ export function App() {
   }
 
   async function logout() {
+    if (!confirmLeave()) return;
     await supabase.auth.signOut();
     setMessage('');
     setEventResult(null);
