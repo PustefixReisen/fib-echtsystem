@@ -482,6 +482,39 @@ export function App() {
     if (data.hasMore) setSourceMessage('Maximal 100 Fundstellen. Suche bitte eingrenzen.');
   }
 
+  async function unlinkFinding(findingId: string) {
+    if (!eventResult || !window.confirm('Zuordnung dieser Fundstelle zum Ereignis aufheben? Die Fundstelle bleibt im System erhalten.')) return;
+    setSourceBusy(true);
+    setSourceMessage(null);
+    const acquiredForThisAction = !coordination?.lock?.mine;
+    if (acquiredForThisAction) {
+      const allowed = await runCoordinationAction('acquire_lock', true);
+      if (!allowed) {
+        setSourceBusy(false);
+        setSourceMessage('Das Ereignis ist gesperrt. Bitte den Koordinationsstatus prüfen.');
+        return;
+      }
+    }
+    try {
+      const { data, error } = await supabase.functions.invoke<{ok?: boolean; error?: string}>('fib-editorial-write', {
+        body: { action: 'unlink_finding', eventId: eventResult.id, findingId },
+      });
+      if (error || !data?.ok) {
+        setSourceMessage('Die Zuordnung konnte nicht aufgehoben werden.');
+        return;
+      }
+      const { data: updated, error: readError } = await supabase.functions.invoke<EventResult>('fib-get-event', {
+        body: { eventId: eventResult.id },
+      });
+      if (!readError && updated?.ok) setEventSources(updated.sources ?? []);
+      setSourceMessage('Zuordnung aufgehoben und protokolliert.');
+    } finally {
+      if (acquiredForThisAction) await runCoordinationAction('release_lock', true);
+      setSourceBusy(false);
+      await loadCoordinationState();
+    }
+  }
+
   async function linkFinding(findingId: string) {
     if (!eventResult) return;
     setSourceBusy(true);
@@ -943,25 +976,23 @@ export function App() {
 
               <section className="panel card-headed">
                 <h2>Quellen und Fundstellen</h2>
-                {eventSources.length === 0 ? <p>Für dieses Ereignis sind noch keine Fundstellen zugeordnet.</p> : (
+                <div className="finding-view-tabs" role="group" aria-label="Fundstellenansicht">
+                  <button type="button" aria-pressed={!sourcePickerOpen} className={!sourcePickerOpen ? 'active' : ''} onClick={() => setSourcePickerOpen(false)}>Zugeordnet ({eventSources.length})</button>
+                  <button type="button" aria-pressed={sourcePickerOpen} className={sourcePickerOpen ? 'active' : ''} onClick={() => setSourcePickerOpen(true)}>Fundstelle hinzufügen</button>
+                </div>
+                {!sourcePickerOpen && (eventSources.length === 0 ? <p>Für dieses Ereignis sind noch keine Fundstellen zugeordnet.</p> : (
                   <ul className="event-source-list">
                     {eventSources.map((source) => (
                       <li key={source.findingId}>
                         <strong>{readableSourceName(source.sourceName)}</strong>
                         <span>{source.originalUrl && /^https?:\/\//i.test(source.originalUrl) ? <a href={source.originalUrl} target="_blank" rel="noopener noreferrer">{source.findingTitle}</a> : source.findingTitle}</span>
+                        <button type="button" disabled={sourceBusy} onClick={() => void unlinkFinding(source.findingId)}>Zuordnung aufheben</button>
                       </li>
                     ))}
                   </ul>
-                )}
-                <div className="button-row">
-                  <button type="button" disabled={sourceBusy || editingEvent} onClick={() => {
-                    setSourcePickerOpen(open => !open);
-                    setSourceMessage(null);
-
-                  }}>{sourcePickerOpen ? 'Zurück zu den zugeordneten Fundstellen' : 'Weitere Fundstelle zuordnen'}</button>
-                </div>
+                ))}
                 {sourcePickerOpen && <div className="stack">
-                  <p className="meta">Auswahl aus bereits erfassten Fundstellen. Bestehende Zuordnungen bleiben oben sichtbar.</p>
+                  <p className="meta">Bereits erfasste Fundstellen suchen und diesem Ereignis zuordnen. Bestehende Zuordnungen findest du unter „Zugeordnet“.</p>
                   <div className="finding-filter">
                     <label>Fundstellen filtern – Titel oder Quelle
                       <input type="search" value={sourceSearch} onChange={event => setSourceSearch(event.target.value)} maxLength={120} placeholder="Suchbegriff eingeben …" />
@@ -973,8 +1004,8 @@ export function App() {
                     <div><strong>{readableSourceName(finding.sourceName)}</strong><p>{finding.findingTitle}</p></div>
                     <button type="button" disabled={sourceBusy} onClick={() => void linkFinding(finding.findingId)}>Zuordnen</button>
                   </div>)}
-                  {sourceMessage && <p role="status">{sourceMessage}</p>}
                 </div>}
+                {sourceMessage && <p role="status">{sourceMessage}</p>}
               </section>
 
                             </div>
