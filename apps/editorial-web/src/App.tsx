@@ -478,7 +478,7 @@ export function App() {
       setSourceMessage('Fundstellen konnten nicht geladen werden.');
       return;
     }
-    setSourceMatches(data.findings.filter(finding => !eventSources.some(item => item.findingId === finding.findingId)));
+    setSourceMatches(data.findings);
     if (data.hasMore) setSourceMessage('Maximal 100 Fundstellen. Suche bitte eingrenzen.');
   }
 
@@ -516,34 +516,43 @@ export function App() {
   }
 
   async function linkFinding(findingId: string) {
-    if (!eventResult) return;
+    if (!eventResult || sourceBusy) return;
+    const selected = sourceMatches.find(item => item.findingId === findingId);
     setSourceBusy(true);
-    // Bereits gehaltene Sperren nicht nach einer Zuordnung freigeben.
+    setSourceMessage(null);
     const acquiredForThisAction = !coordination?.lock?.mine;
-    if (acquiredForThisAction) {
-      const allowed = await runCoordinationAction('acquire_lock', true);
-      if (!allowed) {
-        setSourceBusy(false);
-        setSourceMessage('Das Ereignis ist möglicherweise durch eine andere Person gesperrt. Bitte den Koordinationsstatus prüfen.');
+    try {
+      if (acquiredForThisAction) {
+        const allowed = await runCoordinationAction('acquire_lock', true);
+        if (!allowed) {
+          setSourceMessage('Keine Zuordnung möglich: Bearbeitungssperre konnte nicht übernommen werden.');
+          return;
+        }
+      }
+      const { data, error } = await supabase.functions.invoke<{ok?: boolean; error?: string}>('fib-editorial-write', {
+        body: { action: 'link_finding', eventId: eventResult.id, findingId },
+      });
+      if (error || !data?.ok) {
+        const code = data?.error ?? 'server_error';
+        setSourceMessage(`Zuordnung fehlgeschlagen (${code}). Bitte den Koordinationsstatus prüfen.`);
         return;
       }
+      // Erfolg der Schreiboperation unmittelbar darstellen; anschließend mit Datenbankstand abgleichen.
+      if (selected) setEventSources(current => current.some(item => item.findingId === findingId) ? current : [...current, selected]);
+      const { data: updated, error: refreshError } = await supabase.functions.invoke<EventResult>('fib-get-event', {
+        body: { eventId: eventResult.id },
+      });
+      if (!refreshError && updated?.ok) {
+        setEventSources(updated.sources ?? []);
+        setSourceMessage('Fundstelle zugeordnet. Sie erscheint jetzt unter den zugeordneten Fundstellen.');
+      } else {
+        setSourceMessage('Fundstelle gespeichert; der Abgleich mit der Datenbank ist noch nicht gelungen. Bitte Ereignis neu öffnen.');
+      }
+    } finally {
+      if (acquiredForThisAction) await runCoordinationAction('release_lock', true);
+      setSourceBusy(false);
+      await loadCoordinationState();
     }
-    const { data, error } = await supabase.functions.invoke<{ok?: boolean; error?: string}>('fib-editorial-write', {
-      body: { action: 'link_finding', eventId: eventResult.id, findingId },
-    });
-    if (acquiredForThisAction) await runCoordinationAction('release_lock', true);
-    setSourceBusy(false);
-    if (error || !data?.ok) {
-      setSourceMessage('Fundstelle konnte nicht zugeordnet werden. Bitte Sperre und Berechtigung prüfen.');
-      return;
-    }
-    const { data: updated, error: updateError } = await supabase.functions.invoke<EventResult>('fib-get-event', {
-      body: { eventId: eventResult.id },
-    });
-    if (!updateError && updated?.ok) setEventSources(updated.sources ?? []);
-    setSourceMatches(current => current.filter(item => item.findingId !== findingId));
-    setSourceMessage('Fundstelle zugeordnet.');
-    await loadCoordinationState();
   }
 
   async function startEventEditing() {
@@ -1000,7 +1009,7 @@ export function App() {
                     <button type="button" className="action-button" disabled={!sourceSearch} onClick={() => setSourceSearch('')}>Filter löschen</button>
                   </div>
                   {sourceBusy && <p role="status">Suche läuft …</p>}
-                  {sourceMatches.map(finding => <div className="work-item" key={finding.findingId}>
+                  {sourceMatches.filter(finding => !eventSources.some(item => item.findingId === finding.findingId)).map(finding => <div className="work-item" key={finding.findingId}>
                     <div><strong>{readableSourceName(finding.sourceName)}</strong><p>{finding.findingTitle}</p></div>
                     <button type="button" disabled={sourceBusy} onClick={() => void linkFinding(finding.findingId)}>Zuordnen</button>
                   </div>)}
