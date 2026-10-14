@@ -312,6 +312,7 @@ export function App() {
     }
     setEventResult(data.event);
     setCoordination(null);
+    setCoordinationMessage(null);
     setEditingEvent(false);
     navigateTo('event');
   }
@@ -356,7 +357,7 @@ export function App() {
     if (!quiet) setCoordinationMessage(null);
 
     const { data, error } = await supabase.functions.invoke<CoordinationResult>('fib-coordination', {
-      body: { action, objectType: 'event', objectId: LIVE_TEST_EVENT_ID },
+      body: { action, objectType: 'event', objectId: eventResult?.id ?? LIVE_TEST_EVENT_ID },
     });
 
     if (!quiet) setCoordinationRunning(false);
