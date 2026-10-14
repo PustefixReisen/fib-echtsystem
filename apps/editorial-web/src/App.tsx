@@ -34,6 +34,7 @@ type EventData = {
 
 type EventSource = { findingId: string; findingTitle: string; originalUrl: string | null; sourceName: string };
 type EventResult = { ok: true; event: EventData; sources?: EventSource[] };
+type FindingListResult = { ok: true; findings: EventSource[]; hasMore: boolean };
 function readableSummary(summary: string | null): string | null {
   if (!summary) return null;
   if (!summary.startsWith('Entwicklungsdaten; Import ')) return summary;
@@ -93,6 +94,11 @@ export function App() {
   const [view, setView] = useState<EditorialView>('dashboard');
   const [eventResult, setEventResult] = useState<EventData | null>(null);
   const [eventSources, setEventSources] = useState<EventSource[]>([]);
+  const [sourceSearch, setSourceSearch] = useState('');
+  const [sourceMatches, setSourceMatches] = useState<EventSource[]>([]);
+  const [sourcePickerOpen, setSourcePickerOpen] = useState(false);
+  const [sourceBusy, setSourceBusy] = useState(false);
+  const [sourceMessage, setSourceMessage] = useState<string | null>(null);
   const [eventList, setEventList] = useState<EventData[]>([]);
   const [eventSearch, setEventSearch] = useState('');
   const [eventListBusy, setEventListBusy] = useState(false);
@@ -122,7 +128,7 @@ export function App() {
 
   const eventDirty = editingEvent && !!eventResult && (
     editTitle !== eventResult.title ||
-    (editSummary.trim() || null) !== (eventResult.summary?.trim() || null) ||
+    (editSummary.trim() || null) !== (readableSummary(eventResult.summary)?.trim() || null) ||
     editOccurredAt !== (eventResult.occurredAt?.slice(0, 10) ?? '')
   );
   leaveGuardRef.current = eventDirty || editSaving;
@@ -443,12 +449,50 @@ export function App() {
     return true;
   }
 
+  async function searchAvailableFindings(search = '') {
+    setSourceBusy(true);
+    setSourceMessage(null);
+    const { data, error } = await supabase.functions.invoke<FindingListResult>('fib-get-event', {
+      body: { action: 'list_findings', search },
+    });
+    setSourceBusy(false);
+    if (error || !data?.ok) {
+      setSourceMessage('Fundstellen konnten nicht geladen werden.');
+      return;
+    }
+    setSourceMatches(data.findings.filter(finding => !eventSources.some(item => item.findingId === finding.findingId)));
+    if (data.hasMore) setSourceMessage('Maximal 100 Fundstellen. Suche bitte eingrenzen.');
+  }
+
+  async function linkFinding(findingId: string) {
+    if (!eventResult || !coordination?.lock?.mine) {
+      setSourceMessage('Bitte zuerst eine Bearbeitungssperre für dieses Ereignis übernehmen.');
+      return;
+    }
+    setSourceBusy(true);
+    const { data, error } = await supabase.functions.invoke<{ok?: boolean; error?: string}>('fib-editorial-write', {
+      body: { action: 'link_finding', eventId: eventResult.id, findingId },
+    });
+    setSourceBusy(false);
+    if (error || !data?.ok) {
+      setSourceMessage('Fundstelle konnte nicht zugeordnet werden. Bitte Sperre und Berechtigung prüfen.');
+      return;
+    }
+    const { data: updated, error: updateError } = await supabase.functions.invoke<EventResult>('fib-get-event', {
+      body: { eventId: eventResult.id },
+    });
+    if (!updateError && updated?.ok) setEventSources(updated.sources ?? []);
+    setSourceMatches(current => current.filter(item => item.findingId !== findingId));
+    setSourceMessage('Fundstelle zugeordnet.');
+    await loadCoordinationState();
+  }
+
   async function startEventEditing() {
     if (!eventResult) return;
     const acquired = await runCoordinationAction('acquire_lock');
     if (!acquired) return;
     setEditTitle(eventResult.title);
-    setEditSummary(eventResult.summary ?? '');
+    setEditSummary(readableSummary(eventResult.summary) ?? '');
     setEditOccurredAt(eventResult.occurredAt ? eventResult.occurredAt.slice(0, 10) : '');
     setEditMessage(null);
     setEditFailed(false);
@@ -884,6 +928,27 @@ export function App() {
                     ))}
                   </ul>
                 )}
+                <div className="button-row">
+                  <button type="button" disabled={sourceBusy || editingEvent} onClick={() => {
+                    setSourcePickerOpen(open => !open);
+                    setSourceMessage(null);
+                    if (!sourcePickerOpen) void searchAvailableFindings();
+                  }}>{sourcePickerOpen ? 'Auswahl schließen' : 'Fundstelle zuordnen'}</button>
+                </div>
+                {sourcePickerOpen && <div className="stack">
+                  <form className="button-row" onSubmit={event => { event.preventDefault(); void searchAvailableFindings(sourceSearch); }}>
+                    <label>Vorhandene Fundstellen suchen
+                      <input type="search" value={sourceSearch} onChange={event => setSourceSearch(event.target.value)} maxLength={120} placeholder="Titel oder Quelle" />
+                    </label>
+                    <button type="submit" disabled={sourceBusy}>Suchen</button>
+                  </form>
+                  {!coordination?.lock?.mine && <p className="meta">Zum Zuordnen ist eine Bearbeitungssperre erforderlich. Du kannst sie unter „Redaktionelle Koordination“ starten.</p>}
+                  {sourceMatches.map(finding => <div className="work-item" key={finding.findingId}>
+                    <div><strong>{readableSourceName(finding.sourceName)}</strong><p>{finding.findingTitle}</p></div>
+                    <button type="button" disabled={sourceBusy || !coordination?.lock?.mine} onClick={() => void linkFinding(finding.findingId)}>Zuordnen</button>
+                  </div>)}
+                  {sourceMessage && <p role="status">{sourceMessage}</p>}
+                </div>}
               </section>
 
                             </div>
