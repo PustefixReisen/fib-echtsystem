@@ -99,6 +99,7 @@ export function App() {
   const [sourcePickerOpen, setSourcePickerOpen] = useState(false);
   const [sourceBusy, setSourceBusy] = useState(false);
   const [sourceMessage, setSourceMessage] = useState<string | null>(null);
+  const sourceRequestRef = useRef(0);
   const [eventList, setEventList] = useState<EventData[]>([]);
   const [eventSearch, setEventSearch] = useState('');
   const [eventListBusy, setEventListBusy] = useState(false);
@@ -449,12 +450,20 @@ export function App() {
     return true;
   }
 
+  useEffect(() => {
+    if (!sourcePickerOpen) return;
+    const timer = window.setTimeout(() => { void searchAvailableFindings(sourceSearch); }, 300);
+    return () => window.clearTimeout(timer);
+  }, [sourcePickerOpen, sourceSearch]);
+
   async function searchAvailableFindings(search = '') {
+    const request = ++sourceRequestRef.current;
     setSourceBusy(true);
     setSourceMessage(null);
     const { data, error } = await supabase.functions.invoke<FindingListResult>('fib-get-event', {
       body: { action: 'list_findings', search },
     });
+    if (request !== sourceRequestRef.current) return;
     setSourceBusy(false);
     if (error || !data?.ok) {
       setSourceMessage('Fundstellen konnten nicht geladen werden.');
@@ -465,14 +474,22 @@ export function App() {
   }
 
   async function linkFinding(findingId: string) {
-    if (!eventResult || !coordination?.lock?.mine) {
-      setSourceMessage('Bitte zuerst eine Bearbeitungssperre für dieses Ereignis übernehmen.');
-      return;
-    }
+    if (!eventResult) return;
     setSourceBusy(true);
+    // Bereits gehaltene Sperren nicht nach einer Zuordnung freigeben.
+    const acquiredForThisAction = !coordination?.lock?.mine;
+    if (acquiredForThisAction) {
+      const allowed = await runCoordinationAction('acquire_lock', true);
+      if (!allowed) {
+        setSourceBusy(false);
+        setSourceMessage('Das Ereignis ist möglicherweise durch eine andere Person gesperrt. Bitte den Koordinationsstatus prüfen.');
+        return;
+      }
+    }
     const { data, error } = await supabase.functions.invoke<{ok?: boolean; error?: string}>('fib-editorial-write', {
       body: { action: 'link_finding', eventId: eventResult.id, findingId },
     });
+    if (acquiredForThisAction) await runCoordinationAction('release_lock', true);
     setSourceBusy(false);
     if (error || !data?.ok) {
       setSourceMessage('Fundstelle konnte nicht zugeordnet werden. Bitte Sperre und Berechtigung prüfen.');
@@ -932,20 +949,20 @@ export function App() {
                   <button type="button" disabled={sourceBusy || editingEvent} onClick={() => {
                     setSourcePickerOpen(open => !open);
                     setSourceMessage(null);
-                    if (!sourcePickerOpen) void searchAvailableFindings();
+
                   }}>{sourcePickerOpen ? 'Auswahl schließen' : 'Fundstelle zuordnen'}</button>
                 </div>
                 {sourcePickerOpen && <div className="stack">
-                  <form className="button-row" onSubmit={event => { event.preventDefault(); void searchAvailableFindings(sourceSearch); }}>
-                    <label>Vorhandene Fundstellen suchen
-                      <input type="search" value={sourceSearch} onChange={event => setSourceSearch(event.target.value)} maxLength={120} placeholder="Titel oder Quelle" />
+                  <div className="finding-filter">
+                    <label>Fundstellen filtern – Titel oder Quelle
+                      <input type="search" value={sourceSearch} onChange={event => setSourceSearch(event.target.value)} maxLength={120} placeholder="Suchbegriff eingeben …" />
                     </label>
-                    <button type="submit" disabled={sourceBusy}>Suchen</button>
-                  </form>
-                  {!coordination?.lock?.mine && <p className="meta">Zum Zuordnen ist eine Bearbeitungssperre erforderlich. Du kannst sie unter „Redaktionelle Koordination“ starten.</p>}
+                    <button type="button" className="action-button" disabled={!sourceSearch} onClick={() => setSourceSearch('')}>Filter löschen</button>
+                  </div>
+                  {sourceBusy && <p role="status">Suche läuft …</p>}
                   {sourceMatches.map(finding => <div className="work-item" key={finding.findingId}>
                     <div><strong>{readableSourceName(finding.sourceName)}</strong><p>{finding.findingTitle}</p></div>
-                    <button type="button" disabled={sourceBusy || !coordination?.lock?.mine} onClick={() => void linkFinding(finding.findingId)}>Zuordnen</button>
+                    <button type="button" disabled={sourceBusy} onClick={() => void linkFinding(finding.findingId)}>Zuordnen</button>
                   </div>)}
                   {sourceMessage && <p role="status">{sourceMessage}</p>}
                 </div>}
