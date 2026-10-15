@@ -105,7 +105,7 @@ export default {
           );
           if (!old.length) return false;
           const nextRole = body.evidenceRole!.trim();
-          const nextNote = (body.note ?? '').trim() || null;
+          const nextNote = body.note === undefined ? (old[0].note ?? null) : (body.note ?? '').trim() || null;
           if (old[0].evidence_role === nextRole && (old[0].note ?? null) === nextNote) return true;
           await tx.unsafe(
             'update fib.event_findings set evidence_role=$3,note=$4 where event_id=$1::uuid and finding_id=$2::uuid',
