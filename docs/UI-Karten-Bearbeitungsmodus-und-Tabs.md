@@ -24,3 +24,9 @@ Buttons mit Symbol und Beschriftung benötigen immer einen sichtbaren Abstand (m
 ## Aufgehobene Zuordnungen
 
 Beim erneuten Zuordnen darf optional die letzte gespeicherte Begründung der identischen Beziehung Fundstelle ↔ Ereignis übernommen werden. Alternativ wird die Beziehung ohne Begründung neu angelegt. Die Herkunfts- und Auditdaten bleiben unberührt; eine vollständige Versionsauswahl wird nicht angezeigt.
+
+## Vereinfachte Wiederzuordnung (15.10.2026)
+
+Wenn für die identische Beziehung zwischen Ereignis und Fundstelle eine frühere Begründung vorliegt, zeigt die Suchliste diesen Vorgängerwert vor der Aktion „Zuordnen“ an. Die einfache Aktion „Zuordnen“ übernimmt ihn automatisch; eine separate Auswahl „Mit letzter Begründung“ entfällt. Nach dem Zuordnen kann die Begründung redaktionell angepasst werden. Dies betrifft ausschließlich die letzte Begründung dieser Beziehung, nicht andere Ereignisse oder fremde Fundstellen.
+
+Aktueller FIB-weiter Mindestabstand zwischen Icon und Buttonbeschriftung: 0,7 rem.
