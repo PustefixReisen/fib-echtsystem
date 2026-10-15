@@ -345,6 +345,10 @@ h3 { margin-bottom: .45rem; }
 .finding-justification-editor .button-row { margin-top: .2rem; }
 
 /* FIB-weiter Standard: Icon und Text in Aktionsbuttons haben sichtbaren Abstand. */
-button:has(> .action-icon) { display: inline-flex; align-items: center; justify-content: center; gap: .45rem; }
+button:has(> .action-icon) { display: inline-flex; align-items: center; justify-content: center; gap: .7rem; }
 .finding-link-actions { display: flex; gap: .4rem; flex-wrap: wrap; justify-content: flex-end; }
 .finding-link-actions button { margin-top: .2rem; }
+
+/* Gespeicherte Vorgängerbegründung in den Suchtreffern zurückhaltend anzeigen. */
+.work-item .finding-justification { font-size: .88rem; font-weight: 400; color: #526159; line-height: 1.4; margin: .3rem 0 0; }
+.work-item .finding-justification strong { font-weight: 650; }
