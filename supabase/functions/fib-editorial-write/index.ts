@@ -56,6 +56,7 @@ export default {
       summary?: string | null;
       occurredAt?: string | null;
       findingId?: string;
+      restorePrevious?: boolean;
       evidenceRole?: string;
       note?: string | null;
       justification?: string | null;
@@ -164,20 +165,40 @@ export default {
       }
 
       if (body.action === 'link_finding') {
-        if (typeof body.findingId !== 'string' || !/^[0-9a-f-]{36}$/i.test(body.findingId)) return json({ error: 'invalid_finding_id' }, 400);
-        const linked = await sql.unsafe(
-          `insert into fib.event_findings (event_id, finding_id, evidence_role)
-           select $1::uuid, f.id, 'editorial_reference' from fib.findings f
-           where f.id=$2::uuid and exists (select 1 from fib.events e where e.id=$1::uuid and e.status='confirmed')
-           on conflict (event_id, finding_id) do nothing returning finding_id`,
-          [body.eventId, body.findingId],
-        );
-        if (!linked.length) return json({ error: 'finding_missing_or_already_linked' }, 409);
-        await sql.unsafe(
-          "insert into fib.object_last_edits (object_type,object_id,user_id,edited_at) values ('event',$1::uuid,$2,now()) on conflict (object_type,object_id) do update set user_id=excluded.user_id, edited_at=excluded.edited_at",
-          [body.eventId, userId],
-        );
-        return json({ ok: true });
+        if (typeof body.findingId !== 'string' || !/^[0-9a-f-]{36}$/i.test(body.findingId) ||
+            (body.restorePrevious !== undefined && typeof body.restorePrevious !== 'boolean'))
+          return json({ error: 'invalid_finding_id' }, 400);
+        const restored = await sql.begin(async tx => {
+          const inserted = await tx.unsafe(
+            `insert into fib.event_findings (event_id, finding_id, evidence_role, justification)
+             select $1::uuid, f.id, 'editorial_reference',
+               case when $3::boolean then
+                 (select j.new_justification from fib.event_finding_justification_log j
+                  where j.event_id=$1::uuid and j.finding_id=f.id
+                  order by j.changed_at desc, j.id desc limit 1)
+               else null end
+             from fib.findings f
+             where f.id=$2::uuid and exists
+                (select 1 from fib.events e where e.id=$1::uuid and e.status='confirmed')
+             on conflict (event_id, finding_id) do nothing
+             returning finding_id, justification`,
+            [body.eventId, body.findingId, body.restorePrevious === true],
+          );
+          if (!inserted.length) return null;
+          if (inserted[0].justification) {
+            await tx.unsafe(
+              'insert into fib.event_finding_justification_log (event_id,finding_id,actor_id,old_justification,new_justification) values ($1::uuid,$2::uuid,$3::uuid,null,$4)',
+              [body.eventId, body.findingId, userId, inserted[0].justification],
+            );
+          }
+          await tx.unsafe(
+            "insert into fib.object_last_edits (object_type,object_id,user_id,edited_at) values ('event',$1::uuid,$2,now()) on conflict (object_type,object_id) do update set user_id=excluded.user_id,edited_at=excluded.edited_at",
+            [body.eventId, userId],
+          );
+          return inserted[0];
+        });
+        if (!restored) return json({ error: 'finding_missing_or_already_linked' }, 409);
+        return json({ ok: true, restoredPrevious: body.restorePrevious === true && Boolean(restored.justification) });
       }
 
       const updated = await sql.unsafe(

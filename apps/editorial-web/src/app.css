@@ -343,3 +343,8 @@ h3 { margin-bottom: .45rem; }
 }
 .finding-mode-intro { margin: 0 0 1rem; }
 .finding-justification-editor .button-row { margin-top: .2rem; }
+
+/* FIB-weiter Standard: Icon und Text in Aktionsbuttons haben sichtbaren Abstand. */
+button:has(> .action-icon) { display: inline-flex; align-items: center; justify-content: center; gap: .45rem; }
+.finding-link-actions { display: flex; gap: .4rem; flex-wrap: wrap; justify-content: flex-end; }
+.finding-link-actions button { margin-top: .2rem; }

@@ -32,7 +32,7 @@ type EventData = {
   occurredAt: string | null;
 };
 
-type EventSource = { findingId: string; findingTitle: string; originalUrl: string | null; sourceName: string; evidenceRole?: string | null; note?: string | null; justification?: string | null };
+type EventSource = { findingId: string; findingTitle: string; originalUrl: string | null; sourceName: string; evidenceRole?: string | null; note?: string | null; justification?: string | null; previousJustification?: string | null };
 function isImportedFindingNote(note: string | null | undefined): boolean {
   if (!note?.trim().startsWith('{')) return false;
   try {
@@ -501,7 +501,7 @@ export function App() {
     setSourceBusy(true);
     setSourceMessage(null);
     const { data, error } = await supabase.functions.invoke<FindingListResult>('fib-get-event', {
-      body: { action: 'list_findings', search },
+      body: { action: 'list_findings', search, eventId: eventResult?.id },
     });
     if (request !== sourceRequestRef.current) return;
     setSourceBusy(false);
@@ -587,7 +587,7 @@ export function App() {
     }
   }
 
-  async function linkFinding(findingId: string) {
+  async function linkFinding(findingId: string, restorePrevious = false) {
     if (!eventResult || sourceBusy) return;
     const selected = sourceMatches.find(item => item.findingId === findingId);
     setSourceBusy(true);
@@ -602,7 +602,7 @@ export function App() {
         }
       }
       const { data, error } = await supabase.functions.invoke<{ok?: boolean; error?: string}>('fib-editorial-write', {
-        body: { action: 'link_finding', eventId: eventResult.id, findingId },
+        body: { action: 'link_finding', eventId: eventResult.id, findingId, restorePrevious },
       });
       if (error || !data?.ok) {
         const code = data?.error ?? 'server_error';
@@ -616,7 +616,7 @@ export function App() {
       });
       if (!refreshError && updated?.ok) {
         setEventSources(updated.sources ?? []);
-        setSourceMessage('Fundstelle zugeordnet. Sie erscheint jetzt unter den zugeordneten Fundstellen.');
+        setSourceMessage(restorePrevious ? 'Fundstelle mit der letzten gespeicherten Begründung zugeordnet.' : 'Fundstelle zugeordnet. Sie erscheint jetzt unter den zugeordneten Fundstellen.');
       } else {
         setSourceMessage('Fundstelle gespeichert; der Abgleich mit der Datenbank ist noch nicht gelungen. Bitte Ereignis neu öffnen.');
       }
@@ -1080,6 +1080,7 @@ export function App() {
                       <li key={source.findingId}>
                         <strong>{readableSourceName(source.sourceName)}</strong>
                         <span>{source.originalUrl && /^https?:\/\//i.test(source.originalUrl) ? <a href={source.originalUrl} target="_blank" rel="noopener noreferrer">{source.findingTitle}</a> : source.findingTitle}</span>
+                        {editingSourceId !== source.findingId && source.justification && <p className="finding-justification">{source.justification}</p>}
                         {sourcePickerOpen && (editingSourceId === source.findingId ? (
                           <div className="stack finding-justification-editor">
                             <label>Begründung der Zuordnung
@@ -1096,8 +1097,6 @@ export function App() {
                             <button type="button" disabled={sourceBusy || !!editingSourceId} onClick={() => void unlinkFinding(source.findingId)}>Zuordnung aufheben</button>
                           </div>
                         ))}
-                        {editingSourceId !== source.findingId && source.justification && <p className="finding-justification">{source.justification}</p>}
-                        
                       </li>
                     ))}
                   </ul>
@@ -1112,7 +1111,10 @@ export function App() {
                   {sourceBusy && <p role="status">Suche läuft …</p>}
                   {sourceMatches.filter(finding => !eventSources.some(item => item.findingId === finding.findingId)).map(finding => <div className="work-item" key={finding.findingId}>
                     <div><strong>{readableSourceName(finding.sourceName)}</strong><p>{finding.findingTitle}</p></div>
-                    <button type="button" disabled={sourceBusy} onClick={() => void linkFinding(finding.findingId)}>Zuordnen</button>
+                    <div className="finding-link-actions">
+                      <button type="button" disabled={sourceBusy} onClick={() => void linkFinding(finding.findingId)}>Zuordnen</button>
+                      {finding.previousJustification && <button type="button" className="action-button" disabled={sourceBusy} title={finding.previousJustification} onClick={() => void linkFinding(finding.findingId, true)}>Mit letzter Begründung</button>}
+                    </div>
                   </div>)}
                 </div>}
                 {sourceMessage && <p role="status">{sourceMessage}</p>}
