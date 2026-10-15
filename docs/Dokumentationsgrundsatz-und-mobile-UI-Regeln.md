@@ -25,3 +25,10 @@ Stand: 15.10.2026, bestätigt durch die Projektleitung.
 - Mobile Verbesserungen müssen Desktop-Verhalten und Schutzmechanismen bewahren.
 
 Umsetzung erfolgt schrittweise in gesonderten PRs; diese Regeln allein gelten nicht als abgeschlossene Implementierung.
+
+## Umsetzungsschritt: mobile Navigation und Ereignisfilter (15.10.2026)
+
+- Die Navigationsleiste bleibt vollständig (auch geplante Funktionen); mobil erhält sie einen eindeutig benannten Schließen-Button, lässt sich weiterhin durch Tippen auf den Hintergrund schließen und scrollt unabhängig vom Hauptinhalt.
+- Der Ereignisfilter verwendet die kompakte Beschriftung „Titel oder Beschreibung“; ein durchgestrichenes Filtersymbol erscheint **nur** bei aktivem Filter und hat `aria-label` und Tooltip zum Zurücksetzen. Die bestehende Live-Filterlogik wird beibehalten.
+- Die allgemeine Suchfunktion bleibt erhalten, auch wenn sie noch nicht implementiert ist.
+- Dies ist ein weiteres UI-Inkrement; Pflichtbegründung bei Fundstellen und übrige mobile Verbesserungen bleiben gesonderte offene Implementierungen.
