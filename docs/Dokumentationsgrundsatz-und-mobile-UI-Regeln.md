@@ -32,3 +32,9 @@ Umsetzung erfolgt schrittweise in gesonderten PRs; diese Regeln allein gelten ni
 - Der Ereignisfilter verwendet die kompakte Beschriftung „Titel oder Beschreibung“; ein durchgestrichenes Filtersymbol erscheint **nur** bei aktivem Filter und hat `aria-label` und Tooltip zum Zurücksetzen. Die bestehende Live-Filterlogik wird beibehalten.
 - Die allgemeine Suchfunktion bleibt erhalten, auch wenn sie noch nicht implementiert ist.
 - Dies ist ein weiteres UI-Inkrement; Pflichtbegründung bei Fundstellen und übrige mobile Verbesserungen bleiben gesonderte offene Implementierungen.
+
+## Pflichtbegründung beim Zuordnen (Implementierungsstand 15.10.2026)
+
+Die neue Ereignis-Fundstellen-Beziehung darf nur gemeinsam mit einer nicht leeren, auf maximal 2.000 Zeichen begrenzten redaktionellen Begründung gespeichert werden. Eine für dieselbe Beziehung zuvor gespeicherte Begründung wird als editierbarer Vorgängerwert vorgeschlagen; andernfalls ist ein Pflichtfeld mit kontextbezogenem Hinweis sichtbar. Der Button „Zuordnen“ wird erst bei gültigem Feld freigeschaltet. Die Edge Function validiert dieselbe Pflicht serverseitig und protokolliert die Begründung. Beim Bearbeiten vorhandener Zuordnungen kann die Begründung nicht vollständig entfernt werden. Bestehende Entwicklungsbeziehungen ohne Begründung bleiben zunächst erhalten, müssen aber bei Bearbeitung nachbegründet werden; keine automatische Umschreibung der Altbestände.
+
+**Abgrenzung:** Eine formale Datenbank-`NOT NULL`-Umstellung ist wegen vorhandener Testdatensätze nicht Teil dieses Schritts. Die Prüfung gilt für die FIB-Schreib-API. Künftige alternative Schreibwege müssen die Fachregel ebenfalls durchsetzen.
