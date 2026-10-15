@@ -32,7 +32,7 @@ type EventData = {
   occurredAt: string | null;
 };
 
-type EventSource = { findingId: string; findingTitle: string; originalUrl: string | null; sourceName: string };
+type EventSource = { findingId: string; findingTitle: string; originalUrl: string | null; sourceName: string; evidenceRole?: string | null; note?: string | null };
 type EventResult = { ok: true; event: EventData; sources?: EventSource[] };
 type FindingListResult = { ok: true; findings: EventSource[]; hasMore: boolean };
 function readableSummary(summary: string | null): string | null {
@@ -97,6 +97,9 @@ export function App() {
   const [sourceSearch, setSourceSearch] = useState('');
   const [sourceMatches, setSourceMatches] = useState<EventSource[]>([]);
   const [sourcePickerOpen, setSourcePickerOpen] = useState(false);
+  const [editingSourceId, setEditingSourceId] = useState<string | null>(null);
+  const [sourceRoleDraft, setSourceRoleDraft] = useState('');
+  const [sourceNoteDraft, setSourceNoteDraft] = useState('');
   const [sourceBusy, setSourceBusy] = useState(false);
   const [sourceMessage, setSourceMessage] = useState<string | null>(null);
   const sourceRequestRef = useRef(0);
@@ -493,6 +496,47 @@ export function App() {
     }
     setSourceMatches(data.findings);
     if (data.hasMore) setSourceMessage('Maximal 100 Fundstellen. Suche bitte eingrenzen.');
+  }
+
+  function startFindingMetadataEdit(source: EventSource) {
+    setEditingSourceId(source.findingId);
+    setSourceRoleDraft(source.evidenceRole ?? 'editorial_reference');
+    setSourceNoteDraft(source.note ?? '');
+    setSourceMessage(null);
+  }
+
+  async function saveFindingMetadata(findingId: string) {
+    if (!eventResult || sourceBusy) return;
+    setSourceBusy(true);
+    setSourceMessage(null);
+    const acquiredForThisAction = !coordination?.lock?.mine;
+    try {
+      if (acquiredForThisAction && !await runCoordinationAction('acquire_lock', true)) {
+        setSourceMessage('Bearbeitungssperre konnte nicht übernommen werden.');
+        return;
+      }
+      const { data, error } = await supabase.functions.invoke<{ok?: boolean; error?: string}>('fib-editorial-write', {
+        body: {action: 'update_finding_link', eventId: eventResult.id, findingId, evidenceRole: sourceRoleDraft.trim(), note: sourceNoteDraft.trim() || null},
+      });
+      if (error || !data?.ok) {
+        setSourceMessage('Änderung nicht gespeichert (' + (data?.error ?? 'server_error') + ').');
+        return;
+      }
+      const { data: updated, error: refreshError } = await supabase.functions.invoke<EventResult>('fib-get-event', {
+        body: {eventId: eventResult.id},
+      });
+      if (refreshError || !updated?.ok) {
+        setSourceMessage('Änderung gespeichert, aber Daten konnten nicht neu geladen werden. Bitte Ereignis aktualisieren.');
+      } else {
+        setEventSources(updated.sources ?? []);
+        setSourceMessage('Belegrolle und Anmerkung gespeichert.');
+      }
+      setEditingSourceId(null);
+    } finally {
+      if (acquiredForThisAction) await runCoordinationAction('release_lock', true);
+      setSourceBusy(false);
+      await loadCoordinationState();
+    }
   }
 
   async function unlinkFinding(findingId: string) {
@@ -1013,14 +1057,30 @@ export function App() {
                   <h2>Quellen und Fundstellen</h2>
                   {!sourcePickerOpen && <button type="button" className="primary action-button" onClick={() => { setSourcePickerOpen(true); setSourceMessage(null); }}>Fundstelle hinzufügen</button>}
                 </div>
-                {sourcePickerOpen && <button type="button" className="action-button finding-back" onClick={() => { setSourcePickerOpen(false); setSourceMessage(null); }}><ActionIcon name="back" />Zurück</button>}
+                {sourcePickerOpen && <button type="button" className="action-button finding-back" onClick={() => { if (editingSourceId) { setSourceMessage("Bitte Bearbeitung zuerst speichern oder abbrechen."); return; } setSourcePickerOpen(false); setSourceMessage(null); }}><ActionIcon name="back" />Zurück</button>}
                 {eventSources.length === 0 ? <p>Für dieses Ereignis sind noch keine Fundstellen zugeordnet.</p> : (
                   <ul className="event-source-list">
                     {eventSources.map((source) => (
                       <li key={source.findingId}>
                         <strong>{readableSourceName(source.sourceName)}</strong>
                         <span>{source.originalUrl && /^https?:\/\//i.test(source.originalUrl) ? <a href={source.originalUrl} target="_blank" rel="noopener noreferrer">{source.findingTitle}</a> : source.findingTitle}</span>
-                        {sourcePickerOpen && <button type="button" disabled={sourceBusy} onClick={() => void unlinkFinding(source.findingId)}>Zuordnung aufheben</button>}
+                        {sourcePickerOpen && (editingSourceId === source.findingId ? (
+                          <div className="stack">
+                            <label>Belegrolle<input value={sourceRoleDraft} maxLength={120} onChange={e => setSourceRoleDraft(e.target.value)} required /></label>
+                            <label>Redaktionelle Anmerkung<textarea value={sourceNoteDraft} maxLength={2000} onChange={e => setSourceNoteDraft(e.target.value)} rows={3} /></label>
+                            <div className="button-row">
+                              <button type="button" disabled={sourceBusy || !sourceRoleDraft.trim()} onClick={() => void saveFindingMetadata(source.findingId)}>Speichern</button>
+                              <button type="button" disabled={sourceBusy} onClick={() => setEditingSourceId(null)}>Abbrechen</button>
+                            </div>
+                          </div>
+                        ) : (
+                          <div className="button-row">
+                            <button type="button" disabled={sourceBusy || !!editingSourceId} onClick={() => startFindingMetadataEdit(source)}>Zuordnung bearbeiten</button>
+                            <button type="button" disabled={sourceBusy || !!editingSourceId} onClick={() => void unlinkFinding(source.findingId)}>Zuordnung aufheben</button>
+                          </div>
+                        ))}
+                        {source.evidenceRole && <small>Belegrolle: {source.evidenceRole}</small>}
+                        {source.note && <p>{source.note}</p>}
                       </li>
                     ))}
                   </ul>
