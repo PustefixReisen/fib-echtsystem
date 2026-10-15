@@ -1030,8 +1030,8 @@ export function App() {
               <div className="detail-content-column">
               <section className="panel card-headed">
                 <div className="section-heading">
-                  <div><h2>Ereignisdaten</h2></div>
-                  {editingEvent && <span className={editFailed ? 'card-edit-state error' : eventDirty ? 'card-edit-state dirty' : 'card-edit-state'} role="status">{editSaving ? 'Speichern läuft …' : editFailed ? 'Änderung nicht gespeichert' : eventDirty ? '● Ungespeicherte Änderungen' : 'Unverändert'}</span>}
+                  <div className="card-title-group"><h2>Ereignisdaten</h2>{editingEvent && <span className="card-mode-label">Bearbeiten</span>}</div>
+                  {editingEvent && <span className={editFailed ? 'card-edit-state error' : !editTitle.trim() ? 'card-edit-state error' : eventDirty ? 'card-edit-state dirty' : 'card-edit-state'} role="status">{editSaving ? 'Speichern läuft …' : editFailed ? 'Änderung nicht gespeichert' : !editTitle.trim() ? '⚠ Pflichteingaben unvollständig' : eventDirty ? '● Ungespeicherte Änderungen' : 'Unverändert'}</span>}
                   {!editingEvent && editSaved && <span className="card-edit-state saved" role="status">✓ Gespeichert</span>}
                   {!editingEvent && (
                     <button className="primary action-button" onClick={startEventEditing} disabled={coordinationRunning || !!(coordination?.lock && !coordination.lock.mine)}>
@@ -1043,11 +1043,12 @@ export function App() {
 
                 {editingEvent ? (
                   <form className="stack edit-form" onSubmit={saveEventEdit}>
-                    <label>Titel
-                      <input value={editTitle} onChange={(e) => setEditTitle(e.target.value)} required />
+                    <label>Titel *
+                      <input value={editTitle} onChange={(e) => setEditTitle(e.target.value)} required aria-invalid={!editTitle.trim()} />
+                      {!editTitle.trim() && <small className="field-validation-note">Bitte einen Titel eingeben.</small>}
                     </label>
                     <label>Zusammenfassung
-                      <textarea value={editSummary} onChange={(e) => setEditSummary(e.target.value)} rows={6} />
+                      <textarea value={editSummary} onChange={(e) => setEditSummary(e.target.value)} rows={4} />
                     </label>
                     <label>Ereignisdatum
                       <input type="date" value={editOccurredAt} onChange={(e) => setEditOccurredAt(e.target.value)} />
@@ -1069,11 +1070,11 @@ export function App() {
 
               <section className="panel card-headed">
                 <div className="section-heading">
-                  <h2>Quellen und Fundstellen</h2>
+                  <div className="card-title-group"><h2>Quellen und Fundstellen</h2>{sourcePickerOpen && <span className="card-mode-label">Bearbeiten</span>}</div>
                   {!sourcePickerOpen && <button type="button" className="primary action-button" onClick={() => { setSourcePickerOpen(true); setSourceMessage(null); }}>Fundstellen bearbeiten</button>}
                 </div>
                 {sourcePickerOpen && <button type="button" className="action-button finding-back" disabled={sourceBusy} onClick={() => { if (editingSourceId) { const current = eventSources.find(item => item.findingId === editingSourceId); const changed = current && sourceNoteDraft !== (current.justification ?? ""); if (changed && !window.confirm("Ungespeicherte Änderungen an dieser Zuordnung verwerfen und zurückkehren?")) return; setEditingSourceId(null); } setSourcePickerOpen(false); setSourceMessage(null); }}><ActionIcon name="back" />Zurück</button>}
-                {sourcePickerOpen && <p className="meta finding-mode-intro">Hier kannst du bestehende Zuordnungen bearbeiten oder aufheben und weitere Fundstellen suchen und zuordnen. Jede Aktion wird direkt gespeichert. „Zurück“ beendet nur diesen Modus.</p>}
+                {sourcePickerOpen && <p className="meta finding-mode-intro">Fundstellen zuordnen, bearbeiten oder entfernen.</p>}
                 {eventSources.length === 0 ? <p>Für dieses Ereignis sind noch keine Fundstellen zugeordnet.</p> : (
                   <ul className="event-source-list">
                     {eventSources.map((source) => (
