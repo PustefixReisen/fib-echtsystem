@@ -360,3 +360,15 @@ button:has(> .action-icon) { display: inline-flex; align-items: center; justify-
   justify-content: center;
   gap: .8rem;
 }
+
+/* Gemeinsame Kartenkopf-Regeln: kompakte Modusmarkierung und Pflichtfeldhinweis. */
+.card-title-group { display: inline-flex; align-items: baseline; flex-wrap: wrap; gap: .35rem .55rem; min-width: 0; }
+.card-mode-label { color: #526159; font-weight: 600; font-size: .83rem; }
+.card-mode-label::before { content: "· "; }
+.field-validation-note { display: block; margin-top: .25rem; color: #a02525; font-size: .84rem; font-weight: 400; }
+.edit-form input[aria-invalid="true"] { border-color: #a02525; }
+@media (max-width: 520px) {
+  .card-headed > .section-heading:first-child { align-items: flex-start; }
+  .card-edit-state { flex: 0 1 auto; margin-left: 0; }
+  .edit-form textarea { min-height: 5.5rem; }
+}
