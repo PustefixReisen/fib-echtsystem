@@ -352,3 +352,11 @@ button:has(> .action-icon) { display: inline-flex; align-items: center; justify-
 /* Gespeicherte Vorgängerbegründung in den Suchtreffern zurückhaltend anzeigen. */
 .work-item .finding-justification { font-size: .88rem; font-weight: 400; color: #526159; line-height: 1.4; margin: .3rem 0 0; }
 .work-item .finding-justification strong { font-weight: 650; }
+
+/* Spezifischer als .event-source-list li button: Flex-Abstand darf nicht verloren gehen. */
+.event-source-list li .finding-justification-editor button.action-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: .8rem;
+}
