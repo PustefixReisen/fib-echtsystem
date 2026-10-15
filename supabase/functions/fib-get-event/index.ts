@@ -136,16 +136,19 @@ export default {
       if (findingsListing) {
         const search = typeof payload.search === 'string' ? payload.search.trim() : '';
         const rows = await sql.unsafe(
-          `select f.id, f.title, f.original_url, s.name as source_name
+          `select f.id, f.title, f.original_url, s.name as source_name,
+                    (select j.new_justification from fib.event_finding_justification_log j
+                     where j.finding_id=f.id and j.event_id=$2::uuid
+                     order by j.changed_at desc, j.id desc limit 1) as previous_justification
              from fib.findings f join fib.sources s on s.id = f.source_id
              where $1::text = '' or f.title ilike '%' || $1 || '%' or s.name ilike '%' || $1 || '%'
              order by f.discovered_at desc nulls last, f.id desc limit 101`,
-          [search],
+          [search, typeof payload.eventId === 'string' && /^[0-9a-f-]{36}$/i.test(payload.eventId) ? payload.eventId : null],
         );
         return json({
           ok: true,
           findings: rows.slice(0, 100).map(row => ({
-            findingId: row.id, findingTitle: row.title, originalUrl: row.original_url, sourceName: row.source_name,
+            findingId: row.id, findingTitle: row.title, originalUrl: row.original_url, sourceName: row.source_name, previousJustification: row.previous_justification,
           })),
           hasMore: rows.length > 100,
         });
