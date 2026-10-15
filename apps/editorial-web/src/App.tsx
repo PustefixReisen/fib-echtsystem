@@ -798,6 +798,7 @@ export function App() {
 
       <div className="app-layout">
         <aside className={`side-nav ${navigationOpen ? 'open' : ''}`} aria-label="Hauptnavigation">
+          <button type="button" className="mobile-nav-close" aria-label="Navigationsmenü schließen" onClick={() => setNavigationOpen(false)}>✕ <span>Schließen</span></button>
           <div className="nav-section">
             <button className={view === 'dashboard' ? 'nav-item active' : 'nav-item'} onClick={() => navigateTo('dashboard')}><NavIcon src={dashboardIcon} />Dashboard</button>
             <button className="nav-item" disabled><NavIcon src={workbasketIcon} />Arbeitskorb <span>folgt</span></button>
@@ -876,12 +877,12 @@ export function App() {
               <div><p className="eyebrow">Redaktion · Recherche</p><h1 className="object-title"><img className="object-icon" src={eventIcon} alt="" aria-hidden="true" />Ereignisse</h1></div>
             </div>
             <section className="panel card-headed">
-              <h2>Ereignisse suchen und öffnen</h2>
+              <h2>Ereignisse suchen</h2>
               <div className="finding-filter">
-                <label>Ereignisse filtern – Titel oder Beschreibung
+                <label>Titel oder Beschreibung
                   <input type="search" value={eventSearch} onChange={e => setEventSearch(e.target.value)} maxLength={120} placeholder="Suchbegriff eingeben …" />
                 </label>
-                <button type="button" disabled={!eventSearch} onClick={() => setEventSearch('')}>Filter löschen</button>
+                {eventSearch && <button type="button" className="event-filter-reset" aria-label="Ereignisfilter löschen" title="Filter löschen" onClick={() => setEventSearch('')}><svg viewBox="0 0 24 24" width="21" height="21" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M4 5h16l-6.5 7.3V19l-3 1v-7.7L4 5Z" /><path d="M3 21 21 3" /></svg></button>}
               </div>
               {eventListBusy && <p role="status">Ereignisse werden geladen …</p>}
               {eventListError && <p className="error" role="alert">{eventListError}</p>}

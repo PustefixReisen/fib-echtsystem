@@ -372,3 +372,13 @@ button:has(> .action-icon) { display: inline-flex; align-items: center; justify-
   .card-edit-state { flex: 0 1 auto; margin-left: 0; }
   .edit-form textarea { min-height: 5.5rem; }
 }
+
+/* FIB Mobile UI: Navigation geschlossen unabhängig scrollbar, mit sichtbarem Abschluss. */
+.mobile-nav-close { display: none; }
+.event-filter-reset { width: 42px; height: 42px; min-width: 42px; padding: .4rem; display: inline-grid; place-items: center; align-self: flex-end; }
+.event-filter-reset svg { display: block; }
+@media (max-width: 760px) {
+  .side-nav { overflow-y: auto; overscroll-behavior: contain; padding-bottom: max(1.5rem, env(safe-area-inset-bottom)); }
+  .mobile-nav-close { display: flex; align-items: center; justify-content: flex-end; gap: .5rem; margin: 0 .65rem .75rem auto; min-height: 44px; padding: .5rem .75rem; font-size: .9rem; }
+  .finding-filter { padding: .6rem; }
+}
