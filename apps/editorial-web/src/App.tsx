@@ -1110,10 +1110,9 @@ export function App() {
                   </div>
                   {sourceBusy && <p role="status">Suche läuft …</p>}
                   {sourceMatches.filter(finding => !eventSources.some(item => item.findingId === finding.findingId)).map(finding => <div className="work-item" key={finding.findingId}>
-                    <div><strong>{readableSourceName(finding.sourceName)}</strong><p>{finding.findingTitle}</p></div>
+                    <div><strong>{readableSourceName(finding.sourceName)}</strong><p>{finding.findingTitle}</p>{finding.previousJustification && <p className="finding-justification"><strong>Letzte Begründung (wird übernommen):</strong> {finding.previousJustification}</p>}</div>
                     <div className="finding-link-actions">
-                      <button type="button" disabled={sourceBusy} onClick={() => void linkFinding(finding.findingId)}>Zuordnen</button>
-                      {finding.previousJustification && <button type="button" className="action-button" disabled={sourceBusy} title={finding.previousJustification} onClick={() => void linkFinding(finding.findingId, true)}>Mit letzter Begründung</button>}
+                      <button type="button" disabled={sourceBusy} onClick={() => void linkFinding(finding.findingId, Boolean(finding.previousJustification))}>Zuordnen</button>
                     </div>
                   </div>)}
                 </div>}
