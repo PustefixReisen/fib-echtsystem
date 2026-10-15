@@ -33,6 +33,21 @@ type EventData = {
 };
 
 type EventSource = { findingId: string; findingTitle: string; originalUrl: string | null; sourceName: string; evidenceRole?: string | null; note?: string | null };
+function isImportedFindingNote(note: string | null | undefined): boolean {
+  if (!note?.trim().startsWith('{')) return false;
+  try {
+    const metadata = JSON.parse(note) as Record<string, unknown>;
+    return typeof metadata.batch === 'string' && metadata.batch.startsWith('demo-') &&
+      typeof metadata.demonstrator_id === 'string' && typeof metadata.original_source === 'object';
+  } catch { return false; }
+}
+function evidenceRoleLabel(role: string | null | undefined): string {
+  const labels: Record<string, string> = {
+    primary_official: 'Amtliche Originalquelle',
+    editorial_reference: 'Redaktionell zugeordneter Beleg',
+  };
+  return role ? (labels[role] ?? `Weitere Belegrolle (${role})`) : 'Nicht festgelegt';
+}
 type EventResult = { ok: true; event: EventData; sources?: EventSource[] };
 type FindingListResult = { ok: true; findings: EventSource[]; hasMore: boolean };
 function readableSummary(summary: string | null): string | null {
@@ -501,7 +516,7 @@ export function App() {
   function startFindingMetadataEdit(source: EventSource) {
     setEditingSourceId(source.findingId);
     setSourceRoleDraft(source.evidenceRole ?? 'editorial_reference');
-    setSourceNoteDraft(source.note ?? '');
+    setSourceNoteDraft(isImportedFindingNote(source.note) ? '' : (source.note ?? ''));
     setSourceMessage(null);
   }
 
@@ -516,7 +531,7 @@ export function App() {
         return;
       }
       const { data, error } = await supabase.functions.invoke<{ok?: boolean; error?: string}>('fib-editorial-write', {
-        body: {action: 'update_finding_link', eventId: eventResult.id, findingId, evidenceRole: sourceRoleDraft.trim(), note: sourceNoteDraft.trim() || null},
+        body: {action: 'update_finding_link', eventId: eventResult.id, findingId, evidenceRole: sourceRoleDraft.trim(), ...(isImportedFindingNote(eventSources.find(item => item.findingId === findingId)?.note) ? {} : {note: sourceNoteDraft.trim() || null})},
       });
       if (error || !data?.ok) {
         setSourceMessage('Änderung nicht gespeichert (' + (data?.error ?? 'server_error') + ').');
@@ -1066,10 +1081,20 @@ export function App() {
                         <span>{source.originalUrl && /^https?:\/\//i.test(source.originalUrl) ? <a href={source.originalUrl} target="_blank" rel="noopener noreferrer">{source.findingTitle}</a> : source.findingTitle}</span>
                         {sourcePickerOpen && (editingSourceId === source.findingId ? (
                           <div className="stack">
-                            <label>Belegrolle<input value={sourceRoleDraft} maxLength={120} onChange={e => setSourceRoleDraft(e.target.value)} required /></label>
-                            <label>Redaktionelle Anmerkung<textarea value={sourceNoteDraft} maxLength={2000} onChange={e => setSourceNoteDraft(e.target.value)} rows={3} /></label>
+                            <label>Belegrolle
+                              <select value={sourceRoleDraft} onChange={e => setSourceRoleDraft(e.target.value)}>
+                                <option value="primary_official">Amtliche Originalquelle</option>
+                                <option value="editorial_reference">Redaktionell zugeordneter Beleg</option>
+                                {!['primary_official', 'editorial_reference'].includes(sourceRoleDraft) && <option value={sourceRoleDraft}>{evidenceRoleLabel(sourceRoleDraft)}</option>}
+                              </select>
+                            </label>
+                            {isImportedFindingNote(source.note) ? (
+                              <p className="meta">Für diese Entwicklungs-Fundstelle sind technische Herkunftsdaten hinterlegt. Sie bleiben geschützt; die redaktionelle Anmerkung wird erst nach fachlicher Trennung bearbeitbar.</p>
+                            ) : (
+                              <label>Redaktionelle Anmerkung<textarea value={sourceNoteDraft} maxLength={2000} onChange={e => setSourceNoteDraft(e.target.value)} rows={3} /></label>
+                            )}
                             <div className="button-row">
-                              <button type="button" disabled={sourceBusy || !sourceRoleDraft.trim()} onClick={() => void saveFindingMetadata(source.findingId)}>Speichern</button>
+                              <button type="button" disabled={sourceBusy || !sourceRoleDraft.trim() || (sourceRoleDraft === (source.evidenceRole ?? "editorial_reference") && sourceNoteDraft === (isImportedFindingNote(source.note) ? "" : (source.note ?? "")))} onClick={() => void saveFindingMetadata(source.findingId)}>Speichern</button>
                               <button type="button" disabled={sourceBusy} onClick={() => setEditingSourceId(null)}>Abbrechen</button>
                             </div>
                           </div>
@@ -1079,8 +1104,8 @@ export function App() {
                             <button type="button" disabled={sourceBusy || !!editingSourceId} onClick={() => void unlinkFinding(source.findingId)}>Zuordnung aufheben</button>
                           </div>
                         ))}
-                        {source.evidenceRole && <small>Belegrolle: {source.evidenceRole}</small>}
-                        {source.note && <p>{source.note}</p>}
+                        {source.evidenceRole && <small>Belegrolle: {evidenceRoleLabel(source.evidenceRole)}</small>}
+                        {source.note && (isImportedFindingNote(source.note) ? <small>Herkunft: Demonstrator-Import (technische Metadaten geschützt)</small> : <p>{source.note}</p>)}
                       </li>
                     ))}
                   </ul>
