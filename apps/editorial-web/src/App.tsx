@@ -32,7 +32,7 @@ type EventData = {
   occurredAt: string | null;
 };
 
-type EventSource = { findingId: string; findingTitle: string; originalUrl: string | null; sourceName: string; evidenceRole?: string | null; note?: string | null };
+type EventSource = { findingId: string; findingTitle: string; originalUrl: string | null; sourceName: string; evidenceRole?: string | null; note?: string | null; justification?: string | null };
 function isImportedFindingNote(note: string | null | undefined): boolean {
   if (!note?.trim().startsWith('{')) return false;
   try {
@@ -516,7 +516,7 @@ export function App() {
   function startFindingMetadataEdit(source: EventSource) {
     setEditingSourceId(source.findingId);
     setSourceRoleDraft(source.evidenceRole ?? 'editorial_reference');
-    setSourceNoteDraft(isImportedFindingNote(source.note) ? '' : (source.note ?? ''));
+    setSourceNoteDraft(source.justification ?? '');
     setSourceMessage(null);
   }
 
@@ -531,7 +531,7 @@ export function App() {
         return;
       }
       const { data, error } = await supabase.functions.invoke<{ok?: boolean; error?: string}>('fib-editorial-write', {
-        body: {action: 'update_finding_link', eventId: eventResult.id, findingId, evidenceRole: sourceRoleDraft.trim(), ...(isImportedFindingNote(eventSources.find(item => item.findingId === findingId)?.note) ? {} : {note: sourceNoteDraft.trim() || null})},
+        body: {action: 'update_finding_justification', eventId: eventResult.id, findingId, justification: sourceNoteDraft.trim() || null},
       });
       if (error || !data?.ok) {
         setSourceMessage('Änderung nicht gespeichert (' + (data?.error ?? 'server_error') + ').');
@@ -544,7 +544,7 @@ export function App() {
         setSourceMessage('Änderung gespeichert, aber Daten konnten nicht neu geladen werden. Bitte Ereignis aktualisieren.');
       } else {
         setEventSources(updated.sources ?? []);
-        setSourceMessage('Belegrolle und Anmerkung gespeichert.');
+        setSourceMessage('Begründung der Zuordnung gespeichert.');
       }
       setEditingSourceId(null);
     } finally {
@@ -1070,9 +1070,9 @@ export function App() {
               <section className="panel card-headed">
                 <div className="section-heading">
                   <h2>Quellen und Fundstellen</h2>
-                  {!sourcePickerOpen && <button type="button" className="primary action-button" onClick={() => { setSourcePickerOpen(true); setSourceMessage(null); }}>Fundstelle hinzufügen</button>}
+                  {!sourcePickerOpen && <button type="button" className="primary action-button" onClick={() => { setSourcePickerOpen(true); setSourceMessage(null); }}>Fundstellen bearbeiten</button>}
                 </div>
-                {sourcePickerOpen && <button type="button" className="action-button finding-back" disabled={sourceBusy} onClick={() => { if (editingSourceId) { const current = eventSources.find(item => item.findingId === editingSourceId); const changed = current && (sourceRoleDraft !== (current.evidenceRole ?? "editorial_reference") || sourceNoteDraft !== (isImportedFindingNote(current.note) ? "" : (current.note ?? ""))); if (changed && !window.confirm("Ungespeicherte Änderungen an dieser Zuordnung verwerfen und zurückkehren?")) return; setEditingSourceId(null); } setSourcePickerOpen(false); setSourceMessage(null); }}><ActionIcon name="back" />Zurück</button>}
+                {sourcePickerOpen && <button type="button" className="action-button finding-back" disabled={sourceBusy} onClick={() => { if (editingSourceId) { const current = eventSources.find(item => item.findingId === editingSourceId); const changed = current && sourceNoteDraft !== (current.justification ?? ""); if (changed && !window.confirm("Ungespeicherte Änderungen an dieser Zuordnung verwerfen und zurückkehren?")) return; setEditingSourceId(null); } setSourcePickerOpen(false); setSourceMessage(null); }}><ActionIcon name="back" />Zurück</button>}
                 {eventSources.length === 0 ? <p>Für dieses Ereignis sind noch keine Fundstellen zugeordnet.</p> : (
                   <ul className="event-source-list">
                     {eventSources.map((source) => (
@@ -1081,20 +1081,11 @@ export function App() {
                         <span>{source.originalUrl && /^https?:\/\//i.test(source.originalUrl) ? <a href={source.originalUrl} target="_blank" rel="noopener noreferrer">{source.findingTitle}</a> : source.findingTitle}</span>
                         {sourcePickerOpen && (editingSourceId === source.findingId ? (
                           <div className="stack">
-                            <label>Belegrolle
-                              <select value={sourceRoleDraft} onChange={e => setSourceRoleDraft(e.target.value)}>
-                                <option value="primary_official">Amtliche Originalquelle</option>
-                                <option value="editorial_reference">Redaktionell zugeordneter Beleg</option>
-                                {!['primary_official', 'editorial_reference'].includes(sourceRoleDraft) && <option value={sourceRoleDraft}>{evidenceRoleLabel(sourceRoleDraft)}</option>}
-                              </select>
+                            <label>Begründung der Zuordnung
+                              <textarea value={sourceNoteDraft} maxLength={2000} onChange={e => setSourceNoteDraft(e.target.value)} rows={3} placeholder="Warum ist diese Fundstelle dem Ereignis zugeordnet?" />
                             </label>
-                            {isImportedFindingNote(source.note) ? (
-                              <p className="meta">Für diese Entwicklungs-Fundstelle sind technische Herkunftsdaten hinterlegt. Sie bleiben geschützt; die redaktionelle Anmerkung wird erst nach fachlicher Trennung bearbeitbar.</p>
-                            ) : (
-                              <label>Redaktionelle Anmerkung<textarea value={sourceNoteDraft} maxLength={2000} onChange={e => setSourceNoteDraft(e.target.value)} rows={3} /></label>
-                            )}
                             <div className="button-row">
-                              <button type="button" disabled={sourceBusy || !sourceRoleDraft.trim() || (sourceRoleDraft === (source.evidenceRole ?? "editorial_reference") && sourceNoteDraft === (isImportedFindingNote(source.note) ? "" : (source.note ?? "")))} onClick={() => void saveFindingMetadata(source.findingId)}>Speichern</button>
+                              <button type="button" disabled={sourceBusy || sourceNoteDraft === (source.justification ?? "")} onClick={() => void saveFindingMetadata(source.findingId)}>Speichern</button>
                               <button type="button" disabled={sourceBusy} onClick={() => setEditingSourceId(null)}>Abbrechen</button>
                             </div>
                           </div>
@@ -1104,8 +1095,8 @@ export function App() {
                             <button type="button" disabled={sourceBusy || !!editingSourceId} onClick={() => void unlinkFinding(source.findingId)}>Zuordnung aufheben</button>
                           </div>
                         ))}
-                        {source.evidenceRole && <small>Belegrolle: {evidenceRoleLabel(source.evidenceRole)}</small>}
-                        {source.note && (isImportedFindingNote(source.note) ? <small>Herkunft: Demonstrator-Import (technische Metadaten geschützt)</small> : <p>{source.note}</p>)}
+                        {source.justification && <p className="finding-justification">{source.justification}</p>}
+                        
                       </li>
                     ))}
                   </ul>
