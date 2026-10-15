@@ -1072,7 +1072,7 @@ export function App() {
                   <h2>Quellen und Fundstellen</h2>
                   {!sourcePickerOpen && <button type="button" className="primary action-button" onClick={() => { setSourcePickerOpen(true); setSourceMessage(null); }}>Fundstelle hinzufügen</button>}
                 </div>
-                {sourcePickerOpen && <button type="button" className="action-button finding-back" onClick={() => { if (editingSourceId) { setSourceMessage("Bitte Bearbeitung zuerst speichern oder abbrechen."); return; } setSourcePickerOpen(false); setSourceMessage(null); }}><ActionIcon name="back" />Zurück</button>}
+                {sourcePickerOpen && <button type="button" className="action-button finding-back" disabled={sourceBusy} onClick={() => { if (editingSourceId) { const current = eventSources.find(item => item.findingId === editingSourceId); const changed = current && (sourceRoleDraft !== (current.evidenceRole ?? "editorial_reference") || sourceNoteDraft !== (isImportedFindingNote(current.note) ? "" : (current.note ?? ""))); if (changed && !window.confirm("Ungespeicherte Änderungen an dieser Zuordnung verwerfen und zurückkehren?")) return; setEditingSourceId(null); } setSourcePickerOpen(false); setSourceMessage(null); }}><ActionIcon name="back" />Zurück</button>}
                 {eventSources.length === 0 ? <p>Für dieses Ereignis sind noch keine Fundstellen zugeordnet.</p> : (
                   <ul className="event-source-list">
                     {eventSources.map((source) => (
