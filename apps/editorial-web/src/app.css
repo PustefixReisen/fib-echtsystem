@@ -388,3 +388,13 @@ button:has(> .action-icon) { display: inline-flex; align-items: center; justify-
 .finding-link-fields label { display: block; font-weight: 600; margin-top: .5rem; }
 .finding-link-fields textarea { font-size: 1rem; font-weight: 400; min-height: 5rem; }
 .finding-link-fields textarea[aria-invalid="true"] { border-color: #a02525; }
+
+/* Ereignisdetails: kompakte Orientierung auf schmalen Bildschirmen. */
+@media (max-width: 760px) {
+  .event-heading { gap: .45rem; margin-bottom: .7rem; }
+  .event-heading .object-title { overflow-wrap: anywhere; line-height: 1.25; }
+  .event-heading > .action-button { align-self: flex-start; padding: .4rem .6rem; min-height: 42px; }
+  .event-heading .eyebrow { margin-bottom: .25rem; }
+  .object-status { margin-bottom: .7rem; }
+  .object-status > div { padding: .55rem .75rem; }
+}
