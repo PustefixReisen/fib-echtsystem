@@ -16,3 +16,11 @@ Im Anzeigemodus zeigt die Karte die zugeordneten Fundstellen und im Kartenkopf �
 **Persistenzregel:** Jede Zuordnen-/Aufheben-Aktion wird einzeln bestätigt und unmittelbar serverseitig gespeichert. „Zurück“ beendet lediglich den Modus und verwirft keine bereits übernommenen Zuordnungen. Eine Bearbeitungssperre wird erst für eine tatsächliche Veränderung angefordert, nicht für die Anzeige oder Suche. Für noch nicht gespeicherte Formulareingaben gilt der FIB-weite Änderungs- und Verlassenschutz.
 
 Bei mobilen Layouts bleibt die fachliche Kartenreihenfolge unverändert.
+
+## Allgemeiner Buttonstandard
+
+Buttons mit Symbol und Beschriftung benötigen immer einen sichtbaren Abstand (mindestens etwa 0,4 rem) zwischen Icon und Text. Dies gilt auch für deaktivierte Buttons und gilt FIB-weit. Komponenten müssen konsistente Icon-/Text-Anordnung aus dem Styleguide nutzen; neue Buttons dürfen den Abstand nicht durch direkten Textanschluss verlieren.
+
+## Aufgehobene Zuordnungen
+
+Beim erneuten Zuordnen darf optional die letzte gespeicherte Begründung der identischen Beziehung Fundstelle ↔ Ereignis übernommen werden. Alternativ wird die Beziehung ohne Begründung neu angelegt. Die Herkunfts- und Auditdaten bleiben unberührt; eine vollständige Versionsauswahl wird nicht angezeigt.
