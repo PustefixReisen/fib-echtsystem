@@ -321,3 +321,25 @@ h3 { margin-bottom: .45rem; }
 
 /* Zuordnungsmodus in der Karte statt Tab-Navigation */
 .finding-back { margin-bottom: .8rem; }
+
+/* Redaktionelle Begründung: normale Eingabeschrift, zurückhaltende Leseansicht. */
+.finding-justification-editor textarea.finding-justification-input {
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.45;
+}
+.finding-justification-editor textarea.finding-justification-input::placeholder {
+  font-size: .92rem;
+  font-weight: 400;
+  color: #65736c;
+  opacity: 1;
+}
+.event-source-list .finding-justification {
+  font-size: .88rem;
+  font-weight: 400;
+  line-height: 1.4;
+  color: #526159;
+  margin: .35rem 0 0;
+}
+.finding-mode-intro { margin: 0 0 1rem; }
+.finding-justification-editor .button-row { margin-top: .2rem; }
