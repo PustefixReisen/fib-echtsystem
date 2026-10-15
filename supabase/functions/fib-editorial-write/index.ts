@@ -58,6 +58,7 @@ export default {
       findingId?: string;
       evidenceRole?: string;
       note?: string | null;
+      justification?: string | null;
     };
     try {
       body = await req.json();
@@ -65,7 +66,7 @@ export default {
       return json({ error: 'invalid_json' }, 400);
     }
 
-    if (body.action !== 'edit_event' && body.action !== 'link_finding' && body.action !== 'unlink_finding' && body.action !== 'update_finding_link') return json({ error: 'unknown_action' }, 400);
+    if (body.action !== 'edit_event' && body.action !== 'link_finding' && body.action !== 'unlink_finding' && body.action !== 'update_finding_link' && body.action !== 'update_finding_justification') return json({ error: 'unknown_action' }, 400);
     if (!body.eventId || (body.action === 'edit_event' && (typeof body.title !== 'string' || body.title.trim().length === 0))) {
       return json({ error: 'invalid_event_input' }, 400);
     }
@@ -92,6 +93,23 @@ export default {
         [body.eventId, userId],
       );
       if (lock.length === 0) return json({ error: 'active_edit_lock_required' }, 409);
+
+      if (body.action === 'update_finding_justification') {
+        if (typeof body.findingId !== 'string' || !/^[0-9a-f-]{36}$/i.test(body.findingId) ||
+            (typeof body.justification !== 'string' && body.justification !== null) ||
+            (typeof body.justification === 'string' && body.justification.length > 2000)) return json({ error: 'invalid_justification' }, 400);
+        const result = await sql.begin(async tx => {
+          const rows = await tx.unsafe('select justification from fib.event_findings where event_id=$1::uuid and finding_id=$2::uuid for update', [body.eventId,body.findingId]);
+          if (!rows.length) return 'missing';
+          const newValue = body.justification?.trim() || null;
+          if ((rows[0].justification ?? null) === newValue) return 'unchanged';
+          await tx.unsafe('update fib.event_findings set justification=$3 where event_id=$1::uuid and finding_id=$2::uuid',[body.eventId,body.findingId,newValue]);
+          await tx.unsafe('insert into fib.event_finding_justification_log (event_id,finding_id,actor_id,old_justification,new_justification) values ($1::uuid,$2::uuid,$3::uuid,$4,$5)',[body.eventId,body.findingId,userId,rows[0].justification,newValue]);
+          await tx.unsafe("insert into fib.object_last_edits (object_type,object_id,user_id,edited_at) values ('event',$1::uuid,$2,now()) on conflict (object_type,object_id) do update set user_id=excluded.user_id,edited_at=excluded.edited_at",[body.eventId,userId]);
+          return 'updated';
+        });
+        return result === 'missing' ? json({error:'association_not_found'},404) : json({ok:true});
+      }
 
       if (body.action === 'update_finding_link') {
         if (typeof body.findingId !== 'string' || !/^[0-9a-f-]{36}$/i.test(body.findingId)) return json({ error: 'invalid_finding_id' }, 400);
