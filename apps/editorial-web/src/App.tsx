@@ -1073,6 +1073,7 @@ export function App() {
                   {!sourcePickerOpen && <button type="button" className="primary action-button" onClick={() => { setSourcePickerOpen(true); setSourceMessage(null); }}>Fundstellen bearbeiten</button>}
                 </div>
                 {sourcePickerOpen && <button type="button" className="action-button finding-back" disabled={sourceBusy} onClick={() => { if (editingSourceId) { const current = eventSources.find(item => item.findingId === editingSourceId); const changed = current && sourceNoteDraft !== (current.justification ?? ""); if (changed && !window.confirm("Ungespeicherte Änderungen an dieser Zuordnung verwerfen und zurückkehren?")) return; setEditingSourceId(null); } setSourcePickerOpen(false); setSourceMessage(null); }}><ActionIcon name="back" />Zurück</button>}
+                {sourcePickerOpen && <p className="meta finding-mode-intro">Hier kannst du bestehende Zuordnungen bearbeiten oder aufheben und weitere Fundstellen suchen und zuordnen. Jede Aktion wird direkt gespeichert. „Zurück“ beendet nur diesen Modus.</p>}
                 {eventSources.length === 0 ? <p>Für dieses Ereignis sind noch keine Fundstellen zugeordnet.</p> : (
                   <ul className="event-source-list">
                     {eventSources.map((source) => (
@@ -1080,12 +1081,12 @@ export function App() {
                         <strong>{readableSourceName(source.sourceName)}</strong>
                         <span>{source.originalUrl && /^https?:\/\//i.test(source.originalUrl) ? <a href={source.originalUrl} target="_blank" rel="noopener noreferrer">{source.findingTitle}</a> : source.findingTitle}</span>
                         {sourcePickerOpen && (editingSourceId === source.findingId ? (
-                          <div className="stack">
+                          <div className="stack finding-justification-editor">
                             <label>Begründung der Zuordnung
-                              <textarea value={sourceNoteDraft} maxLength={2000} onChange={e => setSourceNoteDraft(e.target.value)} rows={3} placeholder="Warum ist diese Fundstelle dem Ereignis zugeordnet?" />
+                              <textarea className="finding-justification-input" value={sourceNoteDraft} maxLength={2000} onChange={e => setSourceNoteDraft(e.target.value)} rows={3} placeholder="Warum wurde diese Fundstelle dem Ereignis zugeordnet? Welche Information liefert sie dazu?" />
                             </label>
                             <div className="button-row">
-                              <button type="button" disabled={sourceBusy || sourceNoteDraft === (source.justification ?? "")} onClick={() => void saveFindingMetadata(source.findingId)}>Speichern</button>
+                              <button type="button" className="primary action-button" disabled={sourceBusy || sourceNoteDraft === (source.justification ?? "")} onClick={() => void saveFindingMetadata(source.findingId)}><ActionIcon name="save" />Speichern</button>
                               <button type="button" disabled={sourceBusy} onClick={() => setEditingSourceId(null)}>Abbrechen</button>
                             </div>
                           </div>
@@ -1095,14 +1096,13 @@ export function App() {
                             <button type="button" disabled={sourceBusy || !!editingSourceId} onClick={() => void unlinkFinding(source.findingId)}>Zuordnung aufheben</button>
                           </div>
                         ))}
-                        {source.justification && <p className="finding-justification">{source.justification}</p>}
+                        {editingSourceId !== source.findingId && source.justification && <p className="finding-justification">{source.justification}</p>}
                         
                       </li>
                     ))}
                   </ul>
                 )}
                 {sourcePickerOpen && <div className="stack">
-                  <p className="meta">Weitere Fundstellen suchen und direkt zuordnen. Änderungen werden sofort gespeichert; „Zurück“ beendet nur diesen Modus.</p>
                   <div className="finding-filter">
                     <label>Fundstellen filtern – Titel oder Quelle
                       <input type="search" value={sourceSearch} onChange={event => setSourceSearch(event.target.value)} maxLength={120} placeholder="Suchbegriff eingeben …" />
