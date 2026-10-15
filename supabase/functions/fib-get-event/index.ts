@@ -178,7 +178,7 @@ export default {
 
       const sources = await sql.unsafe(
         `select distinct f.id as finding_id, f.title as finding_title, f.original_url,
-                s.name as source_name, ef.evidence_role, ef.note
+                s.name as source_name, ef.evidence_role, ef.note, ef.justification
          from fib.event_findings ef
          join fib.findings f on f.id = ef.finding_id
          join fib.sources s on s.id = f.source_id
@@ -195,6 +195,7 @@ export default {
           sourceName: row.source_name,
           evidenceRole: row.evidence_role,
           note: row.note,
+          justification: row.justification,
         })),
       });
     } catch (error) {
