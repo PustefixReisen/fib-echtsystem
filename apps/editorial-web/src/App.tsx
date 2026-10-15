@@ -56,6 +56,9 @@ function readableSummary(summary: string | null): string | null {
   const split = summary.indexOf('\n\n');
   return split >= 0 ? summary.slice(split + 2) : summary;
 }
+function readableEventTitle(title: string): string {
+  return title.replace(/^\[ENTWICKLUNG [^\]]+\]\s*/, '');
+}
 function readableSourceName(name: string): string {
   return name.replace(/^\[ENTWICKLUNG [^\]]+\]\s*/, '');
 }
@@ -892,7 +895,7 @@ export function App() {
               {!eventListBusy && !eventListError && eventList.length === 0 && <p>Keine Ereignisse gefunden.</p>}
               {!eventListBusy && eventList.map((item) => (
                 <article className="work-item" key={item.id}>
-                  <div><h3>{item.title}</h3>{readableSummary(item.summary) && <p>{readableSummary(item.summary)}</p>}
+                  <div><h3>{readableEventTitle(item.title)}</h3>{readableSummary(item.summary) && <p>{readableSummary(item.summary)}</p>}
                     <p className="meta">Status: {eventStatusLabel(item.status)} · Zeitpunkt: {item.occurredAt ? new Date(item.occurredAt).toLocaleDateString('de-DE') : 'nicht angegeben'}</p>
                   </div>
                   <button className="action-button" disabled={serviceRunning} onClick={() => void openListedEvent(item.id)}><ActionIcon name="open" />Öffnen</button>
@@ -1019,15 +1022,15 @@ export function App() {
             <div className="page-heading event-heading">
               <div>
                 <p className="eyebrow">Ereignis</p>
-                <h1 className="object-title"><img className="object-icon" src={eventIcon} alt="" aria-hidden="true" />{eventResult.title}</h1>
-                {eventResult.summary && <p>{eventResult.summary}</p>}
+                <h1 className="object-title"><img className="object-icon" src={eventIcon} alt="" aria-hidden="true" />{readableEventTitle(eventResult.title)}</h1>
+                {readableSummary(eventResult.summary) && <p>{readableSummary(eventResult.summary)}</p>}
               </div>
               <button className="action-button" onClick={() => navigateTo('events')}><ActionIcon name="back" />Zurück</button>
             </div>
 
             <section className="object-status">
               <div><span>Zustand / Status</span><strong>{eventStatusLabel(eventResult.status)}</strong></div>
-              <div><span>Nächster Schritt</span><strong>Bearbeitung im Ereignis fortsetzen</strong></div>
+              
             </section>
 
             <div className="detail-grid">
@@ -1064,7 +1067,7 @@ export function App() {
                   </form>
                 ) : (
                   <dl className="data-list">
-                    <div><dt>Titel</dt><dd>{eventResult.title}</dd></div>
+                    <div><dt>Titel</dt><dd>{readableEventTitle(eventResult.title)}</dd></div>
                     <div><dt>Zusammenfassung</dt><dd>{readableSummary(eventResult.summary) ?? 'Noch keine Zusammenfassung'}</dd></div>
                     <div><dt>Ereignisdatum</dt><dd>{eventResult.occurredAt ? new Date(eventResult.occurredAt).toLocaleDateString('de-DE') : 'Noch nicht gesetzt'}</dd></div>
                   </dl>
