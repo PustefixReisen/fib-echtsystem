@@ -56,6 +56,8 @@ export default {
       summary?: string | null;
       occurredAt?: string | null;
       findingId?: string;
+      evidenceRole?: string;
+      note?: string | null;
     };
     try {
       body = await req.json();
@@ -63,7 +65,7 @@ export default {
       return json({ error: 'invalid_json' }, 400);
     }
 
-    if (body.action !== 'edit_event' && body.action !== 'link_finding' && body.action !== 'unlink_finding') return json({ error: 'unknown_action' }, 400);
+    if (body.action !== 'edit_event' && body.action !== 'link_finding' && body.action !== 'unlink_finding' && body.action !== 'update_finding_link') return json({ error: 'unknown_action' }, 400);
     if (!body.eventId || (body.action === 'edit_event' && (typeof body.title !== 'string' || body.title.trim().length === 0))) {
       return json({ error: 'invalid_event_input' }, 400);
     }
@@ -90,6 +92,37 @@ export default {
         [body.eventId, userId],
       );
       if (lock.length === 0) return json({ error: 'active_edit_lock_required' }, 409);
+
+      if (body.action === 'update_finding_link') {
+        if (typeof body.findingId !== 'string' || !/^[0-9a-f-]{36}$/i.test(body.findingId)) return json({ error: 'invalid_finding_id' }, 400);
+        if (typeof body.evidenceRole !== 'string' || !body.evidenceRole.trim() || body.evidenceRole.length > 120 ||
+            (body.note !== null && body.note !== undefined && typeof body.note !== 'string') ||
+            (typeof body.note === 'string' && body.note.length > 2000)) return json({ error: 'invalid_link_metadata' }, 400);
+        const changed = await sql.begin(async tx => {
+          const old = await tx.unsafe(
+            'select evidence_role,note from fib.event_findings where event_id=$1::uuid and finding_id=$2::uuid for update',
+            [body.eventId, body.findingId],
+          );
+          if (!old.length) return false;
+          const nextRole = body.evidenceRole!.trim();
+          const nextNote = (body.note ?? '').trim() || null;
+          if (old[0].evidence_role === nextRole && (old[0].note ?? null) === nextNote) return true;
+          await tx.unsafe(
+            'update fib.event_findings set evidence_role=$3,note=$4 where event_id=$1::uuid and finding_id=$2::uuid',
+            [body.eventId, body.findingId, nextRole, nextNote],
+          );
+          await tx.unsafe(
+            'insert into fib.event_finding_metadata_log (event_id,finding_id,actor_id,old_evidence_role,old_note,new_evidence_role,new_note) values ($1::uuid,$2::uuid,$3::uuid,$4,$5,$6,$7)',
+            [body.eventId, body.findingId, userId, old[0].evidence_role, old[0].note, nextRole, nextNote],
+          );
+          await tx.unsafe(
+            "insert into fib.object_last_edits (object_type,object_id,user_id,edited_at) values ('event',$1::uuid,$2,now()) on conflict (object_type,object_id) do update set user_id=excluded.user_id,edited_at=excluded.edited_at",
+            [body.eventId, userId],
+          );
+          return true;
+        });
+        return changed ? json({ ok: true }) : json({ error: 'association_not_found' }, 404);
+      }
 
       if (body.action === 'unlink_finding') {
         if (typeof body.findingId !== 'string' || !/^[0-9a-f-]{36}$/i.test(body.findingId)) return json({ error: 'invalid_finding_id' }, 400);
