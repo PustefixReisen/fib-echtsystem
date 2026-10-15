@@ -111,6 +111,7 @@ export function App() {
   const [eventSources, setEventSources] = useState<EventSource[]>([]);
   const [sourceSearch, setSourceSearch] = useState('');
   const [sourceMatches, setSourceMatches] = useState<EventSource[]>([]);
+  const [linkJustificationDrafts, setLinkJustificationDrafts] = useState<Record<string,string>>({});
   const [sourcePickerOpen, setSourcePickerOpen] = useState(false);
   const [editingSourceId, setEditingSourceId] = useState<string | null>(null);
   const [sourceRoleDraft, setSourceRoleDraft] = useState('');
@@ -587,9 +588,11 @@ export function App() {
     }
   }
 
-  async function linkFinding(findingId: string, restorePrevious = false) {
+  async function linkFinding(findingId: string) {
     if (!eventResult || sourceBusy) return;
     const selected = sourceMatches.find(item => item.findingId === findingId);
+    const justification = (linkJustificationDrafts[findingId] ?? selected?.previousJustification ?? '').trim();
+    if (!justification) { setSourceMessage('Bitte zuerst die Begründung der Zuordnung eingeben.'); return; }
     setSourceBusy(true);
     setSourceMessage(null);
     const acquiredForThisAction = !coordination?.lock?.mine;
@@ -602,7 +605,7 @@ export function App() {
         }
       }
       const { data, error } = await supabase.functions.invoke<{ok?: boolean; error?: string}>('fib-editorial-write', {
-        body: { action: 'link_finding', eventId: eventResult.id, findingId, restorePrevious },
+        body: { action: 'link_finding', eventId: eventResult.id, findingId, justification },
       });
       if (error || !data?.ok) {
         const code = data?.error ?? 'server_error';
@@ -616,7 +619,7 @@ export function App() {
       });
       if (!refreshError && updated?.ok) {
         setEventSources(updated.sources ?? []);
-        setSourceMessage(restorePrevious ? 'Fundstelle mit der letzten gespeicherten Begründung zugeordnet.' : 'Fundstelle zugeordnet. Sie erscheint jetzt unter den zugeordneten Fundstellen.');
+        setSourceMessage('Fundstelle mit Begründung zugeordnet.');
       } else {
         setSourceMessage('Fundstelle gespeichert; der Abgleich mit der Datenbank ist noch nicht gelungen. Bitte Ereignis neu öffnen.');
       }
@@ -1089,7 +1092,7 @@ export function App() {
                               <textarea className="finding-justification-input" value={sourceNoteDraft} maxLength={2000} onChange={e => setSourceNoteDraft(e.target.value)} rows={3} placeholder="Warum wurde diese Fundstelle dem Ereignis zugeordnet? Welche Information liefert sie dazu?" />
                             </label>
                             <div className="button-row">
-                              <button type="button" className="primary action-button" disabled={sourceBusy || sourceNoteDraft === (source.justification ?? "")} onClick={() => void saveFindingMetadata(source.findingId)}><ActionIcon name="save" />Speichern</button>
+                              <button type="button" className="primary action-button" disabled={sourceBusy || !sourceNoteDraft.trim() || sourceNoteDraft === (source.justification ?? "")} onClick={() => void saveFindingMetadata(source.findingId)}><ActionIcon name="save" />Speichern</button>
                               <button type="button" disabled={sourceBusy} onClick={() => setEditingSourceId(null)}>Abbrechen</button>
                             </div>
                           </div>
@@ -1112,9 +1115,14 @@ export function App() {
                   </div>
                   {sourceBusy && <p role="status">Suche läuft …</p>}
                   {sourceMatches.filter(finding => !eventSources.some(item => item.findingId === finding.findingId)).map(finding => <div className="work-item" key={finding.findingId}>
-                    <div><strong>{readableSourceName(finding.sourceName)}</strong><p>{finding.findingTitle}</p>{finding.previousJustification && <p className="finding-justification"><strong>Letzte Begründung (wird übernommen):</strong> {finding.previousJustification}</p>}</div>
+                    <div className="finding-link-fields"><strong>{readableSourceName(finding.sourceName)}</strong><p>{finding.findingTitle}</p>
+                      <label>Begründung der Zuordnung *
+                        <textarea rows={3} maxLength={2000} value={linkJustificationDrafts[finding.findingId] ?? finding.previousJustification ?? ''} onChange={e => setLinkJustificationDrafts(current => ({...current, [finding.findingId]: e.target.value}))} placeholder="Warum ist diese Fundstelle dem Ereignis zugeordnet?" aria-invalid={!(linkJustificationDrafts[finding.findingId] ?? finding.previousJustification ?? '').trim()} />
+                      </label>
+                      {!(linkJustificationDrafts[finding.findingId] ?? finding.previousJustification ?? '').trim() && <small className="field-validation-note">⚠ Pflichteingaben unvollständig: Bitte die Zuordnung begründen.</small>}
+                    </div>
                     <div className="finding-link-actions">
-                      <button type="button" disabled={sourceBusy} onClick={() => void linkFinding(finding.findingId, Boolean(finding.previousJustification))}>Zuordnen</button>
+                      <button type="button" onClick={() => void linkFinding(finding.findingId)} disabled={sourceBusy || !(linkJustificationDrafts[finding.findingId] ?? finding.previousJustification ?? "").trim()}>Zuordnen</button>
                     </div>
                   </div>)}
                 </div>}
