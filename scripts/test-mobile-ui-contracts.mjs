@@ -42,3 +42,11 @@ test('technical import labels remain out of user-facing titles', () => {
 test('source save action has intentional icon-to-text layout', () => {
   assert.match(css, /\.event-source-list li \.finding-justification-editor button\.action-button\s*\{[^}]*display:\s*inline-flex;[^}]*gap:\s*\.8rem/s);
 });
+
+test('source workflow actions stay visible and switch by editing context', () => {
+  assert.match(app, /className="workflow-action-dock"/);
+  assert.match(app, /editingSourceId \? <>/);
+  assert.match(app, /aria-label="Aktionen für Fundstellenbearbeitung"/);
+  assert.match(css, /\.workflow-action-dock\s*\{[^}]*position:\s*fixed;/s);
+  assert.match(css, /\.workflow-dock-host\s*\{[^}]*padding-bottom:/s);
+});
