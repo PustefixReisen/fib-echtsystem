@@ -50,3 +50,7 @@ Auch die bereits bestehende Fundstellenbegründung wird beim Bearbeiten lokal mi
 ## Navigation: aktuelle Position (17.10.2026)
 
 In der mobilen wie der Desktop-Navigation wird der aktuell geöffnete Inhaltsbereich sichtbar und mit `aria-current="page"` gekennzeichnet. Bei Ereignisliste und Ereignisdetail ist der Menüabschnitt „Recherche“ geöffnet, damit „Ereignisse“ als aktueller Ort erkennbar bleibt. Dies ergänzt die bestehenden Regeln zu Menüschließen, Scrollen und Erhalt der geplanten Navigationsbereiche; kein Eingriff in fachliche Daten oder Authentifizierung.
+
+## Automatische UI-Regressionskontrollen (17.10.2026)
+
+Die Editorial-Web-CI führt ergänzend zum Build einen gezielten Satz statischer Regressionstests für mobile Navigation, Filter-Löschfunktion, Pflichtfeldzustände, geschützte Bearbeitungsabbrüche, bereinigte Entwicklungskennungen und Icon-Abstände aus (`node --test scripts/test-mobile-ui-contracts.mjs`). Diese Tests schützen vereinbarte UI-Verträge bei Codeänderungen; sie ersetzen **keine** Browser-, Responsive- oder End-to-End-Tests. Beim Abbrechen einer bearbeiteten Fundstellenbegründung ist das Verwerfen ungespeicherter Änderungen ausdrücklich zu bestätigen, entsprechend dem vorhandenen Zurück-Verhalten.
