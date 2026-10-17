@@ -4,6 +4,7 @@ on:
   pull_request:
     paths:
       - 'apps/editorial-web/**'
+      - 'scripts/test-mobile-ui-contracts.mjs'
       - 'package.json'
       - 'tsconfig.base.json'
       - '.github/workflows/editorial-web-ci.yml'
@@ -30,6 +31,8 @@ jobs:
           cache-dependency-path: apps/editorial-web/package.json
       - name: Install dependencies
         run: npm install
+      - name: Check mobile UI regression contracts
+        run: node --test scripts/test-mobile-ui-contracts.mjs
       - name: Build editorial web
         run: npm run build --workspace @fib/editorial-web
       - name: Validate built HTML assets and JavaScript syntax
