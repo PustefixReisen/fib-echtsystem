@@ -398,3 +398,6 @@ button:has(> .action-icon) { display: inline-flex; align-items: center; justify-
   .object-status { margin-bottom: .7rem; }
   .object-status > div { padding: .55rem .75rem; }
 }
+
+/* Bearbeitete Fundstellen: Pflichtfeld lokal hervorheben. */
+.finding-justification-editor textarea[aria-invalid="true"] { border-color: #a02525; }
