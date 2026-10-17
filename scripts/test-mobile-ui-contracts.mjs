@@ -24,7 +24,7 @@ test('required fields and card status use warning before unsaved indicator', () 
 
 test('finding justification is mandatory before linking and save', () => {
   assert.match(app, /if \(!justification\) \{/);
-  assert.match(app, /disabled=\{sourceBusy \|\| !\(linkJustificationDrafts/);
+  assert.match(app, /document.getElementById/);
   assert.match(app, /disabled=\{sourceBusy \|\| !sourceNoteDraft\.trim\(\)/);
 });
 

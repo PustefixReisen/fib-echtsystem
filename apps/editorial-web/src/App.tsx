@@ -1125,15 +1125,15 @@ export function App() {
                     <button type="button" className="action-button" disabled={!sourceSearch} onClick={() => setSourceSearch('')}>Filter löschen</button>
                   </div>
                   {sourceBusy && <p role="status">Suche läuft …</p>}
-                  {sourceMatches.filter(finding => !eventSources.some(item => item.findingId === finding.findingId)).map(finding => <div className="work-item" key={finding.findingId}>
+                  {sourceMatches.filter(finding => !eventSources.some(item => item.findingId === finding.findingId)).map(finding => <div className="work-item finding-link-item" key={finding.findingId}>
                     <div className="finding-link-fields"><strong>{readableSourceName(finding.sourceName)}</strong><p>{finding.findingTitle}</p>
                       <label>Begründung der Zuordnung *
-                        <textarea rows={3} maxLength={2000} value={linkJustificationDrafts[finding.findingId] ?? finding.previousJustification ?? ''} onChange={e => setLinkJustificationDrafts(current => ({...current, [finding.findingId]: e.target.value}))} placeholder="Warum ist diese Fundstelle dem Ereignis zugeordnet?" aria-invalid={!(linkJustificationDrafts[finding.findingId] ?? finding.previousJustification ?? '').trim()} />
+                        <textarea id={`finding-justification-${finding.findingId}`} rows={3} maxLength={2000} value={linkJustificationDrafts[finding.findingId] ?? finding.previousJustification ?? ''} onChange={e => setLinkJustificationDrafts(current => ({...current, [finding.findingId]: e.target.value}))} placeholder="Warum ist diese Fundstelle dem Ereignis zugeordnet?" aria-invalid={!(linkJustificationDrafts[finding.findingId] ?? finding.previousJustification ?? '').trim()} />
                       </label>
-                      {!(linkJustificationDrafts[finding.findingId] ?? finding.previousJustification ?? '').trim() && <small className="field-validation-note">⚠ Pflichteingaben unvollständig: Bitte die Zuordnung begründen.</small>}
+                      {!(linkJustificationDrafts[finding.findingId] ?? finding.previousJustification ?? '').trim() && <small id={`finding-link-hint-${finding.findingId}`} className="field-validation-note">Bitte zuerst die Zuordnung begründen. Danach auf „Zuordnen“ klicken.</small>}
                     </div>
                     <div className="finding-link-actions">
-                      <button type="button" onClick={() => void linkFinding(finding.findingId)} disabled={sourceBusy || !(linkJustificationDrafts[finding.findingId] ?? finding.previousJustification ?? "").trim()}>Zuordnen</button>
+                      <button type="button" onClick={() => { if (!(linkJustificationDrafts[finding.findingId] ?? finding.previousJustification ?? "").trim()) { document.getElementById(`finding-justification-${finding.findingId}`)?.focus(); return; } void linkFinding(finding.findingId); }} disabled={sourceBusy} aria-describedby={`finding-link-hint-${finding.findingId}`}>Zuordnen</button>
                     </div>
                   </div>)}
                 </div>}

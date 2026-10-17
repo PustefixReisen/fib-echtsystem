@@ -409,3 +409,8 @@ button:has(> .action-icon) { display: inline-flex; align-items: center; justify-
   .card-heading-content { flex-basis: 100%; }
   .card-heading-help { max-width: 100%; }
 }
+
+/* Gefundene Fundstellen werden auch auf Mobilgeräten als vertikaler Formularblock dargestellt. */
+.finding-link-item { flex-direction: column; align-items: stretch; gap: .35rem; }
+.finding-link-item .finding-link-fields { flex: 0 1 auto; min-width: 0; }
+.finding-link-item .finding-link-actions { justify-content: flex-end; margin-top: .1rem; }
