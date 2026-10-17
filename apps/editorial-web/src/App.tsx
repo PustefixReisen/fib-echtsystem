@@ -1082,13 +1082,13 @@ export function App() {
                 {editMessage && <p aria-live="polite" className="status-message">{editMessage}</p>}
               </section>
 
-              <section className="panel card-headed">
+              <section className={`panel card-headed${sourcePickerOpen ? " workflow-dock-host" : ""}`}>
                 <div className="section-heading">
                   <div className="card-heading-content"><div className="card-title-group"><h2>Quellen und Fundstellen</h2>{sourcePickerOpen && <span className="card-mode-label">Bearbeiten</span>}</div>{sourcePickerOpen && <p className="card-heading-help">Fundstellen zuordnen, bearbeiten oder entfernen.</p>}</div>
                   {sourcePickerOpen && editingSourceId && <span className={!sourceNoteDraft.trim() ? 'card-edit-state error' : 'card-edit-state dirty'} role="status">{!sourceNoteDraft.trim() ? '⚠ Pflichteingaben unvollständig' : sourceNoteDraft !== (eventSources.find(item => item.findingId === editingSourceId)?.justification ?? '') ? '● Ungespeicherte Änderungen' : 'Unverändert'}</span>}
                   {!sourcePickerOpen && <button type="button" className="primary action-button" onClick={() => { setSourcePickerOpen(true); setSourceMessage(null); }}>Fundstellen bearbeiten</button>}
                 </div>
-                {sourcePickerOpen && <button type="button" className="action-button finding-back" disabled={sourceBusy} onClick={() => { if (editingSourceId) { const current = eventSources.find(item => item.findingId === editingSourceId); const changed = current && sourceNoteDraft !== (current.justification ?? ""); if (changed && !window.confirm("Ungespeicherte Änderungen an dieser Zuordnung verwerfen und zurückkehren?")) return; setEditingSourceId(null); } setSourcePickerOpen(false); setSourceMessage(null); }}><ActionIcon name="back" />Zurück</button>}
+                
                 {eventSources.length === 0 ? <p>Für dieses Ereignis sind noch keine Fundstellen zugeordnet.</p> : (
                   <ul className="event-source-list">
                     {eventSources.map((source) => (
@@ -1102,10 +1102,7 @@ export function App() {
                               <textarea aria-invalid={!sourceNoteDraft.trim()} className="finding-justification-input" value={sourceNoteDraft} maxLength={2000} onChange={e => setSourceNoteDraft(e.target.value)} rows={3} placeholder="Warum wurde diese Fundstelle dem Ereignis zugeordnet? Welche Information liefert sie dazu?" />
                               {!sourceNoteDraft.trim() && <small className="field-validation-note">Bitte eine Begründung eingeben.</small>}
                             </label>
-                            <div className="button-row">
-                              <button type="button" className="primary action-button" disabled={sourceBusy || !sourceNoteDraft.trim() || sourceNoteDraft === (source.justification ?? "")} onClick={() => void saveFindingMetadata(source.findingId)}><ActionIcon name="save" />Speichern</button>
-                              <button type="button" disabled={sourceBusy} onClick={() => { if (sourceNoteDraft !== (source.justification ?? "") && !window.confirm("Ungespeicherte Änderungen an dieser Zuordnung verwerfen?")) return; setEditingSourceId(null); }}>Abbrechen</button>
-                            </div>
+
                           </div>
                         ) : (
                           <div className="button-row">
@@ -1138,6 +1135,13 @@ export function App() {
                   </div>)}
                 </div>}
                 {sourceMessage && <p role="status">{sourceMessage}</p>}
+                {sourcePickerOpen && <div className="workflow-action-dock" role="group" aria-label="Aktionen für Fundstellenbearbeitung">
+                  {editingSourceId ? <>
+                    <button type="button" className="primary action-button" disabled={sourceBusy || !sourceNoteDraft.trim() || sourceNoteDraft === (eventSources.find(item => item.findingId === editingSourceId)?.justification ?? '')} onClick={() => void saveFindingMetadata(editingSourceId)}><ActionIcon name="save" />Speichern</button>
+                    <button type="button" className="action-button" disabled={sourceBusy} onClick={() => { const current = eventSources.find(item => item.findingId === editingSourceId); if (sourceNoteDraft !== (current?.justification ?? '') && !window.confirm('Ungespeicherte Änderungen an dieser Zuordnung verwerfen?')) return; setEditingSourceId(null); }}>Abbrechen</button>
+                  </> : <button type="button" className="action-button" disabled={sourceBusy} onClick={() => { setSourcePickerOpen(false); setSourceMessage(null); }}><ActionIcon name="back" />Zurück</button>}
+                </div>}
+
               </section>
 
                             </div>
