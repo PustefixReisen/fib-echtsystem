@@ -42,3 +42,7 @@ Die neue Ereignis-Fundstellen-Beziehung darf nur gemeinsam mit einer nicht leere
 ## Umsetzungsschritt: kompakter Ereigniskopf (15.10.2026)
 
 In Ereignisliste, Ereignisüberschrift und lesender Titelanzeige wird das technische Präfix `[ENTWICKLUNG ...]` ausgeblendet; der zugrunde liegende Titel in der Datenbank bleibt unverändert. In der Kopf-Zusammenfassung werden vorhandene technische Importvorspänne ausschließlich für die Anzeige ausgeblendet. Die bisherige Platzhalterkachel „Nächster Schritt: Bearbeitung im Ereignis fortsetzen“ entfällt zugunsten des unmittelbaren Karteninhalts; der tatsächliche Ereignisstatus bleibt sichtbar. Auf mobilen Bildschirmen reduziert der Kartenkopf Abstände und die Statuskachel ihre Höhe. Dies ist keine Migration oder Löschung von Entwicklungsdaten.
+
+## Weiterer UI-Inkrement: Pflichtfeldstatus beim Bearbeiten einer Zuordnung (17.10.2026)
+
+Auch die bereits bestehende Fundstellenbegründung wird beim Bearbeiten lokal mit `*`, Inline-Hinweis und `aria-invalid` validiert. Im Kopf der Quellenkarte erscheint nach Prioritätsregel bei fehlender Begründung „⚠ Pflichteingaben unvollständig“, andernfalls bei verändertem Inhalt „Ungespeicherte Änderungen“ bzw. „Unverändert“. Speichern bleibt bei leerem Feld deaktiviert. Serverseitige Pflichtprüfung aus PR #112 bleibt unverändert.
