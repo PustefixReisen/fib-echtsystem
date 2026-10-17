@@ -54,3 +54,7 @@ In der mobilen wie der Desktop-Navigation wird der aktuell geöffnete Inhaltsber
 ## Automatische UI-Regressionskontrollen (17.10.2026)
 
 Die Editorial-Web-CI führt ergänzend zum Build einen gezielten Satz statischer Regressionstests für mobile Navigation, Filter-Löschfunktion, Pflichtfeldzustände, geschützte Bearbeitungsabbrüche, bereinigte Entwicklungskennungen und Icon-Abstände aus (`node --test scripts/test-mobile-ui-contracts.mjs`). Diese Tests schützen vereinbarte UI-Verträge bei Codeänderungen; sie ersetzen **keine** Browser-, Responsive- oder End-to-End-Tests. Beim Abbrechen einer bearbeiteten Fundstellenbegründung ist das Verwerfen ungespeicherter Änderungen ausdrücklich zu bestätigen, entsprechend dem vorhandenen Zurück-Verhalten.
+
+## Abschließende Kartenkopf-Korrektur (17.10.2026)
+
+Die kurze, nur im Zuordnungsmodus benötigte Hilfe „Fundstellen zuordnen, bearbeiten oder entfernen.“ steht im grünen Kartenkopf der Quellen-/Fundstellenkarte, direkt unter dem unveränderten Kartentitel und seiner Moduskennzeichnung. Sie erscheint nicht nochmals im Karteninhalt. Feldhilfen verbleiben am betroffenen Eingabefeld. Auf kleinen Bildschirmen darf die Kartenkopf-Hilfe innerhalb des Kopfs umbrechen; sie darf keine Aktionen verdecken. Dies ist ein UI-Schritt, keine Änderung des fachlichen Datenbestands.
