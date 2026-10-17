@@ -29,8 +29,8 @@ test('finding justification is mandatory before linking and save', () => {
 });
 
 test('cancel and back both protect modified justification drafts', () => {
-  assert.match(app, /sourceNoteDraft !== \(source\.justification \?\? ""\) && !window\.confirm/);
-  assert.match(app, /Ungespeicherte Änderungen an dieser Zuordnung verwerfen und zurückkehren/);
+  assert.match(app, /sourceNoteDraft !== \(current\?\.justification \?\? ''\) && !window\.confirm/);
+  assert.match(app, /Ungespeicherte Änderungen an dieser Zuordnung verwerfen\?/);
 });
 
 test('technical import labels remain out of user-facing titles', () => {
