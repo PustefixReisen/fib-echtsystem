@@ -50,3 +50,10 @@ test('source workflow actions stay visible and switch by editing context', () =>
   assert.match(css, /\.workflow-action-dock\s*\{[^}]*position:\s*fixed;/s);
   assert.match(css, /\.workflow-dock-host\s*\{[^}]*padding-bottom:/s);
 });
+
+test('event form uses fixed save/cancel dock without duplicate controls', () => {
+  assert.match(app, /aria-label="Aktionen für Ereignisbearbeitung"/);
+  assert.match(app, /className=\{\x60panel card-headed\$\{editingEvent \? " workflow-dock-host"/);
+  assert.match(app, /disabled=\{sourcePickerOpen \|\| coordinationRunning/);
+  assert.match(app, /disabled=\{editingEvent\} onClick=\{\(\) => \{ setSourcePickerOpen\(true\)/);
+});
