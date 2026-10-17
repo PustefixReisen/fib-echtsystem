@@ -46,3 +46,7 @@ In Ereignisliste, Ereignisüberschrift und lesender Titelanzeige wird das techni
 ## Weiterer UI-Inkrement: Pflichtfeldstatus beim Bearbeiten einer Zuordnung (17.10.2026)
 
 Auch die bereits bestehende Fundstellenbegründung wird beim Bearbeiten lokal mit `*`, Inline-Hinweis und `aria-invalid` validiert. Im Kopf der Quellenkarte erscheint nach Prioritätsregel bei fehlender Begründung „⚠ Pflichteingaben unvollständig“, andernfalls bei verändertem Inhalt „Ungespeicherte Änderungen“ bzw. „Unverändert“. Speichern bleibt bei leerem Feld deaktiviert. Serverseitige Pflichtprüfung aus PR #112 bleibt unverändert.
+
+## Navigation: aktuelle Position (17.10.2026)
+
+In der mobilen wie der Desktop-Navigation wird der aktuell geöffnete Inhaltsbereich sichtbar und mit `aria-current="page"` gekennzeichnet. Bei Ereignisliste und Ereignisdetail ist der Menüabschnitt „Recherche“ geöffnet, damit „Ereignisse“ als aktueller Ort erkennbar bleibt. Dies ergänzt die bestehenden Regeln zu Menüschließen, Scrollen und Erhalt der geplanten Navigationsbereiche; kein Eingriff in fachliche Daten oder Authentifizierung.
