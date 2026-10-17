@@ -1139,7 +1139,7 @@ export function App() {
                   {editingSourceId ? <>
                     <button type="button" className="primary action-button" disabled={sourceBusy || !sourceNoteDraft.trim() || sourceNoteDraft === (eventSources.find(item => item.findingId === editingSourceId)?.justification ?? '')} onClick={() => void saveFindingMetadata(editingSourceId)}><ActionIcon name="save" />Speichern</button>
                     <button type="button" className="action-button" disabled={sourceBusy} onClick={() => { const current = eventSources.find(item => item.findingId === editingSourceId); if (sourceNoteDraft !== (current?.justification ?? '') && !window.confirm('Ungespeicherte Änderungen an dieser Zuordnung verwerfen?')) return; setEditingSourceId(null); }}>Abbrechen</button>
-                  </> : <button type="button" className="action-button" disabled={sourceBusy} onClick={() => { setSourcePickerOpen(false); setSourceMessage(null); }}><ActionIcon name="back" />Zurück</button>}
+                  </> : <button type="button" className="action-button" disabled={sourceBusy} onClick={() => { const pending = sourceMatches.some(finding => !eventSources.some(item => item.findingId === finding.findingId) && (linkJustificationDrafts[finding.findingId] ?? "").trim().length > 0); if (pending && !window.confirm("Nicht zugeordnete Begründungsentwürfe verwerfen und Fundstellenbearbeitung beenden?")) return; setSourcePickerOpen(false); setLinkJustificationDrafts({}); setSourceMessage(null); }}><ActionIcon name="back" />Bearbeitung beenden</button>}
                 </div>}
 
               </section>
