@@ -1042,13 +1042,13 @@ export function App() {
 
             <div className="detail-grid">
               <div className="detail-content-column">
-              <section className="panel card-headed">
+              <section className={`panel card-headed${editingEvent ? " workflow-dock-host" : ""}`}>
                 <div className="section-heading">
                   <div className="card-title-group"><h2>Ereignisdaten</h2>{editingEvent && <span className="card-mode-label">Bearbeiten</span>}</div>
                   {editingEvent && <span className={editFailed ? 'card-edit-state error' : !editTitle.trim() ? 'card-edit-state error' : eventDirty ? 'card-edit-state dirty' : 'card-edit-state'} role="status">{editSaving ? 'Speichern läuft …' : editFailed ? 'Änderung nicht gespeichert' : !editTitle.trim() ? '⚠ Pflichteingaben unvollständig' : eventDirty ? '● Ungespeicherte Änderungen' : 'Unverändert'}</span>}
                   {!editingEvent && editSaved && <span className="card-edit-state saved" role="status">✓ Gespeichert</span>}
                   {!editingEvent && (
-                    <button className="primary action-button" onClick={startEventEditing} disabled={coordinationRunning || !!(coordination?.lock && !coordination.lock.mine)}>
+                    <button className="primary action-button" onClick={startEventEditing} disabled={sourcePickerOpen || coordinationRunning || !!(coordination?.lock && !coordination.lock.mine)}>
                       <ActionIcon name="edit" />
                       Bearbeiten
                     </button>
@@ -1067,9 +1067,9 @@ export function App() {
                     <label>Ereignisdatum
                       <input type="date" value={editOccurredAt} onChange={(e) => setEditOccurredAt(e.target.value)} />
                     </label>
-                    <div className="button-row">
-                      <button type="submit" className="primary action-button" disabled={editSaving || !eventDirty}><ActionIcon name="save" />{editSaving ? 'Speichert …' : 'Speichern'}</button>
-                      <button type="button" onClick={cancelEventEditing} disabled={editSaving}>Abbrechen</button>
+                    <div className="workflow-action-dock" role="group" aria-label="Aktionen für Ereignisbearbeitung">
+                      <button type="submit" className="primary action-button" disabled={editSaving || !editTitle.trim() || !eventDirty}><ActionIcon name="save" />{editSaving ? 'Speichert …' : 'Speichern'}</button>
+                      <button type="button" className="action-button" onClick={cancelEventEditing} disabled={editSaving}>Abbrechen</button>
                     </div>
                   </form>
                 ) : (
@@ -1086,7 +1086,7 @@ export function App() {
                 <div className="section-heading">
                   <div className="card-heading-content"><div className="card-title-group"><h2>Quellen und Fundstellen</h2>{sourcePickerOpen && <span className="card-mode-label">Bearbeiten</span>}</div>{sourcePickerOpen && <p className="card-heading-help">Fundstellen zuordnen, bearbeiten oder entfernen.</p>}</div>
                   {sourcePickerOpen && editingSourceId && <span className={!sourceNoteDraft.trim() ? 'card-edit-state error' : 'card-edit-state dirty'} role="status">{!sourceNoteDraft.trim() ? '⚠ Pflichteingaben unvollständig' : sourceNoteDraft !== (eventSources.find(item => item.findingId === editingSourceId)?.justification ?? '') ? '● Ungespeicherte Änderungen' : 'Unverändert'}</span>}
-                  {!sourcePickerOpen && <button type="button" className="primary action-button" onClick={() => { setSourcePickerOpen(true); setSourceMessage(null); }}>Fundstellen bearbeiten</button>}
+                  {!sourcePickerOpen && <button type="button" className="primary action-button" disabled={editingEvent} onClick={() => { setSourcePickerOpen(true); setSourceMessage(null); }}>Fundstellen bearbeiten</button>}
                 </div>
                 
                 {eventSources.length === 0 ? <p>Für dieses Ereignis sind noch keine Fundstellen zugeordnet.</p> : (
