@@ -180,6 +180,13 @@ export function App() {
     return true;
   };
 
+  useEffect(() => {
+    if (view === 'events' || view === 'event') {
+      const group = document.getElementById('nav-recherche') as HTMLDetailsElement | null;
+      if (group) group.open = true;
+    }
+  }, [view]);
+
   function navigateTo(nextView: EditorialView) {
     if (nextView === view || !confirmLeave()) return;
     if (editingEvent) { setEditingEvent(false); void runCoordinationAction('release_lock', true); }
@@ -824,7 +831,7 @@ export function App() {
               <summary>Recherche</summary>
               <button className="nav-subitem" disabled>Rechercheaufträge</button>
               <button className="nav-subitem" disabled>Funde</button>
-              <button className={view === 'events' ? 'nav-subitem active' : 'nav-subitem'} onClick={() => navigateTo('events')}>Ereignisse</button>
+              <button className={view === 'events' || view === 'event' ? 'nav-subitem active' : 'nav-subitem'} aria-current={view === 'events' || view === 'event' ? 'page' : undefined} onClick={() => navigateTo('events')}>Ereignisse</button>
               <button className="nav-subitem" disabled>Quellen</button>
             </details>
             <details>
