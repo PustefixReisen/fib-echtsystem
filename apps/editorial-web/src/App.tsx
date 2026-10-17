@@ -1078,6 +1078,7 @@ export function App() {
               <section className="panel card-headed">
                 <div className="section-heading">
                   <div className="card-title-group"><h2>Quellen und Fundstellen</h2>{sourcePickerOpen && <span className="card-mode-label">Bearbeiten</span>}</div>
+                  {sourcePickerOpen && editingSourceId && <span className={!sourceNoteDraft.trim() ? 'card-edit-state error' : 'card-edit-state dirty'} role="status">{!sourceNoteDraft.trim() ? '⚠ Pflichteingaben unvollständig' : sourceNoteDraft !== (eventSources.find(item => item.findingId === editingSourceId)?.justification ?? '') ? '● Ungespeicherte Änderungen' : 'Unverändert'}</span>}
                   {!sourcePickerOpen && <button type="button" className="primary action-button" onClick={() => { setSourcePickerOpen(true); setSourceMessage(null); }}>Fundstellen bearbeiten</button>}
                 </div>
                 {sourcePickerOpen && <button type="button" className="action-button finding-back" disabled={sourceBusy} onClick={() => { if (editingSourceId) { const current = eventSources.find(item => item.findingId === editingSourceId); const changed = current && sourceNoteDraft !== (current.justification ?? ""); if (changed && !window.confirm("Ungespeicherte Änderungen an dieser Zuordnung verwerfen und zurückkehren?")) return; setEditingSourceId(null); } setSourcePickerOpen(false); setSourceMessage(null); }}><ActionIcon name="back" />Zurück</button>}
@@ -1091,8 +1092,9 @@ export function App() {
                         {editingSourceId !== source.findingId && source.justification && <p className="finding-justification">{source.justification}</p>}
                         {sourcePickerOpen && (editingSourceId === source.findingId ? (
                           <div className="stack finding-justification-editor">
-                            <label>Begründung der Zuordnung
-                              <textarea className="finding-justification-input" value={sourceNoteDraft} maxLength={2000} onChange={e => setSourceNoteDraft(e.target.value)} rows={3} placeholder="Warum wurde diese Fundstelle dem Ereignis zugeordnet? Welche Information liefert sie dazu?" />
+                            <label>Begründung der Zuordnung *
+                              <textarea aria-invalid={!sourceNoteDraft.trim()} className="finding-justification-input" value={sourceNoteDraft} maxLength={2000} onChange={e => setSourceNoteDraft(e.target.value)} rows={3} placeholder="Warum wurde diese Fundstelle dem Ereignis zugeordnet? Welche Information liefert sie dazu?" />
+                              {!sourceNoteDraft.trim() && <small className="field-validation-note">Bitte eine Begründung eingeben.</small>}
                             </label>
                             <div className="button-row">
                               <button type="button" className="primary action-button" disabled={sourceBusy || !sourceNoteDraft.trim() || sourceNoteDraft === (source.justification ?? "")} onClick={() => void saveFindingMetadata(source.findingId)}><ActionIcon name="save" />Speichern</button>
