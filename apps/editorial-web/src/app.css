@@ -401,3 +401,11 @@ button:has(> .action-icon) { display: inline-flex; align-items: center; justify-
 
 /* Bearbeitete Fundstellen: Pflichtfeld lokal hervorheben. */
 .finding-justification-editor textarea[aria-invalid="true"] { border-color: #a02525; }
+
+/* Kurze Kontextinformationen gehören in den Kartenkopf; keine doppelte Erklärung im Inhalt. */
+.card-heading-content { min-width: 0; flex: 1 1 200px; }
+.card-heading-help { font-size: .82rem; font-weight: 400; line-height: 1.4; color: #526159; margin: .2rem 0 0; }
+@media (max-width: 520px) {
+  .card-heading-content { flex-basis: 100%; }
+  .card-heading-help { max-width: 100%; }
+}
