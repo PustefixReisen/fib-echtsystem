@@ -437,3 +437,7 @@ button:has(> .action-icon) { display: inline-flex; align-items: center; justify-
   .workflow-action-dock { flex-wrap: nowrap; gap: .55rem; }
   .workflow-action-dock button { flex: 1 1 0; min-width: 0; max-width: 190px; }
 }
+
+/* Verbindliche Workflow-Button-Typografie: lesbar und einzeilig statt dynamisch verkleinert. */
+.workflow-action-dock button { font-size: 1rem; white-space: nowrap; line-height: 1.25; }
+@media (max-width: 520px) { .workflow-action-dock { min-height: 58px; padding-top: .45rem; padding-bottom: max(.45rem, env(safe-area-inset-bottom)); } }
