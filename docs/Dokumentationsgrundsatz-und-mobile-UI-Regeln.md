@@ -58,3 +58,7 @@ Die Editorial-Web-CI führt ergänzend zum Build einen gezielten Satz statischer
 ## Abschließende Kartenkopf-Korrektur (17.10.2026)
 
 Die kurze, nur im Zuordnungsmodus benötigte Hilfe „Fundstellen zuordnen, bearbeiten oder entfernen.“ steht im grünen Kartenkopf der Quellen-/Fundstellenkarte, direkt unter dem unveränderten Kartentitel und seiner Moduskennzeichnung. Sie erscheint nicht nochmals im Karteninhalt. Feldhilfen verbleiben am betroffenen Eingabefeld. Auf kleinen Bildschirmen darf die Kartenkopf-Hilfe innerhalb des Kopfs umbrechen; sie darf keine Aktionen verdecken. Dies ist ein UI-Schritt, keine Änderung des fachlichen Datenbestands.
+
+## Praxistestkorrektur: Fundstelle zuordnen (17.10.2026)
+
+Ein Screenshot im mobilen Firefox zeigte einen großen Leerraum zwischen Pflichtfeld und Zuordnen-Schaltfläche. Ursache war die generische horizontale `.work-item`-Flexanordnung samt wachsendem Textcontainer. Fundstellen-Treffer erhalten deshalb eine vertikale, kompakte Formularanordnung. Der Button „Zuordnen“ bleibt bedienbar; bei fehlender Pflichtbegründung wird **nicht** gespeichert, sondern das erforderliche Textfeld fokussiert und der Hinweis erläutert die Reihenfolge. Die serverseitige Pflichtbegründung und die Prüfung beim Speichern bleiben bestehen. Änderungen benötigen erneuten Browsertest; CI ist kein Live-Nachweis.
