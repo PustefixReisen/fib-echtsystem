@@ -1105,7 +1105,7 @@ export function App() {
                             </label>
                             <div className="button-row">
                               <button type="button" className="primary action-button" disabled={sourceBusy || !sourceNoteDraft.trim() || sourceNoteDraft === (source.justification ?? "")} onClick={() => void saveFindingMetadata(source.findingId)}><ActionIcon name="save" />Speichern</button>
-                              <button type="button" disabled={sourceBusy} onClick={() => setEditingSourceId(null)}>Abbrechen</button>
+                              <button type="button" disabled={sourceBusy} onClick={() => { if (sourceNoteDraft !== (source.justification ?? "") && !window.confirm("Ungespeicherte Änderungen an dieser Zuordnung verwerfen?")) return; setEditingSourceId(null); }}>Abbrechen</button>
                             </div>
                           </div>
                         ) : (
