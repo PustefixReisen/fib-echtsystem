@@ -414,3 +414,26 @@ button:has(> .action-icon) { display: inline-flex; align-items: center; justify-
 .finding-link-item { flex-direction: column; align-items: stretch; gap: .35rem; }
 .finding-link-item .finding-link-fields { flex: 0 1 auto; min-width: 0; }
 .finding-link-item .finding-link-actions { justify-content: flex-end; margin-top: .1rem; }
+
+/* Wiederverwendbare kontextabhängige Workflow-Leiste: immer im sichtbaren Viewport. */
+.workflow-dock-host { padding-bottom: 6.5rem; }
+.workflow-action-dock {
+  position: fixed;
+  inset: auto 0 0;
+  z-index: 45;
+  display: flex;
+  gap: .7rem;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  min-height: 66px;
+  padding: .65rem max(1rem, env(safe-area-inset-right)) max(.65rem, env(safe-area-inset-bottom)) max(1rem, env(safe-area-inset-left));
+  background: rgba(250, 248, 243, .98);
+  border-top: 1px solid #c5d4cb;
+  box-shadow: 0 -5px 18px rgba(19, 50, 38, .10);
+}
+.workflow-action-dock button { min-height: 44px; min-width: 114px; }
+@media (max-width: 520px) {
+  .workflow-action-dock { flex-wrap: nowrap; gap: .55rem; }
+  .workflow-action-dock button { flex: 1 1 0; min-width: 0; max-width: 190px; }
+}
