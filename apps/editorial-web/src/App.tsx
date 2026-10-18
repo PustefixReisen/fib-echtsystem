@@ -512,6 +512,8 @@ export function App() {
   }
 
   async function loadSessionContext() {
+    // Invitation onboarding must never call any FIB service before first-password completion.
+    if (invitationMode && invitationPasswordPending) return false;
     setMembershipStatus('checking');
     setSessionContext(null);
     const { data, error } = await supabase.functions.invoke<SessionContextResult>('fib-session-context', {
@@ -530,6 +532,7 @@ export function App() {
   }
 
   async function loadEditorialStart() {
+    if (invitationMode && invitationPasswordPending) return;
     if (await loadSessionContext()) await Promise.all([loadEvent(), loadCoordinationState()]);
   }
 
