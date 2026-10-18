@@ -150,7 +150,7 @@ export default {
         if (existingFib.length) return json({ error: 'fib_user_already_exists' }, 409);
 
         await sql.unsafe(
-          "insert into fib.app_users(user_id, full_name, role, active, setup_status) values ($1,$2,$3,true,'invited')",
+          "insert into fib.app_users(user_id, full_name, role, active, setup_status) values ($1,$2,$3,true,'setup_pending')",
           [existingAuth.id, fullName, role],
         );
         return json({
@@ -168,7 +168,7 @@ export default {
 
       try {
         await sql.unsafe(
-          "insert into fib.app_users(user_id, full_name, role, active, setup_status) values ($1,$2,$3,true,'invited')",
+          "insert into fib.app_users(user_id, full_name, role, active, setup_status) values ($1,$2,$3,true,'setup_pending')",
           [invited.body.id, fullName, role],
         );
       } catch (error) {
