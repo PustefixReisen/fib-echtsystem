@@ -31,6 +31,8 @@ Stattdessen legt der Administrator ausschließlich die FIB-Vorautorisierung an. 
 
 Die Benutzerverwaltung zeigt FIB-Mitglieder mit Rolle und Setup-Status an.
 
+Eine noch nicht angenommene Einladung wird mit Versandzeitpunkt angezeigt und kann administrativ erneut versendet werden. Supabase koppelt die Gültigkeit des Einladungslinks an die projektweite Email-OTP-Ablaufzeit; deshalb speichert FIB keine abweichende eigene Link-Laufzeit. Bereits bestätigte Shared-Apps-Konten werden nicht erneut eingeladen, sondern verwenden ihre bestehende Anmeldung.
+
 Eine noch offene FIB-Einladung kann administrativ zurückgenommen werden. Dabei wird nur die FIB-Mitgliedschaft auf `deactivated` gesetzt. Das gemeinsame Auth-Konto wird **nicht** gelöscht.
 
 Bereits aktive Benutzer werden durch die Einladungsfunktion nicht automatisch deaktiviert. Eine allgemeine Deaktivierung aktiver Benutzer bleibt eine getrennte, bewusst bestätigte Administrationsaktion.
@@ -63,6 +65,8 @@ Der Branch zu #115 enthält:
 - Vorautorisierung der FIB-Rolle,
 - Aktivierung erst nach AAL2,
 - Rücknahme offener Einladungen ohne Auth-Kontolöschung,
+- Wiederholung noch nicht angenommener Einladungen,
+- strukturiertes serverseitiges Audit für Einladung, Vorautorisierung, Wiederholung und Rücknahme,
 - Regressionstests für diese Sicherheitsverträge.
 
 Produktive Bereitstellung der neuen Edge Function und ein gezielter Live-Smoke erfolgen erst nach erfolgreicher CI und Merge.
