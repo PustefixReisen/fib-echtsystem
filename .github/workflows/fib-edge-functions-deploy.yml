@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       confirmation:
-        description: 'Enter DEPLOY to publish the three approved FIB Edge Functions to Shared-Apps'
+        description: 'Enter DEPLOY to publish the approved FIB Edge Functions to Shared-Apps'
         required: true
         type: string
 
@@ -39,7 +39,7 @@ jobs:
         run: |
           set -euo pipefail
           project_ref=apaubomxffcwtzjimori
-          for function in fib-coordination fib-editorial-write fib-session-context; do
+          for function in fib-coordination fib-editorial-write fib-session-context fib-admin-users; do
             supabase functions deploy "$function" --project-ref "$project_ref" --no-verify-jwt
           done
 

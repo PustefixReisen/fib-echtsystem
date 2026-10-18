@@ -13,7 +13,7 @@ import assistantIcon from '../../../assets/brand/icons/fib-assistent.svg';
 import './app.css';
 
 type AuthState = 'checking' | 'auth_error' | 'signed_out' | 'aal1_no_factor' | 'aal1_factor_available' | 'aal2';
-type EditorialView = 'dashboard' | 'event' | 'events' | 'profile';
+type EditorialView = 'dashboard' | 'event' | 'events' | 'profile' | 'users';
 
 type CoordinationState = {
   lead: { userId: string; displayName: string; mine: boolean } | null;
@@ -73,6 +73,24 @@ type SessionContext = {
 };
 
 type SessionContextResult = { ok: true; user: SessionContext };
+
+type AdminUser = {
+  user_id: string;
+  full_name: string;
+  role: 'editor' | 'admin';
+  active: boolean;
+  setup_status: 'invited' | 'setup_pending' | 'active' | 'deactivated';
+  created_at: string;
+  updated_at: string;
+  email: string | null;
+  invited_at: string | null;
+  confirmed_at: string | null;
+};
+
+type AdminUsersResult =
+  | { ok: true; users: AdminUser[] }
+  | { ok: true; mode: 'new_account' | 'existing_account'; userId: string; message?: string }
+  | { ok: false; error: string };
 
 const LIVE_TEST_EVENT_ID = 'ff02ffad-e2a5-4724-a94b-073a1483051d';
 
@@ -151,6 +169,13 @@ export function App() {
   const [profileCallName, setProfileCallName] = useState('');
   const [profileSaving, setProfileSaving] = useState(false);
   const [profileMessage, setProfileMessage] = useState<string | null>(null);
+  const [adminUsers, setAdminUsers] = useState<AdminUser[]>([]);
+  const [adminUsersLoading, setAdminUsersLoading] = useState(false);
+  const [adminInviteName, setAdminInviteName] = useState('');
+  const [adminInviteEmail, setAdminInviteEmail] = useState('');
+  const [adminInviteRole, setAdminInviteRole] = useState<'editor' | 'admin'>('editor');
+  const [adminInviteBusy, setAdminInviteBusy] = useState(false);
+  const [adminInviteMessage, setAdminInviteMessage] = useState<string | null>(null);
 
   const [accountEmail, setAccountEmail] = useState('');
   const [newAccountEmail, setNewAccountEmail] = useState('');
@@ -217,6 +242,7 @@ export function App() {
     setNavigationOpen(false);
     if (nextView === 'dashboard') void loadEditorialStart();
     if (nextView === 'events') void loadEventList();
+    if (nextView === 'users') void loadAdminUsers();
   }
 
   async function refreshAuthState() {
@@ -304,7 +330,7 @@ export function App() {
     if (authLinkError) return;
     window.history.replaceState({ ...(window.history.state ?? {}), fibView: 'dashboard' }, '', window.location.href);
     const onPopState = (event: PopStateEvent) => {
-      const nextView = event.state?.fibView === 'event' ? 'event' : event.state?.fibView === 'events' ? 'events' : event.state?.fibView === 'profile' ? 'profile' : 'dashboard';
+      const nextView = event.state?.fibView === 'event' ? 'event' : event.state?.fibView === 'events' ? 'events' : event.state?.fibView === 'profile' ? 'profile' : event.state?.fibView === 'users' ? 'users' : 'dashboard';
       if (!historyLeaveRef.current()) {
         window.history.pushState({ fibView: currentViewRef.current }, '', window.location.href);
         return;
@@ -313,6 +339,7 @@ export function App() {
       setNavigationOpen(false);
       if (nextView === 'dashboard') void loadEditorialStart();
       if (nextView === 'events') void loadEventList();
+      if (nextView === 'users') void loadAdminUsers();
     };
     window.addEventListener('popstate', onPopState);
 
@@ -555,6 +582,79 @@ export function App() {
   async function loadEditorialStart() {
     if (invitationMode && invitationPasswordPending) return;
     if (await loadSessionContext()) await Promise.all([loadEvent(), loadCoordinationState()]);
+  }
+
+  async function loadAdminUsers() {
+    if (sessionContext?.role !== 'admin') return;
+    setAdminUsersLoading(true);
+    setAdminInviteMessage(null);
+    const { data, error } = await supabase.functions.invoke<AdminUsersResult>('fib-admin-users', {
+      body: { action: 'list' },
+    });
+    setAdminUsersLoading(false);
+    if (error || !data?.ok || !('users' in data)) {
+      setAdminInviteMessage('Die Benutzerverwaltung konnte nicht geladen werden.');
+      return;
+    }
+    setAdminUsers(data.users);
+  }
+
+  async function inviteAdminUser(event: FormEvent) {
+    event.preventDefault();
+    if (sessionContext?.role !== 'admin' || adminInviteBusy) return;
+    setAdminInviteBusy(true);
+    setAdminInviteMessage('Einladung wird vorbereitet …');
+    const { data, error } = await supabase.functions.invoke<AdminUsersResult>('fib-admin-users', {
+      body: { action: 'invite', fullName: adminInviteName, email: adminInviteEmail, role: adminInviteRole },
+    });
+    setAdminInviteBusy(false);
+    if (error || !data?.ok || !('mode' in data)) {
+      const response = error && 'context' in error && error.context instanceof Response ? error.context : null;
+      const details = response ? await response.clone().json().catch(() => null) as {error?: string} | null : null;
+      setAdminInviteMessage(details?.error === 'fib_user_already_exists'
+        ? 'Für diese Person besteht bereits ein FIB-Zugang oder eine offene Vorautorisierung.'
+        : 'Die Einladung konnte nicht sicher angelegt werden.');
+      return;
+    }
+    setAdminInviteName('');
+    setAdminInviteEmail('');
+    setAdminInviteRole('editor');
+    setAdminInviteMessage(data.mode === 'new_account'
+      ? 'Einladung versendet. Die Rolle ist vorautorisiert; Zugriff entsteht erst nach Passwort und MFA.'
+      : (data.message ?? 'Vorhandenes Shared-Apps-Konto wurde für FIB vorautorisiert.'));
+    await loadAdminUsers();
+  }
+
+  async function repeatAdminInvitation(userId: string) {
+    if (sessionContext?.role !== 'admin' || adminInviteBusy) return;
+    setAdminInviteBusy(true);
+    setAdminInviteMessage('Einladung wird erneut versendet …');
+    const { data, error } = await supabase.functions.invoke<AdminUsersResult>('fib-admin-users', {
+      body: { action: 'repeat', userId },
+    });
+    setAdminInviteBusy(false);
+    if (error || !data?.ok) {
+      setAdminInviteMessage('Die Einladung konnte nicht erneut versendet werden. Bereits bestätigte Konten verwenden ihre bestehende Anmeldung.');
+      return;
+    }
+    setAdminInviteMessage('Einladung erneut versendet.');
+    await loadAdminUsers();
+  }
+
+  async function revokeAdminInvitation(userId: string) {
+    if (sessionContext?.role !== 'admin' || adminInviteBusy) return;
+    if (!window.confirm('Offene FIB-Einladung wirklich zurücknehmen? Das gemeinsame Auth-Konto wird nicht gelöscht.')) return;
+    setAdminInviteBusy(true);
+    const { data, error } = await supabase.functions.invoke<AdminUsersResult>('fib-admin-users', {
+      body: { action: 'revoke', userId },
+    });
+    setAdminInviteBusy(false);
+    if (error || !data?.ok) {
+      setAdminInviteMessage('Die Einladung konnte nicht zurückgenommen werden.');
+      return;
+    }
+    setAdminInviteMessage('FIB-Einladung zurückgenommen. Das gemeinsame Auth-Konto blieb unverändert.');
+    await loadAdminUsers();
   }
 
   async function runCoordinationAction(action: 'get_state' | 'take_lead' | 'release_lead' | 'acquire_lock' | 'renew_lock' | 'release_lock', quiet = false) {
@@ -1093,7 +1193,7 @@ export function App() {
               <button className="nav-item" disabled>Tasks & Läufe</button>
               <button className="nav-item" disabled>KI & Kosten</button>
               <button className="nav-item" disabled>Referenzsystem</button>
-              <button className="nav-item" disabled>Benutzer & Rollen</button>
+              <button className={view === 'users' ? 'nav-item active' : 'nav-item'} aria-current={view === 'users' ? 'page' : undefined} onClick={() => navigateTo('users')}>Benutzer & Rollen</button>
               <button className="nav-item" disabled>System</button>
               <button className="nav-item" disabled>Audit</button>
             </div>
@@ -1219,6 +1319,62 @@ export function App() {
             <section className="panel muted-panel dashboard-workbasket card-headed">
               <h2>Arbeitskorb</h2>
               <p>Offene oder bewusst zurückgestellte Entscheidungen. Er bleibt nachgeordnet und ist kein Pflicht-Zwischenschritt für jede Bearbeitung.</p>
+            </section>
+          </>
+        )}
+
+        {view === 'users' && isAdmin && (
+          <>
+            <nav className="breadcrumbs" aria-label="Brotkrumen">
+              <button onClick={() => navigateTo('dashboard')}>Dashboard</button>
+              <span>›</span><span aria-current="page">Benutzer & Rollen</span>
+            </nav>
+            <div className="page-heading"><div><p className="eyebrow">Administration</p><h1>Benutzer & Rollen</h1><p>FIB-Zugang wird ausschließlich administrativ vorautorisiert. Ein Auth-Konto allein gewährt keinen Zugriff.</p></div></div>
+            <section className="panel card-headed profile-panel">
+              <h2>Person einladen</h2>
+              <form className="stack" onSubmit={inviteAdminUser}>
+                <label>Vollständiger Name
+                  <input value={adminInviteName} onChange={e => setAdminInviteName(e.target.value)} maxLength={120} required autoComplete="name" />
+                </label>
+                <label>E-Mail-Adresse
+                  <input type="email" value={adminInviteEmail} onChange={e => setAdminInviteEmail(e.target.value)} maxLength={254} required autoComplete="email" />
+                </label>
+                <label>FIB-Rolle
+                  <select value={adminInviteRole} onChange={e => setAdminInviteRole(e.target.value as 'editor' | 'admin')}>
+                    <option value="editor">Redakteur</option>
+                    <option value="admin">Admin</option>
+                  </select>
+                </label>
+                <p className="meta">Bei einem vorhandenen Shared-Apps-Konto bleiben Passwort und MFA unverändert. Die Person wird nur für FIB vorautorisiert.</p>
+                <div className="button-row">
+                  <button className="primary" type="submit" disabled={adminInviteBusy || !adminInviteName.trim() || !adminInviteEmail.trim()}>{adminInviteBusy ? 'Verarbeitet …' : 'Person einladen'}</button>
+                  <button type="button" onClick={() => void loadAdminUsers()} disabled={adminUsersLoading || adminInviteBusy}>Status aktualisieren</button>
+                </div>
+              </form>
+              {adminInviteMessage && <p className="status-message" role="status">{adminInviteMessage}</p>}
+            </section>
+            <section className="panel card-headed">
+              <h2>Zugangsstatus</h2>
+              {adminUsersLoading ? <p role="status">Benutzer werden geladen …</p> : adminUsers.length === 0 ? <p>Noch keine FIB-Benutzer vorhanden.</p> : (
+                <div className="admin-user-list">
+                  {adminUsers.map(user => (
+                    <article className="work-item" key={user.user_id}>
+                      <div>
+                        <strong>{user.full_name}</strong>
+                        <p>{user.email ?? 'E-Mail-Adresse nicht verfügbar'}</p>
+                        <p className="meta">{user.role === 'admin' ? 'Admin' : 'Redakteur'} · {user.setup_status === 'active' && user.active ? 'Aktiv' : user.setup_status === 'invited' && user.active ? 'Einladung offen' : user.setup_status === 'deactivated' || !user.active ? 'Deaktiviert' : 'Einrichtung ausstehend'}</p>
+                        {user.invited_at && !user.confirmed_at && <p className="meta">Einladung versendet: {new Date(user.invited_at).toLocaleString('de-DE')}</p>}
+                      </div>
+                      {(user.setup_status === 'invited' || user.setup_status === 'setup_pending') && user.active && (
+                        <div className="button-row">
+                          {user.setup_status === 'setup_pending' && !user.confirmed_at && user.email && <button type="button" onClick={() => void repeatAdminInvitation(user.user_id)} disabled={adminInviteBusy}>Einladung erneut senden</button>}
+                          <button type="button" onClick={() => void revokeAdminInvitation(user.user_id)} disabled={adminInviteBusy}>Einladung zurücknehmen</button>
+                        </div>
+                      )}
+                    </article>
+                  ))}
+                </div>
+              )}
             </section>
           </>
         )}

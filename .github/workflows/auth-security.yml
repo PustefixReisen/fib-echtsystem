@@ -4,6 +4,8 @@ on:
     paths:
       - 'tests/auth-sandbox/**'
       - 'supabase/functions/fib-session-context/**'
+      - 'supabase/functions/fib-admin-users/**'
+      - 'scripts/test-admin-invitation-contracts.mjs'
       - 'package.json'
       - 'package-lock.json'
       - 'apps/editorial-web/**'
@@ -34,6 +36,9 @@ jobs:
         if: always()
         with:
           node-version: '22'
+      - name: Check admin invitation security contracts
+        if: always()
+        run: node --test scripts/test-admin-invitation-contracts.mjs
       - name: Build isolated browser preview
         if: always()
         run: |

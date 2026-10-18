@@ -5,6 +5,9 @@ on:
     paths:
       - 'apps/editorial-web/**'
       - 'scripts/test-mobile-ui-contracts.mjs'
+      - 'scripts/test-admin-invitation-contracts.mjs'
+      - 'supabase/functions/fib-admin-users/**'
+      - 'supabase/functions/fib-session-context/**'
       - 'package.json'
       - 'tsconfig.base.json'
       - '.github/workflows/editorial-web-ci.yml'
@@ -33,6 +36,8 @@ jobs:
         run: npm install
       - name: Check mobile UI regression contracts
         run: node --test scripts/test-mobile-ui-contracts.mjs
+      - name: Check admin invitation security contracts
+        run: node --test scripts/test-admin-invitation-contracts.mjs
       - name: Build editorial web
         run: npm run build --workspace @fib/editorial-web
       - name: Validate built HTML assets and JavaScript syntax
