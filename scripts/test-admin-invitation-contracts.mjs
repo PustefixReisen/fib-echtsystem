@@ -27,7 +27,7 @@ test('shared account safety keeps existing auth credentials untouched', () => {
 
 test('membership only activates after AAL2 and prior invitation', () => {
   assert.match(sessionFn, /claims\?\.aal === 'aal2'/);
-  assert.match(sessionFn, /row\\.setup_status === 'setup_pending'/);
+  assert.match(sessionFn, /row\.setup_status === 'setup_pending'/);
   assert.match(sessionFn, /set setup_status='active'/);
 });
 
