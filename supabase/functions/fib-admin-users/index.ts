@@ -95,6 +95,17 @@ async function listAuthUsers(): Promise<Array<{ id: string; email?: string; invi
   return users;
 }
 
+async function findAuthUserById(userId: string): Promise<{ id: string; email?: string; invited_at?: string | null; confirmed_at?: string | null } | null> {
+  const response = await authAdminFetch(`/users/${encodeURIComponent(userId)}`);
+  if (response.status === 404) return null;
+  if (!response.ok) throw new Error('auth_lookup_failed');
+  return await response.json() as { id: string; email?: string; invited_at?: string | null; confirmed_at?: string | null };
+}
+
+function audit(action: string, actorUserId: string, details: Record<string, unknown>) {
+  console.info('fib-admin-users audit', { action, actorUserId, ...details });
+}
+
 async function findAuthUserByEmail(email: string): Promise<{ id: string; email: string; confirmed_at?: string | null } | null> {
   for (let page = 1; page <= 10; page += 1) {
     const response = await authAdminFetch(`/users?page=${page}&per_page=100`);
@@ -170,6 +181,26 @@ export default {
           [body.userId],
         );
         if (!rows.length) return json({ error: 'not_revocable' }, 409);
+        audit('revoke_invitation', actorUserId, { targetUserId: body.userId });
+        return json({ ok: true });
+      }
+
+      if (body.action === 'repeat') {
+        if (typeof body.userId !== 'string') return json({ error: 'invalid_user_id' }, 400);
+        const fibRows = await sql.unsafe(
+          "select user_id, full_name, role, active, setup_status from fib.app_users where user_id=$1",
+          [body.userId],
+        );
+        const target = fibRows[0] as any;
+        if (!target || !target.active || target.setup_status !== 'setup_pending') {
+          return json({ error: 'invitation_not_repeatable' }, 409);
+        }
+        const authUser = await findAuthUserById(body.userId);
+        if (!authUser?.email || authUser.confirmed_at) return json({ error: 'invitation_not_repeatable' }, 409);
+        const repeated = await sendInvite(authUser.email, target.full_name);
+        if (!repeated.response.ok) return json({ error: 'invite_delivery_failed' }, 502);
+        await sql.unsafe("update fib.app_users set updated_at=now() where user_id=$1", [body.userId]);
+        audit('repeat_invitation', actorUserId, { targetUserId: body.userId, role: target.role });
         return json({ ok: true });
       }
 
@@ -192,6 +223,7 @@ export default {
           "insert into fib.app_users(user_id, full_name, role, active, setup_status) values ($1,$2,$3,true,'setup_pending')",
           [existingAuth.id, fullName, role],
         );
+        audit('authorize_existing_account', actorUserId, { targetUserId: existingAuth.id, role });
         return json({
           ok: true,
           mode: 'existing_account',
@@ -215,6 +247,7 @@ export default {
         throw error;
       }
 
+      audit('invite_new_account', actorUserId, { targetUserId: invited.body.id, role });
       return json({ ok: true, mode: 'new_account', userId: invited.body.id });
     } catch (error) {
       console.error('fib-admin-users failed', error);
