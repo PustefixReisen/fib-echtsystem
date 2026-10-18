@@ -936,7 +936,7 @@ export function App() {
       <h1>{membershipStatus === 'pending' ? 'Freischaltung ausstehend' : membershipStatus === 'error' ? 'Freischaltung nicht prüfbar' : 'Freischaltung wird geprüft'}</h1>
       <p>Angemeldet als <strong>{accountEmail}</strong>. Dein zweiter Faktor ist bestätigt. Das FIB-Redaktionssystem ist erst nach gesonderter Freischaltung zugänglich.</p>
       {passwordRecovery && <form className="stack" onSubmit={updatePassword}><p>Lege jetzt ein neues Passwort fest.</p><PasswordField label="Neues Passwort" autoComplete="new-password" minLength={12} value={newPassword} onChange={e=>setNewPassword(e.target.value)} required /><PasswordField label="Neues Passwort wiederholen" autoComplete="new-password" minLength={12} value={confirmPassword} onChange={e=>setConfirmPassword(e.target.value)} required /><button disabled={securitySaving}>Passwort ändern</button></form>}
-      {securityMessage && <p role="status">{securityMessage}</p>
+      {securityMessage && <p role="status">{securityMessage}</p>}
       {membershipStatus === 'pending' && <p>Bitte wende dich an einen FIB-Administrator. Die Einrichtung deines Kontos allein verleiht keine Redaktionsrechte.</p>}
       {membershipStatus === 'error' && <p>Deine Berechtigung konnte nicht sicher überprüft werden. Bis zur erfolgreichen Prüfung bleibt der Zugang gesperrt.</p>}
       <button type="button" disabled={membershipStatus === 'checking'} onClick={() => void loadEditorialStart()}>Freischaltung erneut prüfen</button>
