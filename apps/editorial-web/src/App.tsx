@@ -453,6 +453,7 @@ export function App() {
     await refreshAuthState();
     } catch { setMessage('MFA konnte nicht geprüft werden. Bitte erneut versuchen.'); }
     finally { setCode(''); mfaBusy.current = false; }
+  }
 
   useEffect(() => {
     if (view !== 'events') return;
