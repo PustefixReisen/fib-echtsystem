@@ -441,3 +441,11 @@ button:has(> .action-icon) { display: inline-flex; align-items: center; justify-
 /* Verbindliche Workflow-Button-Typografie: lesbar und einzeilig statt dynamisch verkleinert. */
 .workflow-action-dock button { font-size: 1rem; white-space: nowrap; line-height: 1.25; }
 @media (max-width: 520px) { .workflow-action-dock { min-height: 58px; padding-top: .45rem; padding-bottom: max(.45rem, env(safe-area-inset-bottom)); } }
+
+/* PR #74: password show/hide control, shared across auth dialogs. */
+.password-control { position: relative; }
+.password-control input { padding-right: 3.5rem; }
+.password-toggle { position: absolute; right: .15rem; top: .5rem; bottom: .15rem; width: 2.75rem; padding: .5rem; border: 0; color: #16355F; }
+.password-toggle:focus-visible { outline: 3px solid var(--fib-primary); outline-offset: 2px; }
+.password-eye { display: block; position: relative; width: 1.5rem; height: 1.5rem; }
+.password-eye img, .password-eye svg { position: absolute; inset: 0; width: 100%; height: 100%; }
