@@ -54,18 +54,32 @@ function normalizedName(value: unknown): string | null {
   return name;
 }
 
+function adminApiKey(): string | null {
+  const secretKeys = Deno.env.get('SUPABASE_SECRET_KEYS');
+  if (secretKeys) {
+    try {
+      const parsed = JSON.parse(secretKeys) as Record<string, string>;
+      if (parsed.default) return parsed.default;
+    } catch {
+      // Fall through to the legacy key while Shared-Apps is migrated.
+    }
+  }
+  return Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? null;
+}
+
 async function authAdminFetch(path: string, init?: RequestInit) {
   const supabaseUrl = Deno.env.get('SUPABASE_URL');
-  const serviceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY');
-  if (!supabaseUrl || !serviceKey) throw new Error('auth_admin_not_configured');
+  const adminKey = adminApiKey();
+  if (!supabaseUrl || !adminKey) throw new Error('auth_admin_not_configured');
+  const headers: Record<string, string> = {
+    apikey: adminKey,
+    'content-type': 'application/json',
+  };
+  // Opaque sb_secret keys belong only in apikey. Legacy service_role is a JWT.
+  if (!adminKey.startsWith('sb_secret_')) headers.authorization = `Bearer ${adminKey}`;
   return fetch(`${supabaseUrl}/auth/v1/admin${path}`, {
     ...init,
-    headers: {
-      apikey: serviceKey,
-      authorization: `Bearer ${serviceKey}`,
-      'content-type': 'application/json',
-      ...(init?.headers ?? {}),
-    },
+    headers: { ...headers, ...(init?.headers ?? {}) },
   });
 }
 
