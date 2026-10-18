@@ -14,9 +14,9 @@ Der FIB-Administrator erfasst **vollständigen Namen, E-Mail-Adresse und vorgese
 2. Er erfasst Name, E-Mail-Adresse und Rolle.
 3. Die Edge Function `fib-admin-users` prüft serverseitig erneut AAL2 und die aktive FIB-Adminrolle.
 4. Für eine noch nicht vorhandene Shared-Apps-Identität wird über Supabase Auth eine Einladung an die FIB-Redaktions-App versendet.
-5. Parallel wird ausschließlich im FIB-Schema eine Mitgliedschaft mit Status `invited` und der administrativ festgelegten Rolle angelegt.
+5. Parallel wird ausschließlich im FIB-Schema eine Mitgliedschaft mit Status `setup_pending` und der administrativ festgelegten Rolle angelegt.
 6. Die eingeladene Person legt ihr Passwort fest und richtet bzw. bestätigt TOTP-MFA.
-7. Erst eine gültige AAL2-Sitzung darf `fib-session-context` eine zuvor administrativ angelegte Mitgliedschaft von `invited` auf `active` setzen.
+7. Erst eine gültige AAL2-Sitzung darf `fib-session-context` eine zuvor administrativ angelegte Mitgliedschaft von `setup_pending` auf `active` setzen.
 8. Erst danach sind FIB-Fachdienste zugänglich.
 
 Ein eigenständiger zweiter administrativer Freigabeschritt nach erfolgreichem Setup ist damit nicht erforderlich: Die fachliche Freigabe liegt bereits in der vorherigen Admin-Vorautorisierung.
