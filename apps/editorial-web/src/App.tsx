@@ -82,6 +82,9 @@ type AdminUser = {
   setup_status: 'invited' | 'setup_pending' | 'active' | 'deactivated';
   created_at: string;
   updated_at: string;
+  email: string | null;
+  invited_at: string | null;
+  confirmed_at: string | null;
 };
 
 type AdminUsersResult =
@@ -1342,7 +1345,9 @@ export function App() {
                     <article className="work-item" key={user.user_id}>
                       <div>
                         <strong>{user.full_name}</strong>
+                        <p>{user.email ?? 'E-Mail-Adresse nicht verfügbar'}</p>
                         <p className="meta">{user.role === 'admin' ? 'Admin' : 'Redakteur'} · {user.setup_status === 'active' && user.active ? 'Aktiv' : user.setup_status === 'invited' && user.active ? 'Einladung offen' : user.setup_status === 'deactivated' || !user.active ? 'Deaktiviert' : 'Einrichtung ausstehend'}</p>
+                        {user.invited_at && !user.confirmed_at && <p className="meta">Einladung versendet: {new Date(user.invited_at).toLocaleString('de-DE')}</p>}
                       </div>
                       {(user.setup_status === 'invited' || user.setup_status === 'setup_pending') && user.active && <button type="button" onClick={() => void revokeAdminInvitation(user.user_id)} disabled={adminInviteBusy}>Einladung zurücknehmen</button>}
                     </article>
