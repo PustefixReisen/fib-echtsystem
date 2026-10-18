@@ -1344,7 +1344,7 @@ export function App() {
                         <strong>{user.full_name}</strong>
                         <p className="meta">{user.role === 'admin' ? 'Admin' : 'Redakteur'} · {user.setup_status === 'active' && user.active ? 'Aktiv' : user.setup_status === 'invited' && user.active ? 'Einladung offen' : user.setup_status === 'deactivated' || !user.active ? 'Deaktiviert' : 'Einrichtung ausstehend'}</p>
                       </div>
-                      {user.setup_status === 'invited' && user.active && <button type="button" onClick={() => void revokeAdminInvitation(user.user_id)} disabled={adminInviteBusy}>Einladung zurücknehmen</button>}
+                      {(user.setup_status === 'invited' || user.setup_status === 'setup_pending') && user.active && <button type="button" onClick={() => void revokeAdminInvitation(user.user_id)} disabled={adminInviteBusy}>Einladung zurücknehmen</button>}
                     </article>
                   ))}
                 </div>
