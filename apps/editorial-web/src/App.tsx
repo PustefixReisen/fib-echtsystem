@@ -1,5 +1,6 @@
 import { FormEvent, useEffect, useState, useRef, type ReactNode } from 'react';
-import { supabase } from './supabase.js';
+import { PasswordField } from './PasswordField.js';
+import { supabase, invitationMode, authLinkError, invitationPasswordDone, rememberInvitationPassword } from './supabase.js';
 import fibLogo from '../../../assets/brand/logo/fib-logo-primary-approved.png';
 import eventIcon from '../../../assets/brand/icons/ereignis.svg';
 import dashboardIcon from '../../../assets/brand/icons/redaktion-dashboard.svg';
@@ -11,7 +12,7 @@ import sessionIcon from '../../../assets/brand/icons/nav-sitzungen.svg';
 import assistantIcon from '../../../assets/brand/icons/fib-assistent.svg';
 import './app.css';
 
-type AuthState = 'signed_out' | 'aal1_no_factor' | 'aal1_factor_available' | 'aal2';
+type AuthState = 'checking' | 'auth_error' | 'signed_out' | 'aal1_no_factor' | 'aal1_factor_available' | 'aal2';
 type EditorialView = 'dashboard' | 'event' | 'events' | 'profile';
 
 type CoordinationState = {
@@ -101,14 +102,14 @@ function eventStatusLabel(status: EventData['status']) {
 }
 
 export function App() {
-  const [email, setEmail] = useState('josef@kjwalter.de');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [code, setCode] = useState('');
   const [factorId, setFactorId] = useState<string | null>(null);
   const [qrCode, setQrCode] = useState<string | null>(null);
   const [totpSecret, setTotpSecret] = useState<string | null>(null);
-  const [state, setState] = useState<AuthState>('signed_out');
-  const [message, setMessage] = useState('');
+  const [state, setState] = useState<AuthState>('checking');
+  const [message, setMessage] = useState(authLinkError ? 'Dieser Link ist ungültig oder abgelaufen. Bitte fordere einen neuen Link an.' : '');
   const [view, setView] = useState<EditorialView>('dashboard');
   const [eventResult, setEventResult] = useState<EventData | null>(null);
   const [eventSources, setEventSources] = useState<EventSource[]>([]);
@@ -150,6 +151,27 @@ export function App() {
   const [profileCallName, setProfileCallName] = useState('');
   const [profileSaving, setProfileSaving] = useState(false);
   const [profileMessage, setProfileMessage] = useState<string | null>(null);
+
+  const [accountEmail, setAccountEmail] = useState('');
+  const [newAccountEmail, setNewAccountEmail] = useState('');
+  const [newPassword, setNewPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [securitySaving, setSecuritySaving] = useState(false);
+  const [securityMessage, setSecurityMessage] = useState('');
+  const [passwordRecovery, setPasswordRecovery] = useState(false);
+  const [recoverySending, setRecoverySending] = useState(false);
+
+  const [invitationUserId, setInvitationUserId] = useState<string | null>(null);
+  const [invitationPasswordPending, setInvitationPasswordPending] = useState(invitationMode);
+  const [initialPassword, setInitialPassword] = useState('');
+  const [initialPasswordConfirm, setInitialPasswordConfirm] = useState('');
+  const [invitationSaving, setInvitationSaving] = useState(false);
+  const [authenticatedUserId, setAuthenticatedUserId] = useState<string | null>(null);
+  const activeUserId = useRef<string | null>(null);
+  const authRevision = useRef(0);
+  const mfaBusy = useRef(false);
+  const invitationBusy = useRef(false);
+
 
   const eventDirty = editingEvent && !!eventResult && (
     editTitle !== eventResult.title ||
@@ -198,9 +220,21 @@ export function App() {
   }
 
   async function refreshAuthState() {
-    const { data: sessionData } = await supabase.auth.getSession();
+    const revision = ++authRevision.current;
+    try {
+    const { data: sessionData, error: sessionError } = await supabase.auth.getSession();
+    if (revision !== authRevision.current) return;
+    if (sessionError) throw sessionError;
     if (!sessionData.session) {
+      activeUserId.current = null;
+      setAuthenticatedUserId(null);
       setState('signed_out');
+      setInvitationUserId(null);
+      setInitialPassword('');
+      setInitialPasswordConfirm('');
+      setMembershipStatus('checking');
+      setAccountEmail('');
+      setPasswordRecovery(false);
       setFactorId(null);
       setQrCode(null);
       setTotpSecret(null);
@@ -209,17 +243,34 @@ export function App() {
       setCoordination(null);
       setCoordinationMessage(null);
       setSessionContext(null);
-      setMembershipStatus('checking');
       setNavigationOpen(false);
       setView('dashboard');
       return;
     }
 
-    const { data: aal, error: aalError } = await supabase.auth.mfa.getAuthenticatorAssuranceLevel();
-    if (aalError || !aal) {
-      setMessage('MFA-Status konnte nicht geprüft werden.');
-      return;
+    const { data: userData, error: userError } = await supabase.auth.getUser();
+    if (revision !== authRevision.current) return;
+    if (userError || !userData.user || userData.user.id !== sessionData.session.user.id) throw new Error('invalid identity');
+    if (activeUserId.current !== userData.user.id) {
+      activeUserId.current = userData.user.id;
+      setAuthenticatedUserId(userData.user.id);
+      setSessionContext(null);
+      setEventResult(null);
+      setCoordination(null);
+      setInitialPassword('');
+      setInitialPasswordConfirm('');
+      setNewPassword('');
+      setConfirmPassword('');
     }
+    if (invitationMode && !userData.user.invited_at) throw new Error('not an invited account');
+    if (invitationMode) {
+      setInvitationUserId(userData.user.id);
+      setInvitationPasswordPending(!invitationPasswordDone(userData.user.id));
+    }
+    setAccountEmail(userData.user.email ?? '');
+    const { data: aal, error: aalError } = await supabase.auth.mfa.getAuthenticatorAssuranceLevel();
+    if (revision !== authRevision.current) return;
+    if (aalError || !aal) throw new Error('MFA status unavailable');
 
     if (aal.currentLevel === 'aal2') {
       setState('aal2');
@@ -228,10 +279,8 @@ export function App() {
     }
 
     const { data: factors, error: factorsError } = await supabase.auth.mfa.listFactors();
-    if (factorsError) {
-      setMessage('MFA-Faktoren konnten nicht gelesen werden.');
-      return;
-    }
+    if (revision !== authRevision.current) return;
+    if (factorsError) throw factorsError;
 
     const verifiedTotp = factors?.totp.find((factor) => factor.status === 'verified');
     if (verifiedTotp) {
@@ -242,10 +291,17 @@ export function App() {
     }
 
     setState('aal1_no_factor');
-    setMessage('Für FIB muss zuerst TOTP-MFA eingerichtet werden.');
+    setMessage(invitationMode && !invitationPasswordDone(userData.user.id) ? '' : 'Für FIB muss zuerst TOTP-MFA eingerichtet werden.');
+    } catch {
+      if (revision !== authRevision.current) return;
+      setState('auth_error');
+      setSessionContext(null);
+      setMessage('Der Kontozugang konnte nicht sicher geprüft werden. Bitte erneut versuchen oder neu anmelden.');
+    }
   }
 
   useEffect(() => {
+    if (authLinkError) return;
     window.history.replaceState({ ...(window.history.state ?? {}), fibView: 'dashboard' }, '', window.location.href);
     const onPopState = (event: PopStateEvent) => {
       const nextView = event.state?.fibView === 'event' ? 'event' : event.state?.fibView === 'events' ? 'events' : event.state?.fibView === 'profile' ? 'profile' : 'dashboard';
@@ -261,7 +317,10 @@ export function App() {
     window.addEventListener('popstate', onPopState);
 
     void refreshAuthState();
-    const { data } = supabase.auth.onAuthStateChange(() => void refreshAuthState());
+    const { data } = supabase.auth.onAuthStateChange((event) => {
+      if (event === 'PASSWORD_RECOVERY') setPasswordRecovery(true);
+      window.setTimeout(() => { void refreshAuthState(); }, 0);
+    });
     return () => {
       window.removeEventListener('popstate', onPopState);
       data.subscription.unsubscribe();
@@ -269,10 +328,23 @@ export function App() {
   }, []);
 
   useEffect(() => {
-    if (state === 'aal2' && !eventResult && !serviceRunning) {
+    if (state === 'aal2' && !invitationPasswordPending && !eventResult && !serviceRunning) {
       void loadEditorialStart();
     }
   }, [state]);
+
+  useEffect(() => {
+    if (state === 'aal2' && passwordRecovery) setView('profile');
+  }, [state, passwordRecovery]);
+
+  useEffect(() => {
+    if (state !== 'aal2' || view !== 'profile') {
+      setNewPassword('');
+      setConfirmPassword('');
+      setNewAccountEmail('');
+      setSecurityMessage('');
+    }
+  }, [state, view]);
 
   useEffect(() => {
     if (view === 'event' && eventResult) void loadCoordinationState();
@@ -301,12 +373,30 @@ export function App() {
   }
 
   async function enrollTotp() {
+    if (mfaBusy.current) return;
+    mfaBusy.current = true;
+    try {
     setFactorId(null);
     setQrCode(null);
     setTotpSecret(null);
     setCode('');
     setMessage('MFA-Einrichtung wird vorbereitet …');
 
+    const identity = await supabase.auth.getUser();
+    if (identity.error || !identity.data.user) throw new Error('identity unavailable');
+    const pendingKey = `fib-pending-totp-${identity.data.user.id}`;
+    const pendingId = sessionStorage.getItem(pendingKey);
+    if (pendingId) {
+      const factors = await supabase.auth.mfa.listFactors();
+      if (factors.error) throw factors.error;
+      const pending = factors.data.all.find(factor => factor.id === pendingId);
+      if (pending?.status === 'verified') { await refreshAuthState(); return; }
+      if (pending?.status === 'unverified') {
+        const removed = await supabase.auth.mfa.unenroll({ factorId: pendingId });
+        if (removed.error) throw removed.error;
+      }
+      sessionStorage.removeItem(pendingKey);
+    }
     const { data, error } = await supabase.auth.mfa.enroll({
       factorType: 'totp',
       friendlyName: `FIB Redaktionszugang ${new Date().toISOString()}`,
@@ -317,19 +407,17 @@ export function App() {
       return;
     }
 
+    sessionStorage.setItem(pendingKey, data.id);
     setFactorId(data.id);
     setQrCode(data.totp.qr_code);
     setTotpSecret(data.totp.secret);
     setMessage('Authenticator einrichten: QR-Code scannen oder den Schlüssel manuell in Aegis eintragen.');
+    } catch { setMessage('MFA-Einrichtung nicht erreichbar. Bitte erneut versuchen.'); }
+    finally { mfaBusy.current = false; }
   }
 
   async function restartTotpEnrollment() {
-    const currentFactorId = factorId;
-    setFactorId(null);
-    setQrCode(null);
-    setTotpSecret(null);
-    setCode('');
-    if (currentFactorId) await supabase.auth.mfa.unenroll({ factorId: currentFactorId });
+    // Only the unverified factor created by this tab may be replaced.
     await enrollTotp();
   }
 
@@ -344,7 +432,9 @@ export function App() {
   }
 
   async function verifyTotp() {
-    if (!factorId || !code.trim()) return;
+    if (!factorId || !code.trim() || mfaBusy.current) return;
+    mfaBusy.current = true;
+    try {
     const { error } = await supabase.auth.mfa.challengeAndVerify({
       factorId,
       code: code.trim(),
@@ -356,10 +446,13 @@ export function App() {
       return;
     }
 
+    if (activeUserId.current) sessionStorage.removeItem(`fib-pending-totp-${activeUserId.current}`);
     setFactorId(null);
     setQrCode(null);
     setTotpSecret(null);
     await refreshAuthState();
+    } catch { setMessage('MFA konnte nicht geprüft werden. Bitte erneut versuchen.'); }
+    finally { setCode(''); mfaBusy.current = false; }
   }
 
   useEffect(() => {
@@ -440,6 +533,8 @@ export function App() {
   }
 
   async function loadSessionContext() {
+    // Invitation onboarding must never call any FIB service before first-password completion.
+    if (invitationMode && invitationPasswordPending) return false;
     setMembershipStatus('checking');
     setSessionContext(null);
     const { data, error } = await supabase.functions.invoke<SessionContextResult>('fib-session-context', {
@@ -458,6 +553,7 @@ export function App() {
   }
 
   async function loadEditorialStart() {
+    if (invitationMode && invitationPasswordPending) return;
     if (await loadSessionContext()) await Promise.all([loadEvent(), loadCoordinationState()]);
   }
 
@@ -710,9 +806,121 @@ export function App() {
     await loadCoordinationState();
   }
 
+  async function ensureSecureProfileSession(): Promise<boolean> {
+    const { data, error } = await supabase.auth.mfa.getAuthenticatorAssuranceLevel();
+    if (error || data?.currentLevel !== 'aal2') {
+      setSecurityMessage('Bitte erneut mit MFA anmelden, bevor du Zugangsdaten änderst.');
+      await refreshAuthState();
+      return false;
+    }
+    return true;
+  }
+
+  async function requestPasswordRecovery() {
+    if (recoverySending) return;
+    const desired = email.trim();
+    if (!desired) {
+      setMessage('Bitte zuerst deine E-Mail-Adresse eingeben.');
+      return;
+    }
+    setRecoverySending(true);
+    try {
+      await supabase.auth.resetPasswordForEmail(desired, {
+        redirectTo: window.location.origin + window.location.pathname,
+      });
+      setMessage('Wenn die Adresse registriert ist und die Anfrage verarbeitet werden kann, erhältst du eine E-Mail zur Passwortwiederherstellung. Bitte auch den Spamordner prüfen.');
+    } catch {
+      setMessage('Die Anfrage konnte nicht abgeschlossen werden. Bitte die Verbindung prüfen und später erneut versuchen.');
+    } finally {
+      setRecoverySending(false);
+    }
+  }
+
+  async function updateEmail(event: FormEvent) {
+    event.preventDefault();
+    if (securitySaving) return;
+    const desired = newAccountEmail.trim();
+    if (!desired || desired === accountEmail) return;
+    setSecuritySaving(true);
+    setSecurityMessage('');
+    try {
+      if (!(await ensureSecureProfileSession())) return;
+      const { error } = await supabase.auth.updateUser({ email: desired });
+      setSecurityMessage(error
+        ? 'E-Mail-Änderung fehlgeschlagen. Bitte Anmeldung und Adresse prüfen.'
+        : 'Änderung angefordert. Bitte die Bestätigungs-E-Mail(s) prüfen. Wann die neue Adresse aktiv wird, hängt von den Auth-Einstellungen ab.');
+      if (!error) setNewAccountEmail('');
+    } catch {
+      setSecurityMessage('E-Mail-Änderung konnte nicht bestätigt werden. Bitte Verbindung und Kontostand prüfen.');
+    } finally {
+      setSecuritySaving(false);
+    }
+  }
+
+  async function updatePassword(event: FormEvent) {
+    event.preventDefault();
+    if (securitySaving) return;
+    if (newPassword.length < 12 || newPassword !== confirmPassword) {
+      setSecurityMessage('Bitte ein Passwort mit mindestens 12 Zeichen eingeben und identisch wiederholen.');
+      return;
+    }
+    setSecuritySaving(true);
+    setSecurityMessage('');
+    try {
+      if (!(await ensureSecureProfileSession())) return;
+      const { error } = await supabase.auth.updateUser({ password: newPassword });
+      if (!error) setPasswordRecovery(false);
+      setSecurityMessage(error
+        ? 'Passwort konnte nicht geändert werden. Gegebenenfalls ist eine erneute Anmeldung erforderlich.'
+        : 'Passwort aktualisiert. Für andere Geräte kann eine erneute Anmeldung erforderlich sein.');
+    } catch {
+      setSecurityMessage('Passwortänderung konnte nicht bestätigt werden. Bitte Verbindung und Anmeldung prüfen.');
+    } finally {
+      setNewPassword('');
+      setConfirmPassword('');
+      setSecuritySaving(false);
+    }
+  }
+
+  async function setInvitationPassword(event: FormEvent) {
+    event.preventDefault();
+    if (!invitationMode || !invitationUserId || invitationBusy.current) return;
+    if (initialPassword.length < 12 || initialPassword !== initialPasswordConfirm) {
+      setMessage('Bitte mindestens 12 Zeichen eingeben und das Passwort identisch wiederholen.');
+      return;
+    }
+    invitationBusy.current = true;
+    setInvitationSaving(true);
+    try {
+      const { data, error } = await supabase.auth.getUser();
+      if (error || data.user?.id !== invitationUserId || !data.user.invited_at) throw new Error('identity changed');
+      // Auth itself enforces AAL2 if this account already has a verified factor.
+      const result = await supabase.auth.updateUser({ password: initialPassword });
+      if (result.error) {
+        setMessage('Passwort konnte nicht festgelegt werden. Bitte die Passwortregeln prüfen; bei abgelaufener Sitzung einen neuen Link anfordern.');
+        return;
+      }
+      rememberInvitationPassword(invitationUserId);
+      setInvitationPasswordPending(false);
+      await refreshAuthState();
+    } catch {
+      setMessage('Die Passwortfestlegung konnte nicht sicher abgeschlossen werden. Bitte erneut versuchen.');
+    } finally {
+      setInitialPassword('');
+      setInitialPasswordConfirm('');
+      setInvitationSaving(false);
+      invitationBusy.current = false;
+    }
+  }
+
   async function logout() {
     if (!confirmLeave()) return;
-    await supabase.auth.signOut();
+    ++authRevision.current;
+    const { error } = await supabase.auth.signOut({ scope: 'local' });
+    if (error) { setMessage('Abmelden fehlgeschlagen. Bitte erneut versuchen.'); return; }
+    if (invitationMode) sessionStorage.removeItem('fib-invitation-password-user');
+    setInitialPassword('');
+    setInitialPasswordConfirm('');
     setMessage('');
     setEventResult(null);
     setServiceError(null);
@@ -725,11 +933,34 @@ export function App() {
     setView('dashboard');
   }
 
+  if (authLinkError) {
+    return <main className="auth-shell"><section className="auth-card"><h1>Link nicht verwendbar</h1><p>Dieser Link ist ungültig oder abgelaufen. Bitte fordere einen neuen Einladungslink an.</p><a href={window.location.pathname}>Zur Anmeldung</a></section></main>;
+  }
+
+  const showInvitationPassword = invitationMode && invitationPasswordPending && invitationUserId && (state === 'aal1_no_factor' || state === 'aal2');
+  if (showInvitationPassword) {
+    return <main className="auth-shell"><section className="auth-card">
+      <p className="eyebrow">Feldkirchen im Blick · Einladung</p>
+      <h1>Passwort festlegen</h1>
+      <p>Deine Einladung gilt für <strong>{accountEmail}</strong>.</p>
+      <p>Lege zuerst dein Passwort fest. Danach richtest du deinen Authenticator ein. Die Freischaltung als FIB-Redakteur erfolgt getrennt durch einen Administrator.</p>
+      <form className="stack" onSubmit={setInvitationPassword}>
+        <PasswordField label="Erstes Passwort" autoComplete="new-password" minLength={12} value={initialPassword} onChange={e => setInitialPassword(e.target.value)} required disabled={invitationSaving} />
+        <PasswordField label="Erstes Passwort wiederholen" autoComplete="new-password" minLength={12} value={initialPasswordConfirm} onChange={e => setInitialPasswordConfirm(e.target.value)} required disabled={invitationSaving} />
+        <button className="primary" disabled={invitationSaving}>{invitationSaving ? 'Wird gespeichert …' : 'Passwort festlegen'}</button>
+      </form>
+      <p role="status">{message}</p>
+      <button onClick={logout} disabled={invitationSaving}>Abmelden</button>
+    </section></main>;
+  }
+
   if (state === 'aal2' && membershipStatus !== 'active') {
     return <main className="auth-shell"><section className="auth-card">
       <p className="eyebrow">Feldkirchen im Blick</p>
       <h1>{membershipStatus === 'pending' ? 'Freischaltung ausstehend' : membershipStatus === 'error' ? 'Freischaltung nicht prüfbar' : 'Freischaltung wird geprüft'}</h1>
-      <p>Dein zweiter Faktor ist bestätigt. Das FIB-Redaktionssystem ist erst nach gesonderter Freischaltung zugänglich.</p>
+      <p>Angemeldet als <strong>{accountEmail}</strong>. Dein zweiter Faktor ist bestätigt. Das FIB-Redaktionssystem ist erst nach gesonderter Freischaltung zugänglich.</p>
+      {passwordRecovery && <form className="stack" onSubmit={updatePassword}><p>Lege jetzt ein neues Passwort fest.</p><PasswordField label="Neues Passwort" autoComplete="new-password" minLength={12} value={newPassword} onChange={e=>setNewPassword(e.target.value)} required /><PasswordField label="Neues Passwort wiederholen" autoComplete="new-password" minLength={12} value={confirmPassword} onChange={e=>setConfirmPassword(e.target.value)} required /><button disabled={securitySaving}>Passwort ändern</button></form>}
+      {securityMessage && <p role="status">{securityMessage}</p>}
       {membershipStatus === 'pending' && <p>Bitte wende dich an einen FIB-Administrator. Die Einrichtung deines Kontos allein verleiht keine Redaktionsrechte.</p>}
       {membershipStatus === 'error' && <p>Deine Berechtigung konnte nicht sicher überprüft werden. Bis zur erfolgreichen Prüfung bleibt der Zugang gesperrt.</p>}
       <button type="button" disabled={membershipStatus === 'checking'} onClick={() => void loadEditorialStart()}>Freischaltung erneut prüfen</button>
@@ -744,11 +975,16 @@ export function App() {
           <p className="eyebrow">Feldkirchen im Blick</p>
           <h1>Redaktionssystem</h1>
 
-          {state === 'signed_out' && (
+          {(state === 'aal1_no_factor' || state === 'aal1_factor_available') && <p>Angemeldet als <strong>{accountEmail}</strong>.</p>}
+          {state === 'checking' && <p>Kontozugang wird geprüft …</p>}
+          {state === 'auth_error' && <button onClick={() => void refreshAuthState()}>Erneut prüfen</button>}
+          {state === 'signed_out' && invitationMode && <p>Die Einladung ist ungültig, abgelaufen oder bereits verwendet. Bitte fordere bei deinem Administrator einen neuen Link an.</p>}
+          {state === 'signed_out' && !invitationMode && (
             <form onSubmit={login} className="stack">
               <label>E-Mail<input type="email" value={email} onChange={(e) => setEmail(e.target.value)} required /></label>
-              <label>Passwort<input type="password" value={password} onChange={(e) => setPassword(e.target.value)} required /></label>
+              <PasswordField label="Passwort" autoComplete="current-password" value={password} onChange={(e) => setPassword(e.target.value)} required />
               <button type="submit" className="primary">Anmelden</button>
+              <button type="button" disabled={recoverySending} onClick={() => void requestPasswordRecovery()}>{recoverySending ? "Anfrage wird verarbeitet …" : "Passwort vergessen?"}</button>
             </form>
           )}
 
@@ -1012,7 +1248,24 @@ export function App() {
             </section>
             <section className="panel card-headed profile-panel">
               <h2>Zugangssicherheit</h2>
-              <p>Passwortänderung und MFA-Verwaltung werden im nächsten Sicherheitsschritt ergänzt.</p>
+              <p className="meta">Die Änderung deiner E-Mail-Adresse oder deines Passworts gilt für alle Anwendungen, die du mit diesem gemeinsamen Konto nutzt.</p>
+              {passwordRecovery && <p className="notice" role="status">Deine Wiederherstellung ist mit MFA bestätigt. Bitte jetzt ein neues Passwort festlegen.</p>}
+              <p><strong>Aktuelle E-Mail-Adresse:</strong> {accountEmail || '–'}</p>
+              <form className="stack" onSubmit={updateEmail}>
+                <label>Neue E-Mail-Adresse
+                  <input type="email" autoComplete="email" value={newAccountEmail} onChange={e => setNewAccountEmail(e.target.value)} required />
+                </label>
+                <div className="button-row"><button type="submit" disabled={securitySaving || !newAccountEmail.trim()}>E-Mail-Änderung anfordern</button></div>
+                <p className="meta">Du erhältst Bestätigungs-E-Mails. Die Änderung ist erst nach erfolgreicher Verifizierung abgeschlossen.</p>
+              </form>
+              <form className="stack security-form" onSubmit={updatePassword}>
+                <h3>Passwort ändern</h3>
+                <PasswordField label="Neues Passwort" autoComplete="new-password" minLength={12} value={newPassword} onChange={e => setNewPassword(e.target.value)} required />
+                <PasswordField label="Neues Passwort wiederholen" autoComplete="new-password" minLength={12} value={confirmPassword} onChange={e => setConfirmPassword(e.target.value)} required />
+                <div className="button-row"><button type="submit" disabled={securitySaving || !newPassword}>Passwort ändern</button></div>
+              </form>
+              <p className="meta">Die Verwaltung und der sichere Wechsel von MFA-Faktoren folgen als gesonderter Schritt.</p>
+              {securityMessage && <p className="status-message" role="status">{securityMessage}</p>}
             </section>
           </>
         )}
