@@ -38,7 +38,7 @@ jobs:
         if: always()
         run: |
           test -f "$RUNNER_TEMP/fib-auth-browser.json"
-          npm ci --ignore-scripts
+          npm install --ignore-scripts
           npm install --no-save --ignore-scripts playwright@1.56.1 postgres@3.4.7
           npx playwright install --with-deps chromium
           python3 - <<'PY'
