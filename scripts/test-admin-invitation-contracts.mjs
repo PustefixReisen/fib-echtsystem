@@ -35,3 +35,9 @@ test('revocation does not delete the shared auth account', () => {
   assert.match(adminFn, /setup_status='deactivated'/);
   assert.match(app, /gemeinsame Auth-Konto wird nicht gelöscht/);
 });
+
+
+test('FIB frontend exposes no public self-registration path', () => {
+  assert.doesNotMatch(app, /\.auth\.signUp\s*\(/);
+  assert.match(app, /signInWithPassword/);
+});
