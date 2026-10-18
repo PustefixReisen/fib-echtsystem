@@ -41,3 +41,19 @@ test('FIB frontend exposes no public self-registration path', () => {
   assert.doesNotMatch(app, /\.auth\.signUp\s*\(/);
   assert.match(app, /signInWithPassword/);
 });
+
+
+test('repeat invitation is limited to unconfirmed setup-pending accounts', () => {
+  assert.match(adminFn, /body\.action === 'repeat'/);
+  assert.match(adminFn, /target\.setup_status !== 'setup_pending'/);
+  assert.match(adminFn, /authUser\.confirmed_at/);
+  assert.match(app, /Einladung erneut senden/);
+});
+
+test('administrative invitation actions emit server-side audit events', () => {
+  assert.match(adminFn, /fib-admin-users audit/);
+  assert.match(adminFn, /invite_new_account/);
+  assert.match(adminFn, /authorize_existing_account/);
+  assert.match(adminFn, /repeat_invitation/);
+  assert.match(adminFn, /revoke_invitation/);
+});
