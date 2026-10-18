@@ -625,6 +625,22 @@ export function App() {
     await loadAdminUsers();
   }
 
+  async function repeatAdminInvitation(userId: string) {
+    if (sessionContext?.role !== 'admin' || adminInviteBusy) return;
+    setAdminInviteBusy(true);
+    setAdminInviteMessage('Einladung wird erneut versendet …');
+    const { data, error } = await supabase.functions.invoke<AdminUsersResult>('fib-admin-users', {
+      body: { action: 'repeat', userId },
+    });
+    setAdminInviteBusy(false);
+    if (error || !data?.ok) {
+      setAdminInviteMessage('Die Einladung konnte nicht erneut versendet werden. Bereits bestätigte Konten verwenden ihre bestehende Anmeldung.');
+      return;
+    }
+    setAdminInviteMessage('Einladung erneut versendet.');
+    await loadAdminUsers();
+  }
+
   async function revokeAdminInvitation(userId: string) {
     if (sessionContext?.role !== 'admin' || adminInviteBusy) return;
     if (!window.confirm('Offene FIB-Einladung wirklich zurücknehmen? Das gemeinsame Auth-Konto wird nicht gelöscht.')) return;
@@ -1349,7 +1365,12 @@ export function App() {
                         <p className="meta">{user.role === 'admin' ? 'Admin' : 'Redakteur'} · {user.setup_status === 'active' && user.active ? 'Aktiv' : user.setup_status === 'invited' && user.active ? 'Einladung offen' : user.setup_status === 'deactivated' || !user.active ? 'Deaktiviert' : 'Einrichtung ausstehend'}</p>
                         {user.invited_at && !user.confirmed_at && <p className="meta">Einladung versendet: {new Date(user.invited_at).toLocaleString('de-DE')}</p>}
                       </div>
-                      {(user.setup_status === 'invited' || user.setup_status === 'setup_pending') && user.active && <button type="button" onClick={() => void revokeAdminInvitation(user.user_id)} disabled={adminInviteBusy}>Einladung zurücknehmen</button>}
+                      {(user.setup_status === 'invited' || user.setup_status === 'setup_pending') && user.active && (
+                        <div className="button-row">
+                          {user.setup_status === 'setup_pending' && !user.confirmed_at && user.email && <button type="button" onClick={() => void repeatAdminInvitation(user.user_id)} disabled={adminInviteBusy}>Einladung erneut senden</button>}
+                          <button type="button" onClick={() => void revokeAdminInvitation(user.user_id)} disabled={adminInviteBusy}>Einladung zurücknehmen</button>
+                        </div>
+                      )}
                     </article>
                   ))}
                 </div>
