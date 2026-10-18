@@ -954,7 +954,7 @@ export function App() {
           {(state === 'aal1_no_factor' || state === 'aal1_factor_available') && <p>Angemeldet als <strong>{accountEmail}</strong>.</p>}
           {state === 'checking' && <p>Kontozugang wird geprüft …</p>}
           {state === 'auth_error' && <button onClick={() => void refreshAuthState()}>Erneut prüfen</button>}
-          {state === 'signed_out' && invitationMode && <p>Einladung ungültig oder abgelaufen. Bitte den Administrator um einen neuen Link bitten.</p>}
+          {state === 'signed_out' && invitationMode && <p>Die Einladung ist ungültig, abgelaufen oder bereits verwendet. Bitte fordere bei deinem Administrator einen neuen Link an.</p>}
           {state === 'signed_out' && !invitationMode && (
             <form onSubmit={login} className="stack">
               <label>E-Mail<input type="email" value={email} onChange={(e) => setEmail(e.target.value)} required /></label>
