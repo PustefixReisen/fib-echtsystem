@@ -22,3 +22,18 @@
 5. Erst nach Sicherheitsreview, Integrationsprüfung und bestandenen Tests Mergeentscheidung treffen.
 
 **Abgrenzung:** Laufende Mobile-UI-Arbeiten sind unabhängig und dürfen PR #74 nicht stillschweigend verändern.
+
+## Nachtrag: Browserbeobachtung 18.10.2026, circa 19:28 MESZ
+
+**Nutzerbeobachtung:** Aufruf der regulären FIB-Redaktions-App `https://fib.pustivo.de/redaktion/` zeigte die Anmeldemaske, E-Mail-Adresse des Testbenutzers war vorausgefüllt; Passwortfeld leer. Der Nutzer bestätigte anschließend, dass das betreffende Firefox-Fenster länger als 24 Stunden offen war, **ohne während dieser Zeit eine Seitenaktualisierung oder Interaktion vorzunehmen**.
+
+**Bewertung:** Der Bildschirm beweist weder eine fortbestehende gültige Auth-Sitzung bis zum Test noch einen gezielten serverseitigen 24-Stunden-Reauth-Zwang. Token-Ablauf, unterbliebene Erneuerung und weitere Ursachen sind damit nicht ausgeschlossen. PR #74 ist ungemergt; der reguläre Produktivpfad darf nicht als Live-Ausführung der PR-#74-Implementierung ausgegeben werden. **Kein Abnahmeerfolg** für die gealterte, weiterhin gültige Sitzung; kein Login oder Sicherheitskonfigurationswechsel aus dieser Beobachtung veranlasst.
+
+**Präzisierung des Prüfziels:** Laut PR-#74-Testbericht ist „Secure password change“ aktiv; dort bedeutet die 24-Stunden-Grenze die Anforderung einer *frischen Authentifizierung bei Passwortänderungen*, nicht notwendig einen zwangsweisen allgemeinen Logout nach 24 Stunden. Die nächsten Nachweise sind deshalb getrennt zu führen:
+
+1. **Sitzungsbestand/Token-Gültigkeit** separat nachweisen (keine Gleichsetzung mit einem bloß geöffneten Firefox-Fenster).
+2. **Gezielte Passwortänderungs-Reauth**: im tatsächlich für PR #74 bereitgestellten Prüfstand mit autorisiertem Testkonto eine gültige, aber älter als 24 Stunden authentifizierte Sitzung nachweisen; anschließend Passwortänderung ohne erneute frische Anmeldung ablehnen lassen und geschützten Wiederanmeldepfad prüfen. Vorher den technischen Geltungsbereich von Supabase „Secure password change“ und die tatsächlichen Einsatzbedingungen abgleichen. Keine Zeitstempelmanipulation, keine Änderung an Shared-Apps-Auth-Policies, keine Token in Testprotokollen.
+3. **AAL1/API-Negativtest** und aktuelle Membership/AAL2-Checks separat abschließen.
+4. **PR-Integration** gegen aktuellen `main` einschließlich Issue #115 (administrativ initiierte Einladungen) sicherheitsfachlich prüfen, bevor ein Merge überhaupt erwogen wird.
+
+**Status nach Nachtrag:** PR #74 und die Sicherheitsabnahme bleiben **OFFEN**. Nächster sinnvoller technischer Schritt: Testdesign und gültigen PR-#74-Prüfstand klären; erst anschließend neue Browsermitwirkung anfordern.
