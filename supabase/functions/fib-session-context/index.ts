@@ -84,9 +84,9 @@ export default {
       // Administrative preauthorization is stored before the person completes onboarding.
       // A verified AAL2 session is the only client-side milestone that may activate it;
       // the role itself was fixed by an administrator and is never derived from Auth metadata.
-      if (row.setup_status === 'invited') {
+      if (row.setup_status === 'setup_pending') {
         const activated = await sql.unsafe(
-          "update fib.app_users set setup_status='active', updated_at=now() where user_id=$1 and active=true and setup_status='invited' returning user_id, full_name, call_name, role, active, setup_status",
+          "update fib.app_users set setup_status='active', updated_at=now() where user_id=$1 and active=true and setup_status='setup_pending' returning user_id, full_name, call_name, role, active, setup_status",
           [userId],
         );
         if (!activated.length) return json({ error: 'fib_membership_missing_or_inactive' }, 403);
