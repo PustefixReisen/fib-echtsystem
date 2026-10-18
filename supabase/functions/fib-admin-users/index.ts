@@ -83,6 +83,18 @@ async function authAdminFetch(path: string, init?: RequestInit) {
   });
 }
 
+async function listAuthUsers(): Promise<Array<{ id: string; email?: string; invited_at?: string | null; confirmed_at?: string | null }>> {
+  const users: Array<{ id: string; email?: string; invited_at?: string | null; confirmed_at?: string | null }> = [];
+  for (let page = 1; page <= 10; page += 1) {
+    const response = await authAdminFetch(`/users?page=${page}&per_page=100`);
+    if (!response.ok) throw new Error('auth_lookup_failed');
+    const body = await response.json() as { users?: Array<{ id: string; email?: string; invited_at?: string | null; confirmed_at?: string | null }> };
+    users.push(...(body.users ?? []));
+    if (!body.users || body.users.length < 100) break;
+  }
+  return users;
+}
+
 async function findAuthUserByEmail(email: string): Promise<{ id: string; email: string; confirmed_at?: string | null } | null> {
   for (let page = 1; page <= 10; page += 1) {
     const response = await authAdminFetch(`/users?page=${page}&per_page=100`);
@@ -134,7 +146,20 @@ export default {
         const rows = await sql.unsafe(
           "select user_id, full_name, role, active, setup_status, created_at, updated_at from fib.app_users order by full_name",
         );
-        return json({ ok: true, users: rows });
+        const authUsers = await listAuthUsers();
+        const authById = new Map(authUsers.map(user => [user.id, user]));
+        return json({
+          ok: true,
+          users: rows.map((row: any) => {
+            const authUser = authById.get(row.user_id);
+            return {
+              ...row,
+              email: authUser?.email ?? null,
+              invited_at: authUser?.invited_at ?? null,
+              confirmed_at: authUser?.confirmed_at ?? null,
+            };
+          }),
+        });
       }
 
       if (body.action === 'revoke') {
