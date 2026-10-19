@@ -140,11 +140,14 @@ export function App() {
   const [topicDescription,setTopicDescription] = useState('');
   const [topicId,setTopicId] = useState('');
   const [processId,setProcessId] = useState('');
+  const [processPickerOpen,setProcessPickerOpen] = useState(false);
+  const [processQuery,setProcessQuery] = useState('');
   const availableTopicProcesses = (topicData?.processes ?? []).filter(p=>
     !topicData?.links.some(l=>l.topic_id===topicId && l.process_id===p.id) &&
     !topicData?.proposals.some(q=>q.topic_id===topicId && q.process_id===p.id && q.status==='pending')
   );
-  const selectableProcessId = availableTopicProcesses.some(p=>p.id===processId) ? processId : (availableTopicProcesses[0]?.id ?? '');
+  const selectableProcessId = availableTopicProcesses.some(p=>p.id===processId) ? processId : '';
+  const filteredTopicProcesses=availableTopicProcesses.filter(p=>p.title.toLocaleLowerCase('de-DE').includes(processQuery.trim().toLocaleLowerCase('de-DE'))).slice(0,100);
   const [topicStep,setTopicStep] = useState<1|2|3>(1);
   const [topicCreateOpen,setTopicCreateOpen] = useState(false);
   const [topicSignificance,setTopicSignificance] = useState('relevant');
@@ -1309,13 +1312,23 @@ export function App() {
             <h3>Vorgang einem Thema vorschlagen</h3>
             <form onSubmit={e=>{e.preventDefault();void topicAction('propose',{topicId,processId:selectableProcessId,significance:topicSignificance,rationale:topicRationale,origin:'editor'});}}>
               <label>Thema<select value={topicId} onChange={e=>setTopicId(e.target.value)} required>{topicData?.topics.map(t=><option key={t.id} value={t.id}>{t.title}</option>)}</select></label>
-              <label>Vorgang<select value={selectableProcessId} onChange={e=>setProcessId(e.target.value)} required disabled={!availableTopicProcesses.length}>{availableTopicProcesses.map(p=><option key={p.id} value={p.id}>{p.title}</option>)}</select></label>\n              {!availableTopicProcesses.length && <p>Alle vorhandenen Vorgänge sind bereits zugeordnet oder werden geprüft.</p>}
+              <div className="topic-process-choice"><span>Vorgang</span><p>{availableTopicProcesses.find(p=>p.id===selectableProcessId)?.title ?? 'Noch kein Vorgang ausgewählt'}</p><button type="button" disabled={!availableTopicProcesses.length} onClick={()=>{setProcessQuery('');setProcessPickerOpen(true);}}>Vorgang suchen und auswählen</button></div>
+              {!availableTopicProcesses.length && <p>Alle vorhandenen Vorgänge sind bereits zugeordnet oder werden geprüft.</p>}
+              {processPickerOpen && <div className="topic-picker-backdrop" onMouseDown={e=>{if(e.target===e.currentTarget)setProcessPickerOpen(false);}}>
+                <section className="topic-picker-dialog" role="dialog" aria-modal="true" aria-label="Vorgang auswählen">
+                  <div className="topic-picker-heading"><h3>Vorgang auswählen</h3><button type="button" onClick={()=>setProcessPickerOpen(false)}>Schließen</button></div>
+                  <label>Nach Vorgang suchen<input autoFocus type="search" value={processQuery} onChange={e=>setProcessQuery(e.target.value)} placeholder="Titel oder Stichwort" /></label>
+                  <p className="meta">{filteredTopicProcesses.length} Treffer{filteredTopicProcesses.length===100?' (maximal 100 angezeigt)':''}</p>
+                  <div className="topic-picker-results">{filteredTopicProcesses.map(p=><button type="button" key={p.id} onClick={()=>{setProcessId(p.id);setProcessPickerOpen(false);}}>{p.title}</button>)}
+                  {filteredTopicProcesses.length===0 && <p>Kein passender Vorgang gefunden.</p>}</div>
+                </section>
+              </div>}
               <label>Vorgeschlagene Bedeutung<select value={topicSignificance} onChange={e=>setTopicSignificance(e.target.value)}><option value="defining">Prägend</option><option value="relevant">Relevant</option><option value="supplementary">Ergänzend</option></select></label>
               <label>Begründung<textarea required maxLength={4000} value={topicRationale} onChange={e=>setTopicRationale(e.target.value)}/></label>
               <button type="submit" disabled={topicBusy || !topicId || !selectableProcessId || !topicRationale.trim()}>Vorschlag speichern (noch nicht wirksam)</button>
             </form>
             <h3>Beziehungen zu diesem Thema</h3>
-            {topicData?.links.filter(l=>l.topic_id===topicId).map(l=><details className="topic-confirmed-link" key={l.process_id}><summary><span aria-hidden="true">✓ </span>{l.process_title} · {l.significance==='defining'?'Prägend':l.significance==='relevant'?'Relevant':'Ergänzend'} <span className="topic-link-detail-hint">– Begründung anzeigen</span></summary><p>{l.significance_rationale || 'Keine Begründung hinterlegt.'}</p></details>)}
+            {topicData?.links.filter(l=>l.topic_id===topicId).map(l=><details className="topic-confirmed-link" key={l.process_id}><summary><span aria-hidden="true">✓ </span>{l.process_title} · {l.significance==='defining'?'Prägend':l.significance==='relevant'?'Relevant':'Ergänzend'} <span className="topic-link-detail-hint"><span className="topic-detail-action">Begründung anzeigen ▾</span></span></summary><p>{l.significance_rationale || 'Keine Begründung hinterlegt.'}</p></details>)}
             {topicData?.proposals.filter(p=>p.topic_id===topicId && p.status==='pending').map(p=><p key={p.id}>Offen: {p.process_title}</p>)}
             </>}
             {topicStep===3 && <>
@@ -1335,7 +1348,7 @@ export function App() {
             })}
             {!topicData?.proposals.some(p=>p.topic_id===topicId && p.status==='pending') && <p>Keine offenen Vorschläge.</p>}
             <h3>Bestätigte Beziehungen</h3>
-            {topicData?.links.filter(l=>l.topic_id===topicId).map(l=><details key={l.topic_id+l.process_id} className="topic-confirmed-link"><summary>{l.process_title} · {l.significance==='defining'?'Prägend':l.significance==='relevant'?'Relevant':'Ergänzend'} – Begründung anzeigen</summary><p>{l.significance_rationale || 'Keine Begründung hinterlegt.'}</p></details>)}
+            {topicData?.links.filter(l=>l.topic_id===topicId).map(l=><details key={l.topic_id+l.process_id} className="topic-confirmed-link"><summary>{l.process_title} · {l.significance==='defining'?'Prägend':l.significance==='relevant'?'Relevant':'Ergänzend'} <span className="topic-detail-action">Begründung anzeigen ▾</span></summary><p>{l.significance_rationale || 'Keine Begründung hinterlegt.'}</p></details>)}
             </>}
             </div>
             <div className="topic-step-actions">
