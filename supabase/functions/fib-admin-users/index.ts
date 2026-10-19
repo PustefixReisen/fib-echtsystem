@@ -77,7 +77,7 @@ async function authAdminFetch(path: string, init?: RequestInit) {
   };
   // Opaque sb_secret keys belong only in apikey. Legacy service_role is a JWT.
   if (!adminKey.startsWith('sb_secret_')) headers.authorization = `Bearer ${adminKey}`;
-  return fetch(`${supabaseUrl}/auth/v1/admin${path}`, {
+ return fetch(`${supabaseUrl}/auth/v1${path.startsWith('/invite?') ? '' : '/admin'}${path}`, {
     ...init,
     headers: { ...headers, ...(init?.headers ?? {}) },
   });
