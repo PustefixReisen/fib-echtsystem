@@ -1364,7 +1364,7 @@ export function App() {
                       <label>Vollständiger Name<input autoFocus value={adminInviteName} onChange={e => setAdminInviteName(e.target.value)} maxLength={120} required autoComplete="name" /></label>
                       <label>E-Mail-Adresse<input type="email" value={adminInviteEmail} onChange={e => setAdminInviteEmail(e.target.value)} maxLength={254} required autoComplete="email" /></label>
                       <label>FIB-Rolle<select value={adminInviteRole} onChange={e => setAdminInviteRole(e.target.value as 'editor' | 'admin')}><option value="editor">Redakteur</option><option value="admin">Admin</option></select></label>
-                      <p className="meta">Bestehende Shared-Apps-Konten behalten Passwort und MFA. Nur der FIB-Zugang wird vorautorisiert.</p>
+                      <p className="meta">Bei bestehenden Shared-Apps-Konten bleiben Passwort und MFA unverändert. Nur der FIB-Zugang wird vorautorisiert.</p>
                       <button className="primary" type="submit" disabled={adminInviteBusy || !adminInviteName.trim() || !adminInviteEmail.trim()}>{adminInviteBusy ? 'Verarbeitet …' : 'Einladen'}</button>
                     </form>
                   ) : (() => {
