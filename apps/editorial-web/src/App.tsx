@@ -1105,20 +1105,22 @@ export function App() {
                 </div>
               )}
               {qrCode && (
-                <label>Code aus der Authenticator-App
-                  <input inputMode="numeric" autoComplete="one-time-code" value={code} onChange={(e) => setCode(e.target.value)} />
-                  <button onClick={verifyTotp} className="primary">Bestätigen</button>
-                </label>
+                <form className="stack" onSubmit={(event) => { event.preventDefault(); void verifyTotp(); }}>
+                  <label>Code aus der Authenticator-App
+                    <input autoFocus inputMode="numeric" autoComplete="one-time-code" value={code} onChange={(e) => setCode(e.target.value)} />
+                  </label>
+                  <button type="submit" className="primary" disabled={!code.trim()}>Bestätigen</button>
+                </form>
               )}
             </div>
           )}
 
           {state === 'aal1_factor_available' && (
-            <div className="stack">
+            <form className="stack" onSubmit={(event) => { event.preventDefault(); void verifyTotp(); }}>
               <p>Bitte den aktuellen Code aus deiner Authenticator-App eingeben.</p>
-              <input inputMode="numeric" autoComplete="one-time-code" value={code} onChange={(e) => setCode(e.target.value)} />
-              <button onClick={verifyTotp} className="primary">MFA bestätigen</button>
-            </div>
+              <input autoFocus aria-label="MFA-Code" inputMode="numeric" autoComplete="one-time-code" value={code} onChange={(e) => setCode(e.target.value)} />
+              <button type="submit" className="primary" disabled={!code.trim()}>MFA bestätigen</button>
+            </form>
           )}
 
           {state !== 'signed_out' && <button onClick={logout} className="link-button">Abmelden</button>}
