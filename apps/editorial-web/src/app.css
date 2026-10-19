@@ -478,3 +478,24 @@ button:has(> .action-icon) { display: inline-flex; align-items: center; justify-
 
 /* Topic form fields: regular text weight for comfortable editing. */
 .fib-topic-screen input, .fib-topic-screen select, .fib-topic-screen textarea { font-weight: 400; }
+
+/* Topic workflow #140: only the active step is visible. */
+.topic-steps { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:.65rem; margin:1rem 0 1.5rem; }
+.topic-step { display:flex; align-items:center; justify-content:center; gap:.55rem; min-height:54px; padding:.55rem; border:1px solid #bdcbc3; border-radius:9px; background:#f5f8f6; color:#163b34; text-align:center; }
+.topic-step > span:first-child { display:grid; place-items:center; flex:none; width:1.7rem; height:1.7rem; border-radius:50%; background:#e0ebe5; font-weight:700; }
+.topic-step.active { background:#e2f2e8; border:2px solid #28775c; }
+.topic-step-content { max-width:760px; }
+.topic-step-content > label { display:grid; gap:.4rem; }
+.topic-details { padding:1rem 0; }
+.topic-step-actions { display:flex; gap:.65rem; flex-wrap:wrap; margin-top:1rem; }
+.topic-step-actions button { min-width:110px; }
+.fib-topic-review button { width:auto; justify-self:start; }
+@media (max-width:600px) {
+ .topic-steps { gap:.3rem; }
+ .topic-step { flex-direction:column; gap:.3rem; font-size:.8rem; min-height:70px; padding:.35rem .15rem; }
+ .topic-step-actions button { flex:1 1 auto; min-width:0; }
+}
+
+.topic-review-actions { display:flex; gap:.65rem; flex-wrap:wrap; }
+.topic-review-actions button { flex:0 1 auto; min-width:160px; }
+@media (max-width:600px) { .topic-review-actions button { flex:1 1 100%; } }
