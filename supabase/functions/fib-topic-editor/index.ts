@@ -86,6 +86,8 @@ export default {
             (body.description != null && (typeof body.description !== 'string' || body.description.length > 5000))) {
           return json({ error: 'invalid_topic' }, 400);
         }
+        const duplicate = await sql.unsafe('select id from fib.topics where lower(title)=lower($1) limit 1',[body.title.trim()]);
+        if (duplicate.length) return json({error:'topic_already_exists'},409);
         const rows = await sql.unsafe(
           'insert into fib.topics (title,guiding_question,description) values ($1,$2,$3) returning id,title',
           [body.title.trim(), body.guidingQuestion.trim(), body.description?.trim() || null],
@@ -157,6 +159,7 @@ export default {
       return json({ error: 'unknown_action' }, 400);
     } catch (error) {
       console.error('fib-topic-editor failed', error);
+      if (error && typeof error === 'object' && 'code' in error && (error as { code?: string }).code === '23505') return json({ error: 'duplicate_topic_or_pending_proposal' }, 409);
       return json({ error: 'topic_operation_failed' }, 500);
     } finally { await sql.end(); }
   },
