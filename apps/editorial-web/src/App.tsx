@@ -1323,8 +1323,8 @@ export function App() {
                 <div><h3>{p.process_title}</h3><p><strong>Thema:</strong> {p.topic_title}</p><p>Vorschlag: {p.suggested_significance==='defining'?'Prägend':p.suggested_significance==='relevant'?'Relevant':'Ergänzend'} · Herkunft: {p.origin==='ai'?'KI':'Redaktion'}</p><p>{p.suggested_rationale}</p>
                   <label>Redaktionelle Einstufung<select value={review.significance} onChange={e=>setTopicReviews(v=>({...v,[p.id]:{...review,significance:e.target.value}}))}><option value="defining">Prägend</option><option value="relevant">Relevant</option><option value="supplementary">Ergänzend</option></select></label>
                   <label>Redaktionelle Begründung<textarea maxLength={4000} value={review.rationale} onChange={e=>setTopicReviews(v=>({...v,[p.id]:{...review,rationale:e.target.value}}))}/></label>
-                  <button type="button" disabled={topicBusy || !review.rationale.trim()} onClick={()=>void topicAction('decide',{proposalId:p.id,decision:'confirmed',significance:review.significance,rationale:review.rationale})}>Verbindlich bestätigen</button>
-                  <button type="button" disabled={topicBusy} onClick={()=>void topicAction('decide',{proposalId:p.id,decision:'rejected'})}>Ablehnen</button>
+                  <div className="topic-review-actions"><button type="button" disabled={topicBusy || !review.rationale.trim()} onClick={()=>void topicAction('decide',{proposalId:p.id,decision:'confirmed',significance:review.significance,rationale:review.rationale})}>Verbindlich bestätigen</button>
+                  <button type="button" disabled={topicBusy} onClick={()=>void topicAction('decide',{proposalId:p.id,decision:'rejected'})}>Ablehnen</button></div>
                 </div>
               </article>;
             })}
