@@ -1279,15 +1279,22 @@ export function App() {
             <h1 className="object-title"><img className="object-icon" src={topicIcon} alt="" />Themen und ihre Bedeutung</h1>
             <p>Entwicklungsdaten. Ein Vorschlag wird erst durch ausdrückliche redaktionelle Bestätigung wirksam.</p>
             {topicError && <p className="error" role="alert">{topicError}</p>}
-            <nav className="topic-steps" aria-label="Bearbeitungsschritte">
+            <ol className="topic-progress" aria-label="Bearbeitungsfortschritt">
               {([1,2,3] as const).map(step=>{
                 const hasTopic=Boolean(topicId && topicData?.topics.some(t=>t.id===topicId));
                 const hasLink=Boolean(topicData?.links.some(l=>l.topic_id===topicId) || topicData?.proposals.some(p=>p.topic_id===topicId));
                 const pending=Boolean(topicData?.proposals.some(p=>p.topic_id===topicId && p.status==='pending'));
                 const done=step===1?hasTopic:step===2?hasLink:hasLink && !pending;
-                return <button type="button" key={step} className={topicStep===step?'topic-step active':'topic-step'} aria-current={topicStep===step?'step':undefined} onClick={()=>setTopicStep(step)}><span aria-hidden="true">{done?'✓':step}</span><span>{step===1?'Thema':step===2?'Beziehungen':'Redaktionelle Prüfung'}</span></button>;
+                const active=topicStep===step;
+                const label=step===1?'Thema':step===2?'Beziehungen':'Redaktionelle Prüfung';
+                const state=active?'Aktueller Schritt':done?'Abgeschlossen':'Offen';
+                return <li key={step} className={`topic-progress-item ${active?'active':done?'complete':'open'}`} aria-current={active?'step':undefined}>
+                  <span className="topic-progress-marker" aria-hidden="true">{!active&&done?'✓':step}</span>
+                  <span className="topic-progress-label">{label}</span>
+                  <span className="sr-only"> – {state}</span>
+                </li>;
               })}
-            </nav>
+            </ol>
             <div className="topic-step-content">
             {topicStep===1 && <>
             <h2>1. Thema</h2>
