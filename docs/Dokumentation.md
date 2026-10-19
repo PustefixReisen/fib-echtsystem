@@ -198,6 +198,12 @@ Daraus folgt:
 - Frühere und laufende Chats können Erkenntnisse liefern, sind aber keine kanonische Wahrheit.
 - Dauerhaft relevante Chat-Ergebnisse werden erst durch Übernahme in eine zuständige Primärquelle oder ein Issue verbindlich bzw. nachverfolgbar.
 
+## 7a. Verbindliche Fachplanung vor Implementierung
+
+Die Roadmap ordnet neue Funktionen zeitlich und nach Umsetzungsphasen ein. Ein GitHub-Issue startet und verfolgt den Arbeitsauftrag. **Vor der Implementierung neuer Fachlogik** werden vorhandene fachliche Primärdokumente geprüft und nötige Fachfestlegungen dort versioniert ergänzt. Die fachliche Klärung wird im Issue mit Verweisen auf die Primärquellen ausdrücklich dokumentiert. Erst nach diesem Fachgatter folgen technische Detailplanung und Umsetzung.
+
+Der vollständige Ablauf und das Statusverfahren stehen in `docs/Roadmap.md` unter „Planungsweg für neue Fachfunktionen“. Die bestehenden Regeln des Umsetzungs-Vollständigkeitsaudits bleiben zusätzlich gültig. Fachkonzepte werden nicht als bloße Issue-Kommentare oder parallele Dokumentkopien geführt.
+
 ## 8. Issues für bewusst vertagte Punkte
 
 Bewusst vertagte oder optionale Entwicklungen werden nicht als unspezifisches „später“ geführt. Sie erhalten ein nachvollziehbares Wiederaufnahme-Kriterium.

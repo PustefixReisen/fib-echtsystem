@@ -38,6 +38,20 @@ Es gelten die zentralen Status aus `PustefixReisen/pustivo/docs/governance/Dokum
 | Gründungsaudit | **Abgeschlossen** | G1–G10 übergreifend geprüft; keine blockierende Grundsatzfrage offen |
 | Umsetzungs-Vollständigkeitsaudit | **In Arbeit** | erste Gesamtprüfung abgeschlossen; G2.5-Status bereinigt; Koordination/Benutzer in PR #45 fachlich operationalisiert; weitere rote/gelbe Befunde fachbereichsweise schließen |
 
+## Planungsweg für neue Fachfunktionen (verbindlich)
+
+Für neue fachliche Funktionen gilt der Ablauf **Roadmap → Issue → Fachplanung/Fachkonzept → technische Planung und Implementierung → Abnahme**:
+
+1. **Roadmap:** Arbeitspaket, Priorität, Umsetzungsphase und Status festhalten. Die Roadmap allein ist keine fachliche Freigabe.
+2. **GitHub-Issue:** Auftrag mit Ziel, offenen Fachfragen, Abhängigkeiten und Abnahmekriterien anlegen. Erste verpflichtende Aufgabe: **bestehendes Fachkonzept prüfen und nötige fachliche Ergänzungen erarbeiten**.
+3. **Fachplanung:** Regeln, Begriffe, Bedienabläufe, Datenanforderungen, KI-Kontext, Zuständigkeiten und Auswirkungen auf bestehende Funktionen in den **zuständigen versionierten Primärdokumenten** festlegen; keine konkurrierenden Konzeptkopien. Entscheidungen und verbleibende Fragen im Issue nachvollziehbar machen.
+4. **Fachliches Freigabegatter:** Mit dem Issue prüfen und dokumentieren, ob die relevanten fachlichen Fragen geklärt, dokumentiert und für die geplante Ausbaustufe abgenommen sind. Nur dann beginnt die Umsetzung der betreffenden Fachfunktion. Technische Grundlagenarbeit ohne vorweggenommene Fachentscheidung kann unabhängig fortlaufen.
+5. **Implementierung und Abnahme:** Datenmodell, Fachservices, KI-Anbindung, UI, Rechte, Tests und Dokumentation umsetzen; PR und Issue verknüpfen, Roadmap-Status anhand nachgewiesenen Fortschritts aktualisieren.
+
+Ein Issue darf mehrere Umsetzungsschritte auslösen. Bei umfangreichen Vorhaben werden nach der Fachplanung getrennte technische Issues erstellt; die fachlichen Primärdokumente bleiben verbindlich.
+
+**Beispiel:** Issue #145 (versionierte WP-Sprachprofile) startet zunächst den Abgleich des Bibliotheks-Merkblatts v2.2 mit `docs/Sprachleitfaden.md` und die Fachplanung. Die Datenbank- und UI-Umsetzung folgt **erst nach fachlicher Klärung**; U1/U2/U4 bleiben dafür die Roadmap-Zuordnung.
+
 ## 2. Umsetzungsphasen
 
 | Umsetzungsphase | Status | Ziel / Produkt |
