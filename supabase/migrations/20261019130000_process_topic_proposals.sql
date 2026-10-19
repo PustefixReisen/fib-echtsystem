@@ -18,7 +18,7 @@ create table if not exists fib.process_topic_proposals (
     or
     (status = 'rejected' and reviewed_by is not null and reviewed_at is not null and confirmed_significance is null and confirmed_rationale is null)
     or
-    (status = 'confirmed' and reviewed_by is not null and reviewed_at is not null and confirmed_significance is not null and length(btrim(confirmed_rationale)) > 0)
+    (status = 'confirmed' and reviewed_by is not null and reviewed_at is not null and confirmed_significance is not null and confirmed_rationale is not null and length(btrim(confirmed_rationale)) > 0)
   )
 );
 create index if not exists process_topic_proposals_pair_created_idx
