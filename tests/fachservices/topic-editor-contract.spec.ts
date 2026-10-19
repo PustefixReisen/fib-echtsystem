@@ -2,7 +2,7 @@ import { readFileSync } from 'node:fs';
 import { strict as assert } from 'node:assert';
 
 const handler = readFileSync('supabase/functions/fib-topic-editor/index.ts', 'utf8');
-const migration = readFileSync('supabase/migrations/20261019130000_process_topic_proposals.sql', 'utf8');
+const migration = readFileSync('supabase/migrations/20261019132005_process_topic_proposals.sql', 'utf8');
 
 export function caseTopicEndpointRequiresVerifiedMfaAndMembership() {
   assert.match(handler, /claims\.aal === 'aal2'/);
