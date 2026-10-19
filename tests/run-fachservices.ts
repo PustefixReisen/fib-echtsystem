@@ -4,6 +4,7 @@ const modules = [
   './fachservices/editorial-write.spec.ts',
   './fachservices/mfa.spec.ts',
   './fachservices/user-management.spec.ts',
+  './fachservices/topic-editor-contract.spec.ts',
 ];
 
 async function main() {
