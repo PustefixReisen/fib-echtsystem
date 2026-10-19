@@ -159,6 +159,16 @@ Erster sichtbarer Stand:
 
 Noch bewusst nicht vorgetäuscht werden Funktionen, deren Fachservice-/Datenweg noch fehlt. Insbesondere Statuskarten ohne operative Datenquelle bleiben als noch nicht angebunden gekennzeichnet. Der nächste Teil dieses Slices bindet tatsächliches Bearbeiten/Speichern und den Meldungsentwurf über die gemeinsame Fachservice-Schicht an.
 
+### U1/U4 – Versionierte Sprachprofile und KI-Sprachsteuerung – Geplant
+
+- **Verbindliches Arbeitspaket:** [Issue #145](https://github.com/PustefixReisen/fib-echtsystem/issues/145) – Sprachprofile als versionierte, in FIB pflegbare Konfiguration.
+- **Fachliche Vorlage:** Bibliotheks-Merkblatt `Merkblatt_Wissenschaftlich-Politische_Sprache.md`, Version **2.2 vom 18.10.2026**. Den vorhandenen `docs/Sprachleitfaden.md` (v1.1 vom 04.10.2026) vor der technischen Umsetzung fachlich abgleichen und kontrolliert aktualisieren.
+- **Primärprofil:** **WP-Öffentlichkeit** als Standard öffentlicher Bürgertexte; **WP-Kurz** übernimmt dieselben gemeinsamen Sprachgrundsätze und ergänzt Regeln für kurze Formate. WP-Fach und WP-Gremium bleiben weitere Arbeitsprofile.
+- **U1:** versionierte Sprachprofile mit Entwurf/Freigabe, Audit, Quellenreferenz, fester Zuordnung der verwendeten Regelversion zu KI-Textfassungen, ohne Änderungen an Shared-Apps-Fremdanwendungen.
+- **U4:** KI-Anbindung lädt freigegebene Profile providerunabhängig; Prompt-/Qualitätsregressionen einschließlich der verständlichen, quellengebundenen und bürgernahen Sprache.
+- **U2:** pflegbare Bedienoberfläche für berechtigte FIB-Nutzer, voraussichtlich unter Administration → KI & Kosten → Sprachprofile; konkrete Verantwortlichkeit/Rollen vor Umsetzung klären.
+- **Abnahme:** Eine Änderung an WP-Öffentlichkeit ist als Entwurf möglich und wird erst nach expliziter Freigabe wirksam. Frühere Veröffentlichungen behalten ihren historischen Regelstand.
+
 ## 4. Verbindliche Abschlussquellen der Gründung und Architekturkonkretisierung
 
 - `docs/Projektgruendung.md` v1.5
