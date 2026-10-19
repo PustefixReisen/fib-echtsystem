@@ -13,7 +13,10 @@ import assistantIcon from '../../../assets/brand/icons/fib-assistent.svg';
 import './app.css';
 
 type AuthState = 'checking' | 'auth_error' | 'signed_out' | 'aal1_no_factor' | 'aal1_factor_available' | 'aal2';
-type EditorialView = 'dashboard' | 'event' | 'events' | 'profile' | 'users';
+type EditorialView = 'dashboard' | 'event' | 'events' | 'topics' | 'profile' | 'users';
+type TopicData = { id:string; title:string; guiding_question:string | null; description:string | null; status:string };
+type TopicProposal = { id:string; topic_id:string; process_id:string; suggested_significance:string; suggested_rationale:string; status:string; origin:string; process_title:string };
+type TopicListData = { topics:TopicData[]; proposals:TopicProposal[]; processes:{id:string;title:string}[]; links:{topic_id:string;process_id:string;significance:string;significance_rationale:string|null;process_title:string}[] };
 
 type CoordinationState = {
   lead: { userId: string; displayName: string; mine: boolean } | null;
@@ -129,6 +132,17 @@ export function App() {
   const [state, setState] = useState<AuthState>('checking');
   const [message, setMessage] = useState(authLinkError ? 'Dieser Link ist ungültig oder abgelaufen. Bitte fordere einen neuen Link an.' : '');
   const [view, setView] = useState<EditorialView>('dashboard');
+  const [topicData,setTopicData] = useState<TopicListData | null>(null);
+  const [topicBusy,setTopicBusy] = useState(false);
+  const [topicError,setTopicError] = useState('');
+  const [topicTitle,setTopicTitle] = useState('');
+  const [topicQuestion,setTopicQuestion] = useState('');
+  const [topicDescription,setTopicDescription] = useState('');
+  const [topicId,setTopicId] = useState('');
+  const [processId,setProcessId] = useState('');
+  const [topicSignificance,setTopicSignificance] = useState('relevant');
+  const [topicRationale,setTopicRationale] = useState('');
+  const [topicReviews,setTopicReviews] = useState<Record<string,{significance:string;rationale:string}>>({});
   const [eventResult, setEventResult] = useState<EventData | null>(null);
   const [eventSources, setEventSources] = useState<EventSource[]>([]);
   const [sourceSearch, setSourceSearch] = useState('');
@@ -244,6 +258,34 @@ export function App() {
     if (nextView === 'dashboard') void loadEditorialStart();
     if (nextView === 'events') void loadEventList();
     if (nextView === 'users') void loadAdminUsers();
+    if (nextView === 'topics') void loadTopics();
+  }
+
+  async function loadTopics() {
+    setTopicBusy(true); setTopicError('');
+    try {
+      const {data,error} = await supabase.functions.invoke<TopicListData & {error?:string}>('fib-topic-editor',{body:{action:'list'}});
+      if(error || !data || data.error) throw new Error(data?.error ?? 'Laden fehlgeschlagen');
+      setTopicData(data);
+      setTopicId(current => data.topics.some(t => t.id===current) ? current : data.topics[0]?.id ?? '');
+      setProcessId(current => data.processes.some(p=>p.id===current) ? current : data.processes[0]?.id ?? '');
+      setTopicReviews(current => {
+        const next={...current};
+        for(const p of data.proposals) if(p.status==='pending' && !next[p.id])
+          next[p.id]={significance:p.suggested_significance,rationale:p.suggested_rationale};
+        return next;
+      });
+    } catch(e) {setTopicError(e instanceof Error ? e.message : 'Themen konnten nicht geladen werden.');}
+    finally {setTopicBusy(false);}
+  }
+  async function topicAction(action:string, body:Record<string,unknown>) {
+    if(topicBusy) return;
+    setTopicBusy(true);setTopicError('');
+    try {
+      const {data,error}=await supabase.functions.invoke<{ok?:boolean;error?:string}>('fib-topic-editor',{body:{action,...body}});
+      if(error || !data?.ok) throw new Error(data?.error ?? 'Aktion fehlgeschlagen');
+      await loadTopics();
+    } catch(e) {setTopicError(e instanceof Error ? e.message : 'Aktion fehlgeschlagen');setTopicBusy(false);}
   }
 
   async function refreshAuthState() {
@@ -1160,7 +1202,7 @@ export function App() {
             <p className="nav-heading">Inhalte</p>
             <button className="nav-item" disabled><NavIcon src={reportIcon} />Meldungen <span>folgt</span></button>
             <button className="nav-item" disabled><NavIcon src={processIcon} />Vorgänge <span>folgt</span></button>
-            <button className="nav-item" disabled><NavIcon src={topicIcon} />Themen <span>folgt</span></button>
+            <button className={view === "topics" ? "nav-item active" : "nav-item"} aria-current={view === "topics" ? "page" : undefined} onClick={() => navigateTo("topics")}><NavIcon src={topicIcon} />Themen</button>
             <button className="nav-item" disabled><NavIcon src={sessionIcon} />Sitzungen <span>folgt</span></button>
           </div>
 
@@ -1219,6 +1261,46 @@ export function App() {
         {navigationOpen && <button className="nav-backdrop" aria-label="Navigation schließen" onClick={() => setNavigationOpen(false)} />}
 
         <main className="content-shell">
+        {view === 'topics' && (
+          <section className="panel card-headed fib-topic-screen">
+            <p className="eyebrow">Redaktion · Entwicklungsfunktion</p>
+            <h1 className="object-title"><img className="object-icon" src={topicIcon} alt="" />Themen und ihre Bedeutung</h1>
+            <p>Entwicklungsdaten. Ein Vorschlag wird erst durch ausdrückliche redaktionelle Bestätigung wirksam.</p>
+            {topicError && <p className="error" role="alert">{topicError}</p>}
+            <button type="button" onClick={() => void loadTopics()} disabled={topicBusy}>Aktualisieren</button>
+            <h2>Neues Entwicklungsthema</h2>
+            <form onSubmit={e=>{e.preventDefault();void topicAction('create_topic',{title:'[ENTWICKLUNG #136] '+topicTitle.trim(),guidingQuestion:topicQuestion,description:topicDescription});}}>
+              <label>Titel<input required maxLength={170} value={topicTitle} onChange={e=>setTopicTitle(e.target.value)}/></label>
+              <label>Leitfrage<input required maxLength={1000} value={topicQuestion} onChange={e=>setTopicQuestion(e.target.value)}/></label>
+              <label>Beschreibung<textarea maxLength={5000} value={topicDescription} onChange={e=>setTopicDescription(e.target.value)}/></label>
+              <button type="submit" disabled={topicBusy || !topicTitle.trim() || !topicQuestion.trim()}>Thema anlegen</button>
+            </form>
+            <h2>Vorgang einem Thema vorschlagen</h2>
+            <form onSubmit={e=>{e.preventDefault();void topicAction('propose',{topicId,processId,significance:topicSignificance,rationale:topicRationale,origin:'editor'});}}>
+              <label>Thema<select value={topicId} onChange={e=>setTopicId(e.target.value)} required>{topicData?.topics.map(t=><option key={t.id} value={t.id}>{t.title}</option>)}</select></label>
+              <label>Vorgang<select value={processId} onChange={e=>setProcessId(e.target.value)} required>{topicData?.processes.map(p=><option key={p.id} value={p.id}>{p.title}</option>)}</select></label>
+              <label>Vorgeschlagene Bedeutung<select value={topicSignificance} onChange={e=>setTopicSignificance(e.target.value)}><option value="defining">Prägend</option><option value="relevant">Relevant</option><option value="supplementary">Ergänzend</option></select></label>
+              <label>Begründung<textarea required maxLength={4000} value={topicRationale} onChange={e=>setTopicRationale(e.target.value)}/></label>
+              <button type="submit" disabled={topicBusy || !topicId || !processId || !topicRationale.trim()}>Vorschlag speichern (noch nicht wirksam)</button>
+            </form>
+            <h2>Offene Vorschläge</h2>
+            {topicData?.proposals.filter(p=>p.status==='pending').map(p=>{
+              const review=topicReviews[p.id] ?? {significance:p.suggested_significance,rationale:p.suggested_rationale};
+              return <article className="work-item fib-topic-review" key={p.id}>
+                <div><h3>{p.process_title}</h3><p>Vorschlag: {p.suggested_significance==='defining'?'Prägend':p.suggested_significance==='relevant'?'Relevant':'Ergänzend'} · Herkunft: {p.origin==='ai'?'KI':'Redaktion'}</p><p>{p.suggested_rationale}</p>
+                  <label>Redaktionelle Einstufung<select value={review.significance} onChange={e=>setTopicReviews(v=>({...v,[p.id]:{...review,significance:e.target.value}}))}><option value="defining">Prägend</option><option value="relevant">Relevant</option><option value="supplementary">Ergänzend</option></select></label>
+                  <label>Redaktionelle Begründung<textarea maxLength={4000} value={review.rationale} onChange={e=>setTopicReviews(v=>({...v,[p.id]:{...review,rationale:e.target.value}}))}/></label>
+                  <button type="button" disabled={topicBusy || !review.rationale.trim()} onClick={()=>void topicAction('decide',{proposalId:p.id,decision:'confirmed',significance:review.significance,rationale:review.rationale})}>Verbindlich bestätigen</button>
+                  <button type="button" disabled={topicBusy} onClick={()=>void topicAction('decide',{proposalId:p.id,decision:'rejected'})}>Ablehnen</button>
+                </div>
+              </article>;
+            })}
+            {!topicData?.proposals.some(p=>p.status==='pending') && <p>Keine offenen Vorschläge.</p>}
+            <h2>Bestätigte Beziehungen</h2>
+            {topicData?.links.map(l=><p key={l.topic_id+l.process_id}><strong>{l.process_title}</strong> · {l.significance==='defining'?'Prägend':l.significance==='relevant'?'Relevant':'Ergänzend'} · {l.significance_rationale}</p>)}
+            {topicBusy && <p role="status">Bearbeitung läuft …</p>}
+          </section>
+        )}
         {view === 'events' && (
           <>
             <nav className="breadcrumbs" aria-label="Brotkrumen">
