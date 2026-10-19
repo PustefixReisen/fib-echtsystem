@@ -15,7 +15,7 @@ import './app.css';
 type AuthState = 'checking' | 'auth_error' | 'signed_out' | 'aal1_no_factor' | 'aal1_factor_available' | 'aal2';
 type EditorialView = 'dashboard' | 'event' | 'events' | 'topics' | 'profile' | 'users';
 type TopicData = { id:string; title:string; guiding_question:string | null; description:string | null; status:string };
-type TopicProposal = { id:string; topic_id:string; process_id:string; suggested_significance:string; suggested_rationale:string; status:string; origin:string; process_title:string };
+type TopicProposal = { id:string; topic_id:string; process_id:string; suggested_significance:string; suggested_rationale:string; status:string; origin:string; process_title:string; topic_title:string };
 type TopicListData = { topics:TopicData[]; proposals:TopicProposal[]; processes:{id:string;title:string}[]; links:{topic_id:string;process_id:string;significance:string;significance_rationale:string|null;process_title:string}[] };
 
 type CoordinationState = {
@@ -1287,7 +1287,7 @@ export function App() {
             {topicData?.proposals.filter(p=>p.status==='pending').map(p=>{
               const review=topicReviews[p.id] ?? {significance:p.suggested_significance,rationale:p.suggested_rationale};
               return <article className="work-item fib-topic-review" key={p.id}>
-                <div><h3>{p.process_title}</h3><p>Vorschlag: {p.suggested_significance==='defining'?'Prägend':p.suggested_significance==='relevant'?'Relevant':'Ergänzend'} · Herkunft: {p.origin==='ai'?'KI':'Redaktion'}</p><p>{p.suggested_rationale}</p>
+                <div><h3>{p.process_title}</h3><p><strong>Thema:</strong> {p.topic_title}</p><p>Vorschlag: {p.suggested_significance==='defining'?'Prägend':p.suggested_significance==='relevant'?'Relevant':'Ergänzend'} · Herkunft: {p.origin==='ai'?'KI':'Redaktion'}</p><p>{p.suggested_rationale}</p>
                   <label>Redaktionelle Einstufung<select value={review.significance} onChange={e=>setTopicReviews(v=>({...v,[p.id]:{...review,significance:e.target.value}}))}><option value="defining">Prägend</option><option value="relevant">Relevant</option><option value="supplementary">Ergänzend</option></select></label>
                   <label>Redaktionelle Begründung<textarea maxLength={4000} value={review.rationale} onChange={e=>setTopicReviews(v=>({...v,[p.id]:{...review,rationale:e.target.value}}))}/></label>
                   <button type="button" disabled={topicBusy || !review.rationale.trim()} onClick={()=>void topicAction('decide',{proposalId:p.id,decision:'confirmed',significance:review.significance,rationale:review.rationale})}>Verbindlich bestätigen</button>
