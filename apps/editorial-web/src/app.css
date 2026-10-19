@@ -475,3 +475,6 @@ button:has(> .action-icon) { display: inline-flex; align-items: center; justify-
 .fib-topic-review { margin:.8rem 0; }
 .fib-topic-review > div { width:100%; display:grid; gap:.6rem; }
 .fib-topic-screen button { min-height:44px; }
+
+/* Topic form fields: regular text weight for comfortable editing. */
+.fib-topic-screen input, .fib-topic-screen select, .fib-topic-screen textarea { font-weight: 400; }
