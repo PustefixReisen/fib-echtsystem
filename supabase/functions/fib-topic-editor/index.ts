@@ -95,7 +95,7 @@ export default {
       if (body.action === 'propose') {
         if (!uuid(body.topicId) || !uuid(body.processId) || !significance(body.significance) ||
             typeof body.rationale !== 'string' || !body.rationale.trim() || body.rationale.length > 4000 ||
-            !['ai', 'editor'].includes(body.origin ?? '')) {
+            body.origin !== 'editor') {
           return json({ error: 'invalid_proposal' }, 400);
         }
         const link = await sql.unsafe(
@@ -108,6 +108,7 @@ export default {
           [body.processId,body.topicId],
         );
         if (existing.length) return json({ error: 'proposal_already_pending' }, 409);
+        // Until a trusted AI service integration exists, the browser may create only editor-origin proposals.
         const rows = await sql.unsafe(
           `insert into fib.process_topic_proposals (process_id,topic_id,suggested_significance,suggested_rationale,origin)
              values ($1::uuid,$2::uuid,$3,$4,$5) returning id`,
