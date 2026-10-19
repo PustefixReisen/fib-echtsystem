@@ -466,3 +466,12 @@ button:has(> .action-icon) { display: inline-flex; align-items: center; justify-
   .admin-users-table th, .admin-users-table td { padding:.6rem .2rem; }
   .admin-users-table th:last-child, .admin-users-table td:last-child { width:2.9rem; }
 }
+
+/* Issue #136: provisional, accessible topic-review editor */
+.fib-topic-screen form { display:grid; gap:.8rem; max-width:760px; margin:1rem 0 1.5rem; }
+.fib-topic-screen form label, .fib-topic-review label { display:grid; gap:.35rem; }
+.fib-topic-screen input, .fib-topic-screen select, .fib-topic-screen textarea { width:100%; min-height:44px; }
+.fib-topic-screen textarea { min-height:100px; }
+.fib-topic-review { margin:.8rem 0; }
+.fib-topic-review > div { width:100%; display:grid; gap:.6rem; }
+.fib-topic-screen button { min-height:44px; }
