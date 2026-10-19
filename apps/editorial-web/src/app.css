@@ -495,3 +495,7 @@ button:has(> .action-icon) { display: inline-flex; align-items: center; justify-
  .topic-step { flex-direction:column; gap:.3rem; font-size:.8rem; min-height:70px; padding:.35rem .15rem; }
  .topic-step-actions button { flex:1 1 auto; min-width:0; }
 }
+
+.topic-review-actions { display:flex; gap:.65rem; flex-wrap:wrap; }
+.topic-review-actions button { flex:0 1 auto; min-width:160px; }
+@media (max-width:600px) { .topic-review-actions button { flex:1 1 100%; } }
