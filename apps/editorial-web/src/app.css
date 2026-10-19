@@ -499,3 +499,15 @@ button:has(> .action-icon) { display: inline-flex; align-items: center; justify-
 .topic-review-actions { display:flex; gap:.65rem; flex-wrap:wrap; }
 .topic-review-actions button { flex:0 1 auto; min-width:160px; }
 @media (max-width:600px) { .topic-review-actions button { flex:1 1 100%; } }
+
+/* Topic stepper: visual sequence and compact confirmed items. */
+.topic-step { position:relative; }
+.topic-step.active > span:first-child { background:#d3eadd; }
+.topic-confirmed-link { border-bottom:1px solid #dce5df; padding:.5rem 0; }
+.topic-confirmed-link summary { cursor:pointer; line-height:1.45; overflow-wrap:anywhere; }
+.topic-confirmed-link p { margin:.6rem 0 .3rem; line-height:1.5; max-width:75ch; }
+.topic-link-detail-hint { font-size:.9em; }
+@media (min-width:601px) {
+ .topic-steps { position:relative; }
+ .topic-step:not(:last-child)::after { content:'→'; position:absolute; right:-.59rem; top:50%; transform:translate(50%,-50%); z-index:2; background:#f6f8f6; font-weight:700; padding:0 .12rem; }
+}
