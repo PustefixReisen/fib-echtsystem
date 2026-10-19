@@ -133,13 +133,6 @@ export function App() {
   const [message, setMessage] = useState(authLinkError ? 'Dieser Link ist ungültig oder abgelaufen. Bitte fordere einen neuen Link an.' : '');
   const [view, setView] = useState<EditorialView>('dashboard');
   const [topicData,setTopicData] = useState<TopicListData | null>(null);
-  const availableTopicProcesses = (topicData?.processes ?? []).filter(p=>
-    !topicData?.links.some(l=>l.topic_id===topicId && l.process_id===p.id) &&
-    !topicData?.proposals.some(q=>q.topic_id===topicId && q.process_id===p.id && q.status==='pending')
-  );
-  const selectableProcessId = availableTopicProcesses.some(p=>p.id===processId) ? processId : (availableTopicProcesses[0]?.id ?? '');
-  const [topicStep,setTopicStep] = useState<1|2|3>(1);
-  const [topicCreateOpen,setTopicCreateOpen] = useState(false);
   const [topicBusy,setTopicBusy] = useState(false);
   const [topicError,setTopicError] = useState('');
   const [topicTitle,setTopicTitle] = useState('');
@@ -147,6 +140,13 @@ export function App() {
   const [topicDescription,setTopicDescription] = useState('');
   const [topicId,setTopicId] = useState('');
   const [processId,setProcessId] = useState('');
+  const availableTopicProcesses = (topicData?.processes ?? []).filter(p=>
+    !topicData?.links.some(l=>l.topic_id===topicId && l.process_id===p.id) &&
+    !topicData?.proposals.some(q=>q.topic_id===topicId && q.process_id===p.id && q.status==='pending')
+  );
+  const selectableProcessId = availableTopicProcesses.some(p=>p.id===processId) ? processId : (availableTopicProcesses[0]?.id ?? '');
+  const [topicStep,setTopicStep] = useState<1|2|3>(1);
+  const [topicCreateOpen,setTopicCreateOpen] = useState(false);
   const [topicSignificance,setTopicSignificance] = useState('relevant');
   const [topicRationale,setTopicRationale] = useState('');
   const [topicReviews,setTopicReviews] = useState<Record<string,{significance:string;rationale:string}>>({});
