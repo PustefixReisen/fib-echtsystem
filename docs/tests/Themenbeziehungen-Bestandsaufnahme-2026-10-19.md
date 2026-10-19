@@ -33,3 +33,27 @@ Zwei grundsätzlich mögliche Modelle:
 - zusätzliche Workflow-Spalten in beiden Beziehungstabellen, einschließlich expliziter Bestätigungsmetadaten.
 
 **Entscheidung noch nicht getroffen.** Vor der produktiven Migration ist die Konsistenz mit dem FIB-Audit-/Versionskonzept zu prüfen. Keine stillschweigende Vorbelegung vorhandener Beziehungen als „bestätigt“.
+
+## Entscheidungsvorschlag für die erste Implementierung (19.10.2026)
+
+**Bevorzugt: separate Vorschlagstabelle** (zunächst nur für Vorgang–Thema); die bestehenden Tabellen `process_topics` und `event_topics` enthalten ausschließlich **redaktionell bestätigte** Beziehungen. Dadurch können bestehende Lesewege niemals einen KI-Entwurf versehentlich als fachlich wirksam behandeln.
+
+Vorschlag `fib.process_topic_proposals`:
+
+| Feld | Zweck |
+|---|---|
+| `id uuid` | Stabile Vorschlags-ID |
+| `process_id`, `topic_id` | Fremdschlüssel auf Vorgang und Thema |
+| `suggested_significance` | Einer von `defining`, `relevant`, `supplementary` |
+| `suggested_rationale` | Vorschlagsbegründung; Quellenbezug prüfen |
+| `origin` | `ai` oder `editor` |
+| `status` | `pending`, `confirmed`, `rejected` |
+| `reviewed_by`, `reviewed_at` | Redaktionelle Entscheidung, referenziert FIB-Benutzer |
+| `confirmed_significance`, `confirmed_rationale` | Tatsächlich bestätigter Wert und redaktionelle Begründung |
+| `created_at` | Erstellung des Vorschlags |
+
+Bestätigung muss **atomar** die redaktionelle Entscheidung protokollieren und `process_topics` schreiben. Doppelbestätigung desselben Vorschlags darf keine zweite Wirkung auslösen. Die Autorisierung auf aktive FIB-Mitgliedschaft und AAL2 liegt serverseitig. Vorschläge bleiben intern; ein Datenbankeintrag allein bedeutet keine öffentliche Freigabe.
+
+**Nicht Teil des ersten Schnitts:** Ereignis–Thema-Direktzuordnung, automatische KI-Erzeugung, Perspektiven-/Wirkungsmodell. Bei der späteren Ereigniserweiterung denselben Review-Grundsatz anwenden, aber keine zweite unabhängige Semantik schaffen.
+
+**Umsetzungsgatter:** Vor einer produktiven Migration DDL, Rechte, vollständige FIB-Datenmodell-Dokumentation und die existierende Versions-/Auditkonzeption gemeinsam prüfen. Keine Testdaten oder produktiven Beziehungen durch diese Dokumentänderung angelegt.
