@@ -1285,7 +1285,13 @@ export function App() {
                 const hasLink=Boolean(topicData?.links.some(l=>l.topic_id===topicId) || topicData?.proposals.some(p=>p.topic_id===topicId));
                 const pending=Boolean(topicData?.proposals.some(p=>p.topic_id===topicId && p.status==='pending'));
                 const done=step===1?hasTopic:step===2?hasLink:hasLink && !pending;
-                return <button type="button" key={step} className={topicStep===step?'topic-step active':'topic-step'} aria-current={topicStep===step?'step':undefined} onClick={()=>setTopicStep(step)}><span aria-hidden="true">{done?'✓':step}</span><span>{step===1?'Thema':step===2?'Beziehungen':'Redaktionelle Prüfung'}</span></button>;
+                const active=topicStep===step;
+                const label=step===1?'Thema':step===2?'Beziehungen':'Redaktionelle Prüfung';
+                const state=active?'Aktuell':done?'Abgeschlossen':'Offen';
+                return <button type="button" key={step} className={`topic-step ${active?'active':done?'complete':'open'}`} aria-current={active?'step':undefined} aria-label={`Schritt ${step}: ${label}, ${state}`} onClick={()=>setTopicStep(step)}>
+                  <span className="topic-step-number" aria-hidden="true">{active?step:done?'✓':step}</span>
+                  <span className="topic-step-text"><strong>{label}</strong><small>{state}</small></span>
+                </button>;
               })}
             </nav>
             <div className="topic-step-content">
