@@ -133,6 +133,8 @@ export function App() {
   const [message, setMessage] = useState(authLinkError ? 'Dieser Link ist ungültig oder abgelaufen. Bitte fordere einen neuen Link an.' : '');
   const [view, setView] = useState<EditorialView>('dashboard');
   const [topicData,setTopicData] = useState<TopicListData | null>(null);
+  const [topicStep,setTopicStep] = useState<1|2|3>(1);
+  const [topicCreateOpen,setTopicCreateOpen] = useState(false);
   const [topicBusy,setTopicBusy] = useState(false);
   const [topicError,setTopicError] = useState('');
   const [topicTitle,setTopicTitle] = useState('');
@@ -285,6 +287,8 @@ export function App() {
       const {data,error}=await supabase.functions.invoke<{ok?:boolean;error?:string}>('fib-topic-editor',{body:{action,...body}});
       if(error || !data?.ok) throw new Error(data?.error ?? 'Aktion fehlgeschlagen');
       await loadTopics();
+      if(action==='create_topic') {setTopicCreateOpen(false);setTopicTitle('');setTopicQuestion('');setTopicDescription('');setTopicStep(2);}
+      if(action==='propose') {setTopicRationale('');setTopicStep(3);}
     } catch(e) {setTopicError(e instanceof Error ? e.message : 'Aktion fehlgeschlagen');setTopicBusy(false);}
   }
 
@@ -1267,15 +1271,37 @@ export function App() {
             <h1 className="object-title"><img className="object-icon" src={topicIcon} alt="" />Themen und ihre Bedeutung</h1>
             <p>Entwicklungsdaten. Ein Vorschlag wird erst durch ausdrückliche redaktionelle Bestätigung wirksam.</p>
             {topicError && <p className="error" role="alert">{topicError}</p>}
-            <button type="button" onClick={() => void loadTopics()} disabled={topicBusy}>Aktualisieren</button>
-            <h2>Neues Entwicklungsthema</h2>
+            <nav className="topic-steps" aria-label="Bearbeitungsschritte">
+              {([1,2,3] as const).map(step=>{
+                const hasTopic=Boolean(topicId && topicData?.topics.some(t=>t.id===topicId));
+                const hasLink=Boolean(topicData?.links.some(l=>l.topic_id===topicId) || topicData?.proposals.some(p=>p.topic_id===topicId));
+                const pending=Boolean(topicData?.proposals.some(p=>p.topic_id===topicId && p.status==='pending'));
+                const done=step===1?hasTopic:step===2?hasLink:hasLink && !pending;
+                return <button type="button" key={step} className={topicStep===step?'topic-step active':'topic-step'} aria-current={topicStep===step?'step':undefined} onClick={()=>setTopicStep(step)}><span aria-hidden="true">{done?'✓':step}</span><span>{step===1?'Thema':step===2?'Beziehungen':'Redaktionelle Prüfung'}</span></button>;
+              })}
+            </nav>
+            <div className="topic-step-content">
+            {topicStep===1 && <>
+            <h2>1. Thema</h2>
+            <label>Vorhandenes Thema
+              <select value={topicId} onChange={e=>setTopicId(e.target.value)}>{topicData?.topics.map(t=><option key={t.id} value={t.id}>{t.title}</option>)}</select>
+            </label>
+            {topicData?.topics.filter(t=>t.id===topicId).map(t=><div className="topic-details" key={t.id}><h3>{t.title}</h3><p><strong>Leitfrage:</strong> {t.guiding_question}</p><p>{t.description}</p></div>)}
+            <button type="button" onClick={()=>setTopicCreateOpen(v=>!v)}>{topicCreateOpen?'Neuanlage schließen':'Neues Thema anlegen'}</button>
+            {topicCreateOpen && <>
+            <h3>Neues Entwicklungsthema</h3>
             <form onSubmit={e=>{e.preventDefault();void topicAction('create_topic',{title:'[ENTWICKLUNG #136] '+topicTitle.trim(),guidingQuestion:topicQuestion,description:topicDescription});}}>
               <label>Titel<input required maxLength={170} value={topicTitle} onChange={e=>setTopicTitle(e.target.value)}/></label>
               <label>Leitfrage<input required maxLength={1000} value={topicQuestion} onChange={e=>setTopicQuestion(e.target.value)}/></label>
               <label>Beschreibung<textarea maxLength={5000} value={topicDescription} onChange={e=>setTopicDescription(e.target.value)}/></label>
               <button type="submit" disabled={topicBusy || !topicTitle.trim() || !topicQuestion.trim()}>Thema anlegen</button>
             </form>
-            <h2>Vorgang einem Thema vorschlagen</h2>
+            </>}
+            </>}
+            {topicStep===2 && <>
+            <h2>2. Beziehungen</h2>
+            <p>Vorgänge mit begründeter Bedeutung zur redaktionellen Prüfung vorschlagen.</p>
+            <h3>Vorgang einem Thema vorschlagen</h3>
             <form onSubmit={e=>{e.preventDefault();void topicAction('propose',{topicId,processId,significance:topicSignificance,rationale:topicRationale,origin:'editor'});}}>
               <label>Thema<select value={topicId} onChange={e=>setTopicId(e.target.value)} required>{topicData?.topics.map(t=><option key={t.id} value={t.id}>{t.title}</option>)}</select></label>
               <label>Vorgang<select value={processId} onChange={e=>setProcessId(e.target.value)} required>{topicData?.processes.map(p=><option key={p.id} value={p.id}>{p.title}</option>)}</select></label>
@@ -1283,8 +1309,15 @@ export function App() {
               <label>Begründung<textarea required maxLength={4000} value={topicRationale} onChange={e=>setTopicRationale(e.target.value)}/></label>
               <button type="submit" disabled={topicBusy || !topicId || !processId || !topicRationale.trim()}>Vorschlag speichern (noch nicht wirksam)</button>
             </form>
-            <h2>Offene Vorschläge</h2>
-            {topicData?.proposals.filter(p=>p.status==='pending').map(p=>{
+            <h3>Beziehungen zu diesem Thema</h3>
+            {topicData?.links.filter(l=>l.topic_id===topicId).map(l=><p key={l.process_id}>✓ {l.process_title} · {l.significance==='defining'?'Prägend':l.significance==='relevant'?'Relevant':'Ergänzend'}</p>)}
+            {topicData?.proposals.filter(p=>p.topic_id===topicId && p.status==='pending').map(p=><p key={p.id}>Offen: {p.process_title}</p>)}
+            </>}
+            {topicStep===3 && <>
+            <h2>3. Redaktionelle Prüfung</h2>
+            <p>Vorschläge prüfen, begründen, bestätigen oder ablehnen.</p>
+            <h3>Offene Vorschläge</h3>
+            {topicData?.proposals.filter(p=>p.topic_id===topicId && p.status==='pending').map(p=>{
               const review=topicReviews[p.id] ?? {significance:p.suggested_significance,rationale:p.suggested_rationale};
               return <article className="work-item fib-topic-review" key={p.id}>
                 <div><h3>{p.process_title}</h3><p><strong>Thema:</strong> {p.topic_title}</p><p>Vorschlag: {p.suggested_significance==='defining'?'Prägend':p.suggested_significance==='relevant'?'Relevant':'Ergänzend'} · Herkunft: {p.origin==='ai'?'KI':'Redaktion'}</p><p>{p.suggested_rationale}</p>
@@ -1295,9 +1328,16 @@ export function App() {
                 </div>
               </article>;
             })}
-            {!topicData?.proposals.some(p=>p.status==='pending') && <p>Keine offenen Vorschläge.</p>}
-            <h2>Bestätigte Beziehungen</h2>
-            {topicData?.links.map(l=><p key={l.topic_id+l.process_id}><strong>{l.process_title}</strong> · {l.significance==='defining'?'Prägend':l.significance==='relevant'?'Relevant':'Ergänzend'} · {l.significance_rationale}</p>)}
+            {!topicData?.proposals.some(p=>p.topic_id===topicId && p.status==='pending') && <p>Keine offenen Vorschläge.</p>}
+            <h3>Bestätigte Beziehungen</h3>
+            {topicData?.links.filter(l=>l.topic_id===topicId).map(l=><p key={l.topic_id+l.process_id}><strong>{l.process_title}</strong> · {l.significance==='defining'?'Prägend':l.significance==='relevant'?'Relevant':'Ergänzend'} · {l.significance_rationale}</p>)}
+            </>}
+            </div>
+            <div className="topic-step-actions">
+              <button type="button" disabled={topicStep===1} onClick={()=>setTopicStep(v=>v===3?2:1)}>Zurück</button>
+              <button type="button" disabled={topicStep===3 || (topicStep===1 && !topicId)} onClick={()=>setTopicStep(v=>v===1?2:3)}>Weiter</button>
+              <button type="button" disabled={topicBusy} onClick={()=>void loadTopics()}>Aktualisieren</button>
+            </div>
             {topicBusy && <p role="status">Bearbeitung läuft …</p>}
           </section>
         )}
