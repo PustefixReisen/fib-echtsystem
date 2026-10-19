@@ -551,3 +551,14 @@ button:has(> .action-icon) { display: inline-flex; align-items: center; justify-
  .topic-step-text strong { font-size:.76rem; overflow-wrap:anywhere; }
  .topic-step-text small { font-size:.69rem; }
 }
+
+/* Compact read-only progress indicator; navigation uses Back/Next below. */
+.topic-progress { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); list-style:none; padding:0; margin:1.2rem 0 1.6rem; }
+.topic-progress-item { position:relative; display:flex; align-items:center; flex-direction:column; gap:.45rem; min-width:0; text-align:center; color:#596a61; }
+.topic-progress-item:not(:last-child)::after { content:''; position:absolute; height:2px; background:#b5c9bc; left:calc(50% + 1.6rem); right:calc(-50% + 1.6rem); top:1.05rem; }
+.topic-progress-marker { display:grid; place-items:center; box-sizing:border-box; width:2.2rem; height:2.2rem; border-radius:50%; border:2px solid #b6c4ba; background:#f7f9f8; color:#3b5447; font-weight:700; }
+.topic-progress-item.complete .topic-progress-marker { background:#dcefe3; border-color:#89b69c; color:#175c36; }
+.topic-progress-item.active .topic-progress-marker { background:#216c4e; border-color:#216c4e; color:white; }
+.topic-progress-item.active .topic-progress-label { font-weight:700; color:#17583f; }
+.topic-progress-label { font-size:.9rem; line-height:1.3; overflow-wrap:anywhere; }
+@media(max-width:600px) { .topic-progress-label { font-size:.78rem; } .topic-progress-item:not(:last-child)::after { left:calc(50% + 1.45rem); right:calc(-50% + 1.45rem); } }
