@@ -176,6 +176,7 @@ export function App() {
   const [adminInviteRole, setAdminInviteRole] = useState<'editor' | 'admin'>('editor');
   const [adminInviteBusy, setAdminInviteBusy] = useState(false);
   const [adminInviteMessage, setAdminInviteMessage] = useState<string | null>(null);
+  const [adminDialog, setAdminDialog] = useState<'new' | string | null>(null);
 
   const [accountEmail, setAccountEmail] = useState('');
   const [newAccountEmail, setNewAccountEmail] = useState('');
@@ -1332,52 +1333,62 @@ export function App() {
               <span>›</span><span aria-current="page">Benutzer & Rollen</span>
             </nav>
             <div className="page-heading"><div><p className="eyebrow">Administration</p><h1>Benutzer & Rollen</h1><p>FIB-Zugang wird ausschließlich administrativ vorautorisiert. Ein Auth-Konto allein gewährt keinen Zugriff.</p></div></div>
-            <section className="panel card-headed profile-panel">
-              <h2>Person einladen</h2>
-              <form className="stack" onSubmit={inviteAdminUser}>
-                <label>Vollständiger Name
-                  <input value={adminInviteName} onChange={e => setAdminInviteName(e.target.value)} maxLength={120} required autoComplete="name" />
-                </label>
-                <label>E-Mail-Adresse
-                  <input type="email" value={adminInviteEmail} onChange={e => setAdminInviteEmail(e.target.value)} maxLength={254} required autoComplete="email" />
-                </label>
-                <label>FIB-Rolle
-                  <select value={adminInviteRole} onChange={e => setAdminInviteRole(e.target.value as 'editor' | 'admin')}>
-                    <option value="editor">Redakteur</option>
-                    <option value="admin">Admin</option>
-                  </select>
-                </label>
-                <p className="meta">Bei einem vorhandenen Shared-Apps-Konto bleiben Passwort und MFA unverändert. Die Person wird nur für FIB vorautorisiert.</p>
+            <section className="panel card-headed admin-users-panel">
+              <div className="section-heading">
+                <h2>Benutzer &amp; Rollen</h2>
                 <div className="button-row">
-                  <button className="primary" type="submit" disabled={adminInviteBusy || !adminInviteName.trim() || !adminInviteEmail.trim()}>{adminInviteBusy ? 'Verarbeitet …' : 'Person einladen'}</button>
-                  <button type="button" onClick={() => void loadAdminUsers()} disabled={adminUsersLoading || adminInviteBusy}>Status aktualisieren</button>
+                  <button type="button" className="primary" onClick={() => { setAdminInviteMessage(null); setAdminDialog('new'); }}>Neuer Benutzer</button>
+                  <button type="button" className="action-button" aria-label="Benutzerliste aktualisieren" title="Benutzerliste aktualisieren" onClick={() => void loadAdminUsers()} disabled={adminUsersLoading || adminInviteBusy}><ActionIcon name="refresh" /></button>
                 </div>
-              </form>
+              </div>
               {adminInviteMessage && <p className="status-message" role="status">{adminInviteMessage}</p>}
-            </section>
-            <section className="panel card-headed">
-              <h2>Zugangsstatus</h2>
               {adminUsersLoading ? <p role="status">Benutzer werden geladen …</p> : adminUsers.length === 0 ? <p>Noch keine FIB-Benutzer vorhanden.</p> : (
-                <div className="admin-user-list">
-                  {adminUsers.map(user => (
-                    <article className="work-item" key={user.user_id}>
-                      <div>
-                        <strong>{user.full_name}</strong>
-                        <p>{user.email ?? 'E-Mail-Adresse nicht verfügbar'}</p>
-                        <p className="meta">{user.role === 'admin' ? 'Admin' : 'Redakteur'} · {user.setup_status === 'active' && user.active ? 'Aktiv' : user.setup_status === 'invited' && user.active ? 'Einladung offen' : user.setup_status === 'deactivated' || !user.active ? 'Deaktiviert' : 'Einrichtung ausstehend'}</p>
-                        {user.invited_at && !user.confirmed_at && <p className="meta">Einladung versendet: {new Date(user.invited_at).toLocaleString('de-DE')}</p>}
-                      </div>
-                      {(user.setup_status === 'invited' || user.setup_status === 'setup_pending') && user.active && (
-                        <div className="button-row">
-                          {user.setup_status === 'setup_pending' && !user.confirmed_at && user.email && <button type="button" onClick={() => void repeatAdminInvitation(user.user_id)} disabled={adminInviteBusy}>Einladung erneut senden</button>}
-                          <button type="button" onClick={() => void revokeAdminInvitation(user.user_id)} disabled={adminInviteBusy}>Einladung zurücknehmen</button>
-                        </div>
-                      )}
-                    </article>
-                  ))}
-                </div>
+                <table className="admin-users-table">
+                  <thead><tr><th>Name</th><th className="admin-users-email">E-Mail</th><th>Rolle</th><th>Status</th><th><span className="sr-only">Aktion</span></th></tr></thead>
+                  <tbody>{adminUsers.map(user => (
+                    <tr key={user.user_id}>
+                      <td>{user.full_name}</td>
+                      <td className="admin-users-email">{user.email ?? '–'}</td>
+                      <td>{user.role === 'admin' ? 'Admin' : 'Redakteur'}</td>
+                      <td>{user.setup_status === 'active' && user.active ? 'Aktiv' : user.setup_status === 'deactivated' || !user.active ? 'Deaktiviert' : 'Ausstehend'}</td>
+                      <td><button type="button" className="action-button admin-row-action" aria-label={`Benutzer ${user.full_name} bearbeiten`} title="Benutzer bearbeiten" onClick={() => { setAdminInviteMessage(null); setAdminDialog(user.user_id); }}><ActionIcon name="edit" /></button></td>
+                    </tr>
+                  ))}</tbody>
+                </table>
               )}
             </section>
+            {adminDialog !== null && (
+              <div className="admin-dialog-backdrop" onMouseDown={event => { if (event.target === event.currentTarget && !adminInviteBusy) setAdminDialog(null); }}>
+                <section className="admin-dialog" role="dialog" aria-modal="true" aria-label={adminDialog === 'new' ? 'Neuer Benutzer' : 'Benutzer bearbeiten'} onKeyDown={event => { if (event.key === 'Escape' && !adminInviteBusy) setAdminDialog(null); }}>
+                  <div className="section-heading"><h2>{adminDialog === 'new' ? 'Neuer Benutzer' : 'Benutzer bearbeiten'}</h2><button type="button" aria-label="Dialog schließen" title="Schließen" onClick={() => setAdminDialog(null)}>✕</button></div>
+                  {adminDialog === 'new' ? (
+                    <form className="stack" onSubmit={async event => { await inviteAdminUser(event); }}>
+                      <label>Vollständiger Name<input autoFocus value={adminInviteName} onChange={e => setAdminInviteName(e.target.value)} maxLength={120} required autoComplete="name" /></label>
+                      <label>E-Mail-Adresse<input type="email" value={adminInviteEmail} onChange={e => setAdminInviteEmail(e.target.value)} maxLength={254} required autoComplete="email" /></label>
+                      <label>FIB-Rolle<select value={adminInviteRole} onChange={e => setAdminInviteRole(e.target.value as 'editor' | 'admin')}><option value="editor">Redakteur</option><option value="admin">Admin</option></select></label>
+                      <p className="meta">Bei bestehenden Shared-Apps-Konten bleiben Passwort und MFA unverändert. Nur der FIB-Zugang wird vorautorisiert.</p>
+                      <button className="primary" type="submit" disabled={adminInviteBusy || !adminInviteName.trim() || !adminInviteEmail.trim()}>{adminInviteBusy ? 'Verarbeitet …' : 'Einladen'}</button>
+                    </form>
+                  ) : (() => {
+                    const user = adminUsers.find(item => item.user_id === adminDialog);
+                    if (!user) return <p>Benutzer nicht gefunden.</p>;
+                    return <div className="stack">
+                      <p><strong>Name:</strong> {user.full_name}</p>
+                      <p><strong>E-Mail:</strong> {user.email ?? '–'}</p>
+                      <p><strong>Rolle:</strong> {user.role === 'admin' ? 'Admin' : 'Redakteur'}</p>
+                      <p><strong>Status:</strong> {user.setup_status === 'active' && user.active ? 'Aktiv' : user.active ? 'Einrichtung ausstehend' : 'Deaktiviert'}</p>
+                      {user.invited_at && <p className="meta">Einladung vom {new Date(user.invited_at).toLocaleString('de-DE')}</p>}
+                      {(user.setup_status === 'invited' || user.setup_status === 'setup_pending') && user.active && <div className="button-row">
+                        {user.setup_status === 'setup_pending' && !user.confirmed_at && user.email && <button type="button" onClick={() => void repeatAdminInvitation(user.user_id)} disabled={adminInviteBusy}>Einladung erneut senden</button>}
+                        <button type="button" onClick={() => void revokeAdminInvitation(user.user_id)} disabled={adminInviteBusy}>Einladung zurücknehmen</button>
+                      </div>}
+                      {user.setup_status === 'active' && <p className="meta">Änderung von Namen, Rolle und Zugang aktiver Benutzer folgt mit gesicherter Serverfunktion.</p>}
+                    </div>;
+                  })()}
+                  {adminInviteMessage && <p className="status-message" role="status">{adminInviteMessage}</p>}
+                </section>
+              </div>
+            )}
           </>
         )}
 

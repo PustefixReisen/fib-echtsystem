@@ -449,3 +449,20 @@ button:has(> .action-icon) { display: inline-flex; align-items: center; justify-
 .password-toggle:focus-visible { outline: 3px solid var(--fib-primary); outline-offset: 2px; }
 .password-eye { display: block; position: relative; width: 1.5rem; height: 1.5rem; }
 .password-eye img, .password-eye svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+
+/* Admin-Benutzerverwaltung: tabellarisch, Icon-Aktionen und mobile Spaltenreduktion. */
+.admin-users-panel { min-width: 0; }
+.admin-users-panel > .section-heading { display:flex; justify-content:space-between; align-items:center; gap:.7rem; flex-wrap:wrap; }
+.admin-users-table { width:100%; border-collapse:collapse; table-layout:auto; }
+.admin-users-table th, .admin-users-table td { text-align:left; padding:.65rem .45rem; border-bottom:1px solid #dce4dd; vertical-align:middle; overflow-wrap:anywhere; }
+.admin-users-table th:last-child, .admin-users-table td:last-child { text-align:right; width:3.5rem; }
+.admin-row-action { display:inline-grid; place-items:center; width:44px; min-width:44px; height:44px; }
+.admin-dialog-backdrop { position:fixed; z-index:90; inset:0; display:flex; align-items:center; justify-content:center; padding:1rem; background:rgba(10,28,24,.5); }
+.admin-dialog { width:min(100%, 34rem); max-height:90vh; overflow-y:auto; background:#fff; border-radius:12px; padding:1.25rem; box-shadow:0 12px 32px #0003; }
+.admin-dialog > .section-heading { display:flex; align-items:center; justify-content:space-between; gap:.75rem; }
+@media (max-width:760px) {
+  .admin-users-email { display:none; }
+  .admin-users-table { font-size:.85rem; }
+  .admin-users-table th, .admin-users-table td { padding:.6rem .2rem; }
+  .admin-users-table th:last-child, .admin-users-table td:last-child { width:2.9rem; }
+}
