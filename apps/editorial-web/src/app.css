@@ -562,3 +562,10 @@ button:has(> .action-icon) { display: inline-flex; align-items: center; justify-
 .topic-progress-item.active .topic-progress-label { font-weight:700; color:#17583f; }
 .topic-progress-label { font-size:.9rem; line-height:1.3; overflow-wrap:anywhere; }
 @media(max-width:600px) { .topic-progress-label { font-size:.78rem; } .topic-progress-item:not(:last-child)::after { left:calc(50% + 1.45rem); right:calc(-50% + 1.45rem); } }
+
+/* Clickable compact stepper; parent list controls status and connector lines. */
+.topic-progress-link { display:flex; flex-direction:column; align-items:center; gap:.45rem; width:100%; min-height:66px; padding:0 .15rem; border:0; background:transparent; color:inherit; cursor:pointer; font:inherit; text-align:center; }
+.topic-progress-link:hover:not(:disabled) .topic-progress-marker { outline:2px solid #8fb6a0; outline-offset:2px; }
+.topic-progress-link:focus-visible { outline:3px solid #28775c; outline-offset:3px; border-radius:5px; }
+.topic-progress-link:disabled { cursor:not-allowed; opacity:.48; }
+.topic-progress-item.unavailable::after { background:#c9cecb; }
