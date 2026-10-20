@@ -1,0 +1,28 @@
+name: Topic Schema Migration Contracts
+
+on:
+  pull_request:
+    paths:
+      - 'supabase/migrations/20261020160000_fib_topic_contribution_lifecycle.sql'
+      - 'scripts/test-topic-schema-contracts.mjs'
+      - '.github/workflows/topic-schema-contracts.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'supabase/migrations/20261020160000_fib_topic_contribution_lifecycle.sql'
+      - 'scripts/test-topic-schema-contracts.mjs'
+      - '.github/workflows/topic-schema-contracts.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  topic-schema-contracts:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Check topic migration contracts (offline, no database access)
+        run: node --test scripts/test-topic-schema-contracts.mjs
