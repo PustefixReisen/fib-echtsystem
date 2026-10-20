@@ -39,3 +39,9 @@ test('invalid actions cannot bypass checks',()=>{
  assert.equal(check('something_else').reason,'unknown_action');
  assert.equal(check('approve',{body:'  '}).reason,'empty_contribution');
 });
+
+test('approvals cannot bypass required reactivation of inactive topics',()=>{
+ assert.equal(check('approve',{topicStatus:'deferred'}).reason,'topic_not_active');
+ assert.equal(check('approve',{topicStatus:'archived'}).reason,'topic_not_active');
+ assert.equal(check('approve',{topicStatus:'active'}).allowed,true);
+});
