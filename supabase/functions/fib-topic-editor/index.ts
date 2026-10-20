@@ -327,6 +327,9 @@ export default {
             body.origin !== 'editor') {
           return json({ error: 'invalid_proposal' }, 400);
         }
+        const validTopic=await sql.unsafe(
+          'select 1 from fib.topics where id=$1::uuid and deleted_at is null',[body.topicId]);
+        if (!validTopic.length) return json({error:'topic_not_found'},404);
         const link = await sql.unsafe(
           'select 1 from fib.process_topics where process_id=$1::uuid and topic_id=$2::uuid',
           [body.processId,body.topicId],
@@ -358,6 +361,10 @@ export default {
           );
           if (!proposal.length) return 'not_found';
           if (proposal[0].status !== 'pending') return 'already_decided';
+          const activeTopic=await tx.unsafe(
+            'select 1 from fib.topics where id=$1::uuid and deleted_at is null for update',
+            [proposal[0].topic_id]);
+          if (!activeTopic.length) return 'topic_not_found';
           if (body.decision === 'confirmed') {
             const existing = await tx.unsafe(
               'select 1 from fib.process_topics where process_id=$1::uuid and topic_id=$2::uuid',
