@@ -1324,50 +1324,67 @@ export function App() {
         <main className="content-shell">
         {view === 'topics' && (
           <section className="panel card-headed fib-topic-screen">
-            <p className="eyebrow">Redaktion · Entwicklungsfunktion</p>
-            <h1 className="object-title"><img className="object-icon" src={topicIcon} alt="" />Themen und ihre Bedeutung</h1>
-            <p>Entwicklungsdaten. Ein Vorschlag wird erst durch ausdrückliche redaktionelle Bestätigung wirksam.</p>
             {topicError && <p className="error" role="alert">{topicError}</p>}
-            <ol className="topic-progress" aria-label="Bearbeitungsfortschritt">
-              {([1,2,3] as const).map(step=>{
-                const hasTopic=Boolean(topicId && topicData?.topics.some(t=>t.id===topicId));
-                const hasLink=Boolean(topicData?.links.some(l=>l.topic_id===topicId) || topicData?.proposals.some(p=>p.topic_id===topicId));
-                const pending=Boolean(topicData?.proposals.some(p=>p.topic_id===topicId && p.status==='pending'));
-                const done=step===1?hasTopic:step===2?hasLink:hasLink && !pending;
-                const active=topicStep===step;
-                const label=step===1?'Thema':step===2?'Beziehungen':'Redaktionelle Prüfung';
-                const state=active?'Aktueller Schritt':done?'Abgeschlossen':'Offen';
-                return <li key={step} className={`topic-progress-item ${active?'active':done?'complete':'open'}`} aria-current={active?'step':undefined}>
-                  <span className="topic-progress-marker" aria-hidden="true">{!active&&done?'✓':step}</span>
-                  <span className="topic-progress-label">{label}</span>
-                  <span className="sr-only"> – {state}</span>
-                </li>;
-              })}
-            </ol>
-            <div className="topic-step-content">
-            {topicStep===1 && <>
-            <h2>1. Thema</h2>
-            <label>Vorhandenes Thema
-              <select value={topicId} onChange={e=>setTopicId(e.target.value)}>{topicData?.topics.map(t=><option key={t.id} value={t.id}>{t.title}</option>)}</select>
-            </label>
-            {topicData?.topics.filter(t=>t.id===topicId).map(t=><div className="topic-details" key={t.id}><h3>{t.title}</h3><p><strong>Leitfrage:</strong> {t.guiding_question}</p><p>{t.description}</p></div>)}
-            <button type="button" onClick={()=>setTopicCreateOpen(v=>!v)}>{topicCreateOpen?'Neuanlage schließen':'Neues Thema anlegen'}</button>
-            {topicCreateOpen && <>
-            <h3>Neues Entwicklungsthema</h3>
-            <form onSubmit={e=>{e.preventDefault();void topicAction('create_topic',{title:'[ENTWICKLUNG #136] '+topicTitle.trim(),guidingQuestion:topicQuestion,description:topicDescription});}}>
-              <label>Titel<input required maxLength={170} value={topicTitle} onChange={e=>setTopicTitle(e.target.value)}/></label>
-              <label>Leitfrage<input required maxLength={1000} value={topicQuestion} onChange={e=>setTopicQuestion(e.target.value)}/></label>
-              <label>Beschreibung<textarea maxLength={5000} value={topicDescription} onChange={e=>setTopicDescription(e.target.value)}/></label>
-              <button type="submit" disabled={topicBusy || !topicTitle.trim() || !topicQuestion.trim()}>Thema anlegen</button>
-            </form>
-            </>}
-            </>}
-            {topicStep===2 && <>
-            <h2>2. Beziehungen</h2>
-            <p>Vorgänge mit begründeter Bedeutung zur redaktionellen Prüfung vorschlagen.</p>
+            {topicListOpen ? <>
+              <div className="topic-list-heading">
+                <div><p className="eyebrow">Redaktion · Themen</p><h1 className="object-title"><img className="object-icon" src={topicIcon} alt="" />Themen</h1></div>
+                <button type="button" onClick={()=>setTopicCreateOpen(v=>!v)}>{topicCreateOpen?'Schließen':'Neues Thema'}</button>
+              </div>
+              <p>Themen auswählen und bearbeiten. Bestehende Vorgänge und Ereignisse werden durch lokale Bezüge eingebunden.</p>
+              {topicCreateOpen && <form className="topic-definition-form" onSubmit={e=>{e.preventDefault();void topicAction('create_topic',{title:'[ENTWICKLUNG #136] '+topicTitle.trim(),guidingQuestion:topicQuestion,description:topicDescription});}}>
+                <h2>Neues Entwicklungsthema</h2>
+                <label>Titel<input required maxLength={170} value={topicTitle} onChange={e=>setTopicTitle(e.target.value)}/></label>
+                <label>Leitfrage<input required maxLength={1000} value={topicQuestion} onChange={e=>setTopicQuestion(e.target.value)}/></label>
+                <label>Beschreibung<textarea maxLength={5000} value={topicDescription} onChange={e=>setTopicDescription(e.target.value)}/></label>
+                <button type="submit" disabled={topicBusy || !topicTitle.trim() || !topicQuestion.trim()}>Thema anlegen</button>
+              </form>}
+              <div className="topic-list-filters">
+                <label>Themen suchen<input type="search" value={topicSearch} onChange={e=>setTopicSearch(e.target.value)} placeholder="Titel oder Leitfrage"/></label>
+                <label>Status<select value={topicFilter} onChange={e=>setTopicFilter(e.target.value)}>
+                  <option value="all">Alle</option><option value="draft">Entwurf</option><option value="active">Aktiv</option><option value="deferred">Zurückgestellt</option><option value="archived">Archiviert</option>
+                </select></label>
+              </div>
+              <div className="topic-list-results">
+                {topicData?.topics.filter(t=>(topicFilter==='all'||t.status===topicFilter||(topicFilter==='deferred'&&t.status==='dormant'))&&
+                  (t.title+' '+(t.guiding_question??'')).toLocaleLowerCase('de-DE').includes(topicSearch.trim().toLocaleLowerCase('de-DE'))).map(t=>(
+                    <article className="work-item" key={t.id}>
+                      <div><h2>{t.title}</h2><p>{t.guiding_question}</p>
+                        <p className="meta">Status: {t.status==='draft'?'Entwurf':t.status==='active'?'Aktiv':t.status==='deferred'||t.status==='dormant'?'Zurückgestellt':'Archiviert'}</p>
+                      </div>
+                      <button type="button" className="action-button" onClick={()=>showTopic(t)}>Bearbeiten</button>
+                    </article>
+                  ))}
+                {!topicBusy && !topicData?.topics.some(t=>(topicFilter==='all'||t.status===topicFilter||(topicFilter==='deferred'&&t.status==='dormant'))&&
+                  (t.title+' '+(t.guiding_question??'')).toLocaleLowerCase('de-DE').includes(topicSearch.trim().toLocaleLowerCase('de-DE'))) && <p>Keine passenden Themen gefunden.</p>}
+              </div>
+              <button type="button" disabled={topicBusy} onClick={()=>void loadTopics()}>Liste aktualisieren</button>
+            </> : <>
+              <nav className="breadcrumbs" aria-label="Brotkrumen"><button type="button" onClick={()=>setTopicListOpen(true)}>Themen</button><span>›</span><span aria-current="page">{topicData?.topics.find(t=>t.id===topicId)?.title ?? 'Thema'}</span></nav>
+              <p className="eyebrow">Redaktion · Themenbearbeitung</p>
+              <h1 className="object-title"><img className="object-icon" src={topicIcon} alt="" />{topicData?.topics.find(t=>t.id===topicId)?.title ?? 'Thema'}</h1>
+              <nav className="topic-editor-tabs" aria-label="Bereiche der Themenbearbeitung">
+                {(['Themadefinition','Lokale Bezüge','Beitrag'] as const).map((label,i)=>(
+                  <button type="button" key={label} className={topicStep===i+1?'selected':''} aria-current={topicStep===i+1?'page':undefined} onClick={()=>setTopicStep((i+1) as 1|2|3)}>{label}</button>
+                ))}
+              </nav>
+              {topicStep===1 && <section className="topic-editor-area">
+                <h2>Themadefinition</h2>
+                <p className="meta">Themenstatus: {topicData?.topics.find(t=>t.id===topicId)?.status ?? 'unbekannt'} · Änderungen werden intern versioniert.</p>
+                <form className="topic-definition-form" onSubmit={e=>{e.preventDefault();void topicAction('update_topic',{topicId,title:topicEditTitle,guidingQuestion:topicEditQuestion,description:topicEditDescription});}}>
+                  <label>Titel<input required maxLength={200} value={topicEditTitle} onChange={e=>setTopicEditTitle(e.target.value)}/></label>
+                  <label>Leitfrage<input required maxLength={1000} value={topicEditQuestion} onChange={e=>setTopicEditQuestion(e.target.value)}/></label>
+                  <label>Erläuterung<textarea maxLength={5000} value={topicEditDescription} onChange={e=>setTopicEditDescription(e.target.value)}/></label>
+                  <button type="submit" disabled={topicBusy || !topicEditTitle.trim() || !topicEditQuestion.trim()}>Themadefinition speichern</button>
+                </form>
+                <p className="meta">Redaktionelle Koordination: Die bestehende Federführung wird in einem weiteren Arbeitspaket hier eingebunden.</p>
+              </section>}
+              {topicStep===2 && <section className="topic-editor-area">
+                <h2>Lokale Bezüge</h2>
+                <p>Vorgänge und ergänzende Einzelereignisse, die für dieses Thema Bedeutung besitzen. Eine Zuordnung wird erst nach redaktioneller Bestätigung wirksam.</p>
+                <p className="meta">Die direkte Suche nach ergänzenden Einzelereignissen folgt in einem weiteren Arbeitspaket.</p>
             <h3>Vorgang einem Thema vorschlagen</h3>
             <form onSubmit={e=>{e.preventDefault();void topicAction('propose',{topicId,processId:selectableProcessId,significance:topicSignificance,rationale:topicRationale,origin:'editor'});}}>
-              <label>Thema<select value={topicId} onChange={e=>setTopicId(e.target.value)} required>{topicData?.topics.map(t=><option key={t.id} value={t.id}>{t.title}</option>)}</select></label>
+  
               <div className="topic-process-choice"><span>Vorgang</span><p>{availableTopicProcesses.find(p=>p.id===selectableProcessId)?.title ?? 'Noch kein Vorgang ausgewählt'}</p><button type="button" disabled={!availableTopicProcesses.length} onClick={()=>{setProcessQuery('');setProcessPickerOpen(true);}}>Vorgang suchen und auswählen</button></div>
               {!availableTopicProcesses.length && <p>Alle vorhandenen Vorgänge sind bereits zugeordnet oder werden geprüft.</p>}
               {processPickerOpen && <div className="topic-picker-backdrop" onMouseDown={e=>{if(e.target===e.currentTarget)setProcessPickerOpen(false);}}>
@@ -1383,13 +1400,10 @@ export function App() {
               <label>Begründung<textarea required maxLength={4000} value={topicRationale} onChange={e=>setTopicRationale(e.target.value)}/></label>
               <button type="submit" disabled={topicBusy || !topicId || !selectableProcessId || !topicRationale.trim()}>Vorschlag speichern (noch nicht wirksam)</button>
             </form>
-            <h3>Beziehungen zu diesem Thema</h3>
+            <h3>Bestätigte lokale Bezüge</h3>
             {topicData?.links.filter(l=>l.topic_id===topicId).map(l=><details className="topic-confirmed-link" key={l.process_id}><summary><span aria-hidden="true">✓ </span>{l.process_title} · {l.significance==='defining'?'Prägend':l.significance==='relevant'?'Relevant':'Ergänzend'} <span className="topic-link-detail-hint"><span className="topic-detail-action">Begründung anzeigen ▾</span></span></summary><p>{l.significance_rationale || 'Keine Begründung hinterlegt.'}</p></details>)}
             {topicData?.proposals.filter(p=>p.topic_id===topicId && p.status==='pending').map(p=><p key={p.id}>Offen: {p.process_title}</p>)}
-            </>}
-            {topicStep===3 && <>
-            <h2>3. Redaktionelle Prüfung</h2>
-            <p>Vorschläge prüfen, begründen, bestätigen oder ablehnen.</p>
+
             <h3>Offene Vorschläge</h3>
             {topicData?.proposals.filter(p=>p.topic_id===topicId && p.status==='pending').map(p=>{
               const review=topicReviews[p.id] ?? {significance:p.suggested_significance,rationale:p.suggested_rationale};
@@ -1403,15 +1417,41 @@ export function App() {
               </article>;
             })}
             {!topicData?.proposals.some(p=>p.topic_id===topicId && p.status==='pending') && <p>Keine offenen Vorschläge.</p>}
-            <h3>Bestätigte Beziehungen</h3>
-            {topicData?.links.filter(l=>l.topic_id===topicId).map(l=><details key={l.topic_id+l.process_id} className="topic-confirmed-link"><summary>{l.process_title} · {l.significance==='defining'?'Prägend':l.significance==='relevant'?'Relevant':'Ergänzend'} <span className="topic-detail-action">Begründung anzeigen ▾</span></summary><p>{l.significance_rationale || 'Keine Begründung hinterlegt.'}</p></details>)}
+
+              </section>}
+              {topicStep===3 && <section className="topic-editor-area">
+                <h2>Beitrag</h2>
+                <p>Der sachliche Thementext und die optionale „Unsere Einordnung“ werden getrennt bearbeitet.</p>
+                {topicContribution ? <>
+                  <p className="meta">Themenstatus: {topicContribution.topic.status==='draft'?'Entwurf':topicContribution.topic.status==='active'?'Aktiv':topicContribution.topic.status==='deferred'||topicContribution.topic.status==='dormant'?'Zurückgestellt':'Archiviert'} · {topicContribution.currentPublication?'Eine freigegebene Fassung ist intern als Veröffentlichung erfasst.':'Keine aktive Veröffentlichung erfasst.'}</p>
+                  <label>Thementext<textarea className="topic-contribution-body" value={topicBody} onChange={e=>setTopicBody(e.target.value)} maxLength={30000}/></label>
+                  <label>Unsere Einordnung (optional)<textarea className="topic-contribution-assessment" value={topicAssessment} onChange={e=>setTopicAssessment(e.target.value)} maxLength={30000}/></label>
+                  {((topicContribution.draft?.body??'')!==topicBody || (topicContribution.draft?.editorial_assessment??'')!==topicAssessment) && <p className="meta">Ungespeicherte Änderungen – vor einer Freigabe speichern.</p>}
+                  <div className="topic-editor-actions">
+                    <button type="button" disabled={topicBusy} onClick={()=>void contributionAction('save_contribution_draft',{contributionBody:topicBody,editorialAssessment:topicAssessment,expectedRevision:topicContribution.draft?.revision??0})}>Arbeitsfassung speichern</button>
+                    <button type="button" disabled={topicBusy || !topicBody.trim() || (topicContribution.draft?.body??'')!==topicBody || (topicContribution.draft?.editorial_assessment??'')!==topicAssessment} onClick={()=>void contributionAction('approve_contribution',{})}>Fassung freigeben</button>
+                    <button type="button" disabled title="Öffentliche Ausspielung ist noch nicht mit dem K0-Publikationsprozess verbunden">Auf Website veröffentlichen (in Vorbereitung)</button>
+                  </div>
+                  {topicContribution.versions.find(v=>!v.revoked_at&&!v.published_at) && <button type="button" disabled={topicBusy} onClick={()=>{const v=topicContribution.versions.find(v=>!v.revoked_at&&!v.published_at);if(v&&window.confirm('Diese noch unveröffentlichte Freigabe zurücknehmen?'))void contributionAction('revoke_contribution',{contributionVersionId:v.id});}}>Freigabe zurücknehmen</button>}
+                  <div className="topic-editor-actions">
+                    {topicContribution.topic.status==='active' && <>
+                      <button type="button" disabled={topicBusy} onClick={()=>{if(window.confirm('Thema zurückstellen und öffentliche Sichtbarkeit beenden?'))void contributionAction('defer_topic',{confirmation:true});}}>Zurückstellen</button>
+                      <button type="button" disabled={topicBusy} onClick={()=>{if(window.confirm('Thema dauerhaft archivieren und öffentliche Sichtbarkeit beenden?'))void contributionAction('archive_topic',{confirmation:true});}}>Archivieren</button>
+                    </>}
+                    {(topicContribution.topic.status==='deferred'||topicContribution.topic.status==='archived') && <button type="button" disabled={topicBusy} onClick={()=>{if(window.confirm('Aktualität der freigegebenen Fassung geprüft? Das Thema wird aktiviert, jedoch nicht veröffentlicht.'))void contributionAction('reactivate_topic',{confirmation:true,currencyChecked:true});}}>Nach Aktualitätsprüfung wiederaufnehmen</button>}
+                  </div>
+                  <details className="topic-versions"><summary>Versionsverlauf ({topicContribution.versions.length})</summary>
+                    {topicContribution.versions.length===0 && <p>Noch keine freigegebenen Beitragsfassungen.</p>}
+                    {topicContribution.versions.map(v=><details key={v.id}>
+                      <summary>Version {v.version_no} · {new Date(v.approved_at).toLocaleDateString('de-DE')}{v.revoked_at?' · Freigabe zurückgenommen':v.published_at?' · Veröffentlichung dokumentiert':' · Freigegeben'}</summary>
+                      <h4>Thementext (schreibgeschützt)</h4><p className="topic-version-text">{v.body}</p>
+                      {v.editorial_assessment && <><h4>Unsere Einordnung</h4><p className="topic-version-text">{v.editorial_assessment}</p></>}
+                    </details>)}
+                  </details>
+                </> : <p role="status">Beitragsdaten werden geladen …</p>}
+              </section>}
+              <div className="topic-editor-actions"><button type="button" onClick={()=>setTopicListOpen(true)}>Zur Themenliste</button><button type="button" disabled={topicBusy} onClick={()=>{void loadTopics();void loadTopicContribution(topicId);}}>Aktualisieren</button></div>
             </>}
-            </div>
-            <div className="topic-step-actions">
-              <button type="button" disabled={topicStep===1} onClick={()=>setTopicStep(v=>v===3?2:1)}>Zurück</button>
-              <button type="button" disabled={topicStep===3 || (topicStep===1 && !topicId)} onClick={()=>setTopicStep(v=>v===1?2:3)}>Weiter</button>
-              <button type="button" disabled={topicBusy} onClick={()=>void loadTopics()}>Aktualisieren</button>
-            </div>
             {topicBusy && <p role="status">Bearbeitung läuft …</p>}
           </section>
         )}
