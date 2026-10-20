@@ -77,6 +77,23 @@ create table if not exists fib.topic_currency_checks (
  foreign key (contribution_version_id,topic_id) references fib.topic_contribution_versions(id,topic_id) on delete restrict
 );
 
+-- A published snapshot is never allowed to lose its approval.
+create or replace function fib.prevent_published_topic_approval_revocation()
+returns trigger language plpgsql as $
+begin
+ if (new.revoked_at is distinct from old.revoked_at or new.revoked_by is distinct from old.revoked_by)
+    and exists(select 1 from fib.topic_publications p where p.contribution_version_id=old.id) then
+   raise exception 'published approval cannot be revoked';
+ end if;
+ if (new.body,new.editorial_assessment,new.topic_id,new.version_no,new.approved_at,new.approved_by)
+    is distinct from (old.body,old.editorial_assessment,old.topic_id,old.version_no,old.approved_at,old.approved_by) then
+   raise exception 'approved version content is immutable';
+ end if;
+ return new;
+end $;
+create trigger topic_approval_immutability before update on fib.topic_contribution_versions
+ for each row execute function fib.prevent_published_topic_approval_revocation();
+
 -- Only the existing server-side runtime database role can access these objects.
 -- No GRANT to anon/authenticated; service must enforce AAL2, editor role and transitions.
 alter table fib.topic_contribution_drafts enable row level security;
