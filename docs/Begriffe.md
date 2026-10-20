@@ -588,3 +588,7 @@ Freigegebene Fassung des Thementextes einschließlich der zugehörigen optionale
 ### `Themenstatus`
 
 Fachlicher Lebenszyklus eines Themas: **Entwurf**, **Aktiv**, **Zurückgestellt**, **Archiviert**; unabhängig von Freigabe und Sichtbarkeit. Erste Beitragsfreigabe aktiviert den Entwurf; wird diese vor der ersten Veröffentlichung widerrufen, wechselt er zurück zu Entwurf. Zurückgestellt ist eine vorübergehende, Archiviert eine dauerhaft angelegte Herausnahme aus dem öffentlichen Angebot.
+
+### `Wiederaufnahme eines Themas`
+
+Redaktionell bestätigter Statuswechsel von **Zurückgestellt** oder ausnahmsweise **Archiviert** nach **Aktiv**, begleitet von dokumentierter **Aktualitätsprüfung** (Person, Datum, Ergebnis). Bei unverändertem Beitrag genügt die Prüfung ohne erneute Freigabe; bei geändertem Inhalt ist eine neue Freigabe erforderlich. Wiederaufnahme bedeutet noch keine automatische öffentliche Veröffentlichung.
