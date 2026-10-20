@@ -19,14 +19,14 @@ create table fib.event_topic_proposals (
  created_at timestamptz not null default now(),
  constraint event_proposal_decision_coherent check (
   (status='pending' and reviewed_by is null and reviewed_at is null
-   and confirmed_significance is null and confirmed_rationale is null and rejection_reason is null)
+   and confirmed_significance is null and confirmed_rationale is null and rejection_reason is null and rejection_detail is null)
   or (status='confirmed' and reviewed_by is not null and reviewed_at is not null
-   and confirmed_significance is not null and length(btrim(confirmed_rationale))>0
-   and rejection_reason is null)
+   and confirmed_significance is not null and confirmed_rationale is not null and length(btrim(confirmed_rationale))>0
+   and rejection_reason is null and rejection_detail is null)
   or (status='rejected' and reviewed_by is not null and reviewed_at is not null
    and confirmed_significance is null and confirmed_rationale is null
    and rejection_reason is not null
-   and (rejection_reason <> 'other' or length(btrim(rejection_detail))>0))
+   and (rejection_reason <> 'other' or (rejection_detail is not null and length(btrim(rejection_detail))>0)))
  )
 );
 create unique index event_topic_one_pending
