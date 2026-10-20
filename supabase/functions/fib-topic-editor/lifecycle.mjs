@@ -12,7 +12,7 @@ export function decideTopicAction(action, state) {
 
   switch (action) {
     case 'approve':
-      if (!unchangedContent && state.body?.trim() === '') return fail('empty_contribution');
+      if (!state.body?.trim()) return fail('empty_contribution');
       if (topicStatus === 'archived' || topicStatus === 'deferred') return fail('topic_not_active');
       if (approvedVersion && !approvalRevoked) return fail('already_approved');
       return ok(topicStatus === 'draft' ? 'active' : topicStatus);
@@ -33,7 +33,7 @@ export function decideTopicAction(action, state) {
     case 'reactivate':
       if (!['deferred','archived'].includes(topicStatus)) return fail('topic_not_inactive');
       if (!explicitConfirmation || !currencyCheckConfirmed) return fail('currency_check_required');
-      if (!unchangedContent && !approvedVersion) return fail('new_approval_required');
+      if (!unchangedContent && !state.newContentApproved) return fail('new_approval_required');
       return ok('active'); // does not publish by itself
     case 'delete':
       if (everPublished) return fail('published_topic_cannot_be_deleted');
