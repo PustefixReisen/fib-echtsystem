@@ -79,7 +79,7 @@ create table if not exists fib.topic_currency_checks (
 
 -- A published snapshot is never allowed to lose its approval.
 create or replace function fib.prevent_published_topic_approval_revocation()
-returns trigger language plpgsql as $
+returns trigger language plpgsql as $topic_guard$
 begin
  if (new.revoked_at is distinct from old.revoked_at or new.revoked_by is distinct from old.revoked_by)
     and exists(select 1 from fib.topic_publications p where p.contribution_version_id=old.id) then
@@ -90,14 +90,14 @@ begin
    raise exception 'approved version content is immutable';
  end if;
  return new;
-end $;
+end $topic_guard$;
 create trigger topic_approval_immutability before update on fib.topic_contribution_versions
  for each row execute function fib.prevent_published_topic_approval_revocation();
 
 -- A revoked approval can never be published. Lock the referenced version
 -- to serialize concurrent revocation and publication operations.
 create or replace function fib.validate_topic_publication_insert()
-returns trigger language plpgsql as $
+returns trigger language plpgsql as $topic_guard$
 declare approval record;
 begin
  select topic_id,revoked_at into approval
@@ -106,7 +106,7 @@ begin
    raise exception 'publication requires a valid non-revoked topic approval';
  end if;
  return new;
-end $;
+end $topic_guard$;
 create trigger topic_publication_approval_guard before insert on fib.topic_publications
  for each row execute function fib.validate_topic_publication_insert();
 
