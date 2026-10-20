@@ -92,7 +92,8 @@ create policy fib_runtime_all on fib.topic_publications to fib_runtime using (tr
 create policy fib_runtime_all on fib.topic_currency_checks to fib_runtime using (true) with check (true);
 
 grant select,insert,update,delete on fib.topic_contribution_drafts,
- fib.topic_revisions,fib.topic_contribution_versions,
- fib.topic_publications,fib.topic_currency_checks to fib_runtime;
+ fib.topic_revisions,fib.topic_currency_checks to fib_runtime;
+grant select,insert,update on fib.topic_contribution_versions,
+ fib.topic_publications to fib_runtime;
 
 commit;
