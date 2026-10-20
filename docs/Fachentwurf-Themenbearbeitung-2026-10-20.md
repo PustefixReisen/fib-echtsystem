@@ -45,6 +45,10 @@ Die Themenbearbeitung ist eine dauerhaft wieder aufrufbare Objektbearbeitung, ke
 - Im Versionsverlauf sind fachlich maßgebliche Fassungen mit Freigabe und ggf. Veröffentlichungszeitraum schreibgeschützt einsehbar. Nicht jeder Speichervorgang erzeugt eine formale Version: verbindliche Version bei Freigabe.
 - Bei Überarbeitung nach Veröffentlichung bleibt bisherige freigegebene Fassung öffentlich, bis die neue freigegebene Fassung veröffentlicht wird.
 
+### Vereinbarung vom 20.10.2026: fachlich unpassende Bezüge
+
+Die Redaktion kann einen lokalen Bezug als **fachlich unpassend** ablehnen. Ablehnung und Begründung bleiben dokumentiert und gelten bis zu einer neuen redaktionellen Entscheidung. Die KI darf einen solchen Bezug erneut zur Prüfung vorschlagen, **wenn neue Ereignisse oder Änderungen der Themendefinition konkrete neue Gründe liefern**. Die neue Sachlage und die frühere Ablehnung müssen im erneuten Vorschlag erkennbar sein. Die bisherige Entscheidung wird **nie automatisch aufgehoben**. Ein KI-Vorschlag beschreibt die Herkunft; der redaktionelle Zuordnungsstatus bleibt gesondert gespeichert. Die Bedeutungseinstufung (prägend / relevant / ergänzend) ist erst nach redaktioneller Bestätigung verbindlich.
+
 ## 4. Status als getrennte fachliche Dimensionen, aber gemeinsame Darstellung
 
 | Dimension | Status / Regel |
