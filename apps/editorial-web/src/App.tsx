@@ -1279,19 +1279,21 @@ export function App() {
             <h1 className="object-title"><img className="object-icon" src={topicIcon} alt="" />Themen und ihre Bedeutung</h1>
             <p>Entwicklungsdaten. Ein Vorschlag wird erst durch ausdrückliche redaktionelle Bestätigung wirksam.</p>
             {topicError && <p className="error" role="alert">{topicError}</p>}
-            <ol className="topic-progress" aria-label="Bearbeitungsfortschritt">
+            <ol className="topic-progress" aria-label="Bearbeitungsschritte">
               {([1,2,3] as const).map(step=>{
                 const hasTopic=Boolean(topicId && topicData?.topics.some(t=>t.id===topicId));
                 const hasLink=Boolean(topicData?.links.some(l=>l.topic_id===topicId) || topicData?.proposals.some(p=>p.topic_id===topicId));
                 const pending=Boolean(topicData?.proposals.some(p=>p.topic_id===topicId && p.status==='pending'));
                 const done=step===1?hasTopic:step===2?hasLink:hasLink && !pending;
                 const active=topicStep===step;
+                const available=step===1 || hasTopic;
                 const label=step===1?'Thema':step===2?'Beziehungen':'Redaktionelle Prüfung';
-                const state=active?'Aktueller Schritt':done?'Abgeschlossen':'Offen';
-                return <li key={step} className={`topic-progress-item ${active?'active':done?'complete':'open'}`} aria-current={active?'step':undefined}>
-                  <span className="topic-progress-marker" aria-hidden="true">{!active&&done?'✓':step}</span>
-                  <span className="topic-progress-label">{label}</span>
-                  <span className="sr-only"> – {state}</span>
+                const state=active?'Aktueller Schritt':done?'Abgeschlossen':available?'Offen':'Nicht verfügbar: zuerst Thema auswählen';
+                return <li key={step} className={`topic-progress-item ${active?'active':done?'complete':'open'} ${available?'':'unavailable'}`}>
+                  <button type="button" className="topic-progress-link" aria-current={active?'step':undefined} aria-label={`Schritt ${step}: ${label}. ${state}`} title={available?label:'Bitte zuerst ein Thema auswählen'} disabled={!available} onClick={()=>setTopicStep(step)}>
+                    <span className="topic-progress-marker" aria-hidden="true">{!active&&done?'✓':step}</span>
+                    <span className="topic-progress-label">{label}</span>
+                  </button>
                 </li>;
               })}
             </ol>
@@ -1360,7 +1362,7 @@ export function App() {
             </div>
             <div className="topic-step-actions">
               <button type="button" disabled={topicStep===1} onClick={()=>setTopicStep(v=>v===3?2:1)}>Zurück</button>
-              <button type="button" disabled={topicStep===3 || (topicStep===1 && !topicId)} onClick={()=>setTopicStep(v=>v===1?2:3)}>Weiter</button>
+              <button type="button" disabled={topicStep===3 || (topicStep===1 && !topicData?.topics.some(t=>t.id===topicId))} onClick={()=>setTopicStep(v=>v===1?2:3)}>Weiter</button>
               <button type="button" disabled={topicBusy} onClick={()=>void loadTopics()}>Aktualisieren</button>
             </div>
             {topicBusy && <p role="status">Bearbeitung läuft …</p>}
