@@ -147,6 +147,81 @@ export default {
         });
         return json(result,'code' in result ? result.code : 200);
       }
+      if (body.action === 'revoke_contribution' || body.action === 'publish_contribution') {
+        if (!uuid(body.topicId) || !uuid(body.contributionVersionId))
+          return json({error:'invalid_contribution_version'},400);
+        const action = body.action === 'revoke_contribution' ? 'revoke' : 'publish';
+        const result = await sql.begin(async tx => {
+          const topic = await tx.unsafe('select status from fib.topics where id=$1::uuid for update',[body.topicId]);
+          if (!topic.length) return {error:'topic_not_found',code:404};
+          const versions = await tx.unsafe(
+            'select id,revoked_at from fib.topic_contribution_versions where id=$1::uuid and topic_id=$2::uuid for update',
+            [body.contributionVersionId,body.topicId]);
+          if (!versions.length) return {error:'version_not_found',code:404};
+          const history = await tx.unsafe(
+            'select count(*)::integer as n from fib.topic_publications where topic_id=$1::uuid',[body.topicId]);
+          const published = await tx.unsafe(
+            'select 1 from fib.topic_publications where contribution_version_id=$1::uuid limit 1',
+            [body.contributionVersionId]);
+          const outcome = decideTopicAction(action,{
+            topicStatus:topic[0].status,
+            approvedVersion:true,
+            approvalRevoked:versions[0].revoked_at !== null,
+            approvalEverPublished:published.length > 0,
+            everPublished:Number(history[0].n) > 0,
+            explicitConfirmation:body.confirmation === true,
+          });
+          if (!outcome.allowed) return {error:outcome.reason,code:409};
+          if (action === 'revoke') {
+            await tx.unsafe(
+              'update fib.topic_contribution_versions set revoked_by=$2::uuid,revoked_at=now() where id=$1::uuid',
+              [body.contributionVersionId,actor]);
+            if (outcome.resultStatus !== topic[0].status)
+              await tx.unsafe('update fib.topics set status=$2,updated_at=now() where id=$1::uuid',
+                [body.topicId,outcome.resultStatus]);
+          } else {
+            await tx.unsafe(`update fib.topic_publications
+                set ended_at=now(),ended_by=$2::uuid,ended_reason='replaced'
+                where topic_id=$1::uuid and ended_at is null`,[body.topicId,actor]);
+            await tx.unsafe(`insert into fib.topic_publications
+                (topic_id,contribution_version_id,published_by)
+                values ($1::uuid,$2::uuid,$3::uuid)`,[body.topicId,body.contributionVersionId,actor]);
+          }
+          return {ok:true,status:outcome.resultStatus};
+        });
+        return json(result,'code' in result ? result.code : 200);
+      }
+      if (body.action === 'defer_topic' || body.action === 'archive_topic' || body.action === 'reactivate_topic') {
+        if (!uuid(body.topicId)) return json({error:'invalid_topic'},400);
+        const action = body.action === 'defer_topic' ? 'defer' :
+          body.action === 'archive_topic' ? 'archive' : 'reactivate';
+        const result = await sql.begin(async tx => {
+          const topic = await tx.unsafe('select status from fib.topics where id=$1::uuid for update',[body.topicId]);
+          if (!topic.length) return {error:'topic_not_found',code:404};
+          const published=await tx.unsafe(`select contribution_version_id from fib.topic_publications
+              where topic_id=$1::uuid order by published_at desc limit 1`,[body.topicId]);
+          const check=decideTopicAction(action,{
+            topicStatus:topic[0].status,
+            explicitConfirmation:body.confirmation === true,
+            currencyCheckConfirmed:body.currencyChecked === true && published.length > 0,
+            unchangedContent:true,
+          });
+          if (!check.allowed) return {error:check.reason,code:409};
+          if (action !== 'reactivate')
+            await tx.unsafe(`update fib.topic_publications set ended_at=now(),ended_by=$2::uuid,
+                ended_reason=$3 where topic_id=$1::uuid and ended_at is null`,
+                [body.topicId,actor,action === 'archive' ? 'archived' : 'deferred']);
+          else
+            await tx.unsafe(`insert into fib.topic_currency_checks
+                (topic_id,contribution_version_id,checked_by,result)
+                values ($1::uuid,$2::uuid,$3::uuid,'current')`,
+                [body.topicId,published[0].contribution_version_id,actor]);
+          await tx.unsafe('update fib.topics set status=$2,updated_at=now() where id=$1::uuid',
+            [body.topicId,check.resultStatus]);
+          return {ok:true,status:check.resultStatus};
+        });
+        return json(result,'code' in result ? result.code : 200);
+      }
       if (body.action === 'propose') {
         if (!uuid(body.topicId) || !uuid(body.processId) || !significance(body.significance) ||
             typeof body.rationale !== 'string' || !body.rationale.trim() || body.rationale.length > 4000 ||
