@@ -34,6 +34,6 @@ test('RLS is enabled and browser roles are not granted access',()=>{
 test('PL/pgSQL trigger bodies have paired tagged delimiters',()=>{
  const token = '$topic_guard$';
  assert.equal(sql.split('language plpgsql as '+token).length-1,2);
- assert.equal(sql.split('end '+token+';').length-1,2);
+ assert.equal(sql.split('end; '+token+';').length-1,2);
  assert.doesNotMatch(sql,/language plpgsql as \$\s*\n/);
 });
