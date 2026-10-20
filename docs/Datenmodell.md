@@ -173,6 +173,9 @@ Löschen eines Themas ist nur gestattet, wenn **nie veröffentlicht** und aktuel
 
 **Versionierungsebenen:** Beitragsversionen (Freigabe-/Publikationsverlauf, im UI durch „Versionsverlauf“ zugänglich) sind verschieden von den bereits unter §4.6 beschriebenen fachlichen Gesamtversionen (inhaltliche Veränderungen von Thema/Vorgang). Die Fachversionen bleiben intern nachvollziehbar, ohne die alltägliche Beitragsbearbeitung zu überfrachten. Eine konkrete Beitragsfreigabe muss auf ihren fachlichen Bezugsstand rückführbar sein.
 
+
+**Zusätzliche bestätigte Übergangs- und Rechtevorgaben (20.10.2026):** Redaktionelle **Selbstfreigabe und Selbstveröffentlichung** sind zulässig, ohne verpflichtenden zweiten Prüfer. Freigabe und Publikation sind getrennte, auditierte Aktionen (Benutzer, Zeitpunkt); keine autonome KI-Freigabe/-Publikation. **Archiviert → Aktiv** ist ausnahmsweise mit ausdrücklicher redaktioneller Bestätigung und dokumentierter Aktualitätsprüfung möglich; ebenso Wiederaufnahme nach Zurückstellung. Ohne Inhaltsänderung keine neue Freigabe; mit Inhaltsänderung neue Beitragsversion/Freigabe. Reaktivierung allein macht keine Fassung öffentlich, Veröffentlichung ist separat zu bestätigen. Entzug öffentlicher Sichtbarkeit bei Zurückstellung/Archivierung und historische Freigaben bleiben nachvollziehbar.
+
 ## 4. Strukturierter Redaktionsstand und politische Einordnung
 
 ### 4.1 Grundsatz
