@@ -37,7 +37,7 @@ type RequestBody = {
   action?: string; topicId?: string; processId?: string; proposalId?: string;
   title?: string; guidingQuestion?: string; description?: string;
   significance?: string; rationale?: string; origin?: string;
-  decision?: string;
+  decision?: string; eventId?: string; rejectionReason?: string; rejectionDetail?: string;
   contributionBody?: string; editorialAssessment?: string; expectedRevision?: number; confirmation?: boolean; contributionVersionId?: string; currencyChecked?: boolean;
 };
 
@@ -81,7 +81,18 @@ export default {
                   join fib.topics t on t.id=pt.topic_id and t.deleted_at is null`,
         );
         const processes = await sql.unsafe('select id,title from fib.processes order by title');
-        return json({ topics, proposals, links, processes });
+        const events = await sql.unsafe("select id,title from fib.events where status='confirmed' order by title limit 300");
+        const eventLinks = await sql.unsafe(`select et.topic_id,et.event_id,et.significance,et.significance_rationale,
+            ev.title as event_title from fib.event_topics et
+            join fib.events ev on ev.id=et.event_id
+            join fib.topics t on t.id=et.topic_id and t.deleted_at is null`);
+        const eventProposals = await sql.unsafe(`select ep.id,ep.topic_id,ep.event_id,ep.suggested_significance,
+            ep.suggested_rationale,ep.origin,ep.status,ep.rejection_reason,ep.confirmed_significance,
+            ep.confirmed_rationale,ev.title as event_title from fib.event_topic_proposals ep
+            join fib.events ev on ev.id=ep.event_id
+            join fib.topics t on t.id=ep.topic_id and t.deleted_at is null
+            order by ep.created_at desc limit 300`);
+        return json({ topics, proposals, links, processes, events, eventLinks, eventProposals });
       }
       if (body.action === 'update_topic') {
         if (!uuid(body.topicId) ||
@@ -317,6 +328,81 @@ export default {
           if(!decision.allowed) return {error:decision.reason,code:409};
           await tx.unsafe(`update fib.topics set deleted_at=now(),deleted_by=$2::uuid,
               updated_at=now() where id=$1::uuid`,[body.topicId,actor]);
+          return {ok:true};
+        });
+        return json(result,'code' in result ? result.code : 200);
+      }
+      if (body.action === 'propose_event') {
+        if (!uuid(body.topicId) || !uuid(body.eventId) || !significance(body.significance) ||
+            typeof body.rationale !== 'string' || !body.rationale.trim() ||
+            body.rationale.length > 4000 || body.origin !== 'editor')
+          return json({error:'invalid_event_proposal'},400);
+        const result=await sql.begin(async tx=>{
+          const topic=await tx.unsafe(
+            'select 1 from fib.topics where id=$1::uuid and deleted_at is null for update',[body.topicId]);
+          if(!topic.length) return {error:'topic_not_found',code:404};
+          const event=await tx.unsafe(
+            "select 1 from fib.events where id=$1::uuid and status='confirmed'",[body.eventId]);
+          if(!event.length) return {error:'event_not_confirmed',code:409};
+          const covered=await tx.unsafe(`select 1 from fib.event_processes ep
+             join fib.process_topics pt on pt.process_id=ep.process_id
+             where ep.event_id=$1::uuid and pt.topic_id=$2::uuid limit 1`,[body.eventId,body.topicId]);
+          if(covered.length) return {error:'event_already_covered_by_process',code:409};
+          const existing=await tx.unsafe(`select 1 from fib.event_topics
+             where event_id=$1::uuid and topic_id=$2::uuid`,[body.eventId,body.topicId]);
+          if(existing.length) return {error:'event_link_already_confirmed',code:409};
+          const pending=await tx.unsafe(`select 1 from fib.event_topic_proposals
+             where event_id=$1::uuid and topic_id=$2::uuid and status='pending'`,[body.eventId,body.topicId]);
+          if(pending.length) return {error:'event_proposal_already_pending',code:409};
+          const rows=await tx.unsafe(`insert into fib.event_topic_proposals
+             (event_id,topic_id,suggested_significance,suggested_rationale,origin)
+             values($1::uuid,$2::uuid,$3,$4,'editor') returning id`,
+             [body.eventId,body.topicId,body.significance,body.rationale.trim()]);
+          return {ok:true,proposalId:rows[0].id};
+        });
+        return json(result,'code' in result ? result.code : 200);
+      }
+      if (body.action === 'decide_event') {
+        const allowedReasons=['insufficient_topic_relation','already_covered','wrong_topic',
+          'insufficient_evidence','not_currently_relevant','other'];
+        if (!uuid(body.proposalId) || !['confirmed','rejected'].includes(body.decision ?? '') ||
+            (body.decision==='confirmed' && (!significance(body.significance) ||
+              typeof body.rationale !== 'string' || !body.rationale.trim() || body.rationale.length>4000)) ||
+            (body.decision==='rejected' && (!allowedReasons.includes(body.rejectionReason ?? '') ||
+              (body.rejectionReason==='other' && !body.rejectionDetail?.trim()))))
+          return json({error:'invalid_event_decision'},400);
+        const result=await sql.begin(async tx=>{
+          const proposal=await tx.unsafe(`select event_id,topic_id,status from fib.event_topic_proposals
+             where id=$1::uuid for update`,[body.proposalId]);
+          if(!proposal.length) return {error:'proposal_not_found',code:404};
+          if(proposal[0].status!=='pending') return {error:'proposal_already_decided',code:409};
+          const topic=await tx.unsafe(
+            'select 1 from fib.topics where id=$1::uuid and deleted_at is null for update',
+            [proposal[0].topic_id]);
+          if(!topic.length) return {error:'topic_not_found',code:404};
+          if(body.decision==='confirmed'){
+            const covered=await tx.unsafe(`select 1 from fib.event_processes ep
+              join fib.process_topics pt on pt.process_id=ep.process_id
+              where ep.event_id=$1::uuid and pt.topic_id=$2::uuid limit 1`,
+              [proposal[0].event_id,proposal[0].topic_id]);
+            if(covered.length) return {error:'event_already_covered_by_process',code:409};
+            const existing=await tx.unsafe(`select 1 from fib.event_topics
+              where event_id=$1::uuid and topic_id=$2::uuid`,[proposal[0].event_id,proposal[0].topic_id]);
+            if(existing.length) return {error:'event_link_already_confirmed',code:409};
+            await tx.unsafe(`insert into fib.event_topics
+              (event_id,topic_id,significance,significance_rationale)
+              values($1::uuid,$2::uuid,$3,$4)`,
+              [proposal[0].event_id,proposal[0].topic_id,body.significance,body.rationale.trim()]);
+          }
+          await tx.unsafe(`update fib.event_topic_proposals set
+             status=$2,reviewed_by=$3::uuid,reviewed_at=now(),
+             confirmed_significance=$4,confirmed_rationale=$5,rejection_reason=$6,rejection_detail=$7
+             where id=$1::uuid`,
+             [body.proposalId,body.decision,actor,
+               body.decision==='confirmed'?body.significance:null,
+               body.decision==='confirmed'?body.rationale?.trim():null,
+               body.decision==='rejected'?body.rejectionReason:null,
+               body.decision==='rejected'?body.rejectionDetail?.trim()??null:null]);
           return {ok:true};
         });
         return json(result,'code' in result ? result.code : 200);
