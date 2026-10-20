@@ -65,6 +65,10 @@ UX: **keine drei parallelen Statusregler**. Status verständlich als kombinierte
 - Trennung „aktiv“ (redaktionelle Weiterbearbeitung) von „veröffentlicht“ (öffentliche Sichtbarkeit). Auch ein aktives Thema kann aktuell nicht veröffentlicht sein.
 - Löschregel konkret: niemals veröffentlicht **und** aktuell keine wirksame Freigabe; Sicherheitsdialog; historische Freigaberücknahmen/Auditrechte im Datenmodell absichern.
 
+### Vereinbarung vom 20.10.2026: erster Statuswechsel
+
+Ein neu angelegtes Thema erhält zunächst den Themenstatus **Entwurf**. **Mit der ersten redaktionellen Freigabe** des zugehörigen Beitrags wechselt der Themenstatus zu **Aktiv**, unabhängig davon, ob die freigegebene Fassung bereits öffentlich veröffentlicht wird. Die getrennte Publikationsanzeige bleibt bis zur tatsächlichen Veröffentlichung **Noch nicht veröffentlicht**. Eine vor Veröffentlichung zurückgenommene Freigabe wird protokolliert; ob bei bisheriger Erstfreigabe zugleich der Themenstatus nach `Entwurf` zurückgesetzt werden soll, ist als Übergangsregel vor Implementierung ausdrücklich festzulegen. Die vier Zielstatus lauten **Entwurf, Aktiv, Zurückgestellt, Archiviert**; der bisherige Status `ruhend` wird fachlich durch `Zurückgestellt` abgelöst (Migration gesondert prüfen).
+
 ## 5. Klärungen vor verbindlicher Übernahme und Umsetzung
 
 1. Abgleich der vier Themenstatus mit bisherigem `aktiv/ruhend/archiviert`; Definition von „Entwurf“ in Relation zu Freigabe, Koordination und Publikation; Migrationspfad.
