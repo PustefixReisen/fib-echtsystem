@@ -35,3 +35,11 @@ test('migration trigger delimiters valid and paired',()=>{
  assert.equal(schema.split('end; '+tag+';').length-1,2);
  assert.doesNotMatch(schema,/language plpgsql as \$\s*\n/);
 });
+
+test('archived topic can be revised while staying nonpublic',()=>{
+ assert.match(api,/body\.action === 'get_contribution'/);
+ assert.match(api,/matchingFreshApproval/);
+ assert.match(api,/newContentApproved:matchingFreshApproval/);
+ assert.match(api,/currencyCheckConfirmed:body\.currencyChecked === true && approved\.length > 0/);
+ assert.match(api,/unchanged \? published\[0\]\.contribution_version_id : approved\[0\]\.id/);
+});
