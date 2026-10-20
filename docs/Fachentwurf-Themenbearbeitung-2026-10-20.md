@@ -82,3 +82,13 @@ Ein neu angelegtes Thema erhält zunächst den Themenstatus **Entwurf**. **Mit d
 ## 6. Weiteres Vorgehen
 
 Nach fachlicher Freigabe dieses Entwurfs die Änderungen gezielt in den jeweiligen Primärdokumenten (`Themen-und-Vorgangslogik`, `Datenmodell`, `Begriffe`) konsolidieren, dokumentierte Entscheidungen/Abweichungen festhalten und anschließend technische Teilaufgaben sowie UI-Migration des aktuellen Steppers ableiten. Dieser Entwurf ist **keine** implizite Entscheidung, den Prototyp unverzüglich umzubauen.
+
+## 7. Abgleich mit verbindlichen Primärregeln (20.10.2026)
+
+- **Redaktionelle Koordination:** Im Datenmodell §20.2 ist `Federführung` bereits als weiche, änderbare Zuordnung zu einem FIB-Benutzer definiert, ohne exklusive Bearbeitungsrechte. Für das Feld „Redaktionelle Koordination“ kann diese bestehende Regel genutzt werden; keine neue Parallelrolle einführen.
+- **Versionierung:** Datenmodell §4.6 fordert fachliche **Gesamtversionen** eines Themas auch bei wesentlichen Änderungen von Sachstand, Wirkungen, Beziehungen oder Abgrenzung. Die neu beschlossene **Beitrags-/Freigabeversion** entsteht bei Freigabe. Beide sind deshalb **unterschiedliche fachliche Versionierungsebenen**, die nicht versehentlich gleichgesetzt werden dürfen. Im UI kann trotzdem nur ein „Versionsverlauf“ angezeigt werden, der die publizierten/freigegebenen Beitragsfassungen priorisiert.
+- **Veröffentlichung und Rechte:** Datenmodell §15 verweist auf `Fachliche-Plausibilitaets-und-Freigaberegeln.md`; Publikation, Widerruf und Wiederaufnahme müssen mit dessen Freigabe- und Berechtigungsmodell konsistent sein. Hier noch keine Berechtigungsentscheidung getroffen.
+- **Beziehungen:** Das bestehende Primärkonzept lässt direkte Ereignisse nur ergänzend neben Vorgangsbezügen zu und verbietet die doppelte Gewichtung desselben Sachverhalts. Die gemeinsame Liste der „Lokalen Bezüge“ ändert diesen Grundsatz nicht.
+- **Begriffliche Angleichung:** `Zurückgestellt` für Themen statt bisher `ruhend` ist fachlich vereinbart, technisch aber erst nach Prüfung gespeicherter Daten und abhängiger Regeln zu migrieren. Die Vorgangsstatus sind davon **nicht** automatisch betroffen.
+
+**Offene Präzisierung:** Wie interner fachlicher Gesamtversionsstand eines Themas und öffentlich freigegebene Beitragsversion im Versionsverlauf verknüpft werden, muss im Datenmodell und in der UX abgrenzbar bleiben. Ebenso ist bei einem archivierten Thema eine spätere Ausnahme-Wiederaufnahme gesondert zu autorisieren.
