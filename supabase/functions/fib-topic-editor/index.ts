@@ -82,6 +82,34 @@ export default {
         const processes = await sql.unsafe('select id,title from fib.processes order by title');
         return json({ topics, proposals, links, processes });
       }
+      if (body.action === 'get_contribution') {
+        if (!uuid(body.topicId)) return json({error:'invalid_topic'},400);
+        const topics = await sql.unsafe(
+          'select id,title,guiding_question,description,status from fib.topics where id=$1::uuid',
+          [body.topicId],
+        );
+        if (!topics.length) return json({error:'topic_not_found'},404);
+        const draft = await sql.unsafe(
+          'select body,editorial_assessment,revision,updated_at from fib.topic_contribution_drafts where topic_id=$1::uuid',
+          [body.topicId],
+        );
+        const versions = await sql.unsafe(`select v.id,v.version_no,v.body,v.editorial_assessment,
+                 v.approved_at,v.revoked_at,p.published_at,p.ended_at
+               from fib.topic_contribution_versions v
+               left join lateral (
+                 select published_at,ended_at from fib.topic_publications
+                 where contribution_version_id=v.id order by published_at desc limit 1
+               ) p on true
+               where v.topic_id=$1::uuid order by v.version_no desc limit 100`,
+          [body.topicId],
+        );
+        const currentPublication = await sql.unsafe(`select contribution_version_id,published_at
+             from fib.topic_publications where topic_id=$1::uuid and ended_at is null`,
+          [body.topicId],
+        );
+        return json({topic:topics[0],draft:draft[0] ?? null,versions,
+          currentPublication:currentPublication[0] ?? null});
+      }
       if (body.action === 'create_topic') {
         if (typeof body.title !== 'string' || !body.title.trim() || body.title.length > 200 ||
             typeof body.guidingQuestion !== 'string' || !body.guidingQuestion.trim() || body.guidingQuestion.length > 1000 ||
