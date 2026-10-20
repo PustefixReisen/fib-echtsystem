@@ -82,6 +82,34 @@ export default {
         const processes = await sql.unsafe('select id,title from fib.processes order by title');
         return json({ topics, proposals, links, processes });
       }
+      if (body.action === 'get_contribution') {
+        if (!uuid(body.topicId)) return json({error:'invalid_topic'},400);
+        const topics = await sql.unsafe(
+          'select id,title,guiding_question,description,status from fib.topics where id=$1::uuid',
+          [body.topicId],
+        );
+        if (!topics.length) return json({error:'topic_not_found'},404);
+        const draft = await sql.unsafe(
+          'select body,editorial_assessment,revision,updated_at from fib.topic_contribution_drafts where topic_id=$1::uuid',
+          [body.topicId],
+        );
+        const versions = await sql.unsafe(`select v.id,v.version_no,v.body,v.editorial_assessment,
+                 v.approved_at,v.revoked_at,p.published_at,p.ended_at
+               from fib.topic_contribution_versions v
+               left join lateral (
+                 select published_at,ended_at from fib.topic_publications
+                 where contribution_version_id=v.id order by published_at desc limit 1
+               ) p on true
+               where v.topic_id=$1::uuid order by v.version_no desc limit 100`,
+          [body.topicId],
+        );
+        const currentPublication = await sql.unsafe(`select contribution_version_id,published_at
+             from fib.topic_publications where topic_id=$1::uuid and ended_at is null`,
+          [body.topicId],
+        );
+        return json({topic:topics[0],draft:draft[0] ?? null,versions,
+          currentPublication:currentPublication[0] ?? null});
+      }
       if (body.action === 'create_topic') {
         if (typeof body.title !== 'string' || !body.title.trim() || body.title.length > 200 ||
             typeof body.guidingQuestion !== 'string' || !body.guidingQuestion.trim() || body.guidingQuestion.length > 1000 ||
@@ -106,7 +134,6 @@ export default {
         const result = await sql.begin(async tx => {
           const topic = await tx.unsafe('select status from fib.topics where id=$1::uuid for update',[body.topicId]);
           if (!topic.length) return {error:'topic_not_found',code:404};
-          if (topic[0].status === 'archived') return {error:'archived_topic_readonly',code:409};
           const current = await tx.unsafe('select revision from fib.topic_contribution_drafts where topic_id=$1::uuid for update',[body.topicId]);
           const actual = current.length ? Number(current[0].revision) : 0;
           if (actual !== body.expectedRevision) return {error:'revision_conflict',code:409};
@@ -209,12 +236,18 @@ export default {
           const unchanged = lastVersion.length > 0 && (
             !drafts.length || (drafts[0].body === lastVersion[0].body &&
             drafts[0].editorial_assessment === lastVersion[0].editorial_assessment));
+          const approved = await tx.unsafe(`select id,body,editorial_assessment
+              from fib.topic_contribution_versions where topic_id=$1::uuid
+              and revoked_at is null order by version_no desc limit 1`,[body.topicId]);
+          const matchingFreshApproval = approved.length > 0 && drafts.length > 0 &&
+            approved[0].body === drafts[0].body &&
+            approved[0].editorial_assessment === drafts[0].editorial_assessment;
           const check=decideTopicAction(action,{
             topicStatus:topic[0].status,
             explicitConfirmation:body.confirmation === true,
-            currencyCheckConfirmed:body.currencyChecked === true && published.length > 0,
+            currencyCheckConfirmed:body.currencyChecked === true && approved.length > 0,
             unchangedContent:unchanged,
-            newContentApproved:false,
+            newContentApproved:matchingFreshApproval,
           });
           if (!check.allowed) return {error:check.reason,code:409};
           if (action !== 'reactivate')
@@ -225,7 +258,7 @@ export default {
             await tx.unsafe(`insert into fib.topic_currency_checks
                 (topic_id,contribution_version_id,checked_by,result)
                 values ($1::uuid,$2::uuid,$3::uuid,'current')`,
-                [body.topicId,published[0].contribution_version_id,actor]);
+                [body.topicId,unchanged ? published[0].contribution_version_id : approved[0].id,actor]);
           await tx.unsafe('update fib.topics set status=$2,updated_at=now() where id=$1::uuid',
             [body.topicId,check.resultStatus]);
           return {ok:true,status:check.resultStatus};
