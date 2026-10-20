@@ -90,7 +90,7 @@ begin
    raise exception 'approved version content is immutable';
  end if;
  return new;
-end $topic_guard$;
+end; $topic_guard$;
 create trigger topic_approval_immutability before update on fib.topic_contribution_versions
  for each row execute function fib.prevent_published_topic_approval_revocation();
 
@@ -106,7 +106,7 @@ begin
    raise exception 'publication requires a valid non-revoked topic approval';
  end if;
  return new;
-end $topic_guard$;
+end; $topic_guard$;
 create trigger topic_publication_approval_guard before insert on fib.topic_publications
  for each row execute function fib.validate_topic_publication_insert();
 
