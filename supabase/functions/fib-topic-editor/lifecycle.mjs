@@ -13,7 +13,6 @@ export function decideTopicAction(action, state) {
   switch (action) {
     case 'approve':
       if (!state.body?.trim()) return fail('empty_contribution');
-      if (topicStatus === 'archived' || topicStatus === 'deferred') return fail('topic_not_active');
       if (approvedVersion && !approvalRevoked) return fail('already_approved');
       return ok(topicStatus === 'draft' ? 'active' : topicStatus);
     case 'revoke':
