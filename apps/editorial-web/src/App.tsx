@@ -16,6 +16,8 @@ type AuthState = 'checking' | 'auth_error' | 'signed_out' | 'aal1_no_factor' | '
 type EditorialView = 'dashboard' | 'event' | 'events' | 'topics' | 'profile' | 'users';
 type TopicData = { id:string; title:string; guiding_question:string | null; description:string | null; status:string };
 type TopicProposal = { id:string; topic_id:string; process_id:string; suggested_significance:string; suggested_rationale:string; status:string; origin:string; process_title:string; topic_title:string };
+type TopicContributionVersion = {id:string;version_no:number;body:string;editorial_assessment:string|null;approved_at:string;revoked_at:string|null;published_at:string|null;ended_at:string|null};
+type TopicContributionData = {topic:TopicData;draft:{body:string;editorial_assessment:string|null;revision:number;updated_at:string}|null;versions:TopicContributionVersion[];currentPublication:{contribution_version_id:string;published_at:string}|null};
 type TopicListData = { topics:TopicData[]; proposals:TopicProposal[]; processes:{id:string;title:string}[]; links:{topic_id:string;process_id:string;significance:string;significance_rationale:string|null;process_title:string}[] };
 
 type CoordinationState = {
@@ -133,6 +135,15 @@ export function App() {
   const [message, setMessage] = useState(authLinkError ? 'Dieser Link ist ungültig oder abgelaufen. Bitte fordere einen neuen Link an.' : '');
   const [view, setView] = useState<EditorialView>('dashboard');
   const [topicData,setTopicData] = useState<TopicListData | null>(null);
+  const [topicListOpen,setTopicListOpen] = useState(true);
+  const [topicSearch,setTopicSearch] = useState('');
+  const [topicFilter,setTopicFilter] = useState('all');
+  const [topicEditTitle,setTopicEditTitle] = useState('');
+  const [topicEditQuestion,setTopicEditQuestion] = useState('');
+  const [topicEditDescription,setTopicEditDescription] = useState('');
+  const [topicContribution,setTopicContribution] = useState<TopicContributionData | null>(null);
+  const [topicBody,setTopicBody] = useState('');
+  const [topicAssessment,setTopicAssessment] = useState('');
   const [topicBusy,setTopicBusy] = useState(false);
   const [topicError,setTopicError] = useState('');
   const [topicTitle,setTopicTitle] = useState('');
