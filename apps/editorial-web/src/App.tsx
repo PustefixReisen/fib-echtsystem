@@ -1395,7 +1395,7 @@ export function App() {
               {topicStep===2 && <section className="topic-editor-area">
                 <h2>Lokale Bezüge</h2>
                 <p>Vorgänge und ergänzende Einzelereignisse, die für dieses Thema Bedeutung besitzen. Eine Zuordnung wird erst nach redaktioneller Bestätigung wirksam.</p>
-                <p className="meta">Die direkte Suche nach ergänzenden Einzelereignissen folgt in einem weiteren Arbeitspaket.</p>
+                <p className="meta">Einzelereignisse werden nur zusätzlich aufgenommen, wenn sie nicht bereits über einen zugeordneten Vorgang enthalten sind.</p>
             <h3>Vorgang einem Thema vorschlagen</h3>
             <form onSubmit={e=>{e.preventDefault();void topicAction('propose',{topicId,processId:selectableProcessId,significance:topicSignificance,rationale:topicRationale,origin:'editor'});}}>
   
@@ -1414,8 +1414,27 @@ export function App() {
               <label>Begründung<textarea required maxLength={4000} value={topicRationale} onChange={e=>setTopicRationale(e.target.value)}/></label>
               <button type="submit" disabled={topicBusy || !topicId || !selectableProcessId || !topicRationale.trim()}>Vorschlag speichern (noch nicht wirksam)</button>
             </form>
+            <h3>Einzelereignis als lokalen Bezug vorschlagen</h3>
+            <form onSubmit={e=>{e.preventDefault();void topicAction('propose_event',{topicId,eventId:topicEventId,significance:topicEventSignificance,rationale:topicEventRationale,origin:'editor'});}}>
+              <label>Ereignis auswählen
+                <select value={topicEventId} onChange={e=>setTopicEventId(e.target.value)} required>
+                  <option value="">Bitte auswählen …</option>
+                  {(topicData?.events??[]).filter(e=>!(topicData?.eventLinks??[]).some(l=>l.topic_id===topicId&&l.event_id===e.id)&&
+                    !(topicData?.eventProposals??[]).some(q=>q.topic_id===topicId&&q.event_id===e.id&&q.status==='pending')).map(e=><option key={e.id} value={e.id}>{e.title}</option>)}
+                </select>
+              </label>
+              <label>Vorgeschlagene Bedeutung<select value={topicEventSignificance} onChange={e=>setTopicEventSignificance(e.target.value)}>
+                <option value="defining">Prägend</option><option value="relevant">Relevant</option><option value="supplementary">Ergänzend</option>
+              </select></label>
+              <label>Begründung<textarea maxLength={4000} required value={topicEventRationale} onChange={e=>setTopicEventRationale(e.target.value)}/></label>
+              <button type="submit" disabled={topicBusy||!topicEventId||!topicEventRationale.trim()}>Ereignis zur Prüfung vorschlagen</button>
+            </form>
             <h3>Bestätigte lokale Bezüge</h3>
-            {topicData?.links.filter(l=>l.topic_id===topicId).map(l=><details className="topic-confirmed-link" key={l.process_id}><summary><span aria-hidden="true">✓ </span>{l.process_title} · {l.significance==='defining'?'Prägend':l.significance==='relevant'?'Relevant':'Ergänzend'} <span className="topic-link-detail-hint"><span className="topic-detail-action">Begründung anzeigen ▾</span></span></summary><p>{l.significance_rationale || 'Keine Begründung hinterlegt.'}</p></details>)}
+            {topicData?.links.filter(l=>l.topic_id===topicId).map(l=><details className="topic-confirmed-link" key={l.process_id}><summary><img className="object-icon" src={processIcon} alt="" /> {l.process_title} · {l.significance==='defining'?'Prägend':l.significance==='relevant'?'Relevant':'Ergänzend'} <span className="topic-link-detail-hint"><span className="topic-detail-action">Begründung anzeigen ▾</span></span></summary><p>{l.significance_rationale || 'Keine Begründung hinterlegt.'}</p></details>)}
+            {(topicData?.eventLinks??[]).filter(l=>l.topic_id===topicId).map(l=><details className="topic-confirmed-link" key={l.event_id}>
+              <summary><img className="object-icon" src={eventIcon} alt="" /> {l.event_title} · {l.significance==='defining'?'Prägend':l.significance==='relevant'?'Relevant':'Ergänzend'} <span className="topic-detail-action">Begründung anzeigen ▾</span></summary>
+              <p>{l.significance_rationale||'Keine Begründung hinterlegt.'}</p>
+            </details>)}
             {topicData?.proposals.filter(p=>p.topic_id===topicId && p.status==='pending').map(p=><p key={p.id}>Offen: {p.process_title}</p>)}
 
             <h3>Offene Vorschläge</h3>
@@ -1430,7 +1449,31 @@ export function App() {
                 </div>
               </article>;
             })}
-            {!topicData?.proposals.some(p=>p.topic_id===topicId && p.status==='pending') && <p>Keine offenen Vorschläge.</p>}
+            {(topicData?.eventProposals??[]).filter(p=>p.topic_id===topicId&&p.status==='pending').map(p=>{
+              const review=topicEventReviews[p.id]??{significance:p.suggested_significance,rationale:p.suggested_rationale,reason:'',detail:''};
+              return <article className="work-item fib-topic-review" key={p.id}>
+                <div><h3><img className="object-icon" src={eventIcon} alt="" /> {p.event_title}</h3>
+                  <p className="meta">Einzelereignis · Vorschlag aus {p.origin==='ai'?'KI':'Redaktion'}</p>
+                  <p>KI-/Redaktionsvorschlag: {p.suggested_rationale}</p>
+                  <label>Bedeutung für das Thema<select value={review.significance} onChange={e=>setTopicEventReviews(v=>({...v,[p.id]:{...review,significance:e.target.value}}))}>
+                    <option value="defining">Prägend</option><option value="relevant">Relevant</option><option value="supplementary">Ergänzend</option>
+                  </select></label>
+                  <label>Redaktionelle Begründung<textarea maxLength={4000} value={review.rationale} onChange={e=>setTopicEventReviews(v=>({...v,[p.id]:{...review,rationale:e.target.value}}))}/></label>
+                  <label>Grund bei Ablehnung<select value={review.reason} onChange={e=>setTopicEventReviews(v=>({...v,[p.id]:{...review,reason:e.target.value}}))}>
+                    <option value="">Bitte bei Ablehnung auswählen</option>
+                    <option value="insufficient_topic_relation">Zu wenig Themenbezug</option><option value="already_covered">Bereits abgedeckt</option>
+                    <option value="wrong_topic">Anderes Thema</option><option value="insufficient_evidence">Unzureichende Belege</option>
+                    <option value="not_currently_relevant">Derzeit nicht relevant</option><option value="other">Sonstiger Grund</option>
+                  </select></label>
+                  {review.reason==='other' && <label>Erläuterung zur Ablehnung<textarea maxLength={2000} value={review.detail} onChange={e=>setTopicEventReviews(v=>({...v,[p.id]:{...review,detail:e.target.value}}))}/></label>}
+                  <div className="topic-review-actions">
+                    <button type="button" disabled={topicBusy||!review.rationale.trim()} onClick={()=>void topicAction('decide_event',{proposalId:p.id,decision:'confirmed',significance:review.significance,rationale:review.rationale})}>Verbindlich zuordnen</button>
+                    <button type="button" disabled={topicBusy||!review.reason||(review.reason==='other'&&!review.detail.trim())} onClick={()=>void topicAction('decide_event',{proposalId:p.id,decision:'rejected',rejectionReason:review.reason,rejectionDetail:review.detail})}>Fachlich ablehnen</button>
+                  </div>
+                </div>
+              </article>;
+            })}
+            {!topicData?.proposals.some(p=>p.topic_id===topicId && p.status==='pending') && !(topicData?.eventProposals??[]).some(p=>p.topic_id===topicId&&p.status==='pending') && <p>Keine offenen Vorschläge.</p>}
 
               </section>}
               {topicStep===3 && <section className="topic-editor-area">
