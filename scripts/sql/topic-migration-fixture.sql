@@ -9,3 +9,5 @@ create table fib.topics (
  constraint topics_status_check check(status in ('active','dormant','archived'))
 );
 insert into fib.topics(title) values ('Unit test theme');
+
+create table fib.events (id uuid primary key default gen_random_uuid(), title text not null, status text not null default 'confirmed');
