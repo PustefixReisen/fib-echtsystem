@@ -563,3 +563,32 @@ Die quellengebundene, redaktionell verantwortete Antwort auf eine Vertiefungsfra
 ## 10. Noch zu ergänzende Begriffe
 
 Das Register wird weiter anlassbezogen gepflegt. Noch nicht zwingend als eigene Glossarbegriffe ausmodelliert sind insbesondere spezielle technische Begriffe der späteren physischen Datenbank-, Sicherheits- und Betriebsarchitektur. Diese werden erst aufgenommen, wenn ihre fachliche Bedeutung im Projekt festgelegt ist.
+## Ergänzende Begriffe zur Themenbearbeitung (20.10.2026)
+
+### `Lokale Bezüge`
+
+Benutzernahe Bezeichnung für die einem Thema vorgeschlagenen, zu prüfenden oder redaktionell bestätigten Zuordnungen von **Vorgängen** und zusätzlich direkt einbezogenen **Ereignissen**. Keine neue eigenständige Sachobjektart. Ein Vorgang bringt seine Ereignisse bereits in die Themenanalyse ein; einzelne direkte Ereignisbezüge dürfen dieselben Tatsachen nicht doppelt gewichten.
+
+### `Zuordnungsstatus`
+
+Redaktioneller Entscheidungsstand eines lokalen Bezugs, getrennt von der Einstufung **Bedeutung für das Thema** (prägend / relevant / ergänzend). Die Arbeitsbegriffe lauten KI-Vorschlag, Kandidat, zugeordnet, zurückgestellt und fachlich unpassend. Die KI-Herkunft wird **zusätzlich getrennt** vom redaktionellen Zustand gespeichert. „Fachlich unpassend“ ist eine begründete Ablehnung; eine erneute redaktionelle Prüfung darf bei geänderter Faktenlage angeregt werden, nicht automatisch die Ablehnung aufheben. Die endgültige technische Zustandsmaschine bleibt vor Implementierung abzugleichen.
+
+### `Themadefinition`
+
+Interne fachliche Beschreibung des Themas mit Titel, Leitfrage, Erläuterung und den nach Themen- und Vorgangslogik erforderlichen Kontexten, Perspektiven, Abgrenzungen und Bezügen.
+
+### `Thementext`
+
+Sachliche, an die Öffentlichkeit gerichtete Darstellung eines Themas. Nicht mit der optionalen politischen Bewertung **„Unsere Einordnung“** gleichzusetzen.
+
+### `Beitragsversion`
+
+Freigegebene Fassung des Thementextes einschließlich der zugehörigen optionalen Einordnung und der referenzierten fachlichen Grundlage. Im redaktionellen **Versionsverlauf** einsehbar; verschieden von der intern geführten fachlichen **Gesamtversion** des Themas.
+
+### `Themenstatus`
+
+Fachlicher Lebenszyklus eines Themas: **Entwurf**, **Aktiv**, **Zurückgestellt**, **Archiviert**; unabhängig von Freigabe und Sichtbarkeit. Erste Beitragsfreigabe aktiviert den Entwurf; wird diese vor der ersten Veröffentlichung widerrufen, wechselt er zurück zu Entwurf. Zurückgestellt ist eine vorübergehende, Archiviert eine dauerhaft angelegte Herausnahme aus dem öffentlichen Angebot.
+
+### `Wiederaufnahme eines Themas`
+
+Redaktionell bestätigter Statuswechsel von **Zurückgestellt** oder ausnahmsweise **Archiviert** nach **Aktiv**, begleitet von dokumentierter **Aktualitätsprüfung** (Person, Datum, Ergebnis). Bei unverändertem Beitrag genügt die Prüfung ohne erneute Freigabe; bei geändertem Inhalt ist eine neue Freigabe erforderlich. Wiederaufnahme bedeutet noch keine automatische öffentliche Veröffentlichung.
