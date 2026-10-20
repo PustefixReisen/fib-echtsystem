@@ -32,6 +32,6 @@ test('topic publication uses explicit confirmation and current approval',()=>{
 test('migration trigger delimiters valid and paired',()=>{
  const tag='$topic_guard$';
  assert.equal(schema.split('language plpgsql as '+tag).length-1,2);
- assert.equal(schema.split('end '+tag+';').length-1,2);
+ assert.equal(schema.split('end; '+tag+';').length-1,2);
  assert.doesNotMatch(schema,/language plpgsql as \$\s*\n/);
 });
