@@ -1,3 +1,4 @@
+import { decideTopicAction } from './lifecycle.mjs';
 import postgres from 'npm:postgres@3.4.7';
 
 // Internal topics editing API. Browser never gets direct table grants.
@@ -37,6 +38,7 @@ type RequestBody = {
   title?: string; guidingQuestion?: string; description?: string;
   significance?: string; rationale?: string; origin?: string;
   decision?: string;
+  contributionBody?: string; editorialAssessment?: string; expectedRevision?: number; confirmation?: boolean; contributionVersionId?: string; currencyChecked?: boolean;
 };
 
 export default {
@@ -93,6 +95,57 @@ export default {
           [body.title.trim(), body.guidingQuestion.trim(), body.description?.trim() || null],
         );
         return json({ ok: true, topic: rows[0] });
+      }
+      if (body.action === 'save_contribution_draft') {
+        if (!uuid(body.topicId) || typeof body.contributionBody !== 'string' ||
+            body.contributionBody.length > 30000 ||
+            (body.editorialAssessment != null && (typeof body.editorialAssessment !== 'string' || body.editorialAssessment.length > 30000)) ||
+            !Number.isSafeInteger(body.expectedRevision) || Number(body.expectedRevision) < 0) {
+          return json({error:'invalid_contribution_draft'},400);
+        }
+        const result = await sql.begin(async tx => {
+          const topic = await tx.unsafe('select status from fib.topics where id=$1::uuid for update',[body.topicId]);
+          if (!topic.length) return {error:'topic_not_found',code:404};
+          if (topic[0].status === 'archived') return {error:'archived_topic_readonly',code:409};
+          const current = await tx.unsafe('select revision from fib.topic_contribution_drafts where topic_id=$1::uuid for update',[body.topicId]);
+          const actual = current.length ? Number(current[0].revision) : 0;
+          if (actual !== body.expectedRevision) return {error:'revision_conflict',code:409};
+          const rows = await tx.unsafe(`insert into fib.topic_contribution_drafts
+              (topic_id,body,editorial_assessment,revision,updated_by,updated_at)
+              values ($1::uuid,$2,$3,1,$4::uuid,now())
+              on conflict (topic_id) do update set body=excluded.body,
+                editorial_assessment=excluded.editorial_assessment,
+                revision=fib.topic_contribution_drafts.revision+1,
+                updated_by=excluded.updated_by,updated_at=now()
+              returning revision`,
+              [body.topicId,body.contributionBody,body.editorialAssessment ?? null,actor]);
+          return {ok:true,revision:Number(rows[0].revision)};
+        });
+        return json(result,'code' in result ? result.code : 200);
+      }
+      if (body.action === 'approve_contribution') {
+        if (!uuid(body.topicId)) return json({error:'invalid_topic'},400);
+        const result = await sql.begin(async tx => {
+          const topics = await tx.unsafe('select status from fib.topics where id=$1::uuid for update',[body.topicId]);
+          if (!topics.length) return {error:'topic_not_found',code:404};
+          const drafts = await tx.unsafe('select body,editorial_assessment from fib.topic_contribution_drafts where topic_id=$1::uuid for update',[body.topicId]);
+          const valid = decideTopicAction('approve',{topicStatus:topics[0].status,body:drafts[0]?.body,approvedVersion:false,approvalRevoked:false});
+          if (!valid.allowed) return {error:valid.reason,code:409};
+          const existing = await tx.unsafe(`select 1 from fib.topic_contribution_versions
+              where topic_id=$1::uuid and revoked_at is null
+                and not exists(select 1 from fib.topic_publications where contribution_version_id=fib.topic_contribution_versions.id)
+              limit 1`,[body.topicId]);
+          if (existing.length) return {error:'unpublished_approval_already_exists',code:409};
+          const revisions=await tx.unsafe('select id from fib.topic_revisions where topic_id=$1::uuid order by revision_no desc limit 1',[body.topicId]);
+          const rows=await tx.unsafe(`insert into fib.topic_contribution_versions
+             (topic_id,version_no,topic_revision_id,body,editorial_assessment,approved_by)
+             values ($1::uuid,(select coalesce(max(version_no),0)+1 from fib.topic_contribution_versions where topic_id=$1::uuid),
+                     $2::uuid,$3,$4,$5::uuid) returning id,version_no`,
+             [body.topicId,revisions[0]?.id ?? null,drafts[0].body,drafts[0].editorial_assessment,actor]);
+          if (valid.resultStatus !== topics[0].status) await tx.unsafe('update fib.topics set status=$2,updated_at=now() where id=$1::uuid',[body.topicId,valid.resultStatus]);
+          return {ok:true,versionId:rows[0].id,versionNo:rows[0].version_no};
+        });
+        return json(result,'code' in result ? result.code : 200);
       }
       if (body.action === 'propose') {
         if (!uuid(body.topicId) || !uuid(body.processId) || !significance(body.significance) ||
