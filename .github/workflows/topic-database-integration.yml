@@ -1,0 +1,57 @@
+name: Topic Database Integration Tests
+
+on:
+  pull_request:
+    paths:
+      - 'tests/sql/topic_*'
+      - 'supabase/migrations/20261020160000_fib_topic_contribution_lifecycle.sql'
+      - '.github/workflows/topic-database-integration.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'tests/sql/topic_*'
+      - 'supabase/migrations/20261020160000_fib_topic_contribution_lifecycle.sql'
+      - '.github/workflows/topic-database-integration.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  isolated-postgres:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: topic-ci-only
+          POSTGRES_DB: fib_topic_test
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U postgres -d fib_topic_test"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+    env:
+      PGHOST: localhost
+      PGPORT: 5432
+      PGUSER: postgres
+      PGPASSWORD: topic-ci-only
+      PGDATABASE: fib_topic_test
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install PostgreSQL client
+        run: sudo apt-get update -qq && sudo apt-get install -y postgresql-client
+      - name: Prepare minimal isolated FIB fixture
+        run: psql -v ON_ERROR_STOP=1 -f tests/sql/topic_integration_fixture.sql
+      - name: Apply actual versioned topic migration
+        run: psql -v ON_ERROR_STOP=1 -f supabase/migrations/20261020160000_fib_topic_contribution_lifecycle.sql
+      - name: Check invariants and roll back all test mutations
+        run: psql -v actor_id=11111111-1111-4111-8111-111111111111 -f tests/sql/topic_publication_invariants.rollback.sql
+      - name: Verify rollback left no test records
+        run: |
+          test "$(psql -Atc 'select count(*) from fib.topics')" = 0
+          test "$(psql -Atc 'select count(*) from fib.topic_publications')" = 0
+          test "$(psql -Atc 'select count(*) from fib.topic_contribution_versions')" = 0
