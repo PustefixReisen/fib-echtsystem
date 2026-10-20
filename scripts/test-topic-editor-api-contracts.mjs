@@ -43,3 +43,13 @@ test('archived topic can be revised while staying nonpublic',()=>{
  assert.match(api,/currencyCheckConfirmed:body\.currencyChecked === true && approved\.length > 0/);
  assert.match(api,/unchanged \? published\[0\]\.contribution_version_id : approved\[0\]\.id/);
 });
+
+test('topic removal is gated by published history and effective approval',()=>{
+ assert.match(api,/body\.action === 'delete_topic'/);
+ assert.match(api,/decideTopicAction\('delete'/);
+ assert.match(api,/everPublished:publication\.length>0/);
+ assert.match(api,/approvedVersion:approvals\.length>0/);
+ assert.match(api,/explicitConfirmation:body\.confirmation===true/);
+ assert.match(api,/deleted_at=now\(\),deleted_by/);
+ assert.match(api,/where deleted_at is null order by title/);
+});
