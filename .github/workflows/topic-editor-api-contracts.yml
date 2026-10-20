@@ -6,10 +6,12 @@ on:
       - 'supabase/functions/fib-topic-editor/**'
       - 'supabase/migrations/20261020160000_fib_topic_contribution_lifecycle.sql'
       - 'supabase/migrations/20261020172000_fib_topic_safe_delete.sql'
+      - 'supabase/migrations/20261020180000_fib_event_topic_proposals.sql'
       - 'scripts/test-topic-editor-api-contracts.mjs'
       - 'scripts/sql/topic-migration-fixture.sql'
       - 'scripts/sql/topic-migration-assertions.sql'
       - 'scripts/sql/topic-safe-delete-assertions.sql'
+      - 'scripts/sql/topic-event-proposals-assertions.sql'
       - '.github/workflows/topic-editor-api-contracts.yml'
   push:
     branches: [main]
@@ -17,6 +19,7 @@ on:
       - 'supabase/functions/fib-topic-editor/**'
       - 'supabase/migrations/20261020160000_fib_topic_contribution_lifecycle.sql'
       - 'supabase/migrations/20261020172000_fib_topic_safe_delete.sql'
+      - 'supabase/migrations/20261020180000_fib_event_topic_proposals.sql'
       - 'scripts/test-topic-editor-api-contracts.mjs'
       - '.github/workflows/topic-editor-api-contracts.yml'
 
@@ -68,3 +71,7 @@ jobs:
         run: psql -v ON_ERROR_STOP=1 -f supabase/migrations/20261020172000_fib_topic_safe_delete.sql
       - name: Verify safe-delete auditing
         run: psql -v ON_ERROR_STOP=1 -f scripts/sql/topic-safe-delete-assertions.sql
+      - name: Apply event proposal migration on disposable database
+        run: psql -v ON_ERROR_STOP=1 -f supabase/migrations/20261020180000_fib_event_topic_proposals.sql
+      - name: Verify supplemental event proposal invariants
+        run: psql -v ON_ERROR_STOP=1 -f scripts/sql/topic-event-proposals-assertions.sql
