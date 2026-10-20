@@ -92,3 +92,9 @@ Nach fachlicher Freigabe dieses Entwurfs die Änderungen gezielt in den jeweilig
 - **Begriffliche Angleichung:** `Zurückgestellt` für Themen statt bisher `ruhend` ist fachlich vereinbart, technisch aber erst nach Prüfung gespeicherter Daten und abhängiger Regeln zu migrieren. Die Vorgangsstatus sind davon **nicht** automatisch betroffen.
 
 **Bestätigte Entscheidung (20.10.2026):** Redaktionell wird ein einziger einfacher **Versionsverlauf freigegebener Beitragsfassungen** angezeigt. Änderungen an Themendefinition, lokalen Bezügen und sonstigen fachlichen Angaben werden **gesondert intern und nachvollziehbar versioniert**. Beide Versionierungsebenen bleiben fachlich und technisch unterscheidbar; ihre referenzielle Verknüpfung ist bei technischer Modellierung festzulegen. Ebenso ist bei einem archivierten Thema eine spätere Ausnahme-Wiederaufnahme gesondert zu autorisieren.
+
+## 8. Berechtigungsentscheidung: Selbstfreigabe (20.10.2026)
+
+**Fachlich bestätigt:** Ein FIB-Redakteur darf einen eigenen Beitrag **selbst freigeben und veröffentlichen**. Eine zweite Person ist für die reguläre Freigabe nicht verpflichtend. Die Identität der freigebenden und veröffentlichenden Person sowie die jeweiligen Zeitpunkte werden protokolliert; fachliche Freigabe und tatsächliche Veröffentlichung bleiben getrennte Vorgänge. Die KI darf weder freigeben noch veröffentlichen. Eine spätere optionale Vier-Augen-Regel kann gesondert konzipiert werden, ist aber keine Voraussetzung des MVP.
+
+Die übrige Berechtigungsmatrix (insbesondere Rücknahme, Archivierung und Löschung) ist vor Implementierung mit dem bestehenden Rollen- und Fachfunktionskonzept abzugleichen.
