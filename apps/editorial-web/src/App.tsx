@@ -346,6 +346,7 @@ export function App() {
       await loadTopics();
       if(action==='create_topic') {setTopicCreateOpen(false);setTopicTitle('');setTopicQuestion('');setTopicDescription('');if(data.topic){setTopicId(data.topic.id);setTopicListOpen(false);setTopicStep(1);void loadTopicContribution(data.topic.id);}}
       if(action==='propose') {setTopicRationale('');setTopicStep(2);}
+      if(action==='delete_topic') {setTopicListOpen(true);setTopicId('');setTopicContribution(null);}
     } catch(e) {setTopicError(e instanceof Error ? e.message : 'Aktion fehlgeschlagen');setTopicBusy(false);}
   }
 
@@ -1377,6 +1378,12 @@ export function App() {
                   <button type="submit" disabled={topicBusy || !topicEditTitle.trim() || !topicEditQuestion.trim()}>Themadefinition speichern</button>
                 </form>
                 <p className="meta">Redaktionelle Koordination: Die bestehende Federführung wird in einem weiteren Arbeitspaket hier eingebunden.</p>
+                {topicContribution && topicContribution.versions.every(v=>!v.published_at && !!v.revoked_at) && <div className="topic-delete-area">
+                  <button type="button" disabled={topicBusy} onClick={()=>{
+                    if(window.confirm('Dieses noch nie veröffentlichte Thema wirklich löschen? Es verschwindet aus der Themenliste. Die Prüfprotokolle bleiben intern erhalten.'))
+                      void topicAction('delete_topic',{topicId,confirmation:true});
+                  }}>Thema löschen</button>
+                </div>}
               </section>}
               {topicStep===2 && <section className="topic-editor-area">
                 <h2>Lokale Bezüge</h2>

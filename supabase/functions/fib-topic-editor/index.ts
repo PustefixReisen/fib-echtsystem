@@ -63,7 +63,7 @@ export default {
 
       if (body.action === 'list') {
         const topics = await sql.unsafe(
-          'select id,title,guiding_question,description,status from fib.topics order by title',
+          'select id,title,guiding_question,description,status from fib.topics where deleted_at is null order by title',
         );
         const proposals = await sql.unsafe(
           `select p.id,p.topic_id,p.process_id,p.suggested_significance,p.suggested_rationale,p.origin,p.status,
@@ -71,13 +71,14 @@ export default {
                   pr.title as process_title,t.title as topic_title
              from fib.process_topic_proposals p
              join fib.processes pr on pr.id=p.process_id
-             join fib.topics t on t.id=p.topic_id
+             join fib.topics t on t.id=p.topic_id and t.deleted_at is null
             order by p.created_at desc limit 200`,
         );
         const links = await sql.unsafe(
           `select pt.topic_id,pt.process_id,pt.significance,pt.significance_rationale,
                   pr.title as process_title from fib.process_topics pt
-                  join fib.processes pr on pr.id=pt.process_id`,
+                  join fib.processes pr on pr.id=pt.process_id
+                  join fib.topics t on t.id=pt.topic_id and t.deleted_at is null`,
         );
         const processes = await sql.unsafe('select id,title from fib.processes order by title');
         return json({ topics, proposals, links, processes });
@@ -92,11 +93,11 @@ export default {
         }
         const updated = await sql.begin(async tx => {
           const topic = await tx.unsafe(
-            'select title,guiding_question,description,status from fib.topics where id=$1::uuid for update',[body.topicId]);
+            'select title,guiding_question,description,status from fib.topics where id=$1::uuid and deleted_at is null for update',[body.topicId]);
           if (!topic.length) return {error:'topic_not_found',code:404};
           if (topic[0].status === 'archived') return {error:'archived_topic_readonly',code:409};
           const dup = await tx.unsafe(
-            'select id from fib.topics where lower(title)=lower($1) and id<>$2::uuid limit 1',
+            'select id from fib.topics where deleted_at is null and lower(title)=lower($1) and id<>$2::uuid limit 1',
             [body.title.trim(),body.topicId]);
           if (dup.length) return {error:'topic_already_exists',code:409};
           const next={title:body.title.trim(),guiding_question:body.guidingQuestion.trim(),
@@ -118,7 +119,7 @@ export default {
       if (body.action === 'get_contribution') {
         if (!uuid(body.topicId)) return json({error:'invalid_topic'},400);
         const topics = await sql.unsafe(
-          'select id,title,guiding_question,description,status from fib.topics where id=$1::uuid',
+          'select id,title,guiding_question,description,status from fib.topics where id=$1::uuid and deleted_at is null',
           [body.topicId],
         );
         if (!topics.length) return json({error:'topic_not_found'},404);
@@ -149,7 +150,7 @@ export default {
             (body.description != null && (typeof body.description !== 'string' || body.description.length > 5000))) {
           return json({ error: 'invalid_topic' }, 400);
         }
-        const duplicate = await sql.unsafe('select id from fib.topics where lower(title)=lower($1) limit 1',[body.title.trim()]);
+        const duplicate = await sql.unsafe('select id from fib.topics where deleted_at is null and lower(title)=lower($1) limit 1',[body.title.trim()]);
         if (duplicate.length) return json({error:'topic_already_exists'},409);
         const rows = await sql.unsafe(
           'insert into fib.topics (title,guiding_question,description) values ($1,$2,$3) returning id,title',
@@ -165,7 +166,7 @@ export default {
           return json({error:'invalid_contribution_draft'},400);
         }
         const result = await sql.begin(async tx => {
-          const topic = await tx.unsafe('select status from fib.topics where id=$1::uuid for update',[body.topicId]);
+          const topic = await tx.unsafe('select status from fib.topics where id=$1::uuid and deleted_at is null for update',[body.topicId]);
           if (!topic.length) return {error:'topic_not_found',code:404};
           const current = await tx.unsafe('select revision from fib.topic_contribution_drafts where topic_id=$1::uuid for update',[body.topicId]);
           const actual = current.length ? Number(current[0].revision) : 0;
@@ -186,7 +187,7 @@ export default {
       if (body.action === 'approve_contribution') {
         if (!uuid(body.topicId)) return json({error:'invalid_topic'},400);
         const result = await sql.begin(async tx => {
-          const topics = await tx.unsafe('select status from fib.topics where id=$1::uuid for update',[body.topicId]);
+          const topics = await tx.unsafe('select status from fib.topics where id=$1::uuid and deleted_at is null for update',[body.topicId]);
           if (!topics.length) return {error:'topic_not_found',code:404};
           const drafts = await tx.unsafe('select body,editorial_assessment from fib.topic_contribution_drafts where topic_id=$1::uuid for update',[body.topicId]);
           const valid = decideTopicAction('approve',{topicStatus:topics[0].status,body:drafts[0]?.body,approvedVersion:false,approvalRevoked:false});
@@ -212,7 +213,7 @@ export default {
           return json({error:'invalid_contribution_version'},400);
         const action = body.action === 'revoke_contribution' ? 'revoke' : 'publish';
         const result = await sql.begin(async tx => {
-          const topic = await tx.unsafe('select status from fib.topics where id=$1::uuid for update',[body.topicId]);
+          const topic = await tx.unsafe('select status from fib.topics where id=$1::uuid and deleted_at is null for update',[body.topicId]);
           if (!topic.length) return {error:'topic_not_found',code:404};
           const versions = await tx.unsafe(
             'select id,revoked_at from fib.topic_contribution_versions where id=$1::uuid and topic_id=$2::uuid for update',
@@ -256,7 +257,7 @@ export default {
         const action = body.action === 'defer_topic' ? 'defer' :
           body.action === 'archive_topic' ? 'archive' : 'reactivate';
         const result = await sql.begin(async tx => {
-          const topic = await tx.unsafe('select status from fib.topics where id=$1::uuid for update',[body.topicId]);
+          const topic = await tx.unsafe('select status from fib.topics where id=$1::uuid and deleted_at is null for update',[body.topicId]);
           if (!topic.length) return {error:'topic_not_found',code:404};
           const published=await tx.unsafe(`select contribution_version_id from fib.topic_publications
               where topic_id=$1::uuid order by published_at desc limit 1`,[body.topicId]);
@@ -298,12 +299,37 @@ export default {
         });
         return json(result,'code' in result ? result.code : 200);
       }
+      if (body.action === 'delete_topic') {
+        if (!uuid(body.topicId)) return json({error:'invalid_topic'},400);
+        const result=await sql.begin(async tx=>{
+          const topics=await tx.unsafe(
+            'select status from fib.topics where id=$1::uuid and deleted_at is null for update',[body.topicId]);
+          if (!topics.length) return {error:'topic_not_found',code:404};
+          const publication=await tx.unsafe(
+            'select 1 from fib.topic_publications where topic_id=$1::uuid limit 1',[body.topicId]);
+          const approvals=await tx.unsafe(`select 1 from fib.topic_contribution_versions
+              where topic_id=$1::uuid and revoked_at is null limit 1`,[body.topicId]);
+          const decision=decideTopicAction('delete',{
+            topicStatus:topics[0].status,everPublished:publication.length>0,
+            approvedVersion:approvals.length>0,approvalRevoked:false,
+            explicitConfirmation:body.confirmation===true,
+          });
+          if(!decision.allowed) return {error:decision.reason,code:409};
+          await tx.unsafe(`update fib.topics set deleted_at=now(),deleted_by=$2::uuid,
+              updated_at=now() where id=$1::uuid`,[body.topicId,actor]);
+          return {ok:true};
+        });
+        return json(result,'code' in result ? result.code : 200);
+      }
       if (body.action === 'propose') {
         if (!uuid(body.topicId) || !uuid(body.processId) || !significance(body.significance) ||
             typeof body.rationale !== 'string' || !body.rationale.trim() || body.rationale.length > 4000 ||
             body.origin !== 'editor') {
           return json({ error: 'invalid_proposal' }, 400);
         }
+        const validTopic=await sql.unsafe(
+          'select 1 from fib.topics where id=$1::uuid and deleted_at is null',[body.topicId]);
+        if (!validTopic.length) return json({error:'topic_not_found'},404);
         const link = await sql.unsafe(
           'select 1 from fib.process_topics where process_id=$1::uuid and topic_id=$2::uuid',
           [body.processId,body.topicId],
@@ -335,6 +361,10 @@ export default {
           );
           if (!proposal.length) return 'not_found';
           if (proposal[0].status !== 'pending') return 'already_decided';
+          const activeTopic=await tx.unsafe(
+            'select 1 from fib.topics where id=$1::uuid and deleted_at is null for update',
+            [proposal[0].topic_id]);
+          if (!activeTopic.length) return 'topic_not_found';
           if (body.decision === 'confirmed') {
             const existing = await tx.unsafe(
               'select 1 from fib.process_topics where process_id=$1::uuid and topic_id=$2::uuid',

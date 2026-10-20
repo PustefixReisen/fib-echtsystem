@@ -16,7 +16,7 @@ test('topic writes use database transactions and pessimistic row locks',()=>{
   assert.ok(api.includes("body.action === '"+action+"'"),action);
  }
  assert.ok(api.includes('sql.begin(async tx =>'));
- assert.match(api,/from fib\.topics where id=\$1::uuid for update/);
+ assert.match(api,/from fib\.topics where id=\$1::uuid(?: and deleted_at is null)? for update/);
  assert.match(api,/revision_conflict/);
 });
 test('reactivation is checked against actual draft and published version',()=>{
@@ -42,4 +42,14 @@ test('archived topic can be revised while staying nonpublic',()=>{
  assert.match(api,/newContentApproved:matchingFreshApproval/);
  assert.match(api,/currencyCheckConfirmed:body\.currencyChecked === true && approved\.length > 0/);
  assert.match(api,/unchanged \? published\[0\]\.contribution_version_id : approved\[0\]\.id/);
+});
+
+test('topic removal is gated by published history and effective approval',()=>{
+ assert.match(api,/body\.action === 'delete_topic'/);
+ assert.match(api,/decideTopicAction\('delete'/);
+ assert.match(api,/everPublished:publication\.length>0/);
+ assert.match(api,/approvedVersion:approvals\.length>0/);
+ assert.match(api,/explicitConfirmation:body\.confirmation===true/);
+ assert.match(api,/deleted_at=now\(\),deleted_by/);
+ assert.match(api,/where deleted_at is null order by title/);
 });
