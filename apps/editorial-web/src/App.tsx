@@ -18,7 +18,9 @@ type TopicData = { id:string; title:string; guiding_question:string | null; desc
 type TopicProposal = { id:string; topic_id:string; process_id:string; suggested_significance:string; suggested_rationale:string; status:string; origin:string; process_title:string; topic_title:string };
 type TopicContributionVersion = {id:string;version_no:number;body:string;editorial_assessment:string|null;approved_at:string;revoked_at:string|null;published_at:string|null;ended_at:string|null};
 type TopicContributionData = {topic:TopicData;draft:{body:string;editorial_assessment:string|null;revision:number;updated_at:string}|null;versions:TopicContributionVersion[];currentPublication:{contribution_version_id:string;published_at:string}|null};
-type TopicListData = { topics:TopicData[]; proposals:TopicProposal[]; processes:{id:string;title:string}[]; links:{topic_id:string;process_id:string;significance:string;significance_rationale:string|null;process_title:string}[] };
+type TopicEventProposal = {id:string;topic_id:string;event_id:string;suggested_significance:string;suggested_rationale:string;origin:string;status:string;event_title:string;rejection_reason:string|null};
+type TopicEventLink = {topic_id:string;event_id:string;significance:string;significance_rationale:string|null;event_title:string};
+type TopicListData = { topics:TopicData[]; proposals:TopicProposal[]; processes:{id:string;title:string}[]; links:{topic_id:string;process_id:string;significance:string;significance_rationale:string|null;process_title:string}[];events:{id:string;title:string}[];eventLinks:TopicEventLink[];eventProposals:TopicEventProposal[] };
 
 type CoordinationState = {
   lead: { userId: string; displayName: string; mine: boolean } | null;
@@ -161,6 +163,10 @@ export function App() {
   const filteredTopicProcesses=availableTopicProcesses.filter(p=>p.title.toLocaleLowerCase('de-DE').includes(processQuery.trim().toLocaleLowerCase('de-DE'))).slice(0,100);
   const [topicStep,setTopicStep] = useState<1|2|3>(1);
   const [topicCreateOpen,setTopicCreateOpen] = useState(false);
+  const [topicEventId,setTopicEventId] = useState('');
+  const [topicEventSignificance,setTopicEventSignificance] = useState('relevant');
+  const [topicEventRationale,setTopicEventRationale] = useState('');
+  const [topicEventReviews,setTopicEventReviews] = useState<Record<string,{significance:string;rationale:string;reason:string;detail:string}>>({});
   const [topicSignificance,setTopicSignificance] = useState('relevant');
   const [topicRationale,setTopicRationale] = useState('');
   const [topicReviews,setTopicReviews] = useState<Record<string,{significance:string;rationale:string}>>({});
@@ -346,6 +352,7 @@ export function App() {
       await loadTopics();
       if(action==='create_topic') {setTopicCreateOpen(false);setTopicTitle('');setTopicQuestion('');setTopicDescription('');if(data.topic){setTopicId(data.topic.id);setTopicListOpen(false);setTopicStep(1);void loadTopicContribution(data.topic.id);}}
       if(action==='propose') {setTopicRationale('');setTopicStep(2);}
+      if(action==='propose_event') {setTopicEventRationale('');setTopicEventId('');setTopicStep(2);}
       if(action==='delete_topic') {setTopicListOpen(true);setTopicId('');setTopicContribution(null);}
     } catch(e) {setTopicError(e instanceof Error ? e.message : 'Aktion fehlgeschlagen');setTopicBusy(false);}
   }
