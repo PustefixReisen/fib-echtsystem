@@ -279,7 +279,45 @@ export function App() {
     if (nextView === 'dashboard') void loadEditorialStart();
     if (nextView === 'events') void loadEventList();
     if (nextView === 'users') void loadAdminUsers();
-    if (nextView === 'topics') void loadTopics();
+    if (nextView === 'topics') {setTopicListOpen(true);void loadTopics();}
+  }
+
+  function showTopic(t: TopicData) {
+    setTopicId(t.id);
+    setTopicEditTitle(t.title);
+    setTopicEditQuestion(t.guiding_question ?? '');
+    setTopicEditDescription(t.description ?? '');
+    setTopicListOpen(false);
+    setTopicStep(1);
+    setTopicError('');
+    void loadTopicContribution(t.id);
+  }
+  async function loadTopicContribution(id:string) {
+    setTopicContribution(null);
+    try {
+      const {data,error}=await supabase.functions.invoke<TopicContributionData & {error?:string}>(
+        'fib-topic-editor',{body:{action:'get_contribution',topicId:id}});
+      if(error || !data || data.error) throw new Error(data?.error ?? 'Beitrag konnte nicht geladen werden.');
+      setTopicContribution(data);
+      setTopicBody(data.draft?.body ?? '');
+      setTopicAssessment(data.draft?.editorial_assessment ?? '');
+    } catch(e) {
+      setTopicError(e instanceof Error ? e.message : 'Beitrag konnte nicht geladen werden.');
+    }
+  }
+  async function contributionAction(action:string, extras:Record<string,unknown>) {
+    if(topicBusy || !topicId) return;
+    setTopicBusy(true);setTopicError('');
+    try {
+      const {data,error}=await supabase.functions.invoke<{ok?:boolean;error?:string}>(
+        'fib-topic-editor',{body:{action,topicId,...extras}});
+      if(error || !data?.ok) throw new Error(data?.error ?? 'Aktion fehlgeschlagen');
+      await loadTopicContribution(topicId);
+      await loadTopics();
+    } catch(e) {
+      setTopicError(e instanceof Error ? e.message : 'Aktion fehlgeschlagen');
+      setTopicBusy(false);
+    }
   }
 
   async function loadTopics() {
@@ -303,11 +341,11 @@ export function App() {
     if(topicBusy) return;
     setTopicBusy(true);setTopicError('');
     try {
-      const {data,error}=await supabase.functions.invoke<{ok?:boolean;error?:string}>('fib-topic-editor',{body:{action,...body}});
+      const {data,error}=await supabase.functions.invoke<{ok?:boolean;error?:string;topic?:{id:string}}>('fib-topic-editor',{body:{action,...body}});
       if(error || !data?.ok) throw new Error(data?.error ?? 'Aktion fehlgeschlagen');
       await loadTopics();
-      if(action==='create_topic') {setTopicCreateOpen(false);setTopicTitle('');setTopicQuestion('');setTopicDescription('');setTopicStep(2);}
-      if(action==='propose') {setTopicRationale('');setTopicStep(3);}
+      if(action==='create_topic') {setTopicCreateOpen(false);setTopicTitle('');setTopicQuestion('');setTopicDescription('');if(data.topic){setTopicId(data.topic.id);setTopicListOpen(false);setTopicStep(1);void loadTopicContribution(data.topic.id);}}
+      if(action==='propose') {setTopicRationale('');setTopicStep(2);}
     } catch(e) {setTopicError(e instanceof Error ? e.message : 'Aktion fehlgeschlagen');setTopicBusy(false);}
   }
 
