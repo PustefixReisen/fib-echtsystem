@@ -16,7 +16,7 @@ test('topic writes use database transactions and pessimistic row locks',()=>{
   assert.ok(api.includes("body.action === '"+action+"'"),action);
  }
  assert.ok(api.includes('sql.begin(async tx =>'));
- assert.match(api,/from fib\.topics where id=\$1::uuid for update/);
+ assert.match(api,/from fib\.topics where id=\$1::uuid(?: and deleted_at is null)? for update/);
  assert.match(api,/revision_conflict/);
 });
 test('reactivation is checked against actual draft and published version',()=>{
