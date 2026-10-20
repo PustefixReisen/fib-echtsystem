@@ -147,15 +147,31 @@ Für Vorgang↔Thema und direkte Ereignis↔Thema-Beziehungen wird die redaktion
 - `relevant`,
 - `ergänzend`.
 
-Themenstatus:
+Themenstatus (siehe §3.4.1):
 
-- `aktiv`,
-- `ruhend`,
-- `archiviert`.
+- `Entwurf`,
+- `Aktiv`,
+- `Zurückgestellt`,
+- `Archiviert`.
 
 Ein Thema besitzt bewusst keinen Status `abgeschlossen`.
 
 Die detaillierte Entstehungs-, Dublett- und Bearbeitungslogik steht in `docs/Themen-und-Vorgangslogik.md`.
+
+
+### 3.4.1 Lebenszyklus, Beitrag und Freigabe eines Themas (Abstimmung 20.10.2026)
+
+Das fachliche Zielstatusmodell für Themen lautet **Entwurf / Aktiv / Zurückgestellt / Archiviert**; es ersetzt für Themen den früheren Begriff `ruhend`, **nicht** automatisch den Statuskatalog der Vorgänge. Themenstatus, Freigabestatus einer konkreten Beitragsfassung und Publikationsstatus werden getrennt geführt. In der Redaktion dürfen diese Dimensionen in einer einzigen verständlichen Aktions-/Statusanzeige zusammengefasst sein.
+
+Der **Beitrag** zum Thema besteht aus dem sachlichen **Thementext** und der optionalen getrennten politischen **„Unsere Einordnung“**. Redigierte Texte und KI-Vorschläge sind getrennte versionierte Informationsobjekte. Eine verbindliche **Beitragsversion** entsteht durch Freigabe; bloße Zwischenstände werden nicht zu neuen formalen Beitragsversionen.
+
+Freigabezustände einer Beitragsversion: **Noch keine Freigabe**, **Freigegeben**, **Freigabe zurückgenommen** (nur vor Erstveröffentlichung dieser Fassung). Mit der ersten Freigabe geht der Themenstatus Entwurf nach Aktiv über. Wird diese Freigabe vor jeder Veröffentlichung zurückgenommen, kehrt das Thema in Entwurf zurück. Bereits veröffentlichte Freigaben bleiben Teil der unveränderlichen Historie. Eine spätere Überarbeitung erhält eine neue Freigabe und ersetzt die frühere öffentliche Fassung erst mit eigener Publikation.
+
+Publikationszustände: **Noch nicht veröffentlicht / Veröffentlicht / Zurückgezogen**. Zurückstellen und Archivieren beenden die aktuelle öffentliche Sichtbarkeit, ohne veröffentlichte Fassungen oder Freigaben historisch zu löschen. Wiederaufnahme ohne Inhaltsänderung setzt eine dokumentierte Aktualitätsprüfung (Person, Datum) voraus und erfordert keine neue Freigabe. Mit Inhaltsänderung ist eine neue Freigabe nötig.
+
+Löschen eines Themas ist nur gestattet, wenn **nie veröffentlicht** und aktuell **keine wirksame Freigabe** vorliegt; ausdrückliche Sicherheitsbestätigung. Referenzierte Vorgänge/Ereignisse und bestehende Auditpflichten sind zu wahren. Exakte Berechtigungen, atomare Zustandswechsel und technische Migrationsregeln sind noch zu spezifizieren.
+
+**Versionierungsebenen:** Beitragsversionen (Freigabe-/Publikationsverlauf, im UI durch „Versionsverlauf“ zugänglich) sind verschieden von den bereits unter §4.6 beschriebenen fachlichen Gesamtversionen (inhaltliche Veränderungen von Thema/Vorgang). Die Fachversionen bleiben intern nachvollziehbar, ohne die alltägliche Beitragsbearbeitung zu überfrachten. Eine konkrete Beitragsfreigabe muss auf ihren fachlichen Bezugsstand rückführbar sein.
 
 ## 4. Strukturierter Redaktionsstand und politische Einordnung
 
