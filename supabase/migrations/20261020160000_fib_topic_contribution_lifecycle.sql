@@ -94,6 +94,22 @@ end $;
 create trigger topic_approval_immutability before update on fib.topic_contribution_versions
  for each row execute function fib.prevent_published_topic_approval_revocation();
 
+-- A revoked approval can never be published. Lock the referenced version
+-- to serialize concurrent revocation and publication operations.
+create or replace function fib.validate_topic_publication_insert()
+returns trigger language plpgsql as $
+declare approval record;
+begin
+ select topic_id,revoked_at into approval
+ from fib.topic_contribution_versions where id=new.contribution_version_id for update;
+ if not found or approval.topic_id <> new.topic_id or approval.revoked_at is not null then
+   raise exception 'publication requires a valid non-revoked topic approval';
+ end if;
+ return new;
+end $;
+create trigger topic_publication_approval_guard before insert on fib.topic_publications
+ for each row execute function fib.validate_topic_publication_insert();
+
 -- Only the existing server-side runtime database role can access these objects.
 -- No GRANT to anon/authenticated; service must enforce AAL2, editor role and transitions.
 alter table fib.topic_contribution_drafts enable row level security;
