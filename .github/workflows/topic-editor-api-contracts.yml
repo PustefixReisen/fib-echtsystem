@@ -6,6 +6,8 @@ on:
       - 'supabase/functions/fib-topic-editor/**'
       - 'supabase/migrations/20261020160000_fib_topic_contribution_lifecycle.sql'
       - 'scripts/test-topic-editor-api-contracts.mjs'
+      - 'scripts/sql/topic-migration-fixture.sql'
+      - 'scripts/sql/topic-migration-assertions.sql'
       - '.github/workflows/topic-editor-api-contracts.yml'
   push:
     branches: [main]
@@ -29,3 +31,33 @@ jobs:
       - run: node --test scripts/test-topic-editor-api-contracts.mjs
       - run: node --test scripts/test-topic-schema-contracts.mjs
       - run: node --test scripts/test-topic-lifecycle.mjs
+
+  postgres-integration:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_PASSWORD: test_only
+          POSTGRES_DB: fib_ci
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U postgres"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 15
+    env:
+      PGHOST: localhost
+      PGPORT: '5432'
+      PGDATABASE: fib_ci
+      PGUSER: postgres
+      PGPASSWORD: test_only
+    steps:
+      - uses: actions/checkout@v4
+      - name: Initialize ephemeral FIB schema
+        run: psql -v ON_ERROR_STOP=1 -f scripts/sql/topic-migration-fixture.sql
+      - name: Execute actual migration on disposable database
+        run: psql -v ON_ERROR_STOP=1 -f supabase/migrations/20261020160000_fib_topic_contribution_lifecycle.sql
+      - name: Exercise publication guards with PostgreSQL
+        run: psql -v ON_ERROR_STOP=1 -f scripts/sql/topic-migration-assertions.sql
