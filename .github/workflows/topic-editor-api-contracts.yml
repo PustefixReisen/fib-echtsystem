@@ -1,0 +1,31 @@
+name: Topic Editor API Contracts
+
+on:
+  pull_request:
+    paths:
+      - 'supabase/functions/fib-topic-editor/**'
+      - 'supabase/migrations/20261020160000_fib_topic_contribution_lifecycle.sql'
+      - 'scripts/test-topic-editor-api-contracts.mjs'
+      - '.github/workflows/topic-editor-api-contracts.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'supabase/functions/fib-topic-editor/**'
+      - 'supabase/migrations/20261020160000_fib_topic_contribution_lifecycle.sql'
+      - 'scripts/test-topic-editor-api-contracts.mjs'
+      - '.github/workflows/topic-editor-api-contracts.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  contracts:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: node --test scripts/test-topic-editor-api-contracts.mjs
+      - run: node --test scripts/test-topic-schema-contracts.mjs
+      - run: node --test scripts/test-topic-lifecycle.mjs
