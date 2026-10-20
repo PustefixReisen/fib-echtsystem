@@ -562,3 +562,29 @@ button:has(> .action-icon) { display: inline-flex; align-items: center; justify-
 .topic-progress-item.active .topic-progress-label { font-weight:700; color:#17583f; }
 .topic-progress-label { font-size:.9rem; line-height:1.3; overflow-wrap:anywhere; }
 @media(max-width:600px) { .topic-progress-label { font-size:.78rem; } .topic-progress-item:not(:last-child)::after { left:calc(50% + 1.45rem); right:calc(-50% + 1.45rem); } }
+
+/* Persistent topic object editor: list, local relations and publication draft. */
+.topic-list-heading { display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:.8rem; }
+.topic-list-filters { display:flex; flex-wrap:wrap; gap:1rem; margin:1.2rem 0; }
+.topic-list-filters label { flex:1 1 220px; min-width:0; }
+.topic-list-results { display:grid; gap:.7rem; margin-bottom:1rem; }
+.topic-list-results .work-item { display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:1rem; }
+.topic-list-results .work-item h2 { margin:0 0 .35rem; font-size:1.05rem; }
+.topic-editor-tabs { display:flex; flex-wrap:wrap; gap:.4rem; margin:1.2rem 0; padding-bottom:.4rem; border-bottom:1px solid #b8c6bb; }
+.topic-editor-tabs button { flex:1 1 140px; border:0; border-radius:.45rem .45rem 0 0; border-bottom:3px solid transparent; background:transparent; font:inherit; padding:.6rem .35rem; text-align:center; cursor:pointer; }
+.topic-editor-tabs button.selected { border-bottom-color:#24704e; font-weight:700; background:#eef5ef; }
+.topic-editor-tabs button:focus-visible { outline:3px solid #24704e; outline-offset:2px; }
+.topic-editor-area { display:grid; gap:.75rem; min-width:0; }
+.topic-definition-form { display:grid; gap:.75rem; max-width:760px; }
+.topic-contribution-body { min-height:13rem; }
+.topic-contribution-assessment { min-height:9rem; }
+.topic-editor-actions { display:flex; flex-wrap:wrap; align-items:center; gap:.65rem; margin-top:.65rem; }
+.topic-versions { border-top:1px solid #b8c6bb; margin-top:1rem; padding:1rem 0; }
+.topic-versions details { margin:.7rem 0; padding:.6rem; border:1px solid #ccd8ce; border-radius:.4rem; }
+.topic-versions summary { cursor:pointer; }
+.topic-version-text { white-space:pre-wrap; overflow-wrap:anywhere; }
+@media (max-width:640px) {
+  .topic-editor-tabs { gap:0; }
+  .topic-editor-tabs button { flex:1 1 33%; font-size:.79rem; padding:.7rem .15rem; }
+  .topic-list-results .work-item .action-button { width:100%; }
+}
