@@ -82,6 +82,39 @@ export default {
         const processes = await sql.unsafe('select id,title from fib.processes order by title');
         return json({ topics, proposals, links, processes });
       }
+      if (body.action === 'update_topic') {
+        if (!uuid(body.topicId) ||
+            typeof body.title !== 'string' || !body.title.trim() || body.title.length > 200 ||
+            typeof body.guidingQuestion !== 'string' || !body.guidingQuestion.trim() ||
+            body.guidingQuestion.length > 1000 ||
+            (body.description != null && (typeof body.description !== 'string' || body.description.length > 5000))) {
+          return json({error:'invalid_topic'},400);
+        }
+        const updated = await sql.begin(async tx => {
+          const topic = await tx.unsafe(
+            'select title,guiding_question,description,status from fib.topics where id=$1::uuid for update',[body.topicId]);
+          if (!topic.length) return {error:'topic_not_found',code:404};
+          if (topic[0].status === 'archived') return {error:'archived_topic_readonly',code:409};
+          const dup = await tx.unsafe(
+            'select id from fib.topics where lower(title)=lower($1) and id<>$2::uuid limit 1',
+            [body.title.trim(),body.topicId]);
+          if (dup.length) return {error:'topic_already_exists',code:409};
+          const next={title:body.title.trim(),guiding_question:body.guidingQuestion.trim(),
+            description:body.description?.trim() || null};
+          if (topic[0].title===next.title && topic[0].guiding_question===next.guiding_question &&
+              topic[0].description===next.description) return {ok:true,unchanged:true};
+          await tx.unsafe(`update fib.topics set title=$2,guiding_question=$3,description=$4,
+              updated_at=now() where id=$1::uuid`,
+            [body.topicId,next.title,next.guiding_question,next.description]);
+          await tx.unsafe(`insert into fib.topic_revisions
+              (topic_id,revision_no,snapshot,changed_by,reason)
+              values($1::uuid,(select coalesce(max(revision_no),0)+1 from fib.topic_revisions
+              where topic_id=$1::uuid),$2::jsonb,$3::uuid,$4)`,
+            [body.topicId,JSON.stringify(next),actor,'Themadefinition geändert']);
+          return {ok:true};
+        });
+        return json(updated,'code' in updated ? updated.code : 200);
+      }
       if (body.action === 'get_contribution') {
         if (!uuid(body.topicId)) return json({error:'invalid_topic'},400);
         const topics = await sql.unsafe(
