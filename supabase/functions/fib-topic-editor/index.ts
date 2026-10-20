@@ -200,11 +200,21 @@ export default {
           if (!topic.length) return {error:'topic_not_found',code:404};
           const published=await tx.unsafe(`select contribution_version_id from fib.topic_publications
               where topic_id=$1::uuid order by published_at desc limit 1`,[body.topicId]);
+          const lastVersion = published.length ? await tx.unsafe(
+            'select body,editorial_assessment from fib.topic_contribution_versions where id=$1::uuid',
+            [published[0].contribution_version_id]) : [];
+          const drafts = await tx.unsafe(
+            'select body,editorial_assessment from fib.topic_contribution_drafts where topic_id=$1::uuid',
+            [body.topicId]);
+          const unchanged = lastVersion.length > 0 && (
+            !drafts.length || (drafts[0].body === lastVersion[0].body &&
+            drafts[0].editorial_assessment === lastVersion[0].editorial_assessment));
           const check=decideTopicAction(action,{
             topicStatus:topic[0].status,
             explicitConfirmation:body.confirmation === true,
             currencyCheckConfirmed:body.currencyChecked === true && published.length > 0,
-            unchangedContent:true,
+            unchangedContent:unchanged,
+            newContentApproved:false,
           });
           if (!check.allowed) return {error:check.reason,code:409};
           if (action !== 'reactivate')
