@@ -44,3 +44,12 @@ test('migration enforces one active public version and rejects revoked approvals
  assert.match(migration,/topic_publication_approval_guard/);
  assert.match(migration,/topic_approval_immutability/);
 });
+
+
+test('confirmed topic links update inside a lock-protected transaction with revision audit',()=>{
+ assert.match(service,/body\.action === 'update_confirmed_link'/);
+ assert.match(service,/invalid_link_update/);
+ assert.match(service,/select significance,significance_rationale from fib\.process_topics[^;]+for update/s);
+ assert.match(service,/update fib\.process_topics set significance=/);
+ assert.match(service,/insert into fib\.topic_revisions/);
+});
