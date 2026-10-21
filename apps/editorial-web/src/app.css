@@ -588,3 +588,23 @@ button:has(> .action-icon) { display: inline-flex; align-items: center; justify-
   .topic-editor-tabs button { flex:1 1 33%; font-size:.79rem; padding:.7rem .15rem; }
   .topic-list-results .work-item .action-button { width:100%; }
 }
+
+
+/* Shared editorial interaction grammar: page header, icon actions, and list-to-editor navigation. */
+.fib-topic-screen { padding-top:1.5rem; }
+.topic-list-heading { padding-top:.35rem; }
+.topic-header-actions { display:flex; align-items:center; gap:.55rem; }
+.fib-topic-screen .icon-button {
+  display:inline-flex; align-items:center; justify-content:center;
+  min-width:44px; min-height:44px; padding:.35rem .65rem;
+  font-size:1.25rem; line-height:1; flex:0 0 auto;
+}
+.topic-list-results .work-item { padding:.7rem .85rem; }
+.topic-list-results .work-item > div { flex:1 1 0; min-width:0; }
+.topic-editor-area .topic-definition-form { width:100%; max-width:none; }
+.topic-editor-area .topic-definition-form textarea { min-height:10rem; }
+.topic-editor-actions { justify-content:flex-end; }
+@media (max-width:600px) {
+  .topic-list-heading { align-items:flex-start; }
+  .topic-header-actions { margin-left:auto; }
+}
