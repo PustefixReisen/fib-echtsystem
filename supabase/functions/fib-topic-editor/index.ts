@@ -348,6 +348,38 @@ export default {
         );
         return json({ ok: true, proposalId: rows[0].id });
       }
+      if (body.action === 'update_confirmed_link') {
+        if (!uuid(body.topicId) || !uuid(body.processId) || !significance(body.significance) ||
+            typeof body.rationale !== 'string' || !body.rationale.trim() || body.rationale.length > 4000) {
+          return json({ error: 'invalid_link_update' }, 400);
+        }
+        const outcome = await sql.begin(async tx => {
+          const topic = await tx.unsafe(
+            'select id from fib.topics where id=$1::uuid and deleted_at is null for update', [body.topicId]);
+          if (!topic.length) return { error: 'topic_not_found', code: 404 };
+          const link = await tx.unsafe(
+            'select significance,significance_rationale from fib.process_topics where topic_id=$1::uuid and process_id=$2::uuid for update',
+            [body.topicId,body.processId]);
+          if (!link.length) return { error: 'link_not_found', code: 404 };
+          if (link[0].significance === body.significance && link[0].significance_rationale === body.rationale.trim())
+            return { ok: true, unchanged: true };
+          await tx.unsafe(
+            'update fib.process_topics set significance=$3, significance_rationale=$4, updated_at=now() where topic_id=$1::uuid and process_id=$2::uuid',
+            [body.topicId,body.processId,body.significance,body.rationale.trim()]);
+          const previous = await tx.unsafe(
+            'select coalesce(max(revision_no),0)+1 as next from fib.topic_revisions where topic_id=$1::uuid',
+            [body.topicId]);
+          await tx.unsafe(
+            'insert into fib.topic_revisions(topic_id,revision_no,snapshot,changed_by,reason) values($1::uuid,$2,$3::jsonb,$4::uuid,$5)',
+            [body.topicId,previous[0].next,JSON.stringify({
+              kind:'confirmed_process_link_updated',processId:body.processId,
+              oldSignificance:link[0].significance,oldRationale:link[0].significance_rationale,
+              newSignificance:body.significance,newRationale:body.rationale.trim(),
+            }),actor,'Lokalen Bezug bearbeitet']);
+          return { ok: true };
+        });
+        return json(outcome, 'code' in outcome ? outcome.code : 200);
+      }
       if (body.action === 'decide') {
         if (!uuid(body.proposalId) || !['confirmed', 'rejected'].includes(body.decision ?? '') ||
             (body.decision === 'confirmed' && (!significance(body.significance) ||
