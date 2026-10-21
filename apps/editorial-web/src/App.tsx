@@ -1491,18 +1491,21 @@ export function App() {
                   <label>Thementext<textarea className="topic-contribution-body" value={topicBody} onChange={e=>setTopicBody(e.target.value)} maxLength={30000}/></label>
                   <label>Unsere Einordnung (optional)<textarea className="topic-contribution-assessment" value={topicAssessment} onChange={e=>setTopicAssessment(e.target.value)} maxLength={30000}/></label>
                   {((topicContribution.draft?.body??'')!==topicBody || (topicContribution.draft?.editorial_assessment??'')!==topicAssessment) && <p className="meta">Ungespeicherte Änderungen – vor einer Freigabe speichern.</p>}
-                  <div className="topic-editor-actions">
+                  <div className="topic-editor-actions topic-contribution-toolbar">
                     <button type="button" disabled={topicBusy} onClick={()=>void contributionAction('save_contribution_draft',{contributionBody:topicBody,editorialAssessment:topicAssessment,expectedRevision:topicContribution.draft?.revision??0})}>Arbeitsfassung speichern</button>
-                    <button type="button" disabled={topicBusy || !topicBody.trim() || (topicContribution.draft?.body??'')!==topicBody || (topicContribution.draft?.editorial_assessment??'')!==topicAssessment} onClick={()=>void contributionAction('approve_contribution',{})}>Fassung freigeben</button>
-                    <button type="button" disabled title="Öffentliche Ausspielung ist noch nicht mit dem K0-Publikationsprozess verbunden">Auf Website veröffentlichen (in Vorbereitung)</button>
-                  </div>
-                  {topicContribution.versions.find(v=>!v.revoked_at&&!v.published_at) && <button type="button" disabled={topicBusy} onClick={()=>{const v=topicContribution.versions.find(v=>!v.revoked_at&&!v.published_at);if(v&&window.confirm('Diese noch unveröffentlichte Freigabe zurücknehmen?'))void contributionAction('revoke_contribution',{contributionVersionId:v.id});}}>Freigabe zurücknehmen</button>}
-                  <div className="topic-editor-actions">
-                    {topicContribution.topic.status==='active' && <>
-                      <button type="button" disabled={topicBusy} onClick={()=>{if(window.confirm('Thema zurückstellen und öffentliche Sichtbarkeit beenden?'))void contributionAction('defer_topic',{confirmation:true});}}>Zurückstellen</button>
-                      <button type="button" disabled={topicBusy} onClick={()=>{if(window.confirm('Thema dauerhaft archivieren und öffentliche Sichtbarkeit beenden?'))void contributionAction('archive_topic',{confirmation:true});}}>Archivieren</button>
-                    </>}
-                    {(topicContribution.topic.status==='deferred'||topicContribution.topic.status==='archived') && <button type="button" disabled={topicBusy} onClick={()=>{if(window.confirm('Aktualität der freigegebenen Fassung geprüft? Das Thema wird aktiviert, jedoch nicht veröffentlicht.'))void contributionAction('reactivate_topic',{confirmation:true,currencyChecked:true});}}>Nach Aktualitätsprüfung wiederaufnehmen</button>}
+                    <details className="topic-action-menu">
+                      <summary aria-label="Weitere Beitragsaktionen">Aktionen ▾</summary>
+                      <div className="topic-action-menu-items">
+                        <button type="button" disabled={topicBusy || !topicBody.trim() || (topicContribution.draft?.body??'')!==topicBody || (topicContribution.draft?.editorial_assessment??'')!==topicAssessment} onClick={()=>void contributionAction('approve_contribution',{})}>Fassung freigeben</button>
+                        {topicContribution.versions.find(v=>!v.revoked_at&&!v.published_at) && <button type="button" disabled={topicBusy} onClick={()=>{const v=topicContribution.versions.find(v=>!v.revoked_at&&!v.published_at);if(v&&window.confirm('Diese noch unveröffentlichte Freigabe zurücknehmen?'))void contributionAction('revoke_contribution',{contributionVersionId:v.id});}}>Freigabe zurücknehmen</button>}
+                        {topicContribution.topic.status==='active' && <>
+                          <button type="button" disabled={topicBusy} onClick={()=>{if(window.confirm('Thema zurückstellen und öffentliche Sichtbarkeit beenden?'))void contributionAction('defer_topic',{confirmation:true});}}>Thema zurückstellen</button>
+                          <button type="button" disabled={topicBusy} onClick={()=>{if(window.confirm('Thema dauerhaft archivieren und öffentliche Sichtbarkeit beenden?'))void contributionAction('archive_topic',{confirmation:true});}}>Thema archivieren</button>
+                        </>}
+                        {(topicContribution.topic.status==='deferred'||topicContribution.topic.status==='archived') && <button type="button" disabled={topicBusy} onClick={()=>{if(window.confirm('Aktualität der freigegebenen Fassung geprüft? Das Thema wird aktiviert, jedoch nicht veröffentlicht.'))void contributionAction('reactivate_topic',{confirmation:true,currencyChecked:true});}}>Nach Aktualitätsprüfung wiederaufnehmen</button>}
+                        <p className="meta">Öffentliche Veröffentlichung wird erst mit dem K0-Publikationsprozess verfügbar.</p>
+                      </div>
+                    </details>
                   </div>
                   <details className="topic-versions"><summary>Versionsverlauf ({topicContribution.versions.length})</summary>
                     {topicContribution.versions.length===0 && <p>Noch keine freigegebenen Beitragsfassungen.</p>}
