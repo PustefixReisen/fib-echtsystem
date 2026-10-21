@@ -630,3 +630,13 @@ button:has(> .action-icon) { display: inline-flex; align-items: center; justify-
   .fib-topic-screen .topic-area-card {padding:.85rem;}
   .topic-area-card-header {align-items:flex-start;}
 }
+
+
+/* One editorial layout for topics and events: main content plus coordination sidebar. */
+.topic-detail-grid { display:grid; grid-template-columns:minmax(0,2fr) minmax(270px,1fr); gap:1rem; align-items:start; }
+.topic-detail-main { min-width:0; }
+.topic-coordination-panel { min-width:0; }
+.topic-coordination-panel .section-heading { display:flex; justify-content:space-between; align-items:center; gap:.5rem; }
+.topic-coordination-panel .section-heading h2 { margin:0; }
+.topic-coordination-panel p { overflow-wrap:anywhere; }
+@media (max-width:760px) { .topic-detail-grid { grid-template-columns:1fr; } }
