@@ -1446,9 +1446,16 @@ export function App() {
                 <thead><tr><th scope="col">Lokaler Bezug</th><th scope="col">Typ</th><th scope="col">Bedeutung</th><th scope="col">Status</th><th scope="col"><span className="visually-hidden">Aktionen</span></th></tr></thead>
                 <tbody>
                 {(topicData?.links ?? []).filter(l=>l.topic_id===topicId).map(l=><tr key={`linked-${l.process_id}`}>
-                  <td><details className="topic-row-details"><summary>{l.process_title}</summary><p><strong>Begründung:</strong> {l.significance_rationale || 'Keine Begründung hinterlegt.'}</p><p className="meta">Bearbeiten bestätigter Bezüge wird nach Erweiterung des Themenservices ermöglicht.</p></details></td>
+                  <td><details className="topic-row-details"><summary>{l.process_title}</summary>
+                    <p><strong>Begründung:</strong> {l.significance_rationale || 'Keine Begründung hinterlegt.'}</p>
+                    <div className="topic-inline-editor">
+                      <label>Bedeutung<select value={(topicReviews[`confirmed-${l.process_id}`]?.significance) ?? l.significance} onChange={e=>setTopicReviews(v=>({...v,[`confirmed-${l.process_id}`]:{significance:e.target.value,rationale:v[`confirmed-${l.process_id}`]?.rationale ?? l.significance_rationale ?? ''}}))}><option value="defining">Prägend</option><option value="relevant">Relevant</option><option value="supplementary">Ergänzend</option></select></label>
+                      <label>Begründung<textarea maxLength={4000} value={topicReviews[`confirmed-${l.process_id}`]?.rationale ?? l.significance_rationale ?? ''} onChange={e=>setTopicReviews(v=>({...v,[`confirmed-${l.process_id}`]:{significance:v[`confirmed-${l.process_id}`]?.significance ?? l.significance,rationale:e.target.value}}))}/></label>
+                      <button type="button" disabled={topicBusy || !(topicReviews[`confirmed-${l.process_id}`]?.rationale ?? l.significance_rationale ?? '').trim()} onClick={()=>void topicAction('update_confirmed_link',{topicId,processId:l.process_id,significance:topicReviews[`confirmed-${l.process_id}`]?.significance ?? l.significance,rationale:topicReviews[`confirmed-${l.process_id}`]?.rationale ?? l.significance_rationale})}>Änderungen speichern</button>
+                    </div>
+                  </details></td>
                   <td>Vorgang</td><td>{l.significance==='defining'?'Prägend':l.significance==='relevant'?'Relevant':'Ergänzend'}</td><td>Zugeordnet</td>
-                  <td><button type="button" className="icon-button" aria-label={`Begründung zu ${l.process_title} anzeigen`} title="Begründung in der ersten Spalte aufklappen" disabled>✎</button></td>
+                  <td><span title="Bezug in der ersten Spalte öffnen">✎</span></td>
                 </tr>)}
                 {(topicData?.proposals ?? []).filter(p=>p.topic_id===topicId && p.status==='pending').map(p=>{
                   const review=topicReviews[p.id] ?? {significance:p.suggested_significance,rationale:p.suggested_rationale};
