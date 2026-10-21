@@ -656,19 +656,26 @@ button:has(> .action-icon) { display: inline-flex; align-items: center; justify-
 .visually-hidden { position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; }
 
 
-/* Consistent contribution actions: frequently used save stays visible. */
-.topic-contribution-toolbar { justify-content:flex-start; align-items:flex-start; }
-.topic-action-menu { position:relative; min-width:12rem; }
+/* Consistent contribution actions: compact single-row toolbar, wrapping on narrow screens. */
+.topic-contribution-toolbar { justify-content:flex-start; align-items:center; gap:.65rem; }
+.topic-contribution-toolbar > button { flex:0 0 auto; }
+.topic-action-menu { position:relative; flex:0 0 auto; width:9.5rem; }
 .topic-action-menu > summary {
   display:flex; align-items:center; justify-content:space-between;
+  box-sizing:border-box; width:100%;
   padding:.65rem .8rem; min-height:44px; border:1px solid #8a9b8e;
   border-radius:.45rem; cursor:pointer; background:#fff; font-weight:600;
 }
 .topic-action-menu > summary:focus-visible {outline:3px solid #24704e; outline-offset:2px;}
 .topic-action-menu-items {
+  position:absolute; z-index:20; top:calc(100% + .25rem); left:0;
   display:grid; gap:.4rem; padding:.65rem;
+  box-sizing:border-box; width:min(20rem,calc(100vw - 3rem));
   border:1px solid #d6ded8; border-radius:.45rem; background:#fff;
-  box-shadow:0 5px 18px rgba(0,0,0,.08); min-width:min(20rem,80vw);
+  box-shadow:0 5px 18px rgba(0,0,0,.08);
 }
 .topic-action-menu-items button {text-align:left; width:100%; white-space:normal;}
 .topic-action-menu-items .meta {margin:.3rem 0 0;}
+@media (max-width:600px) {
+  .topic-action-menu-items {left:auto; right:0; max-width:calc(100vw - 3rem);}
+}
