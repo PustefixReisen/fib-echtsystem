@@ -608,3 +608,25 @@ button:has(> .action-icon) { display: inline-flex; align-items: center; justify-
   .topic-list-heading { align-items:flex-start; }
   .topic-header-actions { margin-left:auto; }
 }
+
+
+/* Topic areas follow the same card header/action pattern as editorial event panels. */
+.fib-topic-screen .topic-area-card {
+  border:1px solid #d6ded8;
+  border-radius:.7rem;
+  background:#fff;
+  padding:1rem 1.15rem 1.25rem;
+  margin-top:.9rem;
+}
+.topic-area-card-header {
+  display:flex; align-items:center; justify-content:space-between;
+  flex-wrap:wrap; gap:.65rem; border-bottom:1px solid #e1e8e3;
+  padding-bottom:.65rem; margin-bottom:.35rem;
+}
+.topic-area-card-header h2 { margin:0; font-size:1.12rem; }
+.topic-area-card-actions { display:flex; align-items:center; flex-wrap:wrap; gap:.65rem; }
+.topic-status-text { font-weight:600; color:#25553c; }
+@media (max-width:600px) {
+  .fib-topic-screen .topic-area-card {padding:.85rem;}
+  .topic-area-card-header {align-items:flex-start;}
+}
