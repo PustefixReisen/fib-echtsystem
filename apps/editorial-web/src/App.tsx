@@ -1329,7 +1329,7 @@ export function App() {
             {topicListOpen ? <>
               <div className="topic-list-heading">
                 <div><p className="eyebrow">Redaktion · Themen</p><h1 className="object-title"><img className="object-icon" src={topicIcon} alt="" />Themen</h1></div>
-                <button type="button" onClick={()=>setTopicCreateOpen(v=>!v)}>{topicCreateOpen?'Schließen':'Neues Thema'}</button>
+                <div className="topic-header-actions"><button type="button" className="icon-button" aria-label="Themenliste aktualisieren" title="Aktualisieren" disabled={topicBusy} onClick={()=>void loadTopics()}>↻</button><button type="button" onClick={()=>setTopicCreateOpen(v=>!v)}>{topicCreateOpen?'Schließen':'Neues Thema'}</button></div>
               </div>
               <p>Themen auswählen und bearbeiten. Bestehende Vorgänge und Ereignisse werden durch lokale Bezüge eingebunden.</p>
               {topicCreateOpen && <form className="topic-definition-form" onSubmit={e=>{e.preventDefault();void topicAction('create_topic',{title:'[ENTWICKLUNG #136] '+topicTitle.trim(),guidingQuestion:topicQuestion,description:topicDescription});}}>
@@ -1352,17 +1352,17 @@ export function App() {
                       <div><h2>{t.title}</h2><p>{t.guiding_question}</p>
                         <p className="meta">Status: {t.status==='draft'?'Entwurf':t.status==='active'?'Aktiv':t.status==='deferred'||t.status==='dormant'?'Zurückgestellt':'Archiviert'}</p>
                       </div>
-                      <button type="button" className="action-button" onClick={()=>showTopic(t)}>Bearbeiten</button>
+                      <button type="button" className="icon-button" aria-label={`Thema ${t.title} bearbeiten`} title="Thema bearbeiten" onClick={()=>showTopic(t)}>✎</button>
                     </article>
                   ))}
                 {!topicBusy && !topicData?.topics.some(t=>(topicFilter==='all'||t.status===topicFilter||(topicFilter==='deferred'&&t.status==='dormant'))&&
                   (t.title+' '+(t.guiding_question??'')).toLocaleLowerCase('de-DE').includes(topicSearch.trim().toLocaleLowerCase('de-DE'))) && <p>Keine passenden Themen gefunden.</p>}
               </div>
-              <button type="button" disabled={topicBusy} onClick={()=>void loadTopics()}>Liste aktualisieren</button>
+               
             </> : <>
-              <nav className="breadcrumbs" aria-label="Brotkrumen"><button type="button" onClick={()=>setTopicListOpen(true)}>Themen</button><span>›</span><span aria-current="page">{topicData?.topics.find(t=>t.id===topicId)?.title ?? 'Thema'}</span></nav>
+              <nav className="breadcrumbs" aria-label="Brotkrumen"><button type="button" onClick={()=>setTopicListOpen(true)}>‹ Zurück</button><span>›</span><span aria-current="page">{topicData?.topics.find(t=>t.id===topicId)?.title ?? 'Thema'}</span></nav>
               <p className="eyebrow">Redaktion · Themenbearbeitung</p>
-              <h1 className="object-title"><img className="object-icon" src={topicIcon} alt="" />{topicData?.topics.find(t=>t.id===topicId)?.title ?? 'Thema'}</h1>
+              <h1 className="object-title"><img className="object-icon" src={topicIcon} alt="" />{(topicData?.topics.find(t=>t.id===topicId)?.title ?? 'Thema').replace(/^\[ENTWICKLUNG[^\]]*\]\s*/, '')}</h1>
               <nav className="topic-editor-tabs" aria-label="Bereiche der Themenbearbeitung">
                 {(['Themadefinition','Lokale Bezüge','Beitrag'] as const).map((label,i)=>(
                   <button type="button" key={label} className={topicStep===i+1?'selected':''} aria-current={topicStep===i+1?'page':undefined} onClick={()=>setTopicStep((i+1) as 1|2|3)}>{label}</button>
@@ -1457,7 +1457,7 @@ export function App() {
                   </details>
                 </> : <p role="status">Beitragsdaten werden geladen …</p>}
               </section>}
-              <div className="topic-editor-actions"><button type="button" onClick={()=>setTopicListOpen(true)}>Zur Themenliste</button><button type="button" disabled={topicBusy} onClick={()=>{void loadTopics();void loadTopicContribution(topicId);}}>Aktualisieren</button></div>
+              <div className="topic-editor-actions"><button type="button" className="icon-button" aria-label="Themenbearbeitung aktualisieren" title="Aktualisieren" disabled={topicBusy} onClick={()=>{void loadTopics();void loadTopicContribution(topicId);}}>↻</button></div>
             </>}
             {topicBusy && <p role="status">Bearbeitung läuft …</p>}
           </section>
