@@ -1368,9 +1368,15 @@ export function App() {
                   <button type="button" key={label} className={topicStep===i+1?'selected':''} aria-current={topicStep===i+1?'page':undefined} onClick={()=>setTopicStep((i+1) as 1|2|3)}>{label}</button>
                 ))}
               </nav>
-              {topicStep===1 && <section className="topic-editor-area">
-                <h2>Themadefinition</h2>
-                <p className="meta">Themenstatus: {topicData?.topics.find(t=>t.id===topicId)?.status ?? 'unbekannt'} · Änderungen werden intern versioniert.</p>
+              {topicStep===1 && <section className="topic-editor-area topic-area-card">
+                <div className="topic-area-card-header">
+                  <h2>Themadefinition</h2>
+                  <div className="topic-area-card-actions">
+                    <span className="topic-status-text">Status: {topicData?.topics.find(t=>t.id===topicId)?.status==='draft'?'Entwurf':topicData?.topics.find(t=>t.id===topicId)?.status==='active'?'Aktiv':topicData?.topics.find(t=>t.id===topicId)?.status==='archived'?'Archiviert':'Zurückgestellt'}</span>
+                    <button type="button" className="icon-button" aria-label="Themadefinition aktualisieren" title="Aktualisieren" disabled={topicBusy} onClick={()=>void loadTopics()}>↻</button>
+                  </div>
+                </div>
+                <p className="meta">Änderungen an der Themadefinition werden intern versioniert.</p>
                 <form className="topic-definition-form" onSubmit={e=>{e.preventDefault();void topicAction('update_topic',{topicId,title:topicEditTitle,guidingQuestion:topicEditQuestion,description:topicEditDescription});}}>
                   <label>Titel<input required maxLength={200} value={topicEditTitle} onChange={e=>setTopicEditTitle(e.target.value)}/></label>
                   <label>Leitfrage<input required maxLength={1000} value={topicEditQuestion} onChange={e=>setTopicEditQuestion(e.target.value)}/></label>
@@ -1385,8 +1391,8 @@ export function App() {
                   }}>Thema löschen</button>
                 </div>}
               </section>}
-              {topicStep===2 && <section className="topic-editor-area">
-                <h2>Lokale Bezüge</h2>
+              {topicStep===2 && <section className="topic-editor-area topic-area-card">
+                <div className="topic-area-card-header"><h2>Lokale Bezüge</h2><button type="button" className="icon-button" aria-label="Lokale Bezüge aktualisieren" title="Aktualisieren" disabled={topicBusy} onClick={()=>void loadTopics()}>↻</button></div>
                 <p>Vorgänge und ergänzende Einzelereignisse, die für dieses Thema Bedeutung besitzen. Eine Zuordnung wird erst nach redaktioneller Bestätigung wirksam.</p>
                 <p className="meta">Die direkte Suche nach ergänzenden Einzelereignissen folgt in einem weiteren Arbeitspaket.</p>
             <h3>Vorgang einem Thema vorschlagen</h3>
@@ -1426,8 +1432,8 @@ export function App() {
             {!topicData?.proposals.some(p=>p.topic_id===topicId && p.status==='pending') && <p>Keine offenen Vorschläge.</p>}
 
               </section>}
-              {topicStep===3 && <section className="topic-editor-area">
-                <h2>Beitrag</h2>
+              {topicStep===3 && <section className="topic-editor-area topic-area-card">
+                <div className="topic-area-card-header"><h2>Beitrag</h2><div className="topic-area-card-actions"><span className="topic-status-text">{topicContribution?.currentPublication?'Intern veröffentlicht':topicContribution?.versions.some(v=>!v.revoked_at)?'Freigegeben':'Noch keine Freigabe'}</span><button type="button" className="icon-button" aria-label="Beitrag aktualisieren" title="Aktualisieren" disabled={topicBusy} onClick={()=>void loadTopicContribution(topicId)}>↻</button></div></div>
                 <p>Der sachliche Thementext und die optionale „Unsere Einordnung“ werden getrennt bearbeitet.</p>
                 {topicContribution ? <>
                   <p className="meta">Themenstatus: {topicContribution.topic.status==='draft'?'Entwurf':topicContribution.topic.status==='active'?'Aktiv':topicContribution.topic.status==='deferred'||topicContribution.topic.status==='dormant'?'Zurückgestellt':'Archiviert'} · {topicContribution.currentPublication?'Eine freigegebene Fassung ist intern als Veröffentlichung erfasst.':'Keine aktive Veröffentlichung erfasst.'}</p>
