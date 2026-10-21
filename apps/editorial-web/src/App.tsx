@@ -150,6 +150,9 @@ export function App() {
   const [topicQuestion,setTopicQuestion] = useState('');
   const [topicDescription,setTopicDescription] = useState('');
   const [topicId,setTopicId] = useState('');
+  const [topicCoordination,setTopicCoordination] = useState<CoordinationState | null>(null);
+  const [topicCoordinationBusy,setTopicCoordinationBusy] = useState(false);
+  const [topicCoordinationMessage,setTopicCoordinationMessage] = useState<string | null>(null);
   const [processId,setProcessId] = useState('');
   const [processPickerOpen,setProcessPickerOpen] = useState(false);
   const [processQuery,setProcessQuery] = useState('');
@@ -284,6 +287,9 @@ export function App() {
 
   function showTopic(t: TopicData) {
     setTopicId(t.id);
+    setTopicCoordination(null);
+    setTopicCoordinationMessage(null);
+    void topicCoordinationAction('get_state', t.id);
     setTopicEditTitle(t.title);
     setTopicEditQuestion(t.guiding_question ?? '');
     setTopicEditDescription(t.description ?? '');
@@ -291,6 +297,23 @@ export function App() {
     setTopicStep(1);
     setTopicError('');
     void loadTopicContribution(t.id);
+  }
+  async function topicCoordinationAction(action: 'get_state' | 'take_lead' | 'release_lead', id = topicId) {
+    if (!id || topicCoordinationBusy) return;
+    setTopicCoordinationBusy(true);
+    setTopicCoordinationMessage(null);
+    try {
+      const {data,error}=await supabase.functions.invoke<CoordinationResult>('fib-coordination',{
+        body:{action,objectType:'topic',objectId:id},
+      });
+      if (error || !data?.ok) {
+        setTopicCoordinationMessage('Redaktionelle Koordination konnte nicht aktualisiert werden.');
+        return;
+      }
+      setTopicCoordination(data.state);
+      if (action==='take_lead') setTopicCoordinationMessage('Federführung übernommen.');
+      if (action==='release_lead') setTopicCoordinationMessage('Federführung abgegeben.');
+    } finally { setTopicCoordinationBusy(false); }
   }
   async function loadTopicContribution(id:string) {
     setTopicContribution(null);
@@ -1368,6 +1391,8 @@ export function App() {
                   <button type="button" key={label} className={topicStep===i+1?'selected':''} aria-current={topicStep===i+1?'page':undefined} onClick={()=>setTopicStep((i+1) as 1|2|3)}>{label}</button>
                 ))}
               </nav>
+              <div className="topic-detail-grid">
+                <div className="topic-detail-main">
               {topicStep===1 && <section className="topic-editor-area topic-area-card">
                 <div className="topic-area-card-header">
                   <h2>Themadefinition</h2>
@@ -1463,6 +1488,20 @@ export function App() {
                   </details>
                 </> : <p role="status">Beitragsdaten werden geladen …</p>}
               </section>}
+                </div>
+                <aside className="panel card-headed topic-coordination-panel" aria-label="Redaktionelle Koordination">
+                  <div className="section-heading"><h2>Redaktionelle Koordination</h2>
+                    <button type="button" className="icon-button" title="Koordination aktualisieren" aria-label="Koordination aktualisieren" disabled={topicCoordinationBusy} onClick={()=>void topicCoordinationAction('get_state')}>↻</button>
+                  </div>
+                  <p><strong>Federführung:</strong> {topicCoordination?.lead ? (topicCoordination.lead.mine ? (sessionContext?.displayName ?? topicCoordination.lead.displayName) : topicCoordination.lead.displayName) : 'niemand'}</p>
+                  <p><strong>Bearbeitung:</strong> {topicCoordination?.lock ? (topicCoordination.lock.mine ? 'durch mich gesperrt' : `gesperrt durch ${topicCoordination.lock.displayName}`) : 'frei'}</p>
+                  <p><strong>Letzte Bearbeitung:</strong> {topicCoordination?.lastEdit ? `${topicCoordination.lastEdit.displayName} · ${new Date(topicCoordination.lastEdit.editedAt).toLocaleString('de-DE')}` : 'noch nicht erfasst'}</p>
+                  <button type="button" className="action-button" disabled={topicCoordinationBusy || (!!topicCoordination?.lead && !topicCoordination.lead.mine)} onClick={()=>void topicCoordinationAction(topicCoordination?.lead?.mine?'release_lead':'take_lead')}>
+                    {topicCoordination?.lead?.mine?'Federführung abgeben':'Federführung übernehmen'}
+                  </button>
+                  {topicCoordinationMessage && <p role="status">{topicCoordinationMessage}</p>}
+                </aside>
+              </div>
               <div className="topic-editor-actions"><button type="button" className="icon-button" aria-label="Themenbearbeitung aktualisieren" title="Aktualisieren" disabled={topicBusy} onClick={()=>{void loadTopics();void loadTopicContribution(topicId);}}>↻</button></div>
             </>}
             {topicBusy && <p role="status">Bearbeitung läuft …</p>}
