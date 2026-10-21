@@ -19,7 +19,8 @@ export function caseTopicProposalsCannotPretendToBeAi() {
 export function caseTopicDecisionIsAtomicAndNotReplayed() {
   assert.match(handler, /sql\.begin\(async tx =>/);
   assert.match(handler, /for update/);
-  assert.match(handler, /proposal\[0\]\.status !== 'pending'/);
+  assert.match(handler, /proposal\[0\]\.status === 'confirmed'/);
+  assert.match(handler, /\['pending','confirmed','deferred','rejected'\]/);
   assert.match(handler, /insert into fib\.process_topics/);
   assert.match(handler, /update fib\.process_topic_proposals/);
 }

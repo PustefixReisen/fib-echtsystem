@@ -53,3 +53,12 @@ test('topic removal is gated by published history and effective approval',()=>{
  assert.match(api,/deleted_at=now\(\),deleted_by/);
  assert.match(api,/where deleted_at is null order by title/);
 });
+
+
+test('local link status model supports candidate assigned deferred and rejected states',()=>{
+  assert.match(api,/transition_confirmed_link/);
+  assert.match(api,/\['pending','confirmed','deferred','rejected'\]/);
+  assert.match(api,/suggested_significance=\$2,suggested_rationale=\$3,status=\$4/);
+  assert.match(api,/delete from fib\.process_topics/);
+  assert.match(api,/case when \$4='pending' then null else \$5::uuid end/);
+});

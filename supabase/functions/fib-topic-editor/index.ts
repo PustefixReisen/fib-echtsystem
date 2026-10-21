@@ -380,10 +380,45 @@ export default {
         });
         return json(outcome, 'code' in outcome ? outcome.code : 200);
       }
+      if (body.action === 'transition_confirmed_link') {
+        if (!uuid(body.topicId) || !uuid(body.processId) ||
+            !['pending','deferred','rejected'].includes(body.decision ?? '') ||
+            !significance(body.significance) || typeof body.rationale !== 'string' ||
+            !body.rationale.trim() || body.rationale.length > 4000) {
+          return json({ error: 'invalid_link_transition' }, 400);
+        }
+        const outcome = await sql.begin(async tx => {
+          const topic=await tx.unsafe(
+            'select 1 from fib.topics where id=$1::uuid and deleted_at is null for update',[body.topicId]);
+          if(!topic.length) return 'topic_not_found';
+          const link=await tx.unsafe(
+            'select 1 from fib.process_topics where topic_id=$1::uuid and process_id=$2::uuid for update',
+            [body.topicId,body.processId]);
+          if(!link.length) return 'link_not_found';
+          if(body.decision === 'pending') {
+            const pending=await tx.unsafe(
+              "select 1 from fib.process_topic_proposals where topic_id=$1::uuid and process_id=$2::uuid and status='pending' for update",
+              [body.topicId,body.processId]);
+            if(pending.length) return 'proposal_already_pending';
+          }
+          await tx.unsafe('delete from fib.process_topics where topic_id=$1::uuid and process_id=$2::uuid',
+            [body.topicId,body.processId]);
+          await tx.unsafe(
+            `insert into fib.process_topic_proposals
+              (process_id,topic_id,suggested_significance,suggested_rationale,origin,status,reviewed_by,reviewed_at)
+              values ($1::uuid,$2::uuid,$3,$4,'editor',$5,
+                case when $5='pending' then null else $6::uuid end,
+                case when $5='pending' then null else now() end)`,
+            [body.processId,body.topicId,body.significance,body.rationale.trim(),body.decision,actor]);
+          return 'ok';
+        });
+        if(outcome!=='ok') return json({error:outcome},outcome.endsWith('not_found')?404:409);
+        return json({ok:true});
+      }
       if (body.action === 'decide') {
-        if (!uuid(body.proposalId) || !['confirmed', 'rejected'].includes(body.decision ?? '') ||
-            (body.decision === 'confirmed' && (!significance(body.significance) ||
-             typeof body.rationale !== 'string' || !body.rationale.trim() || body.rationale.length > 4000))) {
+        if (!uuid(body.proposalId) || !['pending','confirmed','deferred','rejected'].includes(body.decision ?? '') ||
+            !significance(body.significance) || typeof body.rationale !== 'string' ||
+            !body.rationale.trim() || body.rationale.length > 4000) {
           return json({ error: 'invalid_decision' }, 400);
         }
         const outcome = await sql.begin(async tx => {
@@ -392,7 +427,7 @@ export default {
             [body.proposalId],
           );
           if (!proposal.length) return 'not_found';
-          if (proposal[0].status !== 'pending') return 'already_decided';
+          if (proposal[0].status === 'confirmed') return 'already_decided';
           const activeTopic=await tx.unsafe(
             'select 1 from fib.topics where id=$1::uuid and deleted_at is null for update',
             [proposal[0].topic_id]);
@@ -405,17 +440,18 @@ export default {
             if (existing.length) return 'relationship_already_confirmed';
             await tx.unsafe(
               'insert into fib.process_topics (process_id,topic_id,significance,significance_rationale) values ($1::uuid,$2::uuid,$3,$4)',
-              [proposal[0].process_id,proposal[0].topic_id,body.significance,body.rationale?.trim()],
+              [proposal[0].process_id,proposal[0].topic_id,body.significance,body.rationale.trim()],
             );
           }
           await tx.unsafe(
             `update fib.process_topic_proposals
-                set status=$2,reviewed_by=$3::uuid,reviewed_at=now(),
-                    confirmed_significance=$4,confirmed_rationale=$5
+                set suggested_significance=$2,suggested_rationale=$3,status=$4,
+                    reviewed_by=case when $4='pending' then null else $5::uuid end,
+                    reviewed_at=case when $4='pending' then null else now() end,
+                    confirmed_significance=case when $4='confirmed' then $2 else null end,
+                    confirmed_rationale=case when $4='confirmed' then $3 else null end
               where id=$1::uuid`,
-            [body.proposalId,body.decision,actor,
-              body.decision === 'confirmed' ? body.significance : null,
-              body.decision === 'confirmed' ? body.rationale?.trim() : null],
+            [body.proposalId,body.significance,body.rationale.trim(),body.decision,actor],
           );
           return 'ok';
         });
