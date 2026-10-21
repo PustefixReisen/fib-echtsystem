@@ -158,7 +158,7 @@ export function App() {
   const [processQuery,setProcessQuery] = useState('');
   const availableTopicProcesses = (topicData?.processes ?? []).filter(p=>
     !topicData?.links.some(l=>l.topic_id===topicId && l.process_id===p.id) &&
-    !topicData?.proposals.some(q=>q.topic_id===topicId && q.process_id===p.id && q.status==='pending')
+    !topicData?.proposals.some(q=>q.topic_id===topicId && q.process_id===p.id && ['pending','deferred','rejected'].includes(q.status))
   );
   const selectableProcessId = availableTopicProcesses.some(p=>p.id===processId) ? processId : '';
   const filteredTopicProcesses=availableTopicProcesses.filter(p=>p.title.toLocaleLowerCase('de-DE').includes(processQuery.trim().toLocaleLowerCase('de-DE'))).slice(0,100);
@@ -166,7 +166,7 @@ export function App() {
   const [topicCreateOpen,setTopicCreateOpen] = useState(false);
   const [topicSignificance,setTopicSignificance] = useState('relevant');
   const [topicRationale,setTopicRationale] = useState('');
-  const [topicReviews,setTopicReviews] = useState<Record<string,{significance:string;rationale:string}>>({});
+  const [topicReviews,setTopicReviews] = useState<Record<string,{significance:string;rationale:string;status?:string}>>({});
   const [eventResult, setEventResult] = useState<EventData | null>(null);
   const [eventSources, setEventSources] = useState<EventSource[]>([]);
   const [sourceSearch, setSourceSearch] = useState('');
@@ -353,8 +353,8 @@ export function App() {
       setProcessId(current => data.processes.some(p=>p.id===current) ? current : data.processes[0]?.id ?? '');
       setTopicReviews(current => {
         const next={...current};
-        for(const p of data.proposals) if(p.status==='pending' && !next[p.id])
-          next[p.id]={significance:p.suggested_significance,rationale:p.suggested_rationale};
+        for(const p of data.proposals) if(['pending','deferred','rejected'].includes(p.status) && !next[p.id])
+          next[p.id]={significance:p.suggested_significance,rationale:p.suggested_rationale,status:p.status};
         return next;
       });
     } catch(e) {setTopicError(e instanceof Error ? e.message : 'Themen konnten nicht geladen werden.');}
@@ -1445,42 +1445,50 @@ export function App() {
               <table className="topic-links-table">
                 <thead><tr><th scope="col">Lokaler Bezug</th><th scope="col">Typ</th><th scope="col">Bedeutung</th><th scope="col">Status</th><th scope="col"><span className="visually-hidden">Aktionen</span></th></tr></thead>
                 <tbody>
-                {(topicData?.links ?? []).filter(l=>l.topic_id===topicId).map(l=><tr key={`linked-${l.process_id}`}>
-                  <td><details className="topic-row-details"><summary>{l.process_title}</summary>
-                    <p><strong>Begründung:</strong> {l.significance_rationale || 'Keine Begründung hinterlegt.'}</p>
-                    <div className="topic-inline-editor">
-                      <label>Bedeutung<select value={(topicReviews[`confirmed-${l.process_id}`]?.significance) ?? l.significance} onChange={e=>setTopicReviews(v=>({...v,[`confirmed-${l.process_id}`]:{significance:e.target.value,rationale:v[`confirmed-${l.process_id}`]?.rationale ?? l.significance_rationale ?? ''}}))}><option value="defining">Prägend</option><option value="relevant">Relevant</option><option value="supplementary">Ergänzend</option></select></label>
-                      <label>Begründung<textarea maxLength={4000} value={topicReviews[`confirmed-${l.process_id}`]?.rationale ?? l.significance_rationale ?? ''} onChange={e=>setTopicReviews(v=>({...v,[`confirmed-${l.process_id}`]:{significance:v[`confirmed-${l.process_id}`]?.significance ?? l.significance,rationale:e.target.value}}))}/></label>
-                      <button type="button" disabled={topicBusy || !(topicReviews[`confirmed-${l.process_id}`]?.rationale ?? l.significance_rationale ?? '').trim()} onClick={()=>void topicAction('update_confirmed_link',{topicId,processId:l.process_id,significance:topicReviews[`confirmed-${l.process_id}`]?.significance ?? l.significance,rationale:topicReviews[`confirmed-${l.process_id}`]?.rationale ?? l.significance_rationale})}>Änderungen speichern</button>
-                    </div>
-                  </details></td>
-                  <td>Vorgang</td><td>{l.significance==='defining'?'Prägend':l.significance==='relevant'?'Relevant':'Ergänzend'}</td><td>Zugeordnet</td>
-                  <td><span title="Bezug in der ersten Spalte öffnen">✎</span></td>
-                </tr>)}
-                {(topicData?.proposals ?? []).filter(p=>p.topic_id===topicId && p.status==='pending').map(p=>{
-                  const review=topicReviews[p.id] ?? {significance:p.suggested_significance,rationale:p.suggested_rationale};
-                  return <tr key={`proposal-${p.id}`}>
-                    <td><details className="topic-row-details"><summary>{p.process_title}</summary>
-                      <p className="meta">Herkunft: {p.origin==='ai'?'KI':'Redaktion'} · Vorschlag ist noch nicht verbindlich.</p>
-                      <p><strong>Vorgeschlagene Begründung:</strong> {p.suggested_rationale}</p>
+                {(topicData?.links ?? []).filter(l=>l.topic_id===topicId).map(l=>{
+                  const key=`confirmed-${l.process_id}`;
+                  const review=topicReviews[key] ?? {significance:l.significance,rationale:l.significance_rationale ?? '',status:'confirmed'};
+                  return <tr key={`linked-${l.process_id}`}>
+                    <td><details className="topic-row-details"><summary>{l.process_title}</summary>
+                      <p><strong>Begründung:</strong> {l.significance_rationale || 'Keine Begründung hinterlegt.'}</p>
                       <div className="topic-inline-editor">
-                        <label>Redaktionelle Bedeutung<select value={review.significance} onChange={e=>setTopicReviews(v=>({...v,[p.id]:{...review,significance:e.target.value}}))}><option value="defining">Prägend</option><option value="relevant">Relevant</option><option value="supplementary">Ergänzend</option></select></label>
-                        <label>Redaktionelle Begründung<textarea maxLength={4000} value={review.rationale} onChange={e=>setTopicReviews(v=>({...v,[p.id]:{...review,rationale:e.target.value}}))}/></label>
-                        <div className="topic-review-actions">
-                          <button type="button" disabled={topicBusy || !review.rationale.trim()} onClick={()=>void topicAction('decide',{proposalId:p.id,decision:'confirmed',significance:review.significance,rationale:review.rationale})}>Zuordnen</button>
-                          <button type="button" disabled={topicBusy} onClick={()=>void topicAction('decide',{proposalId:p.id,decision:'rejected'})}>Fachlich unpassend</button>
-                        </div>
+                        <label>Status<select value={review.status ?? 'confirmed'} onChange={e=>setTopicReviews(v=>({...v,[key]:{...review,status:e.target.value}}))}>
+                          <option value="pending">Kandidat</option><option value="confirmed">Zugeordnet</option><option value="deferred">Zurückgestellt</option><option value="rejected">Fachlich unpassend</option>
+                        </select></label>
+                        <label>Bedeutung<select value={review.significance} onChange={e=>setTopicReviews(v=>({...v,[key]:{...review,significance:e.target.value}}))}><option value="defining">Prägend</option><option value="relevant">Relevant</option><option value="supplementary">Ergänzend</option></select></label>
+                        <label>Begründung<textarea maxLength={4000} value={review.rationale} onChange={e=>setTopicReviews(v=>({...v,[key]:{...review,rationale:e.target.value}}))}/></label>
+                        <button type="button" disabled={topicBusy || !review.rationale.trim()} onClick={()=>void topicAction((review.status ?? 'confirmed')==='confirmed'?'update_confirmed_link':'transition_confirmed_link',{topicId,processId:l.process_id,decision:review.status ?? 'confirmed',significance:review.significance,rationale:review.rationale})}>Änderungen speichern</button>
                       </div>
                     </details></td>
-                    <td>Vorgang</td><td>{review.significance==='defining'?'Prägend':review.significance==='relevant'?'Relevant':'Ergänzend'} (Vorschlag)</td>
-                    <td>Kandidat</td><td><span title="Zum Bearbeiten Bezug in der ersten Spalte öffnen">✎</span></td>
+                    <td>Vorgang</td><td>{review.significance==='defining'?'Prägend':review.significance==='relevant'?'Relevant':'Ergänzend'}</td><td>Zugeordnet</td>
+                    <td><span title="Bezug in der ersten Spalte öffnen">✎</span></td>
                   </tr>;
                 })}
-                {!(topicData?.links.some(l=>l.topic_id===topicId) || topicData?.proposals.some(p=>p.topic_id===topicId && p.status==='pending')) && <tr><td colSpan={5}>Noch keine lokalen Bezüge vorhanden.</td></tr>}
+                {(topicData?.proposals ?? []).filter(p=>p.topic_id===topicId && ['pending','deferred','rejected'].includes(p.status)).map(p=>{
+                  const review=topicReviews[p.id] ?? {significance:p.suggested_significance,rationale:p.suggested_rationale,status:p.status};
+                  const status=review.status ?? p.status;
+                  return <tr key={`proposal-${p.id}`}>
+                    <td><details className="topic-row-details"><summary>{p.process_title}</summary>
+                      <p className="meta">Herkunft: {p.origin==='ai'?'KI':'Redaktion'} · Redaktioneller Status kann jederzeit bewusst neu bewertet werden.</p>
+                      <p><strong>Begründung:</strong> {p.suggested_rationale}</p>
+                      <div className="topic-inline-editor">
+                        <label>Status<select value={status} onChange={e=>setTopicReviews(v=>({...v,[p.id]:{...review,status:e.target.value}}))}>
+                          <option value="pending">Kandidat</option><option value="confirmed">Zugeordnet</option><option value="deferred">Zurückgestellt</option><option value="rejected">Fachlich unpassend</option>
+                        </select></label>
+                        <label>Bedeutung<select value={review.significance} onChange={e=>setTopicReviews(v=>({...v,[p.id]:{...review,significance:e.target.value}}))}><option value="defining">Prägend</option><option value="relevant">Relevant</option><option value="supplementary">Ergänzend</option></select></label>
+                        <label>Begründung<textarea maxLength={4000} value={review.rationale} onChange={e=>setTopicReviews(v=>({...v,[p.id]:{...review,rationale:e.target.value}}))}/></label>
+                        <button type="button" disabled={topicBusy || !review.rationale.trim()} onClick={()=>void topicAction('decide',{proposalId:p.id,decision:status,significance:review.significance,rationale:review.rationale})}>Änderungen speichern</button>
+                      </div>
+                    </details></td>
+                    <td>Vorgang</td><td>{review.significance==='defining'?'Prägend':review.significance==='relevant'?'Relevant':'Ergänzend'}</td>
+                    <td>{status==='pending'?'Kandidat':status==='deferred'?'Zurückgestellt':status==='rejected'?'Fachlich unpassend':'Zugeordnet'}</td><td><span title="Zum Bearbeiten Bezug in der ersten Spalte öffnen">✎</span></td>
+                  </tr>;
+                })}
+                {!(topicData?.links.some(l=>l.topic_id===topicId) || topicData?.proposals.some(p=>p.topic_id===topicId && ['pending','deferred','rejected'].includes(p.status))) && <tr><td colSpan={5}>Noch keine lokalen Bezüge vorhanden.</td></tr>}
                 </tbody>
               </table>
             </div>
-            <p className="meta">Die Liste zeigt bestätigte Zuordnungen und noch zu prüfende Kandidaten. Historische Ablehnungen bleiben gespeichert, werden hier aber noch nicht als eigene Zeilen dargestellt.</p>
+            <p className="meta">Alle lokalen Bezüge bleiben gemeinsam sichtbar: Kandidat, Zugeordnet, Zurückgestellt oder Fachlich unpassend. Bedeutung und Begründung können zeilenbezogen bearbeitet werden.</p>
 
               </section>}
               {topicStep===3 && <section className="topic-editor-area topic-area-card">
