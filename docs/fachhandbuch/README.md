@@ -18,10 +18,10 @@ Projektübergreifender Standard: [pustivo – Fachliches Dokumentationsmodell](h
 |---|---|---|
 | 01 Grundlagen | Zweck, Feldkirchen-Bezug, Grundsätze | geplant |
 | 02 Wissensmodell | Inhaltsobjekte und Beziehungen | geplant |
-| 03 Recherche | Beobachtung, Quellen, Fundstellen, Relevanz | geplant |
+| [03 Recherche](03-Recherche.md) | Beobachtung, Quellen, Fundstellen, Relevanz | Konsolidierungsentwurf 0.1; Quellenabgleich offen |
 | 04 Ereignisse und Meldungen | Erkennung, Aufbereitung, Fortschreibung | geplant |
 | 05 Vorgänge | Status, Ereignisbeziehungen, Sachstand | geplant |
-| [06 Themen](06-Themen.md) | Definition, lokale Bezüge, redaktionelle Bedeutung, Beitragslebenszyklus | Konsolidierungsentwurf 0.1; Quellenabgleich offen |
+| [06 Themen](06-Themen.md) | Definition, lokale Bezüge, redaktionelle Bedeutung, Beitragslebenszyklus | Konsolidierungsentwurf 2.5; Quellenabgleich offen |
 | 07 Sitzungen und Beschlüsse | RIS, Vorlagen, Beschlüsse | geplant |
 | 08 Redaktion | Rollen im Arbeitsablauf, Prüfung, Freigabe, Veröffentlichung | geplant |
 | 09 Öffentliches Angebot | Navigation, Darstellung, Mehr wissen | geplant |
