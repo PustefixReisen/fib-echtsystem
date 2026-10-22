@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 0.1 – Konsolidierungsentwurf | 22.10.2026 | Projektverantwortung – erstellt mit KI-Unterstützung |
+| 0.2 – Konsolidierungsentwurf | 22.10.2026 | Projektverantwortung – erstellt mit KI-Unterstützung |
 
 > **Übernahmestatus:** Dieses Kapitel bündelt bereits beschlossene Fachregeln; während des Abgleichs bleiben die in [der Inventur](../Fachhandbuch-Inventur-2026-10-22.md) bezeichneten bisherigen Primärquellen verbindlich. Abweichungen und offene Fragen sind unten markiert. Erst die fachlich geprüfte vollständige Übernahme schaltet dieses Kapitel zur alleinigen Primärquelle.
 
@@ -12,17 +12,36 @@
 
 Ein **Thema** ist eine übergeordnete Fragestellung, die mehrere unterschiedliche Vorgänge, Ereignisse, Perspektiven oder Rahmenbedingungen verbindet und dadurch zusätzlichen Erklärungsgewinn für Feldkirchen schafft. Ein einzelner länger laufender Vorgang ist nicht allein deshalb ein Thema.
 
+### Fachlicher Zusammenhang
+
+Im FIB-Wissensmodell beantworten **Ereignisse** die Frage, was geschehen ist, **Meldungen** berichten darüber, und **Vorgänge** führen Ereignisse zu einem konkreten Sachverhalt zusammen. Ein **Thema** geht bewusst darüber hinaus: Es verbindet mehrere Sachverhalte unter einer gemeinsamen Frage, damit Bürgerinnen und Bürger Entwicklungen, Zusammenhänge und kommunale Handlungsmöglichkeiten verstehen können. Es ist keine bloße Sammlung von Meldungen.
+
+Beispiel Mobilität: Der Ausbau des Autobahnkreuzes München-Ost, ein Radschnellweg und die örtliche Verkehrsplanung sind unterschiedliche Vorgänge. Ein Thema kann fragen, wie sich Mobilität und Erreichbarkeit in Feldkirchen entwickeln. Es betrachtet die Vorgänge gemeinsam, ohne deren Eigenständigkeit aufzuheben.
+
+Wie im [Fachkonzept – Zielbild und Wissensstruktur](../Fachkonzept.md) gilt: Das Informationsangebot erschließt den **aktuellen Wissensstand**, unterscheidet gesicherte Sachinformation von **„Unsere Einordnung“** und stellt einen nachvollziehbaren Feldkirchen-Bezug her. Dieses Kapitel erläutert die speziellen Regeln für Themen; die grundlegende Fachlogik wird nicht nochmals abweichend festgelegt.
+
 Themen werden aus dem FIB-Wissensbestand erkannt oder redaktionell neu angelegt. KI-Themenkandidaten und redaktionelle Neuanlagen werden vor Übernahme auf gleiche oder ähnliche bestehende Themen geprüft. Die Redaktion kann Leitfrage und Abgrenzung schärfen, Aspekte ergänzen oder verwerfen und Rechercheaufträge auslösen. Neue, noch unbelegte Aspekte bleiben bis zur Prüfung Recherchebedarf, nicht gesicherte Tatsachen.
 
 **Quellen:** [Fachkonzept §4.3](../Fachkonzept.md), [Themen- und Vorgangslogik §§3–6](../Themen-und-Vorgangslogik.md).
 
 ## 6.2 Definition und Bearbeitungsbereiche
 
-Die dauerhafte Themenbearbeitung umfasst drei jederzeit erreichbare Bereiche: **Themadefinition**, **Lokale Bezüge** und **Beitrag**. Dies ist keine verpflichtende lineare Schrittfolge. Die Themadefinition enthält insbesondere Titel, Leitfrage und Erläuterung. Die redaktionelle Koordination erfolgt über die Federführung.
+Die Bearbeitung eines Themas dient nicht nur dem Schreiben eines Textes. Zunächst wird geklärt, **welche Frage** beantwortet werden soll, **welche lokalen Entwicklungen** dafür tatsächlich aussagekräftig sind und **welche Erkenntnisse** daraus für Leserinnen und Leser entstehen. Darum unterscheidet FIB die Definition, die fachlichen Bezüge und die öffentliche Darstellung.
+
+Die dauerhafte Themenbearbeitung umfasst drei jederzeit erreichbare Bereiche: **Themadefinition**, **Lokale Bezüge** und **Beitrag**. Dies ist keine verpflichtende lineare Schrittfolge. Die Themadefinition enthält insbesondere Titel, Leitfrage und Erläuterung. Die redaktionelle Koordination erfolgt über die Federführung. **Themadefinition** legt Gegenstand und Grenzen fest; **Lokale Bezüge** machen den tatsächlichen Informationsunterbau prüfbar; **Beitrag** formuliert daraus die öffentliche Erklärung. Diese Bereiche hängen fachlich zusammen, aber die Redaktion kann sie jederzeit erneut bearbeiten: Neue Ereignisse können Bezüge verändern, daraus kann sich eine präzisere Leitfrage ergeben und anschließend eine neue Textfassung.
+
+Die drei Bereiche sind **keine drei Freigabestufen**. Ihre unterschiedlichen Status und Folgen werden in §6.5 erläutert.
 
 **Quellen:** [Themen- und Vorgangslogik §12](../Themen-und-Vorgangslogik.md), [Fachentwurf §§2–3](../Fachentwurf-Themenbearbeitung-2026-10-20.md).
 
 ## 6.3 Lokale Bezüge
+
+### Wozu braucht ein Thema lokale Bezüge?
+
+Eine übergeordnete Frage wird erst durch konkrete lokale Vorgänge und Ereignisse verständlich und überprüfbar. **Lokale Bezüge** dokumentieren, auf welchen Sachverhalten ein Thema beruht und weshalb diese dazu gehören. Ohne solche Bezüge droht ein Thema zu allgemein zu werden. Die Redaktion kann nachvollziehen, was den Kern des Themas prägt, was zusätzlichen Kontext liefert und welche Zusammenhänge noch unzureichend belegt sind.
+
+Es gibt zwei unterschiedliche Entscheidungen: **Gehört dieser Sachverhalt überhaupt zum Thema?** Das beantwortet der *Zuordnungsstatus*. **Wie wichtig ist er für die Erklärung?** Das beantwortet erst bei bestätigter Zuordnung die *Bedeutung für das Thema*. Beispielsweise kann der Ausbau des Autobahnkreuzes „Zugeordnet“ und zugleich „Prägend“ sein; eine weitere Verkehrsstudie kann „Kandidat“ sein, obwohl die KI sie als „Relevant“ vorschlägt. Der KI-Vorschlag allein macht sie nicht zum bestätigten Themenbestandteil.
+
 
 **FIB-THEMA-BEZUG-001 – Auswahlbasis.** Ein Thema wird vorzugsweise durch die Auswahl ganzer Vorgänge gebildet. Ihre zugehörigen Ereignisse werden automatisch berücksichtigt. **Ergänzende direkte Einzelereignisse** sind zulässig, wenn sie nicht bereits über einen bestätigten Themenvorgang abgedeckt sind. Meldungen bilden keinen dritten Auswahlweg. Dieselbe Tatsache wird nicht mehrfach gewichtet, nur weil sie als Fundstelle, Ereignis, Meldung und Vorgang erscheint.
 
@@ -49,11 +68,41 @@ Status und Herkunft sind verschiedene Dimensionen: **KI-Vorschlag** bezeichnet e
 
 ## 6.4 Perspektiven und Wirkungen
 
+### Warum reicht eine Aufzählung von Vorgängen nicht aus?
+
+Ein Thema soll **Zusammenhänge erklären**, nicht nur Vorgänge nebeneinanderstellen. Perspektiven beantworten, **unter welchen fachlichen Blickwinkeln** diese Vorgänge gemeinsam zu betrachten sind. Wirkungen beschreiben, **welche nachvollziehbaren Folgen oder Veränderungen** innerhalb dieser Blickwinkel entstehen oder plausibel zu erwarten sind.
+
+Beispiel Mobilität: Der Ausbau eines Autobahnkreuzes und ein Radschnellweg können unter der Perspektive *Erreichbarkeit* betrachtet werden, aber auch unter *Lärm*, *Verkehrssicherheit* oder *Flächenverbrauch*. Dieselbe Perspektive wird einmal für das Thema geführt; darunter lassen sich Wirkungen verschiedener Vorgänge vergleichen. So wird erkennbar, wo Ziele übereinstimmen oder Zielkonflikte entstehen. Eine Wirkung ist zunächst eine sachliche Aussage, keine automatische politische Bewertung.
+
+
 Perspektiven (z. B. Lärm, Verkehrssicherheit, Flächenverbrauch) sind **dem Thema**, nicht einzelnen Vorgängen, zugeordnet. Sie werden aus dem gesamten bestätigten Themenbestand erarbeitet. Die Redaktion darf KI-Vorschläge übernehmen, ergänzen, zusammenführen und korrigieren. Unter bestätigten Perspektiven werden belegbare oder begründet erwartbare Wirkungen beschrieben. Eine sachliche Wirkung ist noch keine politische Bewertung; diese gehört in „Unsere Einordnung“.
 
 **Quelle:** [Themen- und Vorgangslogik §5.5](../Themen-und-Vorgangslogik.md).
 
 ## 6.5 Beitrag, Version und Freigabe
+
+### Wie hängen Thema, lokale Bezüge und Beitrag zusammen?
+
+Das **Thema** ist die fachliche Klammer. Seine **lokalen Bezüge** bestimmen, welche Sachverhalte als geprüfter Bestandteil in die Analyse eingehen. Der **Beitrag** vermittelt den daraus gewonnenen Kenntnisstand nach außen – als sachlicher Thementext und gegebenenfalls getrennte „Unsere Einordnung“.
+
+FIB führt dabei **verschiedene Statusdimensionen nebeneinander**, weil sie unterschiedliche Fragen beantworten:
+
+| Dimension | Leitfrage | Zustände bzw. Ausprägungen | Worauf wirkt sie? |
+|---|---|---|---|
+| **Thema** | In welcher Lebensphase befindet sich das Thema? | Entwurf · Aktiv · Zurückgestellt · Archiviert | Fachliche Bearbeitung und grundsätzliche Sichtbarkeit |
+| **Einzelner lokaler Bezug** | Ist der Vorgang oder das Ereignis diesem Thema zugeordnet? | Kandidat · Zugeordnet · Zurückgestellt · Fachlich unpassend | Aufnahme in den bestätigten Themenbestand |
+| **Bedeutung eines Bezugs** | Welches Gewicht hat ein bestätigter Bezug? | Prägend · Relevant · Ergänzend | Redaktionell bestätigte fachliche Einordnung, **kein Status** |
+| **Beitragsfassung** | Ist diese konkrete Textfassung freigegeben? | Arbeitsfassung / noch nicht freigegeben · freigegeben · Freigabe vor Publikation zurückgenommen | Inhaltliche Freigabe der Version |
+| **Öffentliche Veröffentlichung** | Welche Fassung ist tatsächlich sichtbar? | Noch nicht veröffentlicht · veröffentlicht · zurückgezogen/beendet | Öffentliche Ausspielung der freigegebenen Version |
+
+**„Unsere Einordnung“ ist ein eigener, optionaler Textbestandteil, kein eigenständiger Themenstatus.** Sie wird getrennt vom Sachtext bearbeitet, gehört aber zur betreffenden Beitragsfassung und ihrer Freigabe. Eine separat editierte Einordnung macht die noch nicht freigegebene neue Fassung nicht automatisch öffentlich.
+
+Die Redaktion soll diese Informationen **zusammen verständlich anzeigen**, jedoch nicht durch einen einzigen Sammelstatus ersetzen. Aus dem Status eines Bezugs lässt sich weder die Freigabe noch die Veröffentlichung des Themas ableiten.
+
+### Beispiel für die getrennten Dimensionen
+
+Ein Mobilitätsthema ist **Aktiv**. Das Autobahnkreuz München-Ost ist als lokaler Bezug **Zugeordnet** und **Prägend** eingestuft; eine neu gefundene Studie steht zunächst als **Kandidat** zur Prüfung. Die bisherige Beitragsfassung kann bereits **freigegeben und veröffentlicht** sein, während die Redaktion eine **neue Arbeitsfassung** mit aktualisiertem Sachtext und einer überarbeiteten optionalen Einordnung erstellt. Die Veröffentlichung bleibt unverändert, bis eine neue Fassung ausdrücklich freigegeben und separat veröffentlicht wird.
+
 
 **FIB-THEMA-BEITRAG-001 – Zwei getrennte Textteile.** Der Beitrag enthält den sachlichen **Thementext** und die optionale, gesonderte **„Unsere Einordnung“**. KI-Textvorschläge bleiben von der redaktionell bearbeiteten Fassung unterscheidbar.
 
@@ -64,6 +113,22 @@ Perspektiven (z. B. Lärm, Verkehrssicherheit, Flächenverbrauch) sind **dem The
 **Quelle:** [Themen- und Vorgangslogik §12](../Themen-und-Vorgangslogik.md), [Fachentwurf §§3.3, 8](../Fachentwurf-Themenbearbeitung-2026-10-20.md).
 
 ## 6.6 Themenstatus und Lebenszyklus
+
+### Was ändert ein Statuswechsel – und was gerade nicht?
+
+Der **Themenstatus** beschreibt den Lebenszyklus des übergeordneten Wissensobjekts. Der **Zuordnungsstatus** betrifft dagegen genau einen einzelnen lokalen Bezug. Eine zurückgestellte Zuordnung stellt **nicht** das gesamte Thema zurück; umgekehrt löscht eine Archivierung des Themas **nicht** automatisch seine Beziehungen oder historischen Beitragsfassungen.
+
+| Fachlicher Vorgang | Folge für die anderen Dimensionen |
+|---|---|
+| Lokalen Bezug als „Zugeordnet“ bestätigen | Er wird fachlich wirksam; das Thema wird deshalb **nicht** automatisch freigegeben oder veröffentlicht. |
+| Bezug zurückstellen oder als fachlich unpassend markieren | Er gehört nicht zum aktuell bestätigten Themenbestand; bereits dokumentierte Entscheidungen bleiben nachvollziehbar. |
+| Beitragsentwurf speichern | Die Arbeitsfassung ändert sich; vorhandene freigegebene oder veröffentlichte Fassungen bleiben bestehen. |
+| Erste Beitragsfassung freigeben | Thema wechselt von **Entwurf** zu **Aktiv**, bleibt aber **noch nicht veröffentlicht**. |
+| Thema zurückstellen oder archivieren | Öffentliche Sichtbarkeit endet; Freigaben, frühere Fassungen und Bezugsentscheidungen bleiben dokumentiert. |
+| Thema nach Aktualitätsprüfung wiederaufnehmen | Das Thema kann wieder **Aktiv** werden; es erfolgt **keine automatische Veröffentlichung**. |
+
+Diese Übersicht erläutert die bereits vereinbarten Grundwirkungen; sie ersetzt **keine** noch zu prüfende vollständige technische Übergangsmatrix für alle Sonderfälle.
+
 
 **FIB-THEMA-STATUS-001 – Fachliche Zustände.** Der Themenlebenszyklus unterscheidet **Entwurf, Aktiv, Zurückgestellt, Archiviert**. Status, Freigabe und tatsächlich bestehende öffentliche Sichtbarkeit sind getrennte Informationen. „Zurückgestellt“ beendet die aktuelle öffentliche Sichtbarkeit vorläufig; „Archiviert“ ist eine auf Dauer angelegte Herausnahme.
 
@@ -98,4 +163,4 @@ Perspektiven (z. B. Lärm, Verkehrssicherheit, Flächenverbrauch) sind **dem The
 
 | Version | Datum | Änderung |
 |---|---|---|
-| 0.1 | 22.10.2026 | Erste regelbasierte Zusammenführung des Themenbereichs, 13 Regelkennungen, Quellverweise und offene Abgleichpunkte. |
+| 0.2 | 22.10.2026 | Fachliche Absicht und Wissensmodell erläutert; Statusdimensionen mit gemeinsamen Beispielen und Folgen erklärt. |\n| 0.1 | 22.10.2026 | Erste regelbasierte Zusammenführung des Themenbereichs, 13 Regelkennungen, Quellverweise und offene Abgleichpunkte. |
