@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 1.3 – Konsolidierungsentwurf | 22.10.2026 | Projektverantwortung – erstellt mit KI-Unterstützung |
+| 1.4 – Konsolidierungsentwurf | 22.10.2026 | Projektverantwortung – erstellt mit KI-Unterstützung |
 
 > **Übernahmestatus:** Dieses Kapitel bündelt bereits beschlossene Fachregeln; während des Abgleichs bleiben die in [der Inventur](../Fachhandbuch-Inventur-2026-10-22.md) bezeichneten bisherigen Primärquellen verbindlich. Abweichungen und offene Fragen sind unten markiert. Erst die fachlich geprüfte vollständige Übernahme schaltet dieses Kapitel zur alleinigen Primärquelle.
 
@@ -44,26 +44,6 @@ Es gibt zwei unterschiedliche Entscheidungen: **Gehört dieser Sachverhalt über
 
 
 **FIB-THEMA-BEZUG-001 – Auswahlbasis.** Ein Thema wird vorzugsweise durch die Auswahl ganzer Vorgänge gebildet. Ihre zugehörigen Ereignisse werden automatisch berücksichtigt. **Ergänzende direkte Einzelereignisse** sind zulässig, wenn sie nicht bereits über einen bestätigten Themenvorgang abgedeckt sind. Meldungen bilden keinen dritten Auswahlweg. Dieselbe Tatsache wird nicht mehrfach gewichtet, nur weil sie als Fundstelle, Ereignis, Meldung und Vorgang erscheint.
-
-### Übersicht: Übergänge lokaler Bezüge
-
-| Von | Nach | Voraussetzung |
-|---|---|---|
-| Kandidat | Zugeordnet | Redaktion bestätigt Bedeutung und Begründung |
-| Kandidat | Zurückgestellt | Redaktion vertagt Entscheidung |
-| Kandidat | Fachlich unpassend | Begründete redaktionelle Ablehnung |
-| Zugeordnet | Zurückgestellt | Vorläufige Herausnahme aus bestätigtem Bestand |
-| Zugeordnet | Fachlich unpassend | Begründete fachliche Neubewertung |
-| Zurückgestellt | Zugeordnet | Erneute Prüfung und Bestätigung |
-| Zurückgestellt | Fachlich unpassend | Redaktionelle Ablehnung |
-| Fachlich unpassend | Kandidat | Neue Sachlage oder veränderte Themendefinition |
-| Fachlich unpassend | Zugeordnet | **Nicht unmittelbar zulässig** |
-
-Die Tabelle steht vor den Einzelregeln. Alle Entscheidungen werden nachvollziehbar dokumentiert. Die KI darf erneute Prüfung vorschlagen, aber keinen Status eigenständig wechseln lassen.
-
-**FIB-THEMA-BEZUG-007 – Neubewertung bestätigter Bezüge.** Eine zugeordnete Beziehung darf unmittelbar als fachlich unpassend eingestuft werden, wenn ihre fachliche Eignung entfällt. Begründung und frühere Entscheidung bleiben historisch nachvollziehbar.
-
-**FIB-THEMA-BEZUG-008 – Zweistufige Wiederaufnahme abgelehnter Bezüge.** Ein fachlich unpassender Bezug kann bei veränderter Faktenlage oder Themendefinition zunächst wieder Kandidat werden. Erst nach erneuter Prüfung und ausdrücklicher redaktioneller Bestätigung ist Zugeordnet zulässig. Der direkte Übergang von Fachlich unpassend zu Zugeordnet ist ausgeschlossen.
 
 **FIB-THEMA-BEZUG-002 – Vier redaktionelle Zuordnungsstatus.** Lokale Bezüge haben die fachlichen Zustände:
 
@@ -132,20 +112,6 @@ Die drei Einheiten bilden **keine Statushierarchie**: Eine zugeordnete Beziehung
 
 Bei Änderungen an Beziehungen, Perspektiven oder der Themendefinition kann der öffentliche Text fachlich überholt sein. Deshalb darf eine neue Arbeitsfassung **nicht stillschweigend** die bisherige veröffentlichte Fassung überschreiben. Redakteure können weiterarbeiten, ohne einen fertigen öffentlichen Informationsstand sofort zu verändern. Eine neue geänderte Fassung benötigt eine neue Freigabe.
 
-### Übersicht: Beitragsfassung, Freigabe und Veröffentlichung
-
-| Ausgangslage | Aktion / Ergebnis | Voraussetzung / Folge |
-|---|---|---|
-| Arbeitsfassung | Speichern | Verändert keine bereits veröffentlichte Fassung |
-| Arbeitsfassung | **Freigeben** | Berechtigter Redakteur oder Administrator; Freigabe protokollieren |
-| Freigegebene, noch nie veröffentlichte Fassung | Freigabe **zurücknehmen** | Vor Erstveröffentlichung dieser Fassung; historisieren |
-| Freigegebene Fassung | **Veröffentlichen** | Gesonderte bestätigte Aktion und zulässiger Themenstatus |
-| Veröffentlichte Fassung | Überarbeiten | Neue Arbeitsfassung; bisherige Veröffentlichung bleibt unverändert |
-| Neue freigegebene Fassung | Veröffentlichen | Ersetzt die bisher öffentlich sichtbare Fassung bei gesonderter Publikation |
-| Zurückgestelltes / archiviertes Thema | Sichtbarkeit beenden | Fassungen und Freigaben bleiben historisch erhalten |
-
-Die optionale **„Unsere Einordnung“** gehört zur Beitragsfassung. Sie ist ein eigener Textteil, **kein gesonderter Freigabe- oder Publikationsstatus**. Weitergehende Berechtigungsdetails und besondere Übergänge werden im gemeinsamen fachlichen Abgleich vervollständigt.
-
 **FIB-THEMA-BEITRAG-001 – Zwei getrennte Textteile.** Der Beitrag enthält den sachlichen **Thementext** und die optionale, gesonderte **„Unsere Einordnung“**. KI-Textvorschläge bleiben von der redaktionell bearbeiteten Fassung unterscheidbar.
 
 **FIB-THEMA-BEITRAG-002 – Freigabe und Veröffentlichung.** Redaktionelle Freigabe ist eine eigenständige Handlung und **nicht automatisch eine öffentliche Veröffentlichung**. Freigaben/Veröffentlichungen werden mit Person und Zeitpunkt nachvollziehbar dokumentiert. Redakteure dürfen eigene Beitragsfassungen selbst freigeben und veröffentlichen; es gibt kein zwingendes Vier-Augen-Prinzip. KI darf weder eigenständig freigeben noch veröffentlichen.
@@ -164,39 +130,7 @@ Die optionale **„Unsere Einordnung“** gehört zur Beitragsfassung. Sie ist e
 
 Die Regeln zu Zustandsübergängen sind **fachliche Plausibilitäts- und Geschäftsregeln**: Sie beschreiben zulässige Aktionen, notwendige Vorbedingungen und fachliche Folgen an Thema, lokalen Beziehungen, Beitragsfassungen und Veröffentlichung. Die technische Durchsetzung und eine später aus den Primärregeln abgeleitete Status-/Rechteübersicht müssen auf diese Regeln Bezug nehmen.
 
-### Zwei Arten von Übergangsprüfungen
-
-Das bestehende FIB-Regelwerk unterscheidet **harte fachliche Invarianten** von **semantischen Plausibilitätsprüfungen**. Diese Unterscheidung gilt ausdrücklich auch für Statusänderungen an Themen, lokalen Bezügen und Beitragsfassungen.
-
-- **Harte Invariante:** Eine objektiv unzulässige Aktion (beispielsweise Veröffentlichung einer nicht freigegebenen Fassung, ein nicht erlaubter Übergang oder eine Handlung ohne erforderliches Recht) muss **serverseitig blockiert** werden. Eine KI-Empfehlung darf sie nicht überstimmen.
-- **Semantische Plausibilitätsprüfung:** Gibt es mehrere fachlich vertretbare Entscheidungen (beispielsweise, ob ein großer Einzelvorgang ein eigenständiges Thema rechtfertigt), erhält die Redaktion einen begründeten Prüfhinweis und trifft die Entscheidung. Die KI darf dazu Vorschläge machen, aber nicht eigenständig bestätigen.
-
-Das Ziel ist **kein gigantischer Katalog theoretischer Statuskombinationen**, sondern eine nachvollziehbare, objektbezogene Regelung jeder fachlichen Aktion: *Ausgangslage → erforderliche Rolle und Voraussetzungen → Entscheidung/Bestätigung → zulässiger neuer Zustand → Audit und Folgeaktionen*. Die genaue Vollständigkeitsprüfung der Übergänge bleibt im [Issue #153](https://github.com/PustefixReisen/fib-echtsystem/issues/153) als Entwicklungs- und Testaufgabe erfasst.
-
-**Quelle:** [Fachliche Plausibilitäts- und Freigaberegeln §§2–4](../Fachliche-Plausibilitaets-und-Freigaberegeln.md).
-
-### Nur die notwendigen Abhängigkeiten prüfen
-
-FIB führt die drei Einheiten getrennt; es wird **nicht jede denkbare Statuskombination als eigener Zustand** verwaltet. Stattdessen prüft das System bei einer fachlichen Aktion die erforderlichen Voraussetzungen und Folgen.
-
-| Wenn die Redaktion … | Dann ist entscheidend … |
-|---|---|
-| einen lokalen Bezug bestätigt | Nur diese Beziehung wird **Zugeordnet**; Thema und Beitrag werden dadurch nicht freigegeben oder veröffentlicht. |
-| einen Bezug zurückstellt oder ablehnt | Die Beziehung bleibt nachvollziehbar, ist aber nicht Teil des bestätigten Bestands. Eine bereits veröffentlichte Textfassung ändert sich dadurch nicht automatisch; redaktioneller Aktualisierungsbedarf kann entstehen. |
-| die Themendefinition überarbeitet | Der fachliche Themenstand wird fortgeschrieben. Es entsteht **nicht automatisch** eine neue öffentliche Beitragsfassung. |
-| eine Arbeitsfassung speichert | Nur der Entwurf ändert sich; bisher freigegebene/veröffentlichte Fassungen bleiben erhalten. |
-| erstmals eine Beitragsfassung freigibt | Das Thema wechselt von **Entwurf** nach **Aktiv**; die Veröffentlichung steht weiter aus. |
-| die freigegebene Fassung veröffentlicht | Diese Fassung wird öffentlich sichtbar – getrennt von der Freigabe und unter Berücksichtigung des zulässigen Themenstatus. |
-| ein Thema zurückstellt oder archiviert | Seine öffentliche Sichtbarkeit endet; alte Freigaben, Versionen und Beziehungen bleiben historisch nachvollziehbar. |
-| ein Thema wiederaufnimmt | Eine Aktualitätsprüfung ist nötig; die Rückkehr nach **Aktiv** veröffentlicht nichts automatisch. Bei inhaltlich geänderter Fassung ist eine erneute Freigabe erforderlich. |
-
-### Ein durchgängiges Beispiel
-
-Ein **aktives** Mobilitätsthema hat zwei **zugeordnete** Vorgänge und einen weiteren **Kandidaten**. Die Redaktion erhält neue Erkenntnisse, korrigiert eine Wirkung und erstellt eine neue Arbeitsfassung mit angepasstem Sachtext und optional neuer Einordnung. Die bisherige **freigegebene und veröffentlichte** Fassung bleibt zunächst sichtbar. Erst wenn die neue Fassung redaktionell **freigegeben** und danach ausdrücklich **veröffentlicht** wird, ändert sich die öffentliche Darstellung.
-
-**Merksatz:** *Themenstatus steuert den Lebenszyklus, Beziehungsstatus den bestätigten Erkenntnisbestand, Beitragsfreigabe den geprüften Text und Veröffentlichung die öffentliche Sichtbarkeit.*
-
-Die Tabelle erklärt Grundregeln, **keine vollständige Übergangsmatrix**. Spezialfälle, notwendige Berechtigungen und unzulässige Kombinationen müssen gesondert gegen Datenmodell, Services und fachliche Entscheidungen geprüft werden; daraus wird nicht stillschweigend ein weiterer Status eingeführt.
+### 6.6.1 Thema: Zustände, Übergänge und Rechte
 
 ### Übersicht: Themenstatus und Berechtigungen
 
@@ -236,6 +170,83 @@ Die Tabellen stehen bewusst **vor** den erläuternden Regeln. Sie sind eine fach
 **FIB-THEMA-STATUS-007 – Wiederaufnahme aus dem Archiv.** Der direkte Übergang **Archiviert → Zurückgestellt** wird **nicht** als reguläre Aktion angeboten. Bei erneuter Bearbeitung erfolgt die ausdrücklich bestätigte, dokumentierte Wiederaufnahme nach **Aktiv** unter den bereits in FIB-THEMA-STATUS-003 festgelegten Aktualitätsbedingungen. Für nie freigegebene archivierte Entwürfe muss die genaue Wiederaufnahme-Semantik noch gesondert gegen die Bedingung „erste Freigabe aktiviert den Entwurf“ geprüft werden; daraus wird hier kein neuer Übergang erfunden.
 
 Diese zusätzlichen Übergänge sind **fachlich beschlossen**. Die Berechtigungen und technische Umsetzung werden noch getrennt geprüft.
+
+
+### 6.6.2 Lokale Beziehung: Zustände und Übergänge
+
+### Übersicht: Übergänge lokaler Bezüge
+
+| Von | Nach | Voraussetzung |
+|---|---|---|
+| Kandidat | Zugeordnet | Redaktion bestätigt Bedeutung und Begründung |
+| Kandidat | Zurückgestellt | Redaktion vertagt Entscheidung |
+| Kandidat | Fachlich unpassend | Begründete redaktionelle Ablehnung |
+| Zugeordnet | Zurückgestellt | Vorläufige Herausnahme aus bestätigtem Bestand |
+| Zugeordnet | Fachlich unpassend | Begründete fachliche Neubewertung |
+| Zurückgestellt | Zugeordnet | Erneute Prüfung und Bestätigung |
+| Zurückgestellt | Fachlich unpassend | Redaktionelle Ablehnung |
+| Fachlich unpassend | Kandidat | Neue Sachlage oder veränderte Themendefinition |
+| Fachlich unpassend | Zugeordnet | **Nicht unmittelbar zulässig** |
+
+Die Tabelle steht vor den Einzelregeln. Alle Entscheidungen werden nachvollziehbar dokumentiert. Die KI darf erneute Prüfung vorschlagen, aber keinen Status eigenständig wechseln lassen.
+
+**FIB-THEMA-BEZUG-007 – Neubewertung bestätigter Bezüge.** Eine zugeordnete Beziehung darf unmittelbar als fachlich unpassend eingestuft werden, wenn ihre fachliche Eignung entfällt. Begründung und frühere Entscheidung bleiben historisch nachvollziehbar.
+
+**FIB-THEMA-BEZUG-008 – Zweistufige Wiederaufnahme abgelehnter Bezüge.** Ein fachlich unpassender Bezug kann bei veränderter Faktenlage oder Themendefinition zunächst wieder Kandidat werden. Erst nach erneuter Prüfung und ausdrücklicher redaktioneller Bestätigung ist Zugeordnet zulässig. Der direkte Übergang von Fachlich unpassend zu Zugeordnet ist ausgeschlossen.
+
+
+### 6.6.3 Beitrag: Fassungen, Freigabe und Veröffentlichung
+
+### Übersicht: Beitragsfassung, Freigabe und Veröffentlichung
+
+| Ausgangslage | Aktion / Ergebnis | Voraussetzung / Folge |
+|---|---|---|
+| Arbeitsfassung | Speichern | Verändert keine bereits veröffentlichte Fassung |
+| Arbeitsfassung | **Freigeben** | Berechtigter Redakteur oder Administrator; Freigabe protokollieren |
+| Freigegebene, noch nie veröffentlichte Fassung | Freigabe **zurücknehmen** | Vor Erstveröffentlichung dieser Fassung; historisieren |
+| Freigegebene Fassung | **Veröffentlichen** | Gesonderte bestätigte Aktion und zulässiger Themenstatus |
+| Veröffentlichte Fassung | Überarbeiten | Neue Arbeitsfassung; bisherige Veröffentlichung bleibt unverändert |
+| Neue freigegebene Fassung | Veröffentlichen | Ersetzt die bisher öffentlich sichtbare Fassung bei gesonderter Publikation |
+| Zurückgestelltes / archiviertes Thema | Sichtbarkeit beenden | Fassungen und Freigaben bleiben historisch erhalten |
+
+Die optionale **„Unsere Einordnung“** gehört zur Beitragsfassung. Sie ist ein eigener Textteil, **kein gesonderter Freigabe- oder Publikationsstatus**. Weitergehende Berechtigungsdetails und besondere Übergänge werden im gemeinsamen fachlichen Abgleich vervollständigt.
+
+
+### 6.6.4 Zusammenspiel und Prüfarten
+
+### Zwei Arten von Übergangsprüfungen
+
+Das bestehende FIB-Regelwerk unterscheidet **harte fachliche Invarianten** von **semantischen Plausibilitätsprüfungen**. Diese Unterscheidung gilt ausdrücklich auch für Statusänderungen an Themen, lokalen Bezügen und Beitragsfassungen.
+
+- **Harte Invariante:** Eine objektiv unzulässige Aktion (beispielsweise Veröffentlichung einer nicht freigegebenen Fassung, ein nicht erlaubter Übergang oder eine Handlung ohne erforderliches Recht) muss **serverseitig blockiert** werden. Eine KI-Empfehlung darf sie nicht überstimmen.
+- **Semantische Plausibilitätsprüfung:** Gibt es mehrere fachlich vertretbare Entscheidungen (beispielsweise, ob ein großer Einzelvorgang ein eigenständiges Thema rechtfertigt), erhält die Redaktion einen begründeten Prüfhinweis und trifft die Entscheidung. Die KI darf dazu Vorschläge machen, aber nicht eigenständig bestätigen.
+
+Das Ziel ist **kein gigantischer Katalog theoretischer Statuskombinationen**, sondern eine nachvollziehbare, objektbezogene Regelung jeder fachlichen Aktion: *Ausgangslage → erforderliche Rolle und Voraussetzungen → Entscheidung/Bestätigung → zulässiger neuer Zustand → Audit und Folgeaktionen*. Die genaue Vollständigkeitsprüfung der Übergänge bleibt im [Issue #153](https://github.com/PustefixReisen/fib-echtsystem/issues/153) als Entwicklungs- und Testaufgabe erfasst.
+
+**Quelle:** [Fachliche Plausibilitäts- und Freigaberegeln §§2–4](../Fachliche-Plausibilitaets-und-Freigaberegeln.md).
+
+### Nur die notwendigen Abhängigkeiten prüfen
+
+FIB führt die drei Einheiten getrennt; es wird **nicht jede denkbare Statuskombination als eigener Zustand** verwaltet. Stattdessen prüft das System bei einer fachlichen Aktion die erforderlichen Voraussetzungen und Folgen.
+
+| Wenn die Redaktion … | Dann ist entscheidend … |
+|---|---|
+| einen lokalen Bezug bestätigt | Nur diese Beziehung wird **Zugeordnet**; Thema und Beitrag werden dadurch nicht freigegeben oder veröffentlicht. |
+| einen Bezug zurückstellt oder ablehnt | Die Beziehung bleibt nachvollziehbar, ist aber nicht Teil des bestätigten Bestands. Eine bereits veröffentlichte Textfassung ändert sich dadurch nicht automatisch; redaktioneller Aktualisierungsbedarf kann entstehen. |
+| die Themendefinition überarbeitet | Der fachliche Themenstand wird fortgeschrieben. Es entsteht **nicht automatisch** eine neue öffentliche Beitragsfassung. |
+| eine Arbeitsfassung speichert | Nur der Entwurf ändert sich; bisher freigegebene/veröffentlichte Fassungen bleiben erhalten. |
+| erstmals eine Beitragsfassung freigibt | Das Thema wechselt von **Entwurf** nach **Aktiv**; die Veröffentlichung steht weiter aus. |
+| die freigegebene Fassung veröffentlicht | Diese Fassung wird öffentlich sichtbar – getrennt von der Freigabe und unter Berücksichtigung des zulässigen Themenstatus. |
+| ein Thema zurückstellt oder archiviert | Seine öffentliche Sichtbarkeit endet; alte Freigaben, Versionen und Beziehungen bleiben historisch nachvollziehbar. |
+| ein Thema wiederaufnimmt | Eine Aktualitätsprüfung ist nötig; die Rückkehr nach **Aktiv** veröffentlicht nichts automatisch. Bei inhaltlich geänderter Fassung ist eine erneute Freigabe erforderlich. |
+
+### Ein durchgängiges Beispiel
+
+Ein **aktives** Mobilitätsthema hat zwei **zugeordnete** Vorgänge und einen weiteren **Kandidaten**. Die Redaktion erhält neue Erkenntnisse, korrigiert eine Wirkung und erstellt eine neue Arbeitsfassung mit angepasstem Sachtext und optional neuer Einordnung. Die bisherige **freigegebene und veröffentlichte** Fassung bleibt zunächst sichtbar. Erst wenn die neue Fassung redaktionell **freigegeben** und danach ausdrücklich **veröffentlicht** wird, ändert sich die öffentliche Darstellung.
+
+**Merksatz:** *Themenstatus steuert den Lebenszyklus, Beziehungsstatus den bestätigten Erkenntnisbestand, Beitragsfreigabe den geprüften Text und Veröffentlichung die öffentliche Sichtbarkeit.*
+
+Die Tabelle erklärt Grundregeln, **keine vollständige Übergangsmatrix**. Spezialfälle, notwendige Berechtigungen und unzulässige Kombinationen müssen gesondert gegen Datenmodell, Services und fachliche Entscheidungen geprüft werden; daraus wird nicht stillschweigend ein weiterer Status eingeführt.
 
 **FIB-THEMA-STATUS-001 – Fachliche Zustände.** Der Themenlebenszyklus unterscheidet **Entwurf, Aktiv, Zurückgestellt, Archiviert**. Status, Freigabe und tatsächlich bestehende öffentliche Sichtbarkeit sind getrennte Informationen. „Zurückgestellt“ beendet die aktuelle öffentliche Sichtbarkeit vorläufig; „Archiviert“ ist eine auf Dauer angelegte Herausnahme.
 
@@ -350,6 +361,7 @@ Die Kapitelversion bleibt ein **Konsolidierungsentwurf**. Dieser Quellenabgleich
 
 | Version | Datum | Änderung |
 |---|---|---|
+| 1.4 | 22.10.2026 | Statusübersichten und Übergangsregeln zentral in 6.6 nach Thema, Beziehung und Beitrag geordnet; keine Fachentscheidung geändert. |
 | 1.3 | 22.10.2026 | Gemeinsam beschlossene Statusübergänge lokaler Bezüge und zweistufige Wiederprüfung dokumentiert. |
 | 1.2 | 22.10.2026 | Themen-Berechtigungen bestätigt und Status-/Übergangsübersichten vor Detailregeln für Thema, lokalen Bezug und Beitrag angeordnet. |
 | 1.1 | 22.10.2026 | Drei zusätzliche Übergangsregeln gemeinsam entschieden: Entwurf zurückstellen/archivieren, Zurückgestellt archivieren, kein direkter Archiviert→Zurückgestellt-Übergang. |
