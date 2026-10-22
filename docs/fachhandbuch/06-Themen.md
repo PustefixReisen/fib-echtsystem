@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 1.9 – Konsolidierungsentwurf | 22.10.2026 | Projektverantwortung – erstellt mit KI-Unterstützung |
+| 2.0 – Konsolidierungsentwurf | 22.10.2026 | Projektverantwortung – erstellt mit KI-Unterstützung |
 
 > **Übernahmestatus:** Dieses Kapitel bündelt bereits beschlossene Fachregeln; während des Abgleichs bleiben die in [der Inventur](../Fachhandbuch-Inventur-2026-10-22.md) bezeichneten bisherigen Primärquellen verbindlich. Abweichungen und offene Fragen sind unten markiert. Erst die fachlich geprüfte vollständige Übernahme schaltet dieses Kapitel zur alleinigen Primärquelle.
 
@@ -131,6 +131,8 @@ Bei Änderungen an Beziehungen, Perspektiven oder der Themendefinition kann der 
 **FIB-THEMA-BEITRAG-008 – Speichern und ungespeicherte Änderungen.** Redaktionelle Änderungen am sachlichen Thementext und der optionalen „Unsere Einordnung“ werden über die ausdrücklich betätigte Aktion **Speichern** als Arbeitsstand übernommen. Sobald Felder vom zuletzt gespeicherten Stand abweichen, zeigt die Bedienoberfläche deutlich **„Ungespeicherte Änderungen“** an. Vor dem Verlassen der Bearbeitung oder dem Wechsel zu einem anderen Thema mit ungespeicherten Änderungen wird eine Warnung mit einer bewussten Entscheidung zum Verwerfen oder Verbleiben angezeigt; versehentlicher Datenverlust ist zu verhindern. **Speichern bedeutet weder Freigabe noch Veröffentlichung.** Eine automatische Freigabe oder Publikation durch diesen Vorgang ist unzulässig. Technische Einzelheiten der Navigation und browserseitigen Abfangmöglichkeiten sind getrennt zu prüfen.
 
 **FIB-THEMA-BEITRAG-009 – Freigabe einer Beitragsfassung.** Eine gespeicherte Arbeitsfassung wird erst durch die ausdrücklich bestätigte Aktion **Freigeben** zur unveränderlichen Beitragsversion. Freigebende Person, Zeitpunkt und betroffene Fassung werden protokolliert. Ein berechtigter Redakteur darf den eigenen Beitrag ohne zweite Person freigeben. Eine noch nie veröffentlichte Freigabe darf ausdrücklich zurückgenommen werden; die frühere Entscheidung bleibt in der Historie. Bei bereits veröffentlichter Fassung ist keine Freigaberücknahme zulässig: Für ein Ende der Sichtbarkeit ist der gesonderte Publikationsrückzug zuständig. Eine freigegebene Fassung wird nicht nachträglich verändert; weitere Bearbeitung erfolgt in einer neuen Arbeitsfassung mit erneuter Freigabe. Freigabe löst keine Veröffentlichung aus.
+
+**FIB-THEMA-BEITRAG-011 – Pessimistische Objektsperre während der Bearbeitung.** Für die Bearbeitung eines Themenbeitrags gilt das bereits fachlich vereinbarte **pessimistische Sperrprinzip auf Objektebene**: Bearbeitet ein Redakteur das Objekt, können andere Redakteure es **nur lesen**, nicht parallel verändern. Die Sperre ist vor dem Beginn einer schreibenden Bearbeitung wirksam; eine alleinige Konfliktprüfung erst beim Speichern ist kein Ersatz. Die konkrete technische Behandlung von Freigabe der Sperre, abgebrochenen Sitzungen, Zeitablauf und administrativen Eingriffen ist mit der übergreifenden Objekt-Sperrregel des FIB-Systems abzugleichen. Für andere FIB-Objekte ist dieselbe übergreifende Regel maßgeblich; dieses Kapitel legt keine abweichende Beitragssonderlogik fest.
 
 ## 6.6 Zusammenspiel und Lebenszyklus
 
@@ -375,6 +377,7 @@ Die Kapitelversion bleibt ein **Konsolidierungsentwurf**. Dieser Quellenabgleich
 
 | Version | Datum | Änderung |
 |---|---|---|
+| 2.0 | 22.10.2026 | Vereinbartes pessimistisches Objektsperrprinzip für die Beitragserfassung klargestellt. |
 | 1.9 | 22.10.2026 | Publikationsrückzug mit Begründung, Rechten, Historie und Wiederveröffentlichung bestätigt; Übergangstabelle ergänzt. |
 | 1.8 | 22.10.2026 | Freigabeverfahren, Selbstfreigabe, Rücknahme vor Publikation und Änderungsfassung bestätigt. |
 | 1.7 | 22.10.2026 | Manuelles Speichern, sichtbare Änderungsmarkierung, Verlassenswarnung und Trennung von Freigabe/Publikation gemeinsam bestätigt. |
