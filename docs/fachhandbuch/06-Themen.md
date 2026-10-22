@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 1.4 – Konsolidierungsentwurf | 22.10.2026 | Projektverantwortung – erstellt mit KI-Unterstützung |
+| 1.5 – Konsolidierungsentwurf | 22.10.2026 | Projektverantwortung – erstellt mit KI-Unterstützung |
 
 > **Übernahmestatus:** Dieses Kapitel bündelt bereits beschlossene Fachregeln; während des Abgleichs bleiben die in [der Inventur](../Fachhandbuch-Inventur-2026-10-22.md) bezeichneten bisherigen Primärquellen verbindlich. Abweichungen und offene Fragen sind unten markiert. Erst die fachlich geprüfte vollständige Übernahme schaltet dieses Kapitel zur alleinigen Primärquelle.
 
@@ -123,6 +123,8 @@ Bei Änderungen an Beziehungen, Perspektiven oder der Themendefinition kann der 
 **FIB-THEMA-BEITRAG-004 – Aktuelle Veröffentlichung direkt einsehbar.** Während der Bearbeitung einer neuen Arbeitsfassung bleibt die aktuell veröffentlichte Beitragsfassung unverändert. In der Redaktion muss die **tatsächlich aktuell veröffentlichte Fassung** einschließlich ihrer damaligen optionalen „Unsere Einordnung“ unmittelbar und schreibgeschützt einsehbar sein. Sie ist nicht zwingend die unmittelbar vorherige Versionsnummer. Der historische Versionsverlauf bleibt davon getrennt verfügbar.
 
 **FIB-THEMA-BEITRAG-005 – Ausgangsbasis einer neuen Arbeitsfassung.** Eine neue Arbeitsfassung soll grundsätzlich auf der zuletzt maßgeblichen Beitragsfassung aufbauen; die verwendete Ausgangsfassung ist erkennbar. Eine ältere oder widerrufene Fassung darf nicht unbemerkt die Grundlage bilden. Eine abweichende Ausgangsbasis bedarf einer bewussten redaktionellen Auswahl. Die exakte Konflikt-/Wiederherstellungslogik ist vor der Implementierung zu spezifizieren.
+
+**FIB-THEMA-BEITRAG-006 – Standardansicht bei der Beitragserfassung.** Öffnet die Redaktion den Beitragsbereich eines bereits veröffentlichten Themas, wird **die aktuelle Arbeitsfassung** als Standardansicht angezeigt. Die **tatsächlich aktuell veröffentlichte Fassung** ist daneben über eine unmittelbar erreichbare, eindeutig beschriftete Aktion **„Aktuell veröffentlicht“** schreibgeschützt einsehbar, einschließlich der zu dieser Publikation gehörenden „Unsere Einordnung“. Das Umschalten darf weder den Entwurf überschreiben noch stillschweigend eine neue Arbeitsfassung oder Publikation auslösen. Der Versionsverlauf ist eine davon getrennte Funktion. Falls noch keine Arbeitsfassung vorhanden ist, bleibt die genaue Neuanlage/Ableitung Gegenstand des nachfolgenden fachlichen Abgleichs.
 
 ## 6.6 Zusammenspiel und Lebenszyklus
 
@@ -361,6 +363,7 @@ Die Kapitelversion bleibt ein **Konsolidierungsentwurf**. Dieser Quellenabgleich
 
 | Version | Datum | Änderung |
 |---|---|---|
+| 1.5 | 22.10.2026 | Standardansicht Arbeitsfassung und separate unveränderliche Ansicht „Aktuell veröffentlicht“ gemeinsam bestätigt. |
 | 1.4 | 22.10.2026 | Statusübersichten und Übergangsregeln zentral in 6.6 nach Thema, Beziehung und Beitrag geordnet; keine Fachentscheidung geändert. |
 | 1.3 | 22.10.2026 | Gemeinsam beschlossene Statusübergänge lokaler Bezüge und zweistufige Wiederprüfung dokumentiert. |
 | 1.2 | 22.10.2026 | Themen-Berechtigungen bestätigt und Status-/Übergangsübersichten vor Detailregeln für Thema, lokalen Bezug und Beitrag angeordnet. |
