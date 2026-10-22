@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 1.1 – Konsolidierungsentwurf | 22.10.2026 | Projektverantwortung – erstellt mit KI-Unterstützung |
+| 1.2 – Konsolidierungsentwurf | 22.10.2026 | Projektverantwortung – erstellt mit KI-Unterstützung |
 
 > **Übernahmestatus:** Dieses Kapitel bündelt bereits beschlossene Fachregeln; während des Abgleichs bleiben die in [der Inventur](../Fachhandbuch-Inventur-2026-10-22.md) bezeichneten bisherigen Primärquellen verbindlich. Abweichungen und offene Fragen sind unten markiert. Erst die fachlich geprüfte vollständige Übernahme schaltet dieses Kapitel zur alleinigen Primärquelle.
 
@@ -44,6 +44,17 @@ Es gibt zwei unterschiedliche Entscheidungen: **Gehört dieser Sachverhalt über
 
 
 **FIB-THEMA-BEZUG-001 – Auswahlbasis.** Ein Thema wird vorzugsweise durch die Auswahl ganzer Vorgänge gebildet. Ihre zugehörigen Ereignisse werden automatisch berücksichtigt. **Ergänzende direkte Einzelereignisse** sind zulässig, wenn sie nicht bereits über einen bestätigten Themenvorgang abgedeckt sind. Meldungen bilden keinen dritten Auswahlweg. Dieselbe Tatsache wird nicht mehrfach gewichtet, nur weil sie als Fundstelle, Ereignis, Meldung und Vorgang erscheint.
+
+### Übersicht: Status eines einzelnen lokalen Bezugs
+
+| Status | Fachliche Aktion / Bedeutung | Zulässiger Entscheidungsrahmen |
+|---|---|---|
+| **Kandidat** | Beziehung zur Prüfung vorgeschlagen oder erfasst | Redaktion prüft, kann zuordnen, zurückstellen oder als unpassend bewerten |
+| **Zugeordnet** | Aufnahme in den bestätigten Themenbestand | Redaktionelle Bestätigung und Bedeutung erforderlich |
+| **Zurückgestellt** | Vorläufig nicht verbindlich aufgenommen | Erneute Prüfung bei neuen Erkenntnissen möglich |
+| **Fachlich unpassend** | Begründete Ablehnung | Erneute Prüfung nur aufgrund geänderter Sachlage oder Themendefinition; keine automatische Wiederzuordnung |
+
+Diese Übersicht beschreibt die bekannten Entscheidungen, **nicht** die vollständige technische Übergangsmatrix einschließlich aller Rückwege und Begründungspflichten. Herkunft „KI“ ist kein Status.
 
 **FIB-THEMA-BEZUG-002 – Vier redaktionelle Zuordnungsstatus.** Lokale Bezüge haben die fachlichen Zustände:
 
@@ -112,6 +123,20 @@ Die drei Einheiten bilden **keine Statushierarchie**: Eine zugeordnete Beziehung
 
 Bei Änderungen an Beziehungen, Perspektiven oder der Themendefinition kann der öffentliche Text fachlich überholt sein. Deshalb darf eine neue Arbeitsfassung **nicht stillschweigend** die bisherige veröffentlichte Fassung überschreiben. Redakteure können weiterarbeiten, ohne einen fertigen öffentlichen Informationsstand sofort zu verändern. Eine neue geänderte Fassung benötigt eine neue Freigabe.
 
+### Übersicht: Beitragsfassung, Freigabe und Veröffentlichung
+
+| Ausgangslage | Aktion / Ergebnis | Voraussetzung / Folge |
+|---|---|---|
+| Arbeitsfassung | Speichern | Verändert keine bereits veröffentlichte Fassung |
+| Arbeitsfassung | **Freigeben** | Berechtigter Redakteur oder Administrator; Freigabe protokollieren |
+| Freigegebene, noch nie veröffentlichte Fassung | Freigabe **zurücknehmen** | Vor Erstveröffentlichung dieser Fassung; historisieren |
+| Freigegebene Fassung | **Veröffentlichen** | Gesonderte bestätigte Aktion und zulässiger Themenstatus |
+| Veröffentlichte Fassung | Überarbeiten | Neue Arbeitsfassung; bisherige Veröffentlichung bleibt unverändert |
+| Neue freigegebene Fassung | Veröffentlichen | Ersetzt die bisher öffentlich sichtbare Fassung bei gesonderter Publikation |
+| Zurückgestelltes / archiviertes Thema | Sichtbarkeit beenden | Fassungen und Freigaben bleiben historisch erhalten |
+
+Die optionale **„Unsere Einordnung“** gehört zur Beitragsfassung. Sie ist ein eigener Textteil, **kein gesonderter Freigabe- oder Publikationsstatus**. Weitergehende Berechtigungsdetails und besondere Übergänge werden im gemeinsamen fachlichen Abgleich vervollständigt.
+
 **FIB-THEMA-BEITRAG-001 – Zwei getrennte Textteile.** Der Beitrag enthält den sachlichen **Thementext** und die optionale, gesonderte **„Unsere Einordnung“**. KI-Textvorschläge bleiben von der redaktionell bearbeiteten Fassung unterscheidbar.
 
 **FIB-THEMA-BEITRAG-002 – Freigabe und Veröffentlichung.** Redaktionelle Freigabe ist eine eigenständige Handlung und **nicht automatisch eine öffentliche Veröffentlichung**. Freigaben/Veröffentlichungen werden mit Person und Zeitpunkt nachvollziehbar dokumentiert. Redakteure dürfen eigene Beitragsfassungen selbst freigeben und veröffentlichen; es gibt kein zwingendes Vier-Augen-Prinzip. KI darf weder eigenständig freigeben noch veröffentlichen.
@@ -163,6 +188,35 @@ Ein **aktives** Mobilitätsthema hat zwei **zugeordnete** Vorgänge und einen we
 **Merksatz:** *Themenstatus steuert den Lebenszyklus, Beziehungsstatus den bestätigten Erkenntnisbestand, Beitragsfreigabe den geprüften Text und Veröffentlichung die öffentliche Sichtbarkeit.*
 
 Die Tabelle erklärt Grundregeln, **keine vollständige Übergangsmatrix**. Spezialfälle, notwendige Berechtigungen und unzulässige Kombinationen müssen gesondert gegen Datenmodell, Services und fachliche Entscheidungen geprüft werden; daraus wird nicht stillschweigend ein weiterer Status eingeführt.
+
+### Übersicht: Themenstatus und Berechtigungen
+
+Die Tabellen stehen bewusst **vor** den erläuternden Regeln. Sie sind eine fachliche Orientierung, keine Behauptung über bereits implementierte Serverprüfungen.
+
+| Ausgangslage | Aktion / Ziel | Voraussetzung |
+|---|---|---|
+| Neues Thema | **Entwurf** | Redaktionelle Anlage und Dublettprüfung |
+| Entwurf | **Aktiv** | Erste Beitragsfreigabe |
+| Entwurf | **Zurückgestellt** oder **Archiviert** | Ausdrückliche redaktionelle Entscheidung |
+| Aktiv | **Entwurf** | Nur Rücknahme der ersten Freigabe vor erster Veröffentlichung |
+| Aktiv | **Zurückgestellt** oder **Archiviert** | Redaktionelle Entscheidung; öffentliche Sichtbarkeit endet |
+| Zurückgestellt | **Archiviert** | Redaktionelle Entscheidung |
+| Zurückgestellt | **Aktiv** | Redaktionelle Wiederaufnahme und Aktualitätsprüfung |
+| Archiviert | **Aktiv** | Ausnahme-Wiederaufnahme, ausdrückliche Bestätigung, Aktualitätsprüfung |
+| Archiviert | **Zurückgestellt** | **Kein regulärer Übergang** |
+| Noch nie veröffentlicht und keine wirksame Freigabe | **Löschen** | Sicherheitsabfrage; referenzierte Vorgänge und Ereignisse bleiben erhalten |
+
+| Aktion | Redakteur | Administrator |
+|---|---|---|
+| Thema anlegen | Ja | Ja |
+| Entwurf / aktives Thema zurückstellen oder archivieren | Ja | Ja |
+| Zurückgestelltes Thema archivieren oder wiederaufnehmen | Ja | Ja |
+| Archiviertes Thema wiederaufnehmen | Ja, mit ausdrücklicher Bestätigung | Ja, mit ausdrücklicher Bestätigung |
+| Fachlich zulässigen Entwurf löschen | Ja, mit Sicherheitsabfrage | Ja, mit Sicherheitsabfrage |
+
+**FIB-THEMA-RECHTE-001 – Redaktionelle Eigenverantwortung.** Redakteure und Administratoren dürfen die in der Übersicht genannten Themenstatus-Aktionen ausführen. Die **Federführung** ist keine exklusive Bearbeitungsberechtigung. Für Freigabe, Publikation, Löschung und ausnahmsweise Wiederaufnahme gelten die jeweils zusätzlichen fachlichen Bedingungen. Die konkreten serverseitigen Rollen- und Zustandsprüfungen bleiben Teil der technischen Abnahme.
+
+**Offener Sonderfall:** Bei einem archivierten, noch nie freigegebenen Entwurf ist das Verhältnis zwischen Wiederaufnahme nach Aktiv und erstmaliger Beitragsfreigabe noch fachlich abzugleichen; keine zusätzliche Übergangsregel stillschweigend voraussetzen.
 
 ### Gemeinsam bestätigte zusätzliche Themenübergänge (22.10.2026)
 
@@ -287,6 +341,7 @@ Die Kapitelversion bleibt ein **Konsolidierungsentwurf**. Dieser Quellenabgleich
 
 | Version | Datum | Änderung |
 |---|---|---|
+| 1.2 | 22.10.2026 | Themen-Berechtigungen bestätigt und Status-/Übergangsübersichten vor Detailregeln für Thema, lokalen Bezug und Beitrag angeordnet. |
 | 1.1 | 22.10.2026 | Drei zusätzliche Übergangsregeln gemeinsam entschieden: Entwurf zurückstellen/archivieren, Zurückgestellt archivieren, kein direkter Archiviert→Zurückgestellt-Übergang. |
 | 1.0 | 22.10.2026 | Ergebnis des Altquellenabgleichs und offene Freigabekriterien dokumentiert. |
 | 0.9 | 22.10.2026 | Altquellen zur Unterscheidung blockierender Zustandsinvarianten und redaktioneller Plausibilitätsprüfungen abgeglichen. |
