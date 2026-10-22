@@ -98,4 +98,4 @@ Perspektiven (z. B. Lärm, Verkehrssicherheit, Flächenverbrauch) sind **dem The
 
 | Version | Datum | Änderung |
 |---|---|---|
-| 0.1 | 22.10.2026 | Erste regelbasierte Zusammenführung des Themenbereichs, 15 Regelkennungen, Quellverweise und offene Abgleichpunkte. |
+| 0.1 | 22.10.2026 | Erste regelbasierte Zusammenführung des Themenbereichs, 13 Regelkennungen, Quellverweise und offene Abgleichpunkte. |
