@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 2.3 – Konsolidierungsentwurf | 22.10.2026 | Projektverantwortung – erstellt mit KI-Unterstützung |
+| 2.4 – Konsolidierungsentwurf | 22.10.2026 | Projektverantwortung – erstellt mit KI-Unterstützung |
 
 > **Übernahmestatus:** Dieses Kapitel bündelt bereits beschlossene Fachregeln; während des Abgleichs bleiben die in [der Inventur](../Fachhandbuch-Inventur-2026-10-22.md) bezeichneten bisherigen Primärquellen verbindlich. Abweichungen und offene Fragen sind unten markiert. Erst die fachlich geprüfte vollständige Übernahme schaltet dieses Kapitel zur alleinigen Primärquelle.
 
@@ -169,6 +169,23 @@ Die Tabellen stehen bewusst **vor** den erläuternden Regeln. Sie sind eine fach
 | Zurückgestelltes Thema archivieren oder wiederaufnehmen | Ja | Ja |
 | Archiviertes Thema wiederaufnehmen | Ja, mit ausdrücklicher Bestätigung | Ja, mit ausdrücklicher Bestätigung |
 | Fachlich zulässigen Entwurf löschen | Ja, mit Sicherheitsabfrage | Ja, mit Sicherheitsabfrage |
+
+### Übersicht: Berechtigungen über alle Themenobjekte
+
+| Aktion | Redakteur | Administrator | Zusätzliche Voraussetzung |
+|---|---|---|---|
+| Themendefinition anlegen und bearbeiten | Ja | Ja | Objektsperre beachten |
+| Thema zurückstellen, archivieren, wiederaufnehmen | Ja | Ja | Bestätigte Übergänge und Aktualitätsprüfung |
+| Thema löschen | Ja | Ja | Nur wenn fachlich zulässig; Sicherheitsabfrage |
+| Lokalen Bezug zuordnen, zurückstellen, ablehnen oder erneut prüfen | Ja | Ja | Dokumentierte redaktionelle Entscheidung |
+| Arbeitsfassung bearbeiten und speichern | Ja | Ja | Exklusiver Schreibzugriff auf das Objekt |
+| Beitragsfassung freigeben, Freigabe vor Erstpublikation zurücknehmen | Ja | Ja | Gesonderte Bestätigung und Audit |
+| Veröffentlichen, zurückziehen, erneut veröffentlichen | Ja | Ja | Jeweilige Publikationsvoraussetzungen und Bestätigung |
+| Fremde offensichtlich verwaiste Objektsperre administrativ aufheben | **Nein** | **Ja** | Nur im Ausnahmefall; Audit |
+
+Die Federführung begründet keine exklusiven Änderungsrechte. Für alle fachlich schreibenden Aktionen gilt zusätzlich das übergreifende pessimistische Sperrverfahren nach [Datenmodell §20.4](../Datenmodell.md). Die Tabelle ist eine **fachliche Berechtigungsentscheidung**, kein Nachweis vollständiger technischer Umsetzung.
+
+**FIB-THEMA-RECHTE-002 – Gleiche reguläre Fachberechtigungen.** Redakteure und Administratoren besitzen für reguläre Themenaktionen einschließlich lokaler Bezüge, Beitragsbearbeitung und Freigabe die gleichen fachlichen Befugnisse. Nur die **administrative Aufhebung fremder verwaister Sperren** ist Administratoren vorbehalten und zu auditieren. Alle fachlichen Zustandsbedingungen gelten weiterhin.
 
 **FIB-THEMA-RECHTE-001 – Redaktionelle Eigenverantwortung.** Redakteure und Administratoren dürfen die in der Übersicht genannten Themenstatus-Aktionen ausführen. Die **Federführung** ist keine exklusive Bearbeitungsberechtigung. Für Freigabe, Publikation, Löschung und ausnahmsweise Wiederaufnahme gelten die jeweils zusätzlichen fachlichen Bedingungen. Die konkreten serverseitigen Rollen- und Zustandsprüfungen bleiben Teil der technischen Abnahme.
 
@@ -380,6 +397,7 @@ Die Kapitelversion bleibt ein **Konsolidierungsentwurf**. Dieser Quellenabgleich
 
 | Version | Datum | Änderung |
 |---|---|---|
+| 2.4 | 22.10.2026 | Reguläre Rechte von Redaktion und Administration vereinheitlicht; nur administrative Sperraufhebung ausgenommen. |
 | 2.3 | 22.10.2026 | Sonderfall archivierter, nie freigegebener Entwürfe fachlich bestätigt: Wiederaufnahme nach Entwurf. |
 | 2.2 | 22.10.2026 | Konsistenzprüfung der Beitragserfassung; veraltete offene Verweise aktualisiert und übergreifende Objektsperre an Datenmodell §20.4 rückgebunden. |
 | 2.1 | 22.10.2026 | Anzeige aktiver Objektsperren in der Karte Redaktionelle Koordination ergänzt; Federführung getrennt. |
