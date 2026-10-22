@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 1.8 – Konsolidierungsentwurf | 22.10.2026 | Projektverantwortung – erstellt mit KI-Unterstützung |
+| 1.9 – Konsolidierungsentwurf | 22.10.2026 | Projektverantwortung – erstellt mit KI-Unterstützung |
 
 > **Übernahmestatus:** Dieses Kapitel bündelt bereits beschlossene Fachregeln; während des Abgleichs bleiben die in [der Inventur](../Fachhandbuch-Inventur-2026-10-22.md) bezeichneten bisherigen Primärquellen verbindlich. Abweichungen und offene Fragen sind unten markiert. Erst die fachlich geprüfte vollständige Übernahme schaltet dieses Kapitel zur alleinigen Primärquelle.
 
@@ -216,9 +216,15 @@ Die Tabelle steht vor den Einzelregeln. Alle Entscheidungen werden nachvollziehb
 | Veröffentlichte Fassung | Überarbeiten | Neue Arbeitsfassung; bisherige Veröffentlichung bleibt unverändert |
 | Neue freigegebene Fassung | Veröffentlichen | Ersetzt die bisher öffentlich sichtbare Fassung bei gesonderter Publikation |
 | Zurückgestelltes / archiviertes Thema | Sichtbarkeit beenden | Fassungen und Freigaben bleiben historisch erhalten |
+| Veröffentlichte Fassung | **Veröffentlichung zurückziehen** | Redaktion/Admin bestätigt ausdrücklich, begründet; öffentliche Sichtbarkeit endet |
+| Zurückgezogene Veröffentlichung, Inhalt unverändert und Freigabe weiter gültig | **Erneut veröffentlichen** | Erneute ausdrückliche Publikationsbestätigung, keine neue Beitragsfreigabe |
+| Zurückgezogene Veröffentlichung, Inhalt verändert | **Neue Fassung freigeben und veröffentlichen** | Gesonderte Freigabe und gesonderte Publikation |
+| Zurückgezogene Veröffentlichung | **Historie einsehen** | Frühere Fassung, Freigabe und Rückzugsentscheidung bleiben dokumentiert |
 
 Die optionale **„Unsere Einordnung“** gehört zur Beitragsfassung. Sie ist ein eigener Textteil, **kein gesonderter Freigabe- oder Publikationsstatus**. Weitergehende Berechtigungsdetails und besondere Übergänge werden im gemeinsamen fachlichen Abgleich vervollständigt.
 
+
+**FIB-THEMA-BEITRAG-010 – Publikationsrückzug und erneute Veröffentlichung.** Berechtigte **Redakteure und Administratoren** dürfen eine Veröffentlichung durch eine gesonderte Aktion mit ausdrücklicher Sicherheitsbestätigung und **dokumentierter Begründung** zurückziehen. Dies beendet die öffentliche Sichtbarkeit, verändert aber weder die freigegebene Fassung noch ihre historische Freigabe. Wer, wann und warum zurückgezogen hat, bleibt nachvollziehbar. Eine zuvor veröffentlichte Fassung darf erneut sichtbar werden, wenn sie **inhaltlich unverändert und weiterhin gültig freigegeben** ist und der zulässige Themenstatus sowie sonstige Veröffentlichungsvoraussetzungen erfüllt sind; eine **neue ausdrückliche Publikationsbestätigung**, aber keine erneute Beitragsfreigabe ist erforderlich. Bei inhaltlicher Änderung sind eine neue Arbeitsfassung, Freigabe und gesonderte Veröffentlichung notwendig. Historische Veröffentlichungen bleiben dokumentiert.
 
 ### 6.6.4 Zusammenspiel und Prüfarten
 
@@ -369,6 +375,7 @@ Die Kapitelversion bleibt ein **Konsolidierungsentwurf**. Dieser Quellenabgleich
 
 | Version | Datum | Änderung |
 |---|---|---|
+| 1.9 | 22.10.2026 | Publikationsrückzug mit Begründung, Rechten, Historie und Wiederveröffentlichung bestätigt; Übergangstabelle ergänzt. |
 | 1.8 | 22.10.2026 | Freigabeverfahren, Selbstfreigabe, Rücknahme vor Publikation und Änderungsfassung bestätigt. |
 | 1.7 | 22.10.2026 | Manuelles Speichern, sichtbare Änderungsmarkierung, Verlassenswarnung und Trennung von Freigabe/Publikation gemeinsam bestätigt. |
 | 1.6 | 22.10.2026 | Drei Fälle zur Entstehung/Fortsetzung einer Arbeitsfassung und keine persistente Neuanlage beim bloßen Öffnen bestätigt. |
