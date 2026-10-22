@@ -25,7 +25,6 @@ Kategorien: **F** fachliche Primärinhalte zur Übernahme; **T** technischer/bet
 | `Beobachtungs-und-Recherchemodell.md` | F | Kap. 03 | offen |
 | `Recherche-und-Quellenmonitor.md` | F | Kap. 03 | offen |
 | `Recherchearchitektur-und-Referenzrahmen.md` | F/T | Kap. 03; technische Architektur in Technikquelle belassen | offen |
-| `Recherche-und-Quellenmonitor.md` | F | Kap. 03 | offen |
 | `Sitzungs-und-Beschlussmodell.md` | F | Kap. 07 | offen |
 | `Wirkungsmodell.md` | F | Kap. 02, 05–06 | offen |
 | `Mehr-wissen.md` / `Mehr-wissen-Modell.md` | F | Kap. 09 und 10 | offen |
