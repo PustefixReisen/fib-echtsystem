@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 0.4 – Konsolidierungsentwurf | 22.10.2026 | Projektverantwortung – erstellt mit KI-Unterstützung |
+| 0.5 – Konsolidierungsentwurf | 22.10.2026 | Projektverantwortung – erstellt mit KI-Unterstützung |
 
 > **Übernahmestatus:** Dieses Kapitel bündelt bereits beschlossene Fachregeln; während des Abgleichs bleiben die in [der Inventur](../Fachhandbuch-Inventur-2026-10-22.md) bezeichneten bisherigen Primärquellen verbindlich. Abweichungen und offene Fragen sind unten markiert. Erst die fachlich geprüfte vollständige Übernahme schaltet dieses Kapitel zur alleinigen Primärquelle.
 
@@ -163,7 +163,27 @@ Die Tabelle erklärt Grundregeln, **keine vollständige Übergangsmatrix**. Spez
 
 **Quelle:** [Themen- und Vorgangslogik §12](../Themen-und-Vorgangslogik.md), [Fachentwurf §§4, 8–9](../Fachentwurf-Themenbearbeitung-2026-10-20.md).
 
-## 6.7 Klärungs- und Umsetzungslücken
+## 6.7 Laufende Themenentdeckung und redaktionelle Kontrolle
+
+### Warum bekannte Themen allein nicht genügen
+
+Eine Recherche, die sich nur an bereits angelegten Themen orientiert, könnte wesentliche neue Entwicklungen übersehen. Deshalb ergänzen sich **themenbezogene Recherche** (gezielte Beobachtung bekannter Fragestellungen) und **themenunabhängige Entdeckung** (breite Prüfung definierter Pflichtquellen, ortsbezogene Suche und Rückblicke). Wird eine bisher unbekannte Entwicklung erkannt, kann sie zu einem neuen Vorgang führen oder eine vorhandene Themendefinition verändern.
+
+**Referenzfall Kiesgrund:** Die redaktionelle Ergänzung eines zuvor unzureichend erkannten Baugebiets löst gezielte Recherche aus. Der Fall ist zugleich ein Test dafür, dass künftig neue große Vorhaben nicht allein deshalb fehlen dürfen, weil sie noch nicht in der bisherigen Themenliste stehen.
+
+### Redaktionelle Entscheidungen verbessern künftige KI-Vorschläge
+
+Die KI-Unterstützung soll aus bestätigten, überarbeiteten und verworfenen Themenkandidaten, manuellen Ergänzungen, Dublettenentscheidungen sowie korrigierten Bezügen, Bedeutungen und Perspektiven **nachvollziehbar lernen**. Das ist eine Anforderung an die Weiterentwicklung der Vorschlagslogik, **keine Erlaubnis zur autonomen Änderung bestätigter Themen**. Insbesondere bleiben redaktionelle Entscheidungen verbindlich; eine KI-Empfehlung erfordert dort, wo fachlich vorgesehen, erneute Bestätigung.
+
+Die fachlichen Anforderungen zur Quellenbeobachtung und Recherche werden künftig im **Fachhandbuch-Kapitel 03** primär geregelt. Hier ist nur ihre Auswirkung auf Entstehung und Weiterentwicklung von Themen erläutert.
+
+### Was eine öffentliche Themendarstellung verständlich machen soll
+
+Besucher sollen neben der Leitfrage und dem Feldkirchen-Bezug die prägenden Vorgänge, ergänzenden Ereignisse, Perspektiven, sachlichen Wirkungen, relevanten Hintergrund und offene Wissenslücken erkennen können. Auch Änderungen des Themenverständnisses müssen nachvollziehbar sein. Öffentliche Darstellung und Benutzerführung werden in **Kapitel 09** vertieft; die Fachregeln zu Themen und Bezügen bleiben in diesem Kapitel.
+
+**Quellen:** [Themen- und Vorgangslogik §§7–9 und 11](../Themen-und-Vorgangslogik.md).
+
+## 6.8 Klärungs- und Umsetzungslücken
 
 - **Vorhandene Altquellen:** [Begriffe.md](../Begriffe.md) und [Fachentwurf](../Fachentwurf-Themenbearbeitung-2026-10-20.md) führen die Vier-Status-Entscheidung noch als offen. Das ist eine **veraltete Formulierung**, keine aktuelle fünfte Statusoption. Bereinigung nach Übernahmeprüfung.
 - **Abgelehnte Kandidaten:** Die sechs bereits beschlossenen Ablehnungsgrund-Kategorien stehen in [Issue #149](https://github.com/PustefixReisen/fib-echtsystem/issues/149). Ob und wie sie für alle Statuswechsel und direkte Ereignisbezüge gelten, benötigt beim Einbau der ergänzenden Einzelereignisse noch technische und fachliche Abnahme.
@@ -176,7 +196,7 @@ Die Tabelle erklärt Grundregeln, **keine vollständige Übergangsmatrix**. Spez
 | Bestehende Quelle | Übernommene Bereiche | Noch zu prüfen |
 |---|---|---|
 | `Fachkonzept.md` | Thema als Wissensobjekt | übrige Querverweise |
-| `Themen-und-Vorgangslogik.md` | §§3–6, 12 | §§7–11 vollständig, insbesondere öffentliche Darstellung und KI-Kalibrierung |
+| `Themen-und-Vorgangslogik.md` | §§3–6, 12 | §10 (technische Modellfolgen) und Detailabgleich mit Kap. 03/09; §§7–9/11 nun fachlich eingeordnet |
 | `Fachentwurf-Themenbearbeitung-2026-10-20.md` | §§2–4, 8–9 | §7 technische/fachliche Abgrenzung |
 | `Begriffe.md` | lokale Bezüge, Bedeutung, Status | übrige Perspektiven- und Wirkungsdefinitionen |
 | `Datenmodell.md` | fachlicher Statusbezug | übrige fachliche Kardinalitäten und Versionsdefinitionen |
@@ -186,4 +206,4 @@ Die Tabelle erklärt Grundregeln, **keine vollständige Übergangsmatrix**. Spez
 
 | Version | Datum | Änderung |
 |---|---|---|
-| 0.4 | 22.10.2026 | Neue Beitragsregeln zur unmittelbaren Anzeige des veröffentlichten Standes und Ausgangsbasis neuer Fassungen; Statusübergänge als Plausibilitätsregeln klassifiziert. |\n| 0.3 | 22.10.2026 | Perspektiven als erweiterbare Themenblickwinkel und Wirkungen als belegte/erwartete Ereignisfolgen erläutert; Status je Objekt statt Gesamtmatrix erklärt. |\n| 0.2 | 22.10.2026 | Fachliche Absicht und Wissensmodell erläutert; Statusdimensionen mit gemeinsamen Beispielen und Folgen erklärt. |\n| 0.1 | 22.10.2026 | Erste regelbasierte Zusammenführung des Themenbereichs, 13 Regelkennungen, Quellverweise und offene Abgleichpunkte. |
+| 0.5 | 22.10.2026 | Fehlende Altabschnitte zu Themenentdeckung, Kiesgrund, KI-Kalibrierung und öffentlicher Darstellung eingeordnet; fachliche Zielkapitel abgegrenzt. |\n| 0.4 | 22.10.2026 | Neue Beitragsregeln zur unmittelbaren Anzeige des veröffentlichten Standes und Ausgangsbasis neuer Fassungen; Statusübergänge als Plausibilitätsregeln klassifiziert. |\n| 0.3 | 22.10.2026 | Perspektiven als erweiterbare Themenblickwinkel und Wirkungen als belegte/erwartete Ereignisfolgen erläutert; Status je Objekt statt Gesamtmatrix erklärt. |\n| 0.2 | 22.10.2026 | Fachliche Absicht und Wissensmodell erläutert; Statusdimensionen mit gemeinsamen Beispielen und Folgen erklärt. |\n| 0.1 | 22.10.2026 | Erste regelbasierte Zusammenführung des Themenbereichs, 13 Regelkennungen, Quellverweise und offene Abgleichpunkte. |
