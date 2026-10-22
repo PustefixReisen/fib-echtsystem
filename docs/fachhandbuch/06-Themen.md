@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 0.3 – Konsolidierungsentwurf | 22.10.2026 | Projektverantwortung – erstellt mit KI-Unterstützung |
+| 0.4 – Konsolidierungsentwurf | 22.10.2026 | Projektverantwortung – erstellt mit KI-Unterstützung |
 
 > **Übernahmestatus:** Dieses Kapitel bündelt bereits beschlossene Fachregeln; während des Abgleichs bleiben die in [der Inventur](../Fachhandbuch-Inventur-2026-10-22.md) bezeichneten bisherigen Primärquellen verbindlich. Abweichungen und offene Fragen sind unten markiert. Erst die fachlich geprüfte vollständige Übernahme schaltet dieses Kapitel zur alleinigen Primärquelle.
 
@@ -120,7 +120,15 @@ Bei Änderungen an Beziehungen, Perspektiven oder der Themendefinition kann der 
 
 **Quelle:** [Themen- und Vorgangslogik §12](../Themen-und-Vorgangslogik.md), [Fachentwurf §§3.3, 8](../Fachentwurf-Themenbearbeitung-2026-10-20.md).
 
+**FIB-THEMA-BEITRAG-004 – Aktuelle Veröffentlichung direkt einsehbar.** Während der Bearbeitung einer neuen Arbeitsfassung bleibt die aktuell veröffentlichte Beitragsfassung unverändert. In der Redaktion muss die **tatsächlich aktuell veröffentlichte Fassung** einschließlich ihrer damaligen optionalen „Unsere Einordnung“ unmittelbar und schreibgeschützt einsehbar sein. Sie ist nicht zwingend die unmittelbar vorherige Versionsnummer. Der historische Versionsverlauf bleibt davon getrennt verfügbar.
+
+**FIB-THEMA-BEITRAG-005 – Ausgangsbasis einer neuen Arbeitsfassung.** Eine neue Arbeitsfassung soll grundsätzlich auf der zuletzt maßgeblichen Beitragsfassung aufbauen; die verwendete Ausgangsfassung ist erkennbar. Eine ältere oder widerrufene Fassung darf nicht unbemerkt die Grundlage bilden. Eine abweichende Ausgangsbasis bedarf einer bewussten redaktionellen Auswahl. Die exakte Konflikt-/Wiederherstellungslogik ist vor der Implementierung zu spezifizieren.
+
 ## 6.6 Zusammenspiel und Lebenszyklus
+
+### Plausibilitätsregeln für zulässige Zustandsübergänge
+
+Die Regeln zu Zustandsübergängen sind **fachliche Plausibilitäts- und Geschäftsregeln**: Sie beschreiben zulässige Aktionen, notwendige Vorbedingungen und fachliche Folgen an Thema, lokalen Beziehungen, Beitragsfassungen und Veröffentlichung. Die technische Durchsetzung und eine später aus den Primärregeln abgeleitete Status-/Rechteübersicht müssen auf diese Regeln Bezug nehmen.
 
 ### Nur die notwendigen Abhängigkeiten prüfen
 
@@ -178,4 +186,4 @@ Die Tabelle erklärt Grundregeln, **keine vollständige Übergangsmatrix**. Spez
 
 | Version | Datum | Änderung |
 |---|---|---|
-| 0.3 | 22.10.2026 | Perspektiven als erweiterbare Themenblickwinkel und Wirkungen als belegte/erwartete Ereignisfolgen erläutert; Status je Objekt statt Gesamtmatrix erklärt. |\n| 0.2 | 22.10.2026 | Fachliche Absicht und Wissensmodell erläutert; Statusdimensionen mit gemeinsamen Beispielen und Folgen erklärt. |\n| 0.1 | 22.10.2026 | Erste regelbasierte Zusammenführung des Themenbereichs, 13 Regelkennungen, Quellverweise und offene Abgleichpunkte. |
+| 0.4 | 22.10.2026 | Neue Beitragsregeln zur unmittelbaren Anzeige des veröffentlichten Standes und Ausgangsbasis neuer Fassungen; Statusübergänge als Plausibilitätsregeln klassifiziert. |\n| 0.3 | 22.10.2026 | Perspektiven als erweiterbare Themenblickwinkel und Wirkungen als belegte/erwartete Ereignisfolgen erläutert; Status je Objekt statt Gesamtmatrix erklärt. |\n| 0.2 | 22.10.2026 | Fachliche Absicht und Wissensmodell erläutert; Statusdimensionen mit gemeinsamen Beispielen und Folgen erklärt. |\n| 0.1 | 22.10.2026 | Erste regelbasierte Zusammenführung des Themenbereichs, 13 Regelkennungen, Quellverweise und offene Abgleichpunkte. |
