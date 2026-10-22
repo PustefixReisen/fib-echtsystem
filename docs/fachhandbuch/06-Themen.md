@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 1.0 – Konsolidierungsentwurf | 22.10.2026 | Projektverantwortung – erstellt mit KI-Unterstützung |
+| 1.1 – Konsolidierungsentwurf | 22.10.2026 | Projektverantwortung – erstellt mit KI-Unterstützung |
 
 > **Übernahmestatus:** Dieses Kapitel bündelt bereits beschlossene Fachregeln; während des Abgleichs bleiben die in [der Inventur](../Fachhandbuch-Inventur-2026-10-22.md) bezeichneten bisherigen Primärquellen verbindlich. Abweichungen und offene Fragen sind unten markiert. Erst die fachlich geprüfte vollständige Übernahme schaltet dieses Kapitel zur alleinigen Primärquelle.
 
@@ -164,6 +164,16 @@ Ein **aktives** Mobilitätsthema hat zwei **zugeordnete** Vorgänge und einen we
 
 Die Tabelle erklärt Grundregeln, **keine vollständige Übergangsmatrix**. Spezialfälle, notwendige Berechtigungen und unzulässige Kombinationen müssen gesondert gegen Datenmodell, Services und fachliche Entscheidungen geprüft werden; daraus wird nicht stillschweigend ein weiterer Status eingeführt.
 
+### Gemeinsam bestätigte zusätzliche Themenübergänge (22.10.2026)
+
+**FIB-THEMA-STATUS-005 – Zurückstellen und Archivieren vor erster Aktivierung.** Ein Thema im Zustand **Entwurf** darf durch ausdrückliche redaktionelle Entscheidung entweder **Zurückgestellt** oder **Archiviert** werden. Eine erste Beitragsfreigabe ist dafür nicht erforderlich; die Zustimmung zur Zustandsänderung ist nicht mit einer Beitragsfreigabe gleichzusetzen.
+
+**FIB-THEMA-STATUS-006 – Archivierung nach Zurückstellung.** Ein **Zurückgestelltes** Thema darf unmittelbar **Archiviert** werden. Der Zwischenzustand Aktiv ist dafür nicht erforderlich.
+
+**FIB-THEMA-STATUS-007 – Wiederaufnahme aus dem Archiv.** Der direkte Übergang **Archiviert → Zurückgestellt** wird **nicht** als reguläre Aktion angeboten. Bei erneuter Bearbeitung erfolgt die ausdrücklich bestätigte, dokumentierte Wiederaufnahme nach **Aktiv** unter den bereits in FIB-THEMA-STATUS-003 festgelegten Aktualitätsbedingungen. Für nie freigegebene archivierte Entwürfe muss die genaue Wiederaufnahme-Semantik noch gesondert gegen die Bedingung „erste Freigabe aktiviert den Entwurf“ geprüft werden; daraus wird hier kein neuer Übergang erfunden.
+
+Diese zusätzlichen Übergänge sind **fachlich beschlossen**. Die Berechtigungen und technische Umsetzung werden noch getrennt geprüft.
+
 **FIB-THEMA-STATUS-001 – Fachliche Zustände.** Der Themenlebenszyklus unterscheidet **Entwurf, Aktiv, Zurückgestellt, Archiviert**. Status, Freigabe und tatsächlich bestehende öffentliche Sichtbarkeit sind getrennte Informationen. „Zurückgestellt“ beendet die aktuelle öffentliche Sichtbarkeit vorläufig; „Archiviert“ ist eine auf Dauer angelegte Herausnahme.
 
 **FIB-THEMA-STATUS-002 – Erste Freigabe.** Die erste Beitragsfreigabe führt einen Themenentwurf nach **Aktiv**. Wird diese erste Freigabe *vor der ersten Veröffentlichung* widerrufen, führt dies zurück zu **Entwurf**.
@@ -277,6 +287,7 @@ Die Kapitelversion bleibt ein **Konsolidierungsentwurf**. Dieser Quellenabgleich
 
 | Version | Datum | Änderung |
 |---|---|---|
+| 1.1 | 22.10.2026 | Drei zusätzliche Übergangsregeln gemeinsam entschieden: Entwurf zurückstellen/archivieren, Zurückgestellt archivieren, kein direkter Archiviert→Zurückgestellt-Übergang. |
 | 1.0 | 22.10.2026 | Ergebnis des Altquellenabgleichs und offene Freigabekriterien dokumentiert. |
 | 0.9 | 22.10.2026 | Altquellen zur Unterscheidung blockierender Zustandsinvarianten und redaktioneller Plausibilitätsprüfungen abgeglichen. |
 | 0.8 | 22.10.2026 | Quellenabgleich für Federführung, zwei Versionierungsebenen und Modellfolgen ergänzt, ohne Implementierungsstand vorwegzunehmen. |
