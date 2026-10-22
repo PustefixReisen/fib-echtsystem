@@ -1,5 +1,8 @@
 -- Minimal FIB test fixture for an isolated disposable PostgreSQL service.
 create role fib_runtime nologin;
+-- Supabase-standard roles needed by the actual proposal migration; isolated CI only.
+create role anon nologin;
+create role authenticated nologin;
 create schema fib;
 create table fib.app_users (user_id uuid primary key);
 create table fib.topics (
