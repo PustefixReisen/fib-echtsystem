@@ -21,7 +21,7 @@ Projektübergreifender Standard: [pustivo – Fachliches Dokumentationsmodell](h
 | 03 Recherche | Beobachtung, Quellen, Fundstellen, Relevanz | geplant |
 | 04 Ereignisse und Meldungen | Erkennung, Aufbereitung, Fortschreibung | geplant |
 | 05 Vorgänge | Status, Ereignisbeziehungen, Sachstand | geplant |
-| 06 Themen | Definition, lokale Bezüge, redaktionelle Bedeutung, Beitragslebenszyklus | geplant |
+| [06 Themen](06-Themen.md) | Definition, lokale Bezüge, redaktionelle Bedeutung, Beitragslebenszyklus | Konsolidierungsentwurf 0.1; Quellenabgleich offen |
 | 07 Sitzungen und Beschlüsse | RIS, Vorlagen, Beschlüsse | geplant |
 | 08 Redaktion | Rollen im Arbeitsablauf, Prüfung, Freigabe, Veröffentlichung | geplant |
 | 09 Öffentliches Angebot | Navigation, Darstellung, Mehr wissen | geplant |
