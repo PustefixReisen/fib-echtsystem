@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 0.2 – Konsolidierungsentwurf | 22.10.2026 | Projektverantwortung – erstellt mit KI-Unterstützung |
+| 0.3 – Konsolidierungsentwurf | 22.10.2026 | Projektverantwortung – erstellt mit KI-Unterstützung |
 
 > **Übernahmestatus:** Dieses Kapitel bündelt bereits beschlossene Fachregeln; während des Abgleichs bleiben die in [der Inventur](../Fachhandbuch-Inventur-2026-10-22.md) bezeichneten bisherigen Primärquellen verbindlich. Abweichungen und offene Fragen sind unten markiert. Erst die fachlich geprüfte vollständige Übernahme schaltet dieses Kapitel zur alleinigen Primärquelle.
 
@@ -68,41 +68,49 @@ Status und Herkunft sind verschiedene Dimensionen: **KI-Vorschlag** bezeichnet e
 
 ## 6.4 Perspektiven und Wirkungen
 
-### Warum reicht eine Aufzählung von Vorgängen nicht aus?
+### Perspektiven: sachliche Fragen statt einer starren Kategorienliste
 
-Ein Thema soll **Zusammenhänge erklären**, nicht nur Vorgänge nebeneinanderstellen. Perspektiven beantworten, **unter welchen fachlichen Blickwinkeln** diese Vorgänge gemeinsam zu betrachten sind. Wirkungen beschreiben, **welche nachvollziehbaren Folgen oder Veränderungen** innerhalb dieser Blickwinkel entstehen oder plausibel zu erwarten sind.
+Eine **Perspektive** bezeichnet einen fachlichen Blickwinkel, unter dem mehrere Sachverhalte eines Themas gemeinsam untersucht werden. Beispiele sind Lärm, Verkehrssicherheit, Erreichbarkeit, Flächenverbrauch oder kommunaler Handlungsspielraum.
 
-Beispiel Mobilität: Der Ausbau eines Autobahnkreuzes und ein Radschnellweg können unter der Perspektive *Erreichbarkeit* betrachtet werden, aber auch unter *Lärm*, *Verkehrssicherheit* oder *Flächenverbrauch*. Dieselbe Perspektive wird einmal für das Thema geführt; darunter lassen sich Wirkungen verschiedener Vorgänge vergleichen. So wird erkennbar, wo Ziele übereinstimmen oder Zielkonflikte entstehen. Eine Wirkung ist zunächst eine sachliche Aussage, keine automatische politische Bewertung.
+**Es gibt nach dem bisherigen Fachkonzept keinen abschließenden, verpflichtenden Perspektivenkatalog.** Die Redaktion kann KI-Vorschläge übernehmen, abwählen, umbenennen, zusammenführen und eigene Perspektiven ergänzen. Perspektiven werden für **das jeweilige Thema** bestätigt – nicht für jeden Vorgang erneut als neue Kategorie angelegt. Ein wiederverwendbarer Vorschlagskatalog könnte später bei der Vereinheitlichung helfen; ob er technisch geführt werden soll, ist **noch nicht entschieden**.
 
+Beispiel: Beim Mobilitätsthema kann „Verkehrssicherheit“ eine Perspektive sein. Der Autobahnausbau und ein Radschnellweg werden beide unter dieser Frage betrachtet, auch wenn die konkreten Folgen verschieden sind. Der Blickwinkel benennt **was untersucht wird**, nicht bereits das Ergebnis.
 
-Perspektiven (z. B. Lärm, Verkehrssicherheit, Flächenverbrauch) sind **dem Thema**, nicht einzelnen Vorgängen, zugeordnet. Sie werden aus dem gesamten bestätigten Themenbestand erarbeitet. Die Redaktion darf KI-Vorschläge übernehmen, ergänzen, zusammenführen und korrigieren. Unter bestätigten Perspektiven werden belegbare oder begründet erwartbare Wirkungen beschrieben. Eine sachliche Wirkung ist noch keine politische Bewertung; diese gehört in „Unsere Einordnung“.
+### Wirkungen: konkrete, belegte oder begründet erwartete Folgen
 
-**Quelle:** [Themen- und Vorgangslogik §5.5](../Themen-und-Vorgangslogik.md).
+Eine **Wirkung** (in der App auch „Auswirkung“) beschreibt **was ein Ereignis verändert, verändert hat oder voraussichtlich verändern könnte**. Sie ist konkreter als die Perspektive und hat eine nachvollziehbare Grundlage. Die Wirkung ist fachlich **an einem Ereignis verankert**; sie kann im Kontext eines Vorgangs oder Themas erarbeitet werden. Der jeweilige Herkunftskontext bestimmt, wo sie gepflegt werden darf.
+
+| Perspektive | Beispielhafte Wirkung | Charakter |
+|---|---|---|
+| Flächenverbrauch | Für den Straßenausbau wird zusätzliche Fläche beansprucht. | Konkret zu belegende Folge |
+| Erreichbarkeit | Eine geplante durchgängige Radverbindung könnte Wege sicherer und direkter machen. | Erwartete Wirkung; Prognose kenntlich machen |
+| Lärm | Eine geänderte Verkehrsführung könnte Anwohnende anders belasten. | Prüfbare Erwartung, noch kein erwiesener Effekt |
+
+Eine gute Wirkungsbeschreibung nennt möglichst **betroffenen Sachverhalt, Veränderung, räumlichen/zeitlichen Bezug und Beleg oder Unsicherheit**. Besteht noch keine tragfähige Grundlage, wird die Aussage als mögliche Wirkung bzw. Klärungsbedarf behandelt und nicht als eingetretene Tatsache ausgegeben. Unterschiedliche, auch gegenläufige Wirkungen dürfen nebeneinander stehen.
+
+**Trennung der drei Ebenen:** *Perspektive* = „Welchen Aspekt betrachten wir?“; *Wirkung* = „Was ändert sich nachweislich oder möglicherweise?“; *Unsere Einordnung* = „Wie bewerten die GRÜNEN Feldkirchen dies anhand ihrer Ziele?“. Eine Wirkung ist deshalb weder automatisch positiv oder negativ noch bereits eine politische Bewertung.
+
+Die KI kann aus **allen bestätigten Bezügen** Perspektiven und Wirkungen mit Quellenbezug vorschlagen. Die Redaktion entscheidet, welche Perspektiven zum Thema gehören; Wirkungsbehauptungen bleiben belegpflichtig.
+
+**Quellen:** [Themen- und Vorgangslogik §5.5](../Themen-und-Vorgangslogik.md) und [Begriffe – Perspektive/Wirkung](../Begriffe.md).
 
 ## 6.5 Beitrag, Version und Freigabe
 
-### Wie hängen Thema, lokale Bezüge und Beitrag zusammen?
+### Drei fachliche Einheiten – drei getrennte Entscheidungen
 
-Das **Thema** ist die fachliche Klammer. Seine **lokalen Bezüge** bestimmen, welche Sachverhalte als geprüfter Bestandteil in die Analyse eingehen. Der **Beitrag** vermittelt den daraus gewonnenen Kenntnisstand nach außen – als sachlicher Thementext und gegebenenfalls getrennte „Unsere Einordnung“.
+Zur Verständlichkeit betrachten wir zuerst **jedes Objekt für sich** und erst in §6.6 ihre gegenseitigen Abhängigkeiten.
 
-FIB führt dabei **verschiedene Statusdimensionen nebeneinander**, weil sie unterschiedliche Fragen beantworten:
+**A. Themendefinition (gesamtes Thema).** Sie beschreibt Leitfrage, Abgrenzung und Kontext. Der Themenstatus bezeichnet den *Lebenszyklus des ganzen Themas*: **Entwurf → Aktiv**, gegebenenfalls **Zurückgestellt** oder **Archiviert**. Seine Aktivität sagt **noch nichts darüber**, ob eine Beitragsfassung aktuell öffentlich sichtbar ist. Inhaltliche Änderungen an einer bereits bestätigten Definition bleiben nachvollziehbar.
 
-| Dimension | Leitfrage | Zustände bzw. Ausprägungen | Worauf wirkt sie? |
-|---|---|---|---|
-| **Thema** | In welcher Lebensphase befindet sich das Thema? | Entwurf · Aktiv · Zurückgestellt · Archiviert | Fachliche Bearbeitung und grundsätzliche Sichtbarkeit |
-| **Einzelner lokaler Bezug** | Ist der Vorgang oder das Ereignis diesem Thema zugeordnet? | Kandidat · Zugeordnet · Zurückgestellt · Fachlich unpassend | Aufnahme in den bestätigten Themenbestand |
-| **Bedeutung eines Bezugs** | Welches Gewicht hat ein bestätigter Bezug? | Prägend · Relevant · Ergänzend | Redaktionell bestätigte fachliche Einordnung, **kein Status** |
-| **Beitragsfassung** | Ist diese konkrete Textfassung freigegeben? | Arbeitsfassung / noch nicht freigegeben · freigegeben · Freigabe vor Publikation zurückgenommen | Inhaltliche Freigabe der Version |
-| **Öffentliche Veröffentlichung** | Welche Fassung ist tatsächlich sichtbar? | Noch nicht veröffentlicht · veröffentlicht · zurückgezogen/beendet | Öffentliche Ausspielung der freigegebenen Version |
+**B. Lokale Beziehung (je Vorgang oder ergänzendes Ereignis).** Jede einzelne Beziehung hat ihren eigenen **Zuordnungsstatus**: **Kandidat, Zugeordnet, Zurückgestellt, Fachlich unpassend**. Sie sagt, ob dieser konkrete Bezug für die Themenanalyse redaktionell akzeptiert wurde. Nur bei „Zugeordnet“ ist seine bestätigte **Bedeutung** (prägend/relevant/ergänzend) verbindlich. Diese Bedeutung ist **kein weiterer Status**. Auch Herkunft aus der KI ist kein Status. Mehrere Beziehungen desselben Themas dürfen gleichzeitig unterschiedliche Zustände haben.
 
-**„Unsere Einordnung“ ist ein eigener, optionaler Textbestandteil, kein eigenständiger Themenstatus.** Sie wird getrennt vom Sachtext bearbeitet, gehört aber zur betreffenden Beitragsfassung und ihrer Freigabe. Eine separat editierte Einordnung macht die noch nicht freigegebene neue Fassung nicht automatisch öffentlich.
+**C. Beitrag (Textfassung).** Der Beitrag setzt den bestätigten Kenntnisstand für die Öffentlichkeit um. Eine **Arbeitsfassung** enthält sachlichen Thementext und optional die getrennt editierbare **„Unsere Einordnung“**. Die Redaktion kann eine konkrete *Fassung* freigeben; eine solche Freigabe darf bis zur ersten Veröffentlichung dieser Fassung zurückgenommen werden. **Veröffentlichung ist ein zusätzlicher ausdrücklicher Schritt**, der eine freigegebene Fassung nach außen sichtbar macht. Der Sachtext und die optionale Einordnung sind **Bestandteile derselben Beitragsfassung**, keine zwei unabhängig zu veröffentlichenden Objekte.
 
-Die Redaktion soll diese Informationen **zusammen verständlich anzeigen**, jedoch nicht durch einen einzigen Sammelstatus ersetzen. Aus dem Status eines Bezugs lässt sich weder die Freigabe noch die Veröffentlichung des Themas ableiten.
+Die drei Einheiten bilden **keine Statushierarchie**: Eine zugeordnete Beziehung ist nicht automatisch ein freigegebener Beitrag; ein aktives Thema ist nicht automatisch veröffentlicht. Gleichwohl bestehen **fachliche Abhängigkeiten**, die §6.6 erläutert.
 
-### Beispiel für die getrennten Dimensionen
+### Warum braucht der Beitrag eine eigene Freigabe?
 
-Ein Mobilitätsthema ist **Aktiv**. Das Autobahnkreuz München-Ost ist als lokaler Bezug **Zugeordnet** und **Prägend** eingestuft; eine neu gefundene Studie steht zunächst als **Kandidat** zur Prüfung. Die bisherige Beitragsfassung kann bereits **freigegeben und veröffentlicht** sein, während die Redaktion eine **neue Arbeitsfassung** mit aktualisiertem Sachtext und einer überarbeiteten optionalen Einordnung erstellt. Die Veröffentlichung bleibt unverändert, bis eine neue Fassung ausdrücklich freigegeben und separat veröffentlicht wird.
-
+Bei Änderungen an Beziehungen, Perspektiven oder der Themendefinition kann der öffentliche Text fachlich überholt sein. Deshalb darf eine neue Arbeitsfassung **nicht stillschweigend** die bisherige veröffentlichte Fassung überschreiben. Redakteure können weiterarbeiten, ohne einen fertigen öffentlichen Informationsstand sofort zu verändern. Eine neue geänderte Fassung benötigt eine neue Freigabe.
 
 **FIB-THEMA-BEITRAG-001 – Zwei getrennte Textteile.** Der Beitrag enthält den sachlichen **Thementext** und die optionale, gesonderte **„Unsere Einordnung“**. KI-Textvorschläge bleiben von der redaktionell bearbeiteten Fassung unterscheidbar.
 
@@ -112,23 +120,30 @@ Ein Mobilitätsthema ist **Aktiv**. Das Autobahnkreuz München-Ost ist als lokal
 
 **Quelle:** [Themen- und Vorgangslogik §12](../Themen-und-Vorgangslogik.md), [Fachentwurf §§3.3, 8](../Fachentwurf-Themenbearbeitung-2026-10-20.md).
 
-## 6.6 Themenstatus und Lebenszyklus
+## 6.6 Zusammenspiel und Lebenszyklus
 
-### Was ändert ein Statuswechsel – und was gerade nicht?
+### Nur die notwendigen Abhängigkeiten prüfen
 
-Der **Themenstatus** beschreibt den Lebenszyklus des übergeordneten Wissensobjekts. Der **Zuordnungsstatus** betrifft dagegen genau einen einzelnen lokalen Bezug. Eine zurückgestellte Zuordnung stellt **nicht** das gesamte Thema zurück; umgekehrt löscht eine Archivierung des Themas **nicht** automatisch seine Beziehungen oder historischen Beitragsfassungen.
+FIB führt die drei Einheiten getrennt; es wird **nicht jede denkbare Statuskombination als eigener Zustand** verwaltet. Stattdessen prüft das System bei einer fachlichen Aktion die erforderlichen Voraussetzungen und Folgen.
 
-| Fachlicher Vorgang | Folge für die anderen Dimensionen |
+| Wenn die Redaktion … | Dann ist entscheidend … |
 |---|---|
-| Lokalen Bezug als „Zugeordnet“ bestätigen | Er wird fachlich wirksam; das Thema wird deshalb **nicht** automatisch freigegeben oder veröffentlicht. |
-| Bezug zurückstellen oder als fachlich unpassend markieren | Er gehört nicht zum aktuell bestätigten Themenbestand; bereits dokumentierte Entscheidungen bleiben nachvollziehbar. |
-| Beitragsentwurf speichern | Die Arbeitsfassung ändert sich; vorhandene freigegebene oder veröffentlichte Fassungen bleiben bestehen. |
-| Erste Beitragsfassung freigeben | Thema wechselt von **Entwurf** zu **Aktiv**, bleibt aber **noch nicht veröffentlicht**. |
-| Thema zurückstellen oder archivieren | Öffentliche Sichtbarkeit endet; Freigaben, frühere Fassungen und Bezugsentscheidungen bleiben dokumentiert. |
-| Thema nach Aktualitätsprüfung wiederaufnehmen | Das Thema kann wieder **Aktiv** werden; es erfolgt **keine automatische Veröffentlichung**. |
+| einen lokalen Bezug bestätigt | Nur diese Beziehung wird **Zugeordnet**; Thema und Beitrag werden dadurch nicht freigegeben oder veröffentlicht. |
+| einen Bezug zurückstellt oder ablehnt | Die Beziehung bleibt nachvollziehbar, ist aber nicht Teil des bestätigten Bestands. Eine bereits veröffentlichte Textfassung ändert sich dadurch nicht automatisch; redaktioneller Aktualisierungsbedarf kann entstehen. |
+| die Themendefinition überarbeitet | Der fachliche Themenstand wird fortgeschrieben. Es entsteht **nicht automatisch** eine neue öffentliche Beitragsfassung. |
+| eine Arbeitsfassung speichert | Nur der Entwurf ändert sich; bisher freigegebene/veröffentlichte Fassungen bleiben erhalten. |
+| erstmals eine Beitragsfassung freigibt | Das Thema wechselt von **Entwurf** nach **Aktiv**; die Veröffentlichung steht weiter aus. |
+| die freigegebene Fassung veröffentlicht | Diese Fassung wird öffentlich sichtbar – getrennt von der Freigabe und unter Berücksichtigung des zulässigen Themenstatus. |
+| ein Thema zurückstellt oder archiviert | Seine öffentliche Sichtbarkeit endet; alte Freigaben, Versionen und Beziehungen bleiben historisch nachvollziehbar. |
+| ein Thema wiederaufnimmt | Eine Aktualitätsprüfung ist nötig; die Rückkehr nach **Aktiv** veröffentlicht nichts automatisch. Bei inhaltlich geänderter Fassung ist eine erneute Freigabe erforderlich. |
 
-Diese Übersicht erläutert die bereits vereinbarten Grundwirkungen; sie ersetzt **keine** noch zu prüfende vollständige technische Übergangsmatrix für alle Sonderfälle.
+### Ein durchgängiges Beispiel
 
+Ein **aktives** Mobilitätsthema hat zwei **zugeordnete** Vorgänge und einen weiteren **Kandidaten**. Die Redaktion erhält neue Erkenntnisse, korrigiert eine Wirkung und erstellt eine neue Arbeitsfassung mit angepasstem Sachtext und optional neuer Einordnung. Die bisherige **freigegebene und veröffentlichte** Fassung bleibt zunächst sichtbar. Erst wenn die neue Fassung redaktionell **freigegeben** und danach ausdrücklich **veröffentlicht** wird, ändert sich die öffentliche Darstellung.
+
+**Merksatz:** *Themenstatus steuert den Lebenszyklus, Beziehungsstatus den bestätigten Erkenntnisbestand, Beitragsfreigabe den geprüften Text und Veröffentlichung die öffentliche Sichtbarkeit.*
+
+Die Tabelle erklärt Grundregeln, **keine vollständige Übergangsmatrix**. Spezialfälle, notwendige Berechtigungen und unzulässige Kombinationen müssen gesondert gegen Datenmodell, Services und fachliche Entscheidungen geprüft werden; daraus wird nicht stillschweigend ein weiterer Status eingeführt.
 
 **FIB-THEMA-STATUS-001 – Fachliche Zustände.** Der Themenlebenszyklus unterscheidet **Entwurf, Aktiv, Zurückgestellt, Archiviert**. Status, Freigabe und tatsächlich bestehende öffentliche Sichtbarkeit sind getrennte Informationen. „Zurückgestellt“ beendet die aktuelle öffentliche Sichtbarkeit vorläufig; „Archiviert“ ist eine auf Dauer angelegte Herausnahme.
 
@@ -163,4 +178,4 @@ Diese Übersicht erläutert die bereits vereinbarten Grundwirkungen; sie ersetzt
 
 | Version | Datum | Änderung |
 |---|---|---|
-| 0.2 | 22.10.2026 | Fachliche Absicht und Wissensmodell erläutert; Statusdimensionen mit gemeinsamen Beispielen und Folgen erklärt. |\n| 0.1 | 22.10.2026 | Erste regelbasierte Zusammenführung des Themenbereichs, 13 Regelkennungen, Quellverweise und offene Abgleichpunkte. |
+| 0.3 | 22.10.2026 | Perspektiven als erweiterbare Themenblickwinkel und Wirkungen als belegte/erwartete Ereignisfolgen erläutert; Status je Objekt statt Gesamtmatrix erklärt. |\n| 0.2 | 22.10.2026 | Fachliche Absicht und Wissensmodell erläutert; Statusdimensionen mit gemeinsamen Beispielen und Folgen erklärt. |\n| 0.1 | 22.10.2026 | Erste regelbasierte Zusammenführung des Themenbereichs, 13 Regelkennungen, Quellverweise und offene Abgleichpunkte. |
