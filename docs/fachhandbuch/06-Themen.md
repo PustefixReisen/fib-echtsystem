@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 0.8 – Konsolidierungsentwurf | 22.10.2026 | Projektverantwortung – erstellt mit KI-Unterstützung |
+| 0.9 – Konsolidierungsentwurf | 22.10.2026 | Projektverantwortung – erstellt mit KI-Unterstützung |
 
 > **Übernahmestatus:** Dieses Kapitel bündelt bereits beschlossene Fachregeln; während des Abgleichs bleiben die in [der Inventur](../Fachhandbuch-Inventur-2026-10-22.md) bezeichneten bisherigen Primärquellen verbindlich. Abweichungen und offene Fragen sind unten markiert. Erst die fachlich geprüfte vollständige Übernahme schaltet dieses Kapitel zur alleinigen Primärquelle.
 
@@ -130,6 +130,17 @@ Bei Änderungen an Beziehungen, Perspektiven oder der Themendefinition kann der 
 
 Die Regeln zu Zustandsübergängen sind **fachliche Plausibilitäts- und Geschäftsregeln**: Sie beschreiben zulässige Aktionen, notwendige Vorbedingungen und fachliche Folgen an Thema, lokalen Beziehungen, Beitragsfassungen und Veröffentlichung. Die technische Durchsetzung und eine später aus den Primärregeln abgeleitete Status-/Rechteübersicht müssen auf diese Regeln Bezug nehmen.
 
+### Zwei Arten von Übergangsprüfungen
+
+Das bestehende FIB-Regelwerk unterscheidet **harte fachliche Invarianten** von **semantischen Plausibilitätsprüfungen**. Diese Unterscheidung gilt ausdrücklich auch für Statusänderungen an Themen, lokalen Bezügen und Beitragsfassungen.
+
+- **Harte Invariante:** Eine objektiv unzulässige Aktion (beispielsweise Veröffentlichung einer nicht freigegebenen Fassung, ein nicht erlaubter Übergang oder eine Handlung ohne erforderliches Recht) muss **serverseitig blockiert** werden. Eine KI-Empfehlung darf sie nicht überstimmen.
+- **Semantische Plausibilitätsprüfung:** Gibt es mehrere fachlich vertretbare Entscheidungen (beispielsweise, ob ein großer Einzelvorgang ein eigenständiges Thema rechtfertigt), erhält die Redaktion einen begründeten Prüfhinweis und trifft die Entscheidung. Die KI darf dazu Vorschläge machen, aber nicht eigenständig bestätigen.
+
+Das Ziel ist **kein gigantischer Katalog theoretischer Statuskombinationen**, sondern eine nachvollziehbare, objektbezogene Regelung jeder fachlichen Aktion: *Ausgangslage → erforderliche Rolle und Voraussetzungen → Entscheidung/Bestätigung → zulässiger neuer Zustand → Audit und Folgeaktionen*. Die genaue Vollständigkeitsprüfung der Übergänge bleibt im [Issue #153](https://github.com/PustefixReisen/fib-echtsystem/issues/153) als Entwicklungs- und Testaufgabe erfasst.
+
+**Quelle:** [Fachliche Plausibilitäts- und Freigaberegeln §§2–4](../Fachliche-Plausibilitaets-und-Freigaberegeln.md).
+
 ### Nur die notwendigen Abhängigkeiten prüfen
 
 FIB führt die drei Einheiten getrennt; es wird **nicht jede denkbare Statuskombination als eigener Zustand** verwaltet. Stattdessen prüft das System bei einer fachlichen Aktion die erforderlichen Voraussetzungen und Folgen.
@@ -241,12 +252,13 @@ Die fachliche Aussage zur Federführung und die beiden Versionierungsebenen wurd
 | `Themen-und-Vorgangslogik.md` | §§3–6, 12 | §10 (technische Modellfolgen) nun abgegrenzt; Detailabgleich mit Kap. 03/09 weiterhin offen |
 | `Fachentwurf-Themenbearbeitung-2026-10-20.md` | §§2–4, 8–9 | §7 zu Federführung/Versionierung aufgenommen; Berechtigungsdetails weiter abzugleichen |
 | `Begriffe.md` | lokale Bezüge, Bedeutung, Status | übrige Perspektiven- und Wirkungsdefinitionen |
-| `Datenmodell.md` | fachlicher Statusbezug | übrige fachliche Kardinalitäten und Versionsdefinitionen |
-| Issues #149/#164 | beschlossene Kandidaten-/Statusregeln | Wiederaufnahme- und Ablehnungsmatrix |
+| `Datenmodell.md` | fachlicher Statusbezug, Gesamt-/Beitragsversionen | übrige fachliche Kardinalitäten, technische Versionierungsverknüpfung |
+| `Fachliche-Plausibilitaets-und-Freigaberegeln.md` | harte Invarianten und semantische Prüfungen | allgemeine Medienfreigaben gehören in andere Kapitel |\n| Issues #149/#164 | beschlossene Kandidaten-/Statusregeln | Wiederaufnahme- und Ablehnungsmatrix |
 
 ## Änderungshistorie
 
 | Version | Datum | Änderung |
 |---|---|---|
+| 0.9 | 22.10.2026 | Altquellen zur Unterscheidung blockierender Zustandsinvarianten und redaktioneller Plausibilitätsprüfungen abgeglichen. |
 | 0.8 | 22.10.2026 | Quellenabgleich für Federführung, zwei Versionierungsebenen und Modellfolgen ergänzt, ohne Implementierungsstand vorwegzunehmen. |
 | 0.7 | 22.10.2026 | Kiesgrund als besonders umfangreichen Vorgang und möglichen eigenständigen Themenkandidaten nach redaktioneller Entscheidung präzisiert. |\n| 0.6 | 22.10.2026 | Manuelle Themenanlage und KI-Suchanlässe abgegrenzt; Kiesgrund als übersehener Vorgang präzisiert; Kalibrierung als kontextgestützte Nutzung redaktioneller Entscheidungen mit offener Persistenz-/Laufzeitlücke beschrieben. |\n| 0.5 | 22.10.2026 | Fehlende Altabschnitte zu Themenentdeckung, Kiesgrund, KI-Kalibrierung und öffentlicher Darstellung eingeordnet; fachliche Zielkapitel abgegrenzt. |\n| 0.4 | 22.10.2026 | Neue Beitragsregeln zur unmittelbaren Anzeige des veröffentlichten Standes und Ausgangsbasis neuer Fassungen; Statusübergänge als Plausibilitätsregeln klassifiziert. |\n| 0.3 | 22.10.2026 | Perspektiven als erweiterbare Themenblickwinkel und Wirkungen als belegte/erwartete Ereignisfolgen erläutert; Status je Objekt statt Gesamtmatrix erklärt. |\n| 0.2 | 22.10.2026 | Fachliche Absicht und Wissensmodell erläutert; Statusdimensionen mit gemeinsamen Beispielen und Folgen erklärt. |\n| 0.1 | 22.10.2026 | Erste regelbasierte Zusammenführung des Themenbereichs, 13 Regelkennungen, Quellverweise und offene Abgleichpunkte. |
