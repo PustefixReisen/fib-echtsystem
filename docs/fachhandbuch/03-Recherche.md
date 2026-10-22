@@ -33,6 +33,24 @@
 
 **FIB-RECH-ABLAUF-001:** Neue Fundstelle, neues Ereignis und neue Meldung sind **drei verschiedene** fachliche Entscheidungen. Mehrere Fundstellen können dasselbe Ereignis ergänzen; eine neue Quelle allein rechtfertigt keine neue Meldung. Bei wesentlicher neuer Sachinformation wird zunächst die Fortschreibung eines bestehenden Ereignisses und Vorgangs geprüft.
 
+### Fachobjekte – fachliche Profile
+
+**Beobachtungsauftrag.** Beschreibt eine konkrete, länger zu verfolgende Frage zu **genau einem** Vorgang, Thema oder einer Wissenslücke. Enthält Primärbezug, Frage, Grund, Herkunft, Status und Historie; optionale Wiedervorlage. Die Zustände sind Aktiv, Pausiert und Beendet. Eine Pause/Beendigung verlangt redaktionelle Begründung. **Keine festgeschriebenen Suchwörter** und **kein** ausgeführter Lauf. Implementierung der Objektverwaltung derzeit nicht nachgewiesen.
+
+**Recherchelauf.** Konkrete Suche mit Startgrund, Zeitpunkt, Kontext, versioniertem Regelstand, Ergebnis, neu/erneut erkannten Fundstellen und protokollierten Fehlern. Kann aus Beobachtungsauftrag, offener Recherche, manueller Anweisung oder einem Rückblick entstehen. Ein Ereignis behält seine Belegkette über die Fundstelle zum Lauf, nicht durch eine künstliche direkte Abhängigkeit von einem Beobachtungsauftrag. Automatisierte Laufverwaltung derzeit nicht nachgewiesen.
+
+**Quelle.** Bestimmbare Herkunft einer Information (z. B. Gemeinde, RIS, Zeitung, Initiative, Fachquelle oder interne Datei), mit Namen, Quellenrolle, Herkunft, Zugang, Beobachtungsart sowie Eigenschaft als Pflicht- oder kontextabhängige Quelle. Die tatsächliche Zugänglichkeit ist vom Nutzungsrecht zur Veröffentlichung über FIB getrennt. `fib.sources` ist vorhanden.
+
+**Fundstelle.** Konkretes Dokument, Artikel oder eindeutig identifizierbarer Inhalt aus einer Quelle; erfordert erkennbare Herkunft, Titel, Fundort und relevante Zeitangaben. Ein technischer Quellenabruf ist nicht selbst ein bestätigtes Ereignis. Nicht relevante Funde bleiben für Regressionstests erhalten. `fib.findings` ist vorhanden; automatisches Finden bisher nicht nachgewiesen.
+
+**Fundstellenzuordnung.** Eigenständige Beziehung zwischen Fundstelle und Ereignis; dieselbe Fundstelle darf mehreren Ereignissen dienen. Die fachliche Begründung benennt den konkreten Informationsbeitrag und ist von technischen `note`- und `evidence_role`-Feldern getrennt. Entfernen einer Beziehung löscht nicht die Fundstelle. Redaktionelle UI-, Edge-Function- und Audit-Bausteine sind vorhanden.
+
+**Referenzobjekt.** Dauerhafte Identität eines Ortes, Gebiets, Straßenzugs, Infrastruktur- oder Projektbezugs mit Hauptname, Aliasnamen, Typ, Herkunft und zweckmäßigen Relationen. Zeitabhängige Sachstände gehören in Ereignisse/Vorgänge. Es hilft bei der Erkennung räumlicher Verbindungen, etwa der Trasse eines Radschnellwegs. Fachmodell vorhanden, operative Objektverwaltung nicht nachgewiesen.
+
+**Recherche-/Relevanzregel.** Fachlich freigegebene, versionierte Vorschrift für Entdeckung und Bewertung. Ein Regelentwurf wird mit bekannten Testfällen und neuer Probe-Recherche bewertet; erst danach erfolgt redaktionelle Aktivierung. Der für einen Lauf verwendete Regelstand muss rekonstruierbar sein. Operativer Datenbank-Regelbestand bisher nicht nachgewiesen.
+
+**Ereignis (Schnittstelle zu Kapitel 04).** Bestätigter sachlicher Vorgang zu einem Zeitpunkt oder Zeitraum; kann mehrere Fundstellen und spätere Änderungen aufweisen. Die KI schlägt neue Ereignisse oder die Fortschreibung vorhandener Ereignisse vor, die Redaktion entscheidet. Die bereits implementierte Ereigniserfassung umfasst Bearbeitung und Fundstellenzuordnung. **Details zu Ereignis- und Meldungsstatus, Freigabe und Versionierung sind in Kapitel 04 zu konsolidieren**, statt als konkurrierende Spezialregeln hier festgelegt zu werden.
+
 ## 3.1 Zweck der Recherche
 
 FIB recherchiert für Feldkirchen relevante Entwicklungen möglichst vollständig, nachvollziehbar und quellengebunden. **Bekannte Begriffe, bereits angelegte Vorgänge und Themen dürfen die Entdeckung bislang unbekannter Entwicklungen nicht begrenzen.** Ein exemplarischer Negativtest ist das zunächst übersehene Baugebiet „Kiesgrund“.
