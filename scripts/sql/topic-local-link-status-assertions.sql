@@ -3,7 +3,7 @@ do $local_link_test$
 declare
   t uuid;
   p uuid;
-  reviewer uuid := 'bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb'::uuid;
+  reviewer uuid := 'dddddddd-dddd-4ddd-8ddd-dddddddddddd'::uuid;
   proposal uuid;
 begin
   insert into fib.app_users(user_id) values (reviewer);
