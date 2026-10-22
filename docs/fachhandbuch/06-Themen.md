@@ -275,10 +275,9 @@ Die Kapitelversion bleibt ein **Konsolidierungsentwurf**. Dieser Quellenabgleich
 
 ## Änderungshistorie
 
-| 1.0 | 22.10.2026 | Ergebnis des Altquellenabgleichs und offene Freigabekriterien dokumentiert. |
-
 | Version | Datum | Änderung |
 |---|---|---|
+| 1.0 | 22.10.2026 | Ergebnis des Altquellenabgleichs und offene Freigabekriterien dokumentiert. |
 | 0.9 | 22.10.2026 | Altquellen zur Unterscheidung blockierender Zustandsinvarianten und redaktioneller Plausibilitätsprüfungen abgeglichen. |
 | 0.8 | 22.10.2026 | Quellenabgleich für Federführung, zwei Versionierungsebenen und Modellfolgen ergänzt, ohne Implementierungsstand vorwegzunehmen. |
 | 0.7 | 22.10.2026 | Kiesgrund als besonders umfangreichen Vorgang und möglichen eigenständigen Themenkandidaten nach redaktioneller Entscheidung präzisiert. |
