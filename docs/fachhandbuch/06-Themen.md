@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 0.7 – Konsolidierungsentwurf | 22.10.2026 | Projektverantwortung – erstellt mit KI-Unterstützung |
+| 0.8 – Konsolidierungsentwurf | 22.10.2026 | Projektverantwortung – erstellt mit KI-Unterstützung |
 
 > **Übernahmestatus:** Dieses Kapitel bündelt bereits beschlossene Fachregeln; während des Abgleichs bleiben die in [der Inventur](../Fachhandbuch-Inventur-2026-10-22.md) bezeichneten bisherigen Primärquellen verbindlich. Abweichungen und offene Fragen sind unten markiert. Erst die fachlich geprüfte vollständige Übernahme schaltet dieses Kapitel zur alleinigen Primärquelle.
 
@@ -219,13 +219,27 @@ Besucher sollen neben der Leitfrage und dem Feldkirchen-Bezug die prägenden Vor
 - **KI-Folgeprüfungen:** Ereignisgesteuerte und monatliche, modellunabhängig versionierte Bedeutungsprüfung gemäß Issue #149 ist beschlossenes Ziel, aber nicht mit einer bereits produktiv laufenden Automatisierung gleichzusetzen.
 - **K0-Ausspielung:** Die technisch vorgesehene Veröffentlichung darf nicht als bereits aktiv bereitstehender öffentlicher Publikationsweg dargestellt werden.
 
+## 6.9 Abgleich der älteren Fachquellen: Fassung und Datenmodell
+
+Dieser Abschnitt erläutert bereits beschlossene Regeln, deren **technischer Realisierungsstand separat zu prüfen** ist.
+
+**FIB-THEMA-VERSION-001 – Zwei unterschiedliche Versionierungsebenen.** Eine Themenbearbeitung kann die fachliche **Gesamtfassung** verändern (beispielsweise Definition, Abgrenzung, bestätigte Bezüge oder Wirkungen), ohne unmittelbar eine neue veröffentlichte Beitragsfassung hervorzubringen. Davon getrennt steht die **Beitragsfassung** mit expliziter redaktioneller Freigabe und gegebenenfalls Veröffentlichung. Im redaktionellen Versionsverlauf werden vorrangig freigegebene Beitragsfassungen angezeigt; die wesentlichen Änderungen der Gesamtfassung bleiben intern nachvollziehbar. Ihre technische Verknüpfung ist noch nicht abschließend spezifiziert.
+
+**FIB-THEMA-KOORD-001 – Federführung ohne exklusive Bearbeitungsrechte.** Die redaktionelle Koordination verwendet die vorhandene Federführung eines FIB-Benutzers. Sie begründet **keine ausschließlich dieser Person vorbehaltene Bearbeitungsberechtigung** und ersetzt nicht die fachlichen Rollen-/Freigaberegeln.
+
+**FIB-THEMA-ENTDECKUNG-001 – Themenkandidat statt automatischer Neuanlage.** Die KI-Themenanalyse berücksichtigt bestehende Themen, lokale Quellen und Beziehungen sowie fachliche Merkmale wie übergreifende Leitfrage, zeitliche Tragweite, Zielkonflikte und Mehrwert. Ein Kandidat wird begründet und als Vorschlag kenntlich gemacht. Die Redaktion entscheidet über die Neuanlage nach Dublettprüfung; auch ein besonders umfassender Einzelvorgang wie Kiesgrund kann dabei ein eigenständiges Thema rechtfertigen.
+
+### Verbindlichkeit und offene technische Nachweise
+
+Die fachliche Aussage zur Federführung und die beiden Versionierungsebenen wurden bereits im [Fachentwurf §7](../Fachentwurf-Themenbearbeitung-2026-10-20.md) mit [Datenmodell §4.6](../Datenmodell.md) abgeglichen. Die [Themen- und Vorgangslogik §10](../Themen-und-Vorgangslogik.md) benennt daneben technische Modellfolgen (Beziehungs- und Protokollstruktur, Analyseherkunft, Dublettenprüfung). Sie bleiben im Datenmodell beziehungsweise den technischen Entwicklungsaufgaben zu überprüfen und werden hier **nicht als bereits implementiert behauptet**.
+
 ## Übernahmematrix dieses Kapitels
 
 | Bestehende Quelle | Übernommene Bereiche | Noch zu prüfen |
 |---|---|---|
 | `Fachkonzept.md` | Thema als Wissensobjekt | übrige Querverweise |
-| `Themen-und-Vorgangslogik.md` | §§3–6, 12 | §10 (technische Modellfolgen) und Detailabgleich mit Kap. 03/09; §§7–9/11 nun fachlich eingeordnet |
-| `Fachentwurf-Themenbearbeitung-2026-10-20.md` | §§2–4, 8–9 | §7 technische/fachliche Abgrenzung |
+| `Themen-und-Vorgangslogik.md` | §§3–6, 12 | §10 (technische Modellfolgen) nun abgegrenzt; Detailabgleich mit Kap. 03/09 weiterhin offen |
+| `Fachentwurf-Themenbearbeitung-2026-10-20.md` | §§2–4, 8–9 | §7 zu Federführung/Versionierung aufgenommen; Berechtigungsdetails weiter abzugleichen |
 | `Begriffe.md` | lokale Bezüge, Bedeutung, Status | übrige Perspektiven- und Wirkungsdefinitionen |
 | `Datenmodell.md` | fachlicher Statusbezug | übrige fachliche Kardinalitäten und Versionsdefinitionen |
 | Issues #149/#164 | beschlossene Kandidaten-/Statusregeln | Wiederaufnahme- und Ablehnungsmatrix |
@@ -234,4 +248,5 @@ Besucher sollen neben der Leitfrage und dem Feldkirchen-Bezug die prägenden Vor
 
 | Version | Datum | Änderung |
 |---|---|---|
+| 0.8 | 22.10.2026 | Quellenabgleich für Federführung, zwei Versionierungsebenen und Modellfolgen ergänzt, ohne Implementierungsstand vorwegzunehmen. |
 | 0.7 | 22.10.2026 | Kiesgrund als besonders umfangreichen Vorgang und möglichen eigenständigen Themenkandidaten nach redaktioneller Entscheidung präzisiert. |\n| 0.6 | 22.10.2026 | Manuelle Themenanlage und KI-Suchanlässe abgegrenzt; Kiesgrund als übersehener Vorgang präzisiert; Kalibrierung als kontextgestützte Nutzung redaktioneller Entscheidungen mit offener Persistenz-/Laufzeitlücke beschrieben. |\n| 0.5 | 22.10.2026 | Fehlende Altabschnitte zu Themenentdeckung, Kiesgrund, KI-Kalibrierung und öffentlicher Darstellung eingeordnet; fachliche Zielkapitel abgegrenzt. |\n| 0.4 | 22.10.2026 | Neue Beitragsregeln zur unmittelbaren Anzeige des veröffentlichten Standes und Ausgangsbasis neuer Fassungen; Statusübergänge als Plausibilitätsregeln klassifiziert. |\n| 0.3 | 22.10.2026 | Perspektiven als erweiterbare Themenblickwinkel und Wirkungen als belegte/erwartete Ereignisfolgen erläutert; Status je Objekt statt Gesamtmatrix erklärt. |\n| 0.2 | 22.10.2026 | Fachliche Absicht und Wissensmodell erläutert; Statusdimensionen mit gemeinsamen Beispielen und Folgen erklärt. |\n| 0.1 | 22.10.2026 | Erste regelbasierte Zusammenführung des Themenbereichs, 13 Regelkennungen, Quellverweise und offene Abgleichpunkte. |
