@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 1.2 – Konsolidierungsentwurf | 22.10.2026 | Projektverantwortung – erstellt mit KI-Unterstützung |
+| 1.3 – Konsolidierungsentwurf | 22.10.2026 | Projektverantwortung – erstellt mit KI-Unterstützung |
 
 > **Übernahmestatus:** Dieses Kapitel bündelt bereits beschlossene Fachregeln; während des Abgleichs bleiben die in [der Inventur](../Fachhandbuch-Inventur-2026-10-22.md) bezeichneten bisherigen Primärquellen verbindlich. Abweichungen und offene Fragen sind unten markiert. Erst die fachlich geprüfte vollständige Übernahme schaltet dieses Kapitel zur alleinigen Primärquelle.
 
@@ -45,16 +45,25 @@ Es gibt zwei unterschiedliche Entscheidungen: **Gehört dieser Sachverhalt über
 
 **FIB-THEMA-BEZUG-001 – Auswahlbasis.** Ein Thema wird vorzugsweise durch die Auswahl ganzer Vorgänge gebildet. Ihre zugehörigen Ereignisse werden automatisch berücksichtigt. **Ergänzende direkte Einzelereignisse** sind zulässig, wenn sie nicht bereits über einen bestätigten Themenvorgang abgedeckt sind. Meldungen bilden keinen dritten Auswahlweg. Dieselbe Tatsache wird nicht mehrfach gewichtet, nur weil sie als Fundstelle, Ereignis, Meldung und Vorgang erscheint.
 
-### Übersicht: Status eines einzelnen lokalen Bezugs
+### Übersicht: Übergänge lokaler Bezüge
 
-| Status | Fachliche Aktion / Bedeutung | Zulässiger Entscheidungsrahmen |
+| Von | Nach | Voraussetzung |
 |---|---|---|
-| **Kandidat** | Beziehung zur Prüfung vorgeschlagen oder erfasst | Redaktion prüft, kann zuordnen, zurückstellen oder als unpassend bewerten |
-| **Zugeordnet** | Aufnahme in den bestätigten Themenbestand | Redaktionelle Bestätigung und Bedeutung erforderlich |
-| **Zurückgestellt** | Vorläufig nicht verbindlich aufgenommen | Erneute Prüfung bei neuen Erkenntnissen möglich |
-| **Fachlich unpassend** | Begründete Ablehnung | Erneute Prüfung nur aufgrund geänderter Sachlage oder Themendefinition; keine automatische Wiederzuordnung |
+| Kandidat | Zugeordnet | Redaktion bestätigt Bedeutung und Begründung |
+| Kandidat | Zurückgestellt | Redaktion vertagt Entscheidung |
+| Kandidat | Fachlich unpassend | Begründete redaktionelle Ablehnung |
+| Zugeordnet | Zurückgestellt | Vorläufige Herausnahme aus bestätigtem Bestand |
+| Zugeordnet | Fachlich unpassend | Begründete fachliche Neubewertung |
+| Zurückgestellt | Zugeordnet | Erneute Prüfung und Bestätigung |
+| Zurückgestellt | Fachlich unpassend | Redaktionelle Ablehnung |
+| Fachlich unpassend | Kandidat | Neue Sachlage oder veränderte Themendefinition |
+| Fachlich unpassend | Zugeordnet | **Nicht unmittelbar zulässig** |
 
-Diese Übersicht beschreibt die bekannten Entscheidungen, **nicht** die vollständige technische Übergangsmatrix einschließlich aller Rückwege und Begründungspflichten. Herkunft „KI“ ist kein Status.
+Die Tabelle steht vor den Einzelregeln. Alle Entscheidungen werden nachvollziehbar dokumentiert. Die KI darf erneute Prüfung vorschlagen, aber keinen Status eigenständig wechseln lassen.
+
+**FIB-THEMA-BEZUG-007 – Neubewertung bestätigter Bezüge.** Eine zugeordnete Beziehung darf unmittelbar als fachlich unpassend eingestuft werden, wenn ihre fachliche Eignung entfällt. Begründung und frühere Entscheidung bleiben historisch nachvollziehbar.
+
+**FIB-THEMA-BEZUG-008 – Zweistufige Wiederaufnahme abgelehnter Bezüge.** Ein fachlich unpassender Bezug kann bei veränderter Faktenlage oder Themendefinition zunächst wieder Kandidat werden. Erst nach erneuter Prüfung und ausdrücklicher redaktioneller Bestätigung ist Zugeordnet zulässig. Der direkte Übergang von Fachlich unpassend zu Zugeordnet ist ausgeschlossen.
 
 **FIB-THEMA-BEZUG-002 – Vier redaktionelle Zuordnungsstatus.** Lokale Bezüge haben die fachlichen Zustände:
 
@@ -341,6 +350,7 @@ Die Kapitelversion bleibt ein **Konsolidierungsentwurf**. Dieser Quellenabgleich
 
 | Version | Datum | Änderung |
 |---|---|---|
+| 1.3 | 22.10.2026 | Gemeinsam beschlossene Statusübergänge lokaler Bezüge und zweistufige Wiederprüfung dokumentiert. |
 | 1.2 | 22.10.2026 | Themen-Berechtigungen bestätigt und Status-/Übergangsübersichten vor Detailregeln für Thema, lokalen Bezug und Beitrag angeordnet. |
 | 1.1 | 22.10.2026 | Drei zusätzliche Übergangsregeln gemeinsam entschieden: Entwurf zurückstellen/archivieren, Zurückgestellt archivieren, kein direkter Archiviert→Zurückgestellt-Übergang. |
 | 1.0 | 22.10.2026 | Ergebnis des Altquellenabgleichs und offene Freigabekriterien dokumentiert. |
