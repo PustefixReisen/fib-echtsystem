@@ -6,6 +6,8 @@
 |---|---|---|
 | 3.0 | 06.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
 
+> **Fachhandbuch-Reorganisation (22.10.2026):** [Neuer Einstieg zum Fachhandbuch](fachhandbuch/README.md) und [erste Quellinventur](Fachhandbuch-Inventur-2026-10-22.md). Während der kontrollierten Konsolidierung bleiben die hier genannten bisherigen Fachquellen verbindlich. Die neue Struktur ersetzt sie erst nach geprüftem Abschluss der Übernahme. Zentraler Governance-Standard: [pustivo – Fachliches Dokumentationsmodell](https://github.com/PustefixReisen/pustivo/blob/main/docs/governance/Fachliches-Dokumentationsmodell.md).
+
 ## 1. Zweck
 
 Dieses Dokument ist die verbindliche Dokumentationslandkarte für das Repository `PustefixReisen/fib-echtsystem`.
