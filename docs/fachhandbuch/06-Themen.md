@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 0.5 – Konsolidierungsentwurf | 22.10.2026 | Projektverantwortung – erstellt mit KI-Unterstützung |
+| 0.6 – Konsolidierungsentwurf | 22.10.2026 | Projektverantwortung – erstellt mit KI-Unterstützung |
 
 > **Übernahmestatus:** Dieses Kapitel bündelt bereits beschlossene Fachregeln; während des Abgleichs bleiben die in [der Inventur](../Fachhandbuch-Inventur-2026-10-22.md) bezeichneten bisherigen Primärquellen verbindlich. Abweichungen und offene Fragen sind unten markiert. Erst die fachlich geprüfte vollständige Übernahme schaltet dieses Kapitel zur alleinigen Primärquelle.
 
@@ -163,19 +163,47 @@ Die Tabelle erklärt Grundregeln, **keine vollständige Übergangsmatrix**. Spez
 
 **Quelle:** [Themen- und Vorgangslogik §12](../Themen-und-Vorgangslogik.md), [Fachentwurf §§4, 8–9](../Fachentwurf-Themenbearbeitung-2026-10-20.md).
 
-## 6.7 Laufende Themenentdeckung und redaktionelle Kontrolle
+## 6.7 Themenentdeckung und Berücksichtigung redaktioneller Erfahrungen
 
-### Warum bekannte Themen allein nicht genügen
+### Wie kommt es zur Entdeckung oder Anlage eines Themas?
 
-Eine Recherche, die sich nur an bereits angelegten Themen orientiert, könnte wesentliche neue Entwicklungen übersehen. Deshalb ergänzen sich **themenbezogene Recherche** (gezielte Beobachtung bekannter Fragestellungen) und **themenunabhängige Entdeckung** (breite Prüfung definierter Pflichtquellen, ortsbezogene Suche und Rückblicke). Wird eine bisher unbekannte Entwicklung erkannt, kann sie zu einem neuen Vorgang führen oder eine vorhandene Themendefinition verändern.
+Ein **neues Thema kann jederzeit redaktionell manuell angelegt werden**: Die Redaktion beschreibt eine Leitfrage, einen Arbeitstitel und gegebenenfalls bekannte Vorgänge. Die KI unterstützt auf Anforderung bei der Abgrenzungs- und Dublettprüfung sowie beim Ermitteln möglicher weiterer Bezüge. Der manuelle Weg setzt keine vorangegangene automatische KI-Erkennung voraus.
 
-**Referenzfall Kiesgrund:** Die redaktionelle Ergänzung eines zuvor unzureichend erkannten Baugebiets löst gezielte Recherche aus. Der Fall ist zugleich ein Test dafür, dass künftig neue große Vorhaben nicht allein deshalb fehlen dürfen, weil sie noch nicht in der bisherigen Themenliste stehen.
+Der zweite Weg ist die **KI-gestützte Themenentdeckung**. Sie sucht nach übergeordneten Zusammenhängen, die über einzelne Vorgänge hinausgehen. Ein solcher Such- und Vorschlagslauf kann insbesondere ausgelöst werden, wenn:
 
-### Redaktionelle Entscheidungen verbessern künftige KI-Vorschläge
+1. die Redaktion aus einem Thema, Vorgang oder einer neu erkannten Entwicklung heraus ausdrücklich eine Themenprüfung anfordert;
+2. eine laufende Recherche neue Vorgänge, Ereignisse oder bislang übersehene Entwicklungen identifiziert, die mehrere Sachverhalte verbinden könnten;
+3. ein vorgesehener periodischer Recherche-/Erkennungslauf unabhängig von bereits bekannten Themen neue Muster im Wissensbestand prüft.
 
-Die KI-Unterstützung soll aus bestätigten, überarbeiteten und verworfenen Themenkandidaten, manuellen Ergänzungen, Dublettenentscheidungen sowie korrigierten Bezügen, Bedeutungen und Perspektiven **nachvollziehbar lernen**. Das ist eine Anforderung an die Weiterentwicklung der Vorschlagslogik, **keine Erlaubnis zur autonomen Änderung bestätigter Themen**. Insbesondere bleiben redaktionelle Entscheidungen verbindlich; eine KI-Empfehlung erfordert dort, wo fachlich vorgesehen, erneute Bestätigung.
+**Auslöser** und **fachliches Ergebnis** sind zu trennen: Ein neuer Vorgang rechtfertigt nicht automatisch ein neues Thema. Die KI analysiert unter anderem wiederkehrende Fragestellungen, gemeinsame Ziele oder Zielkonflikte, mehrere unabhängige Vorgänge, einen Feldkirchen-Bezug und den Erklärungsgewinn der übergeordneten Betrachtung. Sie liefert einen **begründeten Themenkandidaten** mit Leitfrage, Bezügen, möglichen Perspektiven und Unsicherheiten. **Die Redaktion** entscheidet nach Dublett-/Ähnlichkeitsprüfung über Anlage, Einordnung in ein vorhandenes Thema oder Verwerfung.
 
-Die fachlichen Anforderungen zur Quellenbeobachtung und Recherche werden künftig im **Fachhandbuch-Kapitel 03** primär geregelt. Hier ist nur ihre Auswirkung auf Entstehung und Weiterentwicklung von Themen erläutert.
+Die genauen automatischen Auslöser, Laufintervalle und Betriebswege sind als **technische Umsetzungsplanung** auszugestalten; ein fachlich vorgesehener Auslöser bedeutet nicht, dass er bereits produktiv aktiviert ist. Die unabhängige breite Quellenentdeckung wird in Kapitel 03 primär behandelt.
+
+### Referenzfall „Kiesgrund“ – Vorgang und möglicher Themenanlass unterscheiden
+
+Beim Test des Themenkandidaten **Wohnen** wies die Redaktion auf die bislang unzureichend berücksichtigte Entwicklung des Baugebiets **„Kiesgrund“** hin. Damit wurde **zunächst ein bedeutender Vorgang bzw. Recherchebedarf** ergänzt – **nicht automatisch ein eigenständiges neues Thema „Kiesgrund“ eröffnet**. Der Vorgang kann beispielsweise unter den übergeordneten Themen *Wohnen* und *Ortsentwicklung* relevant sein.
+
+Die KI soll solche Vorhaben künftig auch ohne bereits hinterlegten Themenbegriff entdecken können: über ortsbezogene und themenunabhängige Recherche, räumliche Referenzen, Quellenhinweise sowie die Prüfung von Größe, zeitlicher Tragweite, kommunaler Relevanz und möglichen Bezügen zu bestehenden Themen. Ob eine **neue übergeordnete Leitfrage** erforderlich ist, wird erst durch den Vergleich mit bestehenden Themen entschieden. Ein einzelnes großes Baugebiet ist nicht allein wegen seiner Größe automatisch ein Thema.
+
+**Prüfziel:** Kiesgrund muss als relevantes, bislang fehlendes Vorhaben erkannt und für passende Themen vorgeschlagen werden können, ohne dass es bereits als Suchwort im Themenbestand geführt wird.
+
+### „KI-Kalibrierung“ heißt: Redaktionelle Entscheidungen als Referenzwissen nutzen
+
+Mit **Kalibrierung** ist gemeint, dass spätere KI-Vorschläge redaktionell bestätigte, korrigierte oder verworfene Fälle berücksichtigen sollen. Das ist **kein automatisches Nachtrainieren des KI-Modells**. Die Anwendung stellt der jeweils eingesetzten KI bei einem konkreten Themenfindungsauftrag passende, aktuelle und bestätigte Informationen aus FIB als Kontext zur Verfügung.
+
+Fachlich zu unterscheiden sind drei Informationsarten:
+
+| Wissensart | Beispiel | Verbindlichkeit und vorgesehene Quelle |
+|---|---|---|
+| **Fachliche Regeln und Prüfkriterien** | Wann ist etwas Thema statt bloß Vorgang? Wie funktioniert die Dublettprüfung? | Versionierte Primärregeln im Fachhandbuch; verwendete Regelversion im KI-Auftrag nachvollziehbar |
+| **Bestätigter FIB-Wissensbestand** | Themen, Leitfragen, bestätigte Vorgänge/Bezüge, Referenzobjekte und Quellen | Persistenter redaktionell bestätigter Datenbestand und bestätigtes Referenzwissen; vgl. [Datenmodell §9](../Datenmodell.md) |
+| **Redaktionelle Entscheidungserfahrungen** | KI-Themenvorschlag verworfen; Bezüge korrigiert; „Kiesgrund“ fehlte; Vorgang statt eigenständigem Thema | Noch zu spezifizierende, nachvollziehbare Entscheidungs-/Feedbackhistorie mit Fallkontext, Begründung, Ergebnis und ggf. Gültigkeitsstand |
+
+Ein **KI-Auftrag zur Themenentdeckung** benötigt daraus einen zweckbezogenen Kontext: gültige fachliche Erkennungsregeln, aktuelle bestätigte Themen zur Dublettprüfung, relevante Ereignisse/Vorgänge/Quellen sowie vergleichbare dokumentierte Entscheidungen. Nicht der gesamte Datenbestand muss ungefiltert an ein KI-Modell übergeben werden. Der Kontext ist modellunabhängig aufzubereiten, sodass unterschiedliche KI-Anbieter dieselben maßgeblichen FIB-Regeln und Fallinformationen erhalten können.
+
+**Umsetzungslücke:** Das bestehende Datenmodell beschreibt bestätigtes Referenzwissen, insbesondere Orte, Bezeichnungen und Beziehungen. Damit ist noch **nicht** festgelegt oder nachgewiesen, dass alle redaktionellen Entscheidungen bereits als wiederverwendbare Kalibrierungsfälle persistiert, ausgewählt und bei jedem KI-Auftrag übergeben werden. Persistenzschema, Auswahlregeln, Versionsbezug, Kontextaufbereitung und Regressionstests sind vor einer produktiven Aussage über „lernende KI“ technisch zu spezifizieren und nachzuweisen. Es wird **keine autonome Übernahme einer KI-Empfehlung** daraus abgeleitet.
+
+**Quellen:** [Themen- und Vorgangslogik §§3–4, 7–9](../Themen-und-Vorgangslogik.md), [KI-Qualität und Modellunabhängigkeit](../KI-Qualitaet-und-Modellunabhaengigkeit.md), [Datenmodell §9](../Datenmodell.md).
 
 ### Was eine öffentliche Themendarstellung verständlich machen soll
 
@@ -206,4 +234,4 @@ Besucher sollen neben der Leitfrage und dem Feldkirchen-Bezug die prägenden Vor
 
 | Version | Datum | Änderung |
 |---|---|---|
-| 0.5 | 22.10.2026 | Fehlende Altabschnitte zu Themenentdeckung, Kiesgrund, KI-Kalibrierung und öffentlicher Darstellung eingeordnet; fachliche Zielkapitel abgegrenzt. |\n| 0.4 | 22.10.2026 | Neue Beitragsregeln zur unmittelbaren Anzeige des veröffentlichten Standes und Ausgangsbasis neuer Fassungen; Statusübergänge als Plausibilitätsregeln klassifiziert. |\n| 0.3 | 22.10.2026 | Perspektiven als erweiterbare Themenblickwinkel und Wirkungen als belegte/erwartete Ereignisfolgen erläutert; Status je Objekt statt Gesamtmatrix erklärt. |\n| 0.2 | 22.10.2026 | Fachliche Absicht und Wissensmodell erläutert; Statusdimensionen mit gemeinsamen Beispielen und Folgen erklärt. |\n| 0.1 | 22.10.2026 | Erste regelbasierte Zusammenführung des Themenbereichs, 13 Regelkennungen, Quellverweise und offene Abgleichpunkte. |
+| 0.6 | 22.10.2026 | Manuelle Themenanlage und KI-Suchanlässe abgegrenzt; Kiesgrund als übersehener Vorgang präzisiert; Kalibrierung als kontextgestützte Nutzung redaktioneller Entscheidungen mit offener Persistenz-/Laufzeitlücke beschrieben. |\n| 0.5 | 22.10.2026 | Fehlende Altabschnitte zu Themenentdeckung, Kiesgrund, KI-Kalibrierung und öffentlicher Darstellung eingeordnet; fachliche Zielkapitel abgegrenzt. |\n| 0.4 | 22.10.2026 | Neue Beitragsregeln zur unmittelbaren Anzeige des veröffentlichten Standes und Ausgangsbasis neuer Fassungen; Statusübergänge als Plausibilitätsregeln klassifiziert. |\n| 0.3 | 22.10.2026 | Perspektiven als erweiterbare Themenblickwinkel und Wirkungen als belegte/erwartete Ereignisfolgen erläutert; Status je Objekt statt Gesamtmatrix erklärt. |\n| 0.2 | 22.10.2026 | Fachliche Absicht und Wissensmodell erläutert; Statusdimensionen mit gemeinsamen Beispielen und Folgen erklärt. |\n| 0.1 | 22.10.2026 | Erste regelbasierte Zusammenführung des Themenbereichs, 13 Regelkennungen, Quellverweise und offene Abgleichpunkte. |
