@@ -6,10 +6,12 @@ on:
       - 'supabase/functions/fib-topic-editor/**'
       - 'supabase/migrations/20261020160000_fib_topic_contribution_lifecycle.sql'
       - 'supabase/migrations/20261020172000_fib_topic_safe_delete.sql'
+      - 'supabase/migrations/20261021170000_local_link_status_model.sql'
       - 'scripts/test-topic-editor-api-contracts.mjs'
       - 'scripts/sql/topic-migration-fixture.sql'
       - 'scripts/sql/topic-migration-assertions.sql'
       - 'scripts/sql/topic-safe-delete-assertions.sql'
+      - 'scripts/sql/topic-local-link-status-assertions.sql'
       - '.github/workflows/topic-editor-api-contracts.yml'
   push:
     branches: [main]
@@ -17,6 +19,7 @@ on:
       - 'supabase/functions/fib-topic-editor/**'
       - 'supabase/migrations/20261020160000_fib_topic_contribution_lifecycle.sql'
       - 'supabase/migrations/20261020172000_fib_topic_safe_delete.sql'
+      - 'supabase/migrations/20261021170000_local_link_status_model.sql'
       - 'scripts/test-topic-editor-api-contracts.mjs'
       - '.github/workflows/topic-editor-api-contracts.yml'
 
@@ -68,3 +71,8 @@ jobs:
         run: psql -v ON_ERROR_STOP=1 -f supabase/migrations/20261020172000_fib_topic_safe_delete.sql
       - name: Verify safe-delete auditing
         run: psql -v ON_ERROR_STOP=1 -f scripts/sql/topic-safe-delete-assertions.sql
+      - name: Verify four-state local-link status in disposable PostgreSQL
+        run: |
+          psql -v ON_ERROR_STOP=1 -f supabase/migrations/20261019132005_process_topic_proposals.sql
+          psql -v ON_ERROR_STOP=1 -f supabase/migrations/20261021170000_local_link_status_model.sql
+          psql -v ON_ERROR_STOP=1 -f scripts/sql/topic-local-link-status-assertions.sql
