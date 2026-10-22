@@ -4,9 +4,34 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 0.5 – Konsolidierungsentwurf | 22.10.2026 | Projektverantwortung – erstellt mit KI-Unterstützung |
+| 0.6 – Konsolidierungsentwurf | 22.10.2026 | Projektverantwortung – erstellt mit KI-Unterstützung |
 
 > **Übernahmestatus:** Dieser Entwurf bündelt bereits beschlossene fachliche Grundregeln. Die bisherigen Primärquellen bleiben bis zum vollständigen abschnittsbezogenen Quellenabgleich maßgeblich. Technische Schnittstellen und tatsächliche Implementierung werden hier nicht als abgeschlossen dargestellt.
+
+## Leseführung: Fachobjekte und Ablauf
+
+**Fachlicher Zusammenhang:** Ein Beobachtungsauftrag (optional) löst einen Recherchelauf aus. Dieser prüft Quellen und identifiziert Fundstellen. Fundstellen werden anhand von Quellenqualität und FIB-Relevanz bewertet und gegebenenfalls einem neuen oder bestehenden Ereignis zugeordnet. Ereignisse werden redaktionell geprüft und können Vorgänge und Themen fortschreiben. Die offene Recherche kann Rechercheläufe auch **ohne** Beobachtungsauftrag auslösen.
+
+**Fachobjekte:** Beobachtungsauftrag → Recherchelauf → Quelle/Fundstelle → Zuordnung Fundstelle–Ereignis → Ereignis. Referenzobjekte, Recherche-/Relevanzregeln und KI-Aufträge sind unterstützende, aber getrennte Fachobjekte.
+
+**Kapitelgrenze:** Recherche und Quellenanalyse bilden den Kern dieses Kapitels. Ereigniserfassung, die Bearbeitung bestehender Ereignisse und ihre Meldungen gehören als umfassendes Fachmodell in **Kapitel 04**. Hier wird die fachliche Übergabe beschrieben und die bereits implementierte Ereignisbearbeitung als Ist-Stand berücksichtigt. Ein bereits vorhandener Ereigniseditor beweist noch keinen automatischen Quellenmonitor.
+
+### Fachlicher End-to-End-Ablauf
+
+| Schritt | Soll-Leistung | Bisheriger Nachweis |
+|---|---|---|
+| 1. Anlass | Offene Suche, Pflichtquellenänderung, Beobachtungsauftrag oder manueller Fund | Fachlich beschrieben; keine durchgängige Automatik nachgewiesen |
+| 2. Kontext | Feldkirchen, dynamischer Recherchehorizont, Quellen, Referenzwissen und versionierte Regeln | Fachkonzept vorhanden |
+| 3. Entdeckung | Bekannte Quellen direkt überwachen und zusätzliche Quellen offen suchen | Automatischer Quellenmonitor nicht nachgewiesen |
+| 4. Fund | Dokument/Artikel identifizieren, Herkunft, Aktualität und Quelle sichern; keine Dubletten | Fundstellenverwaltung nachgewiesen |
+| 5. Relevanz | Direkten oder mittelbaren Bezug, Belegbarkeit, Quellenrolle und Unsicherheit prüfen | Regeln vorhanden, automatische Prüfung nicht nachgewiesen |
+| 6. Ereignisentscheidung | Neues Ereignis, Fortschreibung oder nur ergänzende Information unterscheiden | Fachregel vorhanden; Ereignis-Redaktionseditor existiert |
+| 7. Zuordnung | Fundstelle einem oder mehreren Ereignissen zuordnen; Informationsbeitrag begründen | UI, Edge Functions und Tabellen nachgewiesen |
+| 8. Redaktion | Entscheidung, Daten, Sachstand und Verknüpfung nachvollziehbar bestätigen | Ereignisbearbeitung vorhanden; Umfang gesondert abzunehmen |
+| 9. Fortschreibung | Bestehende Ereignisse/Vorgänge quellenübergreifend aktualisieren, nicht aus jeder Quelle neue Meldung erzeugen | Fachlich vorgesehen; Regression #99 offen |
+| 10. Rückkopplung | Neue Quellen, Referenzobjekte, Suchbegriffe und neue Rechercheanlässe bestätigen | Fachlich vorgesehen, automatische Lernschleife nicht belegt |
+
+**FIB-RECH-ABLAUF-001:** Neue Fundstelle, neues Ereignis und neue Meldung sind **drei verschiedene** fachliche Entscheidungen. Mehrere Fundstellen können dasselbe Ereignis ergänzen; eine neue Quelle allein rechtfertigt keine neue Meldung. Bei wesentlicher neuer Sachinformation wird zunächst die Fortschreibung eines bestehenden Ereignisses und Vorgangs geprüft.
 
 ## 3.1 Zweck der Recherche
 
@@ -223,6 +248,7 @@ Die folgenden Befunde wurden **direkt über die Supabase-Projektverwaltung und e
 
 | Version | Datum | Änderung |
 |---|---|---|
+| 0.6 | 22.10.2026 | Fachlicher Rechercheablauf und Grenze zur bereits realisierten Ereignisbearbeitung ergänzt; Quellenabgleich läuft weiter. |
 | 0.5 | 22.10.2026 | Read-only-Abgleich der Shared-Apps-Tabellen und tatsächlich aktiven Edge Functions; Soll/Ist-Rechercheprozess abgegrenzt. |
 | 0.4 | 22.10.2026 | Regeln zu Referenzwissen, drei Referenzrahmen-Ebenen, Dokumentenrechten sowie versionierter Regelverwaltung und zweistufigen Regeltests übernommen. |
 | 0.3 | 22.10.2026 | Migrationen, Auditmodell, Fundstellenregeln und offene Regressionstest-Issues mit Implementierungsnachweisen inventarisiert. |
