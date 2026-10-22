@@ -72,7 +72,7 @@ Eine **Quelle** ist die Herkunft einer Information; die **Fundstelle** ist das k
 
 **FIB-RECH-FUND-002 – Begründete Zuordnung.** Eine redaktionell bestätigte Beziehung **Fundstelle ↔ Ereignis** besitzt eine nachvollziehbare Begründung ihres konkreten Informationsbeitrags. Während der Bearbeitung ist sie optional; vor Freigabe soll sie geprüft und bestätigt werden. Eine feste Klassifikation nach „Belegcharakter“ ist nicht erforderlich. KI kann Begründungen vorschlagen; die Redaktion entscheidet.
 
-Die konkrete Fundstellenbearbeitung, die Beziehungen zu Ereignissen und die Darstellung von Zuordnungen werden in [Kapitel 04 – Ereignisse und Meldungen](README.md) sowie im späteren redaktionellen Kapitel vertieft. Datenbankfelder und technische Rücknahme-/Wiederherstellungsfunktionen bleiben technische Detaildokumentation.
+Die konkrete Fundstellenbearbeitung, die Beziehungen zu Ereignissen und die Darstellung von Zuordnungen werden in dem noch anzulegenden **Kapitel 04 – Ereignisse und Meldungen** sowie im späteren redaktionellen Kapitel vertieft. Datenbankfelder und technische Rücknahme-/Wiederherstellungsfunktionen bleiben technische Detaildokumentation.
 
 ## 3.6 Relevanz, Reichweite und Qualitätskontrolle
 
