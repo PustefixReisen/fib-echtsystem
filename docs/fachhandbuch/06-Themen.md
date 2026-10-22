@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 2.4 – Konsolidierungsentwurf | 22.10.2026 | Projektverantwortung – erstellt mit KI-Unterstützung |
+| 2.5 – Konsolidierungsentwurf | 22.10.2026 | Projektverantwortung – erstellt mit KI-Unterstützung |
 
 > **Übernahmestatus:** Dieses Kapitel bündelt bereits beschlossene Fachregeln; während des Abgleichs bleiben die in [der Inventur](../Fachhandbuch-Inventur-2026-10-22.md) bezeichneten bisherigen Primärquellen verbindlich. Abweichungen und offene Fragen sind unten markiert. Erst die fachlich geprüfte vollständige Übernahme schaltet dieses Kapitel zur alleinigen Primärquelle.
 
@@ -144,7 +144,7 @@ Die Regeln zu Zustandsübergängen sind **fachliche Plausibilitäts- und Geschä
 
 ### 6.6.1 Thema: Zustände, Übergänge und Rechte
 
-### Übersicht: Themenstatus und Berechtigungen
+### Übersicht: Themenstatus-Übergänge
 
 Die Tabellen stehen bewusst **vor** den erläuternden Regeln. Sie sind eine fachliche Orientierung, keine Behauptung über bereits implementierte Serverprüfungen.
 
@@ -161,14 +161,6 @@ Die Tabellen stehen bewusst **vor** den erläuternden Regeln. Sie sind eine fach
 | Archiviert, früher freigegeben | **Aktiv** | Ausnahme-Wiederaufnahme, ausdrückliche Bestätigung, Aktualitätsprüfung |
 | Archiviert | **Zurückgestellt** | **Kein regulärer Übergang** |
 | Noch nie veröffentlicht und keine wirksame Freigabe | **Löschen** | Sicherheitsabfrage; referenzierte Vorgänge und Ereignisse bleiben erhalten |
-
-| Aktion | Redakteur | Administrator |
-|---|---|---|
-| Thema anlegen | Ja | Ja |
-| Entwurf / aktives Thema zurückstellen oder archivieren | Ja | Ja |
-| Zurückgestelltes Thema archivieren oder wiederaufnehmen | Ja | Ja |
-| Archiviertes Thema wiederaufnehmen | Ja, mit ausdrücklicher Bestätigung | Ja, mit ausdrücklicher Bestätigung |
-| Fachlich zulässigen Entwurf löschen | Ja, mit Sicherheitsabfrage | Ja, mit Sicherheitsabfrage |
 
 ### Übersicht: Berechtigungen über alle Themenobjekte
 
@@ -199,7 +191,7 @@ Die Federführung begründet keine exklusiven Änderungsrechte. Für alle fachli
 
 **FIB-THEMA-STATUS-007 – Wiederaufnahme aus dem Archiv.** Der direkte Übergang **Archiviert → Zurückgestellt** wird **nicht** als reguläre Aktion angeboten. Bei früher bereits freigegebenen archivierten Themen erfolgt die ausdrücklich bestätigte, dokumentierte Wiederaufnahme nach **Aktiv** unter den in FIB-THEMA-STATUS-003 festgelegten Aktualitätsbedingungen. Ein **noch nie freigegebener archivierter Entwurf** wird dagegen ausdrücklich in den Status **Entwurf** wiederaufgenommen; erst seine erste Beitragsfreigabe führt ihn nach Aktiv.
 
-Diese zusätzlichen Übergänge sind **fachlich beschlossen**. Die Berechtigungen und technische Umsetzung werden noch getrennt geprüft.
+Diese zusätzlichen Übergänge und die fachlichen Berechtigungen sind **beschlossen**. Die technische Umsetzung und Prüfung gegen bestehende Rollenrechte stehen noch aus.
 
 
 ### 6.6.2 Lokale Beziehung: Zustände und Übergänge
@@ -346,7 +338,7 @@ Besucher sollen neben der Leitfrage und dem Feldkirchen-Bezug die prägenden Vor
 
 - **Vorhandene Altquellen:** [Begriffe.md](../Begriffe.md) und [Fachentwurf](../Fachentwurf-Themenbearbeitung-2026-10-20.md) führen die Vier-Status-Entscheidung noch als offen. Das ist eine **veraltete Formulierung**, keine aktuelle fünfte Statusoption. Bereinigung nach Übernahmeprüfung.
 - **Abgelehnte Kandidaten:** Die sechs bereits beschlossenen Ablehnungsgrund-Kategorien stehen in [Issue #149](https://github.com/PustefixReisen/fib-echtsystem/issues/149). Ob und wie sie für alle Statuswechsel und direkte Ereignisbezüge gelten, benötigt beim Einbau der ergänzenden Einzelereignisse noch technische und fachliche Abnahme.
-- **Statusübergangsmatrix:** Welche Übergänge für einen Bezug ohne Zusatzbegründung zulässig sind und wann neue Belege zwingend erforderlich sind, bedarf eines eigenen geprüften Regelabschnitts; hier wird keine neue Entscheidung vorweggenommen.
+- **Detailbedingungen der Bezugsübergänge:** Die vereinbarten Übergänge stehen verbindlich in §6.6.2. Noch zu prüfen sind die vollständig zugeordneten Ablehnungsgrund-Kategorien, Zusatzbelege und serverseitigen Prüffälle; dies ändert die beschlossene Matrix nicht.
 - **KI-Folgeprüfungen:** Ereignisgesteuerte und monatliche, modellunabhängig versionierte Bedeutungsprüfung gemäß Issue #149 ist beschlossenes Ziel, aber nicht mit einer bereits produktiv laufenden Automatisierung gleichzusetzen.
 - **K0-Ausspielung:** Die technisch vorgesehene Veröffentlichung darf nicht als bereits aktiv bereitstehender öffentlicher Publikationsweg dargestellt werden.
 
@@ -397,6 +389,7 @@ Die Kapitelversion bleibt ein **Konsolidierungsentwurf**. Dieser Quellenabgleich
 
 | Version | Datum | Änderung |
 |---|---|---|
+| 2.5 | 22.10.2026 | Abschließender Tabellen-/Regelabgleich: doppelte Rechteübersicht entfernt, Altformulierungen präzisiert, verbleibende Kapitelgrenzen offen. |
 | 2.4 | 22.10.2026 | Reguläre Rechte von Redaktion und Administration vereinheitlicht; nur administrative Sperraufhebung ausgenommen. |
 | 2.3 | 22.10.2026 | Sonderfall archivierter, nie freigegebener Entwürfe fachlich bestätigt: Wiederaufnahme nach Entwurf. |
 | 2.2 | 22.10.2026 | Konsistenzprüfung der Beitragserfassung; veraltete offene Verweise aktualisiert und übergreifende Objektsperre an Datenmodell §20.4 rückgebunden. |
