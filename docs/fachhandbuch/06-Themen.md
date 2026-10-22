@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 2.2 – Konsolidierungsentwurf | 22.10.2026 | Projektverantwortung – erstellt mit KI-Unterstützung |
+| 2.3 – Konsolidierungsentwurf | 22.10.2026 | Projektverantwortung – erstellt mit KI-Unterstützung |
 
 > **Übernahmestatus:** Dieses Kapitel bündelt bereits beschlossene Fachregeln; während des Abgleichs bleiben die in [der Inventur](../Fachhandbuch-Inventur-2026-10-22.md) bezeichneten bisherigen Primärquellen verbindlich. Abweichungen und offene Fragen sind unten markiert. Erst die fachlich geprüfte vollständige Übernahme schaltet dieses Kapitel zur alleinigen Primärquelle.
 
@@ -157,7 +157,8 @@ Die Tabellen stehen bewusst **vor** den erläuternden Regeln. Sie sind eine fach
 | Aktiv | **Zurückgestellt** oder **Archiviert** | Redaktionelle Entscheidung; öffentliche Sichtbarkeit endet |
 | Zurückgestellt | **Archiviert** | Redaktionelle Entscheidung |
 | Zurückgestellt | **Aktiv** | Redaktionelle Wiederaufnahme und Aktualitätsprüfung |
-| Archiviert | **Aktiv** | Ausnahme-Wiederaufnahme, ausdrückliche Bestätigung, Aktualitätsprüfung |
+| Archiviert, noch nie freigegeben | **Entwurf** | Ausdrückliche Wiederaufnahmebestätigung; noch keine Beitragsfreigabe |
+| Archiviert, früher freigegeben | **Aktiv** | Ausnahme-Wiederaufnahme, ausdrückliche Bestätigung, Aktualitätsprüfung |
 | Archiviert | **Zurückgestellt** | **Kein regulärer Übergang** |
 | Noch nie veröffentlicht und keine wirksame Freigabe | **Löschen** | Sicherheitsabfrage; referenzierte Vorgänge und Ereignisse bleiben erhalten |
 
@@ -171,7 +172,7 @@ Die Tabellen stehen bewusst **vor** den erläuternden Regeln. Sie sind eine fach
 
 **FIB-THEMA-RECHTE-001 – Redaktionelle Eigenverantwortung.** Redakteure und Administratoren dürfen die in der Übersicht genannten Themenstatus-Aktionen ausführen. Die **Federführung** ist keine exklusive Bearbeitungsberechtigung. Für Freigabe, Publikation, Löschung und ausnahmsweise Wiederaufnahme gelten die jeweils zusätzlichen fachlichen Bedingungen. Die konkreten serverseitigen Rollen- und Zustandsprüfungen bleiben Teil der technischen Abnahme.
 
-**Offener Sonderfall:** Bei einem archivierten, noch nie freigegebenen Entwurf ist das Verhältnis zwischen Wiederaufnahme nach Aktiv und erstmaliger Beitragsfreigabe noch fachlich abzugleichen; keine zusätzliche Übergangsregel stillschweigend voraussetzen.
+**Geklärter Sonderfall:** Ein archivierter, noch nie freigegebener Entwurf wird bei Wiederaufnahme wieder **Entwurf**, nicht Aktiv. Erst die erste Beitragsfreigabe macht ihn Aktiv.
 
 ### Gemeinsam bestätigte zusätzliche Themenübergänge (22.10.2026)
 
@@ -179,7 +180,7 @@ Die Tabellen stehen bewusst **vor** den erläuternden Regeln. Sie sind eine fach
 
 **FIB-THEMA-STATUS-006 – Archivierung nach Zurückstellung.** Ein **Zurückgestelltes** Thema darf unmittelbar **Archiviert** werden. Der Zwischenzustand Aktiv ist dafür nicht erforderlich.
 
-**FIB-THEMA-STATUS-007 – Wiederaufnahme aus dem Archiv.** Der direkte Übergang **Archiviert → Zurückgestellt** wird **nicht** als reguläre Aktion angeboten. Bei erneuter Bearbeitung erfolgt die ausdrücklich bestätigte, dokumentierte Wiederaufnahme nach **Aktiv** unter den bereits in FIB-THEMA-STATUS-003 festgelegten Aktualitätsbedingungen. Für nie freigegebene archivierte Entwürfe muss die genaue Wiederaufnahme-Semantik noch gesondert gegen die Bedingung „erste Freigabe aktiviert den Entwurf“ geprüft werden; daraus wird hier kein neuer Übergang erfunden.
+**FIB-THEMA-STATUS-007 – Wiederaufnahme aus dem Archiv.** Der direkte Übergang **Archiviert → Zurückgestellt** wird **nicht** als reguläre Aktion angeboten. Bei früher bereits freigegebenen archivierten Themen erfolgt die ausdrücklich bestätigte, dokumentierte Wiederaufnahme nach **Aktiv** unter den in FIB-THEMA-STATUS-003 festgelegten Aktualitätsbedingungen. Ein **noch nie freigegebener archivierter Entwurf** wird dagegen ausdrücklich in den Status **Entwurf** wiederaufgenommen; erst seine erste Beitragsfreigabe führt ihn nach Aktiv.
 
 Diese zusätzlichen Übergänge sind **fachlich beschlossen**. Die Berechtigungen und technische Umsetzung werden noch getrennt geprüft.
 
@@ -379,6 +380,7 @@ Die Kapitelversion bleibt ein **Konsolidierungsentwurf**. Dieser Quellenabgleich
 
 | Version | Datum | Änderung |
 |---|---|---|
+| 2.3 | 22.10.2026 | Sonderfall archivierter, nie freigegebener Entwürfe fachlich bestätigt: Wiederaufnahme nach Entwurf. |
 | 2.2 | 22.10.2026 | Konsistenzprüfung der Beitragserfassung; veraltete offene Verweise aktualisiert und übergreifende Objektsperre an Datenmodell §20.4 rückgebunden. |
 | 2.1 | 22.10.2026 | Anzeige aktiver Objektsperren in der Karte Redaktionelle Koordination ergänzt; Federführung getrennt. |
 | 2.0 | 22.10.2026 | Vereinbartes pessimistisches Objektsperrprinzip für die Beitragserfassung klargestellt. |
