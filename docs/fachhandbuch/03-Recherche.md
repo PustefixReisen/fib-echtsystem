@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 0.4 – Konsolidierungsentwurf | 22.10.2026 | Projektverantwortung – erstellt mit KI-Unterstützung |
+| 0.5 – Konsolidierungsentwurf | 22.10.2026 | Projektverantwortung – erstellt mit KI-Unterstützung |
 
 > **Übernahmestatus:** Dieser Entwurf bündelt bereits beschlossene fachliche Grundregeln. Die bisherigen Primärquellen bleiben bis zum vollständigen abschnittsbezogenen Quellenabgleich maßgeblich. Technische Schnittstellen und tatsächliche Implementierung werden hier nicht als abgeschlossen dargestellt.
 
@@ -190,6 +190,24 @@ Die Primärquellen werden abschnittsweise weiter abgeglichen; zusätzlich fließ
 
 **Implementierungsgrenze:** Diese Regeln sind aus den bestehenden Primärquellen übernommen. Die vollständige operative Umsetzung von Referenzobjekten, Uploads, Versionsregelverwaltung und Testläufen ist **nicht** durch die bisher ausgewerteten Edge Functions nachgewiesen. Historische Quellen bleiben bis zu ihrer vollständigen Übernahme gültig.
 
+## 3.12 Lesender Live-Abgleich Shared-Apps (22.10.2026)
+
+Die folgenden Befunde wurden **direkt über die Supabase-Projektverwaltung und eine ausschließlich lesende Datenbankabfrage** des Projekts `Shared-Apps` erhoben. Es wurden keine Daten, Berechtigungen oder Funktionen verändert.
+
+| Nachweis | Befund |
+|---|---|
+| FIB-Datenbanktabellen | `fib.sources`, `fib.findings`, `fib.event_findings` und die drei zugehörigen Audit-Tabellen existieren tatsächlich. |
+| Tabellenbestand (ungefähre vom Dienst gemeldete Zeilenzahlen) | Quellen **3**, Fundstellen **13**, Beziehungen Fundstelle–Ereignis **14**, Aufhebungslogs **7**, Begründungslogs **7**, Metadatenlogs **2**. Diese Werte sind eine Momentaufnahme, keine fachliche Vollständigkeitsprüfung der Datensätze. |
+| Weitere Fachobjekte im Schema `fib` | Ereignisse, Vorgänge, Themen und redaktionelle Koordination sowie Versions-/Publikationsstrukturen sind vorhanden. |
+| Ausgerollte Funktionen | `fib-get-event` **ACTIVE, Version 13**; `fib-editorial-write` **ACTIVE, Version 8**; `fib-coordination` **ACTIVE, Version 2**. Weitere aktive Funktionen im selben Projekt sind `fib-topic-editor`, `fib-session-context`, `fib-admin-users` und `fib-mehr-wissen`; diese sind nicht automatisch als Recherchemonitor zu klassifizieren. |
+| Beobachtungsaufträge, Rechercheläufe oder Quellenmonitor-Tabellen im `fib`-Schema | **Keine entsprechenden Tabellen gefunden** (Stand dieser Abfrage). |
+| Eigene Recherchemonitor-Edge-Function | **Nicht** in der Liste aktiver Supabase-Edge-Functions gefunden. |
+| `cron.job` | Keine Tabelle mit diesem Namen in der abgefragten Systemmetadatenliste gefunden. Das schließt externe Scheduler oder Workflows nicht aus. |
+
+**Bewertung:** Die **redaktionelle Verwaltung bereits vorhandener Fundstellen** besitzt nachweisbare persistente und ausgerollte Bausteine. Die fachlich beschlossene **automatische Beobachtung und offene Quellenentdeckung** ist dagegen noch **nicht als Ende-zu-Ende-Recherchefunktion nachgewiesen**. Der Abgleich erhebt ausdrücklich **keinen Anspruch**, externe Dienste, alle anderen Schemas, Deployment-Inhalte, Cron-/Worker-Konfigurationen und Benutzeroberfläche durch Funktionstests vollständig verifiziert zu haben.
+
+**Offene Nachweise für eine spätere technische Abnahme:** Konkrete ausgeführte Funktionsversionen gegen den GitHub-Stand vergleichen; vorhandene externe Cron/CI/IONOS/Workflow-Aufträge untersuchen; Laufprotokolle, Regelstandsbezug, Quellenabdeckung, Fehlermeldungen und Regressionstests der Fälle #4, #77 und #99 nachweisen.
+
 ## Übernahmematrix
 
 | Bisherige Quelle | In dieser Fassung berücksichtigt | Noch zu übernehmen oder abzugleichen |
@@ -205,6 +223,7 @@ Die Primärquellen werden abschnittsweise weiter abgeglichen; zusätzlich fließ
 
 | Version | Datum | Änderung |
 |---|---|---|
+| 0.5 | 22.10.2026 | Read-only-Abgleich der Shared-Apps-Tabellen und tatsächlich aktiven Edge Functions; Soll/Ist-Rechercheprozess abgegrenzt. |
 | 0.4 | 22.10.2026 | Regeln zu Referenzwissen, drei Referenzrahmen-Ebenen, Dokumentenrechten sowie versionierter Regelverwaltung und zweistufigen Regeltests übernommen. |
 | 0.3 | 22.10.2026 | Migrationen, Auditmodell, Fundstellenregeln und offene Regressionstest-Issues mit Implementierungsnachweisen inventarisiert. |
 | 0.2 | 22.10.2026 | Gestaffelte Recherche-/Relevanzregeln und Rückblick ergänzt; geprüfte vorhandene Fundstellenfunktionen und fehlende Automatiknachweise nachvollziehbar voneinander getrennt. |
