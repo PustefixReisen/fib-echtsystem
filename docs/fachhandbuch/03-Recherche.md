@@ -4,9 +4,52 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 0.5 – Konsolidierungsentwurf | 22.10.2026 | Projektverantwortung – erstellt mit KI-Unterstützung |
+| 0.6 – Konsolidierungsentwurf | 22.10.2026 | Projektverantwortung – erstellt mit KI-Unterstützung |
 
 > **Übernahmestatus:** Dieser Entwurf bündelt bereits beschlossene fachliche Grundregeln. Die bisherigen Primärquellen bleiben bis zum vollständigen abschnittsbezogenen Quellenabgleich maßgeblich. Technische Schnittstellen und tatsächliche Implementierung werden hier nicht als abgeschlossen dargestellt.
+
+## Leseführung: Fachobjekte und Ablauf
+
+**Fachlicher Zusammenhang:** Ein Beobachtungsauftrag (optional) löst einen Recherchelauf aus. Dieser prüft Quellen und identifiziert Fundstellen. Fundstellen werden anhand von Quellenqualität und FIB-Relevanz bewertet und gegebenenfalls einem neuen oder bestehenden Ereignis zugeordnet. Ereignisse werden redaktionell geprüft und können Vorgänge und Themen fortschreiben. Die offene Recherche kann Rechercheläufe auch **ohne** Beobachtungsauftrag auslösen.
+
+**Fachobjekte:** Beobachtungsauftrag → Recherchelauf → Quelle/Fundstelle → Zuordnung Fundstelle–Ereignis → Ereignis. Referenzobjekte, Recherche-/Relevanzregeln und KI-Aufträge sind unterstützende, aber getrennte Fachobjekte.
+
+**Kapitelgrenze:** Recherche und Quellenanalyse bilden den Kern dieses Kapitels. Ereigniserfassung, die Bearbeitung bestehender Ereignisse und ihre Meldungen gehören als umfassendes Fachmodell in **Kapitel 04**. Hier wird die fachliche Übergabe beschrieben und die bereits implementierte Ereignisbearbeitung als Ist-Stand berücksichtigt. Ein bereits vorhandener Ereigniseditor beweist noch keinen automatischen Quellenmonitor.
+
+### Fachlicher End-to-End-Ablauf
+
+| Schritt | Soll-Leistung | Bisheriger Nachweis |
+|---|---|---|
+| 1. Anlass | Offene Suche, Pflichtquellenänderung, Beobachtungsauftrag oder manueller Fund | Fachlich beschrieben; keine durchgängige Automatik nachgewiesen |
+| 2. Kontext | Feldkirchen, dynamischer Recherchehorizont, Quellen, Referenzwissen und versionierte Regeln | Fachkonzept vorhanden |
+| 3. Entdeckung | Bekannte Quellen direkt überwachen und zusätzliche Quellen offen suchen | Automatischer Quellenmonitor nicht nachgewiesen |
+| 4. Fund | Dokument/Artikel identifizieren, Herkunft, Aktualität und Quelle sichern; keine Dubletten | Fundstellenverwaltung nachgewiesen |
+| 5. Relevanz | Direkten oder mittelbaren Bezug, Belegbarkeit, Quellenrolle und Unsicherheit prüfen | Regeln vorhanden, automatische Prüfung nicht nachgewiesen |
+| 6. Ereignisentscheidung | Neues Ereignis, Fortschreibung oder nur ergänzende Information unterscheiden | Fachregel vorhanden; Ereignis-Redaktionseditor existiert |
+| 7. Zuordnung | Fundstelle einem oder mehreren Ereignissen zuordnen; Informationsbeitrag begründen | UI, Edge Functions und Tabellen nachgewiesen |
+| 8. Redaktion | Entscheidung, Daten, Sachstand und Verknüpfung nachvollziehbar bestätigen | Ereignisbearbeitung vorhanden; Umfang gesondert abzunehmen |
+| 9. Fortschreibung | Bestehende Ereignisse/Vorgänge quellenübergreifend aktualisieren, nicht aus jeder Quelle neue Meldung erzeugen | Fachlich vorgesehen; Regression #99 offen |
+| 10. Rückkopplung | Neue Quellen, Referenzobjekte, Suchbegriffe und neue Rechercheanlässe bestätigen | Fachlich vorgesehen, automatische Lernschleife nicht belegt |
+
+**FIB-RECH-ABLAUF-001:** Neue Fundstelle, neues Ereignis und neue Meldung sind **drei verschiedene** fachliche Entscheidungen. Mehrere Fundstellen können dasselbe Ereignis ergänzen; eine neue Quelle allein rechtfertigt keine neue Meldung. Bei wesentlicher neuer Sachinformation wird zunächst die Fortschreibung eines bestehenden Ereignisses und Vorgangs geprüft.
+
+### Fachobjekte – fachliche Profile
+
+**Beobachtungsauftrag.** Beschreibt eine konkrete, länger zu verfolgende Frage zu **genau einem** Vorgang, Thema oder einer Wissenslücke. Enthält Primärbezug, Frage, Grund, Herkunft, Status und Historie; optionale Wiedervorlage. Die Zustände sind Aktiv, Pausiert und Beendet. Eine Pause/Beendigung verlangt redaktionelle Begründung. **Keine festgeschriebenen Suchwörter** und **kein** ausgeführter Lauf. Implementierung der Objektverwaltung derzeit nicht nachgewiesen.
+
+**Recherchelauf.** Konkrete Suche mit Startgrund, Zeitpunkt, Kontext, versioniertem Regelstand, Ergebnis, neu/erneut erkannten Fundstellen und protokollierten Fehlern. Kann aus Beobachtungsauftrag, offener Recherche, manueller Anweisung oder einem Rückblick entstehen. Ein Ereignis behält seine Belegkette über die Fundstelle zum Lauf, nicht durch eine künstliche direkte Abhängigkeit von einem Beobachtungsauftrag. Automatisierte Laufverwaltung derzeit nicht nachgewiesen.
+
+**Quelle.** Bestimmbare Herkunft einer Information (z. B. Gemeinde, RIS, Zeitung, Initiative, Fachquelle oder interne Datei), mit Namen, Quellenrolle, Herkunft, Zugang, Beobachtungsart sowie Eigenschaft als Pflicht- oder kontextabhängige Quelle. Die tatsächliche Zugänglichkeit ist vom Nutzungsrecht zur Veröffentlichung über FIB getrennt. `fib.sources` ist vorhanden.
+
+**Fundstelle.** Konkretes Dokument, Artikel oder eindeutig identifizierbarer Inhalt aus einer Quelle; erfordert erkennbare Herkunft, Titel, Fundort und relevante Zeitangaben. Ein technischer Quellenabruf ist nicht selbst ein bestätigtes Ereignis. Nicht relevante Funde bleiben für Regressionstests erhalten. `fib.findings` ist vorhanden; automatisches Finden bisher nicht nachgewiesen.
+
+**Fundstellenzuordnung.** Eigenständige Beziehung zwischen Fundstelle und Ereignis; dieselbe Fundstelle darf mehreren Ereignissen dienen. Die fachliche Begründung benennt den konkreten Informationsbeitrag und ist von technischen `note`- und `evidence_role`-Feldern getrennt. Entfernen einer Beziehung löscht nicht die Fundstelle. Redaktionelle UI-, Edge-Function- und Audit-Bausteine sind vorhanden.
+
+**Referenzobjekt.** Dauerhafte Identität eines Ortes, Gebiets, Straßenzugs, Infrastruktur- oder Projektbezugs mit Hauptname, Aliasnamen, Typ, Herkunft und zweckmäßigen Relationen. Zeitabhängige Sachstände gehören in Ereignisse/Vorgänge. Es hilft bei der Erkennung räumlicher Verbindungen, etwa der Trasse eines Radschnellwegs. Fachmodell vorhanden, operative Objektverwaltung nicht nachgewiesen.
+
+**Recherche-/Relevanzregel.** Fachlich freigegebene, versionierte Vorschrift für Entdeckung und Bewertung. Ein Regelentwurf wird mit bekannten Testfällen und neuer Probe-Recherche bewertet; erst danach erfolgt redaktionelle Aktivierung. Der für einen Lauf verwendete Regelstand muss rekonstruierbar sein. Operativer Datenbank-Regelbestand bisher nicht nachgewiesen.
+
+**Ereignis (Schnittstelle zu Kapitel 04).** Bestätigter sachlicher Vorgang zu einem Zeitpunkt oder Zeitraum; kann mehrere Fundstellen und spätere Änderungen aufweisen. Die KI schlägt neue Ereignisse oder die Fortschreibung vorhandener Ereignisse vor, die Redaktion entscheidet. Die bereits implementierte Ereigniserfassung umfasst Bearbeitung und Fundstellenzuordnung. **Details zu Ereignis- und Meldungsstatus, Freigabe und Versionierung sind in Kapitel 04 zu konsolidieren**, statt als konkurrierende Spezialregeln hier festgelegt zu werden.
 
 ## 3.1 Zweck der Recherche
 
@@ -208,6 +251,34 @@ Die folgenden Befunde wurden **direkt über die Supabase-Projektverwaltung und e
 
 **Offene Nachweise für eine spätere technische Abnahme:** Konkrete ausgeführte Funktionsversionen gegen den GitHub-Stand vergleichen; vorhandene externe Cron/CI/IONOS/Workflow-Aufträge untersuchen; Laufprotokolle, Regelstandsbezug, Quellenabdeckung, Fehlermeldungen und Regressionstests der Fälle #4, #77 und #99 nachweisen.
 
+## Quellenabgleich nach Fachabschnitten (22.10.2026)
+
+Diese Tabelle ist der **Abschluss der ersten abschnittsbezogenen Inventur der fünf unmittelbar rechercherelevanten Primärquellen**. „Zugeordnet“ bedeutet in der aktuellen Fassung: wesentliche Fachregel in diesem Kapitel beschrieben oder bewusst einem anderen Kapitel zugewiesen; kein Nachweis, dass Implementierung oder alle weiteren fachübergreifenden Quellen vollständig geprüft wurden.
+
+| Primärquelle / Abschnitte | Fachlicher Zielbereich | Zuordnung |
+|---|---|---|
+| Recherchearchitektur §§1–5 | Zweck, Recherchekontext, Beobachtungsauftrag | Kapitel 03 §§3.1–3.4 |
+| Recherchearchitektur §6 | Referenzobjekte, Aliase und Relationen | Fachobjekte, §3.11; Nachweis der Objektverwaltung offen |
+| Recherchearchitektur §§7–9 | offener Horizont, Lernschleife, Recherchebreite | §§3.2, 3.6, 3.11 |
+| Recherchearchitektur §§10–13 | Referenzrahmen, Transparenz, KI | §3.11; Qualitätsregeln zusätzlich Kapitel 10, öffentliche Darstellung Kapitel 09 |
+| Recherchearchitektur §14 | Fach-/Technikmodell-Folgen | §3.12; technischer Datenmodellabgleich separat |
+| Quellenmonitor §§1–6 | Quellenwege, Pflichtquellen, offene Entdeckung | §3.3, Fachobjekte, Ablauf |
+| Quellenmonitor §§7–8 | eingebrachte Quellen, technische Erkennung | §3.11; Speicher-/Rechteumsetzung separat |
+| Quellenmonitor §§9–11 | Stufen, Relevanz, Rückblick, Medien/Akteure | §3.6 |
+| Quellenmonitor §§12–15 | Kandidatenprüfung, Fehler, KI-Qualität | §§3.5–3.7, Schnittstelle zu Kapitel 04 |
+| Quellenmonitor „Regelverwaltung“ | Testarten, Versionsprüfung | §3.11 |
+| Beobachtungs-/Recherchemodell §§1–3 | Auftrag, Primärbezug, Status | §3.4, Fachobjekte |
+| Beobachtungs-/Recherchemodell §§4–7 und „Regelstand“ | Lauf, Provenienz, KI-Task, Historie, Tests | §§3.4, 3.11; technische Nachweise separat |
+| KI-Leitfaden §§5–6 | Quellenrollen, vierteilige Orts-/Relevanzprüfung | §§3.3, 3.6; ausdrücklich ohne politische Quellenverengung |
+| KI-Leitfaden §7 | Neuer Sachverhalt vs. Fortschreibung/Meldung | End-to-End-Ablauf, führende Detailregel in Kapitel 04 |
+| Fundstellenzuordnung-Begruendung.md | Beziehung/Begründung, Audit, UI-Grenze | §3.5 und Fachobjekte; redaktioneller Ablauf in Kapitel 04/08 |
+
+**Noch kein endgültiger Vollständigkeitsnachweis aller Projektentscheidungen:** Weitere fachlich relevante Abschnitte von `Datenmodell.md`, `Fachkonzept.md`, `KI-Leitfaden.md`, UI-/Workflow-Spezifikationen und neueren Issues können zusätzliche Regeln enthalten. Dieser restliche **quellenübergreifende Abgleich**, die technische Abnahme und die gemeinsame **inhaltliche Freigabe** bleiben offen. Das Kapitel darf daher noch nicht alleinige Primärquelle werden.
+
+### Fachkonzept und Implementierung gemeinsam fortentwickeln
+
+**FIB-RECH-GOV-001 – Fachliche Mitentscheidung bei fehlenden Funktionen.** Für noch nicht implementierte Komponenten gilt nicht „erst vollständig vorab spezifizieren, dann blind programmieren“. Die Entwicklung konkretisiert das Fachkonzept in fachlich prüfbaren Schritten. Jede neue fachliche Entscheidung wird **vor oder mit ihrer Implementierung** im führenden Fachhandbuch mit Regelkennung, Auswirkungen, Status-/Rechte-/Ablaufprüfung und gegebenenfalls Testfall festgehalten. Technische Detailwahl darf keine neue fachliche Regel ohne Abstimmung etablieren. Ein Entwicklungsissue ist erst abschließbar, nachdem die Dokumentationsfolgen geprüft und nötige Aktualisierungen erfolgt sind.
+
 ## Übernahmematrix
 
 | Bisherige Quelle | In dieser Fassung berücksichtigt | Noch zu übernehmen oder abzugleichen |
@@ -223,6 +294,7 @@ Die folgenden Befunde wurden **direkt über die Supabase-Projektverwaltung und e
 
 | Version | Datum | Änderung |
 |---|---|---|
+| 0.6 | 22.10.2026 | Fachlicher Rechercheablauf und Grenze zur bereits realisierten Ereignisbearbeitung ergänzt; Quellenabgleich läuft weiter. |
 | 0.5 | 22.10.2026 | Read-only-Abgleich der Shared-Apps-Tabellen und tatsächlich aktiven Edge Functions; Soll/Ist-Rechercheprozess abgegrenzt. |
 | 0.4 | 22.10.2026 | Regeln zu Referenzwissen, drei Referenzrahmen-Ebenen, Dokumentenrechten sowie versionierter Regelverwaltung und zweistufigen Regeltests übernommen. |
 | 0.3 | 22.10.2026 | Migrationen, Auditmodell, Fundstellenregeln und offene Regressionstest-Issues mit Implementierungsnachweisen inventarisiert. |
