@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 0.9 – Konsolidierungsentwurf | 22.10.2026 | Projektverantwortung – erstellt mit KI-Unterstützung |
+| 1.0 – Konsolidierungsentwurf | 22.10.2026 | Projektverantwortung – erstellt mit KI-Unterstützung |
 
 > **Übernahmestatus:** Dieses Kapitel bündelt bereits beschlossene Fachregeln; während des Abgleichs bleiben die in [der Inventur](../Fachhandbuch-Inventur-2026-10-22.md) bezeichneten bisherigen Primärquellen verbindlich. Abweichungen und offene Fragen sind unten markiert. Erst die fachlich geprüfte vollständige Übernahme schaltet dieses Kapitel zur alleinigen Primärquelle.
 
@@ -244,6 +244,23 @@ Dieser Abschnitt erläutert bereits beschlossene Regeln, deren **technischer Rea
 
 Die fachliche Aussage zur Federführung und die beiden Versionierungsebenen wurden bereits im [Fachentwurf §7](../Fachentwurf-Themenbearbeitung-2026-10-20.md) mit [Datenmodell §4.6](../Datenmodell.md) abgeglichen. Die [Themen- und Vorgangslogik §10](../Themen-und-Vorgangslogik.md) benennt daneben technische Modellfolgen (Beziehungs- und Protokollstruktur, Analyseherkunft, Dublettenprüfung). Sie bleiben im Datenmodell beziehungsweise den technischen Entwicklungsaufgaben zu überprüfen und werden hier **nicht als bereits implementiert behauptet**.
 
+## 6.10 Ergebnis des Quellenabgleichs
+
+Der Abgleich mit Fachkonzept, Themen- und Vorgangslogik, Fachentwurf, Begriffsverzeichnis, Datenmodell und fachlichen Plausibilitätsregeln bestätigt die Grundstruktur. Noch nicht freigegeben ist jedoch die Ablösung dieser Altquellen.
+
+| Prüffeld | Befund | Ausstehender Nachweis |
+|---|---|---|
+| Thema und Vorgang | Grundabgrenzung und Kiesgrund-Ausnahme beschrieben | Gemeinsame fachliche Abnahme |
+| Zuordnungsstatus | Vier Zustände verbindlich; in Begriffe.md steht noch irreführend „KI-Vorschlag“ als Status | Altquelle erst nach Gesamtübernahme bereinigen |
+| Perspektiven und Wirkungen | Thema-Perspektive und ereignisverankerte Wirkung abgeglichen | Abgeleitetes Glossar später prüfen |
+| Thema und Beitrag | Eigenständiger Themenlebenszyklus, Gesamt- und Beitragsversion | Technische Zuordnung in Issue #153 nachweisen |
+| Veröffentlichung | Freigabe getrennt von Publikation, direkte Einsicht öffentlicher Fassung | Implementierung und Rechteprüfung in Issue #153 |
+| Statuswechsel | Harte Regeln versus semantische Prüfung unterschieden | Vollständige Aktionen-/Rechtematrix prüfen |
+| KI-Referenzwissen | Fachliche Zielsetzung erläutert | Speicherung und Abruf in Issue #183 |
+| Recherche und öffentliche Darstellung | Thema-bezogene Aussagen übernommen | Detailquellen in Kapitel 03 und 09 konsolidieren |
+
+Die Kapitelversion bleibt ein **Konsolidierungsentwurf**. Dieser Quellenabgleich ist keine Aussage, dass die technische Umsetzung bereits vollständig erfolgt ist.
+
 ## Übernahmematrix dieses Kapitels
 
 | Bestehende Quelle | Übernommene Bereiche | Noch zu prüfen |
@@ -253,12 +270,21 @@ Die fachliche Aussage zur Federführung und die beiden Versionierungsebenen wurd
 | `Fachentwurf-Themenbearbeitung-2026-10-20.md` | §§2–4, 8–9 | §7 zu Federführung/Versionierung aufgenommen; Berechtigungsdetails weiter abzugleichen |
 | `Begriffe.md` | lokale Bezüge, Bedeutung, Status | übrige Perspektiven- und Wirkungsdefinitionen |
 | `Datenmodell.md` | fachlicher Statusbezug, Gesamt-/Beitragsversionen | übrige fachliche Kardinalitäten, technische Versionierungsverknüpfung |
-| `Fachliche-Plausibilitaets-und-Freigaberegeln.md` | harte Invarianten und semantische Prüfungen | allgemeine Medienfreigaben gehören in andere Kapitel |\n| Issues #149/#164 | beschlossene Kandidaten-/Statusregeln | Wiederaufnahme- und Ablehnungsmatrix |
+| `Fachliche-Plausibilitaets-und-Freigaberegeln.md` | harte Invarianten und semantische Prüfungen | allgemeine Medienfreigaben gehören in andere Kapitel |
+| Issues #149/#164 | beschlossene Kandidaten-/Statusregeln | Wiederaufnahme- und Ablehnungsmatrix |
 
 ## Änderungshistorie
+
+| 1.0 | 22.10.2026 | Ergebnis des Altquellenabgleichs und offene Freigabekriterien dokumentiert. |
 
 | Version | Datum | Änderung |
 |---|---|---|
 | 0.9 | 22.10.2026 | Altquellen zur Unterscheidung blockierender Zustandsinvarianten und redaktioneller Plausibilitätsprüfungen abgeglichen. |
 | 0.8 | 22.10.2026 | Quellenabgleich für Federführung, zwei Versionierungsebenen und Modellfolgen ergänzt, ohne Implementierungsstand vorwegzunehmen. |
-| 0.7 | 22.10.2026 | Kiesgrund als besonders umfangreichen Vorgang und möglichen eigenständigen Themenkandidaten nach redaktioneller Entscheidung präzisiert. |\n| 0.6 | 22.10.2026 | Manuelle Themenanlage und KI-Suchanlässe abgegrenzt; Kiesgrund als übersehener Vorgang präzisiert; Kalibrierung als kontextgestützte Nutzung redaktioneller Entscheidungen mit offener Persistenz-/Laufzeitlücke beschrieben. |\n| 0.5 | 22.10.2026 | Fehlende Altabschnitte zu Themenentdeckung, Kiesgrund, KI-Kalibrierung und öffentlicher Darstellung eingeordnet; fachliche Zielkapitel abgegrenzt. |\n| 0.4 | 22.10.2026 | Neue Beitragsregeln zur unmittelbaren Anzeige des veröffentlichten Standes und Ausgangsbasis neuer Fassungen; Statusübergänge als Plausibilitätsregeln klassifiziert. |\n| 0.3 | 22.10.2026 | Perspektiven als erweiterbare Themenblickwinkel und Wirkungen als belegte/erwartete Ereignisfolgen erläutert; Status je Objekt statt Gesamtmatrix erklärt. |\n| 0.2 | 22.10.2026 | Fachliche Absicht und Wissensmodell erläutert; Statusdimensionen mit gemeinsamen Beispielen und Folgen erklärt. |\n| 0.1 | 22.10.2026 | Erste regelbasierte Zusammenführung des Themenbereichs, 13 Regelkennungen, Quellverweise und offene Abgleichpunkte. |
+| 0.7 | 22.10.2026 | Kiesgrund als besonders umfangreichen Vorgang und möglichen eigenständigen Themenkandidaten nach redaktioneller Entscheidung präzisiert. |
+| 0.6 | 22.10.2026 | Manuelle Themenanlage und KI-Suchanlässe abgegrenzt; Kiesgrund als übersehener Vorgang präzisiert; Kalibrierung als kontextgestützte Nutzung redaktioneller Entscheidungen mit offener Persistenz-/Laufzeitlücke beschrieben. |
+| 0.5 | 22.10.2026 | Fehlende Altabschnitte zu Themenentdeckung, Kiesgrund, KI-Kalibrierung und öffentlicher Darstellung eingeordnet; fachliche Zielkapitel abgegrenzt. |
+| 0.4 | 22.10.2026 | Neue Beitragsregeln zur unmittelbaren Anzeige des veröffentlichten Standes und Ausgangsbasis neuer Fassungen; Statusübergänge als Plausibilitätsregeln klassifiziert. |
+| 0.3 | 22.10.2026 | Perspektiven als erweiterbare Themenblickwinkel und Wirkungen als belegte/erwartete Ereignisfolgen erläutert; Status je Objekt statt Gesamtmatrix erklärt. |
+| 0.2 | 22.10.2026 | Fachliche Absicht und Wissensmodell erläutert; Statusdimensionen mit gemeinsamen Beispielen und Folgen erklärt. |
+| 0.1 | 22.10.2026 | Erste regelbasierte Zusammenführung des Themenbereichs, 13 Regelkennungen, Quellverweise und offene Abgleichpunkte. |
