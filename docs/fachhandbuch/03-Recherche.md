@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 0.3 – Konsolidierungsentwurf | 22.10.2026 | Projektverantwortung – erstellt mit KI-Unterstützung |
+| 0.4 – Konsolidierungsentwurf | 22.10.2026 | Projektverantwortung – erstellt mit KI-Unterstützung |
 
 > **Übernahmestatus:** Dieser Entwurf bündelt bereits beschlossene fachliche Grundregeln. Die bisherigen Primärquellen bleiben bis zum vollständigen abschnittsbezogenen Quellenabgleich maßgeblich. Technische Schnittstellen und tatsächliche Implementierung werden hier nicht als abgeschlossen dargestellt.
 
@@ -172,6 +172,24 @@ Die Primärquellen werden abschnittsweise weiter abgeglichen; zusätzlich fließ
 3. Vollständige Verknüpfung der Fachregeln aus `Recherchearchitektur-und-Referenzrahmen.md`, `Recherche-und-Quellenmonitor.md`, `Beobachtungs-und-Recherchemodell.md` sowie `KI-Leitfaden.md` abschnittsweise nachweisen.
 4. Tests für verspätete Indexierung, erweiterte/indirekte örtliche Relevanz, mehrere Quellen pro Sachverhalt, Fehlersituationen und Sechs-Monats-Rückblick anhand von Issues #4, #77 und #99 ergänzen.
 
+## 3.11 Ergänzende Fachregeln aus den bisherigen Recherche-Primärquellen
+
+**FIB-RECH-REF-001 – Stabile Referenzobjekte statt veränderlicher Sachstände.** Referenzwissen bildet langlebige Identitäten, Aliase und wiederholt nützliche Orts-, Infrastruktur-, Raum- und Akteursbeziehungen ab. Ein Referenzobjekt hat eine stabile Identität; seine alternative Bezeichnung ist kein neues Objekt. Aktuelle Planungsstände, Bewertungen, Wirkungen und Veränderungen gehören in Ereignisse, Vorgänge und andere zeitgebundene Fachobjekte. Referenzwissen ersetzt keinen öffentlichen Quellenbeleg.
+
+**FIB-RECH-REF-002 – Kleine, überprüfbare Beziehungstypologie.** Geeignete Referenzbeziehungen sind beispielsweise `ist Teil von`, `liegt in/an`, `verbindet`, `erschließt/versorgt` und `steht in funktionalem Zusammenhang mit`. Beziehungen sind gegebenenfalls gerichtet. Gespeichert werden sie nur, wenn sie für Suche, Erkennung oder Relevanzprüfung wiederholt hilfreich sind. Ihre Herkunft und redaktionelle Bestätigung müssen nachvollziehbar bleiben. Ein KI-Vorschlag ist keine Bestätigung.
+
+**FIB-RECH-REF-003 – Recherche erweitert ihren eigenen Kontext.** Ein neuer relevanter Fund kann neben Ereigniskandidaten auch neue Quellen, bestätigbares Referenzwissen und Erweiterungen des Recherchehorizonts vorschlagen. Für KI-Kandidaten sind Fachregelbezug, verständliche Begründung, Quellen, Unsicherheit und vorgeschlagener Anschluss an bestehende oder neue Objekte erkennbar zu machen. Die Redaktion entscheidet.
+
+**FIB-RECH-RAHMEN-001 – Drei getrennte Referenzrahmen-Ebenen.** Bei Recherche und Analyse sind allgemeine Quellen-/Qualitätsprinzipien, demokratisch-gesellschaftliche Maßstäbe und spezifisch grüne politische Werte sauber zu unterscheiden. Politische Erwartungen dürfen keine Tatsachenbasis verändern. Der grüne Referenzrahmen begründet insbesondere eine gesondert kenntliche „Unsere Einordnung“. Die fachliche Ausarbeitung der demokratisch-gesellschaftlichen Ebene ist in den Altquellen ausdrücklich noch offen und wird hier nicht stillschweigend als entschieden dargestellt.
+
+**FIB-RECH-QUELLE-004 – Redaktionell eingebrachte Dateien mit getrennten Nutzungsrechten.** FIB soll öffentliche URLs, hochgeladene Dokumente (insbesondere PDF) und Quellen ohne öffentliche URL entgegennehmen können. Der interne Speicher- und Erkenntniswert und die öffentliche Bereitstellungsbefugnis werden unabhängig behandelt. Eine Datei wird öffentlich nur bei positiv geklärtem Nutzungsrecht und bestätigter Freigabe bereitgestellt. Interne Quellen können Recherche auslösen, dürfen jedoch nicht als öffentlich zugängliche Belege dargestellt werden. Bei Folgerecherchen wird geprüft, ob dazu inzwischen öffentlich belegte Entwicklungen vorliegen.
+
+**FIB-RECH-REGEL-001 – Versionierte operative Recherche- und Relevanzregeln.** GitHub/Fachhandbuch beschreibt fachlich verbindliche Regeln; deren aktiver operativer Stand soll strukturiert und versioniert in FIB geführt und gezielt bei Rechercheläufen verwendet werden. Ein Änderungsentwurf wird auf Widersprüche geprüft, anhand positiver, negativer und Grenzfälle getestet und erst redaktionell bestätigt aktiviert. Zu jeder Recherche muss der maßgebliche Regelstand erkennbar sein.
+
+**FIB-RECH-REGEL-002 – Zwei verschiedene Regeltests.** Die **Bewertungswirkung** vergleicht alte und neue Entscheidungen über bekannte Fundstellen, auch ehemals als nicht relevant eingestufte. Die **Entdeckungswirkung** erfordert eine zusätzliche Probe-Recherche mit Differenz der alten und neuen Funde. Tests verändern keine regulären Fachobjekte und erzeugen keine normalen Redaktionsaufgaben. Der zweite Test ist nötig, weil eine Regel sonst neue Suchräume verfehlen kann, obwohl die Bewertung bekannter Funde plausibel erscheint.
+
+**Implementierungsgrenze:** Diese Regeln sind aus den bestehenden Primärquellen übernommen. Die vollständige operative Umsetzung von Referenzobjekten, Uploads, Versionsregelverwaltung und Testläufen ist **nicht** durch die bisher ausgewerteten Edge Functions nachgewiesen. Historische Quellen bleiben bis zu ihrer vollständigen Übernahme gültig.
+
 ## Übernahmematrix
 
 | Bisherige Quelle | In dieser Fassung berücksichtigt | Noch zu übernehmen oder abzugleichen |
@@ -187,6 +205,7 @@ Die Primärquellen werden abschnittsweise weiter abgeglichen; zusätzlich fließ
 
 | Version | Datum | Änderung |
 |---|---|---|
+| 0.4 | 22.10.2026 | Regeln zu Referenzwissen, drei Referenzrahmen-Ebenen, Dokumentenrechten sowie versionierter Regelverwaltung und zweistufigen Regeltests übernommen. |
 | 0.3 | 22.10.2026 | Migrationen, Auditmodell, Fundstellenregeln und offene Regressionstest-Issues mit Implementierungsnachweisen inventarisiert. |
 | 0.2 | 22.10.2026 | Gestaffelte Recherche-/Relevanzregeln und Rückblick ergänzt; geprüfte vorhandene Fundstellenfunktionen und fehlende Automatiknachweise nachvollziehbar voneinander getrennt. |
 | 0.1 | 22.10.2026 | Erster fachlicher Konsolidierungsentwurf zu Recherchewegen, Quellenmonitor, Beobachtungsauftrag und Recherchelauf. |
