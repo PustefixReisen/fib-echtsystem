@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 0.2 – Konsolidierungsentwurf | 22.10.2026 | Projektverantwortung – erstellt mit KI-Unterstützung |
+| 0.3 – Konsolidierungsentwurf | 22.10.2026 | Projektverantwortung – erstellt mit KI-Unterstützung |
 
 > **Übernahmestatus:** Dieser Entwurf bündelt bereits beschlossene fachliche Grundregeln. Die bisherigen Primärquellen bleiben bis zum vollständigen abschnittsbezogenen Quellenabgleich maßgeblich. Technische Schnittstellen und tatsächliche Implementierung werden hier nicht als abgeschlossen dargestellt.
 
@@ -138,6 +138,40 @@ Die SQL-Migrationen und der GitHub-Code belegen **eine vorhandene Implementierun
 
 Die Primärquellen werden abschnittsweise weiter abgeglichen; zusätzlich fließen Quellcode, Migrationen, Issues, Tests und später konkrete Deployments in die Ist-Analyse ein. Fachlich beschlossene Funktionen sind unabhängig von ihrem Umsetzungsstand vollständig zu dokumentieren.
 
+## 3.10 Vertiefte Bestandsaufnahme: Datenmodell, Testnachweise und Entwicklungsaufträge
+
+### Datenbankmigrationen und redaktionelle Fachfunktionen
+
+| Baustein | Fundstelle | Stand und Abgrenzung |
+|---|---|---|
+| Aufhebung einer Fundstelle-Ereignis-Beziehung | `supabase/migrations/20261014114500_event_finding_change_log.sql` | SQL-Migration mit Audit-Tabelle `fib.event_finding_change_log` vorhanden; Entfernung betrifft die **Beziehung**, nicht die Fundstelle selbst. |
+| Änderungen technischer Metadaten einer Zuordnung | `20261015120000_event_finding_metadata_log.sql` | Audit der bisherigen und neuen `evidence_role` und `note` in eigener Tabelle; dies ersetzt **keine** fachliche Begründung. |
+| Fachliche Zuordnungsbegründung | `20261015123000_finding_justification.sql` | Feld `fib.event_findings.justification` und Änderungslog definiert; Schreibaktion `update_finding_justification` in `fib-editorial-write` vorhanden. |
+| Schreibberechtigung und Sperrkonzept | `fib-editorial-write`, Redaktionsfrontend und [Datenmodell §20.4](../Datenmodell.md) | Vorhandene Bearbeitungsaktionen beachten das FIB-Sicherheits- und Koordinationsmodell; vollständige Ende-zu-Ende-Abnahme jeder Aktion ist davon getrennt. |
+
+**FIB-RECH-FUND-003 – Fundstelle versus Zuordnungsbeziehung.** Ein redaktionelles Entfernen der Beziehung einer Fundstelle zu einem Ereignis löscht **weder die Fundstelle als Wissensobjekt noch ihre übrigen Zuordnungen**. Die Aufhebung und die fachlich wesentlichen Änderungen bleiben nachvollziehbar. Bereits vereinbarte Wiederherstellungsmöglichkeiten sind gesondert auf tatsächliche Umsetzung zu prüfen.
+
+**FIB-RECH-FUND-004 – Separate fachliche Begründung.** Die redaktionelle `justification` beantwortet, welchen Informationsbeitrag die konkrete Fundstelle zum Ereignis liefert. Das technische Metadatenfeld `note` und die bisherige `evidence_role` bleiben getrennt; technische Importmetadaten dürfen die Begründung nicht überschreiben. Bei zu wenig Quelleninhalt muss ein KI-Vorschlag Unsicherheit kenntlich machen.
+
+### Offene, bereits erfasste Entwicklungsaufträge
+
+| Issue | Befund und fachlicher Testfall | Einordnung |
+|---|---|---|
+| [#4](https://github.com/PustefixReisen/fib-echtsystem/issues/4) | Neue Informationen nach dem Tageslauf, verspätete Suchmaschinenindexierung, noch nicht beobachtete Primärquellen – Beispiel PV-Anlage Aschheim/BENG | Quellenfrequenz, Nachlauf und belastbare Fehlerrückmeldung operativ nachweisen |
+| [#77](https://github.com/PustefixReisen/fib-echtsystem/issues/77) | Radschnellweg München–Markt Schwaben: räumliche/Trassenbezüge mit und ohne bestehendes Referenzobjekt erkennen | Regressionstest für direkte lokale Betroffenheit und offene Quellenentdeckung |
+| [#93](https://github.com/PustefixReisen/fib-echtsystem/issues/93) | Fundstellen-Livesuche, Mehrfachzuordnung, reine Lesezugriffe ohne Sperre, gezielte Sperrung bei Schreibaktion und getrennte Bewertungen | Fachlich beschlossen, Teile im UI und in Edge Functions vorhanden; Gesamtissue nicht mit Teilimplementierung verwechseln |
+| [#99](https://github.com/PustefixReisen/fib-echtsystem/issues/99) | Grundstückskauf/Haushaltsänderung: Übergang RIS-Vorlage → Ratsentscheidung → Pressebeitrag wiedererkennen, bestehenden Vorgang fortschreiben | Regressionstest zur **quellenübergreifenden Fortschreibung**, nicht nur Ersterkennung |
+| [#149](https://github.com/PustefixReisen/fib-echtsystem/issues/149) | KI-Kandidaten und Überprüfung der Bedeutung von Vorgängen für Themen | Fachlicher Übergang zur Themenbearbeitung, primäre Regelquelle Kapitel 06 |
+
+**Ergebnis:** Relevanz und Quellenmonitor sind umfangreich **fachlich geplant**, die Fundstellenbearbeitung ist **teilweise in laufzeitfähigen Code umgesetzt**. Ein produktiv laufender Quellenmonitor oder eine vollständig automatisierte KI-Recherche ist aus den geprüften Repository-Artefakten weiterhin **nicht nachgewiesen**. Eine abgeschlossene Bestandsaufnahme muss deshalb auch tatsächliche Deployments, Job-Konfigurationen, Datenbankobjekte und funktionale Laufzeittests umfassen.
+
+### Noch fehlende Erhebungen
+
+1. Konkrete Quellen-/Fundstellenbestände und aktive Recherchejobs in der bestehenden FIB-Datenbank **nur lesend** prüfen; gemeinsame `Shared-Apps`-Umgebung und andere Anwendungen unangetastet lassen.
+2. Umgebungs-/Deploymentstand der Funktionen, eventuelle externe Cron-/Workflow-Dienste und Trigger prüfen, ohne allein aus Quellcode-Abwesenheit auf deren Nichtvorhandensein zu schließen.
+3. Vollständige Verknüpfung der Fachregeln aus `Recherchearchitektur-und-Referenzrahmen.md`, `Recherche-und-Quellenmonitor.md`, `Beobachtungs-und-Recherchemodell.md` sowie `KI-Leitfaden.md` abschnittsweise nachweisen.
+4. Tests für verspätete Indexierung, erweiterte/indirekte örtliche Relevanz, mehrere Quellen pro Sachverhalt, Fehlersituationen und Sechs-Monats-Rückblick anhand von Issues #4, #77 und #99 ergänzen.
+
 ## Übernahmematrix
 
 | Bisherige Quelle | In dieser Fassung berücksichtigt | Noch zu übernehmen oder abzugleichen |
@@ -153,5 +187,6 @@ Die Primärquellen werden abschnittsweise weiter abgeglichen; zusätzlich fließ
 
 | Version | Datum | Änderung |
 |---|---|---|
+| 0.3 | 22.10.2026 | Migrationen, Auditmodell, Fundstellenregeln und offene Regressionstest-Issues mit Implementierungsnachweisen inventarisiert. |
 | 0.2 | 22.10.2026 | Gestaffelte Recherche-/Relevanzregeln und Rückblick ergänzt; geprüfte vorhandene Fundstellenfunktionen und fehlende Automatiknachweise nachvollziehbar voneinander getrennt. |
 | 0.1 | 22.10.2026 | Erster fachlicher Konsolidierungsentwurf zu Recherchewegen, Quellenmonitor, Beobachtungsauftrag und Recherchelauf. |
