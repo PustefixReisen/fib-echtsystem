@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 1.7 – Konsolidierungsentwurf | 22.10.2026 | Projektverantwortung – erstellt mit KI-Unterstützung |
+| 1.8 – Konsolidierungsentwurf | 22.10.2026 | Projektverantwortung – erstellt mit KI-Unterstützung |
 
 > **Übernahmestatus:** Dieses Kapitel bündelt bereits beschlossene Fachregeln; während des Abgleichs bleiben die in [der Inventur](../Fachhandbuch-Inventur-2026-10-22.md) bezeichneten bisherigen Primärquellen verbindlich. Abweichungen und offene Fragen sind unten markiert. Erst die fachlich geprüfte vollständige Übernahme schaltet dieses Kapitel zur alleinigen Primärquelle.
 
@@ -129,6 +129,8 @@ Bei Änderungen an Beziehungen, Perspektiven oder der Themendefinition kann der 
 **FIB-THEMA-BEITRAG-007 – Entstehung und Wiederaufnahme einer Arbeitsfassung.** Beim erstmaligen Erfassen eines Beitrags bietet FIB eine **leere Arbeitsfassung** an. Ist bereits ein Beitrag veröffentlicht und existiert noch keine neuere Arbeitsfassung, wird zur Bearbeitung eine neue Arbeitsfassung **auf Basis der tatsächlich aktuell veröffentlichten Fassung** angeboten. Existiert bereits eine aktuelle Arbeitsfassung, wird **diese fortgesetzt**, statt einen weiteren Entwurf anzulegen. Das bloße Öffnen oder Anzeigen des Beitragsbereichs **legt noch keinen neuen persistenten Arbeitsstand und keine formale Beitragsversion** an; erst das Speichern einer Änderung begründet einen neuen gespeicherten Arbeitsstand. Die formale freigegebene Beitragsversion entsteht weiterhin erst bei Freigabe. Die verwendete Ausgangsfassung bleibt nachvollziehbar. Weitere Details zu automatischem Zwischenspeichern und Bearbeitungskonflikten werden gesondert abgestimmt.
 
 **FIB-THEMA-BEITRAG-008 – Speichern und ungespeicherte Änderungen.** Redaktionelle Änderungen am sachlichen Thementext und der optionalen „Unsere Einordnung“ werden über die ausdrücklich betätigte Aktion **Speichern** als Arbeitsstand übernommen. Sobald Felder vom zuletzt gespeicherten Stand abweichen, zeigt die Bedienoberfläche deutlich **„Ungespeicherte Änderungen“** an. Vor dem Verlassen der Bearbeitung oder dem Wechsel zu einem anderen Thema mit ungespeicherten Änderungen wird eine Warnung mit einer bewussten Entscheidung zum Verwerfen oder Verbleiben angezeigt; versehentlicher Datenverlust ist zu verhindern. **Speichern bedeutet weder Freigabe noch Veröffentlichung.** Eine automatische Freigabe oder Publikation durch diesen Vorgang ist unzulässig. Technische Einzelheiten der Navigation und browserseitigen Abfangmöglichkeiten sind getrennt zu prüfen.
+
+**FIB-THEMA-BEITRAG-009 – Freigabe einer Beitragsfassung.** Eine gespeicherte Arbeitsfassung wird erst durch die ausdrücklich bestätigte Aktion **Freigeben** zur unveränderlichen Beitragsversion. Freigebende Person, Zeitpunkt und betroffene Fassung werden protokolliert. Ein berechtigter Redakteur darf den eigenen Beitrag ohne zweite Person freigeben. Eine noch nie veröffentlichte Freigabe darf ausdrücklich zurückgenommen werden; die frühere Entscheidung bleibt in der Historie. Bei bereits veröffentlichter Fassung ist keine Freigaberücknahme zulässig: Für ein Ende der Sichtbarkeit ist der gesonderte Publikationsrückzug zuständig. Eine freigegebene Fassung wird nicht nachträglich verändert; weitere Bearbeitung erfolgt in einer neuen Arbeitsfassung mit erneuter Freigabe. Freigabe löst keine Veröffentlichung aus.
 
 ## 6.6 Zusammenspiel und Lebenszyklus
 
@@ -367,6 +369,7 @@ Die Kapitelversion bleibt ein **Konsolidierungsentwurf**. Dieser Quellenabgleich
 
 | Version | Datum | Änderung |
 |---|---|---|
+| 1.8 | 22.10.2026 | Freigabeverfahren, Selbstfreigabe, Rücknahme vor Publikation und Änderungsfassung bestätigt. |
 | 1.7 | 22.10.2026 | Manuelles Speichern, sichtbare Änderungsmarkierung, Verlassenswarnung und Trennung von Freigabe/Publikation gemeinsam bestätigt. |
 | 1.6 | 22.10.2026 | Drei Fälle zur Entstehung/Fortsetzung einer Arbeitsfassung und keine persistente Neuanlage beim bloßen Öffnen bestätigt. |
 | 1.5 | 22.10.2026 | Standardansicht Arbeitsfassung und separate unveränderliche Ansicht „Aktuell veröffentlicht“ gemeinsam bestätigt. |
