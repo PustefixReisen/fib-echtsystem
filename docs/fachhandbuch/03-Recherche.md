@@ -251,6 +251,34 @@ Die folgenden Befunde wurden **direkt über die Supabase-Projektverwaltung und e
 
 **Offene Nachweise für eine spätere technische Abnahme:** Konkrete ausgeführte Funktionsversionen gegen den GitHub-Stand vergleichen; vorhandene externe Cron/CI/IONOS/Workflow-Aufträge untersuchen; Laufprotokolle, Regelstandsbezug, Quellenabdeckung, Fehlermeldungen und Regressionstests der Fälle #4, #77 und #99 nachweisen.
 
+## Quellenabgleich nach Fachabschnitten (22.10.2026)
+
+Diese Tabelle ist der **Abschluss der ersten abschnittsbezogenen Inventur der fünf unmittelbar rechercherelevanten Primärquellen**. „Zugeordnet“ bedeutet in der aktuellen Fassung: wesentliche Fachregel in diesem Kapitel beschrieben oder bewusst einem anderen Kapitel zugewiesen; kein Nachweis, dass Implementierung oder alle weiteren fachübergreifenden Quellen vollständig geprüft wurden.
+
+| Primärquelle / Abschnitte | Fachlicher Zielbereich | Zuordnung |
+|---|---|---|
+| Recherchearchitektur §§1–5 | Zweck, Recherchekontext, Beobachtungsauftrag | Kapitel 03 §§3.1–3.4 |
+| Recherchearchitektur §6 | Referenzobjekte, Aliase und Relationen | Fachobjekte, §3.11; Nachweis der Objektverwaltung offen |
+| Recherchearchitektur §§7–9 | offener Horizont, Lernschleife, Recherchebreite | §§3.2, 3.6, 3.11 |
+| Recherchearchitektur §§10–13 | Referenzrahmen, Transparenz, KI | §3.11; Qualitätsregeln zusätzlich Kapitel 10, öffentliche Darstellung Kapitel 09 |
+| Recherchearchitektur §14 | Fach-/Technikmodell-Folgen | §3.12; technischer Datenmodellabgleich separat |
+| Quellenmonitor §§1–6 | Quellenwege, Pflichtquellen, offene Entdeckung | §3.3, Fachobjekte, Ablauf |
+| Quellenmonitor §§7–8 | eingebrachte Quellen, technische Erkennung | §3.11; Speicher-/Rechteumsetzung separat |
+| Quellenmonitor §§9–11 | Stufen, Relevanz, Rückblick, Medien/Akteure | §3.6 |
+| Quellenmonitor §§12–15 | Kandidatenprüfung, Fehler, KI-Qualität | §§3.5–3.7, Schnittstelle zu Kapitel 04 |
+| Quellenmonitor „Regelverwaltung“ | Testarten, Versionsprüfung | §3.11 |
+| Beobachtungs-/Recherchemodell §§1–3 | Auftrag, Primärbezug, Status | §3.4, Fachobjekte |
+| Beobachtungs-/Recherchemodell §§4–7 und „Regelstand“ | Lauf, Provenienz, KI-Task, Historie, Tests | §§3.4, 3.11; technische Nachweise separat |
+| KI-Leitfaden §§5–6 | Quellenrollen, vierteilige Orts-/Relevanzprüfung | §§3.3, 3.6; ausdrücklich ohne politische Quellenverengung |
+| KI-Leitfaden §7 | Neuer Sachverhalt vs. Fortschreibung/Meldung | End-to-End-Ablauf, führende Detailregel in Kapitel 04 |
+| Fundstellenzuordnung-Begruendung.md | Beziehung/Begründung, Audit, UI-Grenze | §3.5 und Fachobjekte; redaktioneller Ablauf in Kapitel 04/08 |
+
+**Noch kein endgültiger Vollständigkeitsnachweis aller Projektentscheidungen:** Weitere fachlich relevante Abschnitte von `Datenmodell.md`, `Fachkonzept.md`, `KI-Leitfaden.md`, UI-/Workflow-Spezifikationen und neueren Issues können zusätzliche Regeln enthalten. Dieser restliche **quellenübergreifende Abgleich**, die technische Abnahme und die gemeinsame **inhaltliche Freigabe** bleiben offen. Das Kapitel darf daher noch nicht alleinige Primärquelle werden.
+
+### Fachkonzept und Implementierung gemeinsam fortentwickeln
+
+**FIB-RECH-GOV-001 – Fachliche Mitentscheidung bei fehlenden Funktionen.** Für noch nicht implementierte Komponenten gilt nicht „erst vollständig vorab spezifizieren, dann blind programmieren“. Die Entwicklung konkretisiert das Fachkonzept in fachlich prüfbaren Schritten. Jede neue fachliche Entscheidung wird **vor oder mit ihrer Implementierung** im führenden Fachhandbuch mit Regelkennung, Auswirkungen, Status-/Rechte-/Ablaufprüfung und gegebenenfalls Testfall festgehalten. Technische Detailwahl darf keine neue fachliche Regel ohne Abstimmung etablieren. Ein Entwicklungsissue ist erst abschließbar, nachdem die Dokumentationsfolgen geprüft und nötige Aktualisierungen erfolgt sind.
+
 ## Übernahmematrix
 
 | Bisherige Quelle | In dieser Fassung berücksichtigt | Noch zu übernehmen oder abzugleichen |
