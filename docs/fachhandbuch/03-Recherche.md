@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 0.1 – Konsolidierungsentwurf | 22.10.2026 | Projektverantwortung – erstellt mit KI-Unterstützung |
+| 0.2 – Konsolidierungsentwurf | 22.10.2026 | Projektverantwortung – erstellt mit KI-Unterstützung |
 
 > **Übernahmestatus:** Dieser Entwurf bündelt bereits beschlossene fachliche Grundregeln. Die bisherigen Primärquellen bleiben bis zum vollständigen abschnittsbezogenen Quellenabgleich maßgeblich. Technische Schnittstellen und tatsächliche Implementierung werden hier nicht als abgeschlossen dargestellt.
 
@@ -74,13 +74,58 @@ Eine **Quelle** ist die Herkunft einer Information; die **Fundstelle** ist das k
 
 Die konkrete Fundstellenbearbeitung, die Beziehungen zu Ereignissen und die Darstellung von Zuordnungen werden in dem noch anzulegenden **Kapitel 04 – Ereignisse und Meldungen** sowie im späteren redaktionellen Kapitel vertieft. Datenbankfelder und technische Rücknahme-/Wiederherstellungsfunktionen bleiben technische Detaildokumentation.
 
-## 3.6 Relevanz, Reichweite und Qualitätskontrolle
+## 3.6 Relevanz, Recherchehorizont und Qualitätskontrolle
 
-Relevanz umfasst **unmittelbaren Ortsbezug** und nachvollziehbare **mittelbare, zukünftige oder gesellschaftlich-demokratische Bedeutung** für Feldkirchen. Die Erweiterung soll neue Sachverhalte entdecken, darf aber lokale Relevanz nicht durch beliebige allgemeine Berichte verdrängen.
+**FIB-RECH-RELEVANZ-001 – Orts- und Themenabdeckung sind unabhängige Achsen.** Die Recherche bezieht sich einerseits auf Feldkirchen und seine funktional verbundenen Räume, andererseits auf Sachzusammenhänge aus Vorgängen und Themen. **Keine der beiden Achsen darf die andere ersetzen.** Ein örtlich relevantes Vorhaben muss daher auch dann entdeckt werden können, wenn noch kein Thema oder Vorgang dazu erfasst ist.
 
-Die abgestimmten Regeln zum gestaffelten Suchraum, erweiterten Relevanzanteil, Rückblick, zur Prüfung lokaler Referenzbezüge und zur Unterscheidung von Such- und Veröffentlichungsbreite werden in der nächsten Quellenrunde einzeln mit Regelkennungen übernommen. Dies ist **noch keine vollständig geprüfte Übernahme** der Relevanzregeln.
+### Übersicht: Gestaffelter Recherchehorizont
 
-## 3.7 Umsetzungslücken und nächste fachliche Abgleiche
+| Stufe | Raum | Relevanzanforderung |
+|---|---|---|
+| Kernraum | Feldkirchen | Konkreter lokaler Sachverhalt |
+| Funktional verbundener Raum | Unter anderem Aschheim, Kirchheim, Haar, Landkreis München und München-Ost | Nachvollziehbarer räumlicher, institutioneller oder infrastruktureller Bezug |
+| Erweiterter thematischer Raum | Weitere Region München, Bayern, Deutschland sowie begründet europa-/weltweite Entwicklungen | **Konkreter** Erkenntniswert für eine Feldkirchner Fragestellung, nicht nur Themenähnlichkeit |
+
+**FIB-RECH-RELEVANZ-002 – Erweiterte und zukünftige Relevanz.** Ein Fund außerhalb Feldkirchens kann berücksichtigt werden, sofern sein konkreter Bezug begründet ist: institutionell, räumlich, infrastrukturell, regional abhängig, zu einem bestätigten FIB-Vorgang/Thema, als einschlägiger Pilot-/Vergleichsfall oder über einen plausiblen künftigen kommunalen Übertragungsweg. Eine **bloß abstrakte Möglichkeit** genügt nicht. Eingetretene, plausible künftige und nur mögliche Wirkungen werden ausdrücklich sprachlich unterschieden.
+
+**FIB-RECH-RELEVANZ-003 – Breite Recherche, engere Publikation.** Die Recherche darf wesentlich breiter sein als der veröffentlichte Bestand. Für **ausschließlich mittelbar, vergleichend oder zukünftig relevante veröffentlichte Beiträge** ist die Größenordnung von **30 % eine redaktionelle Warnschwelle**, keine starre individuelle Aufnahmequote und **keine Begrenzung der Recherche**. Bei Überschreitung werden Qualität der Feldkirchen-Bezüge, Bündelung und Suchhorizont geprüft; relevante Einzelfunde werden nicht allein deshalb verworfen.
+
+**FIB-RECH-RUECKBLICK-001 – Anlassbezogener Sechs-Monats-Rückblick.** Wird ein Thema oder Vorgang neu bestätigt oder inhaltlich wesentlich geschärft, wird **einmalig grundsätzlich sechs Monate** vor dem Auslöser rückblickend recherchiert. Kürzere oder längere Abweichungen sind mit sachlicher Begründung zu protokollieren. Danach läuft die Beobachtung grundsätzlich inkrementell ab dem letzten erfolgreichen Recherchezeitpunkt mit angemessenem Überlappungsfenster weiter; sechs Monate sind **kein tägliches Standardsuchfenster**.
+
+**FIB-RECH-QUAL-001 – Fehler beweisen keinen Negativbefund.** Ein technischer Abruffehler, ein leerer Suchlauf oder eine gescheiterte Quellenentdeckung beweisen **nicht**, dass keine neuen relevanten Informationen existieren. Fehler werden kenntlich protokolliert; wiederkehrende Abrufprobleme bei Pflichtquellen sind sichtbar zu eskalieren.
+
+**FIB-RECH-QUAL-002 – KI-Qualität vor Kostenoptimierung.** Für semantische Quellenentdeckung, Bewertung neuer Fundstellen und Ereigniserkennung zählt zuerst die nachgewiesene fachliche Ergebnisqualität. Erst zwischen ausreichend geeigneten Modellen wird nach Kosten optimiert. KI darf keine redaktionelle Freigabe ersetzen.
+
+**Schnittstelle zu Kapitel 06:** Neue oder veränderte Themen liefern neue Namen, Orte, Perspektiven und Wissensfragen für die Recherche. Die Themenanlage und ihre fachliche Freigabe bleiben eigenständige Redaktionsentscheidungen.
+
+## 3.7 Nachweis des Implementierungsstands (Repositoryprüfung 22.10.2026)
+
+Der fachliche **Soll-Zustand** und der tatsächlich in den geprüften Repositorydateien nachweisbare **Ist-Zustand** werden ausdrücklich getrennt. Eine vorhandene technische Funktion beweist noch nicht, dass der gesamte Rechercheprozess produktiv läuft; umgekehrt ist eine nicht gefundene Komponente keine abschließende Aussage über alle externen Systeme.
+
+| Funktion | Nachweis im Code oder SQL | Belastbarer Befund |
+|---|---|---|
+| Vorhandene Fundstellen für Ereignis suchen | `supabase/functions/fib-get-event/index.ts`, Aktion `list_findings`; `apps/editorial-web/src/App.tsx`, `searchAvailableFindings` | **Im Repository implementiert**: serverseitige Suche, Ergebnislimit 100 und Redaktionsdialog |
+| Bereits zugeordnete Fundstellen zu einem Ereignis lesen | `fib-get-event`, Aktion `get_event`, SQL-Beziehungen `fib.event_findings`, `fib.findings`, `fib.sources` | **Im Repository implementiert** |
+| Fundstelle zu Ereignis zuordnen oder Zuordnung aufheben | `supabase/functions/fib-editorial-write/index.ts`, `link_finding` / `unlink_finding` | **Im Repository implementiert**; mit Konfliktprüfung, Änderungen und Protokollierung |
+| Begründung einer Fundstellenzuordnung bearbeiten | `fib-editorial-write`, `update_finding_justification`; Migration `20261015123000_finding_justification.sql` | **Im Repository implementiert**; Begründungsänderung wird protokolliert |
+| Technische Metadaten der Zuordnung ändern | `fib-editorial-write`, `update_finding_link`; Migration `20261015120000_event_finding_metadata_log.sql` | **Im Repository implementiert**; technische Metadaten sind nicht automatisch fachliche Begründung |
+| Lese-/Suchoberfläche für Quellen und Fundstellen | `apps/editorial-web/src/App.tsx`, Karte „Quellen und Fundstellen“ | **Teilweise implementiert**: Bearbeitung einer Ereignis-Fundstellen-Beziehung; kein Beleg für kompletten Quellenmonitor |
+| Automatisierte bekannte Quellen regelmäßig abfragen | In den geprüften Edge Functions und dem vorliegenden Redaktionsfrontend kein dedizierter Monitor nachgewiesen | **Implementierungsnachweis fehlt**; Status offen bis Prüfung weiterer Laufzeit-/Deploymentquellen |
+| Neue Quellen KI-gestützt entdecken | In den geprüften Edge Functions/Frontend nicht als durchgängiger Rechercheprozess nachgewiesen | **Implementierungsnachweis fehlt** |
+| Beobachtungsaufträge anlegen, pausieren, Rechercheläufe automatisch auslösen | Fachmodell dokumentiert, jedoch in den geprüften Funktionen keine durchgängige Laufzeitimplementierung nachgewiesen | **Implementierungsnachweis fehlt** |
+| Sechs-Monats-Rückblick, 30-%-Warnschwelle, offene Themenentdeckung | Als Fachregeln in bestehenden Quellen beschlossen | **Fachlich spezifiziert**, nicht als laufende Automatik belegt |
+| Redaktioneller Import vorhandener Demonstratordaten | `data/development/demo-20261013/source-snapshot.json` und zugehörige Entwicklungsdaten | **Entwicklungsdaten** nachweisbar; kein laufender Recherchemonitor |
+
+Die SQL-Migrationen und der GitHub-Code belegen **eine vorhandene Implementierung im Repository**, nicht automatisch einen geprüften produktiven Deploymentstand. Für einen vollständigen Ist-Nachweis sind zusätzlich die tatsächlich ausgerollten Edge Functions, Datenbanktabellen, Jobs/Trigger und UI-Laufzeittests zu untersuchen. Keine Daten anderer Anwendungen in `Shared-Apps` verändern.
+
+### Operative Unterschiede und Abhängigkeiten
+
+- Die **Fundstellenzuordnung** ist eine Funktion des vorhandenen Ereignis-Redaktionsbereichs. Die Erfassung neuer Fundstellen aus dem Web, automatische Quellenüberwachung und KI-Recherche sind davon getrennte Funktionsblöcke.
+- Die Begründung einer Beziehung `Fundstelle ↔ Ereignis` ist **nicht** dasselbe wie „Bedeutung für das Thema“ `Vorgang/Ereignis ↔ Thema`.
+- Die pessimistische Objektsperre und die Karte „Redaktionelle Koordination“ gehören zum übergreifenden Redaktionskonzept. Eine vorhandene Fundstellenbearbeitung muss dessen Sperr- und Rollenprüfungen einhalten.
+- Die technische Speicherung von Metadaten in `note` darf nicht ungeprüft als redaktionelle fachliche `justification` verwendet werden.
+
+## 3.8 Umsetzungslücken und nächste fachliche Abgleiche
 
 - Vollständige fachliche Beschreibung von **Pflichtquellen, Entdeckungsfrequenz und Ausfall-/Fehlerbehandlung** aus dem bisherigen Quellenmonitor.
 - **Gestaffelter Suchraum**, besondere indirekte Feldkirchen-Bezüge, erweiterte und mögliche zukünftige Bedeutung sowie Rückblick und Mengenbegrenzung.
@@ -88,6 +133,10 @@ Die abgestimmten Regeln zum gestaffelten Suchraum, erweiterten Relevanzanteil, R
 - Rechercheläufe, KI-Aufträge und versionierten operativen Regelbestand technisch verknüpfen und gegen die bestehende Implementierung prüfen.
 - Übergangs- und Berechtigungsübersicht für Beobachtungsaufträge fachlich vervollständigen, ohne offene Entscheidungen zu erfinden.
 - Abgrenzung zur **Themenentdeckung in Kapitel 06**, Ereignisprüfung in Kapitel 04 und öffentlicher Ausspielung in Kapitel 09.
+
+## 3.9 Quellen- und Implementierungsnachweise
+
+Die Primärquellen werden abschnittsweise weiter abgeglichen; zusätzlich fließen Quellcode, Migrationen, Issues, Tests und später konkrete Deployments in die Ist-Analyse ein. Fachlich beschlossene Funktionen sind unabhängig von ihrem Umsetzungsstand vollständig zu dokumentieren.
 
 ## Übernahmematrix
 
@@ -104,4 +153,5 @@ Die abgestimmten Regeln zum gestaffelten Suchraum, erweiterten Relevanzanteil, R
 
 | Version | Datum | Änderung |
 |---|---|---|
+| 0.2 | 22.10.2026 | Gestaffelte Recherche-/Relevanzregeln und Rückblick ergänzt; geprüfte vorhandene Fundstellenfunktionen und fehlende Automatiknachweise nachvollziehbar voneinander getrennt. |
 | 0.1 | 22.10.2026 | Erster fachlicher Konsolidierungsentwurf zu Recherchewegen, Quellenmonitor, Beobachtungsauftrag und Recherchelauf. |
