@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 2.2 – zweistufige Lesedarstellung erprobt | 23.10.2026 | Projektverantwortung – erstellt mit KI-Unterstützung |
+| 2.3 – Fachfragen sichtbar gegliedert | 23.10.2026 | Projektverantwortung – erstellt mit KI-Unterstützung |
 
 > **Status:** Konsolidierungsentwurf. Die vorhandenen Fachregeln und Quellenbefunde wurden ohne neue fachliche Entscheidung nach dem Pustivo-Dokumentationsmodell v1.3, §10.2 neu erschlossen. Die bisherigen Primärquellen bleiben bis zur fachlichen Abnahme gültig. Bisherige Abschnittsnummern in übernommenen Verweisen sind historisch und werden im anschließenden Referenzabgleich angepasst.
 
@@ -217,7 +217,7 @@ Als Nächstes werden **P2 – Recherche planen und ausführen** und **P3 – Fun
 
 **Beobachtungsauftrag:** Definiert, *was FIB wissen oder weiter verfolgen möchte*. **Recherchelauf:** Bezeichnet die konkrete Ausführung zu einem Zeitpunkt oder Anlass. Ein Beobachtungsauftrag kann mehrere Rechercheläufe auslösen. Ein offener Recherchelauf kann ohne Beobachtungsauftrag erfolgen.
 
-### Übersicht: Beobachtungsstatus
+#### Beobachtungsstatus im Überblick
 
 | Status | Fachliche Bedeutung |
 |---|---|
@@ -249,18 +249,24 @@ Rechercheläufe können auch manuell, aus der offenen Recherche oder als anlassb
 
 **FIB-RECH-BEOB-004 – Redaktioneller Lebenszyklus (abgestimmt 23.10.2026).** Aktivierung, Pausierung und Beendigung eines Beobachtungsauftrags sind redaktionelle Entscheidungen. Die KI darf eine solche Änderung mit Begründung vorschlagen, aber nicht selbst verbindlich vollziehen. Es gilt das bereits definierte Zustandsmodell **Aktiv / Pausiert / Beendet**; es entsteht hier kein weiteres Statusmodell. Die konkreten Statusübergänge, Wiedervorlagen, Folgen einer späteren neuen Fundstelle und Darstellung in der Oberfläche sind in §§03.4, 03.5 und 03.7 zu vertiefen.
 
-#### Wie werden gleichzeitig laufende Recherchen koordiniert? – Darstellungsprototyp
+#### 03.3.3.1 Wie werden gleichzeitig laufende Recherchen koordiniert?
 
-**Worum geht es?** FIB kann aus mehreren Gründen gleichzeitig denselben Sachverhalt untersuchen: durch die allgemeine Recherche, einen längerfristigen Beobachtungsauftrag oder die Frage eines Redakteurs. Diese Recherchen sollen auf gemeinsame Informationen zugreifen, ohne ihre jeweils eigene Fragestellung zu verlieren.
+**Fachliche Aufgabe und Nutzen**
 
-**Wie funktioniert das?** Zum Ausbau des Autobahnkreuzes München-Ost wird eine neue Planungsunterlage gefunden. FIB erfasst die Unterlage **einmal als Fundstelle**. Zwei Recherchen können sie dennoch unterschiedlich auswerten:
+FIB kann aus mehreren Gründen gleichzeitig denselben Sachverhalt untersuchen: durch die allgemeine Recherche, einen längerfristigen Beobachtungsauftrag oder die Frage eines Redakteurs. Diese Recherchen sollen auf gemeinsame Informationen zugreifen, ohne ihre jeweils eigene Fragestellung zu verlieren.
+
+**Beispiel: Zwei Recherchen – eine gemeinsame Fundstelle**
+
+Zum Ausbau des Autobahnkreuzes München-Ost wird eine neue Planungsunterlage gefunden. FIB erfasst die Unterlage **einmal als Fundstelle**. Zwei Recherchen können sie dennoch unterschiedlich auswerten:
 
 | Recherche | Fachliche Frage | Mögliche Erkenntnis aus derselben Fundstelle |
 | --- | --- | --- |
 | Beobachtungsauftrag | Wie entwickelt sich der Ausbau? | Neuer Termin für einen Planungsschritt |
 | Redaktionelle Recherche | Welche Auswirkungen ergeben sich für Feldkirchen? | Angaben zu Verkehrsbelastung oder Lärmschutz |
 
-**Was bedeutet das für die Redaktion?** Sie muss denselben Beleg nicht mehrfach erfassen und kann trotzdem nachvollziehen, **welche Erkenntnis zu welcher Recherchefrage gehört**. Wird die Planungsunterlage später geändert, prüft FIB die Auswirkungen auf alle betroffenen Recherchen. Die konkrete Datenzuordnung und Oberflächengestaltung werden in §§03.4 und 03.7 beschrieben.
+**Auswirkungen auf die redaktionelle Arbeit**
+
+Sie muss denselben Beleg nicht mehrfach erfassen und kann trotzdem nachvollziehen, **welche Erkenntnis zu welcher Recherchefrage gehört**. Wird die Planungsunterlage später geändert, prüft FIB die Auswirkungen auf alle betroffenen Recherchen. Die konkrete Datenzuordnung und Oberflächengestaltung werden in §§03.4 und 03.7 beschrieben.
 
 <details>
 <summary><strong>Verbindliche Fachregeln anzeigen – FIB-RECH-KOORD-001 und -002</strong></summary>
@@ -563,6 +569,7 @@ Die folgenden Befunde wurden **direkt über die Supabase-Projektverwaltung und e
 
 | Version | Datum | Änderung |
 |---|---|---|
+| 2.3 | 23.10.2026 | Überschrift der fachlichen Frage in P2 hierarchisch nummeriert, prominenter durch eigenständige Unterabschnitte; zusammengehörige Regeln gemeinsam belassen. |
 | 2.2 | 23.10.2026 | Darstellungsprototyp mit verständlicher Einführung, Beispieltabelle und einklappbaren Regeln zur Koordination paralleler Recherchen; Standardentscheidung nach Erprobung. |
 | 2.1 | 23.10.2026 | Gemeinsamer Informationsbestand bei parallelen Recherchen und getrennte Fragestellungen/Ergebnisse bestätigt. |
 | 2.0 | 23.10.2026 | Selbstständige Ausführung aktiver Beobachtungsaufträge und redaktionelle Kontrolle ihres Lebenszyklus bestätigt. |
