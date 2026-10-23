@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 1.1 – Verantwortungsgrenzen abgestimmt | 23.10.2026 | Projektverantwortung – erstellt mit KI-Unterstützung |
+| 1.2 – autonomer Recherchebetrieb abgestimmt | 23.10.2026 | Projektverantwortung – erstellt mit KI-Unterstützung |
 
 > **Status:** Konsolidierungsentwurf. Die vorhandenen Fachregeln und Quellenbefunde wurden ohne neue fachliche Entscheidung nach dem Pustivo-Dokumentationsmodell v1.3, §10.2 neu erschlossen. Die bisherigen Primärquellen bleiben bis zur fachlichen Abnahme gültig. Bisherige Abschnittsnummern in übernommenen Verweisen sind historisch und werden im anschließenden Referenzabgleich angepasst.
 
@@ -107,7 +107,7 @@ Die hier genannten Fragen bleiben **nicht stillschweigend erledigt**. Zuständig
 | RECH-V04 | KI-Voreinschätzung, Sichtungsstatus, redaktionelle Zurückstellung und Wiedervorlage | 03.3 P3, 03.4, 03.5, 03.7 | **Grundsatz abgestimmt, Details zu vertiefen** |
 | RECH-V05 | Bedienbarkeit: Recherchehorizont sehen, Quellen und Beziehungen verändern, Vorschlag/Bestätigung trennen | 03.7 | **Zu erproben** |
 | RECH-V06 | Vollständige Datenobjekte einschließlich Kardinalitäten, Integrität und Herkunft | 03.4 | **Zu vertiefen** |
-| RECH-V07 | Recherchelauf, offene Suche, Suchfrequenz, Fehlernachlauf und Rechercheregel-Version | 03.3 P2/P5, 03.5, 03.9 | **Zu vertiefen** |
+| RECH-V07 | Eigenständiger Grundbetrieb **abgestimmt**; Anlässe, Auslöseschwellen, Recherchelauf, Frequenz, Fehlernachlauf und Rechercheregel-Version | 03.3 P2/P5, 03.5, 03.9 | **Grundsatz abgestimmt, Anlässe zur Vertiefung** |
 | RECH-V08 | Ereigniskandidaten, Aktualisierung bestehender Sachverhalte und Übergabe an die implementierte Ereigniserfassung | 03.3 P4 und Kapitel 04 | **Zu vertiefen** |
 | RECH-V09 | Fachliche Verantwortung Redaktion vs. Admin ist abgestimmt; genaue normative und technische Rechteabgrenzung | 03.5, übergreifende Rechtequelle | **Grundsatz abgestimmt, technischer Abgleich offen** |
 | RECH-V10 | Funktionstests, Akzeptanzfälle, Ist-/Soll-Abgleich und anschließende Implementierung | 03.9, 03.11, Implementierungsissues | **Zu vertiefen** |
@@ -115,6 +115,26 @@ Die hier genannten Fragen bleiben **nicht stillschweigend erledigt**. Zuständig
 **Moderationsregel für dieses Kapitel:** Wir stimmen die großen fachlichen Ziele und Zuständigkeiten zuerst ab. Erst danach vertiefen wir Abläufe, Objekte, Status, Bedienung und Tests. Jeder Vertiefungspunkt erhält seinen Zielabschnitt und wird dort ausdrücklich wieder aufgenommen. Vor der fachlichen Kapitelabnahme werden die Punkte gegen Fachregeln, Datenmodell, UI, Tests und offene Issues abgeglichen. **Die Tabelle ist eine Nachverfolgung offener Punkte, kein konkurrierender Regelbestand.**
 
 ## 03.3 Fachliche Prozesse und Workflows
+
+### 03.3.0 Grundbetrieb und anlassbezogene Recherche
+
+**FIB-RECH-BETRIEB-001 – Eigenständige Recherche (fachlich abgestimmt 23.10.2026).** FIB recherchiert regelmäßig und offen **auch ohne Einzelauftrag durch einen Redakteur**. Manuelle Rechercheaufträge und dauerhafte Beobachtungsaufträge ergänzen diesen automatischen Grundbetrieb. Keine technische Ausführung oder KI-Analyse darf dadurch eigenständig eine Fundstelle verbindlich zurückstellen oder etwas veröffentlichen. Frequenz, technische Auslösung und Fehlernachlauf werden später spezifiziert.
+
+**Anlassbezogene Recherche – zur gemeinsamen fachlichen Vertiefung:** FIB soll aus einem erkannten Anlass zusätzliche gezielte Recherche ableiten können. Ob und unter welchen Voraussetzungen ein Anlass automatisch einen Lauf auslöst, welche Priorität er erhält und ob er eine Wiedervorlage erfordert, ist noch zu entscheiden. Als **Prüfkandidaten**, nicht abschließend beschlossene Auslöseliste, dienen:
+
+| Möglicher Anlass | Beispielfall | Zu prüfende Reaktion |
+|---|---|---|
+| Neue Fundstelle | Pressebericht zum Feldkirchner Grundstückskauf | Weitere Quellen/Beschlussvorlagen suchen; bestehende Ereignisse berücksichtigen |
+| Sachstandsänderung | Neuer Planungsstand A99/A94 | Vorgang und weitere Belege untersuchen |
+| Neues/geschärftes Thema | Radschnellweg neu als Mobilitätsbezug erfasst | Ergänzende Recherche und vereinbarten Sechs-Monats-Rückblick prüfen |
+| Neue Wissenslücke | Beginn der Erschließung eines Baugebiets unbekannt | Einmalige Nachrecherche bzw. Beobachtungsauftrag vorschlagen |
+| Angekündigter Folgeschritt | Anstehender Beschluss im Gemeinderat | Geeignete Wiedervorlage/Folgerecherche |
+| Neuer räumlicher oder funktionaler Bezug | Regionale Trasse betrifft Feldkirchen | Bestehende Fundstellen neu bewerten, ergänzend suchen |
+| Änderung des aktiven Recherchehorizonts/Regelstands | Erweiterter räumlicher Bezugsrahmen | Bewertungs- und Entdeckungswirkung getrennt prüfen |
+
+**Grundlegende Abgrenzung:** Ein Anlass ist nicht automatisch ein neues Ereignis oder ein dauerhafter Beobachtungsauftrag. Ein Recherchelauf kann ohne Auftrag entstehen; die fachliche Provenienz des Anlasses bleibt nachvollziehbar. Offene Fragen für die Vertiefung P2/P5: Auslöseschwellen, Dubletten/Mehrfachauslösung, begrenzte Recherchetiefe und Aufwand, Protokollierung, Eskalation, Termin- und Wiedervorlagelogik, redaktionelle Einsicht und Steuerung.
+
+
 
 ### 03.3.1 P1 – Quellen beobachten und entdecken
 
@@ -462,6 +482,7 @@ Die folgenden Befunde wurden **direkt über die Supabase-Projektverwaltung und e
 
 | Version | Datum | Änderung |
 |---|---|---|
+| 1.2 | 23.10.2026 | Eigenständige regelmäßige und offene Recherche bestätigt; Anlässe für Folge-Recherchen als zu prüfendes Fachmodell gesammelt. |
 | 1.1 | 23.10.2026 | Verantwortungsgrenzen für KI, automatische Recherche und redaktionelle Pflege ausdrücklich abgestimmt; Detailrechte bleiben prüfpflichtig. |
 | 1.0 | 23.10.2026 | Aufgaben- und Verantwortungsmodell sowie zugeordnete Vertiefungspunkte für die gemeinsame Kapitelabstimmung ergänzt. |
 | 0.9 | 23.10.2026 | Fachliche Ziele nach Abstimmung präzisiert: wissensgeleitete/offene Recherche, dynamischer Horizonte, örtliche Vollständigkeitsregel und redaktionelle Sichtung mit KI-Voreinschätzung. |
