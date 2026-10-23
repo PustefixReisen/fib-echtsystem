@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 2.5 – erste gemeinsam erarbeitete Abschnitte konsolidiert | 23.10.2026 | Projektverantwortung – erstellt mit KI-Unterstützung |
+| 2.6 – Fachtext vor abschließendem Regelblock | 23.10.2026 | Projektverantwortung – erstellt mit KI-Unterstützung |
 
 > **Status:** Konsolidierungsentwurf. Die vorhandenen Fachregeln und Quellenbefunde wurden ohne neue fachliche Entscheidung nach dem Pustivo-Dokumentationsmodell v1.3, §10.2 neu erschlossen. Die bisherigen Primärquellen bleiben bis zur fachlichen Abnahme gültig. Bisherige Abschnittsnummern in übernommenen Verweisen sind historisch und werden im anschließenden Referenzabgleich angepasst.
 
@@ -183,14 +183,7 @@ Die Fachobjekte erhalten im nächsten fachlichen Durchgang je **eine vollständi
 5. Neue/geänderte Fundstellen für Quellen- und Relevanzprüfung weitergeben. Unveränderte Quellen erzeugen grundsätzlich keinen neuen semantischen KI-Aufruf.
 6. Recherchelauf, aufgetretene Fehler, maßgeblichen Regelstand und Ergebnisse nachvollziehbar dokumentieren. Geeignete neue Quellen erst nach Prüfung in die künftige Beobachtung übernehmen.
 
-<details>
-<summary><strong>Verbindliche Regeln: Neue Quellen entdecken (FIB-RECH-QUELLE-006 und -007)</strong></summary>
 
-**FIB-RECH-QUELLE-006 – Regelmäßige offene Quellenentdeckung (abgestimmt 23.10.2026).** FIB sucht regelmäßig auch ohne konkreten Rechercheanlass eigenständig nach bislang unbekannten Informationsquellen. Dabei werden sowohl Quellen mit unmittelbarem Feldkirchen-Bezug als auch Quellen zu thematischen Entwicklungen mit konkret begründbarer möglicher Bedeutung für Feldkirchen berücksichtigt. Anlassbezogene und redaktionell angestoßene Quellenentdeckung ergänzen diese laufende Suche. Neu entdeckte Quellen werden mit erkennbarer Herkunft und Begründung als Kandidaten erfasst; die dauerhafte Beobachtung setzt redaktionelle Bestätigung voraus.
-
-**FIB-RECH-QUELLE-007 – Fundstellen aus Quellenkandidaten (abgestimmt 23.10.2026).** FIB darf konkrete Fundstellen aus noch nicht für die dauerhafte Beobachtung bestätigten Quellen bereits erfassen, analysieren und der Redaktion zur Prüfung bereitstellen. Die Herkunft und der vorläufige Quellenstatus bleiben sichtbar. Die Aufnahme einer Fundstelle **bestätigt nicht automatisch** die Quelle als künftig dauerhaft beobachtete Quelle und ist keine Veröffentlichungsentscheidung.
-
-</details>
 
 **Fachliche Eignungsprüfung einer Kandidatenquelle:** Herkunft/Herausgeber, Inhalte, Orts- bzw. Themenbezug, quellenkritische Einordnung, Aktualität und grundsätzliche technische Beobachtbarkeit werden nach Möglichkeit ermittelt. Politische Positionen, Interessenbekundungen und überprüfbare Tatsachen bleiben unterscheidbar. Detailattribute, Bewertung, Bearbeitungsstatus und UI folgen in §§03.4, 03.5 und 03.7.
 
@@ -208,15 +201,22 @@ Die Fachobjekte erhalten im nächsten fachlichen Durchgang je **eine vollständi
 
 **Redaktionelle Tätigkeit:** Quellen, neue Quellenkandidaten, Fundstellen und Überwachungsfehler müssen unterscheidbar und bearbeitbar sein. Die konkrete Bedienoberfläche, Herkunfts- und Sichtbarkeitseinstellungen sowie die Abgrenzung zur bereits vorhandenen Fundstellen-Suchfunktion der Ereignisbearbeitung werden zentral in **§03.7** spezifiziert.
 
-**FIB-RECH-QUELLE-005 – Änderungshistorie und Überwachungsqualität (abgestimmt 23.10.2026).** Ändert sich eine bekannte Fundstelle fachlich relevant, müssen früherer und neuer Informationsstand nachvollziehbar bleiben; nicht jede technische Änderung erfordert eine komplette Dokumentkopie. Für dauerhaft beobachtete Quellen muss die Redaktion letzte erfolgreiche Prüfung, Fehler und mögliche Beobachtungslücken erkennen können. Konkrete Speicherverfahren, Änderungsgrenzen, Status und Anzeigen werden in §§03.4, 03.5 und 03.7 vertieft.
-
 **Akzeptanzbeispiele.** (1) Neu veröffentlichte RIS-Vorlage erscheint als Fundstelle unabhängig von ihrer Erwähnung auf einer Tagesordnung. (2) Inhalt unter gleicher URL wird als Änderung erkannt. (3) Verspätet indexierter Merkur-Artikel bleibt durch Direktbeobachtung/Nachlauf auffindbar. (4) Ein Abruffehler wird nicht als negativer Recherchebefund ausgegeben. (5) Upload einer internen PDF führt nicht ohne Rechteentscheidung zur öffentlichen Bereitstellung.
 
+**Zusammenfassung der verbindlichen Regeln zu P1:** Die folgenden Regeltexte konkretisieren die zuvor beschriebene Quellenentdeckung und den Umgang mit zunächst unbestätigten Quellen. Weitere P1-Regeln im Abschnitt 03.5 bleiben bis zur fachlichen Konsolidierung an ihrer Primärstelle.
+
+<details>
+<summary><strong>Verbindliche Regeln zu Quellenentdeckung und Überwachungsqualität (FIB-RECH-QUELLE-005 bis -007)</strong></summary>
+
+**FIB-RECH-QUELLE-006 – Regelmäßige offene Quellenentdeckung (abgestimmt 23.10.2026).** FIB sucht regelmäßig auch ohne konkreten Rechercheanlass eigenständig nach bislang unbekannten Informationsquellen. Dabei werden sowohl Quellen mit unmittelbarem Feldkirchen-Bezug als auch Quellen zu thematischen Entwicklungen mit konkret begründbarer möglicher Bedeutung für Feldkirchen berücksichtigt. Anlassbezogene und redaktionell angestoßene Quellenentdeckung ergänzen diese laufende Suche. Neu entdeckte Quellen werden mit erkennbarer Herkunft und Begründung als Kandidaten erfasst; die dauerhafte Beobachtung setzt redaktionelle Bestätigung voraus.
+
+**FIB-RECH-QUELLE-007 – Fundstellen aus Quellenkandidaten (abgestimmt 23.10.2026).** FIB darf konkrete Fundstellen aus noch nicht für die dauerhafte Beobachtung bestätigten Quellen bereits erfassen, analysieren und der Redaktion zur Prüfung bereitstellen. Die Herkunft und der vorläufige Quellenstatus bleiben sichtbar. Die Aufnahme einer Fundstelle **bestätigt nicht automatisch** die Quelle als künftig dauerhaft beobachtete Quelle und ist keine Veröffentlichungsentscheidung.
+
+**FIB-RECH-QUELLE-005 – Änderungshistorie und Überwachungsqualität (abgestimmt 23.10.2026).** Ändert sich eine bekannte Fundstelle fachlich relevant, müssen früherer und neuer Informationsstand nachvollziehbar bleiben; nicht jede technische Änderung erfordert eine komplette Dokumentkopie. Für dauerhaft beobachtete Quellen muss die Redaktion letzte erfolgreiche Prüfung, Fehler und mögliche Beobachtungslücken erkennen können. Konkrete Speicherverfahren, Änderungsgrenzen, Status und Anzeigen werden in §§03.4, 03.5 und 03.7 vertieft.
+
+</details>
+
 **Entscheidungs- und Umsetzungsstand:** Fachliches Grundverhalten **beschlossen** (siehe bestehende Regeln im Kapitel); konkrete Frequenz, Arbeitsoberfläche, Monitoring-Automatisierung und Abnahmefälle sind **noch gemeinsam auszuarbeiten**. In Shared-Apps existieren Quellen- und Fundstellentabellen sowie Ereignis-Fundstellen-Bearbeitung; ein automatischer Quellenmonitor wurde bisher **nicht nachgewiesen**.
-
-**Arbeitsstand und weitere Vertiefung (nicht normative Anlage):**
-
-Als Nächstes werden **P2 – Recherche planen und ausführen** und **P3 – Fundstellen prüfen und Ereigniskandidaten bilden** in derselben Tiefe ausgearbeitet. Danach folgen P4/P5, die vollständigen Fachobjektdefinitionen, Bedienprototypen und der Abgleich mit der bereits implementierten Ereigniserfassung in Kapitel 04. **Neue fachliche Entscheidungen werden vor der zugehörigen Implementierung gemeinsam beschlossen**; fehlende Funktionen werden als nachvollziehbare Issues mit Fachregelbezug, Ist-Stand, Abnahmekriterien und Abhängigkeiten geführt.
 
 ### 03.3.3 P2 – Recherche planen und ausführen
 
@@ -579,6 +579,7 @@ Die folgenden Befunde wurden **direkt über die Supabase-Projektverwaltung und e
 
 | Version | Datum | Änderung |
 |---|---|---|
+| 2.6 | 23.10.2026 | P1: erst vollständige fachliche Erklärung, dann ein zusammengefasster Regelblock; überholten Abstimmungsvermerk aus Lesefluss entfernt. |
 | 2.5 | 23.10.2026 | Erläuterungs- und Regelgruppen in P1/P2 sichtbarer getrennt; Abstimmungsfortsetzung als Arbeitsstand statt fachliche Überschrift geführt. |
 | 2.4 | 23.10.2026 | Fachliche Fragen optisch als gut sichtbare Standard-Markdown-Überschriften; gemeinsame Erklärung und zusammengefasste Regeln gemäß Pustivo-Dokumentationsmodell v1.4; weitere Kapitel schrittweise konsolidieren. |
 | 2.3 | 23.10.2026 | Überschrift der fachlichen Frage in P2 hierarchisch nummeriert, prominenter durch eigenständige Unterabschnitte; zusammengehörige Regeln gemeinsam belassen. |
