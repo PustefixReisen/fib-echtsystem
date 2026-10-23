@@ -203,7 +203,9 @@ Die Fachobjekte erhalten im nächsten fachlichen Durchgang je **eine vollständi
 
 **Akzeptanzbeispiele.** (1) Neu veröffentlichte RIS-Vorlage erscheint als Fundstelle unabhängig von ihrer Erwähnung auf einer Tagesordnung. (2) Inhalt unter gleicher URL wird als Änderung erkannt. (3) Verspätet indexierter Merkur-Artikel bleibt durch Direktbeobachtung/Nachlauf auffindbar. (4) Ein Abruffehler wird nicht als negativer Recherchebefund ausgegeben. (5) Upload einer internen PDF führt nicht ohne Rechteentscheidung zur öffentlichen Bereitstellung.
 
-**Zusammenfassung der verbindlichen Regeln zu P1:** Die folgenden Regeltexte konkretisieren die zuvor beschriebene Quellenentdeckung und den Umgang mit zunächst unbestätigten Quellen. Weitere P1-Regeln im Abschnitt 03.5 bleiben bis zur fachlichen Konsolidierung an ihrer Primärstelle.
+**Entscheidungs- und Umsetzungsstand:** Fachliches Grundverhalten **beschlossen** (siehe bestehende Regeln im Kapitel); konkrete Frequenz, Arbeitsoberfläche, Monitoring-Automatisierung und Abnahmefälle sind **noch gemeinsam auszuarbeiten**. In Shared-Apps existieren Quellen- und Fundstellentabellen sowie Ereignis-Fundstellen-Bearbeitung; ein automatischer Quellenmonitor wurde bisher **nicht nachgewiesen**.
+
+**Verbindliche Regeln zu diesem Ablauf:** Die zusammengehörigen Festlegungen zur Quellenentdeckung und Überwachungsqualität stehen abschließend in einem Block. Ergänzende Bestandsregeln sind in §03.5 dokumentiert und werden beim weiteren fachlichen Abgleich an die passende Primärstelle überführt.
 
 <details>
 <summary><strong>Verbindliche Regeln zu Quellenentdeckung und Überwachungsqualität (FIB-RECH-QUELLE-005 bis -007)</strong></summary>
@@ -215,8 +217,6 @@ Die Fachobjekte erhalten im nächsten fachlichen Durchgang je **eine vollständi
 **FIB-RECH-QUELLE-005 – Änderungshistorie und Überwachungsqualität (abgestimmt 23.10.2026).** Ändert sich eine bekannte Fundstelle fachlich relevant, müssen früherer und neuer Informationsstand nachvollziehbar bleiben; nicht jede technische Änderung erfordert eine komplette Dokumentkopie. Für dauerhaft beobachtete Quellen muss die Redaktion letzte erfolgreiche Prüfung, Fehler und mögliche Beobachtungslücken erkennen können. Konkrete Speicherverfahren, Änderungsgrenzen, Status und Anzeigen werden in §§03.4, 03.5 und 03.7 vertieft.
 
 </details>
-
-**Entscheidungs- und Umsetzungsstand:** Fachliches Grundverhalten **beschlossen** (siehe bestehende Regeln im Kapitel); konkrete Frequenz, Arbeitsoberfläche, Monitoring-Automatisierung und Abnahmefälle sind **noch gemeinsam auszuarbeiten**. In Shared-Apps existieren Quellen- und Fundstellentabellen sowie Ereignis-Fundstellen-Bearbeitung; ein automatischer Quellenmonitor wurde bisher **nicht nachgewiesen**.
 
 ### 03.3.3 P2 – Recherche planen und ausführen
 
