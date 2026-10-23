@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 1.5 – Quellenbestand und Kandidaten abgestimmt | 23.10.2026 | Projektverantwortung – erstellt mit KI-Unterstützung |
+| 1.6 – P1 Quellenänderungen und Gliederung bereinigt | 23.10.2026 | Projektverantwortung – erstellt mit KI-Unterstützung |
 
 > **Status:** Konsolidierungsentwurf. Die vorhandenen Fachregeln und Quellenbefunde wurden ohne neue fachliche Entscheidung nach dem Pustivo-Dokumentationsmodell v1.3, §10.2 neu erschlossen. Die bisherigen Primärquellen bleiben bis zur fachlichen Abnahme gültig. Bisherige Abschnittsnummern in übernommenen Verweisen sind historisch und werden im anschließenden Referenzabgleich angepasst.
 
@@ -116,7 +116,13 @@ Die hier genannten Fragen bleiben **nicht stillschweigend erledigt**. Zuständig
 
 ## 03.3 Fachliche Prozesse und Workflows
 
-### 03.3.0 Grundbetrieb und anlassbezogene Recherche
+### 03.3.1 Gesamtprozess: Gemeinsamer Ablauf für alle Rechercheanlässe
+
+Für automatische Grundrecherche, einmalige anlassbezogene Recherche und redaktionell ausgelöste Recherche gilt der gemeinsame fachliche Ablauf: **Anlass verstehen → Vorwissen abgleichen → Suchkontext mit Quellen und Recherchehorizont bestimmen → recherchieren → Fundstellen und Aussagen auswerten → Ergebnis mit Quellen und Unsicherheiten bereitstellen → Folgeschritte vorschlagen**. Die konkreten Aufgaben sind P1 bis P5 zugeordnet. Ein eigener, separater Fachobjekt-Lebenszyklus entsteht daraus nicht.
+
+
+
+#### Grundbetrieb und anlassbezogene Recherche
 
 **FIB-RECH-BETRIEB-001 – Eigenständige Recherche (fachlich abgestimmt 23.10.2026).** FIB recherchiert regelmäßig und offen **auch ohne Einzelauftrag durch einen Redakteur**. Manuelle Rechercheaufträge und dauerhafte Beobachtungsaufträge ergänzen diesen automatischen Grundbetrieb. Keine technische Ausführung oder KI-Analyse darf dadurch eigenständig eine Fundstelle verbindlich zurückstellen oder etwas veröffentlichen. Frequenz, technische Auslösung und Fehlernachlauf werden später spezifiziert.
 
@@ -136,7 +142,7 @@ Die hier genannten Fragen bleiben **nicht stillschweigend erledigt**. Zuständig
 
 
 
-### 03.3.0a Redaktionell ausgelöste Recherche
+#### Redaktionell ausgelöste Recherche
 
 **FIB-RECH-AUFTRAG-001 – Recherche aus redaktioneller Sachfrage.** Ein Redakteur kann **jederzeit eine eigenständige Recherche anstoßen**, insbesondere wenn er von einem bisher nicht in FIB erfassten Sachverhalt erfahren hat. Der Auftrag setzt **weder eine vorhandene Fundstelle noch ein Ereignis, einen Vorgang oder ein Thema voraus**. Er wird als fachliche Frage oder Sachverhaltsbeschreibung in **natürlicher Sprache** erfasst; Kenntnisse von KI-Suchsyntax oder technischem Prompt Engineering sind nicht erforderlich. Ein eventuell eingegebener Suchprompt ist Eingabeinhalt, **nicht** automatisch eine neue Recherche- oder Relevanzregel.
 
@@ -146,7 +152,7 @@ Die hier genannten Fragen bleiben **nicht stillschweigend erledigt**. Zuständig
 
 **Zur gemeinsamen UI-Erprobung offen:** Eingabefeld „Was soll FIB recherchieren?“, optionale Orts-/Themenhinweise, Vorschau der interpretierten Frage, Recherche starten, Ergebnis/Fehler einsehen, mögliche Übernahme als Beobachtungsauftrag. Diese Details sind **noch keine beschlossene UI-Spezifikation**.
 
-### 03.3.1 P1 – Quellen beobachten und entdecken
+### 03.3.2 P1 – Quellen beobachten und entdecken
 
 **Aufgabenorientierter Einstieg.** Die bisherige Bestandsaufnahme bleibt während der Umstrukturierung vollständig erhalten, ist aber **Arbeitsgrundlage**, nicht die gewünschte endgültige Lesereihenfolge. Die folgenden Prozesse bilden die künftig führende Struktur:
 
@@ -182,7 +188,9 @@ Die Fachobjekte erhalten im nächsten fachlichen Durchgang je **eine vollständi
 
 **Alternativen und Fehlerfälle.** Nicht erreichbare Pflichtquelle: Fehler als Unsicherheit protokollieren und bei Wiederholung eskalieren, **niemals „keine Neuigkeit“ behaupten**. Neue Unterseite ohne Suchmaschinenindex: Direktbeobachtung muss dies soweit technisch möglich erkennen. Eingereichte interne PDF: intern nutzbar, aber **nicht automatisch öffentlich bereitstellbar**. Treffer ohne nachweisbaren lokalen/funktionalen Bezug: nicht unbesehen publizieren; fachliche Prüfung P3.
 
-**Bedienkonzept.** Die Redaktion soll bekannte Quellen und ihre Beobachtung, neu gefundene Quellen, Fundstellen und Fehlermeldungen unterscheiden können. Redaktionell eingebrachte URLs/Dateien brauchen klare Herkunfts- und Sichtbarkeitseinstellungen. **Eine bereits vorhandene Fundstellen-Suchkarte in der Ereignisbearbeitung ist nicht der Quellenmonitor.** Die endgültigen Karten, Navigation, Anzeigen und Bedienprototypen sind gemeinsam anhand dieses Prozesses zu erproben; bestehende Wireframes sind keine automatische Norm.
+**Redaktionelle Tätigkeit:** Quellen, neue Quellenkandidaten, Fundstellen und Überwachungsfehler müssen unterscheidbar und bearbeitbar sein. Die konkrete Bedienoberfläche, Herkunfts- und Sichtbarkeitseinstellungen sowie die Abgrenzung zur bereits vorhandenen Fundstellen-Suchfunktion der Ereignisbearbeitung werden zentral in **§03.7** spezifiziert.
+
+**FIB-RECH-QUELLE-005 – Änderungshistorie und Überwachungsqualität (abgestimmt 23.10.2026).** Ändert sich eine bekannte Fundstelle fachlich relevant, müssen früherer und neuer Informationsstand nachvollziehbar bleiben; nicht jede technische Änderung erfordert eine komplette Dokumentkopie. Für dauerhaft beobachtete Quellen muss die Redaktion letzte erfolgreiche Prüfung, Fehler und mögliche Beobachtungslücken erkennen können. Konkrete Speicherverfahren, Änderungsgrenzen, Status und Anzeigen werden in §§03.4, 03.5 und 03.7 vertieft.
 
 **Akzeptanzbeispiele.** (1) Neu veröffentlichte RIS-Vorlage erscheint als Fundstelle unabhängig von ihrer Erwähnung auf einer Tagesordnung. (2) Inhalt unter gleicher URL wird als Änderung erkannt. (3) Verspätet indexierter Merkur-Artikel bleibt durch Direktbeobachtung/Nachlauf auffindbar. (4) Ein Abruffehler wird nicht als negativer Recherchebefund ausgegeben. (5) Upload einer internen PDF führt nicht ohne Rechteentscheidung zur öffentlichen Bereitstellung.
 
@@ -192,11 +200,7 @@ Die Fachobjekte erhalten im nächsten fachlichen Durchgang je **eine vollständi
 
 Als Nächstes werden **P2 – Recherche planen und ausführen** und **P3 – Fundstellen prüfen und Ereigniskandidaten bilden** in derselben Tiefe ausgearbeitet. Danach folgen P4/P5, die vollständigen Fachobjektdefinitionen, Bedienprototypen und der Abgleich mit der bereits implementierten Ereigniserfassung in Kapitel 04. **Neue fachliche Entscheidungen werden vor der zugehörigen Implementierung gemeinsam beschlossen**; fehlende Funktionen werden als nachvollziehbare Issues mit Fachregelbezug, Ist-Stand, Abnahmekriterien und Abhängigkeiten geführt.
 
-### 03.3.0b Gemeinsamer Ablauf für alle Rechercheanlässe
-
-Für automatische Grundrecherche, einmalige anlassbezogene Recherche und redaktionell ausgelöste Recherche gilt der gemeinsame fachliche Ablauf: **Anlass verstehen → Vorwissen abgleichen → Suchkontext mit Quellen und Recherchehorizont bestimmen → recherchieren → Fundstellen und Aussagen auswerten → Ergebnis mit Quellen und Unsicherheiten bereitstellen → Folgeschritte vorschlagen**. Die konkreten Aufgaben sind P1 bis P5 zugeordnet. Ein eigener, separater Fachobjekt-Lebenszyklus entsteht daraus nicht.
-
-### 03.3.2 P2 – Recherche planen und ausführen (vorhandener Regelbestand)
+### 03.3.3 P2 – Recherche planen und ausführen (vorhandener Regelbestand)
 
 **Beobachtungsauftrag:** Definiert, *was FIB wissen oder weiter verfolgen möchte*. **Recherchelauf:** Bezeichnet die konkrete Ausführung zu einem Zeitpunkt oder Anlass. Ein Beobachtungsauftrag kann mehrere Rechercheläufe auslösen. Ein offener Recherchelauf kann ohne Beobachtungsauftrag erfolgen.
 
@@ -224,7 +228,7 @@ Rechercheläufe können auch manuell, aus der offenen Recherche oder als anlassb
 
 **FIB-RECH-LAUF-002 – Nachvollziehbare Ergebnisübersicht (abgestimmt 23.10.2026).** Jede gezielte Recherche endet mit einer nachvollziehbaren Übersicht von Recherchefrage, gesichertem Ergebnis, Fundstellen/Quellen, bereits vorhandenem FIB-Wissen, neuen Erkenntnissen, offenen Fragen/Unsicherheiten und fachlichen Vorschlägen. **Auch ohne Treffer** muss ein Ergebnis mit Suchumfang, Grenzen und gegebenenfalls Fehlern verfügbar sein; ein Nulltreffer belegt nicht das Nichtvorhandensein des Sachverhalts.
 
-### 03.3.3 P3 – Fundstellen prüfen und bewerten (vorhandener Regelbestand)
+### 03.3.4 P3 – Fundstellen prüfen und bewerten (vorhandener Regelbestand)
 
 Eine **Quelle** ist die Herkunft einer Information; die **Fundstelle** ist das konkrete Dokument, die Seite oder Informationseinheit. Eine bereits benutzte Fundstelle wird bei technischer Nichterreichbarkeit nicht allein deshalb aus der Belegbasis gelöscht.
 
@@ -234,7 +238,7 @@ Eine **Quelle** ist die Herkunft einer Information; die **Fundstelle** ist das k
 
 Die konkrete Fundstellenbearbeitung, die Beziehungen zu Ereignissen und die Darstellung von Zuordnungen werden in dem noch anzulegenden **Kapitel 04 – Ereignisse und Meldungen** sowie im späteren redaktionellen Kapitel vertieft. Datenbankfelder und technische Rücknahme-/Wiederherstellungsfunktionen bleiben technische Detaildokumentation.
 
-### 03.3.4 P4 – An die Ereigniserfassung übergeben
+### 03.3.5 P4 – An die Ereigniserfassung übergeben
 
 **Fachlicher Zusammenhang:** Ein Beobachtungsauftrag (optional) löst einen Recherchelauf aus. Dieser prüft Quellen und identifiziert Fundstellen. Fundstellen werden anhand von Quellenqualität und FIB-Relevanz bewertet und gegebenenfalls einem neuen oder bestehenden Ereignis zugeordnet. Ereignisse werden redaktionell geprüft und können Vorgänge und Themen fortschreiben. Die offene Recherche kann Rechercheläufe auch **ohne** Beobachtungsauftrag auslösen.
 
@@ -279,7 +283,7 @@ Die konkrete Fundstellenbearbeitung, die Beziehungen zu Ereignissen und die Dars
 
 **Primäre Ereignisregeln:** Ereignisbestätigung, Meldungsentscheidung und Fortschreibung werden in Kapitel 04 detailliert geregelt; die Recherche liefert Fundstellen, Provenienz, Begründungen und Kandidaten.
 
-### 03.3.5 P5 – Recherche fortschreiben und verbessern
+### 03.3.6 P5 – Recherche fortschreiben und verbessern
 
 Ein Recherchelauf berücksichtigt den konkreten Informationsbedarf, das bestehende FIB-Wissen, geeignete lokale und fachliche Referenzobjekte, den gültigen Referenzrahmen, bekannte Quellen sowie eine offene Suchanweisung.
 
@@ -504,6 +508,7 @@ Die folgenden Befunde wurden **direkt über die Supabase-Projektverwaltung und e
 
 | Version | Datum | Änderung |
 |---|---|---|
+| 1.6 | 23.10.2026 | Gemeinsamen Ablauf vor P1 gesetzt, provisorische Nummerierung bereinigt, Bedienung nach §03.7 verwiesen und P1-Qualitätsgrundsätze dokumentiert. |
 | 1.5 | 23.10.2026 | Quellenkandidaten und bestätigte dauerhafte Quellen abgegrenzt; zentrale Pflege vereinbart, Pflichtquellen/Vollständigkeit ohne neue Dublettenregel erläutert. |
 | 1.4 | 23.10.2026 | Gemeinsamen Ablauf verortet und zwei vereinbarte Regeln zur eigenständigen Vertiefung und Ergebnisübersicht bei P2 ergänzt. |
 | 1.3 | 23.10.2026 | Redaktionell auslösbare Recherche in natürlicher Sprache und Abgrenzung zur Dauerbeobachtung ergänzt. |
