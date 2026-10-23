@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 0.9 – Ziele und Recherchehorizont fachlich abgestimmt | 23.10.2026 | Projektverantwortung – erstellt mit KI-Unterstützung |
+| 1.0 – Aufgaben und Vertiefungsregister zur Abstimmung | 23.10.2026 | Projektverantwortung – erstellt mit KI-Unterstützung |
 
 > **Status:** Konsolidierungsentwurf. Die vorhandenen Fachregeln und Quellenbefunde wurden ohne neue fachliche Entscheidung nach dem Pustivo-Dokumentationsmodell v1.3, §10.2 neu erschlossen. Die bisherigen Primärquellen bleiben bis zur fachlichen Abnahme gültig. Bisherige Abschnittsnummern in übernommenen Verweisen sind historisch und werden im anschließenden Referenzabgleich angepasst.
 
@@ -55,9 +55,56 @@ FIB strebt bei unmittelbarem Feldkirchen-Bezug eine **hohe Auffindbarkeit** auch
 
 ## 03.2 Aufgabenbereiche, Rollen und Verantwortlichkeiten
 
-Die Recherche umfasst fünf miteinander verbundene Prozesse: **P1 Quellen beobachten und entdecken**, **P2 Recherche planen und ausführen**, **P3 Fundstellen prüfen und Ereigniskandidaten bilden**, **P4 Rechercheergebnisse redaktionell übernehmen** und **P5 Recherche fortschreiben und verbessern**.
+Dieser Abschnitt beschreibt **fachliche Zuständigkeiten und Aufgaben**. Einzelrechte und technische Freigaben sind in der jeweiligen fachlichen Primärregel und dem übergreifenden Rollen-/Rechtemodell nachzuweisen. KI-Vorschläge sind keine selbstständigen fachlichen Entscheidungen.
 
-**Beteiligte:** Die Redaktion verantwortet fachliche Bestätigung und weitere Bearbeitung. Die KI schlägt Deutungen, Quellen und Sachbezüge vor. Technische Überwachung erkennt neue oder geänderte Inhalte. Weder KI noch Monitor veröffentlichen selbstständig. Das vollständige Rollen- und Rechtemodell wird in Kapitel 08/11 verankert.
+### 03.2.1 Fünf zusammenhängende Aufgabenbereiche
+
+| Bereich | Fachliche Leistung |
+|---|---|
+| **P1 Quellen beobachten und entdecken** | Pflicht- und Kontextquellen überwachen, unbekannte Quellen finden, redaktionell eingebrachte Quellen übernehmen |
+| **P2 Recherche planen und durchführen** | Wissensgeleitete und offene Recherchen unter Beachtung des dynamischen Recherchehorizonts durchführen |
+| **P3 Fundstellen prüfen und bewerten** | Fundstellen nachvollziehbar erfassen, Dubletten erkennen, Quellenqualität und Relevanz prüfen; **auch unpolitische Feldkirchen-Fundstellen** der Sichtung zugänglich machen |
+| **P4 Rechercheergebnisse redaktionell übernehmen** | Kandidaten für neue Ereignisse oder die Fortschreibung bestehender Ereignisse/Vorgänge übergeben, ohne automatisch Ereignisse zu bestätigen |
+| **P5 Recherche fortschreiben und verbessern** | Quellenbestand, Referenzwissen, Recherchehorizont und Regeln anhand bestätigter Erkenntnisse weiterentwickeln |
+
+### 03.2.2 Fachliche Arbeitsteilung
+
+| Akteur | Aufgabe und Verantwortung |
+|---|---|
+| **Technische Recherchefunktionen** | Abrufen, Änderungen feststellen, Quellen/Fundstellen und Recherchelauf-Provenienz sichern, Fehler kenntlich machen |
+| **KI-Funktionen** | Funde analysieren, begründete Relevanz- und Zurückstellungsvorschläge sowie neue Bezüge/Quellen vorschlagen; Vorschläge sind als solche sichtbar |
+| **Redakteur** | Recherchegrundlagen im fachlich zulässigen Rahmen pflegen, Fundstellen sichten, KI-Vorschläge bewerten, irrelevante Fundstellen zurückstellen, bestätigte Ergebnisse zur Ereignisbearbeitung übergeben |
+| **Administrator** | Sämtliche üblichen Redaktionsaufgaben sowie administrative/sicherheitskritische Konfiguration; systemweit normative Aktivierungen unterliegen den bestehenden Adminvorbehalten |
+| **Besucher** | Nur freigegebene öffentliche Informationen abrufen; keine Recherchekonfiguration oder redaktionellen Entscheidungen |
+
+Das bereits dokumentierte Rollenmodell unterscheidet Besucher, Redakteur und Administrator; KI und technische Rechercheprozesse sind **keine zusätzlichen menschlichen Rollen**. Eine Veröffentlichung wird nicht durch das Auffinden einer Fundstelle ausgelöst.
+
+### 03.2.3 Verantwortungsgrenzen
+
+- **Automatische Entdeckung:** darf neue Fundstellen erzeugen und als Prüfkandidaten vorlegen; **nicht** ohne redaktionellen Entscheid verbindlich zurückstellen oder veröffentlichen.
+- **KI-Einschätzung:** darf Relevanz und irrelevante Inhalte vorbelegen, darf aber die Sichtung nicht durch eine unsichtbare automatische Aussortierung ersetzen.
+- **Redaktionelle Sichtung:** erfasste Feldkirchen-Fundstellen bleiben prüfbar; Zurückstellung ist keine Löschung.
+- **Fachliches Suchprofil:** Redaktion kann seine Grundlagen nachvollziehen und im zulässigen Zuständigkeitsbereich pflegen. Welche Veränderungen systemweit normative Regelaktivierungen sind und daher Adminrechte benötigen, wird anhand der bestehenden Berechtigungsmatrix weiter konkretisiert.
+- **Abgrenzung zu Kapitel 04:** Die Recherche stellt Fundstellen und begründete Kandidaten bereit; Bestätigung, Zusammenführung und Fortschreibung von Ereignissen sind ein eigener redaktioneller Arbeitsablauf.
+
+### 03.2.4 Fachliche Vertiefungen – verbindliche Nachverfolgung
+
+Die hier genannten Fragen bleiben **nicht stillschweigend erledigt**. Zuständige Abschnitte und Bearbeitungszustände:
+
+| ID | Größerer Punkt | Zielabschnitt | Stand |
+|---|---|---|---|
+| RECH-V01 | Vollständiges fachliches Modell des Recherchehorizonts einschließlich Orts-/Themenbezug und begründeter Zukunftsrelevanz | 03.4 und 03.5 | **Zu vertiefen** |
+| RECH-V02 | Quellenarten, Pflichtquellenbestand, Ergänzung und regelmäßige Prüfung | 03.3 P1, 03.4, 03.7 | **Zu vertiefen** |
+| RECH-V03 | Vollständige Erfassung lokaler einschließlich unpolitischer Funde und Fehlerabdeckung | 03.3 P1/P3, 03.9 | **Grundsatz abgestimmt, Details zu vertiefen** |
+| RECH-V04 | KI-Voreinschätzung, Sichtungsstatus, redaktionelle Zurückstellung und Wiedervorlage | 03.3 P3, 03.4, 03.5, 03.7 | **Grundsatz abgestimmt, Details zu vertiefen** |
+| RECH-V05 | Bedienbarkeit: Recherchehorizont sehen, Quellen und Beziehungen verändern, Vorschlag/Bestätigung trennen | 03.7 | **Zu erproben** |
+| RECH-V06 | Vollständige Datenobjekte einschließlich Kardinalitäten, Integrität und Herkunft | 03.4 | **Zu vertiefen** |
+| RECH-V07 | Recherchelauf, offene Suche, Suchfrequenz, Fehlernachlauf und Rechercheregel-Version | 03.3 P2/P5, 03.5, 03.9 | **Zu vertiefen** |
+| RECH-V08 | Ereigniskandidaten, Aktualisierung bestehender Sachverhalte und Übergabe an die implementierte Ereigniserfassung | 03.3 P4 und Kapitel 04 | **Zu vertiefen** |
+| RECH-V09 | Fachliches Verantwortungs- und Rechtemodell: Redaktion vs. Admin bei systemweiten Einstellungen | 03.5, übergreifende Rechtequelle | **Abgleich erforderlich** |
+| RECH-V10 | Funktionstests, Akzeptanzfälle, Ist-/Soll-Abgleich und anschließende Implementierung | 03.9, 03.11, Implementierungsissues | **Zu vertiefen** |
+
+**Moderationsregel für dieses Kapitel:** Wir stimmen die großen fachlichen Ziele und Zuständigkeiten zuerst ab. Erst danach vertiefen wir Abläufe, Objekte, Status, Bedienung und Tests. Jeder Vertiefungspunkt erhält seinen Zielabschnitt und wird dort ausdrücklich wieder aufgenommen. Vor der fachlichen Kapitelabnahme werden die Punkte gegen Fachregeln, Datenmodell, UI, Tests und offene Issues abgeglichen. **Die Tabelle ist eine Nachverfolgung offener Punkte, kein konkurrierender Regelbestand.**
 
 ## 03.3 Fachliche Prozesse und Workflows
 
@@ -407,6 +454,7 @@ Die folgenden Befunde wurden **direkt über die Supabase-Projektverwaltung und e
 
 | Version | Datum | Änderung |
 |---|---|---|
+| 1.0 | 23.10.2026 | Aufgaben- und Verantwortungsmodell sowie zugeordnete Vertiefungspunkte für die gemeinsame Kapitelabstimmung ergänzt. |
 | 0.9 | 23.10.2026 | Fachliche Ziele nach Abstimmung präzisiert: wissensgeleitete/offene Recherche, dynamischer Horizonte, örtliche Vollständigkeitsregel und redaktionelle Sichtung mit KI-Voreinschätzung. |
 | 0.8 | 23.10.2026 | Bisherigen Text entlang der zehn Perspektiven von Pustivo 10.2 umgeordnet; Prozessdarstellung vor Fachobjekten; offene fachliche Ausarbeitung sichtbar belassen. |
 
