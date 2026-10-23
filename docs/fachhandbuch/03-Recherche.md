@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 1.7 – offene Quellenentdeckung abgestimmt | 23.10.2026 | Projektverantwortung – erstellt mit KI-Unterstützung |
+| 1.8 – redaktionelle Quellenübernahme abgestimmt | 23.10.2026 | Projektverantwortung – erstellt mit KI-Unterstützung |
 
 > **Status:** Konsolidierungsentwurf. Die vorhandenen Fachregeln und Quellenbefunde wurden ohne neue fachliche Entscheidung nach dem Pustivo-Dokumentationsmodell v1.3, §10.2 neu erschlossen. Die bisherigen Primärquellen bleiben bis zur fachlichen Abnahme gültig. Bisherige Abschnittsnummern in übernommenen Verweisen sind historisch und werden im anschließenden Referenzabgleich angepasst.
 
@@ -192,6 +192,12 @@ Die Fachobjekte erhalten im nächsten fachlichen Durchgang je **eine vollständi
 **Pflege des Quellenbestands (fachlich abgestimmt 23.10.2026).** Alle bekannten Quellen werden zentral im FIB-Quellenbestand geführt; redaktionell Berechtigte können Quellen ergänzen, ändern und ihre Beobachtung aktivieren oder deaktivieren. FIB darf neue Quellen selbstständig entdecken und als **Quellenkandidaten** mit Herkunft und Begründung speichern. Erst die **redaktionelle Bestätigung** macht einen Kandidaten zur dauerhaft beobachteten Quelle. Ein Quellenkandidat ist dadurch noch keine Pflichtquelle; diese Einordnung ist eine eigene redaktionelle Entscheidung. So bleiben selbstständige Entdeckung und kontrollierte Quellenpflege vereinbar. Die konkrete Beobachtungshäufigkeit, Objektattribute, Statusübergänge und UI werden in §§03.4–03.7 vertieft.
 
 **Lesebezug zu 03.1:** Die dauerhaft zu beobachtenden Pflichtquellen und der Anspruch, möglichst alle erreichbaren Veröffentlichungen mit unmittelbarem Feldkirchen-Bezug zu finden, sind **verschiedene, sich ergänzende Anforderungen**. Diese Erklärung präzisiert die Anwendung der bereits festgelegten Recherchegrundsätze und begründet **keine konkurrierende Geschäftsregel**.
+
+**Redaktionell eingebrachte Informationen – fachlich abgestimmter Grundablauf (23.10.2026).** Redakteure können öffentliche URLs, Dokumente/Dateien und nicht öffentlich zugängliche Unterlagen einbringen. Ein bloßer Sachverhaltshinweis ohne Dokument ist ein **redaktioneller Rechercheanlass** nach §03.3 und muss nicht künstlich als belegte Fundstelle gespeichert werden. FIB erfasst Herkunft, gegebenenfalls Titel, Datum und Dokumentart, prüft bereits bekannte Funde bzw. Fassungen, erschließt Inhalte und stellt die Fundstelle mit KI-Einschätzung in der normalen redaktionellen Sichtung bereit. **Manuell eingebrachte und automatisch entdeckte Fundstellen unterliegen grundsätzlich derselben Quellen-, Dubletten- und Relevanzprüfung**; die Art der Einbringung bleibt nachvollziehbar. Es entsteht kein paralleler Sonderprozess mit anderen fachlichen Prüfregeln.
+
+**Weiterführende Recherche aus eingereichten Inhalten:** FIB darf aus Hinweisen und Dokumenten unmittelbar zusammenhängende Fragen eigenständig nachrecherchieren. Dabei gelten dieselben Grenzen und Ergebnisanforderungen wie bei der bereits abgestimmten anlassbezogenen Recherche (§03.3.3 / FIB-RECH-LAUF-001 und -002); hierfür wird **keine doppelte fachliche Regel** geschaffen.
+
+**Rechte und Sichtbarkeit:** Öffentlich abrufbare Originalquelle, intern gespeicherte Datei und die Berechtigung zu einer öffentlichen Bereitstellung **über FIB** sind getrennt zu beurteilen. Insbesondere darf die Einbringung eines nicht öffentlichen Dokuments nicht automatisch seine öffentliche Bereitstellung auslösen. Die bestehenden Detailregeln sind unter FIB-RECH-QUELLE-004 festgelegt. Upload-Metadaten, Speicherung, Rechteprüfung und Bedienung werden in §§03.4, 03.5 und 03.7 vertieft.
 
 **Alternativen und Fehlerfälle.** Nicht erreichbare Pflichtquelle: Fehler als Unsicherheit protokollieren und bei Wiederholung eskalieren, **niemals „keine Neuigkeit“ behaupten**. Neue Unterseite ohne Suchmaschinenindex: Direktbeobachtung muss dies soweit technisch möglich erkennen. Eingereichte interne PDF: intern nutzbar, aber **nicht automatisch öffentlich bereitstellbar**. Treffer ohne nachweisbaren lokalen/funktionalen Bezug: nicht unbesehen publizieren; fachliche Prüfung P3.
 
@@ -523,6 +529,7 @@ Die folgenden Befunde wurden **direkt über die Supabase-Projektverwaltung und e
 
 | Version | Datum | Änderung |
 |---|---|---|
+| 1.8 | 23.10.2026 | Gleiche fachliche Fundstellenprüfung für redaktionell und automatisch eingebrachte Informationen abgestimmt; automatische Folgefragen durch Verweis auf P2 übernommen. |
 | 1.7 | 23.10.2026 | Regelmäßige anlassunabhängige Quellenentdeckung und unmittelbare prüfende Nutzung von Fundstellen aus Quellenkandidaten abgestimmt. |
 | 1.6 | 23.10.2026 | Gemeinsamen Ablauf vor P1 gesetzt, provisorische Nummerierung bereinigt, Bedienung nach §03.7 verwiesen und P1-Qualitätsgrundsätze dokumentiert. |
 | 1.5 | 23.10.2026 | Quellenkandidaten und bestätigte dauerhafte Quellen abgegrenzt; zentrale Pflege vereinbart, Pflichtquellen/Vollständigkeit ohne neue Dublettenregel erläutert. |
