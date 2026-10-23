@@ -4,9 +4,51 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 0.6 – Konsolidierungsentwurf | 22.10.2026 | Projektverantwortung – erstellt mit KI-Unterstützung |
+| 0.7 – Prozessgliederung in Abstimmung | 22.10.2026 | Projektverantwortung – erstellt mit KI-Unterstützung |
 
 > **Übernahmestatus:** Dieser Entwurf bündelt bereits beschlossene fachliche Grundregeln. Die bisherigen Primärquellen bleiben bis zum vollständigen abschnittsbezogenen Quellenabgleich maßgeblich. Technische Schnittstellen und tatsächliche Implementierung werden hier nicht als abgeschlossen dargestellt.
+
+## Fachliche Lesestruktur nach Pustivo-Governance 1.3 (23.10.2026)
+
+**Aufgabenorientierter Einstieg.** Die bisherige Bestandsaufnahme bleibt während der Umstrukturierung vollständig erhalten, ist aber **Arbeitsgrundlage**, nicht die gewünschte endgültige Lesereihenfolge. Die folgenden Prozesse bilden die künftig führende Struktur:
+
+| Prozess | Ziel | Wesentliche Fachobjekte | Weiterführende bisherige Abschnitte |
+|---|---|---|---|
+| **P1 – Quellen beobachten und entdecken** | Neue und geänderte Informationen entdecken | Quelle, Fundstelle, Recherchelauf | §§3.3, 3.5, 3.7, 3.10–3.12 |
+| **P2 – Recherche planen und ausführen** | Informationsbedürfnisse zielgerichtet und offen verfolgen | Beobachtungsauftrag, Recherchelauf, Regelstand, Referenzobjekt | §§3.2, 3.4, 3.6, 3.11 |
+| **P3 – Fundstellen prüfen und Ereigniskandidaten bilden** | Herkunft, Relevanz und Sachverhalt bestimmen | Fundstelle, Fundstellenzuordnung, Ereigniskandidat | §§3.5, 3.6, 3.10 |
+| **P4 – Rechercheergebnisse redaktionell übernehmen** | Neuer Sachverhalt oder Fortschreibung korrekt an Kapitel 04 übergeben | Ereignis, Vorgang, Fundstellenzuordnung | §3.5 und Kapitel 04 |
+| **P5 – Recherche verbessern** | Aus neuen Erkenntnissen lernen, Regeln prüfen und Rückblicke durchführen | Referenzobjekt, Recherche-/Relevanzregel, Recherchelauf | §§3.6, 3.11 |
+
+Die Fachobjekte erhalten im nächsten fachlichen Durchgang je **eine vollständige Primärdefinition** (Attribute, Beziehungen/Kardinalitäten, Zustände, Invarianten, Verantwortung). Der derzeitige Objektüberblick ist eine Lesebrücke, **noch keine vollständige Objektspezifikation**. Die Detailregeln werden anschließend eindeutig den Prozessen und Primärdefinitionen zugeordnet, statt erneut vervielfältigt zu werden.
+
+### P1 – Quellen beobachten und entdecken: erster durchgängiger Prozessentwurf
+
+**Aufgabe und Ergebnis.** FIB soll unabhängig von bereits bekannten Themen neue Informationen finden und Veränderungen bekannter Quellen erkennen. Ergebnis sind nachvollziehbar identifizierte, gegebenenfalls neue oder aktualisierte Fundstellen sowie Vorschläge für neue Quellen; **keine automatisch bestätigten Ereignisse oder Veröffentlichungen**.
+
+**Auslöser/Eingaben.** (a) reguläre Beobachtung bekannter Pflicht- und Kontextquellen, (b) gezielte Suche nach unbekannten Quellen, (c) eine von der Redaktion eingebrachte URL/Datei oder (d) ein aus neuem Referenzwissen oder einer Frage entstandener Rechercheanlass. Der konkrete Zeitpunkt und die Wiederholungsfrequenz müssen beim Implementierungsentwurf anhand fachlicher Anforderungen beschlossen werden; ein vorhandener Tageslauf darf nicht ungeprüft als ausreichend gelten.
+
+**Verantwortung.** Technische Beobachtung stellt Änderungen fest; KI unterstützt offene Entdeckung und Inhaltsanalyse; Redaktion entscheidet über fachliche Bestätigung, neue Pflicht-/Kontextquellen und Weiterverarbeitung. Die Quellenauswahl ist sachlich offen und nicht auf politische Nähe beschränkt.
+
+**Hauptablauf.**
+1. Beobachtungsauftrag oder offenen Suchanlass bestimmen und aktuellen Recherche-/Referenzkontext laden.
+2. Bekannte Quellen **direkt** abrufen, auch wenn Suchmaschinen neue Inhalte noch nicht indexieren; Dokumente unter unveränderter URL auf Änderungen prüfen.
+3. Zusätzlich unbekannte relevante Quellen offen entdecken; manuell eingebrachte Quellen über denselben nachfolgenden Prüfweg behandeln.
+4. Erkannten Inhalt mit bekannten Fundstellen abgleichen, neu/geändert/unverändert unterscheiden und Herkunft sowie Zeitbezug sichern.
+5. Neue/geänderte Fundstellen für Quellen- und Relevanzprüfung weitergeben. Unveränderte Quellen erzeugen grundsätzlich keinen neuen semantischen KI-Aufruf.
+6. Recherchelauf, aufgetretene Fehler, maßgeblichen Regelstand und Ergebnisse nachvollziehbar dokumentieren. Geeignete neue Quellen erst nach Prüfung in die künftige Beobachtung übernehmen.
+
+**Alternativen und Fehlerfälle.** Nicht erreichbare Pflichtquelle: Fehler als Unsicherheit protokollieren und bei Wiederholung eskalieren, **niemals „keine Neuigkeit“ behaupten**. Neue Unterseite ohne Suchmaschinenindex: Direktbeobachtung muss dies soweit technisch möglich erkennen. Eingereichte interne PDF: intern nutzbar, aber **nicht automatisch öffentlich bereitstellbar**. Treffer ohne nachweisbaren lokalen/funktionalen Bezug: nicht unbesehen publizieren; fachliche Prüfung P3.
+
+**Bedienkonzept.** Die Redaktion soll bekannte Quellen und ihre Beobachtung, neu gefundene Quellen, Fundstellen und Fehlermeldungen unterscheiden können. Redaktionell eingebrachte URLs/Dateien brauchen klare Herkunfts- und Sichtbarkeitseinstellungen. **Eine bereits vorhandene Fundstellen-Suchkarte in der Ereignisbearbeitung ist nicht der Quellenmonitor.** Die endgültigen Karten, Navigation, Anzeigen und Bedienprototypen sind gemeinsam anhand dieses Prozesses zu erproben; bestehende Wireframes sind keine automatische Norm.
+
+**Akzeptanzbeispiele.** (1) Neu veröffentlichte RIS-Vorlage erscheint als Fundstelle unabhängig von ihrer Erwähnung auf einer Tagesordnung. (2) Inhalt unter gleicher URL wird als Änderung erkannt. (3) Verspätet indexierter Merkur-Artikel bleibt durch Direktbeobachtung/Nachlauf auffindbar. (4) Ein Abruffehler wird nicht als negativer Recherchebefund ausgegeben. (5) Upload einer internen PDF führt nicht ohne Rechteentscheidung zur öffentlichen Bereitstellung.
+
+**Entscheidungs- und Umsetzungsstand:** Fachliches Grundverhalten **beschlossen** (siehe bestehende Regeln im Kapitel); konkrete Frequenz, Arbeitsoberfläche, Monitoring-Automatisierung und Abnahmefälle sind **noch gemeinsam auszuarbeiten**. In Shared-Apps existieren Quellen- und Fundstellentabellen sowie Ereignis-Fundstellen-Bearbeitung; ein automatischer Quellenmonitor wurde bisher **nicht nachgewiesen**.
+
+### Fortsetzung der inhaltlichen Abstimmung
+
+Als Nächstes werden **P2 – Recherche planen und ausführen** und **P3 – Fundstellen prüfen und Ereigniskandidaten bilden** in derselben Tiefe ausgearbeitet. Danach folgen P4/P5, die vollständigen Fachobjektdefinitionen, Bedienprototypen und der Abgleich mit der bereits implementierten Ereigniserfassung in Kapitel 04. **Neue fachliche Entscheidungen werden vor der zugehörigen Implementierung gemeinsam beschlossen**; fehlende Funktionen werden als nachvollziehbare Issues mit Fachregelbezug, Ist-Stand, Abnahmekriterien und Abhängigkeiten geführt.
 
 ## Leseführung: Fachobjekte und Ablauf
 
@@ -294,6 +336,7 @@ Diese Tabelle ist der **Abschluss der ersten abschnittsbezogenen Inventur der f�
 
 | Version | Datum | Änderung |
 |---|---|---|
+| 0.7 | 23.10.2026 | Prozessstruktur nach Pustivo 1.3 begonnen und Quellenmonitor P1 vollständig als abstimmbaren Ablaufentwurf beschrieben; bestehende Inventur erhalten. |
 | 0.6 | 22.10.2026 | Fachlicher Rechercheablauf und Grenze zur bereits realisierten Ereignisbearbeitung ergänzt; Quellenabgleich läuft weiter. |
 | 0.5 | 22.10.2026 | Read-only-Abgleich der Shared-Apps-Tabellen und tatsächlich aktiven Edge Functions; Soll/Ist-Rechercheprozess abgegrenzt. |
 | 0.4 | 22.10.2026 | Regeln zu Referenzwissen, drei Referenzrahmen-Ebenen, Dokumentenrechten sowie versionierter Regelverwaltung und zweistufigen Regeltests übernommen. |
