@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 1.2 – autonomer Recherchebetrieb abgestimmt | 23.10.2026 | Projektverantwortung – erstellt mit KI-Unterstützung |
+| 1.3 – redaktioneller Rechercheanlass ergänzt | 23.10.2026 | Projektverantwortung – erstellt mit KI-Unterstützung |
 
 > **Status:** Konsolidierungsentwurf. Die vorhandenen Fachregeln und Quellenbefunde wurden ohne neue fachliche Entscheidung nach dem Pustivo-Dokumentationsmodell v1.3, §10.2 neu erschlossen. Die bisherigen Primärquellen bleiben bis zur fachlichen Abnahme gültig. Bisherige Abschnittsnummern in übernommenen Verweisen sind historisch und werden im anschließenden Referenzabgleich angepasst.
 
@@ -135,6 +135,16 @@ Die hier genannten Fragen bleiben **nicht stillschweigend erledigt**. Zuständig
 **Grundlegende Abgrenzung:** Ein Anlass ist nicht automatisch ein neues Ereignis oder ein dauerhafter Beobachtungsauftrag. Ein Recherchelauf kann ohne Auftrag entstehen; die fachliche Provenienz des Anlasses bleibt nachvollziehbar. Offene Fragen für die Vertiefung P2/P5: Auslöseschwellen, Dubletten/Mehrfachauslösung, begrenzte Recherchetiefe und Aufwand, Protokollierung, Eskalation, Termin- und Wiedervorlagelogik, redaktionelle Einsicht und Steuerung.
 
 
+
+### 03.3.0a Redaktionell ausgelöste Recherche
+
+**FIB-RECH-AUFTRAG-001 – Recherche aus redaktioneller Sachfrage.** Ein Redakteur kann **jederzeit eine eigenständige Recherche anstoßen**, insbesondere wenn er von einem bisher nicht in FIB erfassten Sachverhalt erfahren hat. Der Auftrag setzt **weder eine vorhandene Fundstelle noch ein Ereignis, einen Vorgang oder ein Thema voraus**. Er wird als fachliche Frage oder Sachverhaltsbeschreibung in **natürlicher Sprache** erfasst; Kenntnisse von KI-Suchsyntax oder technischem Prompt Engineering sind nicht erforderlich. Ein eventuell eingegebener Suchprompt ist Eingabeinhalt, **nicht** automatisch eine neue Recherche- oder Relevanzregel.
+
+**Erwartete fachliche Wirkung:** Die Recherche verwendet den geltenden räumlichen und thematischen Recherchehorizont, darf aber für die konkret beschriebene Frage auch neue Quellen und Zusammenhänge prüfen; sie dokumentiert Anlass, redaktionellen Urheber, Suchfrage, Fundstellen, Ergebnis bzw. erfolglose/fehlerhafte Durchführung. Ergebnisse werden wie andere Recherchefunde bewertet und gesichtet. **Nichtfinden** ist nicht gleich **Nichtexistenz**. Kein Vorschlag wird allein durch die Anfrage zum bestätigten Ereignis.
+
+**Unterscheidung von Daueraufträgen:** Eine **einmalige, begrenzte Nachrecherche** soll FIB ohne weiteres menschliches Freigabeverfahren ausführen können. Eine längerfristige Frage führt zu einem **Vorschlag für einen Beobachtungsauftrag**, den die Redaktion bestätigt. Die Suche kann außerdem auf Wunsch später erneut ausgeführt werden; Speicherung, Wiederholung und genaue Darstellung werden in §§03.4 und 03.7 vertieft.
+
+**Zur gemeinsamen UI-Erprobung offen:** Eingabefeld „Was soll FIB recherchieren?“, optionale Orts-/Themenhinweise, Vorschau der interpretierten Frage, Recherche starten, Ergebnis/Fehler einsehen, mögliche Übernahme als Beobachtungsauftrag. Diese Details sind **noch keine beschlossene UI-Spezifikation**.
 
 ### 03.3.1 P1 – Quellen beobachten und entdecken
 
@@ -482,6 +492,7 @@ Die folgenden Befunde wurden **direkt über die Supabase-Projektverwaltung und e
 
 | Version | Datum | Änderung |
 |---|---|---|
+| 1.3 | 23.10.2026 | Redaktionell auslösbare Recherche in natürlicher Sprache und Abgrenzung zur Dauerbeobachtung ergänzt. |
 | 1.2 | 23.10.2026 | Eigenständige regelmäßige und offene Recherche bestätigt; Anlässe für Folge-Recherchen als zu prüfendes Fachmodell gesammelt. |
 | 1.1 | 23.10.2026 | Verantwortungsgrenzen für KI, automatische Recherche und redaktionelle Pflege ausdrücklich abgestimmt; Detailrechte bleiben prüfpflichtig. |
 | 1.0 | 23.10.2026 | Aufgaben- und Verantwortungsmodell sowie zugeordnete Vertiefungspunkte für die gemeinsame Kapitelabstimmung ergänzt. |
