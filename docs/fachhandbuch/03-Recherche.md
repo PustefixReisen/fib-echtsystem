@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 1.0 – Aufgaben und Vertiefungsregister zur Abstimmung | 23.10.2026 | Projektverantwortung – erstellt mit KI-Unterstützung |
+| 1.1 – Verantwortungsgrenzen abgestimmt | 23.10.2026 | Projektverantwortung – erstellt mit KI-Unterstützung |
 
 > **Status:** Konsolidierungsentwurf. Die vorhandenen Fachregeln und Quellenbefunde wurden ohne neue fachliche Entscheidung nach dem Pustivo-Dokumentationsmodell v1.3, §10.2 neu erschlossen. Die bisherigen Primärquellen bleiben bis zur fachlichen Abnahme gültig. Bisherige Abschnittsnummern in übernommenen Verweisen sind historisch und werden im anschließenden Referenzabgleich angepasst.
 
@@ -87,7 +87,15 @@ Das bereits dokumentierte Rollenmodell unterscheidet Besucher, Redakteur und Adm
 - **Fachliches Suchprofil:** Redaktion kann seine Grundlagen nachvollziehen und im zulässigen Zuständigkeitsbereich pflegen. Welche Veränderungen systemweit normative Regelaktivierungen sind und daher Adminrechte benötigen, wird anhand der bestehenden Berechtigungsmatrix weiter konkretisiert.
 - **Abgrenzung zu Kapitel 04:** Die Recherche stellt Fundstellen und begründete Kandidaten bereit; Bestätigung, Zusammenführung und Fortschreibung von Ereignissen sind ein eigener redaktioneller Arbeitsablauf.
 
-### 03.2.4 Fachliche Vertiefungen – verbindliche Nachverfolgung
+### 03.2.4 Vereinbarte Entscheidungs- und Pflegebefugnisse (23.10.2026)
+
+**FIB-RECH-ROLLE-001 – Automatische Vorbereitung, menschliche Verbindlichkeit.** Technische Funktionen und KI dürfen eigenständig recherchieren, Fundstellen erfassen, analysieren und fachliche Vorschläge erzeugen. Sie dürfen weder Fundstellen verbindlich als irrelevant zurückstellen noch veröffentlichen oder fachlich verbindliche Grundlagen des Recherchehorizonts ohne menschliche Entscheidung ändern. Vorschläge und ihre Begründungen bleiben sichtbar.
+
+**FIB-RECH-ROLLE-002 – Redaktionelle Fachpflege.** Redakteure dürfen im normalen fachlichen Arbeitsablauf bekannte Quellen, thematische Recherchefelder, Ortsbezüge und Beobachtungsaufträge anlegen, ändern und pflegen. Die genauen Bedingungen und das Bedienkonzept werden in §§03.4–03.7 vertieft. Besonders geschützte systemweite Einstellungen und normative Regelaktivierungen bleiben den nach geltendem Rechtekonzept berechtigten Rollen vorbehalten.
+
+Diese beiden **fachlichen Grundsatzentscheidungen sind abgestimmt**. Die technischen Berechtigungen, konkreten Statusübergänge sowie die Abgrenzung einzelner normativer Regeländerungen werden später gegen die bestehende Rechte- und Schutzmatrix geprüft; die Umsetzung darf dadurch nicht stillschweigend neue Berechtigungen erhalten.
+
+### 03.2.5 Fachliche Vertiefungen – verbindliche Nachverfolgung
 
 Die hier genannten Fragen bleiben **nicht stillschweigend erledigt**. Zuständige Abschnitte und Bearbeitungszustände:
 
@@ -101,7 +109,7 @@ Die hier genannten Fragen bleiben **nicht stillschweigend erledigt**. Zuständig
 | RECH-V06 | Vollständige Datenobjekte einschließlich Kardinalitäten, Integrität und Herkunft | 03.4 | **Zu vertiefen** |
 | RECH-V07 | Recherchelauf, offene Suche, Suchfrequenz, Fehlernachlauf und Rechercheregel-Version | 03.3 P2/P5, 03.5, 03.9 | **Zu vertiefen** |
 | RECH-V08 | Ereigniskandidaten, Aktualisierung bestehender Sachverhalte und Übergabe an die implementierte Ereigniserfassung | 03.3 P4 und Kapitel 04 | **Zu vertiefen** |
-| RECH-V09 | Fachliches Verantwortungs- und Rechtemodell: Redaktion vs. Admin bei systemweiten Einstellungen | 03.5, übergreifende Rechtequelle | **Abgleich erforderlich** |
+| RECH-V09 | Fachliche Verantwortung Redaktion vs. Admin ist abgestimmt; genaue normative und technische Rechteabgrenzung | 03.5, übergreifende Rechtequelle | **Grundsatz abgestimmt, technischer Abgleich offen** |
 | RECH-V10 | Funktionstests, Akzeptanzfälle, Ist-/Soll-Abgleich und anschließende Implementierung | 03.9, 03.11, Implementierungsissues | **Zu vertiefen** |
 
 **Moderationsregel für dieses Kapitel:** Wir stimmen die großen fachlichen Ziele und Zuständigkeiten zuerst ab. Erst danach vertiefen wir Abläufe, Objekte, Status, Bedienung und Tests. Jeder Vertiefungspunkt erhält seinen Zielabschnitt und wird dort ausdrücklich wieder aufgenommen. Vor der fachlichen Kapitelabnahme werden die Punkte gegen Fachregeln, Datenmodell, UI, Tests und offene Issues abgeglichen. **Die Tabelle ist eine Nachverfolgung offener Punkte, kein konkurrierender Regelbestand.**
@@ -454,6 +462,7 @@ Die folgenden Befunde wurden **direkt über die Supabase-Projektverwaltung und e
 
 | Version | Datum | Änderung |
 |---|---|---|
+| 1.1 | 23.10.2026 | Verantwortungsgrenzen für KI, automatische Recherche und redaktionelle Pflege ausdrücklich abgestimmt; Detailrechte bleiben prüfpflichtig. |
 | 1.0 | 23.10.2026 | Aufgaben- und Verantwortungsmodell sowie zugeordnete Vertiefungspunkte für die gemeinsame Kapitelabstimmung ergänzt. |
 | 0.9 | 23.10.2026 | Fachliche Ziele nach Abstimmung präzisiert: wissensgeleitete/offene Recherche, dynamischer Horizonte, örtliche Vollständigkeitsregel und redaktionelle Sichtung mit KI-Voreinschätzung. |
 | 0.8 | 23.10.2026 | Bisherigen Text entlang der zehn Perspektiven von Pustivo 10.2 umgeordnet; Prozessdarstellung vor Fachobjekten; offene fachliche Ausarbeitung sichtbar belassen. |
