@@ -4,11 +4,27 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 0.7 – Prozessgliederung in Abstimmung | 22.10.2026 | Projektverantwortung – erstellt mit KI-Unterstützung |
+| 0.8 – fachliche Neugliederung zur Abstimmung | 23.10.2026 | Projektverantwortung – erstellt mit KI-Unterstützung |
 
-> **Übernahmestatus:** Dieser Entwurf bündelt bereits beschlossene fachliche Grundregeln. Die bisherigen Primärquellen bleiben bis zum vollständigen abschnittsbezogenen Quellenabgleich maßgeblich. Technische Schnittstellen und tatsächliche Implementierung werden hier nicht als abgeschlossen dargestellt.
+> **Status:** Konsolidierungsentwurf. Die vorhandenen Fachregeln und Quellenbefunde wurden ohne neue fachliche Entscheidung nach dem Pustivo-Dokumentationsmodell v1.3, §10.2 neu erschlossen. Die bisherigen Primärquellen bleiben bis zur fachlichen Abnahme gültig. Bisherige Abschnittsnummern in übernommenen Verweisen sind historisch und werden im anschließenden Referenzabgleich angepasst.
 
-## Fachliche Lesestruktur nach Pustivo-Governance 1.3 (23.10.2026)
+## 03.1 Fachliche Aufgabe, Ziele, Nutzen und Grenzen
+
+FIB recherchiert für Feldkirchen relevante Entwicklungen möglichst vollständig, nachvollziehbar und quellengebunden. **Bekannte Begriffe, bereits angelegte Vorgänge und Themen dürfen die Entdeckung bislang unbekannter Entwicklungen nicht begrenzen.** Ein exemplarischer Negativtest ist das zunächst übersehene Baugebiet „Kiesgrund“.
+
+**FIB-RECH-PRINZIP-001 – Zwei komplementäre Recherchewege.** Die Recherche kombiniert gezielte Beobachtung zu bestehenden Vorgängen und Themen mit einer **offenen, themenunabhängigen Entdeckung**. Beide Wege ergänzen sich; die offene Suche darf nicht allein aus dem bestehenden Themenbestand abgeleitet werden.
+
+**FIB-RECH-PRINZIP-002 – Keine automatische Publikation.** Das Erkennen einer Quelle oder Fundstelle ist noch keine redaktionelle Freigabe oder Veröffentlichung. Erfassung, KI-Analyse, redaktionelle Entscheidung und öffentliche Bereitstellung bleiben getrennte Schritte.
+
+## 03.2 Aufgabenbereiche, Rollen und Verantwortlichkeiten
+
+Die Recherche umfasst fünf miteinander verbundene Prozesse: **P1 Quellen beobachten und entdecken**, **P2 Recherche planen und ausführen**, **P3 Fundstellen prüfen und Ereigniskandidaten bilden**, **P4 Rechercheergebnisse redaktionell übernehmen** und **P5 Recherche fortschreiben und verbessern**.
+
+**Beteiligte:** Die Redaktion verantwortet fachliche Bestätigung und weitere Bearbeitung. Die KI schlägt Deutungen, Quellen und Sachbezüge vor. Technische Überwachung erkennt neue oder geänderte Inhalte. Weder KI noch Monitor veröffentlichen selbstständig. Das vollständige Rollen- und Rechtemodell wird in Kapitel 08/11 verankert.
+
+## 03.3 Fachliche Prozesse und Workflows
+
+### 03.3.1 P1 – Quellen beobachten und entdecken
 
 **Aufgabenorientierter Einstieg.** Die bisherige Bestandsaufnahme bleibt während der Umstrukturierung vollständig erhalten, ist aber **Arbeitsgrundlage**, nicht die gewünschte endgültige Lesereihenfolge. Die folgenden Prozesse bilden die künftig führende Struktur:
 
@@ -50,7 +66,41 @@ Die Fachobjekte erhalten im nächsten fachlichen Durchgang je **eine vollständi
 
 Als Nächstes werden **P2 – Recherche planen und ausführen** und **P3 – Fundstellen prüfen und Ereigniskandidaten bilden** in derselben Tiefe ausgearbeitet. Danach folgen P4/P5, die vollständigen Fachobjektdefinitionen, Bedienprototypen und der Abgleich mit der bereits implementierten Ereigniserfassung in Kapitel 04. **Neue fachliche Entscheidungen werden vor der zugehörigen Implementierung gemeinsam beschlossen**; fehlende Funktionen werden als nachvollziehbare Issues mit Fachregelbezug, Ist-Stand, Abnahmekriterien und Abhängigkeiten geführt.
 
-## Leseführung: Fachobjekte und Ablauf
+### 03.3.2 P2 – Recherche planen und ausführen (vorhandener Regelbestand)
+
+**Beobachtungsauftrag:** Definiert, *was FIB wissen oder weiter verfolgen möchte*. **Recherchelauf:** Bezeichnet die konkrete Ausführung zu einem Zeitpunkt oder Anlass. Ein Beobachtungsauftrag kann mehrere Rechercheläufe auslösen. Ein offener Recherchelauf kann ohne Beobachtungsauftrag erfolgen.
+
+### Übersicht: Beobachtungsstatus
+
+| Status | Fachliche Bedeutung |
+|---|---|
+| **Aktiv** | Informationsbedarf wird regelmäßig oder anlassbezogen verfolgt |
+| **Pausiert** | Derzeit ausgesetzt, später fortsetzbar |
+| **Beendet** | Als Beobachtungsauftrag fachlich abgeschlossen |
+
+Die vollständigen Statusübergänge, Berechtigungen und Bedingungen werden beim späteren fachlichen Einzelabgleich ergänzt; aus dieser Statusübersicht wird **keine neue Übergangsentscheidung** abgeleitet.
+
+**FIB-RECH-BEOB-001 – Eindeutiger Primärbezug.** Jeder Beobachtungsauftrag bezieht sich fachlich primär auf genau **einen Vorgang, ein Thema oder eine offene Frage/Wissenslücke**. Andere Wissensobjekte dienen als Kontext, nicht als zusätzliche Primärbezüge.
+
+**FIB-RECH-BEOB-002 – Suchstrategie nicht festschreiben.** Beobachtungsaufträge enthalten eine fachliche Frage, Status, Herkunft, Begründung und Änderungshistorie; keine verpflichtend fest verdrahtete Liste von Suchbegriffen, Quellen oder Akteuren. Eine Priorität ist nicht generell verpflichtend.
+
+**FIB-RECH-BEOB-003 – Redaktionelle Statusentscheidung.** Pausierung oder Beendigung wird begründet und nachvollziehbar dokumentiert; KI-Vorschläge sind keine verbindlichen Statusentscheidungen.
+
+**FIB-RECH-LAUF-001 – Nachvollziehbarer Recherchelauf.** Ein Recherchelauf dokumentiert Anlass/Herkunft, Zeitpunkt, gegebenenfalls auslösenden Beobachtungsauftrag oder KI-Auftrag, maßgeblichen Regel-/Kontextstand, Ergebnis, neue oder geänderte Fundstellen und wesentliche Fehler. Technische Provider- und Crawlerdetails verbleiben in Betriebs-/Auditdaten.
+
+Rechercheläufe können auch manuell, aus der offenen Recherche oder als anlassbezogener Rückblick entstehen; besonders der vereinbarte **Sechs-Monats-Rückblick** bei verändertem Suchkontext ist später im Detail abzugleichen.
+
+### 03.3.3 P3 – Fundstellen prüfen und bewerten (vorhandener Regelbestand)
+
+Eine **Quelle** ist die Herkunft einer Information; die **Fundstelle** ist das konkrete Dokument, die Seite oder Informationseinheit. Eine bereits benutzte Fundstelle wird bei technischer Nichterreichbarkeit nicht allein deshalb aus der Belegbasis gelöscht.
+
+**FIB-RECH-FUND-001 – Persistenter Recherchekandidat.** Neue und geänderte Fundstellen werden nachvollziehbar erfasst und zur fachlichen Analyse bzw. redaktionellen Prüfung weitergegeben. Eine Fundstelle kann unterschiedliche Sachverhalte betreffen, ohne selbst ein bestätigtes Ereignis zu sein.
+
+**FIB-RECH-FUND-002 – Begründete Zuordnung.** Eine redaktionell bestätigte Beziehung **Fundstelle ↔ Ereignis** besitzt eine nachvollziehbare Begründung ihres konkreten Informationsbeitrags. Während der Bearbeitung ist sie optional; vor Freigabe soll sie geprüft und bestätigt werden. Eine feste Klassifikation nach „Belegcharakter“ ist nicht erforderlich. KI kann Begründungen vorschlagen; die Redaktion entscheidet.
+
+Die konkrete Fundstellenbearbeitung, die Beziehungen zu Ereignissen und die Darstellung von Zuordnungen werden in dem noch anzulegenden **Kapitel 04 – Ereignisse und Meldungen** sowie im späteren redaktionellen Kapitel vertieft. Datenbankfelder und technische Rücknahme-/Wiederherstellungsfunktionen bleiben technische Detaildokumentation.
+
+### 03.3.4 P4 – An die Ereigniserfassung übergeben
 
 **Fachlicher Zusammenhang:** Ein Beobachtungsauftrag (optional) löst einen Recherchelauf aus. Dieser prüft Quellen und identifiziert Fundstellen. Fundstellen werden anhand von Quellenqualität und FIB-Relevanz bewertet und gegebenenfalls einem neuen oder bestehenden Ereignis zugeordnet. Ereignisse werden redaktionell geprüft und können Vorgänge und Themen fortschreiben. Die offene Recherche kann Rechercheläufe auch **ohne** Beobachtungsauftrag auslösen.
 
@@ -93,15 +143,9 @@ Als Nächstes werden **P2 – Recherche planen und ausführen** und **P3 – Fun
 
 **Ereignis (Schnittstelle zu Kapitel 04).** Bestätigter sachlicher Vorgang zu einem Zeitpunkt oder Zeitraum; kann mehrere Fundstellen und spätere Änderungen aufweisen. Die KI schlägt neue Ereignisse oder die Fortschreibung vorhandener Ereignisse vor, die Redaktion entscheidet. Die bereits implementierte Ereigniserfassung umfasst Bearbeitung und Fundstellenzuordnung. **Details zu Ereignis- und Meldungsstatus, Freigabe und Versionierung sind in Kapitel 04 zu konsolidieren**, statt als konkurrierende Spezialregeln hier festgelegt zu werden.
 
-## 3.1 Zweck der Recherche
+**Primäre Ereignisregeln:** Ereignisbestätigung, Meldungsentscheidung und Fortschreibung werden in Kapitel 04 detailliert geregelt; die Recherche liefert Fundstellen, Provenienz, Begründungen und Kandidaten.
 
-FIB recherchiert für Feldkirchen relevante Entwicklungen möglichst vollständig, nachvollziehbar und quellengebunden. **Bekannte Begriffe, bereits angelegte Vorgänge und Themen dürfen die Entdeckung bislang unbekannter Entwicklungen nicht begrenzen.** Ein exemplarischer Negativtest ist das zunächst übersehene Baugebiet „Kiesgrund“.
-
-**FIB-RECH-PRINZIP-001 – Zwei komplementäre Recherchewege.** Die Recherche kombiniert gezielte Beobachtung zu bestehenden Vorgängen und Themen mit einer **offenen, themenunabhängigen Entdeckung**. Beide Wege ergänzen sich; die offene Suche darf nicht allein aus dem bestehenden Themenbestand abgeleitet werden.
-
-**FIB-RECH-PRINZIP-002 – Keine automatische Publikation.** Das Erkennen einer Quelle oder Fundstelle ist noch keine redaktionelle Freigabe oder Veröffentlichung. Erfassung, KI-Analyse, redaktionelle Entscheidung und öffentliche Bereitstellung bleiben getrennte Schritte.
-
-## 3.2 Recherchekontext und Referenzwissen
+### 03.3.5 P5 – Recherche fortschreiben und verbessern
 
 Ein Recherchelauf berücksichtigt den konkreten Informationsbedarf, das bestehende FIB-Wissen, geeignete lokale und fachliche Referenzobjekte, den gültigen Referenzrahmen, bekannte Quellen sowie eine offene Suchanweisung.
 
@@ -109,7 +153,9 @@ Ein Recherchelauf berücksichtigt den konkreten Informationsbedarf, das bestehen
 
 Die redaktionelle Entscheidung über die Anlage oder Änderung eines *Themas* gehört primär in [Kapitel 06](06-Themen.md); ihre Auswirkungen auf weitere Suchläufe gehören hierher.
 
-## 3.3 Recherchewege und Quellen
+## 03.4 Fachobjekte und fachliches Datenmodell
+
+Die bestehenden Objektbeschreibungen aus §§03.3 und 03.4 enthalten bereits Zweck, Herkunft und teilweise Zustände. Die vollständige Attribut-/Beziehungs-/Kardinalitäts- und Invariantenprüfung ist **noch nicht abgeschlossen**; eine Tabellenexistenz in Supabase ersetzt keine Fachobjektspezifikation.
 
 | Zugangsweg | Eingang | Verarbeitung und Ergebnis |
 |---|---|---|
@@ -125,41 +171,7 @@ Die redaktionelle Entscheidung über die Anlage oder Änderung eines *Themas* ge
 
 Quellenklassen umfassen insbesondere Gemeinde und RIS, Landkreis und Behörden, regionale Medien, Nachbargemeinden, Vorhabenträger, Vereine, Verbände und Initiativen, politische Akteure, fachliche Quellen und redaktionell eingebrachte Unterlagen. Die Einteilung als Pflichtquelle oder kontextabhängige Quelle bleibt davon getrennt.
 
-## 3.4 Beobachtungsaufträge und Rechercheläufe
-
-**Beobachtungsauftrag:** Definiert, *was FIB wissen oder weiter verfolgen möchte*. **Recherchelauf:** Bezeichnet die konkrete Ausführung zu einem Zeitpunkt oder Anlass. Ein Beobachtungsauftrag kann mehrere Rechercheläufe auslösen. Ein offener Recherchelauf kann ohne Beobachtungsauftrag erfolgen.
-
-### Übersicht: Beobachtungsstatus
-
-| Status | Fachliche Bedeutung |
-|---|---|
-| **Aktiv** | Informationsbedarf wird regelmäßig oder anlassbezogen verfolgt |
-| **Pausiert** | Derzeit ausgesetzt, später fortsetzbar |
-| **Beendet** | Als Beobachtungsauftrag fachlich abgeschlossen |
-
-Die vollständigen Statusübergänge, Berechtigungen und Bedingungen werden beim späteren fachlichen Einzelabgleich ergänzt; aus dieser Statusübersicht wird **keine neue Übergangsentscheidung** abgeleitet.
-
-**FIB-RECH-BEOB-001 – Eindeutiger Primärbezug.** Jeder Beobachtungsauftrag bezieht sich fachlich primär auf genau **einen Vorgang, ein Thema oder eine offene Frage/Wissenslücke**. Andere Wissensobjekte dienen als Kontext, nicht als zusätzliche Primärbezüge.
-
-**FIB-RECH-BEOB-002 – Suchstrategie nicht festschreiben.** Beobachtungsaufträge enthalten eine fachliche Frage, Status, Herkunft, Begründung und Änderungshistorie; keine verpflichtend fest verdrahtete Liste von Suchbegriffen, Quellen oder Akteuren. Eine Priorität ist nicht generell verpflichtend.
-
-**FIB-RECH-BEOB-003 – Redaktionelle Statusentscheidung.** Pausierung oder Beendigung wird begründet und nachvollziehbar dokumentiert; KI-Vorschläge sind keine verbindlichen Statusentscheidungen.
-
-**FIB-RECH-LAUF-001 – Nachvollziehbarer Recherchelauf.** Ein Recherchelauf dokumentiert Anlass/Herkunft, Zeitpunkt, gegebenenfalls auslösenden Beobachtungsauftrag oder KI-Auftrag, maßgeblichen Regel-/Kontextstand, Ergebnis, neue oder geänderte Fundstellen und wesentliche Fehler. Technische Provider- und Crawlerdetails verbleiben in Betriebs-/Auditdaten.
-
-Rechercheläufe können auch manuell, aus der offenen Recherche oder als anlassbezogener Rückblick entstehen; besonders der vereinbarte **Sechs-Monats-Rückblick** bei verändertem Suchkontext ist später im Detail abzugleichen.
-
-## 3.5 Von der Fundstelle zur redaktionellen Prüfung
-
-Eine **Quelle** ist die Herkunft einer Information; die **Fundstelle** ist das konkrete Dokument, die Seite oder Informationseinheit. Eine bereits benutzte Fundstelle wird bei technischer Nichterreichbarkeit nicht allein deshalb aus der Belegbasis gelöscht.
-
-**FIB-RECH-FUND-001 – Persistenter Recherchekandidat.** Neue und geänderte Fundstellen werden nachvollziehbar erfasst und zur fachlichen Analyse bzw. redaktionellen Prüfung weitergegeben. Eine Fundstelle kann unterschiedliche Sachverhalte betreffen, ohne selbst ein bestätigtes Ereignis zu sein.
-
-**FIB-RECH-FUND-002 – Begründete Zuordnung.** Eine redaktionell bestätigte Beziehung **Fundstelle ↔ Ereignis** besitzt eine nachvollziehbare Begründung ihres konkreten Informationsbeitrags. Während der Bearbeitung ist sie optional; vor Freigabe soll sie geprüft und bestätigt werden. Eine feste Klassifikation nach „Belegcharakter“ ist nicht erforderlich. KI kann Begründungen vorschlagen; die Redaktion entscheidet.
-
-Die konkrete Fundstellenbearbeitung, die Beziehungen zu Ereignissen und die Darstellung von Zuordnungen werden in dem noch anzulegenden **Kapitel 04 – Ereignisse und Meldungen** sowie im späteren redaktionellen Kapitel vertieft. Datenbankfelder und technische Rücknahme-/Wiederherstellungsfunktionen bleiben technische Detaildokumentation.
-
-## 3.6 Relevanz, Recherchehorizont und Qualitätskontrolle
+## 03.5 Geschäftsregeln, Zustände, Validierungen und Ausnahmen
 
 **FIB-RECH-RELEVANZ-001 – Orts- und Themenabdeckung sind unabhängige Achsen.** Die Recherche bezieht sich einerseits auf Feldkirchen und seine funktional verbundenen Räume, andererseits auf Sachzusammenhänge aus Vorgängen und Themen. **Keine der beiden Achsen darf die andere ersetzen.** Ein örtlich relevantes Vorhaben muss daher auch dann entdeckt werden können, wenn noch kein Thema oder Vorgang dazu erfasst ist.
 
@@ -183,7 +195,95 @@ Die konkrete Fundstellenbearbeitung, die Beziehungen zu Ereignissen und die Dars
 
 **Schnittstelle zu Kapitel 06:** Neue oder veränderte Themen liefern neue Namen, Orte, Perspektiven und Wissensfragen für die Recherche. Die Themenanlage und ihre fachliche Freigabe bleiben eigenständige Redaktionsentscheidungen.
 
-## 3.7 Nachweis des Implementierungsstands (Repositoryprüfung 22.10.2026)
+### 03.5.1 Weitere aus den Primärquellen übernommene Regeln
+
+**FIB-RECH-REF-001 – Stabile Referenzobjekte statt veränderlicher Sachstände.** Referenzwissen bildet langlebige Identitäten, Aliase und wiederholt nützliche Orts-, Infrastruktur-, Raum- und Akteursbeziehungen ab. Ein Referenzobjekt hat eine stabile Identität; seine alternative Bezeichnung ist kein neues Objekt. Aktuelle Planungsstände, Bewertungen, Wirkungen und Veränderungen gehören in Ereignisse, Vorgänge und andere zeitgebundene Fachobjekte. Referenzwissen ersetzt keinen öffentlichen Quellenbeleg.
+
+**FIB-RECH-REF-002 – Kleine, überprüfbare Beziehungstypologie.** Geeignete Referenzbeziehungen sind beispielsweise `ist Teil von`, `liegt in/an`, `verbindet`, `erschließt/versorgt` und `steht in funktionalem Zusammenhang mit`. Beziehungen sind gegebenenfalls gerichtet. Gespeichert werden sie nur, wenn sie für Suche, Erkennung oder Relevanzprüfung wiederholt hilfreich sind. Ihre Herkunft und redaktionelle Bestätigung müssen nachvollziehbar bleiben. Ein KI-Vorschlag ist keine Bestätigung.
+
+**FIB-RECH-REF-003 – Recherche erweitert ihren eigenen Kontext.** Ein neuer relevanter Fund kann neben Ereigniskandidaten auch neue Quellen, bestätigbares Referenzwissen und Erweiterungen des Recherchehorizonts vorschlagen. Für KI-Kandidaten sind Fachregelbezug, verständliche Begründung, Quellen, Unsicherheit und vorgeschlagener Anschluss an bestehende oder neue Objekte erkennbar zu machen. Die Redaktion entscheidet.
+
+**FIB-RECH-RAHMEN-001 – Drei getrennte Referenzrahmen-Ebenen.** Bei Recherche und Analyse sind allgemeine Quellen-/Qualitätsprinzipien, demokratisch-gesellschaftliche Maßstäbe und spezifisch grüne politische Werte sauber zu unterscheiden. Politische Erwartungen dürfen keine Tatsachenbasis verändern. Der grüne Referenzrahmen begründet insbesondere eine gesondert kenntliche „Unsere Einordnung“. Die fachliche Ausarbeitung der demokratisch-gesellschaftlichen Ebene ist in den Altquellen ausdrücklich noch offen und wird hier nicht stillschweigend als entschieden dargestellt.
+
+**FIB-RECH-QUELLE-004 – Redaktionell eingebrachte Dateien mit getrennten Nutzungsrechten.** FIB soll öffentliche URLs, hochgeladene Dokumente (insbesondere PDF) und Quellen ohne öffentliche URL entgegennehmen können. Der interne Speicher- und Erkenntniswert und die öffentliche Bereitstellungsbefugnis werden unabhängig behandelt. Eine Datei wird öffentlich nur bei positiv geklärtem Nutzungsrecht und bestätigter Freigabe bereitgestellt. Interne Quellen können Recherche auslösen, dürfen jedoch nicht als öffentlich zugängliche Belege dargestellt werden. Bei Folgerecherchen wird geprüft, ob dazu inzwischen öffentlich belegte Entwicklungen vorliegen.
+
+**FIB-RECH-REGEL-001 – Versionierte operative Recherche- und Relevanzregeln.** GitHub/Fachhandbuch beschreibt fachlich verbindliche Regeln; deren aktiver operativer Stand soll strukturiert und versioniert in FIB geführt und gezielt bei Rechercheläufen verwendet werden. Ein Änderungsentwurf wird auf Widersprüche geprüft, anhand positiver, negativer und Grenzfälle getestet und erst redaktionell bestätigt aktiviert. Zu jeder Recherche muss der maßgebliche Regelstand erkennbar sein.
+
+**FIB-RECH-REGEL-002 – Zwei verschiedene Regeltests.** Die **Bewertungswirkung** vergleicht alte und neue Entscheidungen über bekannte Fundstellen, auch ehemals als nicht relevant eingestufte. Die **Entdeckungswirkung** erfordert eine zusätzliche Probe-Recherche mit Differenz der alten und neuen Funde. Tests verändern keine regulären Fachobjekte und erzeugen keine normalen Redaktionsaufgaben. Der zweite Test ist nötig, weil eine Regel sonst neue Suchräume verfehlen kann, obwohl die Bewertung bekannter Funde plausibel erscheint.
+
+**Implementierungsgrenze:** Diese Regeln sind aus den bestehenden Primärquellen übernommen. Die vollständige operative Umsetzung von Referenzobjekten, Uploads, Versionsregelverwaltung und Testläufen ist **nicht** durch die bisher ausgewerteten Edge Functions nachgewiesen. Historische Quellen bleiben bis zu ihrer vollständigen Übernahme gültig.
+
+## 03.6 Anwendungsfälle und Funktionen
+
+Verbindliche Anwendungsfälle werden künftig nach **Akteur → Auslöser/Vorbedingungen → Funktion → fachlichem Ergebnis/Nachbedingungen** beschrieben. Derzeit belegte und noch zu spezifizierende Funktionsbereiche sind insbesondere die Verarbeitung vorhandener Fundstellen, Quellenbeobachtung, Quellenentdeckung, manuelle Dokumenteinbringung und anlassbezogene Rückblicke. Die funktionale Ausgestaltung folgt den Prozessen in §03.3; fehlende Vor-/Nachbedingungen sind für die fachliche Abstimmung offen.
+
+## 03.7 Bedienkonzept, Navigation und Prototypen
+
+Für die Recherche sind Quellenliste, Fundstellenliste/-detail, Beobachtungsaufträge und Auswertung als fachliche Bedienbereiche vorgesehen. Die existierenden Wireframes unter `docs/ui-wireframes/recherche-*.html` und `auswertung-recherche.html` sind **Prototypen**, keine automatisch beschlossenen Regeln. Die bereits implementierte Karte „Quellen und Fundstellen“ in der Ereignisbearbeitung gehört zur Schnittstelle mit Kapitel 04. Sichtbarkeit, Sperren, Such-/Filteraktionen und Fehler-/Änderungsanzeigen sind noch je Ablauf fachlich zu bestätigen.
+
+## 03.8 Übergreifende Fachanforderungen und Schnittstellen
+
+Zu beachten sind insbesondere Quellen- und Nutzungsrechte, Provenienz, KI-Unterstützung ohne automatische redaktionelle Freigabe, versionierte Recherche- und Relevanzregeln, Audit, pessimistische Objektsperren bei Schreibaktionen sowie die Schnittstellen zu Kapitel 04 (Ereignisse), Kapitel 06 (Themen) und Kapitel 09 (öffentliche Darstellung). Die technische Durchsetzung verbleibt in den jeweils technischen Primärquellen.
+
+## 03.9 Fachliche Beispiele, Akzeptanzkriterien und Testfälle
+
+Referenzfälle aus früheren Prüfungen: verspätete Indexierung/Aschheim ([#4](https://github.com/PustefixReisen/fib-echtsystem/issues/4)), Radschnellweg durch Feldkirchen ([#77](https://github.com/PustefixReisen/fib-echtsystem/issues/77)), Fundstellenbedienung ([#93](https://github.com/PustefixReisen/fib-echtsystem/issues/93)), quellenübergreifende Grundstückskauf-Fortschreibung ([#99](https://github.com/PustefixReisen/fib-echtsystem/issues/99)). Die Akzeptanzkriterien werden den Prozessen zugeordnet und in der inhaltlichen Abstimmung präzisiert.
+
+## 03.10 Begriffe, Entscheidungen, offene Fragen und Dokumentationslandkarte
+
+### 03.10.1 Klärungs- und Umsetzungslücken
+
+- Vollständige fachliche Beschreibung von **Pflichtquellen, Entdeckungsfrequenz und Ausfall-/Fehlerbehandlung** aus dem bisherigen Quellenmonitor.
+- **Gestaffelter Suchraum**, besondere indirekte Feldkirchen-Bezüge, erweiterte und mögliche zukünftige Bedeutung sowie Rückblick und Mengenbegrenzung.
+- Quellen- und Fundstellenstatus, Rechte der Speicherung und Rechte der **öffentlichen Bereitstellung** getrennt betrachten.
+- Rechercheläufe, KI-Aufträge und versionierten operativen Regelbestand technisch verknüpfen und gegen die bestehende Implementierung prüfen.
+- Übergangs- und Berechtigungsübersicht für Beobachtungsaufträge fachlich vervollständigen, ohne offene Entscheidungen zu erfinden.
+- Abgrenzung zur **Themenentdeckung in Kapitel 06**, Ereignisprüfung in Kapitel 04 und öffentlicher Ausspielung in Kapitel 09.
+
+### 03.10.2 Vollständigkeitsnachweis nach Quellabschnitten
+
+Diese Tabelle ist der **Abschluss der ersten abschnittsbezogenen Inventur der fünf unmittelbar rechercherelevanten Primärquellen**. „Zugeordnet“ bedeutet in der aktuellen Fassung: wesentliche Fachregel in diesem Kapitel beschrieben oder bewusst einem anderen Kapitel zugewiesen; kein Nachweis, dass Implementierung oder alle weiteren fachübergreifenden Quellen vollständig geprüft wurden.
+
+| Primärquelle / Abschnitte | Fachlicher Zielbereich | Zuordnung |
+|---|---|---|
+| Recherchearchitektur §§1–5 | Zweck, Recherchekontext, Beobachtungsauftrag | Kapitel 03 §§3.1–3.4 |
+| Recherchearchitektur §6 | Referenzobjekte, Aliase und Relationen | Fachobjekte, §3.11; Nachweis der Objektverwaltung offen |
+| Recherchearchitektur §§7–9 | offener Horizont, Lernschleife, Recherchebreite | §§3.2, 3.6, 3.11 |
+| Recherchearchitektur §§10–13 | Referenzrahmen, Transparenz, KI | §3.11; Qualitätsregeln zusätzlich Kapitel 10, öffentliche Darstellung Kapitel 09 |
+| Recherchearchitektur §14 | Fach-/Technikmodell-Folgen | §3.12; technischer Datenmodellabgleich separat |
+| Quellenmonitor §§1–6 | Quellenwege, Pflichtquellen, offene Entdeckung | §3.3, Fachobjekte, Ablauf |
+| Quellenmonitor §§7–8 | eingebrachte Quellen, technische Erkennung | §3.11; Speicher-/Rechteumsetzung separat |
+| Quellenmonitor §§9–11 | Stufen, Relevanz, Rückblick, Medien/Akteure | §3.6 |
+| Quellenmonitor §§12–15 | Kandidatenprüfung, Fehler, KI-Qualität | §§3.5–3.7, Schnittstelle zu Kapitel 04 |
+| Quellenmonitor „Regelverwaltung“ | Testarten, Versionsprüfung | §3.11 |
+| Beobachtungs-/Recherchemodell §§1–3 | Auftrag, Primärbezug, Status | §3.4, Fachobjekte |
+| Beobachtungs-/Recherchemodell §§4–7 und „Regelstand“ | Lauf, Provenienz, KI-Task, Historie, Tests | §§3.4, 3.11; technische Nachweise separat |
+| KI-Leitfaden §§5–6 | Quellenrollen, vierteilige Orts-/Relevanzprüfung | §§3.3, 3.6; ausdrücklich ohne politische Quellenverengung |
+| KI-Leitfaden §7 | Neuer Sachverhalt vs. Fortschreibung/Meldung | End-to-End-Ablauf, führende Detailregel in Kapitel 04 |
+| Fundstellenzuordnung-Begruendung.md | Beziehung/Begründung, Audit, UI-Grenze | §3.5 und Fachobjekte; redaktioneller Ablauf in Kapitel 04/08 |
+
+**Noch kein endgültiger Vollständigkeitsnachweis aller Projektentscheidungen:** Weitere fachlich relevante Abschnitte von `Datenmodell.md`, `Fachkonzept.md`, `KI-Leitfaden.md`, UI-/Workflow-Spezifikationen und neueren Issues können zusätzliche Regeln enthalten. Dieser restliche **quellenübergreifende Abgleich**, die technische Abnahme und die gemeinsame **inhaltliche Freigabe** bleiben offen. Das Kapitel darf daher noch nicht alleinige Primärquelle werden.
+
+### Fachkonzept und Implementierung gemeinsam fortentwickeln
+
+**FIB-RECH-GOV-001 – Fachliche Mitentscheidung bei fehlenden Funktionen.** Für noch nicht implementierte Komponenten gilt nicht „erst vollständig vorab spezifizieren, dann blind programmieren“. Die Entwicklung konkretisiert das Fachkonzept in fachlich prüfbaren Schritten. Jede neue fachliche Entscheidung wird **vor oder mit ihrer Implementierung** im führenden Fachhandbuch mit Regelkennung, Auswirkungen, Status-/Rechte-/Ablaufprüfung und gegebenenfalls Testfall festgehalten. Technische Detailwahl darf keine neue fachliche Regel ohne Abstimmung etablieren. Ein Entwicklungsissue ist erst abschließbar, nachdem die Dokumentationsfolgen geprüft und nötige Aktualisierungen erfolgt sind.
+
+### 03.10.3 Übernahmematrix
+
+| Bisherige Quelle | In dieser Fassung berücksichtigt | Noch zu übernehmen oder abzugleichen |
+|---|---|---|
+| [Recherchearchitektur und Referenzrahmen](../Recherchearchitektur-und-Referenzrahmen.md) | Dynamischer Suchkontext und offene Recherche | Referenzrahmen, Lernschleife, Suchhorizont und Reichweitenregeln im Detail |
+| [Recherche und Quellenmonitor](../Recherche-und-Quellenmonitor.md) | Drei Quellenwege, Pflichtquellen, KI-Einsatz | Suchraum, Medien-/Akteursquellen, Fehlerbehandlung, Quoten und Rückblick |
+| [Beobachtungs- und Recherchemodell](../Beobachtungs-und-Recherchemodell.md) | Primärbezug, Status, Rechercheläufe | Lebenszyklusdetails und operative Provenienz |
+| [Fundstellenzuordnung – Begründung](../Fundstellenzuordnung-Begruendung.md) | Begründung und redaktionelle Prüfung | Fachfunktions-/UI-Abgrenzung zu Kap. 04 und 08 |
+| [Datenmodell](../Datenmodell.md) | Quelle/Fundstelle sowie Beobachtungsobjekte | technische Persistenz und fachliche Kardinalitäten final abgleichen |
+| [KI-Leitfaden](../KI-Leitfaden.md) | Noch nicht abschnittsweise geprüft | Regeln zur Quellenbindung und Qualität |
+
+## 03.11 Entwicklungs- und Implementierungsnachweise (nicht normative Anlage)
+
+Dieser Teil weist den **Ist-Stand** nach und ist ausdrücklich keine zusätzliche fachliche Primärquelle. In einer späteren Bereinigung werden veraltete Befundabschnitte zusammengeführt; historische Nachweise bleiben erhalten.
+
+### 03.11.1 Repositoryprüfung
 
 Der fachliche **Soll-Zustand** und der tatsächlich in den geprüften Repositorydateien nachweisbare **Ist-Zustand** werden ausdrücklich getrennt. Eine vorhandene technische Funktion beweist noch nicht, dass der gesamte Rechercheprozess produktiv läuft; umgekehrt ist eine nicht gefundene Komponente keine abschließende Aussage über alle externen Systeme.
 
@@ -210,20 +310,11 @@ Die SQL-Migrationen und der GitHub-Code belegen **eine vorhandene Implementierun
 - Die pessimistische Objektsperre und die Karte „Redaktionelle Koordination“ gehören zum übergreifenden Redaktionskonzept. Eine vorhandene Fundstellenbearbeitung muss dessen Sperr- und Rollenprüfungen einhalten.
 - Die technische Speicherung von Metadaten in `note` darf nicht ungeprüft als redaktionelle fachliche `justification` verwendet werden.
 
-## 3.8 Umsetzungslücken und nächste fachliche Abgleiche
-
-- Vollständige fachliche Beschreibung von **Pflichtquellen, Entdeckungsfrequenz und Ausfall-/Fehlerbehandlung** aus dem bisherigen Quellenmonitor.
-- **Gestaffelter Suchraum**, besondere indirekte Feldkirchen-Bezüge, erweiterte und mögliche zukünftige Bedeutung sowie Rückblick und Mengenbegrenzung.
-- Quellen- und Fundstellenstatus, Rechte der Speicherung und Rechte der **öffentlichen Bereitstellung** getrennt betrachten.
-- Rechercheläufe, KI-Aufträge und versionierten operativen Regelbestand technisch verknüpfen und gegen die bestehende Implementierung prüfen.
-- Übergangs- und Berechtigungsübersicht für Beobachtungsaufträge fachlich vervollständigen, ohne offene Entscheidungen zu erfinden.
-- Abgrenzung zur **Themenentdeckung in Kapitel 06**, Ereignisprüfung in Kapitel 04 und öffentlicher Ausspielung in Kapitel 09.
-
-## 3.9 Quellen- und Implementierungsnachweise
+### 03.11.2 Zuordnung technischer Nachweise
 
 Die Primärquellen werden abschnittsweise weiter abgeglichen; zusätzlich fließen Quellcode, Migrationen, Issues, Tests und später konkrete Deployments in die Ist-Analyse ein. Fachlich beschlossene Funktionen sind unabhängig von ihrem Umsetzungsstand vollständig zu dokumentieren.
 
-## 3.10 Vertiefte Bestandsaufnahme: Datenmodell, Testnachweise und Entwicklungsaufträge
+### 03.11.3 SQL-Audits und Entwicklungsissues
 
 ### Datenbankmigrationen und redaktionelle Fachfunktionen
 
@@ -257,25 +348,7 @@ Die Primärquellen werden abschnittsweise weiter abgeglichen; zusätzlich fließ
 3. Vollständige Verknüpfung der Fachregeln aus `Recherchearchitektur-und-Referenzrahmen.md`, `Recherche-und-Quellenmonitor.md`, `Beobachtungs-und-Recherchemodell.md` sowie `KI-Leitfaden.md` abschnittsweise nachweisen.
 4. Tests für verspätete Indexierung, erweiterte/indirekte örtliche Relevanz, mehrere Quellen pro Sachverhalt, Fehlersituationen und Sechs-Monats-Rückblick anhand von Issues #4, #77 und #99 ergänzen.
 
-## 3.11 Ergänzende Fachregeln aus den bisherigen Recherche-Primärquellen
-
-**FIB-RECH-REF-001 – Stabile Referenzobjekte statt veränderlicher Sachstände.** Referenzwissen bildet langlebige Identitäten, Aliase und wiederholt nützliche Orts-, Infrastruktur-, Raum- und Akteursbeziehungen ab. Ein Referenzobjekt hat eine stabile Identität; seine alternative Bezeichnung ist kein neues Objekt. Aktuelle Planungsstände, Bewertungen, Wirkungen und Veränderungen gehören in Ereignisse, Vorgänge und andere zeitgebundene Fachobjekte. Referenzwissen ersetzt keinen öffentlichen Quellenbeleg.
-
-**FIB-RECH-REF-002 – Kleine, überprüfbare Beziehungstypologie.** Geeignete Referenzbeziehungen sind beispielsweise `ist Teil von`, `liegt in/an`, `verbindet`, `erschließt/versorgt` und `steht in funktionalem Zusammenhang mit`. Beziehungen sind gegebenenfalls gerichtet. Gespeichert werden sie nur, wenn sie für Suche, Erkennung oder Relevanzprüfung wiederholt hilfreich sind. Ihre Herkunft und redaktionelle Bestätigung müssen nachvollziehbar bleiben. Ein KI-Vorschlag ist keine Bestätigung.
-
-**FIB-RECH-REF-003 – Recherche erweitert ihren eigenen Kontext.** Ein neuer relevanter Fund kann neben Ereigniskandidaten auch neue Quellen, bestätigbares Referenzwissen und Erweiterungen des Recherchehorizonts vorschlagen. Für KI-Kandidaten sind Fachregelbezug, verständliche Begründung, Quellen, Unsicherheit und vorgeschlagener Anschluss an bestehende oder neue Objekte erkennbar zu machen. Die Redaktion entscheidet.
-
-**FIB-RECH-RAHMEN-001 – Drei getrennte Referenzrahmen-Ebenen.** Bei Recherche und Analyse sind allgemeine Quellen-/Qualitätsprinzipien, demokratisch-gesellschaftliche Maßstäbe und spezifisch grüne politische Werte sauber zu unterscheiden. Politische Erwartungen dürfen keine Tatsachenbasis verändern. Der grüne Referenzrahmen begründet insbesondere eine gesondert kenntliche „Unsere Einordnung“. Die fachliche Ausarbeitung der demokratisch-gesellschaftlichen Ebene ist in den Altquellen ausdrücklich noch offen und wird hier nicht stillschweigend als entschieden dargestellt.
-
-**FIB-RECH-QUELLE-004 – Redaktionell eingebrachte Dateien mit getrennten Nutzungsrechten.** FIB soll öffentliche URLs, hochgeladene Dokumente (insbesondere PDF) und Quellen ohne öffentliche URL entgegennehmen können. Der interne Speicher- und Erkenntniswert und die öffentliche Bereitstellungsbefugnis werden unabhängig behandelt. Eine Datei wird öffentlich nur bei positiv geklärtem Nutzungsrecht und bestätigter Freigabe bereitgestellt. Interne Quellen können Recherche auslösen, dürfen jedoch nicht als öffentlich zugängliche Belege dargestellt werden. Bei Folgerecherchen wird geprüft, ob dazu inzwischen öffentlich belegte Entwicklungen vorliegen.
-
-**FIB-RECH-REGEL-001 – Versionierte operative Recherche- und Relevanzregeln.** GitHub/Fachhandbuch beschreibt fachlich verbindliche Regeln; deren aktiver operativer Stand soll strukturiert und versioniert in FIB geführt und gezielt bei Rechercheläufen verwendet werden. Ein Änderungsentwurf wird auf Widersprüche geprüft, anhand positiver, negativer und Grenzfälle getestet und erst redaktionell bestätigt aktiviert. Zu jeder Recherche muss der maßgebliche Regelstand erkennbar sein.
-
-**FIB-RECH-REGEL-002 – Zwei verschiedene Regeltests.** Die **Bewertungswirkung** vergleicht alte und neue Entscheidungen über bekannte Fundstellen, auch ehemals als nicht relevant eingestufte. Die **Entdeckungswirkung** erfordert eine zusätzliche Probe-Recherche mit Differenz der alten und neuen Funde. Tests verändern keine regulären Fachobjekte und erzeugen keine normalen Redaktionsaufgaben. Der zweite Test ist nötig, weil eine Regel sonst neue Suchräume verfehlen kann, obwohl die Bewertung bekannter Funde plausibel erscheint.
-
-**Implementierungsgrenze:** Diese Regeln sind aus den bestehenden Primärquellen übernommen. Die vollständige operative Umsetzung von Referenzobjekten, Uploads, Versionsregelverwaltung und Testläufen ist **nicht** durch die bisher ausgewerteten Edge Functions nachgewiesen. Historische Quellen bleiben bis zu ihrer vollständigen Übernahme gültig.
-
-## 3.12 Lesender Live-Abgleich Shared-Apps (22.10.2026)
+### 03.11.4 Read-only-Live-Abgleich Shared-Apps
 
 Die folgenden Befunde wurden **direkt über die Supabase-Projektverwaltung und eine ausschließlich lesende Datenbankabfrage** des Projekts `Shared-Apps` erhoben. Es wurden keine Daten, Berechtigungen oder Funktionen verändert.
 
@@ -293,46 +366,11 @@ Die folgenden Befunde wurden **direkt über die Supabase-Projektverwaltung und e
 
 **Offene Nachweise für eine spätere technische Abnahme:** Konkrete ausgeführte Funktionsversionen gegen den GitHub-Stand vergleichen; vorhandene externe Cron/CI/IONOS/Workflow-Aufträge untersuchen; Laufprotokolle, Regelstandsbezug, Quellenabdeckung, Fehlermeldungen und Regressionstests der Fälle #4, #77 und #99 nachweisen.
 
-## Quellenabgleich nach Fachabschnitten (22.10.2026)
-
-Diese Tabelle ist der **Abschluss der ersten abschnittsbezogenen Inventur der fünf unmittelbar rechercherelevanten Primärquellen**. „Zugeordnet“ bedeutet in der aktuellen Fassung: wesentliche Fachregel in diesem Kapitel beschrieben oder bewusst einem anderen Kapitel zugewiesen; kein Nachweis, dass Implementierung oder alle weiteren fachübergreifenden Quellen vollständig geprüft wurden.
-
-| Primärquelle / Abschnitte | Fachlicher Zielbereich | Zuordnung |
-|---|---|---|
-| Recherchearchitektur §§1–5 | Zweck, Recherchekontext, Beobachtungsauftrag | Kapitel 03 §§3.1–3.4 |
-| Recherchearchitektur §6 | Referenzobjekte, Aliase und Relationen | Fachobjekte, §3.11; Nachweis der Objektverwaltung offen |
-| Recherchearchitektur §§7–9 | offener Horizont, Lernschleife, Recherchebreite | §§3.2, 3.6, 3.11 |
-| Recherchearchitektur §§10–13 | Referenzrahmen, Transparenz, KI | §3.11; Qualitätsregeln zusätzlich Kapitel 10, öffentliche Darstellung Kapitel 09 |
-| Recherchearchitektur §14 | Fach-/Technikmodell-Folgen | §3.12; technischer Datenmodellabgleich separat |
-| Quellenmonitor §§1–6 | Quellenwege, Pflichtquellen, offene Entdeckung | §3.3, Fachobjekte, Ablauf |
-| Quellenmonitor §§7–8 | eingebrachte Quellen, technische Erkennung | §3.11; Speicher-/Rechteumsetzung separat |
-| Quellenmonitor §§9–11 | Stufen, Relevanz, Rückblick, Medien/Akteure | §3.6 |
-| Quellenmonitor §§12–15 | Kandidatenprüfung, Fehler, KI-Qualität | §§3.5–3.7, Schnittstelle zu Kapitel 04 |
-| Quellenmonitor „Regelverwaltung“ | Testarten, Versionsprüfung | §3.11 |
-| Beobachtungs-/Recherchemodell §§1–3 | Auftrag, Primärbezug, Status | §3.4, Fachobjekte |
-| Beobachtungs-/Recherchemodell §§4–7 und „Regelstand“ | Lauf, Provenienz, KI-Task, Historie, Tests | §§3.4, 3.11; technische Nachweise separat |
-| KI-Leitfaden §§5–6 | Quellenrollen, vierteilige Orts-/Relevanzprüfung | §§3.3, 3.6; ausdrücklich ohne politische Quellenverengung |
-| KI-Leitfaden §7 | Neuer Sachverhalt vs. Fortschreibung/Meldung | End-to-End-Ablauf, führende Detailregel in Kapitel 04 |
-| Fundstellenzuordnung-Begruendung.md | Beziehung/Begründung, Audit, UI-Grenze | §3.5 und Fachobjekte; redaktioneller Ablauf in Kapitel 04/08 |
-
-**Noch kein endgültiger Vollständigkeitsnachweis aller Projektentscheidungen:** Weitere fachlich relevante Abschnitte von `Datenmodell.md`, `Fachkonzept.md`, `KI-Leitfaden.md`, UI-/Workflow-Spezifikationen und neueren Issues können zusätzliche Regeln enthalten. Dieser restliche **quellenübergreifende Abgleich**, die technische Abnahme und die gemeinsame **inhaltliche Freigabe** bleiben offen. Das Kapitel darf daher noch nicht alleinige Primärquelle werden.
-
-### Fachkonzept und Implementierung gemeinsam fortentwickeln
-
-**FIB-RECH-GOV-001 – Fachliche Mitentscheidung bei fehlenden Funktionen.** Für noch nicht implementierte Komponenten gilt nicht „erst vollständig vorab spezifizieren, dann blind programmieren“. Die Entwicklung konkretisiert das Fachkonzept in fachlich prüfbaren Schritten. Jede neue fachliche Entscheidung wird **vor oder mit ihrer Implementierung** im führenden Fachhandbuch mit Regelkennung, Auswirkungen, Status-/Rechte-/Ablaufprüfung und gegebenenfalls Testfall festgehalten. Technische Detailwahl darf keine neue fachliche Regel ohne Abstimmung etablieren. Ein Entwicklungsissue ist erst abschließbar, nachdem die Dokumentationsfolgen geprüft und nötige Aktualisierungen erfolgt sind.
-
-## Übernahmematrix
-
-| Bisherige Quelle | In dieser Fassung berücksichtigt | Noch zu übernehmen oder abzugleichen |
-|---|---|---|
-| [Recherchearchitektur und Referenzrahmen](../Recherchearchitektur-und-Referenzrahmen.md) | Dynamischer Suchkontext und offene Recherche | Referenzrahmen, Lernschleife, Suchhorizont und Reichweitenregeln im Detail |
-| [Recherche und Quellenmonitor](../Recherche-und-Quellenmonitor.md) | Drei Quellenwege, Pflichtquellen, KI-Einsatz | Suchraum, Medien-/Akteursquellen, Fehlerbehandlung, Quoten und Rückblick |
-| [Beobachtungs- und Recherchemodell](../Beobachtungs-und-Recherchemodell.md) | Primärbezug, Status, Rechercheläufe | Lebenszyklusdetails und operative Provenienz |
-| [Fundstellenzuordnung – Begründung](../Fundstellenzuordnung-Begruendung.md) | Begründung und redaktionelle Prüfung | Fachfunktions-/UI-Abgrenzung zu Kap. 04 und 08 |
-| [Datenmodell](../Datenmodell.md) | Quelle/Fundstelle sowie Beobachtungsobjekte | technische Persistenz und fachliche Kardinalitäten final abgleichen |
-| [KI-Leitfaden](../KI-Leitfaden.md) | Noch nicht abschnittsweise geprüft | Regeln zur Quellenbindung und Qualität |
-
 ## Änderungshistorie
+
+| Version | Datum | Änderung |
+|---|---|---|
+| 0.8 | 23.10.2026 | Bisherigen Text entlang der zehn Perspektiven von Pustivo 10.2 umgeordnet; Prozessdarstellung vor Fachobjekten; offene fachliche Ausarbeitung sichtbar belassen. |
 
 | Version | Datum | Änderung |
 |---|---|---|
