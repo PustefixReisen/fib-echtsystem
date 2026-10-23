@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 2.5 – Konsolidierungsentwurf | 22.10.2026 | Projektverantwortung – erstellt mit KI-Unterstützung |
+| 2.6 – gemeinsame Regelgruppen lesefreundlich | 22.10.2026 | Projektverantwortung – erstellt mit KI-Unterstützung |
 
 > **Übernahmestatus:** Dieses Kapitel bündelt bereits beschlossene Fachregeln; während des Abgleichs bleiben die in [der Inventur](../Fachhandbuch-Inventur-2026-10-22.md) bezeichneten bisherigen Primärquellen verbindlich. Abweichungen und offene Fragen sind unten markiert. Erst die fachlich geprüfte vollständige Übernahme schaltet dieses Kapitel zur alleinigen Primärquelle.
 
@@ -43,6 +43,9 @@ Eine übergeordnete Frage wird erst durch konkrete lokale Vorgänge und Ereignis
 Es gibt zwei unterschiedliche Entscheidungen: **Gehört dieser Sachverhalt überhaupt zum Thema?** Das beantwortet der *Zuordnungsstatus*. **Wie wichtig ist er für die Erklärung?** Das beantwortet erst bei bestätigter Zuordnung die *Bedeutung für das Thema*. Beispielsweise kann der Ausbau des Autobahnkreuzes „Zugeordnet“ und zugleich „Prägend“ sein; eine weitere Verkehrsstudie kann „Kandidat“ sein, obwohl die KI sie als „Relevant“ vorschlägt. Der KI-Vorschlag allein macht sie nicht zum bestätigten Themenbestandteil.
 
 
+<details>
+<summary><strong>Verbindliche Regeln zu lokalen Bezügen (FIB-THEMA-BEZUG-001 bis -006)</strong></summary>
+
 **FIB-THEMA-BEZUG-001 – Auswahlbasis.** Ein Thema wird vorzugsweise durch die Auswahl ganzer Vorgänge gebildet. Ihre zugehörigen Ereignisse werden automatisch berücksichtigt. **Ergänzende direkte Einzelereignisse** sind zulässig, wenn sie nicht bereits über einen bestätigten Themenvorgang abgedeckt sind. Meldungen bilden keinen dritten Auswahlweg. Dieselbe Tatsache wird nicht mehrfach gewichtet, nur weil sie als Fundstelle, Ereignis, Meldung und Vorgang erscheint.
 
 **FIB-THEMA-BEZUG-002 – Vier redaktionelle Zuordnungsstatus.** Lokale Bezüge haben die fachlichen Zustände:
@@ -65,6 +68,8 @@ Status und Herkunft sind verschiedene Dimensionen: **KI-Vorschlag** bezeichnet e
 **FIB-THEMA-BEZUG-006 – Vorschlagssuche.** Das Öffnen eines Themas zeigt gespeicherte Kandidaten und löst **keine** neue KI-Suche aus. Eine gezielte Suche wird ausdrücklich mit **„Weitere Beziehungen vorschlagen“** gestartet. Die Redaktion darf außerdem Vorgänge und geeignete Einzelereignisse selbst suchen und aufnehmen.
 
 **Quelle:** [Themen- und Vorgangslogik §§5.1–5.4, 12](../Themen-und-Vorgangslogik.md), [Issue #149](https://github.com/PustefixReisen/fib-echtsystem/issues/149), [Issue #164](https://github.com/PustefixReisen/fib-echtsystem/issues/164); technischer Nachweis [PR #172](https://github.com/PustefixReisen/fib-echtsystem/pull/172).
+
+</details>
 
 ## 6.4 Perspektiven und Wirkungen
 
@@ -112,6 +117,9 @@ Die drei Einheiten bilden **keine Statushierarchie**: Eine zugeordnete Beziehung
 
 Bei Änderungen an Beziehungen, Perspektiven oder der Themendefinition kann der öffentliche Text fachlich überholt sein. Deshalb darf eine neue Arbeitsfassung **nicht stillschweigend** die bisherige veröffentlichte Fassung überschreiben. Redakteure können weiterarbeiten, ohne einen fertigen öffentlichen Informationsstand sofort zu verändern. Eine neue geänderte Fassung benötigt eine neue Freigabe.
 
+<details>
+<summary><strong>Verbindliche Regeln zu Beitrag, Fassungen und Freigabe</strong></summary>
+
 **FIB-THEMA-BEITRAG-001 – Zwei getrennte Textteile.** Der Beitrag enthält den sachlichen **Thementext** und die optionale, gesonderte **„Unsere Einordnung“**. KI-Textvorschläge bleiben von der redaktionell bearbeiteten Fassung unterscheidbar.
 
 **FIB-THEMA-BEITRAG-002 – Freigabe und Veröffentlichung.** Redaktionelle Freigabe ist eine eigenständige Handlung und **nicht automatisch eine öffentliche Veröffentlichung**. Freigaben/Veröffentlichungen werden mit Person und Zeitpunkt nachvollziehbar dokumentiert. Redakteure dürfen eigene Beitragsfassungen selbst freigeben und veröffentlichen; es gibt kein zwingendes Vier-Augen-Prinzip. KI darf weder eigenständig freigeben noch veröffentlichen.
@@ -135,6 +143,8 @@ Bei Änderungen an Beziehungen, Perspektiven oder der Themendefinition kann der 
 **FIB-THEMA-BEITRAG-011 – Pessimistische Objektsperre während der Bearbeitung.** Für die Bearbeitung eines Themenbeitrags gilt das bereits fachlich vereinbarte **pessimistische Sperrprinzip auf Objektebene**: Bearbeitet ein Redakteur das Objekt, können andere Redakteure es **nur lesen**, nicht parallel verändern. Die Sperre ist vor dem Beginn einer schreibenden Bearbeitung wirksam; eine alleinige Konfliktprüfung erst beim Speichern ist kein Ersatz. Die geltende übergreifende Primärregel steht in [Datenmodell §20.4](../Datenmodell.md): Lesen erzeugt keine Sperre; beim ersten Bearbeitungsversuch wird die Sperre angefordert, währenddessen erneuert und bei regulärem Ende freigegeben; ohne Erneuerung verfällt sie, und eine administrative Aufhebung verwaister Sperren wird auditiert. Die technische Umsetzung und Tests sind gesondert zu prüfen. Für andere FIB-Objekte ist dieselbe übergreifende Regel maßgeblich; dieses Kapitel legt keine abweichende Beitragssonderlogik fest.
 
 **FIB-THEMA-KOORD-002 – Anzeige der aktuellen Bearbeitungssperre.** Die Karte **„Redaktionelle Koordination“** zeigt an, wenn ein anderer Redakteur das Objekt aktuell zur Bearbeitung gesperrt hat. Für weitere Benutzer ist das Objekt dann nur lesbar; Bearbeitungsaktionen bleiben gesperrt. **Aktueller Bearbeiter/Sperrinhaber** und **dauerhafte Federführung** sind voneinander zu unterscheiden: Die Federführung verschafft keine exklusiven Bearbeitungsrechte. Die Anzeige übernimmt den tatsächlichen Sperrstand gemäß [Datenmodell §20.4](../Datenmodell.md); sie erzeugt selbst keine Sperre. Das pessimistischen Sperrkonzept ist für alle betroffenen Objekte einheitlich anzuwenden.
+
+</details>
 
 ## 6.6 Zusammenspiel und Lebenszyklus
 
@@ -389,6 +399,7 @@ Die Kapitelversion bleibt ein **Konsolidierungsentwurf**. Dieser Quellenabgleich
 
 | Version | Datum | Änderung |
 |---|---|---|
+| 2.6 | 23.10.2026 | Lesestandard: lokale Bezüge und Beitragsfassungen mit einführendem Fachtext und zusammengefassten einklappbaren Regelgruppen; Regelwortlaut beibehalten. |
 | 2.5 | 22.10.2026 | Abschließender Tabellen-/Regelabgleich: doppelte Rechteübersicht entfernt, Altformulierungen präzisiert, verbleibende Kapitelgrenzen offen. |
 | 2.4 | 22.10.2026 | Reguläre Rechte von Redaktion und Administration vereinheitlicht; nur administrative Sperraufhebung ausgenommen. |
 | 2.3 | 22.10.2026 | Sonderfall archivierter, nie freigegebener Entwürfe fachlich bestätigt: Wiederaufnahme nach Entwurf. |
