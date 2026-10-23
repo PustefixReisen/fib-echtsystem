@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 2.0 – Beobachtungsaufträge abgestimmt | 23.10.2026 | Projektverantwortung – erstellt mit KI-Unterstützung |
+| 2.1 – parallele Recherchekoordination abgestimmt | 23.10.2026 | Projektverantwortung – erstellt mit KI-Unterstützung |
 
 > **Status:** Konsolidierungsentwurf. Die vorhandenen Fachregeln und Quellenbefunde wurden ohne neue fachliche Entscheidung nach dem Pustivo-Dokumentationsmodell v1.3, §10.2 neu erschlossen. Die bisherigen Primärquellen bleiben bis zur fachlichen Abnahme gültig. Bisherige Abschnittsnummern in übernommenen Verweisen sind historisch und werden im anschließenden Referenzabgleich angepasst.
 
@@ -248,6 +248,12 @@ Rechercheläufe können auch manuell, aus der offenen Recherche oder als anlassb
 **FIB-RECH-BEOB-003 – Selbstständige Beobachtung bei aktivem Auftrag (abgestimmt 23.10.2026).** Ein aktiver Beobachtungsauftrag wird von FIB ohne erneute Freigabe jeder einzelnen Nachrecherche eigenständig bearbeitet. Neue wesentliche Erkenntnisse, Belege und Vorschläge zur fachlichen Fortschreibung werden der Redaktion zur Prüfung bereitgestellt. Ein Zeitraum ohne neue Funde beendet den Auftrag nicht automatisch. Der allgemeine Recherchebetrieb bleibt auch bei pausiertem oder beendetem Auftrag bestehen.
 
 **FIB-RECH-BEOB-004 – Redaktioneller Lebenszyklus (abgestimmt 23.10.2026).** Aktivierung, Pausierung und Beendigung eines Beobachtungsauftrags sind redaktionelle Entscheidungen. Die KI darf eine solche Änderung mit Begründung vorschlagen, aber nicht selbst verbindlich vollziehen. Es gilt das bereits definierte Zustandsmodell **Aktiv / Pausiert / Beendet**; es entsteht hier kein weiteres Statusmodell. Die konkreten Statusübergänge, Wiedervorlagen, Folgen einer späteren neuen Fundstelle und Darstellung in der Oberfläche sind in §§03.4, 03.5 und 03.7 zu vertiefen.
+
+**FIB-RECH-KOORD-001 – Gemeinsamer Informationsbestand bei parallelen Recherchen (abgestimmt 23.10.2026).** Alle Rechercheformen nutzen denselben Quellen- und Fundstellenbestand sowie das bestätigte FIB-Wissen. Dieselbe Information wird nicht allein deshalb als neue Fundstelle oder neuer fachlicher Sachverhalt gespeichert, weil ein weiterer Rechercheanlass sie benötigt. Eine Quellenänderung kann mehrere aktive Recherchefragen betreffen; die betroffenen Fragen werden auf neue Erkenntnisse geprüft. Technische Optimierung von Doppelabrufen wird später festgelegt.
+
+**FIB-RECH-KOORD-002 – Eigenständige Fragestellungen und Ergebnisse (abgestimmt 23.10.2026).** Jede Recherche behält ihre eigene Frage, ihren Anlass, ihren Ergebnisstand und die nachvollziehbare Zuordnung verwendeter Fundstellen. Dieselbe Fundstelle darf für unterschiedliche Fragen verschieden ausgewertet werden; Wiederverwendung darf eigenständige sachliche Aspekte nicht verdecken. Die allgemeinen Regeln zur Historie und Wiederverwendung gelten weiterhin nach **FIB-RECH-LAUF-003**; keine zweite Historienregel.
+
+**Noch zu vertiefen:** Fachliche Zuordnung von Rechercheläufen zu Fundstellen (einschließlich Mehrfachnutzung), Beziehungen zu Beobachtungsaufträgen, Änderungsbenachrichtigung und UI-Darstellung in §§03.4, 03.5 und 03.7.
 
 ### 03.3.4 P3 – Fundstellen prüfen und bewerten (vorhandener Regelbestand)
 
@@ -537,6 +543,7 @@ Die folgenden Befunde wurden **direkt über die Supabase-Projektverwaltung und e
 
 | Version | Datum | Änderung |
 |---|---|---|
+| 2.1 | 23.10.2026 | Gemeinsamer Informationsbestand bei parallelen Recherchen und getrennte Fragestellungen/Ergebnisse bestätigt. |
 | 2.0 | 23.10.2026 | Selbstständige Ausführung aktiver Beobachtungsaufträge und redaktionelle Kontrolle ihres Lebenszyklus bestätigt. |
 | 1.9 | 23.10.2026 | Eigenständige Rechercheplanung mit redaktioneller Einflussmöglichkeit und wiederverwendbare Recherchehistorie fachlich abgestimmt. |
 | 1.8 | 23.10.2026 | Gleiche fachliche Fundstellenprüfung für redaktionell und automatisch eingebrachte Informationen abgestimmt; automatische Folgefragen durch Verweis auf P2 übernommen. |
