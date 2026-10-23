@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 1.9 – P2-Rechercheplanung abgestimmt | 23.10.2026 | Projektverantwortung – erstellt mit KI-Unterstützung |
+| 2.0 – Beobachtungsaufträge abgestimmt | 23.10.2026 | Projektverantwortung – erstellt mit KI-Unterstützung |
 
 > **Status:** Konsolidierungsentwurf. Die vorhandenen Fachregeln und Quellenbefunde wurden ohne neue fachliche Entscheidung nach dem Pustivo-Dokumentationsmodell v1.3, §10.2 neu erschlossen. Die bisherigen Primärquellen bleiben bis zur fachlichen Abnahme gültig. Bisherige Abschnittsnummern in übernommenen Verweisen sind historisch und werden im anschließenden Referenzabgleich angepasst.
 
@@ -244,6 +244,10 @@ Rechercheläufe können auch manuell, aus der offenen Recherche oder als anlassb
 **FIB-RECH-PLAN-001 – Eigenständige Rechercheplanung (abgestimmt 23.10.2026).** FIB leitet aus Rechercheanlass, vorhandenem FIB-Wissen, räumlichem und thematischem Recherchehorizont, Quellenbestand sowie gültigen Recherche-/Relevanzregeln selbstständig eine geeignete Recherchestrategie ab. Redakteure können deren wesentliche Suchwege und Begrenzungen **nachvollziehen und bei Bedarf beeinflussen**; eine Vorabfreigabe für jeden einzelnen Recherchelauf ist nicht erforderlich. Die fachliche Beschreibung eines Beobachtungsauftrags ersetzt keine technisch festgeschriebene Suchwortliste. Konkrete Eingriffs- und Bedienmöglichkeiten werden in §03.7 abgestimmt.
 
 **FIB-RECH-LAUF-003 – Nachvollziehbarkeit und Wiederverwendung (abgestimmt 23.10.2026).** Die Fragestellung, der Rechercheanlass, der maßgebliche fachliche Kontext und Regelstand, die Ergebnisse und zugehörigen Fundstellen bleiben für spätere Recherchen nachvollziehbar erhalten. FIB darf diese Vorarbeiten nutzen, muss aber **zeitliche Gültigkeit, Änderungen und mögliche Überholung** früherer Erkenntnisse prüfen. Die dauerhafte fachliche Provenienz ist von der Aufbewahrung technischer Einzelabfragen und Rohantworten zu unterscheiden. Konkrete Speicher- und Versionsstrukturen folgen in §03.4; die Rechercheergebnisanzeige in §03.7.
+
+**FIB-RECH-BEOB-003 – Selbstständige Beobachtung bei aktivem Auftrag (abgestimmt 23.10.2026).** Ein aktiver Beobachtungsauftrag wird von FIB ohne erneute Freigabe jeder einzelnen Nachrecherche eigenständig bearbeitet. Neue wesentliche Erkenntnisse, Belege und Vorschläge zur fachlichen Fortschreibung werden der Redaktion zur Prüfung bereitgestellt. Ein Zeitraum ohne neue Funde beendet den Auftrag nicht automatisch. Der allgemeine Recherchebetrieb bleibt auch bei pausiertem oder beendetem Auftrag bestehen.
+
+**FIB-RECH-BEOB-004 – Redaktioneller Lebenszyklus (abgestimmt 23.10.2026).** Aktivierung, Pausierung und Beendigung eines Beobachtungsauftrags sind redaktionelle Entscheidungen. Die KI darf eine solche Änderung mit Begründung vorschlagen, aber nicht selbst verbindlich vollziehen. Es gilt das bereits definierte Zustandsmodell **Aktiv / Pausiert / Beendet**; es entsteht hier kein weiteres Statusmodell. Die konkreten Statusübergänge, Wiedervorlagen, Folgen einer späteren neuen Fundstelle und Darstellung in der Oberfläche sind in §§03.4, 03.5 und 03.7 zu vertiefen.
 
 ### 03.3.4 P3 – Fundstellen prüfen und bewerten (vorhandener Regelbestand)
 
@@ -533,6 +537,7 @@ Die folgenden Befunde wurden **direkt über die Supabase-Projektverwaltung und e
 
 | Version | Datum | Änderung |
 |---|---|---|
+| 2.0 | 23.10.2026 | Selbstständige Ausführung aktiver Beobachtungsaufträge und redaktionelle Kontrolle ihres Lebenszyklus bestätigt. |
 | 1.9 | 23.10.2026 | Eigenständige Rechercheplanung mit redaktioneller Einflussmöglichkeit und wiederverwendbare Recherchehistorie fachlich abgestimmt. |
 | 1.8 | 23.10.2026 | Gleiche fachliche Fundstellenprüfung für redaktionell und automatisch eingebrachte Informationen abgestimmt; automatische Folgefragen durch Verweis auf P2 übernommen. |
 | 1.7 | 23.10.2026 | Regelmäßige anlassunabhängige Quellenentdeckung und unmittelbare prüfende Nutzung von Fundstellen aus Quellenkandidaten abgestimmt. |
