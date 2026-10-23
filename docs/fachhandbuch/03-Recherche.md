@@ -4,17 +4,54 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 0.8 – fachliche Neugliederung zur Abstimmung | 23.10.2026 | Projektverantwortung – erstellt mit KI-Unterstützung |
+| 0.9 – Ziele und Recherchehorizont fachlich abgestimmt | 23.10.2026 | Projektverantwortung – erstellt mit KI-Unterstützung |
 
 > **Status:** Konsolidierungsentwurf. Die vorhandenen Fachregeln und Quellenbefunde wurden ohne neue fachliche Entscheidung nach dem Pustivo-Dokumentationsmodell v1.3, §10.2 neu erschlossen. Die bisherigen Primärquellen bleiben bis zur fachlichen Abnahme gültig. Bisherige Abschnittsnummern in übernommenen Verweisen sind historisch und werden im anschließenden Referenzabgleich angepasst.
 
 ## 03.1 Fachliche Aufgabe, Ziele, Nutzen und Grenzen
 
-FIB recherchiert für Feldkirchen relevante Entwicklungen möglichst vollständig, nachvollziehbar und quellengebunden. **Bekannte Begriffe, bereits angelegte Vorgänge und Themen dürfen die Entdeckung bislang unbekannter Entwicklungen nicht begrenzen.** Ein exemplarischer Negativtest ist das zunächst übersehene Baugebiet „Kiesgrund“.
+**Ziel:** FIB soll Informationen über Feldkirchen und für Feldkirchen möglicherweise bedeutsame Entwicklungen möglichst vollständig entdecken, auch wenn noch kein passender FIB-Vorgang oder kein Thema existiert. **Erfassung**, **Relevanzbewertung**, **redaktionelle Entscheidung** und **öffentliche Veröffentlichung** bleiben unterschiedliche Schritte. Eine erkannte Fundstelle wird nicht bereits durch ihre Erfassung zum Ereignis oder veröffentlichten Beitrag.
 
-**FIB-RECH-PRINZIP-001 – Zwei komplementäre Recherchewege.** Die Recherche kombiniert gezielte Beobachtung zu bestehenden Vorgängen und Themen mit einer **offenen, themenunabhängigen Entdeckung**. Beide Wege ergänzen sich; die offene Suche darf nicht allein aus dem bestehenden Themenbestand abgeleitet werden.
+### 03.1.1 Zwei komplementäre Recherchewege
 
-**FIB-RECH-PRINZIP-002 – Keine automatische Publikation.** Das Erkennen einer Quelle oder Fundstelle ist noch keine redaktionelle Freigabe oder Veröffentlichung. Erfassung, KI-Analyse, redaktionelle Entscheidung und öffentliche Bereitstellung bleiben getrennte Schritte.
+**FIB-RECH-PRINZIP-001 – Wissensgeleitete und offene Recherche.**
+
+1. **Wissensgeleitete Recherche:** FIB recherchiert ausgehend von bereits bekannten Meldungen, Ereignissen, Vorgängen, Themen und offenen Fragen. Dazu konsultiert es auch bekannte **dauerhaft zu beobachtende Quellen**, die in einem pflegbaren Quellenbestand geführt werden.
+2. **Offene Recherche:** FIB sucht nach bislang unbekannten Entwicklungen **unabhängig von den bereits angelegten Meldungen, Ereignissen, Vorgängen und Themen**. Sie wird dennoch durch einen **räumlichen und einen thematischen Bezugsrahmen** fachlich gesteuert; diese Rahmen begrenzen sie nicht auf schon bekannte FIB-Objekte.
+
+Beide Wege verwenden denselben **dynamischen Recherchehorizont**. Sie ergänzen sich und dürfen nicht gegeneinander ausgespielt werden. „Offen“ bedeutet nicht sachlich beliebig.
+
+### 03.1.2 Räumlicher und thematischer Recherchehorizont
+
+**FIB-RECH-HORIZONT-001 – Nachvollziehbarer Recherchehorizont.** Der fachliche Recherchehorizont setzt sich zusammen aus (a) räumlichen Referenzobjekten und ihren funktionalen Beziehungen, (b) allgemeinen **thematischen Recherchefeldern** als redaktionell festgelegten Schwerpunkten, getrennt von konkreten FIB-Themen, (c) dem bekannten FIB-Wissensbestand, (d) begründeten indirekten beziehungsweise möglicherweise zukünftigen Relevanzbeziehungen, (e) bekannten Quellen einschließlich Pflichtquellen und (f) den geltenden Rechercheregeln. Er muss **dauerhaft geführt, veränderbar und nachvollziehbar** sein. Die fachlichen Definitionen und die noch fehlenden operativen Datenstrukturen gehören in §03.4.
+
+**FIB-RECH-HORIZONT-002 – Redaktionelle Transparenz und Pflege.** Die Redaktion muss erkennen können, **wonach und warum FIB sucht**, welche Orte, Recherchefelder, Quellen und Relevanzbeziehungen zugrunde liegen und welche davon redaktionell gesetzt oder aus FIB-Wissen abgeleitet wurden. Berechtigte Redakteure sollen den Recherchehorizont einsehen, ändern und ergänzen können; KI-Vorschläge werden kenntlich gemacht und nicht stillschweigend verbindlich. Die konkrete Navigation und Bedienung werden in §03.7 **erprobt**, nicht hier als fertige Oberfläche festgelegt.
+
+### 03.1.3 Drei fachliche Relevanzfälle
+
+**FIB-RECH-RELEVANZ-004 – Grundfälle der Entdeckung.**
+
+| Fall | Ortsbezug | Thematischer Bezug | Fachliche Folge |
+|---|---|---|---|
+| **Regelfall** | Vorhanden | Vorhanden | Im Recherchehorizont berücksichtigen |
+| **Unmittelbarer Feldkirchen-Bezug** | Direkt vorhanden | Kein bekannter oder priorisierter Themenbezug nötig | **Möglichst vollständig als Fundstelle erfassen**, auch unpolitische Inhalte |
+| **Begründete mögliche zukünftige Bedeutung** | Kein unmittelbarer lokaler Bezug | Konkreter Zusammenhang mit einem kommunalen Recherchefeld bzw. möglicher kommunaler Entwicklung | Ebenfalls als Recherchekandidat berücksichtigen; Bedeutung und Unsicherheit begründen |
+
+Zur zweiten Gruppe gehören insbesondere **alle erreichbaren Veröffentlichungen über Feldkirchen** in einschlägigen Medien (z. B. Merkur, SZ, tz, hallo) sowie relevante Veröffentlichungen des Rathauses und der Parteien. Dazu gehören ausdrücklich auch unpolitische Meldungen, beispielsweise Vereinsveranstaltungen oder Sportberichte. **Eine vollständige Erfassung über alle denkbaren externen Quellen kann technisch nicht garantiert werden**; Quellenabdeckung, Ausfälle und Lücken müssen nachvollziehbar sein.
+
+Zum dritten Fall gehört etwa ein realer Pilot zum autonomen Fahren in München, sofern nachvollziehbar ist, **welcher Entwicklungspfad oder welche fachliche Beziehung** eine zukünftige Bedeutung für Feldkirchen begründen könnte. Bloße thematische Ähnlichkeit genügt nicht. Die räumlichen und thematischen Zusammenhänge und die Herleitung müssen überprüfbar und pflegbar sein.
+
+### 03.1.4 Redaktionelle Sichtung auch unpolitischer Fundstellen
+
+**FIB-RECH-SICHTUNG-001 – KI-Voreinschätzung, redaktionelle Entscheidung.** Alle erfassten unmittelbaren Feldkirchen-Fundstellen werden der redaktionellen Sichtung zugänglich gemacht. Die KI kann eine **vorläufige Relevanzeinschätzung mit Begründung** vorbelegen und insbesondere potenziell irrelevante Fundstellen kenntlich machen. Der Redakteur muss die Fundstellen durchgehen und kann irrelevante Fundstellen **zurückstellen**. Eine KI-Voreinstellung ist **keine verbindliche Zurückstellung**, keine Löschung und keine Publikationsentscheidung. Zurückgestellte Fundstellen bleiben nachvollziehbar erhalten, etwa für spätere erneute Prüfung und Regressionstests.
+
+Die **konkreten Statuswerte, Übergänge, Filter und Massenbearbeitungsmöglichkeiten** der Sichtung werden in §§03.4, 03.5 und 03.7 mit der Redaktion festgelegt; aus dem Wort „zurückstellen“ wird hier noch kein ungeprüftes vollständiges Statusmodell abgeleitet.
+
+**FIB-RECH-PRINZIP-002 – Keine automatische Publikation.** Das Erkennen einer Quelle oder Fundstelle ist noch keine redaktionelle Freigabe oder Veröffentlichung. Recherchefunde können umfangreicher sein als die später veröffentlichte Auswahl.
+
+### 03.1.5 Grenzen und Erfolgskriterien
+
+FIB strebt bei unmittelbarem Feldkirchen-Bezug eine **hohe Auffindbarkeit** auch ohne politisch-thematische Vorselektion an. Ziel ist zugleich, neue bedeutsame Entwicklungen außerhalb des bekannten Wissensbestands entdecken zu können. Der Erfolg ist durch nachvollziehbare Quellenabdeckung, erkennbare Recherche- und Fehlerprotokolle, den Anteil übersehener relevanter Testfälle, die Prüfbarkeit des Recherchehorizonts und die redaktionelle Bearbeitbarkeit auch irrelevanter Funde zu bewerten. Die konkrete Messmethodik und Grenzwerte folgen nach fachlicher Abstimmung.
 
 ## 03.2 Aufgabenbereiche, Rollen und Verantwortlichkeiten
 
@@ -370,6 +407,7 @@ Die folgenden Befunde wurden **direkt über die Supabase-Projektverwaltung und e
 
 | Version | Datum | Änderung |
 |---|---|---|
+| 0.9 | 23.10.2026 | Fachliche Ziele nach Abstimmung präzisiert: wissensgeleitete/offene Recherche, dynamischer Horizonte, örtliche Vollständigkeitsregel und redaktionelle Sichtung mit KI-Voreinschätzung. |
 | 0.8 | 23.10.2026 | Bisherigen Text entlang der zehn Perspektiven von Pustivo 10.2 umgeordnet; Prozessdarstellung vor Fachobjekten; offene fachliche Ausarbeitung sichtbar belassen. |
 
 | Version | Datum | Änderung |
