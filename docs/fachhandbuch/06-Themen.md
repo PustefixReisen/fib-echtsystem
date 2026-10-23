@@ -144,13 +144,13 @@ Bei Änderungen an Beziehungen, Perspektiven oder der Themendefinition kann der 
 
 **FIB-THEMA-KOORD-002 – Anzeige der aktuellen Bearbeitungssperre.** Die Karte **„Redaktionelle Koordination“** zeigt an, wenn ein anderer Redakteur das Objekt aktuell zur Bearbeitung gesperrt hat. Für weitere Benutzer ist das Objekt dann nur lesbar; Bearbeitungsaktionen bleiben gesperrt. **Aktueller Bearbeiter/Sperrinhaber** und **dauerhafte Federführung** sind voneinander zu unterscheiden: Die Federführung verschafft keine exklusiven Bearbeitungsrechte. Die Anzeige übernimmt den tatsächlichen Sperrstand gemäß [Datenmodell §20.4](../Datenmodell.md); sie erzeugt selbst keine Sperre. Das pessimistischen Sperrkonzept ist für alle betroffenen Objekte einheitlich anzuwenden.
 
+</details>
+
 ## 6.6 Zusammenspiel und Lebenszyklus
 
 ### Plausibilitätsregeln für zulässige Zustandsübergänge
 
 Die Regeln zu Zustandsübergängen sind **fachliche Plausibilitäts- und Geschäftsregeln**: Sie beschreiben zulässige Aktionen, notwendige Vorbedingungen und fachliche Folgen an Thema, lokalen Beziehungen, Beitragsfassungen und Veröffentlichung. Die technische Durchsetzung und eine später aus den Primärregeln abgeleitete Status-/Rechteübersicht müssen auf diese Regeln Bezug nehmen.
-
-</details>
 
 ### 6.6.1 Thema: Zustände, Übergänge und Rechte
 
