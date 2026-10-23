@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 1.8 – redaktionelle Quellenübernahme abgestimmt | 23.10.2026 | Projektverantwortung – erstellt mit KI-Unterstützung |
+| 1.9 – P2-Rechercheplanung abgestimmt | 23.10.2026 | Projektverantwortung – erstellt mit KI-Unterstützung |
 
 > **Status:** Konsolidierungsentwurf. Die vorhandenen Fachregeln und Quellenbefunde wurden ohne neue fachliche Entscheidung nach dem Pustivo-Dokumentationsmodell v1.3, §10.2 neu erschlossen. Die bisherigen Primärquellen bleiben bis zur fachlichen Abnahme gültig. Bisherige Abschnittsnummern in übernommenen Verweisen sind historisch und werden im anschließenden Referenzabgleich angepasst.
 
@@ -240,6 +240,10 @@ Rechercheläufe können auch manuell, aus der offenen Recherche oder als anlassb
 **FIB-RECH-LAUF-001 – Begrenzte eigenständige Vertiefung (abgestimmt 23.10.2026).** Aus einem Rechercheergebnis unmittelbar entstehende Fragen darf FIB selbstständig nachrecherchieren, solange ein nachvollziehbarer Zusammenhang zum ursprünglichen Anlass besteht. Weiter entfernte Fragestellungen werden als Vorschläge für gesonderte Recherche bereitgestellt. Die genaue Aufwandsbegrenzung und Abbruchbedingungen sind noch fachlich zu spezifizieren.
 
 **FIB-RECH-LAUF-002 – Nachvollziehbare Ergebnisübersicht (abgestimmt 23.10.2026).** Jede gezielte Recherche endet mit einer nachvollziehbaren Übersicht von Recherchefrage, gesichertem Ergebnis, Fundstellen/Quellen, bereits vorhandenem FIB-Wissen, neuen Erkenntnissen, offenen Fragen/Unsicherheiten und fachlichen Vorschlägen. **Auch ohne Treffer** muss ein Ergebnis mit Suchumfang, Grenzen und gegebenenfalls Fehlern verfügbar sein; ein Nulltreffer belegt nicht das Nichtvorhandensein des Sachverhalts.
+
+**FIB-RECH-PLAN-001 – Eigenständige Rechercheplanung (abgestimmt 23.10.2026).** FIB leitet aus Rechercheanlass, vorhandenem FIB-Wissen, räumlichem und thematischem Recherchehorizont, Quellenbestand sowie gültigen Recherche-/Relevanzregeln selbstständig eine geeignete Recherchestrategie ab. Redakteure können deren wesentliche Suchwege und Begrenzungen **nachvollziehen und bei Bedarf beeinflussen**; eine Vorabfreigabe für jeden einzelnen Recherchelauf ist nicht erforderlich. Die fachliche Beschreibung eines Beobachtungsauftrags ersetzt keine technisch festgeschriebene Suchwortliste. Konkrete Eingriffs- und Bedienmöglichkeiten werden in §03.7 abgestimmt.
+
+**FIB-RECH-LAUF-003 – Nachvollziehbarkeit und Wiederverwendung (abgestimmt 23.10.2026).** Die Fragestellung, der Rechercheanlass, der maßgebliche fachliche Kontext und Regelstand, die Ergebnisse und zugehörigen Fundstellen bleiben für spätere Recherchen nachvollziehbar erhalten. FIB darf diese Vorarbeiten nutzen, muss aber **zeitliche Gültigkeit, Änderungen und mögliche Überholung** früherer Erkenntnisse prüfen. Die dauerhafte fachliche Provenienz ist von der Aufbewahrung technischer Einzelabfragen und Rohantworten zu unterscheiden. Konkrete Speicher- und Versionsstrukturen folgen in §03.4; die Rechercheergebnisanzeige in §03.7.
 
 ### 03.3.4 P3 – Fundstellen prüfen und bewerten (vorhandener Regelbestand)
 
@@ -529,6 +533,7 @@ Die folgenden Befunde wurden **direkt über die Supabase-Projektverwaltung und e
 
 | Version | Datum | Änderung |
 |---|---|---|
+| 1.9 | 23.10.2026 | Eigenständige Rechercheplanung mit redaktioneller Einflussmöglichkeit und wiederverwendbare Recherchehistorie fachlich abgestimmt. |
 | 1.8 | 23.10.2026 | Gleiche fachliche Fundstellenprüfung für redaktionell und automatisch eingebrachte Informationen abgestimmt; automatische Folgefragen durch Verweis auf P2 übernommen. |
 | 1.7 | 23.10.2026 | Regelmäßige anlassunabhängige Quellenentdeckung und unmittelbare prüfende Nutzung von Fundstellen aus Quellenkandidaten abgestimmt. |
 | 1.6 | 23.10.2026 | Gemeinsamen Ablauf vor P1 gesetzt, provisorische Nummerierung bereinigt, Bedienung nach §03.7 verwiesen und P1-Qualitätsgrundsätze dokumentiert. |
