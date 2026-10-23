@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 2.3 – Fachfragen sichtbar gegliedert | 23.10.2026 | Projektverantwortung – erstellt mit KI-Unterstützung |
+| 2.4 – Regelgruppen-Standard abgestimmt | 23.10.2026 | Projektverantwortung – erstellt mit KI-Unterstützung |
 
 > **Status:** Konsolidierungsentwurf. Die vorhandenen Fachregeln und Quellenbefunde wurden ohne neue fachliche Entscheidung nach dem Pustivo-Dokumentationsmodell v1.3, §10.2 neu erschlossen. Die bisherigen Primärquellen bleiben bis zur fachlichen Abnahme gültig. Bisherige Abschnittsnummern in übernommenen Verweisen sind historisch und werden im anschließenden Referenzabgleich angepasst.
 
@@ -249,7 +249,7 @@ Rechercheläufe können auch manuell, aus der offenen Recherche oder als anlassb
 
 **FIB-RECH-BEOB-004 – Redaktioneller Lebenszyklus (abgestimmt 23.10.2026).** Aktivierung, Pausierung und Beendigung eines Beobachtungsauftrags sind redaktionelle Entscheidungen. Die KI darf eine solche Änderung mit Begründung vorschlagen, aber nicht selbst verbindlich vollziehen. Es gilt das bereits definierte Zustandsmodell **Aktiv / Pausiert / Beendet**; es entsteht hier kein weiteres Statusmodell. Die konkreten Statusübergänge, Wiedervorlagen, Folgen einer späteren neuen Fundstelle und Darstellung in der Oberfläche sind in §§03.4, 03.5 und 03.7 zu vertiefen.
 
-#### 03.3.3.1 Wie werden gleichzeitig laufende Recherchen koordiniert?
+### 03.3.3.1 Wie werden gleichzeitig laufende Recherchen koordiniert?
 
 **Fachliche Aufgabe und Nutzen**
 
@@ -569,6 +569,7 @@ Die folgenden Befunde wurden **direkt über die Supabase-Projektverwaltung und e
 
 | Version | Datum | Änderung |
 |---|---|---|
+| 2.4 | 23.10.2026 | Fachliche Fragen optisch als gut sichtbare Standard-Markdown-Überschriften; gemeinsame Erklärung und zusammengefasste Regeln gemäß Pustivo-Dokumentationsmodell v1.4; weitere Kapitel schrittweise konsolidieren. |
 | 2.3 | 23.10.2026 | Überschrift der fachlichen Frage in P2 hierarchisch nummeriert, prominenter durch eigenständige Unterabschnitte; zusammengehörige Regeln gemeinsam belassen. |
 | 2.2 | 23.10.2026 | Darstellungsprototyp mit verständlicher Einführung, Beispieltabelle und einklappbaren Regeln zur Koordination paralleler Recherchen; Standardentscheidung nach Erprobung. |
 | 2.1 | 23.10.2026 | Gemeinsamer Informationsbestand bei parallelen Recherchen und getrennte Fragestellungen/Ergebnisse bestätigt. |
