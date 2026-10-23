@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 2.6 – gemeinsame Regelgruppen lesefreundlich | 22.10.2026 | Projektverantwortung – erstellt mit KI-Unterstützung |
+| 2.7 – Freigabeablauf vor Regelgruppe erläutert | 22.10.2026 | Projektverantwortung – erstellt mit KI-Unterstützung |
 
 > **Übernahmestatus:** Dieses Kapitel bündelt bereits beschlossene Fachregeln; während des Abgleichs bleiben die in [der Inventur](../Fachhandbuch-Inventur-2026-10-22.md) bezeichneten bisherigen Primärquellen verbindlich. Abweichungen und offene Fragen sind unten markiert. Erst die fachlich geprüfte vollständige Übernahme schaltet dieses Kapitel zur alleinigen Primärquelle.
 
@@ -112,6 +112,12 @@ Zur Verständlichkeit betrachten wir zuerst **jedes Objekt für sich** und erst 
 **C. Beitrag (Textfassung).** Der Beitrag setzt den bestätigten Kenntnisstand für die Öffentlichkeit um. Eine **Arbeitsfassung** enthält sachlichen Thementext und optional die getrennt editierbare **„Unsere Einordnung“**. Die Redaktion kann eine konkrete *Fassung* freigeben; eine solche Freigabe darf bis zur ersten Veröffentlichung dieser Fassung zurückgenommen werden. **Veröffentlichung ist ein zusätzlicher ausdrücklicher Schritt**, der eine freigegebene Fassung nach außen sichtbar macht. Der Sachtext und die optionale Einordnung sind **Bestandteile derselben Beitragsfassung**, keine zwei unabhängig zu veröffentlichenden Objekte.
 
 Die drei Einheiten bilden **keine Statushierarchie**: Eine zugeordnete Beziehung ist nicht automatisch ein freigegebener Beitrag; ein aktives Thema ist nicht automatisch veröffentlicht. Gleichwohl bestehen **fachliche Abhängigkeiten**, die §6.6 erläutert.
+
+### Wie bleiben Bearbeitung, Freigabe und Veröffentlichung getrennt?
+
+Für Redakteure ist entscheidend, dass sie einen Beitrag bearbeiten können, ohne den veröffentlichten Stand unbeabsichtigt zu verändern. Beim Öffnen eines veröffentlichten Beitrags sehen sie ihre Arbeitsfassung; die aktuelle öffentliche Fassung kann daneben schreibgeschützt eingesehen werden. Eine neue Arbeitsfassung baut grundsätzlich auf der maßgeblichen bisherigen Fassung auf. Das ausdrückliche Speichern übernimmt Änderungen nur in den Arbeitsstand – es veröffentlicht nichts. Erst die gesonderte Freigabe erzeugt eine unveränderliche Beitragsfassung; eine Veröffentlichung ist eine weitere bewusste Entscheidung. Ältere freigegebene Fassungen bleiben nachvollziehbar.
+
+Bei ungespeicherten Änderungen warnt FIB vor Datenverlust. Eine laufende Bearbeitung ist für andere Redakteure lesbar, aber nicht gleichzeitig schreibbar; die dauerhafte redaktionelle Federführung ist nicht mit der aktuellen Bearbeitungssperre gleichzusetzen.
 
 ### Warum braucht der Beitrag eine eigene Freigabe?
 
@@ -399,6 +405,7 @@ Die Kapitelversion bleibt ein **Konsolidierungsentwurf**. Dieser Quellenabgleich
 
 | Version | Datum | Änderung |
 |---|---|---|
+| 2.7 | 23.10.2026 | Redaktioneller Ablauf für Arbeitsfassung, Speichern, Freigabe, Veröffentlichung und Sperre vor gebündeltem Regeltext erläutert. |
 | 2.6 | 23.10.2026 | Lesestandard: lokale Bezüge und Beitragsfassungen mit einführendem Fachtext und zusammengefassten einklappbaren Regelgruppen; Regelwortlaut beibehalten. |
 | 2.5 | 22.10.2026 | Abschließender Tabellen-/Regelabgleich: doppelte Rechteübersicht entfernt, Altformulierungen präzisiert, verbleibende Kapitelgrenzen offen. |
 | 2.4 | 22.10.2026 | Reguläre Rechte von Redaktion und Administration vereinheitlicht; nur administrative Sperraufhebung ausgenommen. |
