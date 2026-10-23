@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 2.5 – Konsolidierungsentwurf | 22.10.2026 | Projektverantwortung – erstellt mit KI-Unterstützung |
+| 2.6 – gemeinsame Regelgruppen lesefreundlich | 22.10.2026 | Projektverantwortung – erstellt mit KI-Unterstützung |
 
 > **Übernahmestatus:** Dieses Kapitel bündelt bereits beschlossene Fachregeln; während des Abgleichs bleiben die in [der Inventur](../Fachhandbuch-Inventur-2026-10-22.md) bezeichneten bisherigen Primärquellen verbindlich. Abweichungen und offene Fragen sind unten markiert. Erst die fachlich geprüfte vollständige Übernahme schaltet dieses Kapitel zur alleinigen Primärquelle.
 
@@ -43,6 +43,9 @@ Eine übergeordnete Frage wird erst durch konkrete lokale Vorgänge und Ereignis
 Es gibt zwei unterschiedliche Entscheidungen: **Gehört dieser Sachverhalt überhaupt zum Thema?** Das beantwortet der *Zuordnungsstatus*. **Wie wichtig ist er für die Erklärung?** Das beantwortet erst bei bestätigter Zuordnung die *Bedeutung für das Thema*. Beispielsweise kann der Ausbau des Autobahnkreuzes „Zugeordnet“ und zugleich „Prägend“ sein; eine weitere Verkehrsstudie kann „Kandidat“ sein, obwohl die KI sie als „Relevant“ vorschlägt. Der KI-Vorschlag allein macht sie nicht zum bestätigten Themenbestandteil.
 
 
+<details>
+<summary><strong>Verbindliche Regeln zu lokalen Bezügen (FIB-THEMA-BEZUG-001 bis -006)</strong></summary>
+
 **FIB-THEMA-BEZUG-001 – Auswahlbasis.** Ein Thema wird vorzugsweise durch die Auswahl ganzer Vorgänge gebildet. Ihre zugehörigen Ereignisse werden automatisch berücksichtigt. **Ergänzende direkte Einzelereignisse** sind zulässig, wenn sie nicht bereits über einen bestätigten Themenvorgang abgedeckt sind. Meldungen bilden keinen dritten Auswahlweg. Dieselbe Tatsache wird nicht mehrfach gewichtet, nur weil sie als Fundstelle, Ereignis, Meldung und Vorgang erscheint.
 
 **FIB-THEMA-BEZUG-002 – Vier redaktionelle Zuordnungsstatus.** Lokale Bezüge haben die fachlichen Zustände:
@@ -65,6 +68,8 @@ Status und Herkunft sind verschiedene Dimensionen: **KI-Vorschlag** bezeichnet e
 **FIB-THEMA-BEZUG-006 – Vorschlagssuche.** Das Öffnen eines Themas zeigt gespeicherte Kandidaten und löst **keine** neue KI-Suche aus. Eine gezielte Suche wird ausdrücklich mit **„Weitere Beziehungen vorschlagen“** gestartet. Die Redaktion darf außerdem Vorgänge und geeignete Einzelereignisse selbst suchen und aufnehmen.
 
 **Quelle:** [Themen- und Vorgangslogik §§5.1–5.4, 12](../Themen-und-Vorgangslogik.md), [Issue #149](https://github.com/PustefixReisen/fib-echtsystem/issues/149), [Issue #164](https://github.com/PustefixReisen/fib-echtsystem/issues/164); technischer Nachweis [PR #172](https://github.com/PustefixReisen/fib-echtsystem/pull/172).
+
+</details>
 
 ## 6.4 Perspektiven und Wirkungen
 
@@ -112,6 +117,9 @@ Die drei Einheiten bilden **keine Statushierarchie**: Eine zugeordnete Beziehung
 
 Bei Änderungen an Beziehungen, Perspektiven oder der Themendefinition kann der öffentliche Text fachlich überholt sein. Deshalb darf eine neue Arbeitsfassung **nicht stillschweigend** die bisherige veröffentlichte Fassung überschreiben. Redakteure können weiterarbeiten, ohne einen fertigen öffentlichen Informationsstand sofort zu verändern. Eine neue geänderte Fassung benötigt eine neue Freigabe.
 
+<details>
+<summary><strong>Verbindliche Regeln zu Beitrag, Fassungen und Freigabe</strong></summary>
+
 **FIB-THEMA-BEITRAG-001 – Zwei getrennte Textteile.** Der Beitrag enthält den sachlichen **Thementext** und die optionale, gesonderte **„Unsere Einordnung“**. KI-Textvorschläge bleiben von der redaktionell bearbeiteten Fassung unterscheidbar.
 
 **FIB-THEMA-BEITRAG-002 – Freigabe und Veröffentlichung.** Redaktionelle Freigabe ist eine eigenständige Handlung und **nicht automatisch eine öffentliche Veröffentlichung**. Freigaben/Veröffentlichungen werden mit Person und Zeitpunkt nachvollziehbar dokumentiert. Redakteure dürfen eigene Beitragsfassungen selbst freigeben und veröffentlichen; es gibt kein zwingendes Vier-Augen-Prinzip. KI darf weder eigenständig freigeben noch veröffentlichen.
@@ -141,6 +149,8 @@ Bei Änderungen an Beziehungen, Perspektiven oder der Themendefinition kann der 
 ### Plausibilitätsregeln für zulässige Zustandsübergänge
 
 Die Regeln zu Zustandsübergängen sind **fachliche Plausibilitäts- und Geschäftsregeln**: Sie beschreiben zulässige Aktionen, notwendige Vorbedingungen und fachliche Folgen an Thema, lokalen Beziehungen, Beitragsfassungen und Veröffentlichung. Die technische Durchsetzung und eine später aus den Primärregeln abgeleitete Status-/Rechteübersicht müssen auf diese Regeln Bezug nehmen.
+
+</details>
 
 ### 6.6.1 Thema: Zustände, Übergänge und Rechte
 
@@ -389,6 +399,7 @@ Die Kapitelversion bleibt ein **Konsolidierungsentwurf**. Dieser Quellenabgleich
 
 | Version | Datum | Änderung |
 |---|---|---|
+| 2.6 | 23.10.2026 | Lesestandard: lokale Bezüge und Beitragsfassungen mit einführendem Fachtext und zusammengefassten einklappbaren Regelgruppen; Regelwortlaut beibehalten. |
 | 2.5 | 22.10.2026 | Abschließender Tabellen-/Regelabgleich: doppelte Rechteübersicht entfernt, Altformulierungen präzisiert, verbleibende Kapitelgrenzen offen. |
 | 2.4 | 22.10.2026 | Reguläre Rechte von Redaktion und Administration vereinheitlicht; nur administrative Sperraufhebung ausgenommen. |
 | 2.3 | 22.10.2026 | Sonderfall archivierter, nie freigegebener Entwürfe fachlich bestätigt: Wiederaufnahme nach Entwurf. |
