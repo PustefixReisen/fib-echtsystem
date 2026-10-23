@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 1.4 – Recherchevertiefung und Ergebnisübersicht abgestimmt | 23.10.2026 | Projektverantwortung – erstellt mit KI-Unterstützung |
+| 1.5 – Quellenbestand und Kandidaten abgestimmt | 23.10.2026 | Projektverantwortung – erstellt mit KI-Unterstützung |
 
 > **Status:** Konsolidierungsentwurf. Die vorhandenen Fachregeln und Quellenbefunde wurden ohne neue fachliche Entscheidung nach dem Pustivo-Dokumentationsmodell v1.3, §10.2 neu erschlossen. Die bisherigen Primärquellen bleiben bis zur fachlichen Abnahme gültig. Bisherige Abschnittsnummern in übernommenen Verweisen sind historisch und werden im anschließenden Referenzabgleich angepasst.
 
@@ -175,6 +175,10 @@ Die Fachobjekte erhalten im nächsten fachlichen Durchgang je **eine vollständi
 4. Erkannten Inhalt mit bekannten Fundstellen abgleichen, neu/geändert/unverändert unterscheiden und Herkunft sowie Zeitbezug sichern.
 5. Neue/geänderte Fundstellen für Quellen- und Relevanzprüfung weitergeben. Unveränderte Quellen erzeugen grundsätzlich keinen neuen semantischen KI-Aufruf.
 6. Recherchelauf, aufgetretene Fehler, maßgeblichen Regelstand und Ergebnisse nachvollziehbar dokumentieren. Geeignete neue Quellen erst nach Prüfung in die künftige Beobachtung übernehmen.
+
+**Pflege des Quellenbestands (fachlich abgestimmt 23.10.2026).** Alle bekannten Quellen werden zentral im FIB-Quellenbestand geführt; redaktionell Berechtigte können Quellen ergänzen, ändern und ihre Beobachtung aktivieren oder deaktivieren. FIB darf neue Quellen selbstständig entdecken und als **Quellenkandidaten** mit Herkunft und Begründung speichern. Erst die **redaktionelle Bestätigung** macht einen Kandidaten zur dauerhaft beobachteten Quelle. Ein Quellenkandidat ist dadurch noch keine Pflichtquelle; diese Einordnung ist eine eigene redaktionelle Entscheidung. So bleiben selbstständige Entdeckung und kontrollierte Quellenpflege vereinbar. Die konkrete Beobachtungshäufigkeit, Objektattribute, Statusübergänge und UI werden in §§03.4–03.7 vertieft.
+
+**Lesebezug zu 03.1:** Die dauerhaft zu beobachtenden Pflichtquellen und der Anspruch, möglichst alle erreichbaren Veröffentlichungen mit unmittelbarem Feldkirchen-Bezug zu finden, sind **verschiedene, sich ergänzende Anforderungen**. Diese Erklärung präzisiert die Anwendung der bereits festgelegten Recherchegrundsätze und begründet **keine konkurrierende Geschäftsregel**.
 
 **Alternativen und Fehlerfälle.** Nicht erreichbare Pflichtquelle: Fehler als Unsicherheit protokollieren und bei Wiederholung eskalieren, **niemals „keine Neuigkeit“ behaupten**. Neue Unterseite ohne Suchmaschinenindex: Direktbeobachtung muss dies soweit technisch möglich erkennen. Eingereichte interne PDF: intern nutzbar, aber **nicht automatisch öffentlich bereitstellbar**. Treffer ohne nachweisbaren lokalen/funktionalen Bezug: nicht unbesehen publizieren; fachliche Prüfung P3.
 
@@ -500,6 +504,7 @@ Die folgenden Befunde wurden **direkt über die Supabase-Projektverwaltung und e
 
 | Version | Datum | Änderung |
 |---|---|---|
+| 1.5 | 23.10.2026 | Quellenkandidaten und bestätigte dauerhafte Quellen abgegrenzt; zentrale Pflege vereinbart, Pflichtquellen/Vollständigkeit ohne neue Dublettenregel erläutert. |
 | 1.4 | 23.10.2026 | Gemeinsamen Ablauf verortet und zwei vereinbarte Regeln zur eigenständigen Vertiefung und Ergebnisübersicht bei P2 ergänzt. |
 | 1.3 | 23.10.2026 | Redaktionell auslösbare Recherche in natürlicher Sprache und Abgrenzung zur Dauerbeobachtung ergänzt. |
 | 1.2 | 23.10.2026 | Eigenständige regelmäßige und offene Recherche bestätigt; Anlässe für Folge-Recherchen als zu prüfendes Fachmodell gesammelt. |
