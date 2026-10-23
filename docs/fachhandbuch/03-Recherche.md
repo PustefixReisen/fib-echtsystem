@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 2.1 – parallele Recherchekoordination abgestimmt | 23.10.2026 | Projektverantwortung – erstellt mit KI-Unterstützung |
+| 2.2 – zweistufige Lesedarstellung erprobt | 23.10.2026 | Projektverantwortung – erstellt mit KI-Unterstützung |
 
 > **Status:** Konsolidierungsentwurf. Die vorhandenen Fachregeln und Quellenbefunde wurden ohne neue fachliche Entscheidung nach dem Pustivo-Dokumentationsmodell v1.3, §10.2 neu erschlossen. Die bisherigen Primärquellen bleiben bis zur fachlichen Abnahme gültig. Bisherige Abschnittsnummern in übernommenen Verweisen sind historisch und werden im anschließenden Referenzabgleich angepasst.
 
@@ -249,9 +249,27 @@ Rechercheläufe können auch manuell, aus der offenen Recherche oder als anlassb
 
 **FIB-RECH-BEOB-004 – Redaktioneller Lebenszyklus (abgestimmt 23.10.2026).** Aktivierung, Pausierung und Beendigung eines Beobachtungsauftrags sind redaktionelle Entscheidungen. Die KI darf eine solche Änderung mit Begründung vorschlagen, aber nicht selbst verbindlich vollziehen. Es gilt das bereits definierte Zustandsmodell **Aktiv / Pausiert / Beendet**; es entsteht hier kein weiteres Statusmodell. Die konkreten Statusübergänge, Wiedervorlagen, Folgen einer späteren neuen Fundstelle und Darstellung in der Oberfläche sind in §§03.4, 03.5 und 03.7 zu vertiefen.
 
+#### Wie werden gleichzeitig laufende Recherchen koordiniert? – Darstellungsprototyp
+
+**Worum geht es?** FIB kann aus mehreren Gründen gleichzeitig denselben Sachverhalt untersuchen: durch die allgemeine Recherche, einen längerfristigen Beobachtungsauftrag oder die Frage eines Redakteurs. Diese Recherchen sollen auf gemeinsame Informationen zugreifen, ohne ihre jeweils eigene Fragestellung zu verlieren.
+
+**Wie funktioniert das?** Zum Ausbau des Autobahnkreuzes München-Ost wird eine neue Planungsunterlage gefunden. FIB erfasst die Unterlage **einmal als Fundstelle**. Zwei Recherchen können sie dennoch unterschiedlich auswerten:
+
+| Recherche | Fachliche Frage | Mögliche Erkenntnis aus derselben Fundstelle |
+| --- | --- | --- |
+| Beobachtungsauftrag | Wie entwickelt sich der Ausbau? | Neuer Termin für einen Planungsschritt |
+| Redaktionelle Recherche | Welche Auswirkungen ergeben sich für Feldkirchen? | Angaben zu Verkehrsbelastung oder Lärmschutz |
+
+**Was bedeutet das für die Redaktion?** Sie muss denselben Beleg nicht mehrfach erfassen und kann trotzdem nachvollziehen, **welche Erkenntnis zu welcher Recherchefrage gehört**. Wird die Planungsunterlage später geändert, prüft FIB die Auswirkungen auf alle betroffenen Recherchen. Die konkrete Datenzuordnung und Oberflächengestaltung werden in §§03.4 und 03.7 beschrieben.
+
+<details>
+<summary><strong>Verbindliche Fachregeln anzeigen – FIB-RECH-KOORD-001 und -002</strong></summary>
+
 **FIB-RECH-KOORD-001 – Gemeinsamer Informationsbestand bei parallelen Recherchen (abgestimmt 23.10.2026).** Alle Rechercheformen nutzen denselben Quellen- und Fundstellenbestand sowie das bestätigte FIB-Wissen. Dieselbe Information wird nicht allein deshalb als neue Fundstelle oder neuer fachlicher Sachverhalt gespeichert, weil ein weiterer Rechercheanlass sie benötigt. Eine Quellenänderung kann mehrere aktive Recherchefragen betreffen; die betroffenen Fragen werden auf neue Erkenntnisse geprüft. Technische Optimierung von Doppelabrufen wird später festgelegt.
 
 **FIB-RECH-KOORD-002 – Eigenständige Fragestellungen und Ergebnisse (abgestimmt 23.10.2026).** Jede Recherche behält ihre eigene Frage, ihren Anlass, ihren Ergebnisstand und die nachvollziehbare Zuordnung verwendeter Fundstellen. Dieselbe Fundstelle darf für unterschiedliche Fragen verschieden ausgewertet werden; Wiederverwendung darf eigenständige sachliche Aspekte nicht verdecken. Die allgemeinen Regeln zur Historie und Wiederverwendung gelten weiterhin nach **FIB-RECH-LAUF-003**; keine zweite Historienregel.
+
+</details>
 
 **Noch zu vertiefen:** Fachliche Zuordnung von Rechercheläufen zu Fundstellen (einschließlich Mehrfachnutzung), Beziehungen zu Beobachtungsaufträgen, Änderungsbenachrichtigung und UI-Darstellung in §§03.4, 03.5 und 03.7.
 
@@ -539,10 +557,13 @@ Die folgenden Befunde wurden **direkt über die Supabase-Projektverwaltung und e
 
 **Offene Nachweise für eine spätere technische Abnahme:** Konkrete ausgeführte Funktionsversionen gegen den GitHub-Stand vergleichen; vorhandene externe Cron/CI/IONOS/Workflow-Aufträge untersuchen; Laufprotokolle, Regelstandsbezug, Quellenabdeckung, Fehlermeldungen und Regressionstests der Fälle #4, #77 und #99 nachweisen.
 
+> **Darstellungsversuch (23.10.2026):** Die einklappbaren Regeltexte in §03.3.3 dienen der gemeinsamen Erprobung zweier Leseebenen. Dies ändert die fachliche Geltung der Regeln nicht. Die Eignung in GitHub (Lesbarkeit, direkte Verlinkung, Suche, KI-/Prüfzugriff) ist vor einer Übernahme als allgemeiner Pustivo-Dokumentationsstandard zu prüfen.
+
 ## Änderungshistorie
 
 | Version | Datum | Änderung |
 |---|---|---|
+| 2.2 | 23.10.2026 | Darstellungsprototyp mit verständlicher Einführung, Beispieltabelle und einklappbaren Regeln zur Koordination paralleler Recherchen; Standardentscheidung nach Erprobung. |
 | 2.1 | 23.10.2026 | Gemeinsamer Informationsbestand bei parallelen Recherchen und getrennte Fragestellungen/Ergebnisse bestätigt. |
 | 2.0 | 23.10.2026 | Selbstständige Ausführung aktiver Beobachtungsaufträge und redaktionelle Kontrolle ihres Lebenszyklus bestätigt. |
 | 1.9 | 23.10.2026 | Eigenständige Rechercheplanung mit redaktioneller Einflussmöglichkeit und wiederverwendbare Recherchehistorie fachlich abgestimmt. |
