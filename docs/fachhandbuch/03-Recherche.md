@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 1.3 – redaktioneller Rechercheanlass ergänzt | 23.10.2026 | Projektverantwortung – erstellt mit KI-Unterstützung |
+| 1.4 – Recherchevertiefung und Ergebnisübersicht abgestimmt | 23.10.2026 | Projektverantwortung – erstellt mit KI-Unterstützung |
 
 > **Status:** Konsolidierungsentwurf. Die vorhandenen Fachregeln und Quellenbefunde wurden ohne neue fachliche Entscheidung nach dem Pustivo-Dokumentationsmodell v1.3, §10.2 neu erschlossen. Die bisherigen Primärquellen bleiben bis zur fachlichen Abnahme gültig. Bisherige Abschnittsnummern in übernommenen Verweisen sind historisch und werden im anschließenden Referenzabgleich angepasst.
 
@@ -188,6 +188,10 @@ Die Fachobjekte erhalten im nächsten fachlichen Durchgang je **eine vollständi
 
 Als Nächstes werden **P2 – Recherche planen und ausführen** und **P3 – Fundstellen prüfen und Ereigniskandidaten bilden** in derselben Tiefe ausgearbeitet. Danach folgen P4/P5, die vollständigen Fachobjektdefinitionen, Bedienprototypen und der Abgleich mit der bereits implementierten Ereigniserfassung in Kapitel 04. **Neue fachliche Entscheidungen werden vor der zugehörigen Implementierung gemeinsam beschlossen**; fehlende Funktionen werden als nachvollziehbare Issues mit Fachregelbezug, Ist-Stand, Abnahmekriterien und Abhängigkeiten geführt.
 
+### 03.3.0b Gemeinsamer Ablauf für alle Rechercheanlässe
+
+Für automatische Grundrecherche, einmalige anlassbezogene Recherche und redaktionell ausgelöste Recherche gilt der gemeinsame fachliche Ablauf: **Anlass verstehen → Vorwissen abgleichen → Suchkontext mit Quellen und Recherchehorizont bestimmen → recherchieren → Fundstellen und Aussagen auswerten → Ergebnis mit Quellen und Unsicherheiten bereitstellen → Folgeschritte vorschlagen**. Die konkreten Aufgaben sind P1 bis P5 zugeordnet. Ein eigener, separater Fachobjekt-Lebenszyklus entsteht daraus nicht.
+
 ### 03.3.2 P2 – Recherche planen und ausführen (vorhandener Regelbestand)
 
 **Beobachtungsauftrag:** Definiert, *was FIB wissen oder weiter verfolgen möchte*. **Recherchelauf:** Bezeichnet die konkrete Ausführung zu einem Zeitpunkt oder Anlass. Ein Beobachtungsauftrag kann mehrere Rechercheläufe auslösen. Ein offener Recherchelauf kann ohne Beobachtungsauftrag erfolgen.
@@ -211,6 +215,10 @@ Die vollständigen Statusübergänge, Berechtigungen und Bedingungen werden beim
 **FIB-RECH-LAUF-001 – Nachvollziehbarer Recherchelauf.** Ein Recherchelauf dokumentiert Anlass/Herkunft, Zeitpunkt, gegebenenfalls auslösenden Beobachtungsauftrag oder KI-Auftrag, maßgeblichen Regel-/Kontextstand, Ergebnis, neue oder geänderte Fundstellen und wesentliche Fehler. Technische Provider- und Crawlerdetails verbleiben in Betriebs-/Auditdaten.
 
 Rechercheläufe können auch manuell, aus der offenen Recherche oder als anlassbezogener Rückblick entstehen; besonders der vereinbarte **Sechs-Monats-Rückblick** bei verändertem Suchkontext ist später im Detail abzugleichen.
+
+**FIB-RECH-LAUF-001 – Begrenzte eigenständige Vertiefung (abgestimmt 23.10.2026).** Aus einem Rechercheergebnis unmittelbar entstehende Fragen darf FIB selbstständig nachrecherchieren, solange ein nachvollziehbarer Zusammenhang zum ursprünglichen Anlass besteht. Weiter entfernte Fragestellungen werden als Vorschläge für gesonderte Recherche bereitgestellt. Die genaue Aufwandsbegrenzung und Abbruchbedingungen sind noch fachlich zu spezifizieren.
+
+**FIB-RECH-LAUF-002 – Nachvollziehbare Ergebnisübersicht (abgestimmt 23.10.2026).** Jede gezielte Recherche endet mit einer nachvollziehbaren Übersicht von Recherchefrage, gesichertem Ergebnis, Fundstellen/Quellen, bereits vorhandenem FIB-Wissen, neuen Erkenntnissen, offenen Fragen/Unsicherheiten und fachlichen Vorschlägen. **Auch ohne Treffer** muss ein Ergebnis mit Suchumfang, Grenzen und gegebenenfalls Fehlern verfügbar sein; ein Nulltreffer belegt nicht das Nichtvorhandensein des Sachverhalts.
 
 ### 03.3.3 P3 – Fundstellen prüfen und bewerten (vorhandener Regelbestand)
 
@@ -492,6 +500,7 @@ Die folgenden Befunde wurden **direkt über die Supabase-Projektverwaltung und e
 
 | Version | Datum | Änderung |
 |---|---|---|
+| 1.4 | 23.10.2026 | Gemeinsamen Ablauf verortet und zwei vereinbarte Regeln zur eigenständigen Vertiefung und Ergebnisübersicht bei P2 ergänzt. |
 | 1.3 | 23.10.2026 | Redaktionell auslösbare Recherche in natürlicher Sprache und Abgrenzung zur Dauerbeobachtung ergänzt. |
 | 1.2 | 23.10.2026 | Eigenständige regelmäßige und offene Recherche bestätigt; Anlässe für Folge-Recherchen als zu prüfendes Fachmodell gesammelt. |
 | 1.1 | 23.10.2026 | Verantwortungsgrenzen für KI, automatische Recherche und redaktionelle Pflege ausdrücklich abgestimmt; Detailrechte bleiben prüfpflichtig. |
