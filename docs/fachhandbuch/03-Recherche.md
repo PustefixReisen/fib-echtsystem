@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 2.4 – Regelgruppen-Standard abgestimmt | 23.10.2026 | Projektverantwortung – erstellt mit KI-Unterstützung |
+| 2.5 – erste gemeinsam erarbeitete Abschnitte konsolidiert | 23.10.2026 | Projektverantwortung – erstellt mit KI-Unterstützung |
 
 > **Status:** Konsolidierungsentwurf. Die vorhandenen Fachregeln und Quellenbefunde wurden ohne neue fachliche Entscheidung nach dem Pustivo-Dokumentationsmodell v1.3, §10.2 neu erschlossen. Die bisherigen Primärquellen bleiben bis zur fachlichen Abnahme gültig. Bisherige Abschnittsnummern in übernommenen Verweisen sind historisch und werden im anschließenden Referenzabgleich angepasst.
 
@@ -167,7 +167,7 @@ Für automatische Grundrecherche, einmalige anlassbezogene Recherche und redakti
 
 Die Fachobjekte erhalten im nächsten fachlichen Durchgang je **eine vollständige Primärdefinition** (Attribute, Beziehungen/Kardinalitäten, Zustände, Invarianten, Verantwortung). Der derzeitige Objektüberblick ist eine Lesebrücke, **noch keine vollständige Objektspezifikation**. Die Detailregeln werden anschließend eindeutig den Prozessen und Primärdefinitionen zugeordnet, statt erneut vervielfältigt zu werden.
 
-### P1 – Quellen beobachten und entdecken: erster durchgängiger Prozessentwurf
+#### Wie beobachtet und entdeckt FIB Quellen?
 
 **Aufgabe und Ergebnis.** FIB soll unabhängig von bereits bekannten Themen neue Informationen finden und Veränderungen bekannter Quellen erkennen. Ergebnis sind nachvollziehbar identifizierte, gegebenenfalls neue oder aktualisierte Fundstellen sowie Vorschläge für neue Quellen; **keine automatisch bestätigten Ereignisse oder Veröffentlichungen**.
 
@@ -183,9 +183,14 @@ Die Fachobjekte erhalten im nächsten fachlichen Durchgang je **eine vollständi
 5. Neue/geänderte Fundstellen für Quellen- und Relevanzprüfung weitergeben. Unveränderte Quellen erzeugen grundsätzlich keinen neuen semantischen KI-Aufruf.
 6. Recherchelauf, aufgetretene Fehler, maßgeblichen Regelstand und Ergebnisse nachvollziehbar dokumentieren. Geeignete neue Quellen erst nach Prüfung in die künftige Beobachtung übernehmen.
 
+<details>
+<summary><strong>Verbindliche Regeln: Neue Quellen entdecken (FIB-RECH-QUELLE-006 und -007)</strong></summary>
+
 **FIB-RECH-QUELLE-006 – Regelmäßige offene Quellenentdeckung (abgestimmt 23.10.2026).** FIB sucht regelmäßig auch ohne konkreten Rechercheanlass eigenständig nach bislang unbekannten Informationsquellen. Dabei werden sowohl Quellen mit unmittelbarem Feldkirchen-Bezug als auch Quellen zu thematischen Entwicklungen mit konkret begründbarer möglicher Bedeutung für Feldkirchen berücksichtigt. Anlassbezogene und redaktionell angestoßene Quellenentdeckung ergänzen diese laufende Suche. Neu entdeckte Quellen werden mit erkennbarer Herkunft und Begründung als Kandidaten erfasst; die dauerhafte Beobachtung setzt redaktionelle Bestätigung voraus.
 
 **FIB-RECH-QUELLE-007 – Fundstellen aus Quellenkandidaten (abgestimmt 23.10.2026).** FIB darf konkrete Fundstellen aus noch nicht für die dauerhafte Beobachtung bestätigten Quellen bereits erfassen, analysieren und der Redaktion zur Prüfung bereitstellen. Die Herkunft und der vorläufige Quellenstatus bleiben sichtbar. Die Aufnahme einer Fundstelle **bestätigt nicht automatisch** die Quelle als künftig dauerhaft beobachtete Quelle und ist keine Veröffentlichungsentscheidung.
+
+</details>
 
 **Fachliche Eignungsprüfung einer Kandidatenquelle:** Herkunft/Herausgeber, Inhalte, Orts- bzw. Themenbezug, quellenkritische Einordnung, Aktualität und grundsätzliche technische Beobachtbarkeit werden nach Möglichkeit ermittelt. Politische Positionen, Interessenbekundungen und überprüfbare Tatsachen bleiben unterscheidbar. Detailattribute, Bewertung, Bearbeitungsstatus und UI folgen in §§03.4, 03.5 und 03.7.
 
@@ -209,11 +214,11 @@ Die Fachobjekte erhalten im nächsten fachlichen Durchgang je **eine vollständi
 
 **Entscheidungs- und Umsetzungsstand:** Fachliches Grundverhalten **beschlossen** (siehe bestehende Regeln im Kapitel); konkrete Frequenz, Arbeitsoberfläche, Monitoring-Automatisierung und Abnahmefälle sind **noch gemeinsam auszuarbeiten**. In Shared-Apps existieren Quellen- und Fundstellentabellen sowie Ereignis-Fundstellen-Bearbeitung; ein automatischer Quellenmonitor wurde bisher **nicht nachgewiesen**.
 
-### Fortsetzung der inhaltlichen Abstimmung
+**Arbeitsstand und weitere Vertiefung (nicht normative Anlage):**
 
 Als Nächstes werden **P2 – Recherche planen und ausführen** und **P3 – Fundstellen prüfen und Ereigniskandidaten bilden** in derselben Tiefe ausgearbeitet. Danach folgen P4/P5, die vollständigen Fachobjektdefinitionen, Bedienprototypen und der Abgleich mit der bereits implementierten Ereigniserfassung in Kapitel 04. **Neue fachliche Entscheidungen werden vor der zugehörigen Implementierung gemeinsam beschlossen**; fehlende Funktionen werden als nachvollziehbare Issues mit Fachregelbezug, Ist-Stand, Abnahmekriterien und Abhängigkeiten geführt.
 
-### 03.3.3 P2 – Recherche planen und ausführen (vorhandener Regelbestand)
+### 03.3.3 P2 – Recherche planen und ausführen
 
 **Beobachtungsauftrag:** Definiert, *was FIB wissen oder weiter verfolgen möchte*. **Recherchelauf:** Bezeichnet die konkrete Ausführung zu einem Zeitpunkt oder Anlass. Ein Beobachtungsauftrag kann mehrere Rechercheläufe auslösen. Ein offener Recherchelauf kann ohne Beobachtungsauftrag erfolgen.
 
@@ -227,6 +232,9 @@ Als Nächstes werden **P2 – Recherche planen und ausführen** und **P3 – Fun
 
 Die vollständigen Statusübergänge, Berechtigungen und Bedingungen werden beim späteren fachlichen Einzelabgleich ergänzt; aus dieser Statusübersicht wird **keine neue Übergangsentscheidung** abgeleitet.
 
+<details>
+<summary><strong>Verbindliche Grundlagen: Beobachtungsauftrag und Recherchelauf</strong></summary>
+
 **FIB-RECH-BEOB-001 – Eindeutiger Primärbezug.** Jeder Beobachtungsauftrag bezieht sich fachlich primär auf genau **einen Vorgang, ein Thema oder eine offene Frage/Wissenslücke**. Andere Wissensobjekte dienen als Kontext, nicht als zusätzliche Primärbezüge.
 
 **FIB-RECH-BEOB-002 – Suchstrategie nicht festschreiben.** Beobachtungsaufträge enthalten eine fachliche Frage, Status, Herkunft, Begründung und Änderungshistorie; keine verpflichtend fest verdrahtete Liste von Suchbegriffen, Quellen oder Akteuren. Eine Priorität ist nicht generell verpflichtend.
@@ -234,6 +242,8 @@ Die vollständigen Statusübergänge, Berechtigungen und Bedingungen werden beim
 **FIB-RECH-BEOB-003 – Redaktionelle Statusentscheidung.** Pausierung oder Beendigung wird begründet und nachvollziehbar dokumentiert; KI-Vorschläge sind keine verbindlichen Statusentscheidungen.
 
 **FIB-RECH-LAUF-001 – Nachvollziehbarer Recherchelauf.** Ein Recherchelauf dokumentiert Anlass/Herkunft, Zeitpunkt, gegebenenfalls auslösenden Beobachtungsauftrag oder KI-Auftrag, maßgeblichen Regel-/Kontextstand, Ergebnis, neue oder geänderte Fundstellen und wesentliche Fehler. Technische Provider- und Crawlerdetails verbleiben in Betriebs-/Auditdaten.
+
+</details>
 
 Rechercheläufe können auch manuell, aus der offenen Recherche oder als anlassbezogener Rückblick entstehen; besonders der vereinbarte **Sechs-Monats-Rückblick** bei verändertem Suchkontext ist später im Detail abzugleichen.
 
@@ -569,6 +579,7 @@ Die folgenden Befunde wurden **direkt über die Supabase-Projektverwaltung und e
 
 | Version | Datum | Änderung |
 |---|---|---|
+| 2.5 | 23.10.2026 | Erläuterungs- und Regelgruppen in P1/P2 sichtbarer getrennt; Abstimmungsfortsetzung als Arbeitsstand statt fachliche Überschrift geführt. |
 | 2.4 | 23.10.2026 | Fachliche Fragen optisch als gut sichtbare Standard-Markdown-Überschriften; gemeinsame Erklärung und zusammengefasste Regeln gemäß Pustivo-Dokumentationsmodell v1.4; weitere Kapitel schrittweise konsolidieren. |
 | 2.3 | 23.10.2026 | Überschrift der fachlichen Frage in P2 hierarchisch nummeriert, prominenter durch eigenständige Unterabschnitte; zusammengehörige Regeln gemeinsam belassen. |
 | 2.2 | 23.10.2026 | Darstellungsprototyp mit verständlicher Einführung, Beispieltabelle und einklappbaren Regeln zur Koordination paralleler Recherchen; Standardentscheidung nach Erprobung. |
