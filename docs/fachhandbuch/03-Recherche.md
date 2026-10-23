@@ -110,6 +110,7 @@ Die hier genannten Fragen bleiben **nicht stillschweigend erledigt**. Zuständig
 | RECH-V07 | Eigenständiger Grundbetrieb **abgestimmt**; Anlässe, Auslöseschwellen, Recherchelauf, Frequenz, Fehlernachlauf und Rechercheregel-Version | 03.3 P2/P5, 03.5, 03.9 | **Grundsatz abgestimmt, Anlässe zur Vertiefung** |
 | RECH-V08 | Ereigniskandidaten, Aktualisierung bestehender Sachverhalte und Übergabe an die implementierte Ereigniserfassung | 03.3 P4 und Kapitel 04 | **Zu vertiefen** |
 | RECH-V09 | Fachliche Verantwortung Redaktion vs. Admin ist abgestimmt; genaue normative und technische Rechteabgrenzung | 03.5, übergreifende Rechtequelle | **Grundsatz abgestimmt, technischer Abgleich offen** |
+| RECH-V11 | Einheitliches Versions- und Historien-Bedienmuster auf Basis von Themenbeiträgen; Fundstellenvergleich und Abgrenzung der Objekttypen | 03.7, Kapitel 06/08 und übergreifendes Bedienkonzept | **Zu vertiefen / UI erproben** |
 | RECH-V10 | Funktionstests, Akzeptanzfälle, Ist-/Soll-Abgleich und anschließende Implementierung | 03.9, 03.11, Implementierungsissues | **Zu vertiefen** |
 
 **Moderationsregel für dieses Kapitel:** Wir stimmen die großen fachlichen Ziele und Zuständigkeiten zuerst ab. Erst danach vertiefen wir Abläufe, Objekte, Status, Bedienung und Tests. Jeder Vertiefungspunkt erhält seinen Zielabschnitt und wird dort ausdrücklich wieder aufgenommen. Vor der fachlichen Kapitelabnahme werden die Punkte gegen Fachregeln, Datenmodell, UI, Tests und offene Issues abgeglichen. **Die Tabelle ist eine Nachverfolgung offener Punkte, kein konkurrierender Regelbestand.**
@@ -358,6 +359,14 @@ Verbindliche Anwendungsfälle werden künftig nach **Akteur → Auslöser/Vorbed
 ## 03.7 Bedienkonzept, Navigation und Prototypen
 
 Für die Recherche sind Quellenliste, Fundstellenliste/-detail, Beobachtungsaufträge und Auswertung als fachliche Bedienbereiche vorgesehen. Die existierenden Wireframes unter `docs/ui-wireframes/recherche-*.html` und `auswertung-recherche.html` sind **Prototypen**, keine automatisch beschlossenen Regeln. Die bereits implementierte Karte „Quellen und Fundstellen“ in der Ereignisbearbeitung gehört zur Schnittstelle mit Kapitel 04. Sichtbarkeit, Sperren, Such-/Filteraktionen und Fehler-/Änderungsanzeigen sind noch je Ablauf fachlich zu bestätigen.
+
+### Übergreifende Versionsbedienung – Abstimmungs- und Erprobungsauftrag
+
+**Zu vertiefen, keine neue verbindliche UI-Regel:** Die Anzeige von Fassungen und Änderungshistorien soll für Redakteure bei Fundstellen, Ereignissen, Vorgängen, Themen und Beiträgen möglichst einem einheitlichen Interaktionsmuster folgen. Dafür ist der bereits in **Kapitel 06 §6.5** beschriebene Themenbeitrags-Ablauf der Ausgangspunkt: aktuelle Arbeitsfassung, unmittelbar erreichbare schreibgeschützte veröffentlichte Fassung und separater Versionsverlauf; Ansehen früherer Fassungen ändert den Arbeitsstand nicht. Diese spezifischen Freigabe-/Publikationszustände dürfen jedoch nicht unbesehen auf **externe Fundstellen** übertragen werden.
+
+Für Fundstellen ist fachlich bereits vereinbart, frühere und neue Informationsstände **nachvollziehbar** zu erhalten (§03.3 P1). Bei der Gestaltung in diesem Abschnitt prüfen wir eine vertraute Aktion **„Versionsverlauf“**, erkennbare Zeitpunkte/Herkunft, aktuelle und frühere Fassung sowie eine **verständliche Änderungsanzeige bzw. einen Vergleich**, soweit die gespeicherten Daten dies erlauben. Wie viele Fassungen/Originalkopien tatsächlich gespeichert werden, bleibt eine getrennte Fach- und Technikentscheidung (§03.4 und §03.5). Die Ausgestaltung soll als **projektübergreifendes FIB-UI-Muster** abgestimmt und in den betroffenen Kapiteln referenziert, nicht mehrfach konkurrierend formuliert werden.
+
+**Prüfauftrag:** Wo muss eine Version neben ihrem Datum auch Urheber, fachlichen Anlass, Publikations-/Freigabebezug und Vergleichsbasis zeigen? Wie verhalten sich schreibgeschützte Historie, laufende Bearbeitung und Wiederherstellung? Für welche Objekte ist ein fachlicher Versionsvergleich sinnvoll? Entscheidung gemeinsam am Prototyp; keine ungetestete Bedienregel ableiten.
 
 ## 03.8 Übergreifende Fachanforderungen und Schnittstellen
 
