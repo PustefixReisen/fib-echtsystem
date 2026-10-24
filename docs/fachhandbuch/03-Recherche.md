@@ -308,8 +308,14 @@ Die Fachobjekte erhalten im nächsten fachlichen Durchgang je **eine vollständi
 
 Die vollständigen Statusübergänge, Berechtigungen und Bedingungen werden beim späteren fachlichen Einzelabgleich ergänzt; aus dieser Statusübersicht wird **keine neue Übergangsentscheidung** abgeleitet.
 
+
+
+Rechercheläufe können auch manuell, aus der offenen Recherche oder als anlassbezogener Rückblick entstehen; besonders der vereinbarte **Sechs-Monats-Rückblick** bei verändertem Suchkontext ist später im Detail abzugleichen.
+
+**Was muss ein Recherchelauf am Ende liefern?** Zu einer Frage zeigt FIB die gefundenen Quellen, neue Erkenntnisse, Unsicherheiten und offene Punkte. Auch ein Lauf ohne Treffer wird mit dem tatsächlich geprüften Suchraum dokumentiert. Für eine laufende Beobachtung übernimmt FIB wiederkehrende Recherchen; über Beginn, Pause und Ende entscheidet die Redaktion. Bei mehreren Fragen werden gemeinsame Fundstellen wiederverwendet, aber jeweils eigenständig ausgewertet.
+
 <details>
-<summary><strong>Verbindliche Grundlagen: Beobachtungsauftrag und Recherchelauf</strong></summary>
+<summary><strong>Verbindliche Regeln: Beobachtungsaufträge und Rechercheläufe (10 Regeltexte)</strong></summary>
 
 **FIB-RECH-BEOB-001 – Eindeutiger Primärbezug.** Jeder Beobachtungsauftrag bezieht sich fachlich primär auf genau **einen Vorgang, ein Thema oder eine offene Frage/Wissenslücke**. Andere Wissensobjekte dienen als Kontext, nicht als zusätzliche Primärbezüge.
 
@@ -318,10 +324,6 @@ Die vollständigen Statusübergänge, Berechtigungen und Bedingungen werden beim
 **FIB-RECH-BEOB-003 – Redaktionelle Statusentscheidung.** Pausierung oder Beendigung wird begründet und nachvollziehbar dokumentiert; KI-Vorschläge sind keine verbindlichen Statusentscheidungen.
 
 **FIB-RECH-LAUF-001 – Nachvollziehbarer Recherchelauf.** Ein Recherchelauf dokumentiert Anlass/Herkunft, Zeitpunkt, gegebenenfalls auslösenden Beobachtungsauftrag oder KI-Auftrag, maßgeblichen Regel-/Kontextstand, Ergebnis, neue oder geänderte Fundstellen und wesentliche Fehler. Technische Provider- und Crawlerdetails verbleiben in Betriebs-/Auditdaten.
-
-</details>
-
-Rechercheläufe können auch manuell, aus der offenen Recherche oder als anlassbezogener Rückblick entstehen; besonders der vereinbarte **Sechs-Monats-Rückblick** bei verändertem Suchkontext ist später im Detail abzugleichen.
 
 **FIB-RECH-LAUF-001 – Begrenzte eigenständige Vertiefung (abgestimmt 23.10.2026).** Aus einem Rechercheergebnis unmittelbar entstehende Fragen darf FIB selbstständig nachrecherchieren, solange ein nachvollziehbarer Zusammenhang zum ursprünglichen Anlass besteht. Weiter entfernte Fragestellungen werden als Vorschläge für gesonderte Recherche bereitgestellt. Die genaue Aufwandsbegrenzung und Abbruchbedingungen sind noch fachlich zu spezifizieren.
 
@@ -334,6 +336,8 @@ Rechercheläufe können auch manuell, aus der offenen Recherche oder als anlassb
 **FIB-RECH-BEOB-003 – Selbstständige Beobachtung bei aktivem Auftrag (abgestimmt 23.10.2026).** Ein aktiver Beobachtungsauftrag wird von FIB ohne erneute Freigabe jeder einzelnen Nachrecherche eigenständig bearbeitet. Neue wesentliche Erkenntnisse, Belege und Vorschläge zur fachlichen Fortschreibung werden der Redaktion zur Prüfung bereitgestellt. Ein Zeitraum ohne neue Funde beendet den Auftrag nicht automatisch. Der allgemeine Recherchebetrieb bleibt auch bei pausiertem oder beendetem Auftrag bestehen.
 
 **FIB-RECH-BEOB-004 – Redaktioneller Lebenszyklus (abgestimmt 23.10.2026).** Aktivierung, Pausierung und Beendigung eines Beobachtungsauftrags sind redaktionelle Entscheidungen. Die KI darf eine solche Änderung mit Begründung vorschlagen, aber nicht selbst verbindlich vollziehen. Es gilt das bereits definierte Zustandsmodell **Aktiv / Pausiert / Beendet**; es entsteht hier kein weiteres Statusmodell. Die konkreten Statusübergänge, Wiedervorlagen, Folgen einer späteren neuen Fundstelle und Darstellung in der Oberfläche sind in §§03.4, 03.5 und 03.7 zu vertiefen.
+
+</details>
 
 ### 03.3.3.1 Wie werden gleichzeitig laufende Recherchen koordiniert?
 
