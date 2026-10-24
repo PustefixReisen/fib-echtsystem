@@ -4,15 +4,24 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 2.6 – Fachtext vor abschließendem Regelblock | 23.10.2026 | Projektverantwortung – erstellt mit KI-Unterstützung |
+| 2.7 – Rechercheziele verständlich und prüfbar erläutert | 23.10.2026 | Projektverantwortung – erstellt mit KI-Unterstützung |
 
-> **Status:** Konsolidierungsentwurf. Die vorhandenen Fachregeln und Quellenbefunde wurden ohne neue fachliche Entscheidung nach dem Pustivo-Dokumentationsmodell v1.3, §10.2 neu erschlossen. Die bisherigen Primärquellen bleiben bis zur fachlichen Abnahme gültig. Bisherige Abschnittsnummern in übernommenen Verweisen sind historisch und werden im anschließenden Referenzabgleich angepasst.
+> **Status:** Konsolidierungsentwurf. Die vorhandenen Fachregeln und Quellenbefunde wurden ohne neue fachliche Entscheidung nach dem Pustivo-Dokumentationsmodell v1.4 neu erschlossen. Die bisherigen Primärquellen bleiben bis zur fachlichen Abnahme gültig. Bisherige Abschnittsnummern in übernommenen Verweisen sind historisch und werden im anschließenden Referenzabgleich angepasst.
 
 ## 03.1 Fachliche Aufgabe, Ziele, Nutzen und Grenzen
 
 **Ziel:** FIB soll Informationen über Feldkirchen und für Feldkirchen möglicherweise bedeutsame Entwicklungen möglichst vollständig entdecken, auch wenn noch kein passender FIB-Vorgang oder kein Thema existiert. **Erfassung**, **Relevanzbewertung**, **redaktionelle Entscheidung** und **öffentliche Veröffentlichung** bleiben unterschiedliche Schritte. Eine erkannte Fundstelle wird nicht bereits durch ihre Erfassung zum Ereignis oder veröffentlichten Beitrag.
 
-### 03.1.1 Zwei komplementäre Recherchewege
+### 03.1.1 Zwei Wege: Bekanntes verfolgen und Neues entdecken
+
+FIB sucht auf zwei Wegen nach Informationen. Zum einen verfolgt es bereits bekannte Ereignisse, Vorgänge, Themen und offene Fragen. So kann FIB beispielsweise prüfen, ob es neue Entscheidungen zum Ausbau des Autobahnkreuzes München-Ost gibt.
+
+Zum anderen sucht FIB bewusst auch nach **noch unbekannten Entwicklungen**. Ein neues Bauvorhaben soll nicht deshalb übersehen werden, weil dazu noch kein Thema im System angelegt wurde. Diese offene Recherche orientiert sich an den räumlichen und thematischen Zusammenhängen, die für Feldkirchen bedeutsam sein können.
+
+Beide Wege ergänzen sich und verwenden denselben, laufend weiterentwickelten Recherchehorizont.
+
+<details>
+<summary><strong>Verbindliche Fachregel – FIB-RECH-PRINZIP-001</strong></summary>
 
 **FIB-RECH-PRINZIP-001 – Wissensgeleitete und offene Recherche.**
 
@@ -21,13 +30,41 @@
 
 Beide Wege verwenden denselben **dynamischen Recherchehorizont**. Sie ergänzen sich und dürfen nicht gegeneinander ausgespielt werden. „Offen“ bedeutet nicht sachlich beliebig.
 
-### 03.1.2 Räumlicher und thematischer Recherchehorizont
+</details>
+
+### 03.1.2 Woher weiß FIB, wonach es suchen soll?
+
+FIB benötigt einen **Recherchehorizont**. Er beschreibt, welche Orte, Verkehrsverbindungen und anderen räumlichen Zusammenhänge für Feldkirchen wichtig sind, welche allgemeinen Recherchefelder verfolgt werden und welches Wissen bereits vorhanden ist.
+
+Beispielsweise kann der Radschnellweg München–Markt Schwaben relevant sein, obwohl ein Artikel nur München oder Markt Schwaben erwähnt: Die Verbindung führt durch Feldkirchen. Auch Entwicklungen mit möglicher zukünftiger Bedeutung können zum Suchbereich gehören, wenn sich dieser Zusammenhang begründen lässt.
+
+Für die Redaktion muss erkennbar sein, **warum FIB etwas sucht**. Berechtigte Redakteure können Suchbereiche und bekannte Quellen pflegen; von der KI vorgeschlagene Ergänzungen bleiben als Vorschläge erkennbar. Die konkrete Bedienung wird in §03.7 festgelegt.
+
+<details>
+<summary><strong>Verbindliche Fachregeln – FIB-RECH-HORIZONT-001 und -002</strong></summary>
 
 **FIB-RECH-HORIZONT-001 – Nachvollziehbarer Recherchehorizont.** Der fachliche Recherchehorizont setzt sich zusammen aus (a) räumlichen Referenzobjekten und ihren funktionalen Beziehungen, (b) allgemeinen **thematischen Recherchefeldern** als redaktionell festgelegten Schwerpunkten, getrennt von konkreten FIB-Themen, (c) dem bekannten FIB-Wissensbestand, (d) begründeten indirekten beziehungsweise möglicherweise zukünftigen Relevanzbeziehungen, (e) bekannten Quellen einschließlich Pflichtquellen und (f) den geltenden Rechercheregeln. Er muss **dauerhaft geführt, veränderbar und nachvollziehbar** sein. Die fachlichen Definitionen und die noch fehlenden operativen Datenstrukturen gehören in §03.4.
 
 **FIB-RECH-HORIZONT-002 – Redaktionelle Transparenz und Pflege.** Die Redaktion muss erkennen können, **wonach und warum FIB sucht**, welche Orte, Recherchefelder, Quellen und Relevanzbeziehungen zugrunde liegen und welche davon redaktionell gesetzt oder aus FIB-Wissen abgeleitet wurden. Berechtigte Redakteure sollen den Recherchehorizont einsehen, ändern und ergänzen können; KI-Vorschläge werden kenntlich gemacht und nicht stillschweigend verbindlich. Die konkrete Navigation und Bedienung werden in §03.7 **erprobt**, nicht hier als fertige Oberfläche festgelegt.
 
-### 03.1.3 Drei fachliche Relevanzfälle
+</details>
+
+### 03.1.3 Welche Informationen soll FIB berücksichtigen?
+
+Nicht jede Information muss schon einem bekannten politischen Thema zugeordnet sein. FIB unterscheidet drei Fälle:
+
+| Fall | Beispiel | Was FIB tun soll |
+|---|---|---|
+| Ort und Thema passen zusammen | Eine neue Planung am Autobahnkreuz München-Ost | Als Recherchekandidat berücksichtigen |
+| Die Information betrifft unmittelbar Feldkirchen | Ein Sportbericht oder eine Vereinsveranstaltung | Möglichst als Fundstelle erfassen, auch ohne politischen Bezug |
+| Eine Entwicklung könnte später Bedeutung für Feldkirchen bekommen | Ein Pilotprojekt zum autonomen Fahren in München | Prüfen, ob eine konkrete mögliche Auswirkung auf Feldkirchen begründbar ist |
+
+Zu den Veröffentlichungen über Feldkirchen gehören insbesondere Meldungen einschlägiger Medien wie Merkur, SZ, tz und hallo sowie Veröffentlichungen aus Rathaus und Parteien. Eine bloße Ähnlichkeit des Themas genügt im dritten Fall nicht: FIB muss erklären können, warum die Entwicklung für Feldkirchen wichtig werden könnte.
+
+**Vollständigkeit ist dabei ein Ziel, keine technisch garantierbare Zusage.** Wie wir die Qualität prüfen, erläutert §03.1.5.
+
+<details>
+<summary><strong>Verbindliche Fachregel – FIB-RECH-RELEVANZ-004</strong></summary>
 
 **FIB-RECH-RELEVANZ-004 – Grundfälle der Entdeckung.**
 
@@ -41,7 +78,18 @@ Zur zweiten Gruppe gehören insbesondere **alle erreichbaren Veröffentlichungen
 
 Zum dritten Fall gehört etwa ein realer Pilot zum autonomen Fahren in München, sofern nachvollziehbar ist, **welcher Entwicklungspfad oder welche fachliche Beziehung** eine zukünftige Bedeutung für Feldkirchen begründen könnte. Bloße thematische Ähnlichkeit genügt nicht. Die räumlichen und thematischen Zusammenhänge und die Herleitung müssen überprüfbar und pflegbar sein.
 
-### 03.1.4 Redaktionelle Sichtung auch unpolitischer Fundstellen
+</details>
+
+### 03.1.4 Was geschieht mit gefundenen Informationen?
+
+FIB soll viele Informationen erfassen, aber nicht alles veröffentlichen. Eine KI kann Funde vorsortieren und erklären, warum sie möglicherweise bedeutsam oder eher nebensächlich sind. **Die Entscheidung trifft die Redaktion.**
+
+Beispielsweise bleibt ein gefundener Sportbericht über Feldkirchen in der redaktionellen Übersicht erhalten. Die KI kann ihn als wenig relevant einschätzen; die Redaktion kann ihn zurückstellen. Der Fund ist deshalb nicht gelöscht und kann später erneut geprüft werden.
+
+Auch ein für die Gemeinde wichtiger Fund wird nicht automatisch zu einem bestätigten Ereignis oder veröffentlichten Beitrag. Welche Status und Filter die Redaktion verwendet, klären wir in §§03.4, 03.5 und 03.7.
+
+<details>
+<summary><strong>Verbindliche Fachregeln – FIB-RECH-SICHTUNG-001 und FIB-RECH-PRINZIP-002</strong></summary>
 
 **FIB-RECH-SICHTUNG-001 – KI-Voreinschätzung, redaktionelle Entscheidung.** Alle erfassten unmittelbaren Feldkirchen-Fundstellen werden der redaktionellen Sichtung zugänglich gemacht. Die KI kann eine **vorläufige Relevanzeinschätzung mit Begründung** vorbelegen und insbesondere potenziell irrelevante Fundstellen kenntlich machen. Der Redakteur muss die Fundstellen durchgehen und kann irrelevante Fundstellen **zurückstellen**. Eine KI-Voreinstellung ist **keine verbindliche Zurückstellung**, keine Löschung und keine Publikationsentscheidung. Zurückgestellte Fundstellen bleiben nachvollziehbar erhalten, etwa für spätere erneute Prüfung und Regressionstests.
 
@@ -49,9 +97,27 @@ Die **konkreten Statuswerte, Übergänge, Filter und Massenbearbeitungsmöglichk
 
 **FIB-RECH-PRINZIP-002 – Keine automatische Publikation.** Das Erkennen einer Quelle oder Fundstelle ist noch keine redaktionelle Freigabe oder Veröffentlichung. Recherchefunde können umfangreicher sein als die später veröffentlichte Auswahl.
 
-### 03.1.5 Grenzen und Erfolgskriterien
+</details>
 
-FIB strebt bei unmittelbarem Feldkirchen-Bezug eine **hohe Auffindbarkeit** auch ohne politisch-thematische Vorselektion an. Ziel ist zugleich, neue bedeutsame Entwicklungen außerhalb des bekannten Wissensbestands entdecken zu können. Der Erfolg ist durch nachvollziehbare Quellenabdeckung, erkennbare Recherche- und Fehlerprotokolle, den Anteil übersehener relevanter Testfälle, die Prüfbarkeit des Recherchehorizonts und die redaktionelle Bearbeitbarkeit auch irrelevanter Funde zu bewerten. Die konkrete Messmethodik und Grenzwerte folgen nach fachlicher Abstimmung.
+### 03.1.5 Was soll die Recherche leisten, und wie prüfen wir ihren Erfolg?
+
+FIB soll möglichst alle öffentlich zugänglichen Informationen finden, die unmittelbar Feldkirchen betreffen. Dazu gehören auch Vereinsnachrichten, Sportberichte und andere Meldungen ohne erkennbaren politischen Bezug.
+
+Außerdem soll FIB wichtige Entwicklungen erkennen, die Feldkirchen künftig betreffen könnten – etwa neue Verkehrsprojekte im Münchner Umland.
+
+**Eine lückenlose Suche im gesamten Internet ist nicht möglich.** Deshalb müssen wir erkennen können, welche Quellen FIB beobachtet, wann sie zuletzt geprüft wurden und wo möglicherweise Informationen fehlen.
+
+Ob die Recherche gut funktioniert, lässt sich an konkreten Fragen überprüfen:
+
+| Prüffrage | Beispiel |
+|---|---|
+| Findet FIB die erwarteten Veröffentlichungen? | Erscheint ein neuer Merkur-Artikel über Feldkirchen als Fundstelle? |
+| Erkennt FIB Änderungen? | Wird eine überarbeitete RIS-Beschlussvorlage erkannt? |
+| Findet FIB auch unerwartete Themen? | Wird ein bislang unbekanntes Bauprojekt entdeckt? |
+| Bleiben Rechercheprobleme sichtbar? | Wird ein fehlgeschlagener Quellenabruf gemeldet? |
+| Kann die Redaktion alle Funde prüfen? | Auch unpolitische Fundstellen sind auffindbar und bearbeitbar. |
+
+Diese Beispiele dienen als Grundlage späterer Testfälle. Die konkrete Messmethodik und verbindliche Zielwerte haben wir noch nicht abgestimmt.
 
 ## 03.2 Aufgabenbereiche, Rollen und Verantwortlichkeiten
 
@@ -579,6 +645,7 @@ Die folgenden Befunde wurden **direkt über die Supabase-Projektverwaltung und e
 
 | Version | Datum | Änderung |
 |---|---|---|
+| 2.7 | 24.10.2026 | Abschnitte 03.1.1 bis 03.1.5 durchgehend verständlich erläutert; Regeln jeweils abschließend gebündelt; Erfolgskriterien als konkrete Prüffragen dargestellt. |
 | 2.6 | 23.10.2026 | P1: erst vollständige fachliche Erklärung, dann ein zusammengefasster Regelblock; überholten Abstimmungsvermerk aus Lesefluss entfernt. |
 | 2.5 | 23.10.2026 | Erläuterungs- und Regelgruppen in P1/P2 sichtbarer getrennt; Abstimmungsfortsetzung als Arbeitsstand statt fachliche Überschrift geführt. |
 | 2.4 | 23.10.2026 | Fachliche Fragen optisch als gut sichtbare Standard-Markdown-Überschriften; gemeinsame Erklärung und zusammengefasste Regeln gemäß Pustivo-Dokumentationsmodell v1.4; weitere Kapitel schrittweise konsolidieren. |
