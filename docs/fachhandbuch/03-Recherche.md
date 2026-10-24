@@ -462,7 +462,11 @@ Für die Bewertung eines Recherchefundes sind der Bezug zu Feldkirchen, die Art 
 **Implementierungsgrenze:** Diese Regeln sind aus den bestehenden Primärquellen übernommen. Die vollständige operative Umsetzung von Referenzobjekten, Uploads, Versionsregelverwaltung und Testläufen ist **nicht** durch die bisher ausgewerteten Edge Functions nachgewiesen. Historische Quellen bleiben bis zu ihrer vollständigen Übernahme gültig.
 
 
-### Verbindliche Regeln: Relevanz und Rückblick
+### Relevanz und Rückblick
+
+FIB prüft nicht nur Meldungen aus Feldkirchen. Auch ein Radweg durch mehrere Gemeinden oder eine neue Technik mit nachvollziehbaren Folgen für Feldkirchen kann wichtig sein. Bei einem neu erfassten oder erheblich veränderten Thema sucht FIB außerdem rückblickend nach bislang übersehenen Informationen. Die Veröffentlichungsauswahl bleibt enger als die Recherche.
+
+**Verbindliche Regeln als Zusammenfassung**
 
 <details>
 <summary><strong>4 Fachregeln anzeigen (FIB-RECH-RELEVANZ-001, FIB-RECH-RELEVANZ-002, FIB-RECH-RELEVANZ-003, FIB-RECH-RUECKBLICK-001)</strong></summary>
@@ -477,7 +481,11 @@ Für die Bewertung eines Recherchefundes sind der Bezug zu Feldkirchen, die Art 
 
 </details>
 
-### Verbindliche Regeln: Qualität und Quellenbewertung
+### Qualität und Quellenbewertung
+
+Ein nicht erreichbarer Link oder ein leerer Suchlauf ist keine Bestätigung dafür, dass nichts passiert ist. FIB macht solche Lücken sichtbar und trennt überprüfte Angaben von ungesicherten Hinweisen. Für KI-Auswertungen zählt zuerst die sachliche Qualität, bevor günstigere Verfahren bevorzugt werden.
+
+**Verbindliche Regeln als Zusammenfassung**
 
 <details>
 <summary><strong>3 Fachregeln anzeigen (FIB-RECH-QUAL-001, FIB-RECH-QUAL-002, FIB-RECH-QUELLE-004)</strong></summary>
@@ -490,7 +498,11 @@ Für die Bewertung eines Recherchefundes sind der Bezug zu Feldkirchen, die Art 
 
 </details>
 
-### Verbindliche Regeln: Referenzwissen und Bewertungsrahmen
+### Referenzwissen und Bewertungsrahmen
+
+FIB nutzt bekannte Orte, Namen, Verbindungen und frühere bestätigte Erkenntnisse als Orientierung. Ein Radschnellweg wird deshalb auch dann als möglicher Feldkirchen-Bezug erkannt, wenn ein Artikel nur die Endpunkte nennt. Tatsachenquellen, gesellschaftliche Bedeutung und politische Einordnung müssen klar unterscheidbar bleiben.
+
+**Verbindliche Regeln als Zusammenfassung**
 
 <details>
 <summary><strong>4 Fachregeln anzeigen (FIB-RECH-REF-001, FIB-RECH-REF-002, FIB-RECH-REF-003, FIB-RECH-RAHMEN-001)</strong></summary>
@@ -505,7 +517,11 @@ Für die Bewertung eines Recherchefundes sind der Bezug zu Feldkirchen, die Art 
 
 </details>
 
-### Verbindliche Regeln: Regelverwaltung und Qualitätsprüfung
+### Regelverwaltung und Qualitätsprüfung
+
+FIB muss nachvollziehen können, nach welchen Regeln eine Recherche durchgeführt wurde. Änderungen an diesen Regeln werden kontrolliert und geprüft. So lässt sich später feststellen, ob eine andere Suchregel einen zuvor übersehenen Fall gefunden hätte.
+
+**Verbindliche Regeln als Zusammenfassung**
 
 <details>
 <summary><strong>2 Fachregeln anzeigen (FIB-RECH-REGEL-001, FIB-RECH-REGEL-002)</strong></summary>
