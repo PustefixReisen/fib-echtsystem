@@ -656,7 +656,29 @@ Bei eindeutigen fachlichen Änderungen darf FIB selbstständig eine neue Fassung
 
 </details>
 
-### 03.4.5 Referenzobjekte und ihre Beziehungen
+### 03.4.5 Prüfstatus einer Fundstelle
+
+Die Redaktion soll erkennen, wie weit die Bearbeitung einer Fundstelle fortgeschritten ist. Dafür genügt ein gemeinsamer Prüfstatus mit vier Werten:
+
+| Prüfstatus | Bedeutung |
+|---|---|
+| **Neu** | Erfasst, noch nicht ausgewertet |
+| **Analysiert** | Von der KI auf Inhalt, Herkunft und mögliche Relevanz untersucht |
+| **Geprüft** | Von der Redaktion fachlich geprüft |
+| **Zurückgestellt** | Von der Redaktion vorerst nicht zur weiteren Bearbeitung vorgesehen |
+
+Der Prüfstatus ist **keine Ereigniszuordnung**. Eine Fundstelle kann unabhängig von ihrem Bearbeitungsstand mehreren Ereignissen als Informationsnachweis dienen. Die fachliche Begründung einer Ereigniszuordnung wird an der Beziehung zur jeweiligen Fundstelle geführt.
+
+Mit diesen vier Statuswerten ist noch keine zusätzliche, unabhängige Statusdimension für die Relevanzentscheidung festgelegt. Die Übergangsbedingungen und etwaige Wiederaufnahme einer zurückgestellten Fundstelle sind bei der Prozessprüfung zu konkretisieren.
+
+<details>
+<summary><strong>Verbindliche Festlegung – Prüfstatus der Fundstelle</strong></summary>
+
+**FIB-RECH-FUND-005 – Vier Prüfstatuswerte.** Fundstellen verwenden die Prüfstatuswerte **Neu, Analysiert, Geprüft und Zurückgestellt**. Die KI darf analysieren und eine Relevanzeinschätzung vorschlagen; die fachliche Prüfung und verbindliche Zurückstellung erfolgen redaktionell. Die Zuordnung einer Fundstelle zu Ereignissen ist eine eigenständige fachliche Beziehung und kein zusätzlicher Prüfstatus.
+
+</details>
+
+### 03.4.6 Referenzobjekte und ihre Beziehungen
 
 Wiederkehrende Orte, Verkehrsverbindungen und bekannte Bezeichnungen sollen als stabile Referenzen erkennbar bleiben. Ein Straßenname oder ein Alias legt kein zweites Objekt an; aktuelle Planungsstände gehören dagegen zu zeitabhängigen Ereignissen und Vorgängen. Beziehungen zwischen Referenzobjekten sollen nachvollziehbar und redaktionell prüfbar sein.
 
@@ -669,7 +691,7 @@ Wiederkehrende Orte, Verkehrsverbindungen und bekannte Bezeichnungen sollen als 
 
 </details>
 
-### 03.4.6 Wie klärt FIB unbekannte räumliche Beziehungen?
+### 03.4.7 Wie klärt FIB unbekannte räumliche Beziehungen?
 
 FIB soll örtliche Zusammenhänge auch dann erkennen können, wenn sie noch nicht im Referenzwissen stehen. Beispiel: Ein Bericht erwähnt den Radschnellweg München–Markt Schwaben, ohne Feldkirchen ausdrücklich zu nennen.
 
