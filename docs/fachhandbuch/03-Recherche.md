@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 2.7 – Rechercheziele verständlich und prüfbar erläutert | 23.10.2026 | Projektverantwortung – erstellt mit KI-Unterstützung |
+| 2.8 – Fachregeln nach Erklärungen gruppiert | 23.10.2026 | Projektverantwortung – erstellt mit KI-Unterstützung |
 
 > **Status:** Konsolidierungsentwurf. Die vorhandenen Fachregeln und Quellenbefunde wurden ohne neue fachliche Entscheidung nach dem Pustivo-Dokumentationsmodell v1.4 neu erschlossen. Die bisherigen Primärquellen bleiben bis zur fachlichen Abnahme gültig. Bisherige Abschnittsnummern in übernommenen Verweisen sind historisch und werden im anschließenden Referenzabgleich angepasst.
 
@@ -447,9 +447,16 @@ Eine Fundstelle bleibt als Beleg erhalten, auch wenn sie später nicht mehr abru
 
 Ein Recherchelauf berücksichtigt den konkreten Informationsbedarf, das bestehende FIB-Wissen, geeignete lokale und fachliche Referenzobjekte, den gültigen Referenzrahmen, bekannte Quellen sowie eine offene Suchanweisung.
 
+Die redaktionelle Entscheidung über die Anlage oder Änderung eines *Themas* gehört primär in [Kapitel 06](06-Themen.md); ihre Auswirkungen auf weitere Suchläufe gehören hierher.
+
+**Warum ist das für die Redaktion wichtig?** Ein einmal erkannter Bezug soll bei späteren Recherchen nicht erneut übersehen werden. Das neue Wissen bleibt als Suchkontext erhalten, während die Entscheidung über die fachliche Anlage eines Themas in Kapitel 06 getroffen wird.
+
+<details>
+<summary><strong>Verbindliche Fachregel zur Fortschreibung (FIB-RECH-KONTEXT-001)</strong></summary>
+
 **FIB-RECH-KONTEXT-001 – Dynamischer Suchkontext.** FIB erweitert den Recherchehorizont anhand neu erkannter Orte, Akteure, Vorgänge, Bezugsobjekte, Referenzbezeichnungen und Zusammenhänge. Diese Informationen ergänzen die offene Entdeckung, statt sie durch starre Schlüsselwortlisten zu ersetzen. Auch indirekte räumliche Bezüge, beispielsweise ein durch Feldkirchen verlaufender Radweg, sollen überprüfbar berücksichtigt werden.
 
-Die redaktionelle Entscheidung über die Anlage oder Änderung eines *Themas* gehört primär in [Kapitel 06](06-Themen.md); ihre Auswirkungen auf weitere Suchläufe gehören hierher.
+</details>
 
 ## 03.4 Fachobjekte und fachliches Datenmodell
 
@@ -733,6 +740,7 @@ Die folgenden Befunde wurden **direkt über die Supabase-Projektverwaltung und e
 
 | Version | Datum | Änderung |
 |---|---|---|
+| 2.8 | 24.10.2026 | Prozessregeln und Regelbestand 03.2–03.5 mit fachlichen Erklärungen und einklappbaren Gruppen konsolidiert; doppelte Regelkennungen als offener Konsistenzpunkt erkannt. |
 | 2.7 | 24.10.2026 | Abschnitte 03.1.1 bis 03.1.5 durchgehend verständlich erläutert; Regeln jeweils abschließend gebündelt; Erfolgskriterien als konkrete Prüffragen dargestellt. |
 | 2.6 | 23.10.2026 | P1: erst vollständige fachliche Erklärung, dann ein zusammengefasster Regelblock; überholten Abstimmungsvermerk aus Lesefluss entfernt. |
 | 2.5 | 23.10.2026 | Erläuterungs- und Regelgruppen in P1/P2 sichtbarer getrennt; Abstimmungsfortsetzung als Arbeitsstand statt fachliche Überschrift geführt. |
