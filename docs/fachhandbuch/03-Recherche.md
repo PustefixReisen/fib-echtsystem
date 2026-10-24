@@ -121,6 +121,9 @@ Diese Beispiele dienen als Grundlage späterer Testfälle. Die konkrete Messmeth
 
 ## 03.2 Aufgabenbereiche, Rollen und Verantwortlichkeiten
 
+FIB sucht und analysiert Informationen. Die KI macht begründete Vorschläge, während die Redaktion über verbindliche Entscheidungen und Veröffentlichungen bestimmt. Die folgenden Abschnitte erklären diese Aufgabenteilung.
+
+
 Dieser Abschnitt beschreibt **fachliche Zuständigkeiten und Aufgaben**. Einzelrechte und technische Freigaben sind in der jeweiligen fachlichen Primärregel und dem übergreifenden Rollen-/Rechtemodell nachzuweisen. KI-Vorschläge sind keine selbstständigen fachlichen Entscheidungen.
 
 ### 03.2.1 Fünf zusammenhängende Aufgabenbereiche
