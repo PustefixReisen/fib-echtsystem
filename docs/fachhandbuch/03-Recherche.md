@@ -628,7 +628,31 @@ Eine gezielte Recherche kann bevorzugt ausgewählte Quellen nutzen. Diese **temp
 
 </details>
 
-### 03.4.4 Referenzobjekte und ihre Beziehungen
+### 03.4.4 Fundstelle und ihre Fassungen
+
+Eine **Fundstelle** ist eine konkrete identifizierbare Veröffentlichung oder Informationseinheit, beispielsweise eine RIS-Beschlussvorlage oder ein Zeitungsartikel. Sie ist ein Informationsnachweis, noch kein bestätigtes Ereignis. Jede Fundstelle besitzt nach §03.4.3 genau eine primäre Quelle und kann in mehreren Rechercheläufen gefunden sowie mehreren Ereignissen zugeordnet werden.
+
+Zur fachlichen Beschreibung gehören mindestens eine eindeutige Kennung, Titel oder Bezeichnung, Primärquelle, Fundort beziehungsweise Dokumentverweis, soweit bekannt Veröffentlichungsdatum, Datum der ersten Erfassung, Herkunft der Einbringung und der jeweils nachvollziehbare Prüfstand. Inhalt und fachliche Änderungen werden über die Fassungen erschlossen. Die genaue Attributpflicht und Statusausgestaltung sind im weiteren Objektabgleich zu spezifizieren.
+
+**Identität und Änderung:** Wird dieselbe Veröffentlichung erneut unverändert gefunden, nutzt FIB die vorhandene Fundstelle. Ändert sich diese Veröffentlichung **inhaltlich relevant**, bleibt ihre Identität bestehen und FIB dokumentiert eine neue Fundstellenfassung. Frühere Fassungen bleiben nachvollziehbar; eine bloße technische oder gestalterische Änderung muss nicht als neue fachliche Fassung gelten.
+
+| Situation | Fachliche Behandlung |
+|---|---|
+| Bisher unbekannte RIS-Beschlussvorlage | Neue Fundstelle |
+| Bekannter unveränderter Artikel | Vorhandene Fundstelle wiederverwenden |
+| Nachträglich geänderte Kostenangabe in derselben Vorlage | Neue Fassung der vorhandenen Fundstelle |
+| Nur geänderte PDF-Formatierung ohne fachlichen Unterschied | Nicht zwingend eine neue fachliche Fassung |
+
+Die KI kann Änderungen erkennen und ihre fachliche Bedeutung zunächst einschätzen. Welche Abweichungen automatisch als fachlich relevant gelten und wie Unsicherheiten redaktionell geklärt werden, ist als nächste fachliche Frage offen.
+
+<details>
+<summary><strong>Verbindliche Fachregel – Identität und Fassungen der Fundstelle (FIB-RECH-FUND-003)</strong></summary>
+
+**FIB-RECH-FUND-003 – Stabile Fundstellenidentität und fachliche Fassungen.** Eine erneut erkannte unveränderte Veröffentlichung wird als vorhandene Fundstelle weiterverwendet. Fachlich relevante Änderungen desselben veröffentlichten Informationsobjekts werden als neue Fassung unter derselben Fundstellenidentität nachvollziehbar dokumentiert; frühere Informationsstände bleiben rekonstruierbar. Rein technische oder gestalterische Änderungen begründen nicht zwingend eine neue fachliche Fassung. Eine neue Fassung allein führt weder automatisch zu einem neuen Ereignis noch zu einer Veröffentlichung.
+
+</details>
+
+### 03.4.5 Referenzobjekte und ihre Beziehungen
 
 Wiederkehrende Orte, Verkehrsverbindungen und bekannte Bezeichnungen sollen als stabile Referenzen erkennbar bleiben. Ein Straßenname oder ein Alias legt kein zweites Objekt an; aktuelle Planungsstände gehören dagegen zu zeitabhängigen Ereignissen und Vorgängen. Beziehungen zwischen Referenzobjekten sollen nachvollziehbar und redaktionell prüfbar sein.
 
@@ -641,7 +665,7 @@ Wiederkehrende Orte, Verkehrsverbindungen und bekannte Bezeichnungen sollen als 
 
 </details>
 
-### 03.4.5 Wie klärt FIB unbekannte räumliche Beziehungen?
+### 03.4.6 Wie klärt FIB unbekannte räumliche Beziehungen?
 
 FIB soll örtliche Zusammenhänge auch dann erkennen können, wenn sie noch nicht im Referenzwissen stehen. Beispiel: Ein Bericht erwähnt den Radschnellweg München–Markt Schwaben, ohne Feldkirchen ausdrücklich zu nennen.
 
