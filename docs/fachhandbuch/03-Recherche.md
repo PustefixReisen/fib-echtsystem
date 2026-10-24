@@ -376,11 +376,18 @@ Eine Fundstelle ist zum Beispiel ein Pressebericht oder eine Beschlussvorlage. F
 
 Eine **Quelle** ist die Herkunft einer Information; die **Fundstelle** ist das konkrete Dokument, die Seite oder Informationseinheit. Eine bereits benutzte Fundstelle wird bei technischer Nichterreichbarkeit nicht allein deshalb aus der Belegbasis gelöscht.
 
+Die konkrete Fundstellenbearbeitung, die Beziehungen zu Ereignissen und die Darstellung von Zuordnungen werden in dem noch anzulegenden **Kapitel 04 – Ereignisse und Meldungen** sowie im späteren redaktionellen Kapitel vertieft. Datenbankfelder und technische Rücknahme-/Wiederherstellungsfunktionen bleiben technische Detaildokumentation.
+
+Eine Fundstelle bleibt als Beleg erhalten, auch wenn sie später nicht mehr abrufbar ist. Ihre Zuordnung zu einem Ereignis muss fachlich begründet sein. Die Redaktion prüft die KI-Vorschläge, bevor daraus bestätigte Beziehungen werden.
+
+<details>
+<summary><strong>Verbindliche Regeln zu Fundstellenprüfung (2)</strong></summary>
+
 **FIB-RECH-FUND-001 – Persistenter Recherchekandidat.** Neue und geänderte Fundstellen werden nachvollziehbar erfasst und zur fachlichen Analyse bzw. redaktionellen Prüfung weitergegeben. Eine Fundstelle kann unterschiedliche Sachverhalte betreffen, ohne selbst ein bestätigtes Ereignis zu sein.
 
 **FIB-RECH-FUND-002 – Begründete Zuordnung.** Eine redaktionell bestätigte Beziehung **Fundstelle ↔ Ereignis** besitzt eine nachvollziehbare Begründung ihres konkreten Informationsbeitrags. Während der Bearbeitung ist sie optional; vor Freigabe soll sie geprüft und bestätigt werden. Eine feste Klassifikation nach „Belegcharakter“ ist nicht erforderlich. KI kann Begründungen vorschlagen; die Redaktion entscheidet.
 
-Die konkrete Fundstellenbearbeitung, die Beziehungen zu Ereignissen und die Darstellung von Zuordnungen werden in dem noch anzulegenden **Kapitel 04 – Ereignisse und Meldungen** sowie im späteren redaktionellen Kapitel vertieft. Datenbankfelder und technische Rücknahme-/Wiederherstellungsfunktionen bleiben technische Detaildokumentation.
+</details>
 
 ### 03.3.5 P4 – An die Ereigniserfassung übergeben
 
@@ -445,13 +452,20 @@ Die bestehenden Objektbeschreibungen aus §§03.3 und 03.4 enthalten bereits Zwe
 | **Quellenentdeckung** | Offene, auch themenunabhängige Suche nach bisher unbekannten relevanten Informationsquellen | KI-gestützte Einordnung; neue Quellen nach Prüfung für künftige Beobachtung vormerken |
 | **Redaktionelle Einbringung** | URL, Datei oder dokumentierte externe Information | Gleicher fachlicher Prüf- und Zuordnungsweg wie bei automatisch erfassten Fundstellen |
 
+Quellenklassen umfassen insbesondere Gemeinde und RIS, Landkreis und Behörden, regionale Medien, Nachbargemeinden, Vorhabenträger, Vereine, Verbände und Initiativen, politische Akteure, fachliche Quellen und redaktionell eingebrachte Unterlagen. Die Einteilung als Pflichtquelle oder kontextabhängige Quelle bleibt davon getrennt.
+
+Die Quellenbeobachtung hat drei Eingänge: bereits bekannte Quellen, neu entdeckte Quellen und Hinweise oder Dateien aus der Redaktion. Bei allen drei Wegen soll FIB neue Fundstellen feststellen, ohne dieselbe Veröffentlichung mehrfach zu erfassen. Die folgenden Regeln beschreiben die gemeinsame Verarbeitung; die vollständige Fachobjektdefinition ist hier weiterhin nachzuholen.
+
+<details>
+<summary><strong>Verbindliche Regeln zu Quellen und Fundstellen (3)</strong></summary>
+
 **FIB-RECH-QUELLE-001 – Drei Quellenzugangswege.** Die drei Zugangswege sind gleichwertige Eingangskanäle des FIB-Rechercheprozesses; keiner erlaubt eine automatische fachliche Bestätigung oder Publikation.
 
 **FIB-RECH-QUELLE-002 – Bekannte Pflichtquellen direkt prüfen.** Zentrale Gemeinde- und RIS-Einstiege sowie weitere Pflichtquellen werden unabhängig von Suchmaschinen geprüft. Relevant sind auch Dokumentfreigaben außerhalb von Tagesordnungen, neue Unterseiten und geänderte Dateien unter gleichbleibender URL. Aus einer Dokumentfreigabe allein folgt noch kein bestimmter Tagesordnungspunkt oder Sitzungstermin.
 
 **FIB-RECH-QUELLE-003 – KI nur bei semantischem Mehrwert.** Unveränderter bekannter Quellenbestand löst grundsätzlich keinen erneuten KI-Auswertungsauftrag aus. KI wird für fachliche Analyse, relevante Veränderung oder offene Quellenentdeckung eingesetzt; Kosten und Prüfbarkeit sind dabei zu berücksichtigen.
 
-Quellenklassen umfassen insbesondere Gemeinde und RIS, Landkreis und Behörden, regionale Medien, Nachbargemeinden, Vorhabenträger, Vereine, Verbände und Initiativen, politische Akteure, fachliche Quellen und redaktionell eingebrachte Unterlagen. Die Einteilung als Pflichtquelle oder kontextabhängige Quelle bleibt davon getrennt.
+</details>
 
 ## 03.5 Geschäftsregeln, Zustände, Validierungen und Ausnahmen
 
