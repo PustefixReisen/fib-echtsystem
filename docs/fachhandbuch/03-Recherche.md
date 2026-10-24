@@ -121,6 +121,9 @@ Diese Beispiele dienen als Grundlage späterer Testfälle. Die konkrete Messmeth
 
 ## 03.2 Aufgabenbereiche, Rollen und Verantwortlichkeiten
 
+FIB sucht und analysiert Informationen. Die KI macht begründete Vorschläge, während die Redaktion über verbindliche Entscheidungen und Veröffentlichungen bestimmt. Die folgenden Abschnitte erklären diese Aufgabenteilung.
+
+
 Dieser Abschnitt beschreibt **fachliche Zuständigkeiten und Aufgaben**. Einzelrechte und technische Freigaben sind in der jeweiligen fachlichen Primärregel und dem übergreifenden Rollen-/Rechtemodell nachzuweisen. KI-Vorschläge sind keine selbstständigen fachlichen Entscheidungen.
 
 ### 03.2.1 Fünf zusammenhängende Aufgabenbereiche
@@ -284,7 +287,7 @@ Die Fachobjekte erhalten im nächsten fachlichen Durchgang je **eine vollständi
 
 </details>
 
-### 03.3.3 P2 – Recherche planen und ausführen
+### 03.3.3 P2 – Wie plant und erledigt FIB Recherchen?
 
 **Beobachtungsauftrag:** Definiert, *was FIB wissen oder weiter verfolgen möchte*. **Recherchelauf:** Bezeichnet die konkrete Ausführung zu einem Zeitpunkt oder Anlass. Ein Beobachtungsauftrag kann mehrere Rechercheläufe auslösen. Ein offener Recherchelauf kann ohne Beobachtungsauftrag erfolgen.
 
@@ -355,7 +358,10 @@ Sie muss denselben Beleg nicht mehrfach erfassen und kann trotzdem nachvollziehe
 
 **Noch zu vertiefen:** Fachliche Zuordnung von Rechercheläufen zu Fundstellen (einschließlich Mehrfachnutzung), Beziehungen zu Beobachtungsaufträgen, Änderungsbenachrichtigung und UI-Darstellung in §§03.4, 03.5 und 03.7.
 
-### 03.3.4 P3 – Fundstellen prüfen und bewerten (vorhandener Regelbestand)
+### 03.3.4 P3 – Fundstellen prüfen und bewerten
+
+Eine Fundstelle ist zum Beispiel ein Pressebericht oder eine Beschlussvorlage. FIB prüft, ob die Information neu ist, woher sie stammt und welchen Beitrag sie zu einem Sachverhalt leistet. Dieselbe Fundstelle kann mehreren Ereignissen zugeordnet werden. Redaktionell bestätigte Zuordnungen werden begründet.
+
 
 Eine **Quelle** ist die Herkunft einer Information; die **Fundstelle** ist das konkrete Dokument, die Seite oder Informationseinheit. Eine bereits benutzte Fundstelle wird bei technischer Nichterreichbarkeit nicht allein deshalb aus der Belegbasis gelöscht.
 
@@ -437,6 +443,9 @@ Die bestehenden Objektbeschreibungen aus §§03.3 und 03.4 enthalten bereits Zwe
 Quellenklassen umfassen insbesondere Gemeinde und RIS, Landkreis und Behörden, regionale Medien, Nachbargemeinden, Vorhabenträger, Vereine, Verbände und Initiativen, politische Akteure, fachliche Quellen und redaktionell eingebrachte Unterlagen. Die Einteilung als Pflichtquelle oder kontextabhängige Quelle bleibt davon getrennt.
 
 ## 03.5 Geschäftsregeln, Zustände, Validierungen und Ausnahmen
+
+Für die Bewertung eines Recherchefundes sind der Bezug zu Feldkirchen, die Art der Information und die Qualität der verfügbaren Quellen wichtig. Die nachfolgenden Tabellen beschreiben, wie FIB auch überregionale Entwicklungen berücksichtigt.
+
 
 **FIB-RECH-RELEVANZ-001 – Orts- und Themenabdeckung sind unabhängige Achsen.** Die Recherche bezieht sich einerseits auf Feldkirchen und seine funktional verbundenen Räume, andererseits auf Sachzusammenhänge aus Vorgängen und Themen. **Keine der beiden Achsen darf die andere ersetzen.** Ein örtlich relevantes Vorhaben muss daher auch dann entdeckt werden können, wenn noch kein Thema oder Vorgang dazu erfasst ist.
 
