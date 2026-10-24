@@ -643,12 +643,16 @@ Zur fachlichen Beschreibung gehören mindestens eine eindeutige Kennung, Titel o
 | Nachträglich geänderte Kostenangabe in derselben Vorlage | Neue Fassung der vorhandenen Fundstelle |
 | Nur geänderte PDF-Formatierung ohne fachlichen Unterschied | Nicht zwingend eine neue fachliche Fassung |
 
-Die KI kann Änderungen erkennen und ihre fachliche Bedeutung zunächst einschätzen. Welche Abweichungen automatisch als fachlich relevant gelten und wie Unsicherheiten redaktionell geklärt werden, ist als nächste fachliche Frage offen.
+Die KI vergleicht den bisherigen und neuen Inhalt. Änderungen an Kosten, Planungen, Beschlüssen oder zusätzlichen Sachinformationen sind fachlich relevant und führen zu einer neuen Fundstellenfassung. Reine Rechtschreibkorrekturen, Layoutänderungen oder PDF-Komprimierung begründen keine neue fachliche Fassung. Änderungen etwa an Veröffentlichungsdaten sind im Einzelfall zu prüfen.
+
+Bei eindeutigen fachlichen Änderungen darf FIB selbstständig eine neue Fassung anlegen. Bei unsicherer Einordnung erhält die Redaktion eine konkrete Änderungsübersicht zur Entscheidung. Die Redaktion kann jederzeit eine neue Fassung verlangen oder eine automatische Einstufung korrigieren. Jede solche Entscheidung bleibt nachvollziehbar.
 
 <details>
 <summary><strong>Verbindliche Fachregel – Identität und Fassungen der Fundstelle (FIB-RECH-FUND-003)</strong></summary>
 
 **FIB-RECH-FUND-003 – Stabile Fundstellenidentität und fachliche Fassungen.** Eine erneut erkannte unveränderte Veröffentlichung wird als vorhandene Fundstelle weiterverwendet. Fachlich relevante Änderungen desselben veröffentlichten Informationsobjekts werden als neue Fassung unter derselben Fundstellenidentität nachvollziehbar dokumentiert; frühere Informationsstände bleiben rekonstruierbar. Rein technische oder gestalterische Änderungen begründen nicht zwingend eine neue fachliche Fassung. Eine neue Fassung allein führt weder automatisch zu einem neuen Ereignis noch zu einer Veröffentlichung.
+
+**FIB-RECH-FUND-004 – Prüfung der fachlichen Änderungsrelevanz.** FIB vergleicht die bisherige und die neue Fassung eines Inhalts. Änderungen an fachlichen Angaben, insbesondere Kosten, Beschluss- oder Planungsinhalten und zusätzlichen Sachinformationen, führen zu einer neuen Fundstellenfassung. Bloße Rechtschreib-, Layout- und Komprimierungsänderungen sind keine fachlichen Fassungsänderungen. Zweifelsfälle, beispielsweise geänderte Datumsangaben, werden mit einer konkreten Änderungsübersicht der Redaktion zur Entscheidung vorgelegt. FIB darf eindeutig fachlich relevante Änderungen selbstständig als neue Fassung dokumentieren. Die Redaktion kann Fassungen verlangen und automatische Einstufungen korrigieren; Entscheidungen sind nachvollziehbar zu dokumentieren.
 
 </details>
 
