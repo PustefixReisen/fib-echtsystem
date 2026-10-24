@@ -569,6 +569,27 @@ Wiederkehrende Orte, Verkehrsverbindungen und bekannte Bezeichnungen sollen als 
 
 </details>
 
+### 03.4.3 Wie klärt FIB unbekannte räumliche Beziehungen?
+
+FIB soll örtliche Zusammenhänge auch dann erkennen können, wenn sie noch nicht im Referenzwissen stehen. Beispiel: Ein Bericht erwähnt den Radschnellweg München–Markt Schwaben, ohne Feldkirchen ausdrücklich zu nennen.
+
+FIB geht dabei stufenweise vor:
+
+1. **Bekanntes Wissen nutzen:** Bereits geprüfte räumliche und funktionale Beziehungen werden für die Suche herangezogen.
+2. **Selbstständig recherchieren:** Fehlt eine Beziehung, sucht die KI nach nachvollziehbaren Belegen, etwa amtlichen Streckenplänen oder Projektbeschreibungen, und macht Unsicherheit sichtbar.
+3. **Redaktion gezielt befragen:** Besteht weiterhin eine begründete Vermutung, fragt FIB die Redaktion unter Angabe des vermuteten Zusammenhangs und der bisherigen Erkenntnisse. Fragen werden gesammelt als bearbeitbare Aufgaben gezeigt; sie unterbrechen nicht jeden Recherchelauf.
+
+Die Redaktion kann eine Beziehung bestätigen, ablehnen oder offenlassen und eine Begründung oder Quelle ergänzen. Eine redaktionelle Bestätigung ist von einem unabhängig nachgewiesenen geografischen Sachverhalt zu unterscheiden. Die Entscheidung samt Herkunft und Prüfstatus steht späteren Recherchen zur Verfügung. Bereits geklärte Fragen werden ohne neue widersprechende Erkenntnisse nicht erneut gestellt. Offene Fragen verhindern nicht die Fortsetzung anderer Recherchearbeiten.
+
+**Grenze:** Eine aufwendige automatische Berechnung geometrischer Überschneidungen ist derzeit nicht Teil dieser Grundanforderung. Sie kann später ergänzt werden, wenn praktische Tests unzureichende Erkennungsqualität zeigen.
+
+<details>
+<summary><strong>Verbindliche Fachregel – räumliche Beziehungen klären (FIB-RECH-REF-004)</strong></summary>
+
+**FIB-RECH-REF-004 – Dreistufige Klärung räumlicher Beziehungen.** FIB verwendet zuerst vorhandene geprüfte Referenzbeziehungen, recherchiert fehlende räumliche Bezüge selbstständig mit Quellen und legt der Redaktion bei weiterhin begründeter Unsicherheit eine konkrete Klärungsfrage mit Begründung vor. Redaktionelle Antworten können bestätigt, abgelehnt oder offen gehalten werden; Antwort, Herkunft, Prüfstatus und gegebenenfalls Nachweis bleiben nachvollziehbar. Redaktionell bestätigtes Wissen ist von unabhängig belegten Tatsachen zu unterscheiden. Wiederholte Rückfragen ohne neue widersprechende Erkenntnisse sind zu vermeiden. Offene Fragen blockieren sonstige Recherche nicht.
+
+</details>
+
 ## 03.5 Geschäftsregeln, Zustände, Validierungen und Ausnahmen
 
 Für die Bewertung eines Recherchefundes sind der Bezug zu Feldkirchen, die Art der Information und die Qualität der verfügbaren Quellen wichtig. Die nachfolgenden Tabellen beschreiben, wie FIB auch überregionale Entwicklungen berücksichtigt.
