@@ -605,7 +605,30 @@ Die KI kann diese Änderungen vorschlagen, führt sie aber nicht selbst aus. Pau
 
 </details>
 
-### 03.4.3 Referenzobjekte und ihre Beziehungen
+### 03.4.3 Beziehungen von Quellen und Fundstellen
+
+Eine Quelle ist ein identifizierbares Informationsangebot, beispielsweise das RIS Feldkirchen. Dessen Herausgeber ist die Gemeinde Feldkirchen. Eine Quelle kann viele Fundstellen liefern. Jede Fundstelle hat genau **eine primäre Quelle**; zusätzliche Fundorte desselben Inhalts können nachvollziehbar vermerkt werden, ohne allein deswegen eine identische zweite Fundstelle anzulegen.
+
+Der Zusammenhang zu einem Vorgang oder Thema ergibt sich **über die Fundstellen und die zugeordneten Ereignisse**. Eine zusätzliche dauerhafte Beziehung Quelle–Vorgang oder Quelle–Thema ist dafür nicht erforderlich und soll nicht als parallele fachliche Wahrheit gepflegt werden.
+
+| Beziehung | Fachliche Bedeutung |
+|---|---|
+| Herausgeber → Quelle | Ein Herausgeber kann mehrere Informationsangebote verantworten |
+| Quelle → Fundstelle | Eine Quelle kann viele Fundstellen besitzen; jede Fundstelle hat eine primäre Quelle |
+| Fundstelle ↔ Ereignis | Eine Fundstelle kann mehrere Ereignisse belegen; ein Ereignis kann mehrere Fundstellen besitzen |
+| Ereignis → Vorgang / Thema | Die Zuordnung ergibt sich aus den jeweiligen fachlichen Beziehungsregeln der Ereignis-, Vorgangs- und Themenmodelle |
+| Recherchelauf ↔ Quelle | Mehrere Rechercheläufe können dieselbe Quelle untersuchen; die untersuchten Quellen sind im Lauf nachvollziehbar |
+
+Eine gezielte Recherche kann bevorzugt ausgewählte Quellen nutzen. Diese **temporäre Recherchestrategie** begründet keine dauerhafte Quelle–Thema- oder Quelle–Vorgang-Beziehung.
+
+<details>
+<summary><strong>Verbindliche Fachregel – Quellenzuordnung (FIB-RECH-QUELLE-010)</strong></summary>
+
+**FIB-RECH-QUELLE-010 – Primärquelle und abgeleitete fachliche Bezüge.** Jede Fundstelle verweist auf genau eine primäre Quelle. Zusätzliche Fundorte desselben Inhalts können ohne automatische Duplikation der Fundstelle erfasst werden. Fachliche Verbindungen von Quellen zu Vorgängen oder Themen werden aus Fundstellen, deren Ereigniszuordnungen und den fachlichen Beziehungen der Ereignisse abgeleitet und nicht als redundante eigenständige Quelle–Vorgang- beziehungsweise Quelle–Thema-Zuordnung gepflegt. Die Quellenauswahl eines Recherchelaufs ist davon getrennt.
+
+</details>
+
+### 03.4.4 Referenzobjekte und ihre Beziehungen
 
 Wiederkehrende Orte, Verkehrsverbindungen und bekannte Bezeichnungen sollen als stabile Referenzen erkennbar bleiben. Ein Straßenname oder ein Alias legt kein zweites Objekt an; aktuelle Planungsstände gehören dagegen zu zeitabhängigen Ereignissen und Vorgängen. Beziehungen zwischen Referenzobjekten sollen nachvollziehbar und redaktionell prüfbar sein.
 
@@ -618,7 +641,7 @@ Wiederkehrende Orte, Verkehrsverbindungen und bekannte Bezeichnungen sollen als 
 
 </details>
 
-### 03.4.4 Wie klärt FIB unbekannte räumliche Beziehungen?
+### 03.4.5 Wie klärt FIB unbekannte räumliche Beziehungen?
 
 FIB soll örtliche Zusammenhänge auch dann erkennen können, wenn sie noch nicht im Referenzwissen stehen. Beispiel: Ein Bericht erwähnt den Radschnellweg München–Markt Schwaben, ohne Feldkirchen ausdrücklich zu nennen.
 
