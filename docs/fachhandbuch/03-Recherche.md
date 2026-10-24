@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 2.8 – Fachregeln nach Erklärungen gruppiert | 23.10.2026 | Projektverantwortung – erstellt mit KI-Unterstützung |
+| 2.9 – Fachobjektprofile in 03.4 eingeordnet | 23.10.2026 | Projektverantwortung – erstellt mit KI-Unterstützung |
 
 > **Status:** Konsolidierungsentwurf. Die vorhandenen Fachregeln und Quellenbefunde wurden ohne neue fachliche Entscheidung nach dem Pustivo-Dokumentationsmodell v1.4 neu erschlossen. Die bisherigen Primärquellen bleiben bis zur fachlichen Abnahme gültig. Bisherige Abschnittsnummern in übernommenen Verweisen sind historisch und werden im anschließenden Referenzabgleich angepasst.
 
@@ -423,7 +423,26 @@ Eine Fundstelle bleibt als Beleg erhalten, auch wenn sie später nicht mehr abru
 
 **FIB-RECH-ABLAUF-001:** Neue Fundstelle, neues Ereignis und neue Meldung sind **drei verschiedene** fachliche Entscheidungen. Mehrere Fundstellen können dasselbe Ereignis ergänzen; eine neue Quelle allein rechtfertigt keine neue Meldung. Bei wesentlicher neuer Sachinformation wird zunächst die Fortschreibung eines bestehenden Ereignisses und Vorgangs geprüft.
 
-### Fachobjekte – fachliche Profile
+### 03.3.6 P5 – Recherche fortschreiben und verbessern
+
+Ein Recherchelauf berücksichtigt den konkreten Informationsbedarf, das bestehende FIB-Wissen, geeignete lokale und fachliche Referenzobjekte, den gültigen Referenzrahmen, bekannte Quellen sowie eine offene Suchanweisung.
+
+Die redaktionelle Entscheidung über die Anlage oder Änderung eines *Themas* gehört primär in [Kapitel 06](06-Themen.md); ihre Auswirkungen auf weitere Suchläufe gehören hierher.
+
+**Warum ist das für die Redaktion wichtig?** Ein einmal erkannter Bezug soll bei späteren Recherchen nicht erneut übersehen werden. Das neue Wissen bleibt als Suchkontext erhalten, während die Entscheidung über die fachliche Anlage eines Themas in Kapitel 06 getroffen wird.
+
+<details>
+<summary><strong>Verbindliche Fachregel zur Fortschreibung (FIB-RECH-KONTEXT-001)</strong></summary>
+
+**FIB-RECH-KONTEXT-001 – Dynamischer Suchkontext.** FIB erweitert den Recherchehorizont anhand neu erkannter Orte, Akteure, Vorgänge, Bezugsobjekte, Referenzbezeichnungen und Zusammenhänge. Diese Informationen ergänzen die offene Entdeckung, statt sie durch starre Schlüsselwortlisten zu ersetzen. Auch indirekte räumliche Bezüge, beispielsweise ein durch Feldkirchen verlaufender Radweg, sollen überprüfbar berücksichtigt werden.
+
+</details>
+
+## 03.4 Fachobjekte und fachliches Datenmodell
+
+Die nachstehenden Fachobjekte werden in mehreren Rechercheprozessen benötigt. Ihre Definitionen stehen hier zentral, nicht in der Übergabe an die Ereigniserfassung (P4). Die Profile sind eine erste fachliche Orientierung; Attribute, Beziehungen, Kardinalitäten, Zustände und Invarianten werden noch vollständig geprüft.
+
+### 03.4.1 Fachobjekte im Überblick – fachliche Profile
 
 **Beobachtungsauftrag.** Beschreibt eine konkrete, länger zu verfolgende Frage zu **genau einem** Vorgang, Thema oder einer Wissenslücke. Enthält Primärbezug, Frage, Grund, Herkunft, Status und Historie; optionale Wiedervorlage. Die Zustände sind Aktiv, Pausiert und Beendet. Eine Pause/Beendigung verlangt redaktionelle Begründung. **Keine festgeschriebenen Suchwörter** und **kein** ausgeführter Lauf. Implementierung der Objektverwaltung derzeit nicht nachgewiesen.
 
@@ -443,24 +462,10 @@ Eine Fundstelle bleibt als Beleg erhalten, auch wenn sie später nicht mehr abru
 
 **Primäre Ereignisregeln:** Ereignisbestätigung, Meldungsentscheidung und Fortschreibung werden in Kapitel 04 detailliert geregelt; die Recherche liefert Fundstellen, Provenienz, Begründungen und Kandidaten.
 
-### 03.3.6 P5 – Recherche fortschreiben und verbessern
 
-Ein Recherchelauf berücksichtigt den konkreten Informationsbedarf, das bestehende FIB-Wissen, geeignete lokale und fachliche Referenzobjekte, den gültigen Referenzrahmen, bekannte Quellen sowie eine offene Suchanweisung.
 
-Die redaktionelle Entscheidung über die Anlage oder Änderung eines *Themas* gehört primär in [Kapitel 06](06-Themen.md); ihre Auswirkungen auf weitere Suchläufe gehören hierher.
 
-**Warum ist das für die Redaktion wichtig?** Ein einmal erkannter Bezug soll bei späteren Recherchen nicht erneut übersehen werden. Das neue Wissen bleibt als Suchkontext erhalten, während die Entscheidung über die fachliche Anlage eines Themas in Kapitel 06 getroffen wird.
-
-<details>
-<summary><strong>Verbindliche Fachregel zur Fortschreibung (FIB-RECH-KONTEXT-001)</strong></summary>
-
-**FIB-RECH-KONTEXT-001 – Dynamischer Suchkontext.** FIB erweitert den Recherchehorizont anhand neu erkannter Orte, Akteure, Vorgänge, Bezugsobjekte, Referenzbezeichnungen und Zusammenhänge. Diese Informationen ergänzen die offene Entdeckung, statt sie durch starre Schlüsselwortlisten zu ersetzen. Auch indirekte räumliche Bezüge, beispielsweise ein durch Feldkirchen verlaufender Radweg, sollen überprüfbar berücksichtigt werden.
-
-</details>
-
-## 03.4 Fachobjekte und fachliches Datenmodell
-
-Die bestehenden Objektbeschreibungen aus §§03.3 und 03.4 enthalten bereits Zweck, Herkunft und teilweise Zustände. Die vollständige Attribut-/Beziehungs-/Kardinalitäts- und Invariantenprüfung ist **noch nicht abgeschlossen**; eine Tabellenexistenz in Supabase ersetzt keine Fachobjektspezifikation.
+Die vorstehenden Objektprofile beschreiben bereits Zweck, Herkunft und teilweise Zustände. Die vollständige Attribut-/Beziehungs-/Kardinalitäts- und Invariantenprüfung ist **noch nicht abgeschlossen**; eine Tabellenexistenz in Supabase ersetzt keine Fachobjektspezifikation.
 
 | Zugangsweg | Eingang | Verarbeitung und Ergebnis |
 |---|---|---|
@@ -740,6 +745,7 @@ Die folgenden Befunde wurden **direkt über die Supabase-Projektverwaltung und e
 
 | Version | Datum | Änderung |
 |---|---|---|
+| 2.9 | 24.10.2026 | Fachobjektprofile aus 03.3.5 nach 03.4 verschoben; Definitionsort eindeutig, P4 bleibt Prozessbeschreibung. |
 | 2.8 | 24.10.2026 | Prozessregeln und Regelbestand 03.2–03.5 mit fachlichen Erklärungen und einklappbaren Gruppen konsolidiert; doppelte Regelkennungen als offener Konsistenzpunkt erkannt. |
 | 2.7 | 24.10.2026 | Abschnitte 03.1.1 bis 03.1.5 durchgehend verständlich erläutert; Regeln jeweils abschließend gebündelt; Erfolgskriterien als konkrete Prüffragen dargestellt. |
 | 2.6 | 23.10.2026 | P1: erst vollständige fachliche Erklärung, dann ein zusammengefasster Regelblock; überholten Abstimmungsvermerk aus Lesefluss entfernt. |
