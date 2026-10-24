@@ -480,19 +480,6 @@ Eine Fundstelle bleibt als Beleg erhalten, auch wenn sie später nicht mehr abru
 
 **FIB-RECH-ABLAUF-001:** Neue Fundstelle, neues Ereignis und neue Meldung sind **drei verschiedene** fachliche Entscheidungen. Mehrere Fundstellen können dasselbe Ereignis ergänzen; eine neue Quelle allein rechtfertigt keine neue Meldung. Bei wesentlicher neuer Sachinformation wird zunächst die Fortschreibung eines bestehenden Ereignisses und Vorgangs geprüft.
 
-#### Wie nutzt FIB dauerhaftes Referenzwissen?
-
-Wiederkehrende Orte, Verkehrsverbindungen und bekannte Bezeichnungen sollen als stabile Referenzen erkennbar bleiben. Ein Straßenname oder ein Alias legt kein zweites Objekt an; aktuelle Planungsstände gehören dagegen zu zeitabhängigen Ereignissen und Vorgängen. Beziehungen zwischen Referenzobjekten sollen nachvollziehbar und redaktionell prüfbar sein.
-
-<details>
-<summary><strong>Verbindliche Fachregeln (FIB-RECH-REF-001, FIB-RECH-REF-002)</strong></summary>
-
-**FIB-RECH-REF-001 – Stabile Referenzobjekte statt veränderlicher Sachstände.** Referenzwissen bildet langlebige Identitäten, Aliase und wiederholt nützliche Orts-, Infrastruktur-, Raum- und Akteursbeziehungen ab. Ein Referenzobjekt hat eine stabile Identität; seine alternative Bezeichnung ist kein neues Objekt. Aktuelle Planungsstände, Bewertungen, Wirkungen und Veränderungen gehören in Ereignisse, Vorgänge und andere zeitgebundene Fachobjekte. Referenzwissen ersetzt keinen öffentlichen Quellenbeleg.
-
-**FIB-RECH-REF-002 – Kleine, überprüfbare Beziehungstypologie.** Geeignete Referenzbeziehungen sind beispielsweise `ist Teil von`, `liegt in/an`, `verbindet`, `erschließt/versorgt` und `steht in funktionalem Zusammenhang mit`. Beziehungen sind gegebenenfalls gerichtet. Gespeichert werden sie nur, wenn sie für Suche, Erkennung oder Relevanzprüfung wiederholt hilfreich sind. Ihre Herkunft und redaktionelle Bestätigung müssen nachvollziehbar bleiben. Ein KI-Vorschlag ist keine Bestätigung.
-
-</details>
-
 ### 03.3.6 P5 – Recherche fortschreiben und verbessern
 
 Ein Recherchelauf berücksichtigt den konkreten Informationsbedarf, das bestehende FIB-Wissen, geeignete lokale und fachliche Referenzobjekte, den gültigen Referenzrahmen, bekannte Quellen sowie eine offene Suchanweisung.
@@ -566,6 +553,19 @@ Die Quellenbeobachtung hat drei Eingänge: bereits bekannte Quellen, neu entdeck
 **FIB-RECH-QUELLE-002 – Bekannte Pflichtquellen direkt prüfen.** Zentrale Gemeinde- und RIS-Einstiege sowie weitere Pflichtquellen werden unabhängig von Suchmaschinen geprüft. Relevant sind auch Dokumentfreigaben außerhalb von Tagesordnungen, neue Unterseiten und geänderte Dateien unter gleichbleibender URL. Aus einer Dokumentfreigabe allein folgt noch kein bestimmter Tagesordnungspunkt oder Sitzungstermin.
 
 **FIB-RECH-QUELLE-003 – KI nur bei semantischem Mehrwert.** Unveränderter bekannter Quellenbestand löst grundsätzlich keinen erneuten KI-Auswertungsauftrag aus. KI wird für fachliche Analyse, relevante Veränderung oder offene Quellenentdeckung eingesetzt; Kosten und Prüfbarkeit sind dabei zu berücksichtigen.
+
+</details>
+
+### 03.4.2 Referenzobjekte und ihre Beziehungen
+
+Wiederkehrende Orte, Verkehrsverbindungen und bekannte Bezeichnungen sollen als stabile Referenzen erkennbar bleiben. Ein Straßenname oder ein Alias legt kein zweites Objekt an; aktuelle Planungsstände gehören dagegen zu zeitabhängigen Ereignissen und Vorgängen. Beziehungen zwischen Referenzobjekten sollen nachvollziehbar und redaktionell prüfbar sein.
+
+<details>
+<summary><strong>Verbindliche Fachregeln (FIB-RECH-REF-001, FIB-RECH-REF-002)</strong></summary>
+
+**FIB-RECH-REF-001 – Stabile Referenzobjekte statt veränderlicher Sachstände.** Referenzwissen bildet langlebige Identitäten, Aliase und wiederholt nützliche Orts-, Infrastruktur-, Raum- und Akteursbeziehungen ab. Ein Referenzobjekt hat eine stabile Identität; seine alternative Bezeichnung ist kein neues Objekt. Aktuelle Planungsstände, Bewertungen, Wirkungen und Veränderungen gehören in Ereignisse, Vorgänge und andere zeitgebundene Fachobjekte. Referenzwissen ersetzt keinen öffentlichen Quellenbeleg.
+
+**FIB-RECH-REF-002 – Kleine, überprüfbare Beziehungstypologie.** Geeignete Referenzbeziehungen sind beispielsweise `ist Teil von`, `liegt in/an`, `verbindet`, `erschließt/versorgt` und `steht in funktionalem Zusammenhang mit`. Beziehungen sind gegebenenfalls gerichtet. Gespeichert werden sie nur, wenn sie für Suche, Erkennung oder Relevanzprüfung wiederholt hilfreich sind. Ihre Herkunft und redaktionelle Bestätigung müssen nachvollziehbar bleiben. Ein KI-Vorschlag ist keine Bestätigung.
 
 </details>
 
