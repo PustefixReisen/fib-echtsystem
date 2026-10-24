@@ -287,7 +287,7 @@ Die Fachobjekte erhalten im nächsten fachlichen Durchgang je **eine vollständi
 
 </details>
 
-### 03.3.3 P2 – Recherche planen und ausführen
+### 03.3.3 P2 – Wie plant und erledigt FIB Recherchen?
 
 **Beobachtungsauftrag:** Definiert, *was FIB wissen oder weiter verfolgen möchte*. **Recherchelauf:** Bezeichnet die konkrete Ausführung zu einem Zeitpunkt oder Anlass. Ein Beobachtungsauftrag kann mehrere Rechercheläufe auslösen. Ein offener Recherchelauf kann ohne Beobachtungsauftrag erfolgen.
 
