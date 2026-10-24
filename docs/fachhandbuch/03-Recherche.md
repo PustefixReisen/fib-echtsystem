@@ -355,7 +355,7 @@ Sie muss denselben Beleg nicht mehrfach erfassen und kann trotzdem nachvollziehe
 
 **Noch zu vertiefen:** Fachliche Zuordnung von Rechercheläufen zu Fundstellen (einschließlich Mehrfachnutzung), Beziehungen zu Beobachtungsaufträgen, Änderungsbenachrichtigung und UI-Darstellung in §§03.4, 03.5 und 03.7.
 
-### 03.3.4 P3 – Fundstellen prüfen und bewerten (vorhandener Regelbestand)
+### 03.3.4 P3 – Fundstellen prüfen und bewerten
 
 Eine **Quelle** ist die Herkunft einer Information; die **Fundstelle** ist das konkrete Dokument, die Seite oder Informationseinheit. Eine bereits benutzte Fundstelle wird bei technischer Nichterreichbarkeit nicht allein deshalb aus der Belegbasis gelöscht.
 
