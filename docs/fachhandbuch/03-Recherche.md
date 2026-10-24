@@ -669,12 +669,14 @@ Die Redaktion soll erkennen, wie weit die Bearbeitung einer Fundstelle fortgesch
 
 Der Prüfstatus ist **keine Ereigniszuordnung**. Eine Fundstelle kann unabhängig von ihrem Bearbeitungsstand mehreren Ereignissen als Informationsnachweis dienen. Die fachliche Begründung einer Ereigniszuordnung wird an der Beziehung zur jeweiligen Fundstelle geführt.
 
-Mit diesen vier Statuswerten ist noch keine zusätzliche, unabhängige Statusdimension für die Relevanzentscheidung festgelegt. Die Übergangsbedingungen und etwaige Wiederaufnahme einer zurückgestellten Fundstelle sind bei der Prozessprüfung zu konkretisieren.
+Mit diesen vier Statuswerten ist noch keine zusätzliche, unabhängige Statusdimension für die Relevanzentscheidung festgelegt. Eine zurückgestellte Fundstelle kann jederzeit durch die Redaktion wieder aufgenommen werden. Wird eine fachlich relevante neue Fassung erkannt, veranlasst FIB eine erneute Prüfung; die frühere Prüfentscheidung und ihre Begründung bleiben in der Historie nachvollziehbar. Eine neue Fassung wird nicht ohne erneute fachliche Prüfung automatisch als bestätigt behandelt. Weitere Übergangsdetails werden mit P3 abgestimmt.
 
 <details>
 <summary><strong>Verbindliche Festlegung – Prüfstatus der Fundstelle</strong></summary>
 
 **FIB-RECH-FUND-005 – Vier Prüfstatuswerte.** Fundstellen verwenden die Prüfstatuswerte **Neu, Analysiert, Geprüft und Zurückgestellt**. Die KI darf analysieren und eine Relevanzeinschätzung vorschlagen; die fachliche Prüfung und verbindliche Zurückstellung erfolgen redaktionell. Die Zuordnung einer Fundstelle zu Ereignissen ist eine eigenständige fachliche Beziehung und kein zusätzlicher Prüfstatus.
+
+**FIB-RECH-FUND-006 – Wiederaufnahme und erneute Prüfung.** Die Redaktion kann eine zurückgestellte Fundstelle jederzeit zur weiteren Bearbeitung wieder aufnehmen. Erkennt FIB eine fachlich relevante neue Fassung einer bereits geprüften oder zurückgestellten Fundstelle, wird eine erneute fachliche Prüfung veranlasst. Die bisherige redaktionelle Entscheidung und Begründung bleiben historisch nachvollziehbar; die neue Fassung gilt nicht allein wegen einer früheren Prüfung als bestätigt.
 
 </details>
 
