@@ -426,12 +426,12 @@ Sie muss denselben Beleg nicht mehrfach erfassen und kann trotzdem nachvollziehe
 
 #### Wann recherchiert FIB rückblickend?
 
-Wenn ein neues Thema oder ein wesentlich veränderter Vorgang neue Suchfragen aufwirft, sollen auch ältere Veröffentlichungen berücksichtigt werden. Dafür ist grundsätzlich ein einmaliger Rückblick von sechs Monaten vorgesehen, nicht eine tägliche Vollsuche. Wann eine Änderung als wesentlich gilt, muss noch konkretisiert werden.
+Wenn ein neues Thema oder ein wesentlich veränderter Vorgang neue Suchfragen aufwirft, sollen auch ältere Veröffentlichungen berücksichtigt werden. Dafür ist grundsätzlich ein einmaliger Rückblick von sechs Monaten vorgesehen, nicht eine tägliche Vollsuche. Eine Änderung ist dann wesentlich, wenn neue fachliche Fragen oder räumliche beziehungsweise funktionale Bezüge den bisherigen Suchbereich erweitern. Der Rückblick konzentriert sich auf diese Erweiterung; bloße Textänderungen oder neue Funde zum bereits abgedeckten Bereich lösen ihn nicht aus.
 
 <details>
 <summary><strong>Verbindliche Fachregeln (FIB-RECH-RUECKBLICK-001)</strong></summary>
 
-**FIB-RECH-RUECKBLICK-001 – Anlassbezogener Sechs-Monats-Rückblick.** Wird ein Thema oder Vorgang neu bestätigt oder inhaltlich wesentlich geschärft, wird **einmalig grundsätzlich sechs Monate** vor dem Auslöser rückblickend recherchiert. Kürzere oder längere Abweichungen sind mit sachlicher Begründung zu protokollieren. Danach läuft die Beobachtung grundsätzlich inkrementell ab dem letzten erfolgreichen Recherchezeitpunkt mit angemessenem Überlappungsfenster weiter; sechs Monate sind **kein tägliches Standardsuchfenster**.
+**FIB-RECH-RUECKBLICK-001 – Anlassbezogener Sechs-Monats-Rückblick.** Wird ein Thema oder Vorgang neu bestätigt oder inhaltlich wesentlich geschärft, wird **einmalig grundsätzlich sechs Monate** vor dem Auslöser rückblickend recherchiert. Kürzere oder längere Abweichungen sind mit sachlicher Begründung zu protokollieren. Danach läuft die Beobachtung grundsätzlich inkrementell ab dem letzten erfolgreichen Recherchezeitpunkt mit angemessenem Überlappungsfenster weiter; sechs Monate sind **kein tägliches Standardsuchfenster**. Als **wesentliche Schärfung** gilt insbesondere eine fachliche Erweiterung des Suchbereichs durch neue Recherchefragen, räumliche oder funktionale Bezüge oder wichtige Teilfragen. Rein sprachliche Änderungen, zusätzliche Fundstellen innerhalb des bisherigen Suchbereichs oder eine andere redaktionelle Bewertung ohne Änderung des Suchbereichs lösen für sich keinen erneuten Sechs-Monats-Rückblick aus. FIB prüft zunächst, welche Teilbereiche neu hinzugekommen sind, und recherchiert gezielt dort rückblickend; bereits vorhandene Ergebnisse können nach Prüfung ihrer Aktualität wiederverwendet werden. Mehrfachfunde sind zu vermeiden.
 
 </details>
 
