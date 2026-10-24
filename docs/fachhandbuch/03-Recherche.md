@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 2.9 – Fachobjektprofile in 03.4 eingeordnet | 23.10.2026 | Projektverantwortung – erstellt mit KI-Unterstützung |
+| 3.0 – übernommene Regeln fachlich eingeordnet | 23.10.2026 | Projektverantwortung – erstellt mit KI-Unterstützung |
 
 > **Status:** Konsolidierungsentwurf. Die vorhandenen Fachregeln und Quellenbefunde wurden ohne neue fachliche Entscheidung nach dem Pustivo-Dokumentationsmodell v1.4 neu erschlossen. Die bisherigen Primärquellen bleiben bis zur fachlichen Abnahme gültig. Bisherige Abschnittsnummern in übernommenen Verweisen sind historisch und werden im anschließenden Referenzabgleich angepasst.
 
@@ -80,6 +80,19 @@ Zum dritten Fall gehört etwa ein realer Pilot zum autonomen Fahren in München,
 
 </details>
 
+#### Wie berücksichtigt FIB örtliche und mittelbare Bezüge?
+
+Der räumliche Bezug und die inhaltliche Bedeutung sind zwei unterschiedliche Fragen. Ein neues Vorhaben in Feldkirchen soll auch dann gefunden werden, wenn noch kein FIB-Thema dazu angelegt ist. Außerhalb Feldkirchens braucht FIB dagegen einen konkret begründeten Zusammenhang, beispielsweise einen durch Feldkirchen führenden Radweg. Nur eine thematische Ähnlichkeit genügt nicht.
+
+<details>
+<summary><strong>Verbindliche Fachregeln (FIB-RECH-RELEVANZ-001, FIB-RECH-RELEVANZ-002)</strong></summary>
+
+**FIB-RECH-RELEVANZ-001 – Orts- und Themenabdeckung sind unabhängige Achsen.** Die Recherche bezieht sich einerseits auf Feldkirchen und seine funktional verbundenen Räume, andererseits auf Sachzusammenhänge aus Vorgängen und Themen. **Keine der beiden Achsen darf die andere ersetzen.** Ein örtlich relevantes Vorhaben muss daher auch dann entdeckt werden können, wenn noch kein Thema oder Vorgang dazu erfasst ist.
+
+**FIB-RECH-RELEVANZ-002 – Erweiterte und zukünftige Relevanz.** Ein Fund außerhalb Feldkirchens kann berücksichtigt werden, sofern sein konkreter Bezug begründet ist: institutionell, räumlich, infrastrukturell, regional abhängig, zu einem bestätigten FIB-Vorgang/Thema, als einschlägiger Pilot-/Vergleichsfall oder über einen plausiblen künftigen kommunalen Übertragungsweg. Eine **bloß abstrakte Möglichkeit** genügt nicht. Eingetretene, plausible künftige und nur mögliche Wirkungen werden ausdrücklich sprachlich unterschieden.
+
+</details>
+
 ### 03.1.4 Was geschieht mit gefundenen Informationen?
 
 FIB soll viele Informationen erfassen, aber nicht alles veröffentlichen. Eine KI kann Funde vorsortieren und erklären, warum sie möglicherweise bedeutsam oder eher nebensächlich sind. **Die Entscheidung trifft die Redaktion.**
@@ -96,6 +109,17 @@ Auch ein für die Gemeinde wichtiger Fund wird nicht automatisch zu einem bestä
 Die **konkreten Statuswerte, Übergänge, Filter und Massenbearbeitungsmöglichkeiten** der Sichtung werden in §§03.4, 03.5 und 03.7 mit der Redaktion festgelegt; aus dem Wort „zurückstellen“ wird hier noch kein ungeprüftes vollständiges Statusmodell abgeleitet.
 
 **FIB-RECH-PRINZIP-002 – Keine automatische Publikation.** Das Erkennen einer Quelle oder Fundstelle ist noch keine redaktionelle Freigabe oder Veröffentlichung. Recherchefunde können umfangreicher sein als die später veröffentlichte Auswahl.
+
+</details>
+
+#### Warum unterscheidet FIB Recherche und Veröffentlichung?
+
+Die Recherche darf wesentlich mehr Informationen erfassen, als später veröffentlicht werden. Gerade bei mittelbaren oder erst zukünftig bedeutsamen Entwicklungen soll die Redaktion erkennen, ob die veröffentlichte Auswahl noch einen ausreichenden Feldkirchen-Bezug hat. Der bisher vereinbarte Wert von rund 30 Prozent ist nur eine Warnschwelle; die genaue Berechnungsgrundlage bleibt zu klären.
+
+<details>
+<summary><strong>Verbindliche Fachregeln (FIB-RECH-RELEVANZ-003)</strong></summary>
+
+**FIB-RECH-RELEVANZ-003 – Breite Recherche, engere Publikation.** Die Recherche darf wesentlich breiter sein als der veröffentlichte Bestand. Für **ausschließlich mittelbar, vergleichend oder zukünftig relevante veröffentlichte Beiträge** ist die Größenordnung von **30 % eine redaktionelle Warnschwelle**, keine starre individuelle Aufnahmequote und **keine Begrenzung der Recherche**. Bei Überschreitung werden Qualität der Feldkirchen-Bezüge, Bündelung und Suchhorizont geprüft; relevante Einzelfunde werden nicht allein deshalb verworfen.
 
 </details>
 
@@ -303,6 +327,28 @@ Die Fachobjekte erhalten im nächsten fachlichen Durchgang je **eine vollständi
 
 </details>
 
+#### Wie erkennt die Redaktion Lücken in der Quellenbeobachtung?
+
+Ein nicht erreichbares RIS-Dokument und ein Suchlauf ohne Treffer bedeuten nicht, dass es keine neuen Informationen gibt. FIB kennzeichnet Fehler, prüft wichtige Quellen erneut und macht wiederkehrende Störungen bei Pflichtquellen sichtbar.
+
+<details>
+<summary><strong>Verbindliche Fachregeln (FIB-RECH-QUAL-001)</strong></summary>
+
+**FIB-RECH-QUAL-001 – Fehler beweisen keinen Negativbefund.** Ein technischer Abruffehler, ein leerer Suchlauf oder eine gescheiterte Quellenentdeckung beweisen **nicht**, dass keine neuen relevanten Informationen existieren. Fehler werden kenntlich protokolliert; wiederkehrende Abrufprobleme bei Pflichtquellen sind sichtbar zu eskalieren.
+
+</details>
+
+#### Wie behandelt FIB eingebrachte Dateien und ihre Rechte?
+
+Eine intern hochgeladene Beschlussvorlage oder ein unveröffentlichtes Dokument darf FIB für die interne Recherche nutzen, ohne es dadurch öffentlich zugänglich zu machen. Vor einer öffentlichen Bereitstellung müssen Nutzungsrecht und Freigabe geklärt sein. FIB darf ergänzend nach öffentlich zugänglichen Belegen suchen.
+
+<details>
+<summary><strong>Verbindliche Fachregeln (FIB-RECH-QUELLE-004)</strong></summary>
+
+**FIB-RECH-QUELLE-004 – Redaktionell eingebrachte Dateien mit getrennten Nutzungsrechten.** FIB soll öffentliche URLs, hochgeladene Dokumente (insbesondere PDF) und Quellen ohne öffentliche URL entgegennehmen können. Der interne Speicher- und Erkenntniswert und die öffentliche Bereitstellungsbefugnis werden unabhängig behandelt. Eine Datei wird öffentlich nur bei positiv geklärtem Nutzungsrecht und bestätigter Freigabe bereitgestellt. Interne Quellen können Recherche auslösen, dürfen jedoch nicht als öffentlich zugängliche Belege dargestellt werden. Bei Folgerecherchen wird geprüft, ob dazu inzwischen öffentlich belegte Entwicklungen vorliegen.
+
+</details>
+
 ### 03.3.3 P2 – Wie plant und erledigt FIB Recherchen?
 
 **Beobachtungsauftrag:** Definiert, *was FIB wissen oder weiter verfolgen möchte*. **Recherchelauf:** Bezeichnet die konkrete Ausführung zu einem Zeitpunkt oder Anlass. Ein Beobachtungsauftrag kann mehrere Rechercheläufe auslösen. Ein offener Recherchelauf kann ohne Beobachtungsauftrag erfolgen.
@@ -378,6 +424,17 @@ Sie muss denselben Beleg nicht mehrfach erfassen und kann trotzdem nachvollziehe
 
 **Noch zu vertiefen:** Fachliche Zuordnung von Rechercheläufen zu Fundstellen (einschließlich Mehrfachnutzung), Beziehungen zu Beobachtungsaufträgen, Änderungsbenachrichtigung und UI-Darstellung in §§03.4, 03.5 und 03.7.
 
+#### Wann recherchiert FIB rückblickend?
+
+Wenn ein neues Thema oder ein wesentlich veränderter Vorgang neue Suchfragen aufwirft, sollen auch ältere Veröffentlichungen berücksichtigt werden. Dafür ist grundsätzlich ein einmaliger Rückblick von sechs Monaten vorgesehen, nicht eine tägliche Vollsuche. Wann eine Änderung als wesentlich gilt, muss noch konkretisiert werden.
+
+<details>
+<summary><strong>Verbindliche Fachregeln (FIB-RECH-RUECKBLICK-001)</strong></summary>
+
+**FIB-RECH-RUECKBLICK-001 – Anlassbezogener Sechs-Monats-Rückblick.** Wird ein Thema oder Vorgang neu bestätigt oder inhaltlich wesentlich geschärft, wird **einmalig grundsätzlich sechs Monate** vor dem Auslöser rückblickend recherchiert. Kürzere oder längere Abweichungen sind mit sachlicher Begründung zu protokollieren. Danach läuft die Beobachtung grundsätzlich inkrementell ab dem letzten erfolgreichen Recherchezeitpunkt mit angemessenem Überlappungsfenster weiter; sechs Monate sind **kein tägliches Standardsuchfenster**.
+
+</details>
+
 ### 03.3.4 P3 – Fundstellen prüfen und bewerten
 
 Eine Fundstelle ist zum Beispiel ein Pressebericht oder eine Beschlussvorlage. FIB prüft, ob die Information neu ist, woher sie stammt und welchen Beitrag sie zu einem Sachverhalt leistet. Dieselbe Fundstelle kann mehreren Ereignissen zugeordnet werden. Redaktionell bestätigte Zuordnungen werden begründet.
@@ -438,6 +495,17 @@ Die redaktionelle Entscheidung über die Anlage oder Änderung eines *Themas* ge
 
 </details>
 
+#### Wie fließen neue Erkenntnisse in künftige Recherchen ein?
+
+Eine neue Fundstelle kann nicht nur einen Ereigniskandidaten begründen, sondern auch eine bisher unbekannte Quelle oder eine wichtige räumliche Beziehung sichtbar machen. FIB darf diese Erweiterungen vorschlagen; sie werden nachvollziehbar begründet und durch die Redaktion geprüft.
+
+<details>
+<summary><strong>Verbindliche Fachregeln (FIB-RECH-REF-003)</strong></summary>
+
+**FIB-RECH-REF-003 – Recherche erweitert ihren eigenen Kontext.** Ein neuer relevanter Fund kann neben Ereigniskandidaten auch neue Quellen, bestätigbares Referenzwissen und Erweiterungen des Recherchehorizonts vorschlagen. Für KI-Kandidaten sind Fachregelbezug, verständliche Begründung, Quellen, Unsicherheit und vorgeschlagener Anschluss an bestehende oder neue Objekte erkennbar zu machen. Die Redaktion entscheidet.
+
+</details>
+
 ## 03.4 Fachobjekte und fachliches Datenmodell
 
 Die nachstehenden Fachobjekte werden in mehreren Rechercheprozessen benötigt. Ihre Definitionen stehen hier zentral, nicht in der Übergabe an die Ereigniserfassung (P4). Die Profile sind eine erste fachliche Orientierung; Attribute, Beziehungen, Kardinalitäten, Zustände und Invarianten werden noch vollständig geprüft.
@@ -488,6 +556,19 @@ Die Quellenbeobachtung hat drei Eingänge: bereits bekannte Quellen, neu entdeck
 
 </details>
 
+### 03.4.2 Referenzobjekte und ihre Beziehungen
+
+Wiederkehrende Orte, Verkehrsverbindungen und bekannte Bezeichnungen sollen als stabile Referenzen erkennbar bleiben. Ein Straßenname oder ein Alias legt kein zweites Objekt an; aktuelle Planungsstände gehören dagegen zu zeitabhängigen Ereignissen und Vorgängen. Beziehungen zwischen Referenzobjekten sollen nachvollziehbar und redaktionell prüfbar sein.
+
+<details>
+<summary><strong>Verbindliche Fachregeln (FIB-RECH-REF-001, FIB-RECH-REF-002)</strong></summary>
+
+**FIB-RECH-REF-001 – Stabile Referenzobjekte statt veränderlicher Sachstände.** Referenzwissen bildet langlebige Identitäten, Aliase und wiederholt nützliche Orts-, Infrastruktur-, Raum- und Akteursbeziehungen ab. Ein Referenzobjekt hat eine stabile Identität; seine alternative Bezeichnung ist kein neues Objekt. Aktuelle Planungsstände, Bewertungen, Wirkungen und Veränderungen gehören in Ereignisse, Vorgänge und andere zeitgebundene Fachobjekte. Referenzwissen ersetzt keinen öffentlichen Quellenbeleg.
+
+**FIB-RECH-REF-002 – Kleine, überprüfbare Beziehungstypologie.** Geeignete Referenzbeziehungen sind beispielsweise `ist Teil von`, `liegt in/an`, `verbindet`, `erschließt/versorgt` und `steht in funktionalem Zusammenhang mit`. Beziehungen sind gegebenenfalls gerichtet. Gespeichert werden sie nur, wenn sie für Suche, Erkennung oder Relevanzprüfung wiederholt hilfreich sind. Ihre Herkunft und redaktionelle Bestätigung müssen nachvollziehbar bleiben. Ein KI-Vorschlag ist keine Bestätigung.
+
+</details>
+
 ## 03.5 Geschäftsregeln, Zustände, Validierungen und Ausnahmen
 
 Für die Bewertung eines Recherchefundes sind der Bezug zu Feldkirchen, die Art der Information und die Qualität der verfügbaren Quellen wichtig. Die nachfolgenden Tabellen beschreiben, wie FIB auch überregionale Entwicklungen berücksichtigt.
@@ -502,81 +583,6 @@ Für die Bewertung eines Recherchefundes sind der Bezug zu Feldkirchen, die Art 
 | Erweiterter thematischer Raum | Weitere Region München, Bayern, Deutschland sowie begründet europa-/weltweite Entwicklungen | **Konkreter** Erkenntniswert für eine Feldkirchner Fragestellung, nicht nur Themenähnlichkeit |
 
 **Schnittstelle zu Kapitel 06:** Neue oder veränderte Themen liefern neue Namen, Orte, Perspektiven und Wissensfragen für die Recherche. Die Themenanlage und ihre fachliche Freigabe bleiben eigenständige Redaktionsentscheidungen.
-
-### 03.5.1 Weitere aus den Primärquellen übernommene Regeln
-
-**Implementierungsgrenze:** Diese Regeln sind aus den bestehenden Primärquellen übernommen. Die vollständige operative Umsetzung von Referenzobjekten, Uploads, Versionsregelverwaltung und Testläufen ist **nicht** durch die bisher ausgewerteten Edge Functions nachgewiesen. Historische Quellen bleiben bis zu ihrer vollständigen Übernahme gültig.
-
-
-### Relevanz und Rückblick
-
-FIB prüft nicht nur Meldungen aus Feldkirchen. Auch ein Radweg durch mehrere Gemeinden oder eine neue Technik mit nachvollziehbaren Folgen für Feldkirchen kann wichtig sein. Bei einem neu erfassten oder erheblich veränderten Thema sucht FIB außerdem rückblickend nach bislang übersehenen Informationen. Die Veröffentlichungsauswahl bleibt enger als die Recherche.
-
-**Verbindliche Regeln als Zusammenfassung**
-
-<details>
-<summary><strong>4 Fachregeln anzeigen (FIB-RECH-RELEVANZ-001, FIB-RECH-RELEVANZ-002, FIB-RECH-RELEVANZ-003, FIB-RECH-RUECKBLICK-001)</strong></summary>
-
-**FIB-RECH-RELEVANZ-001 – Orts- und Themenabdeckung sind unabhängige Achsen.** Die Recherche bezieht sich einerseits auf Feldkirchen und seine funktional verbundenen Räume, andererseits auf Sachzusammenhänge aus Vorgängen und Themen. **Keine der beiden Achsen darf die andere ersetzen.** Ein örtlich relevantes Vorhaben muss daher auch dann entdeckt werden können, wenn noch kein Thema oder Vorgang dazu erfasst ist.
-
-**FIB-RECH-RELEVANZ-002 – Erweiterte und zukünftige Relevanz.** Ein Fund außerhalb Feldkirchens kann berücksichtigt werden, sofern sein konkreter Bezug begründet ist: institutionell, räumlich, infrastrukturell, regional abhängig, zu einem bestätigten FIB-Vorgang/Thema, als einschlägiger Pilot-/Vergleichsfall oder über einen plausiblen künftigen kommunalen Übertragungsweg. Eine **bloß abstrakte Möglichkeit** genügt nicht. Eingetretene, plausible künftige und nur mögliche Wirkungen werden ausdrücklich sprachlich unterschieden.
-
-**FIB-RECH-RELEVANZ-003 – Breite Recherche, engere Publikation.** Die Recherche darf wesentlich breiter sein als der veröffentlichte Bestand. Für **ausschließlich mittelbar, vergleichend oder zukünftig relevante veröffentlichte Beiträge** ist die Größenordnung von **30 % eine redaktionelle Warnschwelle**, keine starre individuelle Aufnahmequote und **keine Begrenzung der Recherche**. Bei Überschreitung werden Qualität der Feldkirchen-Bezüge, Bündelung und Suchhorizont geprüft; relevante Einzelfunde werden nicht allein deshalb verworfen.
-
-**FIB-RECH-RUECKBLICK-001 – Anlassbezogener Sechs-Monats-Rückblick.** Wird ein Thema oder Vorgang neu bestätigt oder inhaltlich wesentlich geschärft, wird **einmalig grundsätzlich sechs Monate** vor dem Auslöser rückblickend recherchiert. Kürzere oder längere Abweichungen sind mit sachlicher Begründung zu protokollieren. Danach läuft die Beobachtung grundsätzlich inkrementell ab dem letzten erfolgreichen Recherchezeitpunkt mit angemessenem Überlappungsfenster weiter; sechs Monate sind **kein tägliches Standardsuchfenster**.
-
-</details>
-
-### Qualität und Quellenbewertung
-
-Ein nicht erreichbarer Link oder ein leerer Suchlauf ist keine Bestätigung dafür, dass nichts passiert ist. FIB macht solche Lücken sichtbar und trennt überprüfte Angaben von ungesicherten Hinweisen. Für KI-Auswertungen zählt zuerst die sachliche Qualität, bevor günstigere Verfahren bevorzugt werden.
-
-**Verbindliche Regeln als Zusammenfassung**
-
-<details>
-<summary><strong>3 Fachregeln anzeigen (FIB-RECH-QUAL-001, FIB-RECH-QUAL-002, FIB-RECH-QUELLE-004)</strong></summary>
-
-**FIB-RECH-QUAL-001 – Fehler beweisen keinen Negativbefund.** Ein technischer Abruffehler, ein leerer Suchlauf oder eine gescheiterte Quellenentdeckung beweisen **nicht**, dass keine neuen relevanten Informationen existieren. Fehler werden kenntlich protokolliert; wiederkehrende Abrufprobleme bei Pflichtquellen sind sichtbar zu eskalieren.
-
-**FIB-RECH-QUAL-002 – KI-Qualität vor Kostenoptimierung.** Für semantische Quellenentdeckung, Bewertung neuer Fundstellen und Ereigniserkennung zählt zuerst die nachgewiesene fachliche Ergebnisqualität. Erst zwischen ausreichend geeigneten Modellen wird nach Kosten optimiert. KI darf keine redaktionelle Freigabe ersetzen.
-
-**FIB-RECH-QUELLE-004 – Redaktionell eingebrachte Dateien mit getrennten Nutzungsrechten.** FIB soll öffentliche URLs, hochgeladene Dokumente (insbesondere PDF) und Quellen ohne öffentliche URL entgegennehmen können. Der interne Speicher- und Erkenntniswert und die öffentliche Bereitstellungsbefugnis werden unabhängig behandelt. Eine Datei wird öffentlich nur bei positiv geklärtem Nutzungsrecht und bestätigter Freigabe bereitgestellt. Interne Quellen können Recherche auslösen, dürfen jedoch nicht als öffentlich zugängliche Belege dargestellt werden. Bei Folgerecherchen wird geprüft, ob dazu inzwischen öffentlich belegte Entwicklungen vorliegen.
-
-</details>
-
-### Referenzwissen und Bewertungsrahmen
-
-FIB nutzt bekannte Orte, Namen, Verbindungen und frühere bestätigte Erkenntnisse als Orientierung. Ein Radschnellweg wird deshalb auch dann als möglicher Feldkirchen-Bezug erkannt, wenn ein Artikel nur die Endpunkte nennt. Tatsachenquellen, gesellschaftliche Bedeutung und politische Einordnung müssen klar unterscheidbar bleiben.
-
-**Verbindliche Regeln als Zusammenfassung**
-
-<details>
-<summary><strong>4 Fachregeln anzeigen (FIB-RECH-REF-001, FIB-RECH-REF-002, FIB-RECH-REF-003, FIB-RECH-RAHMEN-001)</strong></summary>
-
-**FIB-RECH-REF-001 – Stabile Referenzobjekte statt veränderlicher Sachstände.** Referenzwissen bildet langlebige Identitäten, Aliase und wiederholt nützliche Orts-, Infrastruktur-, Raum- und Akteursbeziehungen ab. Ein Referenzobjekt hat eine stabile Identität; seine alternative Bezeichnung ist kein neues Objekt. Aktuelle Planungsstände, Bewertungen, Wirkungen und Veränderungen gehören in Ereignisse, Vorgänge und andere zeitgebundene Fachobjekte. Referenzwissen ersetzt keinen öffentlichen Quellenbeleg.
-
-**FIB-RECH-REF-002 – Kleine, überprüfbare Beziehungstypologie.** Geeignete Referenzbeziehungen sind beispielsweise `ist Teil von`, `liegt in/an`, `verbindet`, `erschließt/versorgt` und `steht in funktionalem Zusammenhang mit`. Beziehungen sind gegebenenfalls gerichtet. Gespeichert werden sie nur, wenn sie für Suche, Erkennung oder Relevanzprüfung wiederholt hilfreich sind. Ihre Herkunft und redaktionelle Bestätigung müssen nachvollziehbar bleiben. Ein KI-Vorschlag ist keine Bestätigung.
-
-**FIB-RECH-REF-003 – Recherche erweitert ihren eigenen Kontext.** Ein neuer relevanter Fund kann neben Ereigniskandidaten auch neue Quellen, bestätigbares Referenzwissen und Erweiterungen des Recherchehorizonts vorschlagen. Für KI-Kandidaten sind Fachregelbezug, verständliche Begründung, Quellen, Unsicherheit und vorgeschlagener Anschluss an bestehende oder neue Objekte erkennbar zu machen. Die Redaktion entscheidet.
-
-**FIB-RECH-RAHMEN-001 – Drei getrennte Referenzrahmen-Ebenen.** Bei Recherche und Analyse sind allgemeine Quellen-/Qualitätsprinzipien, demokratisch-gesellschaftliche Maßstäbe und spezifisch grüne politische Werte sauber zu unterscheiden. Politische Erwartungen dürfen keine Tatsachenbasis verändern. Der grüne Referenzrahmen begründet insbesondere eine gesondert kenntliche „Unsere Einordnung“. Die fachliche Ausarbeitung der demokratisch-gesellschaftlichen Ebene ist in den Altquellen ausdrücklich noch offen und wird hier nicht stillschweigend als entschieden dargestellt.
-
-</details>
-
-### Regelverwaltung und Qualitätsprüfung
-
-FIB muss nachvollziehen können, nach welchen Regeln eine Recherche durchgeführt wurde. Änderungen an diesen Regeln werden kontrolliert und geprüft. So lässt sich später feststellen, ob eine andere Suchregel einen zuvor übersehenen Fall gefunden hätte.
-
-**Verbindliche Regeln als Zusammenfassung**
-
-<details>
-<summary><strong>2 Fachregeln anzeigen (FIB-RECH-REGEL-001, FIB-RECH-REGEL-002)</strong></summary>
-
-**FIB-RECH-REGEL-001 – Versionierte operative Recherche- und Relevanzregeln.** GitHub/Fachhandbuch beschreibt fachlich verbindliche Regeln; deren aktiver operativer Stand soll strukturiert und versioniert in FIB geführt und gezielt bei Rechercheläufen verwendet werden. Ein Änderungsentwurf wird auf Widersprüche geprüft, anhand positiver, negativer und Grenzfälle getestet und erst redaktionell bestätigt aktiviert. Zu jeder Recherche muss der maßgebliche Regelstand erkennbar sein.
-
-**FIB-RECH-REGEL-002 – Zwei verschiedene Regeltests.** Die **Bewertungswirkung** vergleicht alte und neue Entscheidungen über bekannte Fundstellen, auch ehemals als nicht relevant eingestufte. Die **Entdeckungswirkung** erfordert eine zusätzliche Probe-Recherche mit Differenz der alten und neuen Funde. Tests verändern keine regulären Fachobjekte und erzeugen keine normalen Redaktionsaufgaben. Der zweite Test ist nötig, weil eine Regel sonst neue Suchräume verfehlen kann, obwohl die Bewertung bekannter Funde plausibel erscheint.
-
-</details>
 
 ## 03.6 Anwendungsfälle und Funktionen
 
@@ -597,6 +603,32 @@ Für Fundstellen ist fachlich bereits vereinbart, frühere und neue Informations
 ## 03.8 Übergreifende Fachanforderungen und Schnittstellen
 
 Zu beachten sind insbesondere Quellen- und Nutzungsrechte, Provenienz, KI-Unterstützung ohne automatische redaktionelle Freigabe, versionierte Recherche- und Relevanzregeln, Audit, pessimistische Objektsperren bei Schreibaktionen sowie die Schnittstellen zu Kapitel 04 (Ereignisse), Kapitel 06 (Themen) und Kapitel 09 (öffentliche Darstellung). Die technische Durchsetzung verbleibt in den jeweils technischen Primärquellen.
+
+### Welche übergreifenden Maßstäbe und KI-Qualitätsanforderungen gelten?
+
+FIB unterscheidet die Tatsachenbasis einer Recherche von gesellschaftlichen Bewertungsmaßstäben und der politischen Einordnung aus grüner Perspektive. Politische Erwartungen dürfen Fakten nicht verändern. Bei KI-Modellen steht die nachgewiesene fachliche Qualität vor einer Kostenoptimierung. Die gesellschaftliche Bewertungsebene ist noch auszuarbeiten.
+
+<details>
+<summary><strong>Verbindliche Fachregeln (FIB-RECH-RAHMEN-001, FIB-RECH-QUAL-002)</strong></summary>
+
+**FIB-RECH-RAHMEN-001 – Drei getrennte Referenzrahmen-Ebenen.** Bei Recherche und Analyse sind allgemeine Quellen-/Qualitätsprinzipien, demokratisch-gesellschaftliche Maßstäbe und spezifisch grüne politische Werte sauber zu unterscheiden. Politische Erwartungen dürfen keine Tatsachenbasis verändern. Der grüne Referenzrahmen begründet insbesondere eine gesondert kenntliche „Unsere Einordnung“. Die fachliche Ausarbeitung der demokratisch-gesellschaftlichen Ebene ist in den Altquellen ausdrücklich noch offen und wird hier nicht stillschweigend als entschieden dargestellt.
+
+**FIB-RECH-QUAL-002 – KI-Qualität vor Kostenoptimierung.** Für semantische Quellenentdeckung, Bewertung neuer Fundstellen und Ereigniserkennung zählt zuerst die nachgewiesene fachliche Ergebnisqualität. Erst zwischen ausreichend geeigneten Modellen wird nach Kosten optimiert. KI darf keine redaktionelle Freigabe ersetzen.
+
+</details>
+
+### Wie werden operative Rechercheregeln geändert und geprüft?
+
+Das Fachhandbuch beschreibt die fachlichen Regeln. Für automatische Recherchen muss FIB außerdem wissen, welche operative Regelversion aktiv ist. Geänderte Regeln sind gegen bekannte Fälle und in einer zusätzlichen Probe-Recherche zu prüfen, damit weder bekannte Funde falsch bewertet noch neue Suchräume übersehen werden. Freigabeverantwortung und konkrete Abnahmeschwellen werden gesondert geklärt.
+
+<details>
+<summary><strong>Verbindliche Fachregeln (FIB-RECH-REGEL-001, FIB-RECH-REGEL-002)</strong></summary>
+
+**FIB-RECH-REGEL-001 – Versionierte operative Recherche- und Relevanzregeln.** GitHub/Fachhandbuch beschreibt fachlich verbindliche Regeln; deren aktiver operativer Stand soll strukturiert und versioniert in FIB geführt und gezielt bei Rechercheläufen verwendet werden. Ein Änderungsentwurf wird auf Widersprüche geprüft, anhand positiver, negativer und Grenzfälle getestet und erst redaktionell bestätigt aktiviert. Zu jeder Recherche muss der maßgebliche Regelstand erkennbar sein.
+
+**FIB-RECH-REGEL-002 – Zwei verschiedene Regeltests.** Die **Bewertungswirkung** vergleicht alte und neue Entscheidungen über bekannte Fundstellen, auch ehemals als nicht relevant eingestufte. Die **Entdeckungswirkung** erfordert eine zusätzliche Probe-Recherche mit Differenz der alten und neuen Funde. Tests verändern keine regulären Fachobjekte und erzeugen keine normalen Redaktionsaufgaben. Der zweite Test ist nötig, weil eine Regel sonst neue Suchräume verfehlen kann, obwohl die Bewertung bekannter Funde plausibel erscheint.
+
+</details>
 
 ## 03.9 Fachliche Beispiele, Akzeptanzkriterien und Testfälle
 
@@ -745,6 +777,7 @@ Die folgenden Befunde wurden **direkt über die Supabase-Projektverwaltung und e
 
 | Version | Datum | Änderung |
 |---|---|---|
+| 3.0 | 24.10.2026 | Die 13 übernommenen Regeln aus 03.5.1 auf fachlich passende Abschnitte verteilt und mit Erläuterungen versehen; offene Eindeutigkeitsfragen für spätere Abstimmung markiert. |
 | 2.9 | 24.10.2026 | Fachobjektprofile aus 03.3.5 nach 03.4 verschoben; Definitionsort eindeutig, P4 bleibt Prozessbeschreibung. |
 | 2.8 | 24.10.2026 | Prozessregeln und Regelbestand 03.2–03.5 mit fachlichen Erklärungen und einklappbaren Gruppen konsolidiert; doppelte Regelkennungen als offener Konsistenzpunkt erkannt. |
 | 2.7 | 24.10.2026 | Abschnitte 03.1.1 bis 03.1.5 durchgehend verständlich erläutert; Regeln jeweils abschließend gebündelt; Erfolgskriterien als konkrete Prüffragen dargestellt. |
