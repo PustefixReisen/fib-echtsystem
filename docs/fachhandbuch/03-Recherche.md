@@ -194,8 +194,6 @@ Für automatische Grundrecherche, einmalige anlassbezogene Recherche und redakti
 
 #### Grundbetrieb und anlassbezogene Recherche
 
-**FIB-RECH-BETRIEB-001 – Eigenständige Recherche (fachlich abgestimmt 23.10.2026).** FIB recherchiert regelmäßig und offen **auch ohne Einzelauftrag durch einen Redakteur**. Manuelle Rechercheaufträge und dauerhafte Beobachtungsaufträge ergänzen diesen automatischen Grundbetrieb. Keine technische Ausführung oder KI-Analyse darf dadurch eigenständig eine Fundstelle verbindlich zurückstellen oder etwas veröffentlichen. Frequenz, technische Auslösung und Fehlernachlauf werden später spezifiziert.
-
 **Anlassbezogene Recherche – zur gemeinsamen fachlichen Vertiefung:** FIB soll aus einem erkannten Anlass zusätzliche gezielte Recherche ableiten können. Ob und unter welchen Voraussetzungen ein Anlass automatisch einen Lauf auslöst, welche Priorität er erhält und ob er eine Wiedervorlage erfordert, ist noch zu entscheiden. Als **Prüfkandidaten**, nicht abschließend beschlossene Auslöseliste, dienen:
 
 | Möglicher Anlass | Beispielfall | Zu prüfende Reaktion |
@@ -214,13 +212,22 @@ Für automatische Grundrecherche, einmalige anlassbezogene Recherche und redakti
 
 #### Redaktionell ausgelöste Recherche
 
-**FIB-RECH-AUFTRAG-001 – Recherche aus redaktioneller Sachfrage.** Ein Redakteur kann **jederzeit eine eigenständige Recherche anstoßen**, insbesondere wenn er von einem bisher nicht in FIB erfassten Sachverhalt erfahren hat. Der Auftrag setzt **weder eine vorhandene Fundstelle noch ein Ereignis, einen Vorgang oder ein Thema voraus**. Er wird als fachliche Frage oder Sachverhaltsbeschreibung in **natürlicher Sprache** erfasst; Kenntnisse von KI-Suchsyntax oder technischem Prompt Engineering sind nicht erforderlich. Ein eventuell eingegebener Suchprompt ist Eingabeinhalt, **nicht** automatisch eine neue Recherche- oder Relevanzregel.
-
 **Erwartete fachliche Wirkung:** Die Recherche verwendet den geltenden räumlichen und thematischen Recherchehorizont, darf aber für die konkret beschriebene Frage auch neue Quellen und Zusammenhänge prüfen; sie dokumentiert Anlass, redaktionellen Urheber, Suchfrage, Fundstellen, Ergebnis bzw. erfolglose/fehlerhafte Durchführung. Ergebnisse werden wie andere Recherchefunde bewertet und gesichtet. **Nichtfinden** ist nicht gleich **Nichtexistenz**. Kein Vorschlag wird allein durch die Anfrage zum bestätigten Ereignis.
 
 **Unterscheidung von Daueraufträgen:** Eine **einmalige, begrenzte Nachrecherche** soll FIB ohne weiteres menschliches Freigabeverfahren ausführen können. Eine längerfristige Frage führt zu einem **Vorschlag für einen Beobachtungsauftrag**, den die Redaktion bestätigt. Die Suche kann außerdem auf Wunsch später erneut ausgeführt werden; Speicherung, Wiederholung und genaue Darstellung werden in §§03.4 und 03.7 vertieft.
 
 **Zur gemeinsamen UI-Erprobung offen:** Eingabefeld „Was soll FIB recherchieren?“, optionale Orts-/Themenhinweise, Vorschau der interpretierten Frage, Recherche starten, Ergebnis/Fehler einsehen, mögliche Übernahme als Beobachtungsauftrag. Diese Details sind **noch keine beschlossene UI-Spezifikation**.
+
+**Verbindliche Regeln zu den Rechercheanlässen**
+
+<details>
+<summary><strong>2 Regeln anzeigen: Grundbetrieb und redaktioneller Auftrag</strong></summary>
+
+**FIB-RECH-BETRIEB-001 – Eigenständige Recherche (fachlich abgestimmt 23.10.2026).** FIB recherchiert regelmäßig und offen **auch ohne Einzelauftrag durch einen Redakteur**. Manuelle Rechercheaufträge und dauerhafte Beobachtungsaufträge ergänzen diesen automatischen Grundbetrieb. Keine technische Ausführung oder KI-Analyse darf dadurch eigenständig eine Fundstelle verbindlich zurückstellen oder etwas veröffentlichen. Frequenz, technische Auslösung und Fehlernachlauf werden später spezifiziert.
+
+**FIB-RECH-AUFTRAG-001 – Recherche aus redaktioneller Sachfrage.** Ein Redakteur kann **jederzeit eine eigenständige Recherche anstoßen**, insbesondere wenn er von einem bisher nicht in FIB erfassten Sachverhalt erfahren hat. Der Auftrag setzt **weder eine vorhandene Fundstelle noch ein Ereignis, einen Vorgang oder ein Thema voraus**. Er wird als fachliche Frage oder Sachverhaltsbeschreibung in **natürlicher Sprache** erfasst; Kenntnisse von KI-Suchsyntax oder technischem Prompt Engineering sind nicht erforderlich. Ein eventuell eingegebener Suchprompt ist Eingabeinhalt, **nicht** automatisch eine neue Recherche- oder Relevanzregel.
+
+</details>
 
 ### 03.3.2 P1 – Quellen beobachten und entdecken
 
