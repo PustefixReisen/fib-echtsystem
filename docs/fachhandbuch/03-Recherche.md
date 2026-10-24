@@ -583,12 +583,25 @@ Der operative Betrieb ergänzt Angaben zur letzten erfolgreichen Prüfung, Abruf
 | **Beendet** | Dauerhafte Beobachtung eingestellt; bisherige Fundstellen bleiben erhalten |
 | **Abgelehnt** | Quelle geprüft, aber nicht zur dauerhaften Beobachtung geeignet |
 
-Eine Quelle kann bereits als Kandidat Fundstellen liefern. **Pflichtquelle** ist kein sechster Zustand, sondern eine getrennte Eigenschaft. Die konkreten Übergänge, Rechte, Gründe und Auswirkungen auf Pflichtquellen werden im nächsten fachlichen Schritt vereinbart.
+Eine Quelle kann bereits als Kandidat Fundstellen liefern. **Pflichtquelle** ist kein sechster Zustand, sondern eine getrennte Eigenschaft. Die dauerhafte Beobachtung wird durch eine ausdrückliche redaktionelle Entscheidung gesteuert. Für die Quellen gelten folgende Übergänge:
+
+| Übergang | Fachlicher Anlass | Entscheidung |
+|---|---|---|
+| Kandidat → Aktiv | Neue Quelle zur dauerhaften Beobachtung geeignet | Redaktion |
+| Kandidat → Abgelehnt | Quelle für dauerhafte Beobachtung nicht geeignet | Redaktion |
+| Aktiv → Pausiert | Beobachtung vorübergehend aussetzen | Redaktion |
+| Pausiert → Aktiv | Beobachtung wieder aufnehmen | Redaktion |
+| Aktiv/Pausiert → Beendet | Dauerhafte Beobachtung einstellen | Redaktion |
+| Abgelehnt/Beendet → Aktiv | Nach erneuter Prüfung wieder beobachten | Redaktion |
+
+Die KI kann diese Änderungen vorschlagen, führt sie aber nicht selbst aus. Pausierung und Beendigung müssen begründet und mit Entscheidung sowie Zeitpunkt historisiert werden. Bei Pflichtquellen zeigt FIB vor Pausierung oder Beendigung ausdrücklich die mögliche Recherche- und Beobachtungslücke an. Bereits erfasste Fundstellen bleiben in jedem Fall erhalten.
 
 <details>
 <summary><strong>Verbindliche Festlegungen zum Fachobjekt Quelle</strong></summary>
 
-**FIB-RECH-QUELLE-008 – Quellenstatus und Pflichtquelleneigenschaft.** Der redaktionelle Beobachtungsstatus einer Quelle unterscheidet Kandidat, Aktiv, Pausiert, Beendet und Abgelehnt. Die Eigenschaft „Pflichtquelle“ wird unabhängig davon geführt. Ein Abruffehler führt nicht automatisch zu einem Statuswechsel. Bereits erfasste Fundstellen bleiben bei Pausierung, Beendigung oder Ablehnung erhalten. Die dauerhafte Aufnahme einer neu entdeckten Quelle bedarf redaktioneller Bestätigung.
+**FIB-RECH-QUELLE-008 – Quellenstatus und Pflichtquelleneigenschaft.** Der redaktionelle Beobachtungsstatus einer Quelle unterscheidet Kandidat, Aktiv, Pausiert, Beendet und Abgelehnt. Die Eigenschaft „Pflichtquelle“ wird unabhängig davon geführt. Ein Abruffehler führt nicht automatisch zu einem Statuswechsel. Bereits erfasste Fundstellen bleiben bei Pausierung, Beendigung oder Ablehnung erhalten. Die dauerhafte Aufnahme einer neu entdeckten Quelle bedarf redaktioneller Bestätigung. 
+
+**FIB-RECH-QUELLE-009 – Redaktionelle Quellenstatus-Übergänge.** Zulässig sind Kandidat → Aktiv/Abgelehnt, Aktiv → Pausiert/Beendet, Pausiert → Aktiv/Beendet sowie Abgelehnt/Beendet → Aktiv nach erneuter Prüfung. Alle Übergänge bedürfen einer redaktionellen Entscheidung; KI darf sie nur vorschlagen. Pausierung und Beendigung werden begründet und mit Entscheidung sowie Zeitpunkt historisiert. Vor Pausierung oder Beendigung einer Pflichtquelle weist FIB ausdrücklich auf mögliche Recherche- und Beobachtungslücken hin. Historische Fundstellen bleiben erhalten.
 
 </details>
 
