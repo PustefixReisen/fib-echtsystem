@@ -556,7 +556,43 @@ Die Quellenbeobachtung hat drei Eingänge: bereits bekannte Quellen, neu entdeck
 
 </details>
 
-### 03.4.2 Referenzobjekte und ihre Beziehungen
+### 03.4.2 Quelle – Eigenschaften und Zustände
+
+Eine **Quelle** ist ein identifizierbares Informationsangebot, aus dem FIB Fundstellen gewinnt, zum Beispiel das **RIS Feldkirchen**. Die **Gemeinde Feldkirchen** ist dessen Herausgeber, nicht selbst die Quelle. Mehrere Quellen können demselben Herausgeber zugeordnet sein. Ein gesondertes fachliches Objekt „Beobachtungszugang“ ist derzeit nicht vorgesehen; Abrufadresse und Abrufverfahren gehören zu den technischen Angaben der Quelle.
+
+Für die redaktionelle Verwaltung sind insbesondere folgende Eigenschaften vorgesehen:
+
+| Eigenschaft | Bedeutung |
+|---|---|
+| Kennung und Bezeichnung | Quelle eindeutig identifizieren, zum Beispiel „RIS Feldkirchen“ |
+| Herausgeber | Verantwortliche Organisation oder Person |
+| Quellenart und Beschreibung | Art und angebotene Inhalte erkennen |
+| Internetadresse beziehungsweise Zugang | Informationsangebot auffinden |
+| Räumlicher und thematischer Bezug | Bedeutung für die Recherche nachvollziehen |
+| Pflichtquelle (ja/nein) | Besonderer Beobachtungsauftrag unabhängig vom aktuellen Status |
+| Beobachtungsstatus | Lebenszyklus der dauerhaften Beobachtung |
+| Herkunft und Bestätigung | Entdeckung und redaktionelle Entscheidung nachweisen |
+
+Der operative Betrieb ergänzt Angaben zur letzten erfolgreichen Prüfung, Abruffehlern und technischen Abrufmethoden. Ein technischer Abruffehler verändert nicht automatisch den fachlichen Beobachtungsstatus.
+
+| Quellenstatus | Fachliche Bedeutung |
+|---|---|
+| **Kandidat** | Quelle entdeckt, noch nicht zur dauerhaften Beobachtung bestätigt |
+| **Aktiv** | Quelle wird dauerhaft beobachtet |
+| **Pausiert** | Beobachtung vorübergehend ausgesetzt |
+| **Beendet** | Dauerhafte Beobachtung eingestellt; bisherige Fundstellen bleiben erhalten |
+| **Abgelehnt** | Quelle geprüft, aber nicht zur dauerhaften Beobachtung geeignet |
+
+Eine Quelle kann bereits als Kandidat Fundstellen liefern. **Pflichtquelle** ist kein sechster Zustand, sondern eine getrennte Eigenschaft. Die konkreten Übergänge, Rechte, Gründe und Auswirkungen auf Pflichtquellen werden im nächsten fachlichen Schritt vereinbart.
+
+<details>
+<summary><strong>Verbindliche Festlegungen zum Fachobjekt Quelle</strong></summary>
+
+**FIB-RECH-QUELLE-008 – Quellenstatus und Pflichtquelleneigenschaft.** Der redaktionelle Beobachtungsstatus einer Quelle unterscheidet Kandidat, Aktiv, Pausiert, Beendet und Abgelehnt. Die Eigenschaft „Pflichtquelle“ wird unabhängig davon geführt. Ein Abruffehler führt nicht automatisch zu einem Statuswechsel. Bereits erfasste Fundstellen bleiben bei Pausierung, Beendigung oder Ablehnung erhalten. Die dauerhafte Aufnahme einer neu entdeckten Quelle bedarf redaktioneller Bestätigung.
+
+</details>
+
+### 03.4.3 Referenzobjekte und ihre Beziehungen
 
 Wiederkehrende Orte, Verkehrsverbindungen und bekannte Bezeichnungen sollen als stabile Referenzen erkennbar bleiben. Ein Straßenname oder ein Alias legt kein zweites Objekt an; aktuelle Planungsstände gehören dagegen zu zeitabhängigen Ereignissen und Vorgängen. Beziehungen zwischen Referenzobjekten sollen nachvollziehbar und redaktionell prüfbar sein.
 
@@ -569,7 +605,7 @@ Wiederkehrende Orte, Verkehrsverbindungen und bekannte Bezeichnungen sollen als 
 
 </details>
 
-### 03.4.3 Wie klärt FIB unbekannte räumliche Beziehungen?
+### 03.4.4 Wie klärt FIB unbekannte räumliche Beziehungen?
 
 FIB soll örtliche Zusammenhänge auch dann erkennen können, wenn sie noch nicht im Referenzwissen stehen. Beispiel: Ein Bericht erwähnt den Radschnellweg München–Markt Schwaben, ohne Feldkirchen ausdrücklich zu nennen.
 
