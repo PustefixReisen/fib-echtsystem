@@ -156,6 +156,15 @@ Das bereits dokumentierte Rollenmodell unterscheidet Besucher, Redakteur und Adm
 - **Fachliches Suchprofil:** Redaktion kann seine Grundlagen nachvollziehen und im zulässigen Zuständigkeitsbereich pflegen. Welche Veränderungen systemweit normative Regelaktivierungen sind und daher Adminrechte benötigen, wird anhand der bestehenden Berechtigungsmatrix weiter konkretisiert.
 - **Abgrenzung zu Kapitel 04:** Die Recherche stellt Fundstellen und begründete Kandidaten bereit; Bestätigung, Zusammenführung und Fortschreibung von Ereignissen sind ein eigener redaktioneller Arbeitsablauf.
 
+**Zusammengefasste Zuständigkeitsregeln:** Die folgenden beiden Regeln halten fest, welche Aufgaben FIB vorbereiten darf und welche Entscheidungen bei der Redaktion bleiben.
+
+<details>
+<summary><strong>Verbindliche Regeln zur Aufgabenteilung (2)</strong></summary>
+
+
+
+</details>
+
 ### 03.2.4 Vereinbarte Entscheidungs- und Pflegebefugnisse (23.10.2026)
 
 **FIB-RECH-ROLLE-001 – Automatische Vorbereitung, menschliche Verbindlichkeit.** Technische Funktionen und KI dürfen eigenständig recherchieren, Fundstellen erfassen, analysieren und fachliche Vorschläge erzeugen. Sie dürfen weder Fundstellen verbindlich als irrelevant zurückstellen noch veröffentlichen oder fachlich verbindliche Grundlagen des Recherchehorizonts ohne menschliche Entscheidung ändern. Vorschläge und ihre Begründungen bleiben sichtbar.
