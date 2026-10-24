@@ -360,6 +360,9 @@ Sie muss denselben Beleg nicht mehrfach erfassen und kann trotzdem nachvollziehe
 
 ### 03.3.4 P3 – Fundstellen prüfen und bewerten
 
+Eine Fundstelle ist zum Beispiel ein Pressebericht oder eine Beschlussvorlage. FIB prüft, ob die Information neu ist, woher sie stammt und welchen Beitrag sie zu einem Sachverhalt leistet. Dieselbe Fundstelle kann mehreren Ereignissen zugeordnet werden. Redaktionell bestätigte Zuordnungen werden begründet.
+
+
 Eine **Quelle** ist die Herkunft einer Information; die **Fundstelle** ist das konkrete Dokument, die Seite oder Informationseinheit. Eine bereits benutzte Fundstelle wird bei technischer Nichterreichbarkeit nicht allein deshalb aus der Belegbasis gelöscht.
 
 **FIB-RECH-FUND-001 – Persistenter Recherchekandidat.** Neue und geänderte Fundstellen werden nachvollziehbar erfasst und zur fachlichen Analyse bzw. redaktionellen Prüfung weitergegeben. Eine Fundstelle kann unterschiedliche Sachverhalte betreffen, ohne selbst ein bestätigtes Ereignis zu sein.
