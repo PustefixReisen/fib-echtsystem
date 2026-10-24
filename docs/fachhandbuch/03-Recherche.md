@@ -114,12 +114,12 @@ Die **konkreten Statuswerte, Übergänge, Filter und Massenbearbeitungsmöglichk
 
 #### Warum unterscheidet FIB Recherche und Veröffentlichung?
 
-Die Recherche darf wesentlich mehr Informationen erfassen, als später veröffentlicht werden. Gerade bei mittelbaren oder erst zukünftig bedeutsamen Entwicklungen soll die Redaktion erkennen, ob die veröffentlichte Auswahl noch einen ausreichenden Feldkirchen-Bezug hat. Der bisher vereinbarte Wert von rund 30 Prozent ist nur eine Warnschwelle; die genaue Berechnungsgrundlage bleibt zu klären.
+Die Recherche darf wesentlich mehr Informationen erfassen, als später veröffentlicht werden. Gerade bei mittelbaren oder erst zukünftig bedeutsamen Entwicklungen soll die Redaktion erkennen, ob die veröffentlichte Auswahl noch einen ausreichenden Feldkirchen-Bezug hat. Der Anteil wird über einen rollierenden Zeitraum von 90 Tagen berechnet: Gezählt werden alle neu veröffentlichten Beiträge, darunter gesondert diejenigen ohne unmittelbaren Feldkirchen-Bezug. Bei mehr als 30 Prozent prüft die Redaktion die Auswahl; es erfolgt keine automatische Ablehnung.
 
 <details>
 <summary><strong>Verbindliche Fachregeln (FIB-RECH-RELEVANZ-003)</strong></summary>
 
-**FIB-RECH-RELEVANZ-003 – Breite Recherche, engere Publikation.** Die Recherche darf wesentlich breiter sein als der veröffentlichte Bestand. Für **ausschließlich mittelbar, vergleichend oder zukünftig relevante veröffentlichte Beiträge** ist die Größenordnung von **30 % eine redaktionelle Warnschwelle**, keine starre individuelle Aufnahmequote und **keine Begrenzung der Recherche**. Bei Überschreitung werden Qualität der Feldkirchen-Bezüge, Bündelung und Suchhorizont geprüft; relevante Einzelfunde werden nicht allein deshalb verworfen.
+**FIB-RECH-RELEVANZ-003 – Breite Recherche, engere Publikation.** Die Recherche darf wesentlich breiter sein als der veröffentlichte Bestand. Für **ausschließlich mittelbar, vergleichend oder zukünftig relevante veröffentlichte Beiträge** ist die Größenordnung von **30 % eine redaktionelle Warnschwelle**, keine starre individuelle Aufnahmequote und **keine Begrenzung der Recherche**. Bei Überschreitung werden Qualität der Feldkirchen-Bezüge, Bündelung und Suchhorizont geprüft; relevante Einzelfunde werden nicht allein deshalb verworfen. Die Warnschwelle wird anhand aller **innerhalb der zurückliegenden 90 Tage neu veröffentlichten Beiträge** berechnet (rollierender Zeitraum). Als Zähler zählen veröffentlichte Beiträge, deren Feldkirchen-Bezug **ausschließlich mittelbar, vergleichend oder zukünftig** begründet ist. Als Nenner zählen alle im selben Zeitraum neu veröffentlichten Beiträge. Jeder Beitrag zählt genau einmal, unabhängig von der Zahl der Quellen und Themenbezüge. Die Schwelle ist überschritten, wenn der Anteil **mehr als 30 %** beträgt. Bei noch keinen Veröffentlichungen im Zeitraum ist kein Anteil berechenbar.
 
 </details>
 
