@@ -26,6 +26,8 @@ Themen werden aus dem FIB-Wissensbestand erkannt oder redaktionell neu angelegt.
 
 **Quellen:** [Fachkonzept §4.3](../Fachkonzept.md), [Themen- und Vorgangslogik §§3–6](../Themen-und-Vorgangslogik.md).
 
+**Freigabevoraussetzung Erkenntnisebene:** Ein Themenentwurf darf ohne Beobachtungsauftrag angelegt und bearbeitet werden. Vor der erstmaligen fachlichen Freigabe muss jedoch mindestens ein dem Thema zugeordneter Beobachtungsauftrag tatsächlich ausgewertet worden sein. Die Auswertung dokumentiert untersuchte Fragen, verfügbare Belege, Erkenntnisstand sowie weiterhin offene Fragen und Unsicherheiten. Ein aktiver oder bereits beendeter Auftrag kann dafür herangezogen werden; seine bloße Existenz genügt nicht. Neue Erkenntnisse sind keine Pflicht, und unbelegte Aussagen dürfen nicht zur Erfüllung der Voraussetzung erzeugt werden. Die Redaktion prüft die Auswertung und entscheidet über die Freigabe. Der bestehende dreiteilige Themenbearbeitungsablauf bleibt unverändert.
+
 ## 6.2 Definition und Bearbeitungsbereiche
 
 Die Bearbeitung eines Themas dient nicht nur dem Schreiben eines Textes. Zunächst wird geklärt, **welche Frage** beantwortet werden soll, **welche lokalen Entwicklungen** dafür tatsächlich aussagekräftig sind und **welche Erkenntnisse** daraus für Leserinnen und Leser entstehen. Darum unterscheidet FIB die Definition, die fachlichen Bezüge und die öffentliche Darstellung.
