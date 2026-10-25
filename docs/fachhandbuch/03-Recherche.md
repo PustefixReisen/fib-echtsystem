@@ -353,6 +353,8 @@ Eine intern hochgeladene Beschlussvorlage oder ein unveröffentlichtes Dokument 
 
 **Beobachtungsauftrag:** Definiert, *was FIB wissen oder weiter verfolgen möchte*. **Recherchelauf:** Bezeichnet die konkrete Ausführung zu einem Zeitpunkt oder Anlass. Ein Beobachtungsauftrag kann mehrere Rechercheläufe auslösen. Ein offener Recherchelauf kann ohne Beobachtungsauftrag erfolgen.
 
+**Vorschlag für einen Beobachtungsauftrag:** Ist eine relevante Frage längerfristig offen, weil weitere Entwicklungen oder Veröffentlichungen abzuwarten sind, schlägt FIB ihre Beobachtung mit einer Begründung vor. Nur die Redaktion entscheidet über die Anlage und Aktivierung. Unmittelbar klärbare Fragen bleiben einmalige Nachrecherchen.
+
 #### Beobachtungsstatus im Überblick
 
 | Status | Fachliche Bedeutung |
