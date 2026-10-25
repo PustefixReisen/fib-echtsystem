@@ -355,6 +355,10 @@ Eine intern hochgeladene Beschlussvorlage oder ein unveröffentlichtes Dokument 
 
 **Vorschlag für einen Beobachtungsauftrag:** Ist eine relevante Frage längerfristig offen, weil weitere Entwicklungen oder Veröffentlichungen abzuwarten sind, schlägt FIB ihre Beobachtung mit einer Begründung vor. Nur die Redaktion entscheidet über die Anlage und Aktivierung. Unmittelbar klärbare Fragen bleiben einmalige Nachrecherchen.
 
+**Zwei Entstehungswege:** Ein Beobachtungsauftrag kann aus einer offenen Frage zu einem bereits bestehenden Vorgang oder Thema entstehen. Ebenso kann die allgemeine oder gezielte Recherche eine fachlich relevante Wissenslücke aufdecken, bevor ein passender Vorgang oder ein Thema existiert. Die Redaktion entscheidet in beiden Fällen über Anlage und Aktivierung.
+
+**Spätere fachliche Einordnung:** Wird eine zunächst eigenständige Wissenslücke später einem Vorgang oder Thema zugeordnet, bleibt der bestehende Beobachtungsauftrag einschließlich seiner bisherigen Fundstellen, Fragestellungen und Historie erhalten. Sein fachlicher Primärbezug wird nachvollziehbar angepasst; weitere Vorgänge oder Themen können den Auftrag als zusätzlichen Nutzungskontext verknüpfen. Es entsteht kein doppelter Beobachtungsauftrag.
+
 #### Beobachtungsstatus im Überblick
 
 | Status | Fachliche Bedeutung |
