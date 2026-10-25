@@ -394,6 +394,8 @@ Rechercheläufe können auch manuell, aus der offenen Recherche oder als anlassb
 
 **FIB-RECH-BEOB-004 – Redaktioneller Lebenszyklus (abgestimmt 23.10.2026).** Aktivierung, Pausierung und Beendigung eines Beobachtungsauftrags sind redaktionelle Entscheidungen. Die KI darf eine solche Änderung mit Begründung vorschlagen, aber nicht selbst verbindlich vollziehen. Es gilt das bereits definierte Zustandsmodell **Aktiv / Pausiert / Beendet**; es entsteht hier kein weiteres Statusmodell. Die konkreten Statusübergänge, Wiedervorlagen, Folgen einer späteren neuen Fundstelle und Darstellung in der Oberfläche sind in §§03.4, 03.5 und 03.7 zu vertiefen.
 
+**FIB-RECH-BEOB-006 – Beendigungsvorschlag.** Ist die Beobachtungsfrage beantwortet oder die weitere Beobachtung fachlich nicht mehr sinnvoll, kann FIB die Beendigung mit Begründung vorschlagen. Allein das Ausbleiben neuer Fundstellen ist kein Beendigungsgrund. Die verbindliche Entscheidung trifft die Redaktion.
+
 </details>
 
 ### 03.3.3.1 Wie werden gleichzeitig laufende Recherchen koordiniert?
