@@ -482,6 +482,25 @@ Eine Fundstelle bleibt als Beleg erhalten, auch wenn sie später nicht mehr abru
 
 **FIB-RECH-ABLAUF-001:** Neue Fundstelle, neues Ereignis und neue Meldung sind **drei verschiedene** fachliche Entscheidungen. Mehrere Fundstellen können dasselbe Ereignis ergänzen; eine neue Quelle allein rechtfertigt keine neue Meldung. Bei wesentlicher neuer Sachinformation wird zunächst die Fortschreibung eines bestehenden Ereignisses und Vorgangs geprüft.
 
+#### Erkenntnisweitergabe an Vorgänge und Themen
+
+Beobachtungsaufträge dienen nicht nur dem Auffinden neuer Fundstellen. FIB soll aus den Funden auch offene Fragen, Erklärungen, Hintergründe sowie beabsichtigte und unbeabsichtigte Folgen erkennen. Erkenntnisse können für bestehende Vorgänge und Themen wichtig sein, ohne selbst ein neues Ereignis oder eine Meldung darzustellen.
+
+Die Analyse unterscheidet **Faktenwissen**, **Erklärungswissen** (einschließlich wissenschaftlicher, technischer und rechtlicher Grundlagen) und **Hintergrund- und Zusammenhangswissen**. Die Wirkungsbetrachtung schließt direkte und mittelbare, positive und negative sowie mögliche Nebenfolgen ein. Wirtschaftliche, soziale, städtebauliche, ökologische und mobilitätsbezogene Wirkungen sind ein Ausgangsraster, aber **kein abschließender Katalog**: FIB entwickelt weitere Wirkungsbereiche aus der konkreten Frage und den Belegen. Diese Folgen beeinflussen auch die Priorisierung offener Recherchefragen.
+
+Die Beobachtungsfrage steuert die Recherche; daraus abgeleitete Erkenntnisse werden mit ihren Fundstellen, ihrer Begründung und der Unterscheidung zwischen Beleg, fachlicher Erklärung und Hypothese an die Bearbeitung betroffener Vorgänge und Themen übergeben. FIB schlägt auch ohne neues Ereignis Ergänzungen eines Vorgangs, neue oder geänderte Themenbezüge und Änderungen an der „Bedeutung für das Thema“ vor. **Die Redaktion prüft und übernimmt** solche Vorschläge; ein mögliches Wirkungsverhältnis wird nicht ohne Beleg als Tatsache bestätigt.
+
+Ein Vorgang oder Thema kann direkt auf einen Beobachtungsauftrag verweisen, um dessen Fragestellung, Erkenntnisse, offene Fragen und Belege zugänglich zu machen. Solche Verweise sind **zusätzliche Nutzungskontexte** und ändern nicht den bereits vereinbarten genau einen fachlichen Primärbezug des Beobachtungsauftrags. Mehrere Vorgänge oder Themen dürfen denselben Beobachtungsauftrag nutzen. Die gesicherten Fundstellen bleiben eigenständig; Erkenntnisse werden nicht künstlich als Ereignisse erfasst.
+
+Für „Mehr wissen“ bei Vorgängen und Themen können insbesondere wissenschaftliche, rechtliche und technische Hintergründe sowie Wirkungszusammenhänge als begründete vertiefende Fragen verwendet werden. Wie Erkenntnisvorschläge und Links in der Oberfläche angezeigt und historisiert werden, wird im jeweiligen Prozess- und Bedienkonzept konkretisiert.
+
+<details>
+<summary><strong>Verbindliche Fachregel zur Erkenntnisweitergabe</strong></summary>
+
+**FIB-RECH-ERKENNTNIS-001 – Erkenntnisse und Wirkungen weitergeben.** FIB berücksichtigt bei vertieften Recherchen erklärende, rechtliche, wissenschaftliche und technische Grundlagen, Hintergründe sowie direkte und mittelbare Folgen einschließlich Nebenwirkungen. Wirkungsbereiche werden anlassbezogen erweitert und bei der Fragenpriorisierung berücksichtigt. FIB kann belegte oder ausdrücklich als Hypothese bezeichnete Erkenntnisse auch ohne neues Ereignis als begründete Änderungsvorschläge an Vorgänge oder Themen übergeben; die Redaktion entscheidet über die Übernahme. Vorgänge und Themen dürfen auf Beobachtungsaufträge als zusätzliche Nutzungskontexte verweisen, ohne deren eindeutigen Primärbezug zu verändern.
+
+</details>
+
 ### 03.3.6 P5 – Recherche fortschreiben und verbessern
 
 Ein Recherchelauf berücksichtigt den konkreten Informationsbedarf, das bestehende FIB-Wissen, geeignete lokale und fachliche Referenzobjekte, den gültigen Referenzrahmen, bekannte Quellen sowie eine offene Suchanweisung.
