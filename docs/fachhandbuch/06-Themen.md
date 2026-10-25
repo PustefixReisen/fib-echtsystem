@@ -22,6 +22,8 @@ Wie im [Fachkonzept – Zielbild und Wissensstruktur](../Fachkonzept.md) gilt: D
 
 Themen werden aus dem FIB-Wissensbestand erkannt oder redaktionell neu angelegt. KI-Themenkandidaten und redaktionelle Neuanlagen werden vor Übernahme auf gleiche oder ähnliche bestehende Themen geprüft. Die Redaktion kann Leitfrage und Abgrenzung schärfen, Aspekte ergänzen oder verwerfen und Rechercheaufträge auslösen. Neue, noch unbelegte Aspekte bleiben bis zur Prüfung Recherchebedarf, nicht gesicherte Tatsachen.
 
+**Beobachtungsaufträge als Grundlage der Themenentwicklung:** Themen werden nicht allein aus Ereignissen und Meldungen entwickelt. Sie benötigen auch Erkenntnisse über Ursachen, rechtliche, wissenschaftliche und technische Hintergründe, Wirkungszusammenhänge sowie direkte und mittelbare Folgen einschließlich möglicher Nebenwirkungen. Diese sachverhaltsbezogenen Vertiefungen werden insbesondere durch Beobachtungsaufträge erschlossen. Ein Thema kann verknüpfte Beobachtungsaufträge mit deren offenen Fragen, Fundstellen und Erkenntnissen heranziehen, auch wenn keine neue Meldung oder kein neues Ereignis entstanden ist. FIB schlägt daraus begründete Änderungen an Themenbeschreibung, Perspektiven und der Bedeutung zugeordneter Vorgänge für das Thema vor. Die Redaktion prüft und übernimmt die Vorschläge. Beobachtungswissen darf nicht ohne Prüfung des konkreten Bezugs verallgemeinert werden. Die Bearbeitungsansicht des Themas macht diese Beobachtungsbezüge und Vorschläge zugänglich; die genaue UI-Ausgestaltung wird im Bedienkonzept abgestimmt.
+
 **Quellen:** [Fachkonzept §4.3](../Fachkonzept.md), [Themen- und Vorgangslogik §§3–6](../Themen-und-Vorgangslogik.md).
 
 ## 6.2 Definition und Bearbeitungsbereiche
