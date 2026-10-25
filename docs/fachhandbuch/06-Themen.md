@@ -40,6 +40,14 @@ Die drei Bereiche sind **keine drei Freigabestufen**. Ihre unterschiedlichen Sta
 
 **Quellen:** [Themen- und Vorgangslogik §12](../Themen-und-Vorgangslogik.md), [Fachentwurf §§2–3](../Fachentwurf-Themenbearbeitung-2026-10-20.md).
 
+### Vier Bausteine der Themenentwicklung
+
+**Lokale Bezüge** entstehen fachlich über zugeordnete Vorgänge und ergänzende Einzelereignisse. Sie dokumentieren die konkreten Entwicklungen, auf denen das Thema beruht. Erkenntnisse sind kein zusätzlicher Typ lokaler Bezüge.
+
+**Beobachtungsaufträge** erschließen eigenständig sachverhaltsgebundene Erkenntnisse über Ursachen, rechtliche, wissenschaftliche und technische Hintergründe, Wirkungen und mögliche Nebenfolgen. Ein Thema kann auf zugehörige Aufträge mit Fragen, Auswertungen und Fundstellen zugreifen, auch ohne neues Ereignis. **Vorgänge** können zusätzlich eigene und aus Beobachtungsaufträgen gewonnene Erkenntnisse einbringen; sie werden bei der redaktionellen Bewertung der Bedeutung eines Vorgangs für das Thema berücksichtigt.
+
+**Themenbeitrag:** Die Redaktion verarbeitet Ereignisse und Erkenntnisse im Beitragstext zu einer verständlichen Gesamtdarstellung und gibt dessen Fassung nach Prüfung frei. Die fachliche Prüfung von Erkenntnissen beginnt bereits vor der Textfreigabe: Belege, konkreter Geltungsbereich, Unsicherheiten und Hypothesen werden bei der Übernahme in die Themenbearbeitung geprüft. Eine Beobachtungsauswertung ersetzt keine redaktionelle Beitragsfreigabe.
+
 ## 6.3 Lokale Bezüge
 
 ### Wozu braucht ein Thema lokale Bezüge?
