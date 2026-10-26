@@ -121,6 +121,20 @@ Bei späteren Entwicklungen darf FIB eine **Wiederaufnahme** oder die Anlage ein
 
 **Wichtig:** Auch bei abgeschlossenen oder archivierten Vorgängen kann ein öffentlich zugänglicher Beitrag eine dringend erforderliche fachliche Korrektur benötigen. Solche Aufgaben müssen im Dashboard angezeigt werden.
 
+### Fachliche Zustandsübergänge und Wiederaufnahme
+
+Ein **Vorgangsstatus** beschreibt den Bearbeitungs- und Sachstand des Vorgangs, nicht die Freigabe seiner Analyse und auch nicht die öffentliche Sichtbarkeit einer Meldung oder eines Vorgangsbeitrags. Maßgeblich bleibt das vierteilige Bestandsmodell aus [Persistenz- und Lebenszyklusmodell](../Persistenz-und-Lebenszyklusmodell.md): **Aktiv – Ruhend – Abgeschlossen – Archiviert**.
+
+| Ausgangslage | Fachlicher Anlass | Ergebnis |
+|---|---|---|
+| **Aktiv** | Zwischenzeitlich keine neuen Entwicklungen erwartet, Beobachtung soll aber möglich bleiben | **Ruhend** kann redaktionell entschieden werden; bestehende Belege, Analysen und öffentliche Fassungen bleiben erhalten |
+| **Aktiv oder Ruhend** | Sachverhalt ist fachlich vorerst beendet | **Abgeschlossen** nur durch redaktionelle Entscheidung nach begründetem Vorschlag; keine automatische Schlussfolgerung aus ausbleibenden Funden |
+| **Abgeschlossen** | Später neue Information, Korrektur oder Entwicklung | Zuerst Prüfung, ob der **gleiche Vorgang** wiederaufzunehmen ist oder ob eine neue, verknüpfte Entwicklung beginnt; eine KI-Entdeckung allein setzt keinen verbindlichen Status |
+| **Ruhend oder Abgeschlossen** | Dauerhaft nur noch historische Bedeutung | **Archiviert** nach fachlicher Prüfung; historische Beziehungen, bestätigte Analysefassungen und Publikationen werden nicht gelöscht |
+| **Archiviert** | Neue sachliche Entwicklung mit ausreichendem Bezug | Wiederaufnahme redaktionell prüfen; bereits publizierte Fassungen und damalige Erkenntnisstände bleiben als Historie unterscheidbar |
+
+**Wichtig:** „Abgeschlossen“ bedeutet nicht „keine weitere Recherche zulässig“ und „Archiviert“ bedeutet nicht „öffentliche Inhalte löschen“. Wesentliche sachliche Korrekturen zu veröffentlichten Inhalten müssen unabhängig vom internen Vorgangsstatus als Aufgaben sichtbar bleiben. Die fachlich zulässigen **direkten** Statusübergänge sind bei der endgültigen Migration mit den bestehenden Detailregeln abzugleichen; diese Tabelle benennt Entscheidungsanlässe und darf keine zusätzlichen automatischen Übergänge legitimieren.
+
 ## 05.8 Anforderungen an die Bedienung
 
 Die Vorgangsbearbeitung soll in der bestehenden Redaktionsanwendung einen **kontextbezogenen Zugang** zu Sachstand, Ereignissen, Analyse, Fragen/Antworten, Rechercheaufträgen und Änderungspaketen bieten.
