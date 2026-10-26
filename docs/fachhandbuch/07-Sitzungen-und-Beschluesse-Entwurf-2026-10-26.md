@@ -98,6 +98,19 @@ Zweifelhafte Zuordnungen zu TOP, Ereignis, Abstimmung oder Beschlusstext müssen
 
 Für einen fachlich abgeschlossenen Sitzungsstand ist die öffentlich belegte Genehmigung der Niederschrift maßgeblich. Das ist von der öffentlichen Verfügbarkeit des Dokuments zu unterscheiden. Quelle: [Sitzungs- und Beschlussmodell](../Sitzungs-und-Beschlussmodell.md), Abschnitte 4 bis 8.
 
+### Wie Sitzungen, Meldungen, Vorgänge und Themen zusammenhängen
+
+Die öffentliche Sitzungsansicht wird **aus den bereits bestätigten Fachbeziehungen erschlossen**. Ein Tagesordnungspunkt gehört zu einer Sitzung und kann mit einem oder mehreren Ereignissen verbunden sein. Über diese Ereignisse lassen sich zugehörige Meldungen, Vorgänge und Themen finden. Die Redaktion muss diese Beziehungen nicht ein zweites Mal an der Sitzung pflegen.
+
+- **Meldungen:** Der Bezug zur Sitzung oder zu einem TOP entsteht über **Meldung → Ereignis → TOP → Sitzung**; bei sitzungsweiten Ereignissen gegebenenfalls direkt über Ereignis → Sitzung. Es gibt keine zusätzliche verbindliche Zuordnung Meldung–TOP oder Meldung–Sitzung.
+- **Vorgänge und Themen:** Die Verbindung entsteht über **TOP → Ereignis → Vorgang → Thema** beziehungsweise über einen begründeten direkten Ereignis–Thema-Bezug. Beide Navigationsrichtungen müssen möglich bleiben.
+- **Öffentlicher Beschluss:** Im Vordergrund stehen der tatsächlich abgestimmte Wortlaut, das Abstimmungsergebnis, Sitzung und TOP. Der ursprüngliche Beschlussvorschlag bleibt als Vergleich nachvollziehbar zugänglich, sofern vorhanden.
+- **Herkunft und Verlauf:** Es muss nachvollziehbar sein, welches Ereignis welchem TOP zugeordnet wurde, welche Beschlussfassungen tatsächlich abgestimmt wurden und welche späteren Ereignisse denselben Sachverhalt betreffen.
+
+**Beispiel:** Ein Besucher öffnet einen Tagesordnungspunkt zum Parkraumkonzept. Er kann den dokumentierten Beschluss mit Abstimmung sehen, den ursprünglichen Vorschlag vergleichen und zum zugehörigen Vorgang sowie dessen Meldungen wechseln. Eine Meldung erhält dadurch **keine zweite unabhängige Zuordnung** zur Sitzung.
+
+Diese Regeln stammen aus dem [Sitzungs- und Beschlussmodell](../Sitzungs-und-Beschlussmodell.md), §§9–11. Die Gestaltung der Verlinkungen und der Beschlussansicht wird erst in der nächsten UI-Phase entschieden.
+
 ## 07.5 Abnahmeszenarien
 
 1. RIS veröffentlicht TOP mit Vorlage: FIB zeigt den vorgesehenen Beratungspunkt, **noch keinen Beschluss**.
