@@ -70,6 +70,16 @@ Thematische Zusammenhänge entstehen aus fachlich geprüften Beziehungen zu **Vo
 
 **Beispiel:** Für „Mobilität in Feldkirchen“ wird der Vorgang Parkraumkonzept als „relevant“ eingestuft. Erkennt FIB später eine neue Verkehrsplanung, kann sie einen Bezugskandidaten vorschlagen. Eine zuvor als fachlich unpassend abgelehnte Zuordnung wird nicht heimlich reaktiviert.
 
+### Wie verbessert die Redaktion langfristig die KI-Vorschläge?
+
+Redaktionelle Entscheidungen verbessern nicht nur einen einzelnen Beitrag. Sie zeigen FIB auch, **welche Arten von Zusammenhängen und Themenabgrenzungen in Feldkirchen tatsächlich sinnvoll sind**. Diese Kalibrierung ist eine fachliche Rückkopplung, keine automatische Übergabe redaktioneller Entscheidungshoheit an die KI.
+
+FIB berücksichtigt dabei nachvollziehbar bestätigte, überarbeitete und abgelehnte Themenkandidaten; bestätigte Dubletten- oder Abgrenzungsentscheidungen; ergänzte fehlende Aspekte; nachträglich entdeckte Vorgänge und Ereignisse; korrigierte Bedeutungseinstufungen sowie bestätigte oder verworfene Analyseperspektiven. Die redaktionelle Entscheidung bleibt mit ihrem Anlass und ihrer Begründung auffindbar.
+
+**Beispiel:** Die Redaktion verwirft wiederholt den Vorschlag, ein einmaliges örtliches Ereignis ohne übergreifende Leitfrage als eigenständiges Thema zu führen. FIB soll diesen Maßstab bei künftigen Vorschlägen berücksichtigen, ohne deshalb ähnliche neue Sachverhalte pauschal zu unterdrücken.
+
+Die Kalibrierung verbessert Vorschläge, **legt aber weder selbst neue Themen verbindlich an noch setzt sie bestätigte Bezüge oder andere Regeln außer Kraft**. Fachliche Primärquelle: [Themen- und Vorgangslogik](../Themen-und-Vorgangslogik.md), §7. Ein konkretes Lernverfahren oder KI-Modell wird hier bewusst nicht vorgegeben.
+
 ## 06.5 Themenanalyse: Eigenständiges Verständnis
 
 Die **Themenanalyse gehört zum Thema** und entwickelt eine selbstständige, übergreifende Sicht. Sie **kopiert nicht** sämtliche Vorgangsanalysen, sondern nutzt deren bestätigte Erkenntnisse mit nachvollziehbaren Verweisen und verarbeitet ergänzende Einzelereignisse. Übergreifende Erkenntnisse dürfen in der Themenanalyse verbleiben, auch wenn kein einzelner Vorgang eindeutig als Ursprung in Frage kommt. Ein künstlicher Vorgang wird dafür nicht angelegt.
