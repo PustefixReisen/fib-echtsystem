@@ -150,6 +150,12 @@ In Kapitel 07 wurden die fachlichen Detailregeln aus `docs/Sitzungs-und-Beschlus
 
 **Offen:** Noch nicht jede historische Quellenregel ist normativ inventarisiert; insbesondere der verbleibende Quellabgleich zu Öffentlichkeitsdarstellung und anderen Primärquellen ist bis zur Abnahme nachzuführen.
 
+## Ergänzender Abgleich Kapitel 07: Öffentliches Sitzungsangebot
+
+Aus `docs/Sitzungs-und-Beschlussmodell.md` §§9–11 sind die abgeleiteten Navigationsbeziehungen Meldung → Ereignis → TOP/Sitzung und TOP → Ereignis → Vorgang/Thema in Kapitel 07 übertragen. Die öffentliche Beschlussansicht stellt den tatsächlichen Beschluss in den Vordergrund und lässt den ursprünglichen Vorschlag zum Vergleich zugänglich. Eine zusätzliche eigenständige Fachzuordnung von Meldungen zu Sitzungen oder TOPs wird ausgeschlossen.
+
+Die bislang pauschal als fehlend bezeichneten TOP-, Fassungs- und Niederschriftregeln sind jetzt im Fachkapitel prozessorientiert erläutert. **Die Einzelinventur auf Ebene jeder bisherigen Detailaussage bleibt dennoch offen**; der Leseentwurf ersetzt die Primärquelle noch nicht.
+
 ## Wann ist die fachliche Abnahme möglich?
 
 Nach vollendetem Quell-/Regelabgleich, widerspruchsfreien Kapiteln, referenzierten Ausnahmen, funktionierenden internen Verweisen und einer letzten **gemeinsamen Leseprüfung**. Technische Umsetzbarkeit ist anschließend Gegenstand der iterativen Entwicklungsphase.
