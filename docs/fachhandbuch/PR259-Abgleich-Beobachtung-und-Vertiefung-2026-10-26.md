@@ -15,7 +15,7 @@ Ausgangsquelle: `docs/Beobachtungs-und-Recherchemodell.md`.
 - Der Beobachtungsauftrag braucht keine starre verbindliche Liste von Suchbegriffen.
 - Die Zustände aktiv, pausiert und beendet sind fachlich redaktionell verantwortet.
 
-Ziel: Kapitel 03. Die noch fehlende vollständige Einordnung in den lesbaren Prozess ist weiter zu prüfen; die bisherige Primärquelle bleibt gültig.
+**Nachgetragen in Kapitel 03:** Die fachliche Abgrenzung von Beobachtungsauftrag, Recherchelauf und technischem KI-Auftrag steht nun im Abschnitt 03.3. Die vollständige normative Inventur der Ausgangsquelle bleibt offen; die bisherige Primärquelle bleibt bis zur Abnahme gültig.
 
 ## Mehr wissen
 
