@@ -77,6 +77,16 @@ Zur Prüfung stellt FIB eine **kompakte fachliche Qualitätsbeurteilung** bereit
 
 **Grenze:** Unzureichend geprüfte Aussagen dürfen nicht als gesicherte Erkenntnisse in einen öffentlichen Beitrag gelangen. Redaktionell freigegebene und hinreichend abgesicherte vorläufige Einschätzungen können nur mit erkennbarer Unsicherheit dargestellt werden, wenn die hierfür geltenden Qualitäts- und Publikationsregeln das zulassen.
 
+## 05.6a Der Vorgangsbeitrag
+
+**Fachlich vereinbart:** Ein öffentlich dargestellter Vorgang enthält einen eigenständigen **Vorgangsbeitrag**. Dieser ist analog zum Themenbeitrag ein redaktionell freigegebener öffentlicher Text auf Grundlage der Vorgangsanalyse – nicht lediglich ein Sachstandsbericht und keine bloße Zusammenstellung von Meldungen.
+
+Der Vorgangsbeitrag vermittelt den aktuellen Stand, die Entwicklung, Ursachen, Hintergründe, Erklärungen, rechtliche oder fachliche Rahmenbedingungen, Wirkungen, Folgen, Zielkonflikte und offene Fragen, soweit relevant. Das Erkenntnisinteresse betrifft den konkreten Vorgang; ein Themenbeitrag erschließt dagegen den Zusammenhang verschiedener Vorgänge.
+
+**Ablauf:** Analyse → Vorgangsbeitragsentwurf → redaktionelles Korrektorat → Freigabe einer fixierten Fassung → gesonderte Veröffentlichung. Fachlich wirksame Aktualisierungen brauchen eine neue nachvollziehbare Fassung. Analysefreigabe und Beitragsfreigabe sind getrennte Entscheidungen.
+
+**Technisch noch zu klären:** Status- und Versionsmodell für Vorgangsbeiträge, Freigaberechte und Rücknahme; bisher sind diese Regeln für Themenbeiträge weiter ausgearbeitet. Keine stillschweigende Übernahme des Themenstatusmodells.
+
 ## 05.7 Lebenszyklus: aktiv, ruhend, abgeschlossen, archiviert
 
 Das bestehende logische Datenmodell nennt für Vorgänge die Status **`aktiv`, `ruhend`, `abgeschlossen`, `archiviert`**. Diese bestehenden fachlichen Begriffe bleiben zur Prüfung erhalten; der neue Entwurf führt keine weiteren Status ein.
