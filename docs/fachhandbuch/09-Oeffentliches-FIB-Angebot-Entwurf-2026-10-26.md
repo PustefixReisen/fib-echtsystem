@@ -114,6 +114,20 @@ Eine Meldung, ein Vorgang oder ein Thema kann mehrere öffentlich angebotene **V
 
 **Kontrollierte Fachänderung:** Die ältere [Primärquelle „Mehr wissen?“-Modell](../Mehr-wissen-Modell.md) kennt als primäre Kontexte nur Meldung oder Thema und schließt einen direkten Vorgangsbezug im damaligen MVP ausdrücklich aus. Die hier beschlossene Erweiterung auf **Vorgänge** ersetzt genau diese alte Einschränkung; alle übrigen Anforderungen an Belege, Freigabe, Versionierung, Aktualität und redaktionelle Verantwortung bleiben erhalten. Die endgültige normative Quellenumstellung steht noch aus.
 
+### Wie wählt FIB geeignete Vertiefungsfragen aus?
+
+FIB entwickelt „Mehr wissen?“-Fragen **aus dem jeweiligen Sachverhalt**, statt überall dieselben Standardfragen einzublenden. Die ursprüngliche fachliche Ausarbeitung [„Mehr wissen?“](../Mehr-wissen.md) gilt hierbei ergänzend zur Objekt- und Freigabelogik des [Vertiefungsmodells](../Mehr-wissen-Modell.md).
+
+1. Zunächst klärt FIB, ob der Einstieg eine Meldung, einen Vorgang oder ein Thema betrifft.
+2. Anschließend berücksichtigt es den örtlichen Bezug, die Handlungsmöglichkeiten Feldkirchens, die zeitliche Entwicklung und offene fachliche Zusammenhänge.
+3. Erst danach wird eine **konkrete, verständliche Vertiefungsfrage** formuliert. Sie soll zusätzliches Wissen eröffnen und weder den Beitrag wiederholen noch suggestiv sein.
+4. Für das erste öffentliche Angebot werden im Regelfall **etwa vier bis sechs besonders hilfreiche Fragen** ausgewählt; weitere können nachrangig erschlossen werden. Die Zahl ist keine starre Begrenzung.
+5. Antworten beginnen mit einer kurzen direkten Erklärung, erläutern nötigenfalls Hintergrund und Stand der Erkenntnis, führen geeignete Belege auf und benennen Unsicherheiten.
+
+**Je nach Einstieg unterscheidet sich der Erkenntniswert:** Bei einer **Meldung** sind Vorgeschichte, Zuständigkeit und Folgen des Ereignisses besonders wichtig. Bei einem **Vorgang** werden Varianten, bisherige Entscheidungen, Verlauf, offene nächste Schritte und Wechselwirkungen verständlich. Bei einem **Thema** interessieren übergreifende Bedingungen, Zielkonflikte, Handlungsmöglichkeiten und übertragbare Erfahrungen. Möglicher Lerntransfer ist als Möglichkeit zu kennzeichnen, nicht als schon bewiesene Übertragbarkeit.
+
+**Grenzfall:** Fehlt für eine anspruchsvolle technische oder rechtliche Aussage eine belastbare Quelle, darf FIB die Antwort nicht aus allgemeinem KI-Wissen als gesicherte Tatsache ergänzen. Stattdessen bleibt die Frage intern als Recherche- oder Prüfbedarf erhalten oder eine öffentliche Antwort benennt den belegbar offenen Stand. Dokumentierte Positionen beteiligter Akteure bleiben von einer ausdrücklich gekennzeichneten politischen Einordnung getrennt.
+
 ## 09.8 Orientierung, Einstiege und Suche
 
 Bisher vereinbarte öffentliche Hauptnavigation:
