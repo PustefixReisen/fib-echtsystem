@@ -47,6 +47,28 @@ Die Arbeitsfolge variiert je nach Gegenstand. Für **Analysen** ist eine fachlic
 
 Die Analysefreigabe verändert den **Themenstatus** nicht; der Wechsel von Entwurf zu Aktiv erfolgt nach der bestehenden Regel bei der **ersten Beitragsfreigabe**.
 
+### Fachliche Entscheidungsmatrix für den Redaktionsalltag
+
+Die Aktionsstufen ersetzen die **konkrete Handlung** nicht. Insbesondere die vorbereitende KI-Arbeit darf nicht als stillschweigende Freigabe einer späteren Entscheidung behandelt werden.
+
+| Handlung | KI | Redakteur | Administrator | Besondere Grenze |
+|---|---|---|---|---|
+| Quellen recherchieren, Fundstellen erfassen, vorläufige Ereignisse vorbereiten | selbstständig im zulässigen Rahmen | ja | ja | keine endgültige fachliche Bestätigung allein durch KI |
+| Bestehenden, bestätigten Ereignisinhalt sachlich ändern | Änderungsvorschlag | verbindliche Entscheidung | verbindliche Entscheidung | Belege und Audit; kein verdecktes Überschreiben |
+| Vorgangs- oder Themenanalyse ergänzen | vorläufige Vorschläge und Teilfragen | fachlich prüfen, bestätigen oder zurückstellen | ebenfalls | Bestätigtes vor KI-Überschreibung schützen |
+| Thema neu und verbindlich anlegen | Kandidat vorschlagen | ja | ja | Dublettenprüfung und klare Leitfrage |
+| Themenbezug und Bedeutung für das Thema verbindlich festlegen | Kandidat/Einstufung vorschlagen | ja | ja | negativ bestätigte Entscheidung nicht automatisch aufheben |
+| Analyse (teilweise) freigeben | nein | ja | ja | keine öffentliche Beitragsfreigabe, kein Thema-Statuswechsel |
+| Meldung, Vorgangs- oder Themenbeitrag freigeben | nein | ja, auch eigene Fassung | ja | freigegebene konkrete Fassung fixieren |
+| Freigegebenen Beitrag veröffentlichen oder zurückziehen | nein | ja | ja | eigener ausdrücklicher S3-Schritt, aktueller Zustand erneut prüfen |
+| Redaktionelle Federführung übernehmen | nein | gemäß Koordination | gemäß Koordination | keine exklusiven Fachrechte durch Federführung |
+| Bestehende fremde Bearbeitungssperre außerordentlich lösen | nein | kein generelles Sonderrecht | nur nach begründeter Schutzprüfung | Audit, keine unbemerkte parallele Bearbeitung |
+| FIB-Benutzer und Rollen verwalten | nein | nein | ja | separate geschützte Administration |
+
+**Grenzfall:** Ein Redakteur hat eine Themenanalyse selbst erstellt. Er darf diese fachlich prüfen und im vorgesehenen Verfahren freigeben; ein vorgeschriebener zweiter Prüfer ist nicht nötig. Das macht aber weder die darin enthaltenen KI-Vorschläge automatisch zu gesicherten Tatsachen noch veröffentlicht es den Themenbeitrag. Die erste **Beitragsfreigabe** aktiviert das Thema, die anschließende Veröffentlichung benötigt eine eigene bestätigte Aktion.
+
+Diese Matrix erläutert die fachliche Verantwortung. Konkrete Authentifizierung, serverseitige Rollenprüfung, RLS-Policies und Sperrtransaktionen bleiben nachgelagerte technische Verträge; sie dürfen die hier beschriebenen Rechte **nicht** stillschweigend erweitern.
+
 ## 11.5 Wann muss ausdrücklich bestätigt werden?
 
 Bei risikoarmen eindeutigen S2-Einzeländerungen kann die klare Handlungsanweisung eines berechtigten Redakteurs genügen. Bei mehrdeutigen, folgenreichen oder mehrere Objekte betreffenden Änderungen ist eine erkennbare Vorher-/Nachher-Prüfung und ausdrückliche Bestätigung erforderlich.
