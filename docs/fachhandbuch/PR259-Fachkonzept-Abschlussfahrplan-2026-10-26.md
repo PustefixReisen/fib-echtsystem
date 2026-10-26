@@ -89,6 +89,13 @@ Die Arbeit wurde über Kapitel 03 und 06 hinaus auf die Übergänge zwischen den
 
 **Kapitel 05** führt einen vollständigen exemplarischen Vorgang von der ersten Fundstelle über vorläufige Vorgangsanlage, automatische Erstanalyse, Fragen und nachweisbaren Beschluss bis zu Änderungspaketen, gesonderter Beitragsfreigabe/Publikation und späterer Fortschreibung. Darin wird ausdrücklich gezeigt, **wo keine manuelle Einzelentscheidung nötig ist** und wo redaktionelle Freigabe erforderlich bleibt. Das Grundstückskaufbeispiel ist hypothetisch und keine Tatsachendarstellung. Noch offen bleiben vollständiger Quellregelabgleich und gemeinsame Gesamtleseabnahme.
 
+## Primärquellenabgleich: Medienfreigabe und Plausibilität (26.10.2026)
+
+- Bestandsquelle `docs/Fachliche-Plausibilitaets-und-Freigaberegeln.md` §§2–8 gegen Kapitel 10 geprüft.
+- In Kapitel 10 ergänzt: **Beitragsfreigabe ist keine Dokument-/Bildfreigabe**; öffentliche Dateien benötigen positiv geklärte Rechte; konkrete Bildverwendung braucht eigene Prüfung; S3-Bestätigung und Audit bleiben erforderlich.
+- Beispiel RIS: öffentlich abrufbare PDF ist nicht schon zur erneuten Veröffentlichung durch FIB freigegeben.
+- Die detaillierte Quelle bleibt bis zur vollständigen Übernahme aller ihrer Status- und Entscheidungsregeln verbindlich. Kein produktiver Medienzugriff geändert.
+
 ## Wann ist die fachliche Abnahme möglich?
 
 Nach vollendetem Quell-/Regelabgleich, widerspruchsfreien Kapiteln, referenzierten Ausnahmen, funktionierenden internen Verweisen und einer letzten **gemeinsamen Leseprüfung**. Technische Umsetzbarkeit ist anschließend Gegenstand der iterativen Entwicklungsphase.
