@@ -13,7 +13,7 @@ Dringlichkeit ist nicht politische Relevanz. Vorgesehen sind **dringend** (zentr
 ## 08.3 Fachliche Entscheidungen
 Gezielte Recherche: Redaktion genehmigt einmalig Ziel und Grenzen, KI führt danach autonom innerhalb des genehmigten Rahmens aus; Erweiterungen benötigen neue Genehmigung. Vorgänge und Themen bieten direkte Nachfragen und Zugang zu Fragen, Belegen und Recherchen.
 
-Analyse: Die KI bündelt Änderungen und Belege in Änderungspaketen. Änderungen dürfen einzeln bestätigt, bearbeitet, zurückgestellt oder abgelehnt werden. Eine **Teilfreigabe** der Analyse ist möglich. Bestätigte Inhalte bleiben geschützt. Folgewirkungen zwischen Vorgängen und Themen werden gezielt geprüft.
+Analyse: Die KI bündelt Änderungen und Belege in Änderungspaketen. Änderungen dürfen einzeln bestätigt, bearbeitet, zurückgestellt oder abgelehnt werden. Eine **Teilfreigabe** der Analyse ist möglich. Jede bestätigte Teilfreigabe erzeugt einen neuen gültigen Gesamtstand nur mit angenommenen Änderungen; offene Vorschläge bleiben getrennt. Bestätigte Inhalte bleiben geschützt. Folgewirkungen zwischen Vorgängen und Themen werden gezielt geprüft.
 
 ### Fachregeln für nachvollziehbare redaktionelle Entscheidungen
 
