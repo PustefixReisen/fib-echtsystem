@@ -12,30 +12,49 @@ Das folgende Modell zeigt die fachlichen Gegenstände und ihre wesentlichen Bezi
 
 ```mermaid
 flowchart TB
-  Q[Quelle] -->|liefert| F[Fundstelle]
-  F -->|belegt / informiert| E[Ereignis]
-  F -.->|liefert Hintergrund und Belege| AV[Vorgangsanalyse]
-  F -.->|liefert Hintergrund und Belege| AT[Themenanalyse]
-
-  E -->|0 oder 1 öffentliche Darstellung| M[Meldung]
-  E <-->|0 bis viele, Sachverhaltszuordnung| V[Vorgang]
-  E <-->|zusätzlicher direkter Bezug| T[Thema]
-  V <-->|0 bis viele, fachlicher Bezug| T
-
-  V -->|hat| AV
-  T -->|hat| AT
-  AV -.->|Erkenntnisse als Eingaben| AT
-  AT -.->|Anstöße zur Überprüfung| AV
-  AV -.->|Wissenslücke / Frage| R[Gezielte Recherche]
-  AT -.->|Wissenslücke / Frage| R
-  R -->|neue belegte Informationen| F
-
-  AT -->|fachliche Grundlage| B[Themenbeitrag]
-  E -.->|Meldungsanlass| M
-
-  M --> P[Öffentliches FIB-Angebot]
-  B --> P
+  subgraph INF["Quellen und Recherche"]
+    RIS["RIS Feldkirchen (Quellsystem)"]
+    Q["Weitere Quellen"]
+    F["Fundstellen / Dokumente"]
+    RIS --> F
+    Q --> F
+  end
+  subgraph RAT["Sitzungen und Beschlüsse"]
+    S["Sitzung"] --> TOP["Tagesordnungspunkt (TOP)"]
+    TOP --> BS["Beschluss / Beschlusspunkte"]
+  end
+  RIS -.-> S
+  F -.->|"Vorlage / Niederschrift"| TOP
+  subgraph W["Fachlicher Wissenskern"]
+    E["Ereignis"]
+    V["Vorgang"] --> AV["Vorgangsanalyse"]
+    T["Thema"] --> AT["Themenanalyse"]
+    E <-->|"0 bis viele"| V
+    V <-->|"0 bis viele"| T
+    E <-->|"zusätzlicher Bezug"| T
+  end
+  F -->|"Beleg"| E
+  TOP <-->|"Behandlung / Beschlussereignisse"| E
+  BS -.->|"belegte Beschlussereignisse"| E
+  AV -.->|"Erkenntnisbeitrag"| AT
+  AT -.->|"Rückfragen / neue Zusammenhänge"| AV
+  subgraph PUB["Öffentliches FIB-Angebot: freigegebene Informationen"]
+    M["Meldungen"]
+    OV["Vorgangsübersicht und Verlauf"]
+    OT["Themenbeiträge und Themenübersicht"]
+    OS["Sitzungs- und Beschlussansicht"]
+  end
+  E -->|"0 oder 1 Meldung"| M
+  V -.->|"aufbereiteter öffentlicher Sachstand"| OV
+  AV -.->|"ausgewählte geprüfte Erkenntnisse"| OV
+  T -.-> OT
+  AT -.->|"freigegebener Beitrag"| OT
+  S --> OS
+  TOP --> OS
+  BS --> OS
 ```
+
+**Wichtig:** Das öffentliche FIB-Angebot ist **kein einzelnes Datenobjekt**, sondern der Zweck und die Besuchersicht des Systems: Meldungen, Vorgänge, Themen sowie Sitzungen und Beschlüsse sind miteinander navigierbar. Öffentliche Vorgangsansichten verwenden nur entsprechend geprüfte und freigegebene Inhalte; ihr genauer Umfang ist noch fachlich zu bestimmen. Das RIS ist ein externes Quellsystem; Sitzung, TOP und Beschluss sind eigene fachliche Objekte in FIB, nicht nur gewöhnliche Fundstellen.
 
 **Leseschlüssel:** Durchgezogene Linien zeigen stabile fachliche Grundbeziehungen. Gestrichelte Linien zeigen mögliche Erkenntnis-, Recherche- und Bearbeitungsbezüge. Die Bezeichnung `0 bis viele` meint optionale Mehrfachbeziehungen, nicht automatisch bestätigte Zuordnungen. Meldungen sind eigene redaktionelle Darstellungen, nicht die Grundlage der Vorgangs- und Themenanalyse.
 
@@ -52,6 +71,12 @@ flowchart TB
 | **Thema** | übergreifende Fragestellung mit eigenen Erkenntniszielen | Mobilität in Feldkirchen |
 | **Themenanalyse** | verknüpft Erkenntnisse aus Vorgängen, Belegen und Hintergrundwissen; gewinnt eigenständige Schlüsse | Wechselwirkungen verschiedener Verkehrsprojekte |
 | **Themenbeitrag** | redaktionell ausgewählte, öffentliche Darstellung auf Grundlage der Themenanalyse | Bürgernaher Überblick mit optionaler Einordnung |
+
+## 02.2a RIS, Sitzungen und öffentlicher Zugang
+
+Im bisherigen Fachmodell sind **Sitzung, Tagesordnungspunkt (TOP), Beschlussvorschlag, Beschlusspunkt, Beschlussfassung, Abstimmung und Niederschrift** bereits ausdrücklich definiert. Die Vorlage ist als Dokument eine Fundstelle; deren Veröffentlichung kann ein Ereignis auslösen. Die spätere Beratung und ein tatsächlicher Beschluss sind davon getrennte Ereignisse. Aus diesen Beziehungen ergeben sich die Navigationswege **Sitzung → TOP → Ereignis → Vorgang/Thema** und zurück. Grundlage: `docs/Sitzungs-und-Beschlussmodell.md`.
+
+Die öffentliche Ansicht sollte erkennbar machen, wie ein Beschluss zu einem laufenden Vorgang gehört und welche Entwicklung ihm vorausging. Auch ein Vorgang soll von seiner öffentlichen Übersicht zu verbundenen Meldungen, Sitzungen, Quellen und Themen führen können. Bereits im bestehenden Navigationskonzept sind **Meldungen, Vorgänge, Themen und Sitzungen** als eigenständige Inhaltsbereiche vereinbart. Die genaue Gestaltung und die notwendige öffentliche Freigabe der Vorgangsinhalte sind in Kapitel 09 noch zu präzisieren.
 
 ## 02.3 Drei Beziehungen, die man nicht verwechseln darf
 
