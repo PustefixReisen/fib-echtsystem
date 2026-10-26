@@ -54,6 +54,16 @@ Technische Tabellen, Endpunkte, Bildschirmdetails, Farben und exakte Datenbankfe
 - Statusübergänge und Rechte in nachvollziehbaren Tabellen, mit klar unterscheidbaren Entscheidungsarten.
 - Jeder Prozess benötigt mindestens ein alltagsnahes FIB-Beispiel und negative Grenzfälle.
 
+## Fortschritt: Prozessintegration und Querverweisprüfung (26.10.2026)
+
+- **Kapitel 03:** Recherchegrundsätze, Suchraum, Relevanz, Rechercheaufträge, Quellen/Fundstellen, Referenzwissen und Qualität als verständliche Regelgruppen bei den Abläufen verankert. Detailfassungen der 53 Regeln weiterhin in der historischen Referenz; Originalkennung `FIB-RECH-ABLAUF-001` noch zu lokalisieren.
+- **Kapitel 06:** Themendefinition, lokale Bezüge, Beitrag/Versionierung und Status/Rechte als fachliche Regelgruppen mit Beispielen direkt am jeweiligen Arbeitsprozess erläutert; die 32 Originalregeln bleiben vergleichbar. Analysefreigabe und erste Beitragsfreigabe sind weiterhin getrennt.
+- **Kapitel 05:** Eindeutig klargestellt: Ein intern existierender Vorgang erfordert keine Publikation, besitzt für seine *öffentliche* Darstellung jedoch einen eigenständig freizugebenden Vorgangsbeitrag.
+- **Kapitel 08:** Analysefreigabe, konkrete Beitragsfreigabe und öffentliche Publikation als drei getrennte redaktionelle Entscheidungen erläutert.
+- **Verweiskontrolle:** Alle elf Kapitel-Leseentwürfe auf relative Markdown-Dateiverweise gegen den aktuellen GitHub-Dateibaum geprüft; **keine fehlenden Dateiziele in diesen elf Entwürfen gefunden**. Ankerziele und andere Bestandsdateien sind damit noch nicht automatisch geprüft.
+
+**Nächste fachliche Restarbeiten:** weitere Primärquellen abschnittsweise auf Vollständigkeit prüfen, alte abweichende Normtexte nachvollziehbar konsolidieren, Kapitel 01/02/04/05/07/09/10/11 in derselben Lesbarkeit prüfen und abschließende fachliche Leseabnahme vorbereiten. Keine Implementierung im Rahmen von PR #259.
+
 ## Wann ist die fachliche Abnahme möglich?
 
 Nach vollendetem Quell-/Regelabgleich, widerspruchsfreien Kapiteln, referenzierten Ausnahmen, funktionierenden internen Verweisen und einer letzten **gemeinsamen Leseprüfung**. Technische Umsetzbarkeit ist anschließend Gegenstand der iterativen Entwicklungsphase.
