@@ -116,7 +116,7 @@ Die bestehende fachliche Versionsregel sieht vor, den **bestätigten strukturier
 
 **Prüfbeispiel:** Zu den Kosten eines Grundstückskaufs ist ein belastbarer Beleg vorhanden; zur künftigen Nutzung fehlt er. Die Redaktion bestätigt den belegten Kostenstand und stellt die Nutzungseinschätzung zurück. Ein öffentlicher Vorgangsbeitrag darf die bestätigte Kosteninformation verwenden, nicht aber die offene Nutzungshypothese als bereits feststehend darstellen.
 
-**Noch fachlich zu entscheiden:** Ob bei einer Teilfreigabe der zuletzt bestätigte Gesamtstand mit den einzeln genehmigten Änderungen als neue gültige Gesamtfassung entsteht oder ob zusätzlich ein besonderer fachlicher Zwischenzustand nötig ist. Die bestehende Versionierung darf durch die spätere Umsetzung nicht unbeabsichtigt aufgegeben werden.
+**F-03 beschlossen am 26.10.2026:** Teilfreigaben erzeugen einen neuen gültigen bestätigten Gesamtstand mit ausschließlich angenommenen Änderungen. Offene Vorschläge bleiben getrennt erhalten; frühere bestätigte Stände sind rekonstruierbar. Die bisherige Gesamtversionierung bleibt erhalten.
 
 ## 05.7 Lebenszyklus: aktiv, ruhend, abgeschlossen, archiviert
 
