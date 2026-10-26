@@ -36,6 +36,7 @@ flowchart TD
   TOP <-->|"Ereignisbezug"| V
   TOP -.->|"ggf. Meldung"| M
   M --> MEHR["Mehr wissen?"]
+  V --> MEHR
   T --> MEHR
   V -.->|"belegte Sachinformationen"| QUELLE["Quellen / Fundstellen"]
   M --> QUELLE
@@ -91,11 +92,11 @@ Ein TOP auf der Agenda ist **kein Beweis für eine spätere Beschlussfassung**. 
 
 ## 09.7 Hintergründe erschließen: „Mehr wissen?“
 
-Eine Meldung oder ein Thema kann mehrere öffentlich angebotene **Vertiefungsfragen** mit redaktionell freigegebenen Antworten besitzen. Die Fragen erschließen unter anderem fachliche Hintergründe, Rechtsrahmen, Folgen, Zielkonflikte, Vergleichsfälle oder die mögliche künftige Bedeutung einer Entwicklung.
+Eine Meldung, ein Vorgang oder ein Thema kann mehrere öffentlich angebotene **Vertiefungsfragen** mit redaktionell freigegebenen Antworten besitzen. Die Fragen erschließen unter anderem fachliche Hintergründe, Rechtsrahmen, Folgen, Zielkonflikte, Vergleichsfälle oder die mögliche künftige Bedeutung einer Entwicklung.
 
 **Wichtig:** Eine öffentlich angebotene Vertiefungsfrage ist nicht mit einer **internen offenen Wissensfrage** der Redaktion zu verwechseln. Die Antworten müssen quellengebunden, hinsichtlich Unsicherheit ehrlich und auf ihren fachlichen Stand prüfbar sein. Für den bisherigen MVP-Grundsatz werden öffentlich grundsätzlich nur Fragen mit freigegebener Antwort angeboten.
 
-Das bestehende `docs/Mehr-wissen-Modell.md` sieht als primären Kontext **Meldung oder Thema** vor. Da Vorgänge nun ein wesentlicher öffentlicher Zugang sind, ist fachlich zu prüfen, ob und wie Vorgänge ebenfalls eigene Vertiefungsfragen erhalten sollen. **Hier wird noch keine neue Kardinalität beschlossen.**
+**Fachlich vereinbart:** Der primäre Kontext einer Vertiefungsfrage kann **Meldung, Vorgang oder Thema** sein; jede Frage gehört genau einem primären Kontext. Das bestehende `docs/Mehr-wissen-Modell.md` enthält bislang nur Meldung und Thema und muss bei der Regelmigration entsprechend erweitert werden. Die bestehenden Anforderungen an Belege, redaktionelle Freigabe und Aktualität gelten gleichermaßen.
 
 ## 09.8 Orientierung, Einstiege und Suche
 
@@ -141,7 +142,7 @@ Bei späterem Erkenntnisgewinn prüft FIB die Aktualität der öffentlichen Inha
 
 ## 09.12 Noch zu klärende Punkte und Regelmigration
 
-**Fachliche Fragen für die Durchsicht:** Status und Versionierung des Vorgangsbeitrags; eigene „Mehr wissen?“-Fragen für Vorgänge; Gewichtung und Bündelung von Meldungen desselben Vorgangs in öffentlichen Listen; Detailtiefe und Links von Sitzungsansichten.
+**Fachliche Fragen für die Durchsicht:** Status und Versionierung des Vorgangsbeitrags; Gewichtung und Bündelung von Meldungen desselben Vorgangs in öffentlichen Listen; Detailtiefe und Links von Sitzungsansichten.
 
 **Regelmigration:** Bisherige verbindliche Detailanforderungen aus `docs/UX-und-Informationsarchitektur.md`, `docs/Mehr-wissen-Modell.md`, `docs/Sitzungs-und-Beschlussmodell.md`, `docs/Sprachleitfaden.md` und den Beitrags-/Freigaberegeln werden noch abschnittsweise zugeordnet. Dieser Leseentwurf schafft **keine** konkurrierende neue Norm und ersetzt weder Rechteprüfung noch Veröffentlichungsgenehmigungen.
 
