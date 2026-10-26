@@ -144,6 +144,12 @@ Aus `docs/Themen-und-Vorgangslogik.md` §§5.1–5.5 wurde in Kapitel 06 ergänz
 
 Die konkrete Auswahl- und Dialogoberfläche bleibt der späteren iterativen UI-Phase vorbehalten. Der Regelbestand der anderen Primärquellen ist weiterhin im Migrationsabgleich.
 
+## Quelltransfer Sitzungs- und Beschlussmodell (26.10.2026)
+
+In Kapitel 07 wurden die fachlichen Detailregeln aus `docs/Sitzungs-und-Beschlussmodell.md`, Abschnitte 4–8, weiter integriert: TOP-Verfahrensstatus unabhängig von Abstimmung, mehrfache TOP-/Ereignisbezüge, keine vorzeitigen Beschlusspunkte aus Vorlagen, Fassung und Abstimmung, redaktionelle Pflichtprüfung unsicherer Zuordnungen sowie Trennung der Niederschriftgenehmigung von deren Dokumentverfügbarkeit.
+
+**Offen:** Noch nicht jede historische Quellenregel ist normativ inventarisiert; insbesondere der verbleibende Quellabgleich zu Öffentlichkeitsdarstellung und anderen Primärquellen ist bis zur Abnahme nachzuführen.
+
 ## Wann ist die fachliche Abnahme möglich?
 
 Nach vollendetem Quell-/Regelabgleich, widerspruchsfreien Kapiteln, referenzierten Ausnahmen, funktionierenden internen Verweisen und einer letzten **gemeinsamen Leseprüfung**. Technische Umsetzbarkeit ist anschließend Gegenstand der iterativen Entwicklungsphase.
