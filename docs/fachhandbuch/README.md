@@ -52,6 +52,13 @@ Projektübergreifender Standard: [pustivo – Fachliches Dokumentationsmodell](h
 
 Die [Abschlussprüfung mit Regeländerungsübersicht und 20 Regressionstests](PR259-Abschlusspruefung-und-Regression-2026-10-26.md) trennt ausdrücklich zwischen **vollständigem Leseentwurf**, **gesichertem Regelbestand** und der **noch offenen technischen bzw. normativen Abnahme**. Der PR bleibt bis zum vollständigen Quell-/Datenmodell-/Testabgleich Draft.
 
+## Quell- und Technikabgleich (26.10.2026)
+
+- [Weitere fachliche Primärquellen – abschnittsorientierter Übernahmeabgleich](PR259-Weitere-Quellen-Abschnittsabgleich-2026-10-26.md): Ausgangsabschnitte, geplante Zielkapitel und zu prüfende Fachregelabweichungen.
+- [Technischer Vertragsabgleich und fünf Implementierungsblöcke](PR259-Technischer-Vertragsabgleich-und-Arbeitspakete-2026-10-26.md): statische Gegenüberstellung mit SQL-Entwurf, Migrationscode, Fachservice und UI.
+
+**Abnahmegrenze:** Die vorgenannten Prüfungen sind keine produktive Datenbankprüfung und kein Testlauf. Das Fachhandbuch ist noch nicht normative Primärquelle. PR #259 bleibt bis zur vollständigen Übernahme und überprüften Tests im Entwurfszustand.
+
 ## Sekundärsichten (nur diese beiden in der ersten Ausbaustufe)
 
 1. **Begriffe:** möglichst automatisch aus den Primärdefinitionen abgeleitet.
