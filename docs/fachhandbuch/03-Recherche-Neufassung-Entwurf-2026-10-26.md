@@ -14,6 +14,20 @@ Der **dynamische Recherchehorizont** umfasst örtliche und funktionale Bezüge, 
 
 Die bestehende redaktionelle Warnschwelle für **ausschließlich mittelbar, vergleichend oder zukünftig relevante Veröffentlichungen** beträgt mehr als 30 % aller neu veröffentlichten Beiträge in den zurückliegenden 90 Tagen. Sie beschränkt **nicht die Recherche** und führt nicht zu automatischer Ablehnung. Diese vorhandene Regel bleibt bis zum vollständigen Regelabgleich erhalten.
 
+### Fachregeln zu Aufgabe, Suchraum und Relevanz
+
+Die Recherche soll nicht bloß bereits bekannte FIB-Gegenstände bestätigen. Der verbindliche Rahmen erklärt deshalb **gleichermaßen** die offene Entdeckung und die zielgerichtete Suche. Einzelheiten und historische Wortlaute stehen in der [Recherche-Fachregelreferenz](03-Recherche-Fachregelreferenz-Migration-2026-10-26.md).
+
+| Regel | Konkrete fachliche Festlegung |
+|---|---|
+| **FIB-RECH-PRINZIP-001** | Offene und wissensgeleitete Recherche ergänzen sich; beide verwenden denselben dynamischen Horizont, ohne neue Sachverhalte auf bereits erfasste Objekte zu beschränken. |
+| **FIB-RECH-HORIZONT-001/002** | Räumliche Referenzobjekte und funktionale Beziehungen, allgemeine thematische **Recherchefelder** (nicht automatisch FIB-Themen), Quellen, bekannter Wissensstand und Relevanzregeln bilden den sichtbaren, redaktionell pflegbaren Horizont. |
+| **FIB-RECH-RELEVANZ-001/002/004** | Ortsbezug und Themenbezug sind eigenständige Achsen. Ein unmittelbarer örtlicher Fund darf auch ohne aktuellen politischen Themenbezug berücksichtigt werden; mittelbare oder zukünftige Relevanz verlangt einen plausiblen, konkret begründeten Weg nach Feldkirchen. |
+| **FIB-RECH-PRINZIP-002** | Rechercheerfassung ist weder fachliche Bestätigung noch Veröffentlichungsfreigabe. |
+| **FIB-RECH-RELEVANZ-003** | Eine Warnung erfolgt nur bei **mehr als 30 %** ausschließlich mittelbar, vergleichend oder zukünftig relevanter **neu veröffentlichter Beiträge**, berechnet über die letzten **90 Tage**. Jeder Beitrag zählt genau einmal; der Nenner umfasst alle neu veröffentlichten Beiträge desselben Zeitraums. Bei Nenner null kein Quotient. Kein hartes Limit und keine automatische Ablehnung. |
+
+**Grenzbeispiel:** Eine Meldung über eine außerhalb Feldkirchens liegende Straße ist nicht allein wegen der räumlichen Nähe relevant. Erst eine belegte Verbindungsfunktion für Feldkirchen oder ein nachvollziehbar begründeter Einfluss eröffnet die mittelbare Relevanz. Eine örtliche Vereinsmeldung kann umgekehrt ein Recherchefund sein, obwohl noch kein bestehendes politisches Thema dazu passt.
+
 ## 03.2 Fachliches Gesamtmodell
 
 ### 03.2.1 Grundobjekte und Informationsbeziehungen
@@ -55,11 +69,42 @@ Redakteure können unmittelbar bei einem Ereignis, Vorgang oder Thema eine **Nac
 
 Ein **Beobachtungsauftrag** wiederholt die gezielte Recherche längerfristig; die Redaktion kann ihn aktivieren, pausieren und beenden. Beobachtungsaufträge sind **kein permanenter Speicherort der gewonnenen Erkenntnisse**. Diese gehen erst über geprüfte Änderungsvorschläge in die zugehörige Analyse ein.
 
+### Fachregeln zur Durchführung und Koordination von Recherche
+
+Ein Rechercheauftrag beschreibt eine **fachliche Frage und ihre Grenzen**; der Recherchelauf ist die dokumentierte einzelne Ausführung. Ein längerfristiger Beobachtungsauftrag gibt dem Informationsbedarf einen redaktionell verantworteten Lebenszyklus. Parallele offene, anlassbezogene und beauftragte Recherche verwenden denselben Quellen- und Fundstellenbestand.
+
+| Regelgruppe | Verbindlicher fachlicher Kern |
+|---|---|
+| **BETRIEB-001, AUFTRAG-001, PLAN-001** | FIB recherchiert regelmäßig auch ohne Einzelauftrag. Bei einer redaktionellen Sachfrage erstellt FIB eine geeignete Planung aus Kontext, vorhandenen Informationen und Quellen; innerhalb des genehmigten Auftrags darf es operativ selbstständig arbeiten. |
+| **BEOB-001 bis -004** | Jeder dauerhafte Beobachtungsauftrag besitzt einen fachlichen Primärbezug (Vorgang, Thema oder offene Frage), dokumentiert Frage, Status und Herkunft. Aktivierung, Pausierung und Beendigung sind redaktionell zu entscheiden; Suchwörter oder Quellenlisten sind keine vorgeschriebene starre Auftragsdefinition. |
+| **LAUF-001 bis -003** | Ein Recherchelauf zeichnet Anlass, Zeitpunkt, fachlichen Kontext und Regelstand, verwendete Nachweise sowie Ergebnisse auf. Eine gezielte Recherche liefert eine Ergebnisübersicht einschließlich gesichertem Wissen, neuen Erkenntnissen, Unsicherheiten und Folgefragen. |
+| **KOORD-001/002** | Unterschiedliche Recherchen behalten eigene Fragen und Ergebnisse, nutzen aber dieselben Fundstellen; die erneute Verwendung derselben Quelle führt nicht zu einer künstlichen Dublette. |
+| **RUECKBLICK-001** | Bei neu bestätigtem oder wesentlich geschärftem Vorgang/Thema erfolgt grundsätzlich einmalig eine anlassbezogene Rückschau über **sechs Monate**; kürzere oder längere Horizonte sind fachlich zu begründen. |
+
+**Beispiel:** Ein Redakteur fragt zum Radverkehr in Feldkirchen nach neuen Planungen. FIB prüft zunächst die bekannten Fundstellen, entwickelt gegebenenfalls Teilfragen und dokumentiert den Recherchelauf. Eine später identische Fundstelle darf im Ergebnis des zweiten Recherchelaufs erscheinen, ohne im Wissensbestand doppelt angelegt zu werden.
+
 ### 03.3.2 Fundstelle und Ereignis
 
 FIB sichert Fundstellen einschließlich Herkunft, Datum und relevanter Nachweise. Es prüft, ob eine Fundstelle neue Ereignisse belegt, ein vorhandenes Ereignis ergänzt oder früheren Angaben widerspricht. Ein neuer Zeitungsbericht und eine später gefundene amtliche Unterlage müssen nicht zwei Ereignisse ergeben; eine spätere eigene Entscheidung oder Handlung dagegen möglicherweise schon.
 
 **Vorläufige, unbestätigte Ereignisse** dürfen automatisch erfasst, fortgeschrieben und unter Protokollierung korrigiert werden. Bei **redaktionell bestätigten Ereignissen** erfordern fachliche Korrekturen einen begründeten Vorschlag und eine redaktionelle Entscheidung. Widersprüche und Quellenlage bleiben sichtbar. Unsichere Zuordnungen werden zunächst mit vorhandenem Wissen und erlaubten Nachrecherchen untersucht; bei entscheidungsrelevantem Restzweifel wird eine Prüfaufgabe erzeugt. Offene Zuordnungen werden bei später passenden Funden wieder geprüft.
+
+### Fachregeln zu Quellen, Fundstellen und Sichtung
+
+FIB muss Auffindbarkeit und Herkunft sichern, ohne für jede technisch erfasste Information eine zusätzliche redaktionelle Einzelhandlung zu erzeugen. Die automatische Vorarbeit ist von späteren verbindlichen Entscheidungen getrennt.
+
+| Regelgruppe | Verbindlicher fachlicher Kern |
+|---|---|
+| **QUELLE-001/002/006/007** | Pflichtquellen, anlassbezogene Quellen und redaktionell hinzugefügte Quellen sind gleichwertige Recherchezugänge. Bekannte RIS-/Gemeinde-Einstiege werden unabhängig von Suchmaschinen direkt geprüft; neue Quellen werden ebenfalls entdeckt. Fundstellen aus bloßen Quellenkandidaten sind bereits zulässig. |
+| **QUELLE-003/005** | Unveränderte bekannte Quellen brauchen nicht ohne fachlichen Anlass eine erneute KI-Auswertung; fachlich relevante Inhaltsänderungen müssen in ihrer Entwicklung nachvollziehbar bleiben. |
+| **QUELLE-004** | Hochgeladene und nicht öffentlich zugängliche Dateien können intern genutzt werden. Öffentliche Wiedergabe setzt unabhängig davon geklärte Nutzungsrechte voraus. |
+| **QUELLE-008/009** | Quellenstatus: **Kandidat, Aktiv, Pausiert, Beendet, Abgelehnt**. „Pflichtquelle“ ist davon unabhängig; Statusänderungen werden redaktionell verantwortet und begründet. |
+| **QUELLE-010, FUND-001/003/004/007** | Jede Fundstelle hat genau eine Primärquelle. Unveränderte Wiederfunde bleiben derselbe Nachweis; fachlich relevante Änderungen erhalten eine nachvollziehbare Fassung und ein Änderungssignal. |
+| **FUND-002/005/006** | Die begründete Verbindung zu einem Ereignis ist ein eigener Sachverhalt, kein Prüfstatus. Fundstellenstatus: **Neu, Analysiert, Geprüft, Zurückgestellt**. Zurückgestellte Funde bleiben wiederaufnehmbar. |
+| **SICHTUNG-001 (fachlich geändert am 26.10.)** | Sämtliche Fundstellen mit direktem örtlichem Bezug bleiben auffindbar. **Keine verpflichtende Einzelprüfung aller Fundstellen.** Eine menschliche Prüfung wird bei konkreter Unsicherheit, Widerspruch oder redaktionellem Entscheidungsbedarf als Aufgabe ausgelöst. KI-Analyse ist keine verbindliche Zurückstellung, Löschung, Freigabe oder Veröffentlichung. |
+| **QUAL-001** | Fehlgeschlagener Abruf, leere Suche und technische Störung sind niemals ein verlässlicher Negativnachweis. |
+
+**Beispiel:** Ein Merkur-Bericht und eine neuere RIS-Vorlage behandeln denselben Grundstückskauf. Beide werden als getrennte Fundstellen ihrer jeweiligen Primärquelle geführt, können ein gemeinsames Ereignis belegen und unterschiedliche Datenstände erklären. Kommt eine aktualisierte Vorlage hinzu, bleibt die alte Fassung nachvollziehbar. Ein fehlgeschlagener RIS-Zugriff bedeutet nicht, dass keine Vorlage vorliegt.
 
 ### 03.3.3 Ereignis und Meldung (Schnittstelle zu Kapitel 04)
 
