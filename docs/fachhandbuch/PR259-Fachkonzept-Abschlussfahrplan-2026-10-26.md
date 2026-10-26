@@ -78,6 +78,13 @@ Die Arbeit wurde über Kapitel 03 und 06 hinaus auf die Übergänge zwischen den
 
 **Reststatus:** Fachliche Lesefassung weiter fortgeschritten; noch keine vollständige normative Quellmigration, insbesondere bei allen historischen Detailregeln außerhalb 03/06. Keine SQL-, UI- oder Produktionsänderungen. Die gemeinsam vorzunehmende Gesamtleseabnahme folgt erst nach dem Quellabgleich.
 
+## Erweiterung des fachlichen Kernmodells und der Rechte (26.10.2026)
+
+- **Kapitel 02:** sieben besonders verwechslungsanfällige Begriffspaare mit fachlicher Grenzziehung und einem durchgehenden Beispiel aus Quellen-/RIS-Verarbeitung, Vorgangsanalyse und öffentlichem Angebot ergänzt.
+- **Kapitel 11:** handlungsorientierte Matrix für KI, Redakteure und Administratoren ergänzt, insbesondere für vorläufige Ereignisse, bestätigte Korrekturen, Themenbezüge, Analyse-Teilfreigabe, Beitragsfreigabe, Veröffentlichung, Sperren und Benutzerverwaltung.
+- **Konsistenz:** Eine Analysefreigabe macht kein Thema aktiv; allein die erste Beitragsfreigabe führt Entwurf → Aktiv, Veröffentlichung bleibt getrennt. KI erfasst vorläufige Daten, nicht automatisch verbindliche Entscheidungen.
+- **Offen:** Vollständige abschnittsweise Migration der übrigen Primärquellen und finale gemeinsame Leseabnahme; Datenmodell, UI und SQL sind bewusst noch keine Abnahmevoraussetzungen.
+
 ## Wann ist die fachliche Abnahme möglich?
 
 Nach vollendetem Quell-/Regelabgleich, widerspruchsfreien Kapiteln, referenzierten Ausnahmen, funktionierenden internen Verweisen und einer letzten **gemeinsamen Leseprüfung**. Technische Umsetzbarkeit ist anschließend Gegenstand der iterativen Entwicklungsphase.
