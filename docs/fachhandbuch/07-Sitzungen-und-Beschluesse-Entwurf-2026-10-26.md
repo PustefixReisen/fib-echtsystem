@@ -60,6 +60,26 @@ Behandlungen und Beschlüsse stehen über **Ereignisse** mit Vorgängen und Them
 
 Öffentliche Sitzungsansichten erschließen Sitzung, TOP, relevante Beschlussfassung und Abstimmungsergebnis sowie Links zum ursprünglichen Vorschlag und den zugehörigen Vorgängen/Themen. Ob zusätzlich eine Meldung sinnvoll ist, entscheidet der allgemeine Meldungsprozess; nicht jeder TOP erzeugt automatisch eine Meldung.
 
+### Fachlicher Detailablauf: Vom Vorschlag zum nachgewiesenen Beschluss
+
+Eine Beschlussvorlage beschreibt zunächst die **beabsichtigte Entscheidung**. FIB behandelt sie als Fundstelle und – sofern relevant – ihre Veröffentlichung als eigenes Ereignis. Die Zuordnung zu einer Sitzung und einem Tagesordnungspunkt macht aus dem Vorschlag noch keinen Beschluss.
+
+| Zeitpunkt | Fachlicher Gegenstand | Was FIB festhalten darf |
+|---|---|---|
+| Vorlage erscheint | Dokument und Veröffentlichungsereignis | vorgeschlagene Maßnahme, Ausgangsfassung, Quellen- und Datumsnachweis |
+| Tagesordnung wird veröffentlicht oder geändert | Sitzung und TOP | vorgesehene Behandlung, Tagesordnungsstand und Veränderung; kein fingiertes Abstimmungsergebnis |
+| Sitzung findet statt | tatsächliche Beratung/Behandlung | nur mit geeigneten Belegen bestätigter Sitzungsverlauf; ohne Nachweis bleibt Ergebnis offen |
+| Bekanntgabe oder Niederschrift | tatsächliche Beschlussfassung | beschlossener Wortlaut, Beschlusspunkte, Abstimmungen und Quelle nur soweit belegt |
+| Berichtigung oder genehmigte Niederschrift | aktualisierter Nachweis | ursprüngliche Aussage, Änderung, Zeitpunkt und Herkunft bleiben nachvollziehbar |
+
+**Mehrere Beschlusspunkte** eines TOPs können unterschiedliche Entscheidungen enthalten. Auch **mehrere Abstimmungen** zu einem Tagesordnungspunkt sind kein Widerspruch, sondern müssen der jeweils betroffenen Fassung oder dem jeweiligen Beschlusspunkt zugeordnet werden. Die ursprünglich vorgesehene Fassung darf dabei nicht durch den letztlich beschlossenen Wortlaut ersetzt werden.
+
+**Niederschrift und Genehmigung:** Eine zunächst vorläufige Niederschrift ist als solcher Quellenstand kenntlich zu machen; ihre spätere Genehmigung oder Berichtigung ist eine weitere, nachvollziehbare Entwicklung. Wo geeignete amtliche Unterlagen noch fehlen, darf eine Pressequelle als gekennzeichneter Hinweis dienen, nicht als stillschweigend amtlich bestätigtes Ergebnis.
+
+**Beispiel:** Beim Grundstückskauf der Gemeinde Feldkirchen enthält die Vorlage einen Beschlussvorschlag. Erst wenn ein geeigneter Nachweis zur Sitzung vorliegt, kann FIB berichten, ob und mit welcher Fassung darüber entschieden wurde. Änderungen des Kaufgegenstands oder der Bedingungen sind als Unterschied zwischen vorgeschlagenem und beschlossenem Stand zu beschreiben.
+
+Diese Erläuterung konkretisiert das bisherige [Sitzungs- und Beschlussmodell](../Sitzungs-und-Beschlussmodell.md). Die dortigen differenzierten Detailregeln zu Status und Verfahrensereignissen bleiben bis zur vollständigen normativen Migration die maßgebliche Bestandsquelle.
+
 ## 07.4 Wichtige fachliche Sicherungen
 
 - Bei unsicherer Zuordnung von Niederschrifteninhalten zu TOPs, Vorlagen oder Beschlusspunkten schlägt FIB eine **redaktionelle Prüfung** vor und übernimmt strittige Zuordnungen nicht stillschweigend.
