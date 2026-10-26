@@ -154,6 +154,18 @@ Jede öffentliche Meldung, jeder Vorgang, jedes Thema und jede Sitzung soll eine
 
 Darstellungsdetails wie Iconformen, Bannerproportionen und konkrete Filter gehören zur nachfolgenden UI-Erprobung. Die bereits verbindlichen UX-Details aus dem bisherigen `docs/UX-und-Informationsarchitektur.md` bleiben bis zur Migration erhalten.
 
+### Suche, Neuigkeitsstatus und Zugang zum öffentlichen Inhalt
+
+Die öffentliche Suche führt **Meldungen, Vorgänge, Themen, Sitzungen, TOPs, Bezugsobjekte und geeignete Quelleninformationen** zusammen. Sie berücksichtigt neben wörtlichen Treffern auch belegte Beziehungen und Aliasnamen, beispielsweise B471 und Oberndorfer Straße. Ergebnisse benennen ihren Inhaltstyp und werden vorrangig nach fachlicher Relevanz geordnet. Bei vielen Meldungen zu einem Vorgang kann der Vorgang als Wissensübersicht hervorgehoben werden; einzelne veröffentlichte Meldungen bleiben auffindbar.
+
+**Für Besucher verständliche Filter** sind Inhaltstyp, Zeitraum und bei Bedarf Sachbereich beziehungsweise Ort. Speziell in der Meldungsübersicht ist der Filter **Beteiligung** vorgesehen. Interne KI-Sicherheit, Freigabe- und Redaktionsstatus sind keine öffentlichen Filter.
+
+**„Neu seit letztem Besuch“** funktioniert ohne Registrierung und berücksichtigt den lokalen Besuchsstand auf dem jeweiligen Gerät. Fachlich neue Meldungen und wesentliche Aktualisierungen zählen, rein technische oder kosmetische Änderungen nicht. Push ist eine freiwillige Zusatzfunktion mit ausdrücklicher Zustimmung. Ein Badge für ungesehene Neuigkeiten ist optional und darf nicht zur Voraussetzung für die Nutzung werden.
+
+Öffentliche Meldungen, Vorgänge, Themen und Sitzungen erhalten teilbare Direktlinks. Wer einem Link auf eine Aktualisierung folgt, soll die **konkret neue Information** erkennen können. Druckausgaben bewahren Sachstand, Datum, Quellen und Einordnung ohne unnötige Navigation.
+
+**Transparenz** soll vom jeweiligen Inhalt aus unmittelbar erreichbar sein. Sie erklärt redaktionelle Verantwortung, KI-Unterstützung, Quellen, mögliche Unsicherheit und die Unterscheidung zwischen Sachinformation und „Unsere Einordnung“. Grundlage ist [UX und Informationsarchitektur](../UX-und-Informationsarchitektur.md), insbesondere §§14 und 16–18; konkrete Bediengestaltung erfolgt später.
+
 ## 09.9 Vertrauen, Transparenz und Aktualität
 
 Ein öffentlicher Beitrag lässt erkennen, **was gesichert ist, was offen bleibt und auf welche Quellen er sich stützt**. Relevante Änderungen werden als solche erkennbar; rein technische Bearbeitungen lösen keine Scheinaktualität aus. Wesentliche Korrekturen müssen erklären, was geändert wurde und warum.
