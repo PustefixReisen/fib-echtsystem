@@ -126,6 +126,12 @@ Aus `docs/UX-und-Informationsarchitektur.md` wurden in Kapitel 09 die verbindlic
 - **Weiterhin fachlich offen:** Exakte Definition der gültigen Gesamtfassung nach einer Teilfreigabe (F-03). Bei F-02 nur eine mögliche, bisher nicht beschlossene Ausnahme von der Mindestbeziehung. F-01 ist abgeschlossen.
 - **Keine Umsetzung vorgezogen:** Keine neuen Tabellen, Rollen, UI-Schritte oder automatischen Publikationen.
 
+## Fortsetzung: F-03 und KI-Kalibrierung (26.10.2026)
+
+- **F-03 entscheidungsreif, nicht eigenmächtig beschlossen:** konkrete vorgeschlagene Teilfreigaberegel mit Prüffall A+B bestätigt, C zurückgestellt; Historie auf Ebene der bestätigten Gesamtstände. Die noch nötige fachliche Leseentscheidung ist in der [Restkonfliktliste](PR259-Fachliche-Restkonflikte-und-Entscheidungsstand-2026-10-26.md) beschrieben.
+- **Kapitel 06 ergänzt:** Redaktionell angenommene, abgeänderte und verworfene Vorschläge sowie korrigierte Bedeutungseinstufungen dienen als nachvollziehbare Grundlage für künftige FIB-spezifische KI-Vorschläge; keine automatische Übernahme als verbindliche Entscheidung. Ursprungsregel: `docs/Themen-und-Vorgangslogik.md` §7.
+- **Dateiverweise:** Relative Markdown-Dateilinks der elf Kapitelleseentwürfe gegen den aktuellen Branch-Dateibaum erneut geprüft, **keine fehlenden Dateiziele**. Inhalts-/Anker- und normative Vollständigkeitsprüfung bleiben gesondert offen.
+
 ## Wann ist die fachliche Abnahme möglich?
 
 Nach vollendetem Quell-/Regelabgleich, widerspruchsfreien Kapiteln, referenzierten Ausnahmen, funktionierenden internen Verweisen und einer letzten **gemeinsamen Leseprüfung**. Technische Umsetzbarkeit ist anschließend Gegenstand der iterativen Entwicklungsphase.
