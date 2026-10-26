@@ -83,6 +83,14 @@ Ein Rechercheauftrag beschreibt eine **fachliche Frage und ihre Grenzen**; der R
 
 **Beispiel:** Ein Redakteur fragt zum Radverkehr in Feldkirchen nach neuen Planungen. FIB prüft zunächst die bekannten Fundstellen, entwickelt gegebenenfalls Teilfragen und dokumentiert den Recherchelauf. Eine später identische Fundstelle darf im Ergebnis des zweiten Recherchelaufs erscheinen, ohne im Wissensbestand doppelt angelegt zu werden.
 
+### Fachliche Trennung: Beobachtungsauftrag und Recherchelauf
+
+Ein **Beobachtungsauftrag** bezeichnet den längerfristigen Informationsbedarf. Er hat einen Primärbezug zu Vorgang, Thema oder offener Frage und kann aktiv, pausiert oder beendet sein. Eine starre Liste von Suchbegriffen ist nicht vorgeschrieben.
+
+Ein **Recherchelauf** ist eine konkrete Rechercheausführung. Er entsteht auch ohne Beobachtungsauftrag, etwa bei offener Suche, redaktioneller Einzelrecherche oder Rückblick. Anlass, angewandter Regelstand, Ergebnis, erkannte Fundstellen und wesentliche Fehler bleiben nachvollziehbar. Mehrere Läufe dürfen dieselbe Fundstelle nachweisen, ohne sie zu duplizieren. Ein technischer KI-Auftrag ist weder der fachliche Beobachtungsauftrag noch der Recherchelauf.
+
+Die fachliche Grundlage steht im [Beobachtungs- und Recherchemodell](../Beobachtungs-und-Recherchemodell.md).
+
 ### 03.3.2 Fundstelle und Ereignis
 
 FIB sichert Fundstellen einschließlich Herkunft, Datum und relevanter Nachweise. Es prüft, ob eine Fundstelle neue Ereignisse belegt, ein vorhandenes Ereignis ergänzt oder früheren Angaben widerspricht. Ein neuer Zeitungsbericht und eine später gefundene amtliche Unterlage müssen nicht zwei Ereignisse ergeben; eine spätere eigene Entscheidung oder Handlung dagegen möglicherweise schon.
