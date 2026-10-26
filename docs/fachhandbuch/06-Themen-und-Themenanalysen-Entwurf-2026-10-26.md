@@ -113,7 +113,7 @@ Die geltenden Bestandsregeln unterscheiden:
 
 Die Regelgruppen FIB-THEMA-BEZUG-001 bis -008, FIB-THEMA-STATUS-001 bis -007 und FIB-THEMA-BEITRAG-* bleiben bis zum **vollständigen Abgleich** der neuen Analysefreigabe mit alten Freigabevoraussetzungen maßgeblicher Bestand. Die neue Analysefreigabe wird **nicht vorschnell als zusätzliche Themenstatusmaschine** eingeführt. Redakteure/Administratoren haben bisher grundsätzlich dieselben regulären Fachbefugnisse; die Bearbeitungssperren und Admin-Sonderfälle bleiben zu beachten. Freigabe und Veröffentlichung sind verschiedene Entscheidungen.
 
-**Harter Konsistenzpunkt:** Bisher führt **die erste Beitragsfreigabe** den Themenstatus von Entwurf nach Aktiv. Die zusätzliche eigenständige Analysefreigabe darf diesen Übergang **nicht** unbemerkt verändern. Ob und wann ein Thema mit bereits freigegebener Analyse, aber noch ohne freigegebenen Beitrag als Aktiv gilt, ist als **gezielte fachliche Folgeentscheidung** vor Implementierung zu klären.
+**Fachlich entschieden am 26.10.2026:** Die **Analysefreigabe verändert den Themenstatus nicht**. Ein Thema kann eine freigegebene Analyse besitzen und dennoch im Status **Entwurf** stehen. **Erst die erste Beitragsfreigabe** führt wie bisher von Entwurf nach Aktiv; die Veröffentlichung erfolgt gesondert. Technische Versions- und Berechtigungsregeln sind damit noch nicht abgenommen.
 
 ## 06.9 Anforderungen an den Themeneditor (Lösung bewusst offen)
 
