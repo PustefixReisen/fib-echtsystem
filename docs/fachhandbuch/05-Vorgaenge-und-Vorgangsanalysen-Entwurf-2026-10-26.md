@@ -42,6 +42,25 @@ FIB prüft neue Ereignisse und Korrekturen auf die Zugehörigkeit zu bestehenden
 
 Beispiel: Ein neuer Beschluss klärt die zuvor offene Grundstücksnutzung. FIB prüft, welche Aussagen der Vorgangsanalyse (Nutzungszweck, Kosten, Flächenwirkung, Folgen) überholt sind und ob betroffene Themenanalysen aktualisiert werden sollten.
 
+### 05.3.3 Durchgängiger Ablauf eines Vorgangs
+
+Der nachfolgende Beispielfall zeigt, wie Ereignisverarbeitung, Analyse und spätere öffentliche Darstellung **zusammenarbeiten, ohne dieselbe redaktionelle Entscheidung mehrfach zu verlangen**. Die Sachverhalte sind illustrative Möglichkeiten, keine Behauptung über einen tatsächlich erfolgten Grundstückskauf.
+
+| Schritt | Beispiel Grundstückskauf | FIB-Ergebnis und redaktionelle Grenze |
+|---|---|---|
+| **Anlass** | Eine öffentlich zugängliche Vorlage kündigt einen möglichen Grundstückskauf an. | Die Vorlage ist Fundstelle; ihre Veröffentlichung kann ein Ereignis sein. Der angekündigte Kauf ist noch kein nachgewiesener Beschluss. |
+| **Vorgang erkennen** | Der Sachverhalt wird über längere Zeit relevant sein. | FIB kann den Vorgang vorläufig anlegen und Fundstellen/Ereignisse zuordnen, ohne obligatorische Einzelbestätigung. |
+| **Erstanalyse** | Kaufzweck, Kosten, Planungsstand, Zuständigkeit und offene Fragen werden aus bekannten Quellen zusammengestellt. | FIB erstellt einen vorläufigen Analyseentwurf und kennzeichnet unbestätigte Angaben. Keine automatische neue Erkenntnisrecherche. |
+| **Fragen klären** | Der Finanzierungsweg ist unbekannt. | FIB prüft vorhandene Informationen und kann Teilfragen sowie einen gezielten Rechercheauftrag vorschlagen. Ausführung über den genehmigten Rahmen hinaus braucht redaktionelle Entscheidung. |
+| **Neue Entwicklung** | Später erscheint eine Niederschrift mit dem tatsächlichen Beschluss. | Neues oder bestätigtes Ereignis und Auswirkungsprüfung. Vorlage, Beschlussvorschlag und Beschluss werden nicht gleichgesetzt. |
+| **Analyse aktualisieren** | Einzelne frühere Aussagen sind überholt; Auswirkungen müssen ergänzt werden. | FIB bietet belegte Änderungen als einzeln entscheidbare Vorschläge an. Bestätigte Erkenntnisse bleiben vor stiller Änderung geschützt. |
+| **Öffentlicher Beitrag** | Bürger sollen verstehen, was beschlossen wurde und welche Folgen denkbar sind. | Eigener Vorgangsbeitrag aus der fachlich geprüften Analyse, anschließend fassungsbezogene Freigabe und **gesonderte** Veröffentlichung. |
+| **Verlauf und Folgefragen** | Eine spätere Nutzungsentscheidung oder Kostenentwicklung tritt ein. | Meldung zum neuen Ereignis ist optional; Vorgangsverlauf und freigegebener Beitrag werden bei Bedarf aktualisiert, ohne frühere Fassungen zu überschreiben. |
+
+**Entscheidungslogik:** Nicht jeder Fund erhält eine manuelle Einzelprüfung, nicht jedes Ereignis eine Meldung und nicht jeder neue Analyseentwurf eine Veröffentlichung. Ausschlaggebend sind die fachliche Belastbarkeit einer **konkreten Aussage** und die gesondert verantwortete Veröffentlichung einer **konkreten Beitragsfassung**.
+
+**Sonderfälle:** Ein Vorgang kann zunächst ohne öffentlichen Beitrag bleiben. Eine unklare Zuordnung kann Kandidat bleiben. Wenn neue Informationen eine bestätigte Analyse widerlegen, wird ein Korrekturvorschlag und bei öffentlicher Tragweite ein priorisierter redaktioneller Handlungsbedarf erzeugt. Nach formellem Abschluss des Vorgangs bleibt die Historie erhalten; fachlich neue Entwicklungen können eine begründete Wiederaufnahme auslösen.
+
 ## 05.4 Fragen und gezielte Recherche im Bearbeitungskontext
 
 Ein Redakteur kann **direkt beim Vorgang eine natürlichsprachliche Nachfrage** stellen, ohne den allgemeinen Recherchebereich aufrufen zu müssen. FIB versucht die Frage zunächst aus den vorhandenen Informationen zu beantworten und zeigt Belege sowie Unsicherheiten. Erst wenn weitere Informationen erforderlich sind, bereitet FIB einen gezielten Rechercheauftrag mit geeigneten Teilfragen vor.
