@@ -115,6 +115,27 @@ Die Regelgruppen FIB-THEMA-BEZUG-001 bis -008, FIB-THEMA-STATUS-001 bis -007 und
 
 **Fachlich entschieden am 26.10.2026:** Die **Analysefreigabe verändert den Themenstatus nicht**. Ein Thema kann eine freigegebene Analyse besitzen und dennoch im Status **Entwurf** stehen. **Erst die erste Beitragsfreigabe** führt wie bisher von Entwurf nach Aktiv; die Veröffentlichung erfolgt gesondert. Technische Versions- und Berechtigungsregeln sind damit noch nicht abgenommen.
 
+### 06.8a Bestandsübergänge und neue Analysefreigabe
+
+**Abgleich 26.10.2026:** Die schon geltenden Zustände **Entwurf, Aktiv, Zurückgestellt, Archiviert** werden beibehalten. Weder die automatische Erstellung einer Analyse noch ihre redaktionelle (Teil-)Freigabe führen zu einem Statuswechsel. Erst die **erste Beitragsfreigabe** ändert Entwurf → Aktiv; eine Veröffentlichung ist ein eigener, ausdrücklich zu bestätigender Schritt.
+
+| Aktion | Statuswirkung | Veröffentlichungswirkung |
+|---|---|---|
+| Analyse erzeugen, prüfen oder teilweise freigeben | keine | keine |
+| Erste Themenbeitragsfassung freigeben | Entwurf → Aktiv | keine automatische Veröffentlichung |
+| Erste Beitragsfreigabe **vor erster Veröffentlichung** widerrufen | Aktiv → Entwurf, sofern diese erstmalige Freigabe maßgeblich war | keine |
+| Thema im Entwurf zurückstellen oder archivieren | Entwurf → Zurückgestellt / Archiviert | keine |
+| Zurückgestelltes Thema archivieren | Zurückgestellt → Archiviert | keine |
+| Früher freigegebenes, archiviertes Thema nach Aktualitätsprüfung wiederaufnehmen | Archiviert → Aktiv | keine automatische Veröffentlichung |
+| Noch nie freigegebenen archivierten Themenentwurf wiederaufnehmen | Archiviert → Entwurf | keine |
+| Veröffentlichte Beitragsfassung zurückziehen | Themenstatus bleibt eigenständig zu prüfen | bisher sichtbare Fassung wird verborgen; Freigabe- und Publikationshistorie bleiben erhalten |
+
+**FIB-THEMA-STATUS-001 bis -007**, **FIB-THEMA-BEITRAG-002/003/010** und **FIB-THEMA-VERSION-001** bleiben die referenzierten Bestandsregeln. Die neue Analysefreigabe ist eine **zusätzliche fachliche Entscheidung**, keine zusätzliche Themenstatusart.
+
+**Explizite fachliche Änderung der bisherigen Freigabevoraussetzung:** Es wird **nicht mehr verpflichtend ein ausgewerteter Beobachtungsauftrag** verlangt. Stattdessen müssen vor Freigabe des öffentlichen Beitrags die dafür verwendeten Aussagen in der Themenanalyse fachlich geprüft und ausreichend abgesichert sein. Die Redaktion kann Recherche bei Wissenslücken anstoßen; sie ist keine formale Pflichtübung. Der bisherige *dreiteilige* Bearbeitungsablauf wird durch **vier Arbeitsbereiche** ersetzt (Definition, Bezüge, Analyse, Beitrag), ohne vier separate obligatorische Freigaben einzuführen.
+
+**Noch technisch zu klären:** Wie Analysefassungen und Teilfreigaben referenziert werden, welche Analysefreigabe beim Widerruf einer Beitragsfreigabe wirksam bleibt sowie das genaue Verhalten bei späteren Statuswechseln und nachfolgender Veröffentlichung. Die genannten Grundübergänge werden dadurch nicht neu erfunden.
+
 ## 06.9 Anforderungen an den Themeneditor (Lösung bewusst offen)
 
 Der Themeneditor muss die vier Arbeitsbereiche Definition, Bezüge, Analyse und Beitrag in einer verständlichen, **nicht starren** Struktur erschließen. Im Arbeitskontext sollen die Redaktion unter anderem erreichen können:
@@ -141,7 +162,7 @@ Die [Fachregelreferenz mit allen 32 bestehenden Themenregeln](06-Themen-Fachrege
 ## 06.11 Offene Konsistenz- und Lösungsfragen
 
 1. **Freigaberegel ersetzen:** Bisherige Pflicht mindestens eines ausgewerteten Beobachtungsauftrags vor Themenfreigabe vollständig und nachvollziehbar aus Kapitel 06 sowie abhängigen Regeln/Tests entfernen; stattdessen fachlich bestätigte Themenanalyse.
-2. **Lebenszyklus:** Verhältnis einer eigenständigen Analysefreigabe zur bisherigen erstmaligen Beitragsfreigabe, Themenstatus Aktiv und Rücknahmefällen gesondert fachlich abstimmen.
+2. **Lebenszyklus:** Fachlicher Statusübergang bei erster Beitragsfreigabe ist in §06.8a geklärt; technische Daten-/Versionsbeziehungen, Teilfreigabe und Rücknahmefälle prüfen.
 3. **Teilfreigabe und Versionierung:** Inhaltseinheiten, gültige Fassung, Historie und Schutz vor unbemerkter Überschreibung mit bestehendem Gesamtversionsmodell abgleichen.
 4. **Wirkungen und übergreifende Erkenntnisse:** Bestehende Ereignisverankerung einzelner Wirkungen versus themenbezogene Zusammenhänge ohne Einzelereignis gemeinsam konsistent modellieren.
 5. **Bezugsstatus:** Automatische Kandidaten mit verbindlicher redaktioneller Zuordnung und Bedeutung vereinbaren, ohne neuen Status zu erfinden.
