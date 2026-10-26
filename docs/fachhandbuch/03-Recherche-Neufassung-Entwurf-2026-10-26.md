@@ -97,6 +97,14 @@ Vor der Freigabe kontrolliert FIB Belegdeckung, Widersprüche, redaktionelle Sch
 
 Neue Erkenntnisse werden auch auf öffentliche Auswirkungen geprüft. Eine wesentliche Änderung löst Vorschläge zur Aktualisierung von Meldung/Themenbeitrag aus; **dringende Korrekturen** sind im Dashboard auch dann sichtbar, wenn der zugehörige Vorgang abgeschlossen oder das Thema archiviert ist. Dringlichkeit ist von politischer bzw. öffentlicher Relevanz zu unterscheiden.
 
+### RIS-Beobachtung als spezialisierter Rechercheprozess
+
+FIB beobachtet das Feldkirchner Ratsinformationssystem **laufend über dieselbe Recherche- und Ausführungsinfrastruktur wie andere Quellen**. Es erkennt neue und geänderte Sitzungstermine, Tagesordnungen und TOPs, Beschlussvorlagen und Anlagen sowie später verfügbare Niederschriften oder berichtete Beschlussergebnisse. Es vergleicht erkannte Angaben mit dem bisherigen Stand und erfasst die herangezogenen Dokumente bzw. Webseiten als nachvollziehbare Fundstellen.
+
+Die Recherche **liefert die Informationen und Veränderungssignale**. Die fachlich eigenständige Aufbereitung von Sitzungen, TOPs, Behandlung, Beschlusspunkten, beschlossenen Fassungen und Abstimmungen erfolgt in **Kapitel 07 – Sitzungen und Beschlüsse**, nicht als paralleles Recherchesystem. Fundstellen und strukturierte Sitzungsinformationen bleiben dabei logisch getrennt, aber nachvollziehbar verknüpft.
+
+Eine Tagesordnung belegt, was **vorgesehen** ist; erst geeignete spätere Quellen belegen, was tatsächlich behandelt oder beschlossen wurde. FIB kann Pressehinweise vor Verfügbarkeit einer Niederschrift finden und verknüpft diese später mit amtlichen Unterlagen, ohne einen angekündigten Beschluss als tatsächlich gefasst auszugeben. Der konkrete Abfrageplan, Änderungsabgleich und Umgang mit Ausfällen sind bei der technischen Umsetzung zu prüfen.
+
 ## 03.4 Redaktionelle Arbeitssteuerung und Bedienanforderungen
 
 FIB führt Aufgaben für erforderliche **menschliche Entscheidungen** zusammen. Technisch erfolgreiche automatische Einzelschritte sollen die Aufgabenübersicht nicht überfluten. Offene Aufgaben können grundsätzlich von berechtigten Redakteuren selbst übernommen oder durch eine koordinierende Person zugewiesen werden. Die gemeinsame Übersicht zeigt Anlass, Objektkontext, erforderliche Handlung und Dringlichkeit und führt direkt zur Bearbeitung.
