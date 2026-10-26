@@ -28,7 +28,7 @@ Die eigenständige Analyse enthält Fakten, Erklärungswissen sowie Hintergründ
 
 ### 05.3.1 Vorgang anlegen
 
-FIB erkennt aus Ereignissen, ob ein längerfristiger zusammenhängender Sachverhalt vorliegt. Bei eindeutigem Bedarf darf FIB einen **vorläufigen Vorgang automatisch** anlegen und die zugehörigen Ereignisse beiziehen. Eine redaktionelle Einzelbestätigung der Anlage ist nicht notwendig; vorläufige Fachzuordnungen sind nachvollziehbar. Bei unsicherer Abgrenzung recherchiert FIB zunächst im erlaubten Rahmen und legt nötigenfalls eine Entscheidungsfrage vor.
+FIB erkennt aus Ereignissen, ob ein längerfristiger zusammenhängender Sachverhalt vorliegt. Bei eindeutigem Bedarf darf FIB einen **vorläufigen Vorgang automatisch** anlegen und mindestens ein bereits identifiziertes Ereignis als fachlichen Ausgangspunkt zuordnen. Ein solcher Ausgangspunkt kann selbst vorläufig sein; seine Fundstellen und Unsicherheiten bleiben nachvollziehbar. Vorgänge ohne jeden Ereignisbezug werden aus dieser Regel **nicht** abgeleitet. Die spätere Datenmodellierung klärt, wie Vorläufigkeit gespeichert und kontrolliert wird. Eine redaktionelle Einzelbestätigung der Anlage ist nicht notwendig; vorläufige Fachzuordnungen sind nachvollziehbar. Bei unsicherer Abgrenzung recherchiert FIB zunächst im erlaubten Rahmen und legt nötigenfalls eine Entscheidungsfrage vor.
 
 Auch die Redaktion darf aus einem bekannten Sachverhalt unmittelbar einen Vorgang anlegen. Dubletten und konkurrierende Abgrenzungen werden geprüft; künstliche Vorgänge für einmalige Ereignisse sind zu vermeiden.
 
@@ -107,6 +107,16 @@ Der Vorgangsbeitrag vermittelt den aktuellen Stand, die Entwicklung, Ursachen, H
 **Technisch noch zu klären:** Status- und Versionsmodell für Vorgangsbeiträge, Freigaberechte und Rücknahme; bisher sind diese Regeln für Themenbeiträge weiter ausgearbeitet. Keine stillschweigende Übernahme des Themenstatusmodells.
 
 **„Mehr wissen?“ am Vorgang:** Der freigegebene Vorgangsbeitrag kann durch eigene weiterführende Fragen und quellengebundene Antworten ergänzt werden. Sie erklären relevante Hintergründe und Zusammenhänge, ohne den Vorgangsbeitrag nur zu wiederholen. Die Detailregeln für Vertiefungsfragen und ihre Freigabe gehören zu Kapitel 09.
+
+### Gültiger Analysebestand bei Teilfreigaben
+
+Die Redaktion darf Änderungsvorschläge einzeln übernehmen, bearbeiten, zurückstellen oder ablehnen. Daraus folgt **nicht**, dass einzelne Analysebestandteile als unabhängig veröffentlichte oder unabhängig versionierte Objekte behandelt werden.
+
+Die bestehende fachliche Versionsregel sieht vor, den **bestätigten strukturierten Gesamtstand des Vorgangs** zu historisieren. Im jeweils gültigen bestätigten Stand dürfen daher nur die tatsächlich übernommenen Aussagen als bestätigt gelten; offene Vorschläge und zurückgestellte Aussagen bleiben davon unterscheidbar und werden nicht stillschweigend als gesichert ausgegeben.
+
+**Prüfbeispiel:** Zu den Kosten eines Grundstückskaufs ist ein belastbarer Beleg vorhanden; zur künftigen Nutzung fehlt er. Die Redaktion bestätigt den belegten Kostenstand und stellt die Nutzungseinschätzung zurück. Ein öffentlicher Vorgangsbeitrag darf die bestätigte Kosteninformation verwenden, nicht aber die offene Nutzungshypothese als bereits feststehend darstellen.
+
+**Noch fachlich zu entscheiden:** Ob bei einer Teilfreigabe der zuletzt bestätigte Gesamtstand mit den einzeln genehmigten Änderungen als neue gültige Gesamtfassung entsteht oder ob zusätzlich ein besonderer fachlicher Zwischenzustand nötig ist. Die bestehende Versionierung darf durch die spätere Umsetzung nicht unbeabsichtigt aufgegeben werden.
 
 ## 05.7 Lebenszyklus: aktiv, ruhend, abgeschlossen, archiviert
 
