@@ -104,7 +104,7 @@ FIB liefert zur Analysefreigabe eine kompakte **fachliche Qualitätsbeurteilung*
 
 **Eine fachlich geprüfte Themenanalyse ist die Voraussetzung für die spätere Beitragsfreigabe**, **kein verpflichtend ausgewerteter Beobachtungsauftrag**. Vorläufige Einschätzungen können bei entsprechender fachlicher Freigabe nur **mit offengelegter Unsicherheit** öffentlich dargestellt werden, nicht als gesicherte Tatsachen. Zurückgestellte Inhalte dürfen nicht als bestätigte Erkenntnisse in den Beitragsentwurf übernommen werden.
 
-Die Ausgestaltung von Teilfreigabe, Analysefassungen und Rücknahme ist **noch offen** und muss mit den vorhandenen Versionierungs- und Rechtekonzepten konsistent umgesetzt werden.
+Die **aussagenbezogene Teilfreigabe** ist fachlich vereinbart: Nur ausdrücklich bestätigte Inhalte gelten als bestätigt, offene Vorschläge bleiben unterscheidbar und werden nicht als gesichertes Wissen in einen Beitrag übernommen. Die bisherige Historisierung über den **bestätigten Gesamtstand des Themas** bleibt dabei maßgeblicher Ausgangspunkt. **Noch fachlich offen** ist, wie der gültige bestätigte Gesamtstand nach einer nur teilweisen Annahme von Vorschlägen definiert wird; die technische Abbildung und Rücknahme folgen danach.
 
 ## 06.6 Themenbeitrag: Redaktionelle Darstellung
 
