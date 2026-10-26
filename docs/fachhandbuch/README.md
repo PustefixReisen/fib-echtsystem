@@ -48,6 +48,10 @@ Projektübergreifender Standard: [pustivo – Fachliches Dokumentationsmodell](h
 
 **Prüfstatus:** Kapitel 02 wurde im Fachdialog vom 26.10.2026 inhaltlich akzeptiert; Kapitel 09 wurde in wichtigen Einzelpunkten abgestimmt. Die übrigen Kapitel sind Leseentwürfe, keine Gesamtabnahme. Technische Umsetzbarkeit, Regel-/Quellmigration und Status-/Rechtekonsistenz sind gesondert nachzuweisen. Siehe [Gesamtabgleich](PR259-Gesamtabgleich-2026-10-26.md) und [Migrationsmatrix](PR259-Regelkennungen-Migrationsmatrix-2026-10-26.md).
 
+## Abschluss- und Testnachweis für PR #259
+
+Die [Abschlussprüfung mit Regeländerungsübersicht und 20 Regressionstests](PR259-Abschlusspruefung-und-Regression-2026-10-26.md) trennt ausdrücklich zwischen **vollständigem Leseentwurf**, **gesichertem Regelbestand** und der **noch offenen technischen bzw. normativen Abnahme**. Der PR bleibt bis zum vollständigen Quell-/Datenmodell-/Testabgleich Draft.
+
 ## Sekundärsichten (nur diese beiden in der ersten Ausbaustufe)
 
 1. **Begriffe:** möglichst automatisch aus den Primärdefinitionen abgeleitet.
