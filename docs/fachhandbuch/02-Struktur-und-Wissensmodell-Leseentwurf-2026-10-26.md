@@ -145,6 +145,8 @@ Jede öffentliche Korrektur erfolgt nachvollziehbar und nicht als stillschweigen
 
 Das Strukturmodell gehört **an den Beginn des Handbuchs**, unmittelbar nach Zweck und Grundsätzen, und wird in den Prozesskapiteln nur noch **ausschnittweise** erläutert. Damit bleibt die Dokumentation prozessorientiert, ohne die Objektzusammenhänge zu verstecken.
 
+**„Mehr wissen?“ gehört fachlich zu Meldungen, Vorgängen und Themen.** Öffentliche Vertiefungsfragen und ihre quellengebundenen Antworten haben jeweils einen nachvollziehbaren primären Kontext. Die bisherige Primärquelle kennt nur Meldung und Thema; der Vorgang wird im Zuge der Regelmigration ergänzt.
+
 ## 02.8 Noch abzugleichende Detailregeln
 
 Dieses Kapitel ist eine **Lesefassung**, noch keine vollständige Übernahme von `docs/Datenmodell.md`, `docs/Persistenz-und-Lebenszyklusmodell.md` oder den spezialisierten Primärquellen. Vor normativer Ablösung sind insbesondere Analysebestandteile, Teilfreigaben, Vorläufigkeit der Ereignisse, Status-/Rechtekataloge, Veröffentlichungsversionen und Rechercheobjekte vollständig regelweise zu migrieren.
