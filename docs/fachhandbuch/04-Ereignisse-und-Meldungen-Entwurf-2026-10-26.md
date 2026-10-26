@@ -32,6 +32,22 @@ Ereignisse dürfen eigenständig bestehen. Bei erkennbarem längerfristigem Sach
 
 Zuordnungen dürfen vorläufig automatisiert erfolgen, sofern ausreichend begründet. Zweifel werden erst anhand bestehender Informationen und im genehmigten Rechercheumfang geklärt. Offene Zuordnungen werden bei neuen relevanten Fundstellen erneut geprüft. Nur entscheidungsrelevanter Restzweifel wird als Redaktionsaufgabe vorgelegt.
 
+### Redaktionsentscheidungen nach der Ereigniserkennung
+
+Die automatische Erfassung eines **vorläufigen Ereignisses** bedeutet weder die Bestätigung der zugrunde liegenden Aussagen noch die Entscheidung über eine öffentliche Meldung. FIB darf jedoch selbstständig vorhandene Quellen prüfen, mögliche Dubletten auflösen helfen und neue Fundstellen einem vorläufigen Ereignis zuordnen.
+
+| Prüfanlass | Automatische Vorbereitung | Erforderliche Redaktion |
+|---|---|---|
+| Neue, widerspruchsfreie Fundstelle mit erkennbarem Feldkirchen-Bezug | sichern, Herkunft dokumentieren, Ereignisvorschlag bzw. vorläufiges Ereignis anlegen | **keine pauschale Pflicht**, jede Fundstelle oder jedes vorläufige Ereignis einzeln zu bestätigen |
+| Unklarer Widerspruch oder für Veröffentlichung entscheidende Tatsachenunsicherheit | Nachweise abgleichen, offene Frage und Prüfaufgabe formulieren | fachliche Entscheidung über ungeklärte wesentliche Aussage |
+| Nachweis zu schon redaktionell bestätigtem Ereignis | mögliche Ergänzung oder Korrektur mit genauer Änderung und Belegen vorschlagen | verbindliche Korrektur des bestätigten Ereignisses bestätigen |
+| Öffentlich relevanter Sachverhalt | sachlichen Meldungsentwurf vorbereiten, Relevanz und Quellen benennen | konkrete Textfassung freigeben, Veröffentlichung gesondert bestätigen |
+| Nicht veröffentlichungswürdiger Einzelbefund | Ereignis/Fundstelle mit Bezügen weiterhin erhalten | keine Pflicht, dennoch eine Meldung zu produzieren |
+
+**Abgrenzung zum Rechercheprozess:** Die in Kapitel 03 festgelegte Sichtbarkeit aller Fundstellen und die risikobezogene Prüfaufgabe werden übernommen; hier wird nur erläutert, wie eine Fundstelle zu einem Ereignis und gegebenenfalls zu einer Meldung führt. Die Fundstellenstatus **Neu – Analysiert – Geprüft – Zurückgestellt** sind nicht mit dem redaktionellen Status eines Ereignisses oder einer Meldung gleichzusetzen.
+
+**Beispiel:** Eine lokale Veröffentlichung zur Hundewiese ergibt eine neue Fundstelle und ein vorläufiges Ereignis. FIB kann daraus einen Meldungsentwurf erstellen. Die Redaktion muss nicht zuerst alle ähnlichen Funde einzeln abhaken; vor dem öffentlichen Bericht werden die Aussagen und Belege des konkreten Meldungsentwurfs geprüft.
+
 ## 04.4 Von Ereignissen zu Meldungen
 
 FIB prüft die **Nachrichten- und Veröffentlichungsrelevanz** bei der Ereigniserfassung sowie bei späteren neuen Informationen. Bei ausreichender Relevanz erstellt FIB automatisch einen **Meldungsentwurf**, aber veröffentlicht nicht. Mehrere für sich wenig bedeutsame Ereignisse können zusammengenommen berichtenswert sein.
