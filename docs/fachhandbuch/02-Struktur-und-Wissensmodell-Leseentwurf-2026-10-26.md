@@ -16,7 +16,7 @@ flowchart TB
     RIS["RIS Feldkirchen (Quellsystem)"]
     Q["Weitere Quellen"]
     F["Fundstellen / Dokumente"]
-    RIS --> F
+    RIS -->|"Beschlussvorlagen, Niederschriften, Anlagen"| F
     Q --> F
   end
   subgraph RAT["Sitzungen und Beschlüsse"]
@@ -33,7 +33,7 @@ flowchart TB
     V <-->|"0 bis viele"| T
     E <-->|"zusätzlicher Bezug"| T
   end
-  F -->|"Beleg"| E
+  F -->|"belegt Ereignis (z. B. Vorlage oder Niederschrift)"| E
   TOP <-->|"Behandlung / Beschlussereignisse"| E
   BS -.->|"belegte Beschlussereignisse"| E
   AV -.->|"Erkenntnisbeitrag"| AT
