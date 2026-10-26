@@ -15,6 +15,20 @@ Gezielte Recherche: Redaktion genehmigt einmalig Ziel und Grenzen, KI führt dan
 
 Analyse: Die KI bündelt Änderungen und Belege in Änderungspaketen. Änderungen dürfen einzeln bestätigt, bearbeitet, zurückgestellt oder abgelehnt werden. Eine **Teilfreigabe** der Analyse ist möglich. Bestätigte Inhalte bleiben geschützt. Folgewirkungen zwischen Vorgängen und Themen werden gezielt geprüft.
 
+### Fachregeln für nachvollziehbare redaktionelle Entscheidungen
+
+Die Redaktion soll fachliche Entscheidungen **im jeweiligen Zusammenhang** treffen, statt abstrakte technische Felder ausfüllen zu müssen. FIB zeigt deshalb pro Entscheidung den Anlass, die betroffenen Aussagen, Herkunft und Belege, den KI-Vorschlag, offene Unsicherheiten und die zu erwartende Auswirkung an.
+
+- **Vorschläge und eigene redaktionelle Ergänzungen** werden im gleichen fachlichen Arbeitsbereich bearbeitet. Ihre unterschiedliche Herkunft bleibt erkennbar.
+- **KI-Begründungen** nennen die verwendeten Fundstellen, den konkreten Regel- oder Sachbezug und erkennbare Unsicherheiten. Ein bloßer Bewertungswert ohne Begründung genügt nicht.
+- **Prüfkriterien:** Bereits vorhandene Kriterien des jeweiligen fachlichen Prüfbereichs bleiben sichtbar. FIB kann begründet eine Vorauswahl empfehlen, darf die übrigen Kriterien aber nicht unsichtbar machen. Neue sachlich begründete Kriterien können redaktionell ergänzt und gesondert bestätigt werden.
+- **Zwischenstände und Rücksprung:** Fachlich gespeicherte Entscheidungen bleiben nachvollziehbar. Die Redaktion kann frühere Arbeitsschritte erneut aufrufen, ohne dass dabei stillschweigend bestätigte Angaben überschrieben werden.
+- **Redaktionelle Nachfragen:** Bei Ereignissen, Vorgängen und Themen werden verständliche Fragen, ihre bisherigen Antworten, Quellen und der nächste sinnvolle Schritt angeboten; eine unklare Frage ist nicht automatisch ein neuer Beobachtungsauftrag.
+
+**Beispiel:** Bei einer vorgeschlagenen Zuordnung des Parkraumkonzepts zum Thema Mobilität sieht der Redakteur, welche Ereignisse und Fundstellen den Bezug begründen und welche Bedeutung die KI empfiehlt. Er kann die Einordnung bestätigen, verändern oder ablehnen. Dieselben Ereignisse werden in der Themenanalyse nicht doppelt gewichtet, nur weil sie sowohl unmittelbar als auch über den Vorgang erreichbar sind.
+
+**Quellenübernahme:** Diese fachlichen Grundsätze stammen aus [Redaktionsworkflow](../Redaktionsworkflow.md), insbesondere §§2, 5–10 und 13. Die konkrete Karten-/Dialoggestaltung bleibt der späteren UI-Entwicklung vorbehalten.
+
 ## 08.4 Bearbeiten und Korrigieren
 KI erstellt sachliche Meldungs- und Themenbeitragsentwürfe, Redaktion wählt und gewichtet Aussagen. Ein gemeinsames inhaltliches und sprachliches Korrektorat verarbeitet frei formulierte Änderungswünsche. Kleine sprachliche Korrekturen an noch unveröffentlichten Entwürfen darf KI automatisch durchführen, wenn sie nachvollziehbar und umkehrbar sind. Inhaltliche Änderungen erfordern Bestätigung; nicht belegte neue Aussagen lösen Prüf-/Recherchebedarf aus.
 
