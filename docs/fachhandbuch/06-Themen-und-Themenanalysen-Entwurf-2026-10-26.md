@@ -111,7 +111,7 @@ Die geltenden Bestandsregeln unterscheiden:
 - **Bedeutung bestätigter Bezüge:** prägend, relevant, ergänzend.
 - **Beitragsfassung:** Arbeitsfassung, Freigabe und gesonderte Veröffentlichung sowie historisierte Rücknahme-/Wiederaufnahmefälle.
 
-Die Regelgruppen FIB-THEMA-BEZUG-001 bis -008, FIB-THEMA-STATUS-001 bis -007 und FIB-THEMA-BEITRAG-* bleiben bis zum **vollständigen Abgleich** der neuen Analysefreigabe mit alten Freigabevoraussetzungen maßgeblicher Bestand. Die neue Analysefreigabe wird **nicht vorschnell als zusätzliche Themenstatusmaschine** eingeführt. Redakteure/Administratoren haben bisher grundsätzlich dieselben regulären Fachbefugnisse; die Bearbeitungssperren und Admin-Sonderfälle bleiben zu beachten. Freigabe und Veröffentlichung sind verschiedene Entscheidungen.
+Die Regelgruppen FIB-THEMA-BEZUG-001 bis -008, FIB-THEMA-STATUS-001 bis -007 und FIB-THEMA-BEITRAG-* bleiben während der Migration nachweisbare Bestandsreferenzen. **Die später beschlossenen Änderungen zur Analysefreigabe und zum Beobachtungsauftrag sind fachlich entschieden**; entgegenstehende Sätze der älteren Quellen dürfen nicht als noch gültiges Zielmodell ausgegeben werden. Die neue Analysefreigabe wird **nicht vorschnell als zusätzliche Themenstatusmaschine** eingeführt. Redakteure/Administratoren haben bisher grundsätzlich dieselben regulären Fachbefugnisse; die Bearbeitungssperren und Admin-Sonderfälle bleiben zu beachten. Freigabe und Veröffentlichung sind verschiedene Entscheidungen.
 
 **Fachlich entschieden am 26.10.2026:** Die **Analysefreigabe verändert den Themenstatus nicht**. Ein Thema kann eine freigegebene Analyse besitzen und dennoch im Status **Entwurf** stehen. **Erst die erste Beitragsfreigabe** führt wie bisher von Entwurf nach Aktiv; die Veröffentlichung erfolgt gesondert. Technische Versions- und Berechtigungsregeln sind damit noch nicht abgenommen.
 
@@ -161,7 +161,7 @@ Die [Fachregelreferenz mit allen 32 bestehenden Themenregeln](06-Themen-Fachrege
 
 ## 06.11 Offene Konsistenz- und Lösungsfragen
 
-1. **Freigaberegel ersetzen:** Bisherige Pflicht mindestens eines ausgewerteten Beobachtungsauftrags vor Themenfreigabe vollständig und nachvollziehbar aus Kapitel 06 sowie abhängigen Regeln/Tests entfernen; stattdessen fachlich bestätigte Themenanalyse.
+1. **Beschlossene Freigabeänderung nachführen:** Die fachliche Entscheidung ist getroffen und in §§06.5/06.8a formuliert. Vor einer normativen Ablösung sind noch die entgegenstehenden älteren Primärquellen und abhängigen Testanforderungen nachweisbar zu aktualisieren. Dies ist keine offene fachliche Grundsatzfrage.
 2. **Lebenszyklus:** Fachlicher Statusübergang bei erster Beitragsfreigabe ist in §06.8a geklärt; technische Daten-/Versionsbeziehungen, Teilfreigabe und Rücknahmefälle prüfen.
 3. **Teilfreigabe und Versionierung:** Inhaltseinheiten, gültige Fassung, Historie und Schutz vor unbemerkter Überschreibung mit bestehendem Gesamtversionsmodell abgleichen.
 4. **Wirkungen und übergreifende Erkenntnisse:** Bestehende Ereignisverankerung einzelner Wirkungen versus themenbezogene Zusammenhänge ohne Einzelereignis gemeinsam konsistent modellieren.
