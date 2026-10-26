@@ -98,6 +98,22 @@ Eine Meldung, ein Vorgang oder ein Thema kann mehrere öffentlich angebotene **V
 
 **Fachlich vereinbart:** Der primäre Kontext einer Vertiefungsfrage kann **Meldung, Vorgang oder Thema** sein; jede Frage gehört genau einem primären Kontext. Das bestehende `docs/Mehr-wissen-Modell.md` enthält bislang nur Meldung und Thema und muss bei der Regelmigration entsprechend erweitert werden. Die bestehenden Anforderungen an Belege, redaktionelle Freigabe und Aktualität gelten gleichermaßen.
 
+### Fachregeln für öffentliche Vertiefungsfragen
+
+„Mehr wissen?“ ist ein **öffentliches Vertiefungsangebot** und keine interne offene Forschungsfrage. Der Besucher erhält eine konkrete Frage und eine sachlich beantwortete, belegte Vertiefung, ohne selbst einen KI-Dialog führen zu müssen.
+
+| Bestandteil | Verbindliche fachliche Anforderung |
+|---|---|
+| Primärer Kontext | Eine Frage gehört **genau einer** veröffentlichten Meldung, **einem** öffentlich zugänglichen Vorgang oder **einem** veröffentlichten Thema. Dieselbe Frage darf auf weitere Zusammenhänge verlinken, ohne mehrere konkurrierende Primärzuordnungen zu erhalten. |
+| Frage | Verständlicher Mehrwert gegenüber Überschrift/Beitrag; Hintergrund, Ursache, Vergleich, Wirkung, Rechtsrahmen oder Folgerung. Herkunft als KI-Vorschlag oder redaktionell erfasst nachvollziehbar. |
+| Antwort | Aussagen durch konkrete Quellen und Fundstellen belegbar; zeitlicher Erkenntnisstand, Unsicherheiten und Herkunft erkennbar. KI-Allgemeinwissen allein ist kein Veröffentlichungsbeleg. |
+| Freigabe | Antworten dürfen von KI entworfen, aber nicht selbstständig freigegeben oder veröffentlicht werden. Grundsätzlich wird eine Frage erst mit freigegebener, veröffentlichungsfähiger Antwort öffentlich angeboten. |
+| Aktualität und Versionen | Inhaltlich geänderte Antworten erhalten einen nachvollziehbaren neuen Freigabestand. Neue widersprechende Funde lösen Überprüfungsbedarf, **keine automatische Überschreibung**, aus. |
+
+**Beispiel:** Bei einem Vorgangsbeitrag über das Parkraumkonzept können Fragen wie „Welche Auswirkungen hat eine zeitlich begrenzte Parkdauer auf Beschäftigte?“ angeboten werden. Die Antwort muss ihre Belege und Annahmen offenlegen; sie ist weder eine interne Wissenslücke noch eine automatisierte politische Stellungnahme.
+
+**Kontrollierte Fachänderung:** Die ältere [Primärquelle „Mehr wissen?“-Modell](../Mehr-wissen-Modell.md) kennt als primäre Kontexte nur Meldung oder Thema und schließt einen direkten Vorgangsbezug im damaligen MVP ausdrücklich aus. Die hier beschlossene Erweiterung auf **Vorgänge** ersetzt genau diese alte Einschränkung; alle übrigen Anforderungen an Belege, Freigabe, Versionierung, Aktualität und redaktionelle Verantwortung bleiben erhalten. Die endgültige normative Quellenumstellung steht noch aus.
+
 ## 09.8 Orientierung, Einstiege und Suche
 
 Bisher vereinbarte öffentliche Hauptnavigation:
