@@ -73,9 +73,9 @@ Diese Matrix erläutert die fachliche Verantwortung. Konkrete Authentifizierung,
 
 Bei risikoarmen eindeutigen S2-Einzeländerungen kann die klare Handlungsanweisung eines berechtigten Redakteurs genügen. Bei mehrdeutigen, folgenreichen oder mehrere Objekte betreffenden Änderungen ist eine erkennbare Vorher-/Nachher-Prüfung und ausdrückliche Bestätigung erforderlich.
 
-Für **S3** verlangt die bisherige Rechtequelle stets eine **unmittelbare ausdrückliche Bestätigung** vor Ausführung. Dazu gehören insbesondere Veröffentlichung und Rücknahme, die erstmalige öffentliche Bereitstellung interner Dokumente sowie die erste öffentliche Verwendung eines Bildes. Vor Ausführung werden Rechte, Objektzustand, Version und Schutzbedingungen serverseitig erneut geprüft.
+Für **S3** gilt weiterhin eine ausdrückliche Bestätigung. Die bisherige Rechtequelle verlangt sie grundsätzlich unmittelbar vor Ausführung; für **terminierte Veröffentlichungen** gilt die nachfolgend beschlossene, eng begrenzte fassungs- und termingebundene Ausnahme. Dazu gehören insbesondere Veröffentlichung und Rücknahme, die erstmalige öffentliche Bereitstellung interner Dokumente sowie die erste öffentliche Verwendung eines Bildes. Vor Ausführung werden Rechte, Objektzustand, Version und Schutzbedingungen serverseitig erneut geprüft.
 
-**Noch zu konkretisieren:** zeitgesteuerte Veröffentlichung und die Frage, wie die bestätigte Planung mit dieser S3-Regel zusammenwirkt. Eine geplante Veröffentlichung darf weder die erforderliche Bestätigung umgehen noch inzwischen ungültige Veröffentlichungsvoraussetzungen ignorieren.
+**Beschlossene Ausnahme für terminierte Veröffentlichung:** Eine berechtigte Person bestätigt bei der Terminierung als S3-Handlung ausdrücklich **eine bestimmte freigegebene Fassung und einen bestimmten Veröffentlichungstermin**. Die automatische Ausführung zu diesem Termin verlangt keine zweite manuelle Bestätigung. FIB prüft unmittelbar vor Ausführung Berechtigung, gültige Freigabe, Fassungsidentität, Termin und sonstige Voraussetzungen erneut. Bei negativen Prüfergebnissen bleibt die Veröffentlichung aus und die Redaktion erhält eine Aufgabe. Änderungen an Fassung oder Termin verlangen eine erneute gebundene Bestätigung. Andere S3-Aktionen bleiben bei der bisherigen unmittelbaren Bestätigung.
 
 ## 11.6 Welche Freiheiten hat die KI bei vorläufigen Daten?
 
