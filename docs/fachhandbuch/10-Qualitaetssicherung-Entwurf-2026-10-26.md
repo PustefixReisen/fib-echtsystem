@@ -50,6 +50,22 @@ Die bestehende Regelarchitektur unterscheidet **harte fachliche Invarianten** un
 
 **Neu vereinbart:** Erkennt die Schlussprüfung einen **schwerwiegenden und belegbaren fachlichen Widerspruch** in einer wesentlichen öffentlichen Aussage, darf der Beitrag nicht veröffentlicht werden, bevor der Widerspruch korrigiert und erneut geprüft wurde. Bei **begründetem, aber nicht abschließend belegtem Fehlerverdacht** zeigt FIB einen auffälligen Prüfhinweis; die Redaktion kann nach eigener Prüfung trotzdem freigeben. **Geringfügige Unsicherheit** löst einen normalen Hinweis aus. Bloße Unsicherheit, stilistische Unterschiede oder politische Meinungsverschiedenheit gelten nicht als hinreichender Beleg für eine Sperre. Die konkrete technische und fachliche Nachweisgrenze eines Blockers ist vor Implementierung zu definieren, damit fehlbare KI-Urteile nicht zu willkürlichen Publikationssperren führen.
 
+### Entscheidungstabelle: Was verhindert eine Veröffentlichung?
+
+FIB prüft Quellen, Aussage und Freigabestand gemeinsam. Die unterschiedliche Behandlung von gesichertem Fehler und noch offener Plausibilitätsfrage soll einerseits falsche Veröffentlichungen verhindern und andererseits unbegründete KI-Sperren vermeiden.
+
+| Befund | Fachliche Folge | Wer entscheidet? |
+|---|---|---|
+| Eindeutig nachgewiesener schwerwiegender Sachfehler in der konkreten öffentlichen Fassung | Veröffentlichung unterbleibt bis zur Korrektur und erneuten Prüfung | der nachprüfbare Fachgrund ist verbindlich; Redaktion behebt/prüft |
+| Freigabe fehlt, ist widerrufen, notwendiges Recht fehlt oder andere harte Veröffentlichungsvoraussetzung ist nicht erfüllt | Veröffentlichung unzulässig | geschützte Verfahrensregel; nicht per KI-Votum aufhebbar |
+| Plausibler, aber noch nicht gesicherter Widerspruch oder erhebliche Quellenunsicherheit | deutlich sichtbarer Prüfhinweis und erforderlichenfalls gezielte Recherche | Redaktion prüft und entscheidet begründet; keine unbelegte automatische Sperre |
+| Geringfügige Unsicherheit oder kleinere stilistische Unschärfe | normaler Hinweis beziehungsweise Korrektoratsvorschlag | Redaktion im üblichen Bearbeitungsablauf |
+| Abruf einer erwarteten Quelle ist technisch gescheitert | Unvollständigkeit/Fehler sichtbar; kein Schluss „keine Information“ | FIB kann erneut prüfen; relevante Restunsicherheit ggf. der Redaktion vorlegen |
+
+Die Qualitätsentscheidung bezieht sich auf **die betreffende Aussage und konkrete Fassung**, nicht pauschal auf jeden sonstigen Inhalt des Themas oder Vorgangs. Eine fachlich noch unklare Frage kann offen benannt werden, solange sie nicht als gesicherte Tatsache ausgegeben wird. Wo FIB technisch eine Sperre ausführt, muss der zugrunde liegende nachprüfbare Grund sichtbar sein.
+
+**Beispiel:** Eine Beschlussvorlage zum Grundstückskauf wird als bereits endgültig gefasster Beschluss formuliert. Ist die Verwechslung durch die Dokumentlage eindeutig belegt, muss der Text vor Veröffentlichung korrigiert werden. Ist dagegen die Abstimmung noch nicht zuverlässig dokumentiert, darf FIB lediglich den bisher belegten Beratungsstand und diese Unsicherheit darstellen.
+
 ## 10.8 Qualität nach Veröffentlichung
 Neue belastbare Informationen lösen die Prüfung aus, ob öffentliche Meldungen oder Themenbeiträge korrekt, hinreichend aktuell und vollständig bleiben. Änderungen an veröffentlichten Fassungen erfolgen ausschließlich über nachvollziehbare, redaktionell bestätigte neue Versionen. Wesentliche öffentliche Korrekturen erklären, **was** und **warum** geändert wurde.
 
