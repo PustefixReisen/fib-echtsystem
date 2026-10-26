@@ -45,8 +45,8 @@ flowchart TB
     OS["Sitzungs- und Beschlussansicht"]
   end
   E -->|"0 oder 1 Meldung"| M
-  V -.->|"aufbereiteter öffentlicher Sachstand"| OV
-  AV -.->|"ausgewählte geprüfte Erkenntnisse"| OV
+  V -.->|"Vorgangsbeitrag und Verlauf"| OV
+  AV -.->|"Grundlage des Vorgangsbeitrags"| OV
   T -.-> OT
   AT -.->|"freigegebener Beitrag"| OT
   S --> OS
@@ -54,7 +54,7 @@ flowchart TB
   BS --> OS
 ```
 
-**Wichtig:** Das öffentliche FIB-Angebot ist **kein einzelnes Datenobjekt**, sondern der Zweck und die Besuchersicht des Systems: Meldungen, Vorgänge, Themen sowie Sitzungen und Beschlüsse sind miteinander navigierbar. Öffentliche Vorgangsansichten verwenden nur entsprechend geprüfte und freigegebene Inhalte; ihr genauer Umfang ist noch fachlich zu bestimmen. Das RIS ist ein externes Quellsystem; Sitzung, TOP und Beschluss sind eigene fachliche Objekte in FIB, nicht nur gewöhnliche Fundstellen.
+**Wichtig:** Das öffentliche FIB-Angebot ist **kein einzelnes Datenobjekt**, sondern der Zweck und die Besuchersicht des Systems: Meldungen, Vorgänge, Themen sowie Sitzungen und Beschlüsse sind miteinander navigierbar. Öffentliche Vorgangsansichten enthalten einen redaktionell freigegebenen **Vorgangsbeitrag** auf Grundlage der Analyse sowie den Verlauf. Das RIS ist ein externes Quellsystem; Sitzung, TOP und Beschluss sind eigene fachliche Objekte in FIB, nicht nur gewöhnliche Fundstellen.
 
 **Leseschlüssel:** Durchgezogene Linien zeigen stabile fachliche Grundbeziehungen. Gestrichelte Linien zeigen mögliche Erkenntnis-, Recherche- und Bearbeitungsbezüge. Die Bezeichnung `0 bis viele` meint optionale Mehrfachbeziehungen, nicht automatisch bestätigte Zuordnungen. Meldungen sind eigene redaktionelle Darstellungen, nicht die Grundlage der Vorgangs- und Themenanalyse.
 
@@ -67,6 +67,7 @@ flowchart TB
 | **Ereignis** | sachlich relevante Entwicklung | Gemeinde fasst einen Beschluss |
 | **Meldung** | optionaler öffentlicher Bericht über ein Ereignis | Kurzmeldung zum Beschluss |
 | **Vorgang** | länger andauernder konkreter Sachverhalt, verbindet Ereignisse | Parkraumkonzept Feldkirchen |
+| **Vorgangsbeitrag** | freigegebener öffentlicher Erkenntnistext über Sachstand, Hintergründe, Erklärungen, Wirkungen und offene Fragen | Öffentliche Erklärung zum Autobahnkreuz-Umbau |
 | **Vorgangsanalyse** | erklärt und bewertet den überprüfbaren Sachstand eines Vorgangs | Ziele, Ursachen, Wirkungen, Unsicherheiten |
 | **Thema** | übergreifende Fragestellung mit eigenen Erkenntniszielen | Mobilität in Feldkirchen |
 | **Themenanalyse** | verknüpft Erkenntnisse aus Vorgängen, Belegen und Hintergrundwissen; gewinnt eigenständige Schlüsse | Wechselwirkungen verschiedener Verkehrsprojekte |
