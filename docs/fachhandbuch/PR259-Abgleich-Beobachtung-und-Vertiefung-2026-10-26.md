@@ -30,6 +30,18 @@ Ausgangsquellen: `docs/Mehr-wissen.md` und `docs/Mehr-wissen-Modell.md`.
 
 Ziel: Kapitel 09. Frageauswahl und Quellenpflicht dort in den Ablauf übernommen. Der frühere Ausschluss direkter Vorgangsbezüge im MVP der zweiten Quelle wird durch die spätere fachliche Entscheidung aufgehoben.
 
+## Zusätzlicher Fachregeltransfer zu Kapitel 09
+
+Die Primärquelle `docs/Mehr-wissen.md`, §§7–12, wurde erneut abgeglichen. Folgende zuvor noch nicht ausführlich erläuterte Regeln sind jetzt im Abschnitt „Mehr wissen?“ von Kapitel 09 aufgenommen:
+
+- Rechtlich nötiger Mindestkontext im Hauptbeitrag; weiterführende Rechtsfragen in der Vertiefung.
+- Klare Herkunftsunterscheidung unmittelbare Rechtsquelle, amtliche Erklärung und zugeschriebene Einschätzung eines beteiligten Akteurs.
+- Keine eigene rechtliche Würdigung, verbindliche Normauslegung oder Rechtsberatung durch FIB.
+- Mögliche Wechselwirkungen zwischen unabhängigen Vorgängen nur als bedingte Erkenntnis oder offene Frage; keine erfundene Kausalität.
+- Vorbereitete, redaktionell geprüfte Antworten im MVP; keine frei gestellten Live-KI-Besucherfragen.
+
+**Beispiel:** Eine mögliche Wechselwirkung von Hundehaltungsregelungen auf Hundewiese/Freilaufflächen darf erwähnt werden, ohne bereits eingetretene Folgen zu behaupten.
+
 ## Nicht erledigt
 
 Der vollständige abschnittsweise Normtransfer, die Prüfung sämtlicher Querverweise und die gemeinsame Leseabnahme stehen weiterhin aus. Technische Implementierung ist nicht Teil dieses Arbeitsschritts.
