@@ -63,3 +63,12 @@ Die Redaktion darf die automatische Veröffentlichung **einer genau bezeichneten
 
 **Quellen:** `docs/Rollen-Rechte-und-Workflow.md` §6.4; `docs/Persistenz-und-Lebenszyklusmodell.md` §9; `docs/Datenmodell.md`; aktuelle Kapitel 05, 06, 08 und 11.
 
+
+## 6. Integration in die Prozesskapitel
+
+**F-02:** In Kapitel 05 ist nun ausdrücklich klargestellt, dass eine automatische vorläufige Vorgangsanlage auf **mindestens einem bereits identifizierten, gegebenenfalls selbst noch vorläufigen Ereignis** basiert. Das bewahrt den fachlichen Mindestbezug des Bestandsmodells. Ob es darüber hinaus begründete Fälle einer vorläufigen Anlage *ohne jedes Ereignis* geben soll, ist durch die bisherige Entscheidung nicht gedeckt und wird **nicht stillschweigend zugelassen**. Die technische Umsetzung ist nachgelagert.
+
+**F-03:** Kapitel 05 und 06 trennen bestätigte Aussagen von offenen Vorschlägen und knüpfen die Historisierung weiter an den **bestätigten Gesamtstand**. Die präzise fachliche Regel, wann bei Teilfreigabe eine neue gültige Gesamtfassung entsteht und wie offene Elemente darin sichtbar bleiben, ist vor Abnahme noch gemeinsam festzulegen. Es wird keine zusätzliche eigenständige Teilobjekt-Versionierung eingeführt.
+
+**Priorität:** F-02 ist durch Wahrung der bestehenden Mindestbeziehung für den beschriebenen Regelfall konsistent erläutert; die Entscheidung über mögliche Ausnahmen bleibt nur relevant, wenn solche tatsächlich gewünscht werden. **F-03 ist die verbleibende konkrete fachliche Modellfrage.** F-01 wurde bereits gesondert entschieden.
+
