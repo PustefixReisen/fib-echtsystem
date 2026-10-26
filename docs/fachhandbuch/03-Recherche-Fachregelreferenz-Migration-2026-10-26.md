@@ -540,3 +540,19 @@ Diese beiden **fachlichen Grundsatzentscheidungen sind abgestimmt**. Die technis
 - `FIB-RECH-ABLAUF-001` ist im bisherigen Kapitel als Kennung erwähnt, aber nicht als eigenständige fett gesetzte Regeldefinition ausgeführt; Ursprung und Wortlaut sind vor Regelabschluss zu ermitteln.
 
 **Inventur:** 53 eigenständige Regeldefinitionen mit Originalkennungen; 1 zusätzliche referenzierte Kennung offen.
+
+## Fachliche Harmonisierung vom 26.10.2026 – differenzierter Abgleich
+
+**Kein Ersatz des Originalwortlauts.** Die folgenden Ergebnisse lassen die übernommenen Regeltexte unangetastet und beschreiben die Grenzen der neuen Prozessfassung:
+
+| Bestandsregel | Abgleichsergebnis | Verbleibender Prüfbedarf |
+|---|---|---|
+| SICHTUNG-001, FUND-005, ROLLE-001 | Die automatische Anlage **vorläufiger Ereignisse** und die redaktionelle **Fundstellensichtung** sind verschiedene Handlungen; kein automatischer Status „Geprüft“, keine KI-Zurückstellung. | Ist wirklich jede unmittelbare örtliche Fundstelle einzeln von einem Menschen zu sichten oder genügt Sichtbarkeit plus risikobasierte Aufgabenbildung? **Fachentscheidung offen.** |
+| QUELLE-008/009 | Quellenstatus und Pflichtquellen-Kennzeichen dürfen nicht vermengt werden. | Konkrete Statusübergänge in DB/UI und Rechten kontrollieren. |
+| QUELLE-010; FUND-003/004/007 | Stabile Identität, genau eine Primärquelle, Fassungen und Wiederfund ohne Dublette bleiben erhalten. | Technischen Abgleich der Identitäts-/Versionierungsfelder durchführen. |
+| RELEVANZ-003 | 90 Tage; Zähler und Nenner nach *neu veröffentlichten Beiträgen*; über 30 % lediglich Warnung. | Definition „Beitrag“ gegen neue öffentliche Vorgangsbeiträge und Themenbeiträge sowie Meldungen prüfen; keine doppelte Zählung. |
+| BEOB-001 bis -004 | Beobachtungsauftrag ist redaktionell gesteuert; Primärkontext bleibt Vorgang/Thema/offene Frage. | Ereignisbezogene einmalige Nachfrage vs. dauerhafter Beobachtungsauftrag modellieren. |
+| QUAL-001; REGEL-002 | Quellenausfall ist kein Nichtfund; Entdeckung und Bewertung müssen getrennt getestet werden. | Prüffälle/Regressionstests ausarbeiten. |
+
+Die Lese-Neufassung beschreibt die Abgrenzung in **§ 03.5a**. Erst nach Verifikation des vollständigen Regelbestands und seiner Grenzfälle kann diese Migrationsreferenz als verbindliche Primärnorm eingestuft werden.
+
