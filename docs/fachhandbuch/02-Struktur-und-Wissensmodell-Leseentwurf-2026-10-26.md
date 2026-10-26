@@ -72,7 +72,9 @@ flowchart TB
 | **Themenanalyse** | verknüpft Erkenntnisse aus Vorgängen, Belegen und Hintergrundwissen; gewinnt eigenständige Schlüsse | Wechselwirkungen verschiedener Verkehrsprojekte |
 | **Themenbeitrag** | redaktionell ausgewählte, öffentliche Darstellung auf Grundlage der Themenanalyse | Bürgernaher Überblick mit optionaler Einordnung |
 
-## 02.2a RIS, Sitzungen und öffentlicher Zugang
+## 02.2a RIS als Quellsystem und eigenständiger Sitzungsbereich
+
+**Fachliche Aufgabenteilung:** Das RIS wird wie andere Quellen durch die **gemeinsame Recherche** laufend auf neue oder geänderte Inhalte beobachtet (Kapitel 03). Die anschließende fachliche Erschließung von Sitzungen, TOPs, Beschlussvorschlägen, tatsächlichen Beschlüssen und Abstimmungen erfolgt als **eigenständiger Sitzungs- und Beschlussprozess** (Kapitel 07). Die öffentliche Besuchersicht gehört in Kapitel 09. Es entsteht **keine zweite unabhängige RIS-Rechercheinfrastruktur**.
 
 Im bisherigen Fachmodell sind **Sitzung, Tagesordnungspunkt (TOP), Beschlussvorschlag, Beschlusspunkt, Beschlussfassung, Abstimmung und Niederschrift** bereits ausdrücklich definiert. Die Vorlage ist als Dokument eine Fundstelle; deren Veröffentlichung kann ein Ereignis auslösen. Die spätere Beratung und ein tatsächlicher Beschluss sind davon getrennte Ereignisse. Aus diesen Beziehungen ergeben sich die Navigationswege **Sitzung → TOP → Ereignis → Vorgang/Thema** und zurück. Grundlage: `docs/Sitzungs-und-Beschlussmodell.md`.
 
