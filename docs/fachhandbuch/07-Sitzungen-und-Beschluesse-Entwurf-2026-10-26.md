@@ -88,6 +88,16 @@ Diese Erläuterung konkretisiert das bisherige [Sitzungs- und Beschlussmodell](.
 - Beziehungen **Meldung → Ereignis → TOP/Sitzung** werden abgeleitet, nicht als zweite unabhängige Meldungs-TOP-Zuordnung erfasst.
 - Jede öffentliche Datei- oder Bildbereitstellung unterliegt zusätzlich den allgemeinen Rechte- und Freigaberegeln.
 
+### Weitere fachliche Regeln zum Sitzungsverlauf
+
+TOP-Status und Abstimmungsergebnis sind verschieden. FIB unterscheidet angekündigte, vertagte, behandelte und abgesetzte Tagesordnungspunkte. Zwischen TOP und Ereignis sind mehrere begründete Beziehungen zulässig.
+
+Aus einer veröffentlichten Vorlage entstehen noch keine bestätigten Beschlusspunkte oder Abstimmungen. Erst eine geeignete Niederschrift belegt die tatsächlich abgestimmten Texte. Bei mehreren Abstimmungen bleiben Beschlusspunkt, seine unterschiedlichen Fassungen und Abstimmungsergebnisse nachvollziehbar. Der Ausgangsvorschlag bleibt zum Vergleich erhalten.
+
+Zweifelhafte Zuordnungen zu TOP, Ereignis, Abstimmung oder Beschlusstext müssen redaktionell geprüft werden und werden nicht automatisch fachlich wirksam.
+
+Für einen fachlich abgeschlossenen Sitzungsstand ist die öffentlich belegte Genehmigung der Niederschrift maßgeblich. Das ist von der öffentlichen Verfügbarkeit des Dokuments zu unterscheiden. Quelle: [Sitzungs- und Beschlussmodell](../Sitzungs-und-Beschlussmodell.md), Abschnitte 4 bis 8.
+
 ## 07.5 Abnahmeszenarien
 
 1. RIS veröffentlicht TOP mit Vorlage: FIB zeigt den vorgesehenen Beratungspunkt, **noch keinen Beschluss**.
