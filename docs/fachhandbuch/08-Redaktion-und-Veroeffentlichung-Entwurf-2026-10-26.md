@@ -32,6 +32,16 @@ Die Redaktion soll fachliche Entscheidungen **im jeweiligen Zusammenhang** treff
 ## 08.4 Bearbeiten und Korrigieren
 KI erstellt sachliche Meldungs- und Themenbeitragsentwürfe, Redaktion wählt und gewichtet Aussagen. Ein gemeinsames inhaltliches und sprachliches Korrektorat verarbeitet frei formulierte Änderungswünsche. Kleine sprachliche Korrekturen an noch unveröffentlichten Entwürfen darf KI automatisch durchführen, wenn sie nachvollziehbar und umkehrbar sind. Inhaltliche Änderungen erfordern Bestätigung; nicht belegte neue Aussagen lösen Prüf-/Recherchebedarf aus.
 
+### Bildredaktion und redaktionelle Verwendung
+
+Ein Bild wird nicht allein deshalb verwendet, weil es technisch verfügbar ist oder die KI es als passend einstuft. Der redaktionelle Ablauf unterscheidet **vorhandenes Bild**, **Vorschlag für einen konkreten Inhalt**, **fachliche Auswahl** und **öffentliche Freigabe der konkreten Verwendung**.
+
+FIB berücksichtigt beim Vorschlag den Orts- und Objektbezug, vorhandene redaktionelle Zuordnungen und ausdrückliche Verwendungsausschlüsse, den Aktualitätsstand sowie Herkunft und Rechte. **Bei Meldungen ohne wirklich passendes Bild wird bewusst kein Bild gewählt.** Die Redaktion bestätigt zusätzlich sachlich zutreffende Bildunterschrift und Alt-Text. Auch die erste öffentliche Verwendung benötigt die gesonderte Medienfreigabe nach Kapitel 10/11.
+
+**Bei einer Aktualisierung** prüft FIB, ob das bisherige Motiv noch zutrifft. Ein reiner Bildwechsel ändert nicht automatisch den fachlichen Meldungsstand, bleibt aber als redaktionelle Änderung nachvollziehbar. Weiterverwendbare Bilder können in einer Bildbibliothek mit Primärzuordnung, geeigneten weiteren Einsätzen und ausdrücklichen Ausschlüssen geführt werden.
+
+Die fachlichen Anforderungen sind aus [Redaktionsworkflow §§12–13](../Redaktionsworkflow.md) übernommen; konkrete Upload-, Auswahl- und Bedienoberflächen sind nicht Bestandteil der fachlichen Abnahme.
+
 ## 08.5 Schlussprüfung
 Vor Beitragsfreigabe werden fachliche Belege, Widersprüche, Unsicherheiten, Verständlichkeit und redaktioneller Schwerpunkt geprüft. Schwerwiegende und belegbare fachliche Fehler blockieren die Veröffentlichung bis zur Korrektur. Nicht blockierende Hinweise verbleiben in der Verantwortung der Redaktion. Harte Status-/Rechte-Invarianten sind weiterhin serverseitig durchzusetzen; diese dürfen nicht mit semantischen KI-Einschätzungen verwechselt werden.
 
