@@ -64,6 +64,20 @@ Technische Tabellen, Endpunkte, Bildschirmdetails, Farben und exakte Datenbankfe
 
 **Nächste fachliche Restarbeiten:** weitere Primärquellen abschnittsweise auf Vollständigkeit prüfen, alte abweichende Normtexte nachvollziehbar konsolidieren, Kapitel 01/02/04/05/07/09/10/11 in derselben Lesbarkeit prüfen und abschließende fachliche Leseabnahme vorbereiten. Keine Implementierung im Rahmen von PR #259.
 
+## Weitere fachliche Prozessausarbeitung vom 26.10.2026 (Abend)
+
+Die Arbeit wurde über Kapitel 03 und 06 hinaus auf die Übergänge zwischen den Hauptprozessen ausgedehnt:
+
+- **04 Ereignisse/Meldungen:** Entscheidungstabelle von automatischer vorläufiger Erfassung über Widerspruchsbewertung bis zur gesonderten Meldungsfreigabe; keine generelle Einzelprüfpflicht.
+- **05 Vorgänge:** Interner Vorgang ohne Veröffentlichungspflicht; eigenständiger öffentlich freizugebender Vorgangsbeitrag.
+- **06 Themen:** 32 Bestandsregeldefinitionen nach Themendefinition, Bezügen, Beitrag und Status im passenden Ablauf verankert.
+- **07 Sitzungen:** Verfahrensbeispiel vom Beschlussvorschlag über TOP und Sitzung bis zu Abstimmungen, Niederschrift und späterer Korrektur; unterschiedliche Quellenstände sichtbar.
+- **08 Redaktion:** Analysefreigabe, Beitragsfreigabe und Veröffentlichung als drei ausdrückliche, getrennte Entscheidungen.
+- **09 Öffentliches Angebot:** „Mehr wissen?“ mit genau einem Primärkontext (Meldung, Vorgang, Thema), Quellen-/Antwortversions- und Freigaberegeln; ältere MVP-Einschränkung zum Vorgang ausdrücklich als fachlich geändert markiert.
+- **10 Qualität:** Publikationsblockade bei nachgewiesenem schwerwiegendem Fehler gegenüber lediglich ungeklärtem KI-Verdacht in einer Entscheidungs-/Grenzfalltabelle.
+
+**Reststatus:** Fachliche Lesefassung weiter fortgeschritten; noch keine vollständige normative Quellmigration, insbesondere bei allen historischen Detailregeln außerhalb 03/06. Keine SQL-, UI- oder Produktionsänderungen. Die gemeinsam vorzunehmende Gesamtleseabnahme folgt erst nach dem Quellabgleich.
+
 ## Wann ist die fachliche Abnahme möglich?
 
 Nach vollendetem Quell-/Regelabgleich, widerspruchsfreien Kapiteln, referenzierten Ausnahmen, funktionierenden internen Verweisen und einer letzten **gemeinsamen Leseprüfung**. Technische Umsetzbarkeit ist anschließend Gegenstand der iterativen Entwicklungsphase.
