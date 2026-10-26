@@ -23,8 +23,8 @@ flowchart TB
     S["Sitzung"] --> TOP["Tagesordnungspunkt (TOP)"]
     TOP --> BS["Beschluss / Beschlusspunkte"]
   end
-  RIS -.-> S
-  F -.->|"Vorlage / Niederschrift"| TOP
+  RIS -->|"Sitzungsdaten"| S
+  F -->|"Vorlage / Niederschrift als Nachweise"| TOP
   subgraph W["Fachlicher Wissenskern"]
     E["Ereignis"]
     V["Vorgang"] --> AV["Vorgangsanalyse"]
@@ -77,6 +77,21 @@ flowchart TB
 Im bisherigen Fachmodell sind **Sitzung, Tagesordnungspunkt (TOP), Beschlussvorschlag, Beschlusspunkt, Beschlussfassung, Abstimmung und Niederschrift** bereits ausdrücklich definiert. Die Vorlage ist als Dokument eine Fundstelle; deren Veröffentlichung kann ein Ereignis auslösen. Die spätere Beratung und ein tatsächlicher Beschluss sind davon getrennte Ereignisse. Aus diesen Beziehungen ergeben sich die Navigationswege **Sitzung → TOP → Ereignis → Vorgang/Thema** und zurück. Grundlage: `docs/Sitzungs-und-Beschlussmodell.md`.
 
 Die öffentliche Ansicht sollte erkennbar machen, wie ein Beschluss zu einem laufenden Vorgang gehört und welche Entwicklung ihm vorausging. Auch ein Vorgang soll von seiner öffentlichen Übersicht zu verbundenen Meldungen, Sitzungen, Quellen und Themen führen können. Bereits im bestehenden Navigationskonzept sind **Meldungen, Vorgänge, Themen und Sitzungen** als eigenständige Inhaltsbereiche vereinbart. Die genaue Gestaltung und die notwendige öffentliche Freigabe der Vorgangsinhalte sind in Kapitel 09 noch zu präzisieren.
+
+### Öffentlichkeitslogik: Meldung und Vorgang
+
+**Zur fachlichen Entscheidung vorgeschlagen:** Eine veröffentlichte Meldung, die zu einem Vorgang gehört, wird **nicht ausschließlich im Vorgang versteckt**. Sie ist über die aktuelle Meldungsübersicht auffindbar und zugleich im chronologischen Verlauf der öffentlichen Vorgangsansicht eingebunden. Das ist **eine Meldung mit zwei Zugangswegen**, keine Verdoppelung des Datensatzes; die Beziehung wird über Meldung → Ereignis → Vorgang abgeleitet. Mehrere Meldungen desselben Vorgangs können in der aktuellen Übersicht zugunsten der Übersichtlichkeit gruppiert werden. Die konkrete öffentliche Listen- und Gruppierungslogik wird in Kapitel 09 festgelegt.
+
+### RIS: Ausgangsinformationen, Fundstellen und FIB-Objekte
+
+Das externe **RIS** liefert einerseits **Sitzungsdaten** (Sitzung, Gremium, TOP/Agenda), andererseits **Dokumente als Fundstellen** (Beschlussvorlage, Niederschrift, gegebenenfalls weitere Unterlagen). Die strukturierten FIB-Objekte **Sitzung, TOP, Beschlusspunkt und Abstimmung** beruhen auf diesen nachgewiesenen Angaben.
+
+- **Beschlussvorlage:** Fundstelle; ihre Veröffentlichung ist gegebenenfalls ein eigenes Ereignis, **nicht** der später tatsächlich gefasste Beschluss.
+- **Niederschrift:** Fundstelle der Sitzung, aus der FIB die tatsächliche TOP-Behandlung, abgestimmte Beschlussfassung und Abstimmungsergebnisse erschließt. Diese Informationen gehören zu entsprechenden Behandlungs-/Beschlussereignissen.
+- **Öffentliche Sitzungs-/Beschlussansicht:** stellt Sitzung, TOP, tatsächlich beschlossenen Text, Abstimmung, Beziehung zu Vorgang/Thema und den Originalvorschlag zusammen. Eine Datei wird nicht allein aufgrund ihrer Auffindbarkeit im RIS von FIB erneut öffentlich bereitgestellt; dafür gelten die bestehenden Rechteprüfungen.
+- **Navigation:** Sitzung → TOP → Ereignis → Vorgang/Thema und zurück. Öffentliche Meldungsbezüge werden über das Ereignis abgeleitet, nicht als eigenständige doppelte Zuordnung an TOP oder Sitzung gespeichert.
+
+Die Linien zu Sitzung und TOP im Diagramm sind deshalb bewusst **durchgezogen**, wo das RIS strukturierte Sitzungsdaten liefert und Dokumente den TOP belegen. Das ist eine fachliche Informationsherkunft, keine Behauptung, dass FIB jede RIS-Information unverändert übernehmen darf.
 
 ## 02.3 Drei Beziehungen, die man nicht verwechseln darf
 
