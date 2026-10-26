@@ -72,3 +72,20 @@ Die Redaktion darf die automatische Veröffentlichung **einer genau bezeichneten
 
 **Priorität:** F-02 ist durch Wahrung der bestehenden Mindestbeziehung für den beschriebenen Regelfall konsistent erläutert; die Entscheidung über mögliche Ausnahmen bleibt nur relevant, wenn solche tatsächlich gewünscht werden. **F-03 ist die verbleibende konkrete fachliche Modellfrage.** F-01 wurde bereits gesondert entschieden.
 
+
+## 7. Konkrete Entscheidungsgrundlage für F-03
+
+Die bisherigen Entscheidungen tragen bereits folgende Anforderungen: Eine redaktionelle Freigabe darf **einzelne Änderungen** eines Analyse-Änderungspakets annehmen und die übrigen zurückstellen. Bestätigte Aussagen sind geschützt; Analysebestandteile werden über den bestätigten **Gesamtstand des zugehörigen Vorgangs oder Themas** historisiert.
+
+**Fachlich naheliegende, aber noch nicht abgenommene Konsolidierungsregel:**
+
+1. Die Redaktion prüft die einzeln vorgeschlagenen Änderungen anhand ihres Beleg- und Unsicherheitsstands.
+2. Bei einer Teilfreigabe entsteht ein **neuer bestätigter Gesamtstand**, der den bisherigen bestätigten Stand mit **ausschließlich den angenommenen Änderungen** verbindet.
+3. Nicht angenommene Vorschläge bleiben als offene Änderungen mit Begründung und Bezug zum Ausgangsstand erhalten; sie sind **nicht Bestandteil des bestätigten Stands**.
+4. Jede spätere Annahme erzeugt wieder einen nachvollziehbaren bestätigten Gesamtstand. Die Historie früherer Gesamtstände bleibt lesbar.
+5. Ein öffentlicher Vorgangs- oder Themenbeitrag kann nur bestätigte, für seine konkrete Aussage ausreichende Erkenntnisse verwenden; fachlich offene Einschätzungen müssen ausdrücklich als ungesichert behandelt werden.
+
+**Prüffall:** Die bisher bestätigte Aussage A bleibt richtig. Das Änderungspaket enthält neue Aussagen B und C. Die Redaktion bestätigt B, stellt C zurück. Der neue bestätigte Gesamtstand umfasst A+B; C verbleibt als offener Vorschlag. Es entsteht keine eigenständige verbindliche „Version von B“, die das Gesamtversionsmodell unterläuft.
+
+**Entscheidungspunkt für die gemeinsame Leseabnahme:** Soll dieser Grundsatz in Kapitel 05, 06 und 08 als endgültige fachliche Regel gelten? Die genaue Speicherung ist ausdrücklich nicht Teil der Entscheidung.
+
