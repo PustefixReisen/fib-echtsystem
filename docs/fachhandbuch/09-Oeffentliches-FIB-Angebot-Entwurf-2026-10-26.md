@@ -174,6 +174,12 @@ Die öffentliche politische Einordnung wird als solche gekennzeichnet und nicht 
 
 FIB kann verpasste Entwicklungen durch **„Neu seit letztem Besuch“**, PWA-Funktionen und spätere Benachrichtigungskanäle erschließen. Anforderungen zur konkreten Benachrichtigungsfrequenz und Browser-/Geräteunterstützung sind vor technischer Umsetzung gesondert abzunehmen.
 
+### Barrierearme Informationsvermittlung
+
+FIB muss auf mobilen und größeren Geräten dieselben wesentlichen Inhalte vermitteln. Wichtiges darf nicht ausschließlich über Farben, Symbole oder Bilder erklärt werden. Längere Seiten können ältere Einzelheiten und Quellenlisten einklappen, aber nicht den aktuellen Sachstand, wesentliche Unsicherheiten oder Kernquellen verstecken. Inhaltliche Bilder benötigen zugängliche Alternativtexte.
+
+Die bisher vereinbarte Zielqualität **WCAG 2.2 AA** bleibt bestehen. Die konkrete Umsetzung der Bedienoberfläche gehört in die anschließende iterative UI-Phase. Primärquelle: [UX und Informationsarchitektur](../UX-und-Informationsarchitektur.md), §20.
+
 ## 09.10 Öffentliche Ausgabe folgt redaktioneller Freigabe
 
 Keine vorläufige KI-Erkenntnis, keine interne Analyse und kein neu erfasstes Ereignis wird allein aufgrund seiner Existenz öffentlich. Die relevanten Informationen benötigen die im Redaktionsteil festgelegten Prüfungen, Freigaben und Veröffentlichungsentscheidungen.
