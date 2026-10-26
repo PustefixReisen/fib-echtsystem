@@ -66,6 +66,14 @@ Die Qualitätsentscheidung bezieht sich auf **die betreffende Aussage und konkre
 
 **Beispiel:** Eine Beschlussvorlage zum Grundstückskauf wird als bereits endgültig gefasster Beschluss formuliert. Ist die Verwechslung durch die Dokumentlage eindeutig belegt, muss der Text vor Veröffentlichung korrigiert werden. Ist dagegen die Abstimmung noch nicht zuverlässig dokumentiert, darf FIB lediglich den bisher belegten Beratungsstand und diese Unsicherheit darstellen.
 
+### Öffentliche Dokumente und Bilder: eigenständige Rechteprüfung
+
+Die Freigabe eines Beitrags umfasst nicht automatisch die Freigabe seiner Dokumente und Bilder. Die bisherige Primärquelle [Fachliche Plausibilitäts- und Freigaberegeln](../Fachliche-Plausibilitaets-und-Freigaberegeln.md) unterscheidet für Dateien interne Nutzung, öffentlich freigabefähige Nutzung, tatsächliche Bereitstellung und Sperrung beziehungsweise Rücknahme. Die öffentliche Bereitstellung verlangt einen **positiv geklärten Rechtezustand** und eine eigene bestätigte S3-Aktion.
+
+Für Bilder sind das Nutzungsrecht am Bild und die Eignung seiner **konkreten Verwendung** getrennt zu prüfen; erforderliche Lizenz-, Datenschutz- und Persönlichkeitsrechtsbedingungen bleiben relevant. Freigabe und Rücknahme sind nachvollziehbar zu protokollieren.
+
+**Beispiel:** Eine öffentlich abrufbare RIS-PDF darf als Fundstelle intern ausgewertet und über ihren Originalfundort nachgewiesen werden. Die öffentliche Abrufbarkeit allein ist jedoch **keine** automatische Berechtigung, dieselbe Datei durch FIB erneut bereitzustellen.
+
 ## 10.8 Qualität nach Veröffentlichung
 Neue belastbare Informationen lösen die Prüfung aus, ob öffentliche Meldungen oder Themenbeiträge korrekt, hinreichend aktuell und vollständig bleiben. Änderungen an veröffentlichten Fassungen erfolgen ausschließlich über nachvollziehbare, redaktionell bestätigte neue Versionen. Wesentliche öffentliche Korrekturen erklären, **was** und **warum** geändert wurde.
 
