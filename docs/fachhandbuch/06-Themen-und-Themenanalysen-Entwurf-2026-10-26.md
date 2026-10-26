@@ -125,6 +125,8 @@ Der Themeneditor muss die vier Arbeitsbereiche Definition, Bezüge, Analyse und 
 
 Daraus wird **keine Pflicht**, jeden Vorgang in vier festen Dialogschritten zu bearbeiten. Auch ist die konkrete Platzierung von Funktionen (Editor oder gemeinsame Aufgabensteuerung) **noch nicht abschließend entschieden**. Sie wird mit echten Anwendungsfällen im bestehenden Echtsystem iterativ erprobt und danach fachlich dokumentiert.
 
+Die [Fachregelreferenz mit allen 32 bestehenden Themenregeln](06-Themen-Fachregelreferenz-Migration-2026-10-26.md) ergänzt die Prozessbeschreibung. Ihre Originaltexte sind für den Abgleich gesichert; fachliche Abweichungen und noch nicht geprüfte Status-/Freigaberegeln sind dort ausdrücklich verzeichnet. Die bisherige Quelle bleibt bis zum geprüften Abschluss verbindlich.
+
 ## 06.10 Abnahmeszenarien
 
 1. **Themenanlage:** FIB schlägt „Mobilität in Feldkirchen“ vor; Redaktion entscheidet, legt Leitfrage fest, prüft Dubletten.
