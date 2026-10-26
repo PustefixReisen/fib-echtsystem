@@ -98,6 +98,22 @@ Das externe **RIS** liefert einerseits **Sitzungsdaten** (Sitzung, Gremium, TOP/
 
 Die Linien zu Sitzung und TOP im Diagramm sind deshalb bewusst **durchgezogen**, wo das RIS strukturierte Sitzungsdaten liefert und Dokumente den TOP belegen. Das ist eine fachliche Informationsherkunft, keine Behauptung, dass FIB jede RIS-Information unverändert übernehmen darf.
 
+### Fachliche Begriffsgrenzen für Entscheidungen und Analysen
+
+Die Objekte sind nicht allein nach ihrer Darstellung zu unterscheiden, sondern nach ihrer **fachlichen Funktion**. Die folgenden Grenzen gelten über die Kapitel hinweg; die jeweiligen Arbeitsabläufe werden in den zuständigen Kapiteln erklärt.
+
+| Begriffspaar | Fachliche Abgrenzung |
+|---|---|
+| **Fundstelle / Ereignis** | Die Fundstelle ist ein nachweisbarer Informationsinhalt samt Herkunft; das Ereignis beschreibt das tatsächliche Geschehen. Mehrere Fundstellen können ein Ereignis belegen, eine Fundstelle kann mehrere Ereignisse betreffen. |
+| **Ereignis / Meldung** | Das Ereignis kann unabhängig von einer Veröffentlichung bestehen. Die Meldung ist eine bewusst freigegebene öffentliche Darstellung eines Ereignisses und keine zusätzliche unabhängige Tatsachenquelle. |
+| **Vorgang / Thema** | Ein Vorgang verfolgt einen konkreten zusammenhängenden Sachverhalt; ein Thema beantwortet eine übergreifende Leitfrage und verbindet dafür gegebenenfalls mehrere Vorgänge und ergänzende Ereignisse. |
+| **Analyse / Beitrag** | Die Analyse ist der interne, nachvollziehbare fachliche Erkenntnisstand; der Vorgangs- oder Themenbeitrag ist eine für Besucher ausgewählte und gesondert freigegebene Darstellung daraus. |
+| **Wirkung / übergreifende Erkenntnis** | Eine konkrete nachgewiesene oder begründet erwartete Wirkung eines Ereignisses ist diesem zuordenbar. Eine analytische Schlussfolgerung über mehrere Ereignisse oder Vorgänge gehört ohne künstlichen Ereignisanker in die jeweilige Analyse. |
+| **Offene Frage / „Mehr wissen?“-Frage** | Eine offene Frage dokumentiert internen Erkenntnis- und Recherchebedarf. „Mehr wissen?“ ist eine öffentliche, beantwortete und freigegebene Vertiefungsfrage bei Meldung, Vorgang oder Thema. |
+| **Vorläufig / bestätigt / freigegeben / veröffentlicht** | Vorläufig beschreibt unverbindliche KI-Vorarbeit, bestätigt eine fachliche Entscheidung, freigegeben eine bestimmte Analyse-/Beitragsfassung und veröffentlicht deren tatsächliche öffentliche Sichtbarkeit. Diese Eigenschaften ersetzen einander nicht. |
+
+**Beispiel:** Zur geplanten Umgestaltung einer Straße kann eine Beschlussvorlage als Fundstelle erfasst werden. Ihre Veröffentlichung kann ein Ereignis sein. Die tatsächlich beschlossene Maßnahme ist erst nach geeignetem Nachweis ein anderes Ereignis. Beide können einem Vorgang zugeordnet sein, dessen Analyse die Folgen erläutert. Ein öffentlicher Vorgangsbeitrag berichtet über den geprüften Sachstand; eine ergänzende „Mehr wissen?“-Antwort erklärt etwa die rechtlichen Zuständigkeiten. Keiner dieser Schritte darf aus einer noch nicht belegten Entscheidung einen schon gefassten Beschluss machen.
+
 ## 02.3 Drei Beziehungen, die man nicht verwechseln darf
 
 **Ereignis ↔ Meldung:** Zu einem Ereignis kann es **keine oder genau eine Meldung** geben; die Meldung bezieht sich auf genau ein Ereignis. Das ist eine bereits geltende Kardinalitätsregel des bisherigen Datenmodells. Sie hindert nicht daran, dass ein späteres **neues Ereignis** eine eigene Folgemeldung erhält.
