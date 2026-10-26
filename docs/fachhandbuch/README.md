@@ -1,5 +1,8 @@
 # FIB-Fachhandbuch – Einstieg und Migrationsstand
 
+**[Fachkonzept-Abschlussfahrplan und Abnahmekriterien](PR259-Fachkonzept-Abschlussfahrplan-2026-10-26.md)** – Aktueller Fokus: fachliche Konsolidierung und gemeinsame Leseabnahme. Datenmodell, Bedienoberfläche und Implementierung folgen anschließend iterativ; die Issues #260–#264 sind nur nachgelagerte Vormerkungen.
+
+
 ## Dokumentstand
 
 | Version | Stand | Verantwortlich |
