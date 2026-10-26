@@ -49,7 +49,7 @@ Das Diagramm stellt **Navigationswege** dar, keine zusätzlichen Datenbankbezieh
 
 Eine Meldung informiert über ein berichtenswertes Ereignis. Die öffentliche Meldungsliste enthält **alle veröffentlichten Meldungen**, nicht nur isolierte oder jüngste Meldungen. Das umfasst ausdrücklich auch Meldungen, deren Ereignisse zu einem Vorgang gehören.
 
-**Fachlich entschieden am 26.10.2026:** Eine solche Meldung wird **sowohl in der aktuellen Übersicht als auch im Verlauf des betreffenden Vorgangs** angezeigt. Es bleibt **dieselbe Meldung mit zwei Zugangswegen**; ihre Zuordnung wird aus Meldung → Ereignis → Vorgang hergeleitet. Mehrere Meldungen desselben Vorgangs dürfen für eine übersichtliche Darstellung zusammengefasst werden, ohne Auffindbarkeit oder eigenständige Links einzubüßen.
+**Fachlich entschieden am 26.10.2026:** Eine solche Meldung wird **sowohl in der aktuellen Übersicht als auch im Verlauf des betreffenden Vorgangs** angezeigt. Es bleibt **dieselbe Meldung mit zwei Zugangswegen**; ihre Zuordnung wird aus Meldung → Ereignis → Vorgang hergeleitet. **Fachlich vereinbart am 26.10.2026:** Mehrere aktuelle Meldungen desselben Vorgangs werden in „Neues“ **bei Bedarf verdichtet unter einem gemeinsamen Vorgangsbezug** dargestellt, wenn dies der Übersichtlichkeit dient. Jede Meldung bleibt einzeln erreichbar; Neuigkeitswert und wichtige Einzelentwicklungen müssen sichtbar bleiben. Einzelne Meldungen erscheinen unverändert eigenständig. Die Bündelung betrifft ausschließlich die Anzeige, nicht das fachliche Datenmodell. Die Entscheidung zwischen aufklappbarer Gruppe, kompakten Karten oder anderer UI erfolgt später im Benutzer-System.
 
 Die Liste bietet Titel, prägnante Zusammenfassung, Ursprungsdatum, bei relevanter Änderung das Aktualisierungsdatum und gegebenenfalls den Vorgangs-/Themenkontext. Maßgeblich für ihre Sortierung ist **die letzte fachlich relevante Entwicklung**, nicht eine rein technische Bearbeitung. Interne Relevanzwerte werden nicht als Zahlen gezeigt.
 
@@ -142,7 +142,7 @@ Bei späterem Erkenntnisgewinn prüft FIB die Aktualität der öffentlichen Inha
 
 ## 09.12 Noch zu klärende Punkte und Regelmigration
 
-**Fachliche Fragen für die Durchsicht:** Status und Versionierung des Vorgangsbeitrags; Gewichtung und Bündelung von Meldungen desselben Vorgangs in öffentlichen Listen; Detailtiefe und Links von Sitzungsansichten.
+**Fachliche Fragen für die Durchsicht:** Status und Versionierung des Vorgangsbeitrags; konkrete UI zur bedarfsabhängigen Bündelung von Meldungen; Detailtiefe und Links von Sitzungsansichten.
 
 **Regelmigration:** Bisherige verbindliche Detailanforderungen aus `docs/UX-und-Informationsarchitektur.md`, `docs/Mehr-wissen-Modell.md`, `docs/Sitzungs-und-Beschlussmodell.md`, `docs/Sprachleitfaden.md` und den Beitrags-/Freigaberegeln werden noch abschnittsweise zugeordnet. Dieser Leseentwurf schafft **keine** konkurrierende neue Norm und ersetzt weder Rechteprüfung noch Veröffentlichungsgenehmigungen.
 
