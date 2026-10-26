@@ -89,3 +89,6 @@ Die bisherigen Entscheidungen tragen bereits folgende Anforderungen: Eine redakt
 
 **Entscheidungspunkt für die gemeinsame Leseabnahme:** Soll dieser Grundsatz in Kapitel 05, 06 und 08 als endgültige fachliche Regel gelten? Die genaue Speicherung ist ausdrücklich nicht Teil der Entscheidung.
 
+
+
+**Entscheidung 26.10.2026:** F-03 angenommen. Bei Teilfreigabe entsteht ein neuer bestätigter Gesamtstand mit den angenommenen Änderungen; offene Vorschläge bleiben getrennt.
