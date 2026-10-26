@@ -27,7 +27,7 @@ flowchart TD
   START --> SITZ["Sitzungen"]
   START --> SUCHE["Suche"]
   NEU --> M["Meldung"]
-  BLICK --> V["Vorgangsansicht"]
+  BLICK --> V["Vorgangsansicht mit Vorgangsbeitrag"]
   BLICK --> T["Themenansicht"]
   M <-->|"eine Meldung, zwei Zugangswege"| V
   V <-->|"fachliche Bezüge"| T
@@ -54,9 +54,9 @@ Die Liste bietet Titel, prägnante Zusammenfassung, Ursprungsdatum, bei relevant
 
 **Aktualisieren oder neue Meldung?** Neue gesicherte Informationen zum *selben* Ereignis können die bestehende Meldung in einer neuen freigegebenen Fassung aktualisieren. Ein *neues* eigenständiges Ereignis mit ausreichendem Nachrichtenwert kann eine weitere Meldung begründen. Bei Folgemeldungen helfen Verknüpfungen und ein kurzer Rückblick, den bisherigen Verlauf zu verstehen. Öffentliche Fassungen werden niemals unbemerkt überschrieben.
 
-## 09.4 Konkrete Sachverhalte verfolgen: Vorgangsansicht
+## 09.4 Konkrete Sachverhalte verstehen: Vorgangsbeitrag und Verlauf
 
-Ein Vorgang verbindet mehrere Ereignisse desselben längerfristigen Sachverhalts, etwa das Parkraumkonzept. Besucher sollen hier erkennen:
+Ein Vorgang verbindet mehrere Ereignisse desselben längerfristigen Sachverhalts, etwa das Parkraumkonzept. **Sein Vorgangsbeitrag ist ein eigener, redaktionell freigegebener Text aus der Vorgangsanalyse**, der neben dem Sachstand insbesondere auch Hintergründe, Erklärungen, Wirkungen, Zielkonflikte und Erkenntnisse erschließt. Besucher sollen hier erkennen:
 1. **Worum geht es?** Der Gegenstand und seine Abgrenzung.
 2. **Wo stehen wir?** Der derzeit belastbare Sachstand und seine zeitliche Einordnung.
 3. **Was ist bisher passiert?** Eine nachvollziehbare Folge wesentlicher Ereignisse und ihrer öffentlichen Meldungen.
@@ -65,7 +65,7 @@ Ein Vorgang verbindet mehrere Ereignisse desselben längerfristigen Sachverhalts
 
 Die **Vorgangsanalyse** bildet die fachliche Grundlage für die öffentliche Darstellung, ist aber **nicht selbst automatisch öffentlich**. Es werden nur die dafür geprüften und entsprechend freigegebenen Informationen verwendet.
 
-Die Detailfrage, ob FIB über die zeitliche Meldungsübersicht hinaus einen eigenständig freizugebenden öffentlichen **Vorgangstext/Sachstandsbericht** benötigt, ist **noch nicht abschließend entschieden**. Die öffentliche Vorgangsansicht als Orientierung und Navigationszugang ist dagegen eine bereits dokumentierte Zielanforderung.
+**Fachlich entschieden:** Der Vorgangsbeitrag ist grundlegender Bestandteil der öffentlichen Vorgangsansicht. Er wird redaktionell als eigene Beitragsfassung freigegeben und veröffentlicht. Die Gestaltung der Seite folgt später im Benutzer-System.
 
 ## 09.5 Größere Zusammenhänge verstehen: Themenansicht
 
@@ -141,7 +141,7 @@ Bei späterem Erkenntnisgewinn prüft FIB die Aktualität der öffentlichen Inha
 
 ## 09.12 Noch zu klärende Punkte und Regelmigration
 
-**Fachliche Fragen für die Durchsicht:** Umfang einer eigenständig freigegebenen Vorgangs-Sachstandsdarstellung; eigene „Mehr wissen?“-Fragen für Vorgänge; Gewichtung und Bündelung von Meldungen desselben Vorgangs in öffentlichen Listen; Detailtiefe und Links von Sitzungsansichten.
+**Fachliche Fragen für die Durchsicht:** Status und Versionierung des Vorgangsbeitrags; eigene „Mehr wissen?“-Fragen für Vorgänge; Gewichtung und Bündelung von Meldungen desselben Vorgangs in öffentlichen Listen; Detailtiefe und Links von Sitzungsansichten.
 
 **Regelmigration:** Bisherige verbindliche Detailanforderungen aus `docs/UX-und-Informationsarchitektur.md`, `docs/Mehr-wissen-Modell.md`, `docs/Sitzungs-und-Beschlussmodell.md`, `docs/Sprachleitfaden.md` und den Beitrags-/Freigaberegeln werden noch abschnittsweise zugeordnet. Dieser Leseentwurf schafft **keine** konkurrierende neue Norm und ersetzt weder Rechteprüfung noch Veröffentlichungsgenehmigungen.
 
