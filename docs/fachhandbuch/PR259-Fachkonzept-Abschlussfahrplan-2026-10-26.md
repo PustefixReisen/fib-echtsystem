@@ -161,3 +161,8 @@ Die bislang pauschal als fehlend bezeichneten TOP-, Fassungs- und Niederschriftr
 Nach vollendetem Quell-/Regelabgleich, widerspruchsfreien Kapiteln, referenzierten Ausnahmen, funktionierenden internen Verweisen und einer letzten **gemeinsamen Leseprüfung**. Technische Umsetzbarkeit ist anschließend Gegenstand der iterativen Entwicklungsphase.
 
 **PR #259 bleibt bis dahin Draft.** Kein Merge, keine Änderungen an Shared-Apps oder der Redaktionsanwendung aufgrund dieses Dokuments.
+
+
+## F-03: Beschluss in den Fachkapiteln umgesetzt (26.10.2026)
+
+Die verbindlich beschlossene Gesamtstandsregel ist jetzt in Kapitel 05 (Vorgangsanalysen), Kapitel 06 (Themenanalysen) und Kapitel 08 (redaktioneller Freigabeprozess) eingetragen. Der separate [F-03-Beschluss](PR259-F03-Beschluss-2026-10-26.md) ist der Entscheidungsnachweis. Offene Änderungsvorschläge werden nicht Teil des gültigen bestätigten Gesamtstands. Verbleibende Aufgaben betreffen Detailmigration und technische Ausgestaltung, nicht die fachliche Grundentscheidung.
