@@ -52,3 +52,14 @@
 - Die drei offenen Fachpunkte **F-01 bis F-03** in der gemeinsamen Leseabnahme konkret und gebündelt entscheiden, nicht mit SQL-/UI-Rückfragen vermischen.
 
 **Status:** Präzise fachliche Restfragen sichtbar; keine Behauptung einer abgeschlossenen Gesamtregelübernahme.
+
+## 5. Quellengestützte Präzisierung der drei Restfragen
+
+**F-01:** Die geltende Rechtequelle formuliert in §6.4 ausdrücklich eine S3-Bestätigung unmittelbar vor Ausführung. Eine Ausnahme für automatische Terminveröffentlichung ist dort nicht ausgewiesen. Die Leseentwürfe enthalten deshalb bislang **ein zusätzliches fachliches Ziel ohne gelöste Ausführungsregel**. Bis zur gemeinsamen Entscheidung darf keine vorab erteilte allgemeine Zustimmung als bestehende Ausnahme dargestellt werden.
+
+**F-02:** Das ältere Datenmodell nennt für die Beziehung Vorgang zu Ereignis `1..n`. Die neue automatische **vorläufige** Vorgangsanlage ist mit einer solchen Mindestverknüpfung vereinbar, wenn sie aufgrund mindestens eines bereits identifizierten Ereignisses erfolgt. Einen Ereignisbezug vollständig entbehrlich zu machen, ist aus der bisherigen Fachentscheidung **nicht ableitbar**. Daher bleibt die Mindestbeziehung als fachlicher Ausgangspunkt erhalten; technische Anlagezeitpunkte sind später zu modellieren.
+
+**F-03:** Das Persistenzmodell, §9, historisiert die Analysebestandteile über den **bestätigten strukturierten Gesamtstand** des jeweiligen Vorgangs bzw. Themas; eigene unabhängige Versionen für einzelne Wirkungen/Perspektiven sind nicht vorgesehen. Die später bestätigte Möglichkeit, **einzelne Änderungen anzunehmen oder zurückzustellen**, hebt diese Regel nicht automatisch auf. Fachlich naheliegende Lesart ist eine neue Gesamtfassung mit ausschließlich übernommenen Änderungen und eindeutig ausgewiesenen offenen Vorschlägen. Ob diese Lesart als verbindliche Regel angenommen wird, bleibt für die gebündelte Leseabnahme ausdrücklich kenntlich.
+
+**Quellen:** `docs/Rollen-Rechte-und-Workflow.md` §6.4; `docs/Persistenz-und-Lebenszyklusmodell.md` §9; `docs/Datenmodell.md`; aktuelle Kapitel 05, 06, 08 und 11.
+
