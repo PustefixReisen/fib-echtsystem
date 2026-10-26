@@ -96,6 +96,17 @@ Die Arbeit wurde über Kapitel 03 und 06 hinaus auf die Übergänge zwischen den
 - Beispiel RIS: öffentlich abrufbare PDF ist nicht schon zur erneuten Veröffentlichung durch FIB freigegeben.
 - Die detaillierte Quelle bleibt bis zur vollständigen Übernahme aller ihrer Status- und Entscheidungsregeln verbindlich. Kein produktiver Medienzugriff geändert.
 
+## Abgleich mit dem bestehenden Redaktionsworkflow (26.10.2026)
+
+Die Primärquelle `docs/Redaktionsworkflow.md` wurde hinsichtlich der Abschnitte zu kontextbezogenen Entscheidungsfragen, Transparenz, KI-Begründungen, Prüfkriterien, Rücksprüngen sowie Bildredaktion gesichtet. In **Kapitel 08** wurden übernommen:
+
+1. Gemeinsame Bearbeitung redaktioneller Eingaben und KI-Vorschläge unter erkennbarer Herkunft, Belegen und Unsicherheit.
+2. Nachvollziehbare Prüfung statt verdeckter KI-Vorauswahl oder abstrakter Formularsprache.
+3. Rückkehr zu früheren Bearbeitungsschritten ohne stillschweigende Überschreibung bestätigter Angaben.
+4. Gesonderte Bildredaktion: fachliche Eignung, Nutzungsrechte, Alt-Text, Bildunterschrift, Eignung nach Inhaltsänderung und nachvollziehbarer Bildwechsel.
+
+**Offen:** Vollständige Abschnitts-/Regelzuordnung der übrigen Primärdokumente; diese Sichtung darf nicht als abgeschlossene Gesamtmigration gelten.
+
 ## Wann ist die fachliche Abnahme möglich?
 
 Nach vollendetem Quell-/Regelabgleich, widerspruchsfreien Kapiteln, referenzierten Ausnahmen, funktionierenden internen Verweisen und einer letzten **gemeinsamen Leseprüfung**. Technische Umsetzbarkeit ist anschließend Gegenstand der iterativen Entwicklungsphase.
