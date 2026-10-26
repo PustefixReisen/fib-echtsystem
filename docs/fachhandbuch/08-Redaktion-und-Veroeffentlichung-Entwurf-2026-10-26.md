@@ -26,6 +26,20 @@ Vor Beitragsfreigabe werden fachliche Belege, Widersprüche, Unsicherheiten, Ver
 
 Bild- und Dokumentverwendung erfordern weiterhin die eigene Rechte- und Freigabeprüfung; Textfreigabe ersetzt diese nicht.
 
+### Schnittstelle zu Analysen und Beiträgen
+
+Der redaktionelle Prozess unterscheidet drei Entscheidungen, damit interne Erkenntnisarbeit nicht unbemerkt zu öffentlicher Verbindlichkeit wird:
+
+| Gegenstand | Was wird entschieden? | Folge |
+|---|---|---|
+| **Analysefreigabe** | Welche belegten Aussagen der Vorgangs- oder Themenanalyse gelten fachlich als bestätigt? | Keine automatische Beitragsfreigabe und keine Publikation; bei Themen kein Statuswechsel nach „Aktiv“. |
+| **Beitragsfreigabe** | Ist eine konkrete, fixierte öffentliche Fassung (Meldung, Vorgangsbeitrag, Themenbeitrag) fachlich freigegeben? | Noch keine öffentliche Sichtbarkeit. Bei Themen: erste Beitragsfreigabe aktiviert den Entwurf. |
+| **Veröffentlichung** | Soll genau diese gültig freigegebene Fassung jetzt oder geplant öffentlich sichtbar werden? | Eigene, dokumentierte S3-Entscheidung; KI darf nicht selbst veröffentlichen. |
+
+Eine Veröffentlichung setzt die für **ihre konkreten Aussagen** tragfähige Analyse-/Belegbasis voraus, nicht die vollständige Beantwortung aller offenen Fragen. Ein eindeutig belegter schwerwiegender Fehler verhindert die Freigabe zur Veröffentlichung, bis der Fehler behoben und die Fassung erneut geprüft ist. Unbestätigte KI-Zweifel führen zu einem sichtbaren Prüfhinweis und erlauben eine begründete redaktionelle Entscheidung.
+
+**Grenzbeispiel:** Die KI ergänzt zur Grundstückskauf-Analyse belastbare Informationen. Daraus entsteht ein Änderungsvorschlag für den Vorgangsbeitrag, **nicht** automatisch eine neue Publikation. Ein bereits veröffentlichter Beitrag bleibt unverändert, bis die Redaktion eine neue Fassung freigibt und deren Veröffentlichung ausdrücklich bestätigt.
+
 ## 08.7 Aktualisierung
 Neue Ereignisse und Erkenntnisse führen zur Prüfung veröffentlichter Inhalte. FIB schlägt gegebenenfalls Aktualisierungen, Folgemeldungen oder belegte Korrekturen vor. Bei wesentlichen Korrekturen muss öffentlich erkennbar sein, was und warum geändert wurde. Veröffentlichung bleibt redaktionelle Entscheidung.
 
