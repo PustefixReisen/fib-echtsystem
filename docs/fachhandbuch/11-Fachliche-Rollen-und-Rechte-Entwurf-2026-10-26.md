@@ -1,0 +1,108 @@
+# 11 – Fachliche Rollen, Rechte und Verantwortung (Leseentwurf)
+
+**Stand:** 26.10.2026 · **Status:** Migrationsentwurf. `docs/Rollen-Rechte-und-Workflow.md` bleibt bis zur vollständigen Regelübernahme verbindlich. Technische Authentifizierung und konkrete RLS-Policies werden hier nicht neu spezifiziert.
+
+## 11.1 Wozu braucht FIB Rollen und Rechte?
+
+FIB trennt **öffentliche Information**, **redaktionelle Arbeit**, **fachlich verbindliche Entscheidungen** und **Administration**. Ein berechtigter Mensch soll wirksam arbeiten können, während unbeabsichtigte Veröffentlichung, Verlust bestätigter Inhalte und unzulässige Zugriffe verhindert werden.
+
+Dabei bestimmt nicht ein sichtbarer Button allein eine Berechtigung. Maßgeblich ist die Kombination aus **Rolle, Fachaktion, Objektzustand, Schutzklasse, Aktionsstufe und notwendiger Bestätigung**.
+
+## 11.2 Wer arbeitet mit FIB?
+
+| Akteur | Zuständigkeit | Fachliche Grenze |
+|---|---|---|
+| **Besucher** | freigegebene öffentliche Inhalte lesen und durchsuchen | keine redaktionelle oder administrative Änderung |
+| **Redakteur** | recherchieren, analysieren, fachlich entscheiden, Beiträge freigeben und veröffentlichen | keine systemweit administrativen Sonderrechte |
+| **Administrator** | sämtliche regulären Redaktionsaufgaben sowie Benutzer-/Rollenverwaltung und geschützte Systemeinstellungen | besondere Eingriffe müssen begründet und nachvollziehbar bleiben |
+| **KI-/AI-Task** | bereitgestellte Quellen analysieren, vorläufige Daten/Entwürfe vorbereiten und begründete Vorschläge liefern | keine eigenständige redaktionelle Freigabe oder Veröffentlichung |
+
+**Keine eigenständige Publisher-Rolle:** Ein Redakteur darf Inhalte im vorgesehenen Verfahren selbst freigeben und veröffentlichen. Selbstfreigabe ist grundsätzlich zulässig. Die KI ist **keine menschliche Rolle**.
+
+## 11.3 Welche Arten von Handlungen unterscheidet FIB?
+
+Das bestehende Konzept trennt Aktionsstufen:
+
+| Stufe | Sinn | Beispiel |
+|---|---|---|
+| **S0 – Lesen/Analysieren** | vorhandene zulässige Informationen auswerten | Vorgangsanalyse anzeigen, Rechercheergebnis lesen |
+| **S1 – Vorschlag/Entwurf** | noch nicht verbindliche Vorarbeit | Meldungstext vorschlagen, Themenkandidaten erkennen |
+| **S2 – Fachlich wirksam ändern** | bestätigten internen Sachstand ändern | Ereignis bestätigen, Themenbezug redaktionell festlegen |
+| **S3 – Öffentlich/normativ wirksam** | besonders geschützte Freigabe, Veröffentlichung oder normative Änderung | Beitrag veröffentlichen, Datei öffentlich bereitstellen, geschützten Referenzmaßstab aktivieren |
+
+Eine normale Rechercheausführung darf nicht durch ihre technische Ausführung zur öffentlichen Freigabe werden. **Eine allgemeine Freigabe für die eigenständige Ausführung eines klar begrenzten Rechercheauftrags** ist von einer Freigabe späterer Erkenntnisse zu unterscheiden.
+
+## 11.4 Wie entsteht eine redaktionell verbindliche Entscheidung?
+
+```mermaid
+flowchart LR
+  KI["KI oder Redaktion: Vorschlag"] --> PR["Prüfen und ggf. ändern"]
+  PR --> B["Berechtigung und fachliche Regeln prüfen"]
+  B --> EN["Redaktionell bestätigen"]
+  EN --> F["Freigegebener Fach-/Beitragsstand"]
+  F --> VE["Gesonderte Veröffentlichung"]
+```
+
+Die Arbeitsfolge variiert je nach Gegenstand. Für **Analysen** ist eine fachliche **Teilfreigabe** möglich. Bei **Beiträgen** wird eine bestimmte Fassung freigegeben; Veröffentlichung ist eine eigenständige Handlung, sofort oder später terminiert. Eine freigegebene Vorgangsanalyse ersetzt nicht die Beitragsfreigabe des **Vorgangsbeitrags**. Entsprechendes gilt für Themenanalysen und Themenbeiträge.
+
+Die Analysefreigabe verändert den **Themenstatus** nicht; der Wechsel von Entwurf zu Aktiv erfolgt nach der bestehenden Regel bei der **ersten Beitragsfreigabe**.
+
+## 11.5 Wann muss ausdrücklich bestätigt werden?
+
+Bei risikoarmen eindeutigen S2-Einzeländerungen kann die klare Handlungsanweisung eines berechtigten Redakteurs genügen. Bei mehrdeutigen, folgenreichen oder mehrere Objekte betreffenden Änderungen ist eine erkennbare Vorher-/Nachher-Prüfung und ausdrückliche Bestätigung erforderlich.
+
+Für **S3** verlangt die bisherige Rechtequelle stets eine **unmittelbare ausdrückliche Bestätigung** vor Ausführung. Dazu gehören insbesondere Veröffentlichung und Rücknahme, die erstmalige öffentliche Bereitstellung interner Dokumente sowie die erste öffentliche Verwendung eines Bildes. Vor Ausführung werden Rechte, Objektzustand, Version und Schutzbedingungen serverseitig erneut geprüft.
+
+**Noch zu konkretisieren:** zeitgesteuerte Veröffentlichung und die Frage, wie die bestätigte Planung mit dieser S3-Regel zusammenwirkt. Eine geplante Veröffentlichung darf weder die erforderliche Bestätigung umgehen noch inzwischen ungültige Veröffentlichungsvoraussetzungen ignorieren.
+
+## 11.6 Welche Freiheiten hat die KI bei vorläufigen Daten?
+
+**Fachlich neu bestätigt:** FIB darf vorläufige Ereignisse selbstständig erfassen, zuordnen und fachlich weiterverarbeiten, ohne für jedes Ereignis eine Pflicht zur redaktionellen Einzelbestätigung auszulösen. Alle Quellen und Ereignisse bleiben sichtbar; wesentliche Unsicherheit oder fachliche Konflikte lösen gezielte Prüfaufgaben aus.
+
+Die Bestandsmatrix erlaubt AI-Tasks im Grundsatz **S0/S1**, ohne bestätigende S2-/S3-Aktionen. Deshalb muss die technische Modellierung ausdrücklich unterscheiden zwischen **reversibler vorläufiger Anlage** und **verbindlicher fachlicher Bestätigung**. Diese neue Fachanforderung bedeutet **keine pauschale Befugniserweiterung der KI**.
+
+## 11.7 Wie werden parallele Bearbeitungen koordiniert?
+
+Eine **Federführung** organisiert Verantwortung, ist aber kein exklusives Bearbeitungsrecht. Bearbeitungssperren verhindern konkurrierendes Schreiben; andere berechtigte Redakteure können dann lesen und ggf. eine Übernahme anfragen. Eine Übernahmeanfrage verleiht keine zusätzlichen Rechte.
+
+Admins dürfen verwaiste fremde Sperren unter Auditbedingungen aufheben. Fachlich wirksame Änderungen müssen veraltete Objektstände erkennen und dürfen keinen neueren bestätigten Stand stillschweigend überschreiben.
+
+Eine gemeinsame Aufgabenübersicht zeigt offene **menschliche Entscheidungen**, nicht jede technische KI-Aktivität. Berechtigte Personen können Aufgaben übernehmen; organisatorische Zuweisungen und Priorisierung verändern die fachlichen Grundrechte nicht.
+
+## 11.8 Was darf nur ein Administrator?
+
+Insbesondere:
+- FIB-Benutzer anlegen, deaktivieren sowie Rollen erteilen oder entziehen;
+- sicherheitsrelevante Konfiguration, Providerzugänge und Secrets verändern;
+- besonders geschützte normative Regeln und Referenzmaßstäbe aktivieren;
+- systemweite KI-Routing- und Sicherheitsgrenzen ändern;
+- besonders geschützte technische Betriebs- oder Ausnahmeaktionen ausführen.
+
+Der reguläre redaktionelle Arbeitsprozess einschließlich Freigabe und Veröffentlichung braucht **keinen Administrator**.
+
+## 11.9 Zugangsschutz und Audit
+
+FIB verwendet keine öffentliche Selbstregistrierung für die Redaktion. Für Redakteure und Administratoren ist **MFA/TOTP verpflichtend**. Normale redaktionelle Arbeit erfordert nicht vor jeder Veröffentlichung einen neuen Authenticator-Code. Kritische administrative Eingriffe können dagegen eine erneute starke Authentifizierung (Step-up) erfordern.
+
+Rollenentzug und Deaktivierung müssen serverseitig wirksam sein – auch wenn ein Browser noch eine Sitzung gespeichert hat. Die eigentliche Entscheidung über Fachrechte liegt in den **Fachservices**; RLS und Datenbankregeln bilden zusätzliche Schutzschichten. Für fachlich wirksame oder besonders geschützte Aktionen werden Akteur, Zeitpunkt, betroffene Objekte, relevante Änderungen, Berechtigungsprüfung und Bestätigung nachvollziehbar auditiert.
+
+## 11.10 Abnahmefälle
+
+1. Redakteur verfasst, bestätigt und veröffentlicht eine Meldung, ohne Adminrolle.
+2. KI erstellt ein vorläufiges Ereignis; redaktionell bestätigter Ereignisinhalt bleibt geschützt.
+3. KI erkennt Widerspruch in einem bestätigten Vorgang; es entsteht ein begründeter Änderungsvorschlag, keine verdeckte Überschreibung.
+4. Eine Analyse wird teilweise freigegeben; der noch offene Anteil bleibt sichtbar und ungeprüft.
+5. Vorgangsbeitrag und Themenbeitrag werden als konkrete Fassung freigegeben; Veröffentlichung folgt gesondert.
+6. Ein zweiter Redakteur sieht eine fremde aktive Bearbeitungssperre und kann nur lesen.
+7. Deaktivierter Redakteur kann trotz bestehender Browsersitzung keine geschützte Änderung ausführen.
+8. Eine erstmalige öffentliche Bild- oder Dateinutzung ohne positiv geklärte Rechte wird gesperrt.
+9. Eine geplante Veröffentlichung wird vor ihrer Ausführung erneut auf Berechtigung und Gültigkeit geprüft.
+
+## 11.11 Quellabgleich und offene Umsetzung
+
+- **Vollständig zu übernehmen:** bestehende Fachfunktionsmatrix, S0–S3-Bestätigungslogik, Schutzklassen, Adminvorbehalte, serverseitige Revalidierung, Sperren, Audits und technische Zugangsgrenzen aus `docs/Rollen-Rechte-und-Workflow.md`.
+- **Neu zu konkretisieren:** vorläufige KI-Ereigniserfassung innerhalb S1, Freigabe/Versionierung von Vorgangsbeiträgen, teilfreigegebene Analysen, zeitgesteuerte Veröffentlichung sowie Aufgabenübernahme und -zuweisung.
+- **Fachkapitel:** Fachprozesse in 03–07; Entscheidungsabläufe in 08; öffentliche Darstellung in 09; Qualitätsblocker in 10.
+- **Technische Sicherheit:** gesonderte Security-/ADR- und RLS-Dokumentation bleibt maßgeblich; dieses Kapitel ist keine Freigabe zur Änderung von Benutzerkonten oder Authentifizierung.
+
+**Quellen:** `docs/Rollen-Rechte-und-Workflow.md`, `docs/Fachliche-Plausibilitaets-und-Freigaberegeln.md`, `docs/Datenmodell.md`, `docs/Redaktionsworkflow.md` und die Fachhandbuch-Migrationsentwürfe.
