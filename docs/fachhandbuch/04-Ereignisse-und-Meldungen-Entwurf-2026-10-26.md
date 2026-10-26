@@ -26,7 +26,7 @@ Ein Bericht nennt die Aufnahme von Kaufverhandlungen. Das wird als Ereignis erfa
 
 FIB prüft bei einer neuen Fundstelle, ob sie einen neuen Sachverhalt, eine Ergänzung oder einen Widerspruch zu Bekanntem enthält. Die Ergebnisse werden mit Quellen und Zeitbezug dokumentiert. Gleiche Aussagen aus unterschiedlichen Fundstellen werden nicht als zusätzliche Ereignisse gezählt.
 
-**Vorläufige, redaktionell noch nicht bestätigte Ereignisse** kann FIB selbstständig erfassen und unter nachvollziehbarer Protokollierung berichtigen. **Bereits redaktionell bestätigte Ereignisse** werden bei materiellen Korrekturen nicht unbemerkt überschrieben: FIB legt einen begründeten Vorschlag mit Belegen vor. Widersprüche bleiben nachvollziehbar.
+**Vorläufige, redaktionell noch nicht bestätigte Ereignisse** kann FIB selbstständig erfassen, zuordnen, fachlich weiterverarbeiten und unter nachvollziehbarer Protokollierung berichtigen. Eine verpflichtende redaktionelle Einzelbestätigung jedes Ereignisses ist **nicht** vorgesehen. Sämtliche Fundstellen und Ereignisse bleiben redaktionell einsehbar; bei wesentlichen Widersprüchen oder entscheidungsrelevanter Unsicherheit entsteht gezielt eine Prüfaufgabe. **Bereits redaktionell bestätigte Ereignisse** werden bei materiellen Korrekturen nicht unbemerkt überschrieben: FIB legt einen begründeten Vorschlag mit Belegen vor. Widersprüche bleiben nachvollziehbar.
 
 Ereignisse dürfen eigenständig bestehen. Bei erkennbarem längerfristigem Sachverhalt darf FIB einen **vorläufigen Vorgang** anlegen; die Vorgangslogik ist Kapitel 05 zugeordnet. Themen werden nur nach redaktioneller Entscheidung angelegt, dürfen aber Einzelereignisse direkt aufnehmen (Kapitel 06).
 
