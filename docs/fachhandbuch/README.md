@@ -28,6 +28,26 @@ Projektübergreifender Standard: [pustivo – Fachliches Dokumentationsmodell](h
 | 10 Qualität | Plausibilität, Quellenbindung, Sprache und Transparenz | geplant |
 | 11 Fachliche Rechte | Fachliche Handlungsbefugnisse; technische Authentifizierung bleibt in Security-Dokumentation | geplant |
 
+## Zusammenhängende Lesefassung in PR #259 (26.10.2026)
+
+**Alle elf Kapitel sind als einzelne Leseentwürfe vorhanden.** Diese Links führen zur neuen, noch **nicht verbindlich konsolidierten** Fassung. Die oben genannten bisherigen Primärkapitel 03 und 06 bleiben während der Migration bestehen.
+
+| Kapitel | Leseentwurf |
+|---|---|
+| 01 Grundlagen | [01 – Grundlagen und Zielsetzung](01-Grundlagen-und-Zielsetzung-Entwurf-2026-10-26.md) |
+| 02 Wissensmodell | [02 – Struktur- und Wissensmodell](02-Struktur-und-Wissensmodell-Leseentwurf-2026-10-26.md) |
+| 03 Recherche | [03 – Recherche, Neufassung](03-Recherche-Neufassung-Entwurf-2026-10-26.md) |
+| 04 Ereignisse und Meldungen | [04 – Ereignisse und Meldungen](04-Ereignisse-und-Meldungen-Entwurf-2026-10-26.md) |
+| 05 Vorgänge | [05 – Vorgänge und Vorgangsanalysen](05-Vorgaenge-und-Vorgangsanalysen-Entwurf-2026-10-26.md) |
+| 06 Themen | [06 – Themen und Themenanalysen](06-Themen-und-Themenanalysen-Entwurf-2026-10-26.md) |
+| 07 Sitzungen und Beschlüsse | [07 – Sitzungen und Beschlüsse](07-Sitzungen-und-Beschluesse-Entwurf-2026-10-26.md) |
+| 08 Redaktion | [08 – Redaktion und Veröffentlichung](08-Redaktion-und-Veroeffentlichung-Entwurf-2026-10-26.md) |
+| 09 Öffentliches Angebot | [09 – Öffentliches FIB-Angebot](09-Oeffentliches-FIB-Angebot-Entwurf-2026-10-26.md) |
+| 10 Qualität | [10 – Qualitätssicherung](10-Qualitaetssicherung-Entwurf-2026-10-26.md) |
+| 11 Rechte | [11 – Fachliche Rollen und Rechte](11-Fachliche-Rollen-und-Rechte-Entwurf-2026-10-26.md) |
+
+**Prüfstatus:** Kapitel 02 wurde im Fachdialog vom 26.10.2026 inhaltlich akzeptiert; Kapitel 09 wurde in wichtigen Einzelpunkten abgestimmt. Die übrigen Kapitel sind Leseentwürfe, keine Gesamtabnahme. Technische Umsetzbarkeit, Regel-/Quellmigration und Status-/Rechtekonsistenz sind gesondert nachzuweisen. Siehe [Gesamtabgleich](PR259-Gesamtabgleich-2026-10-26.md) und [Migrationsmatrix](PR259-Regelkennungen-Migrationsmatrix-2026-10-26.md).
+
 ## Sekundärsichten (nur diese beiden in der ersten Ausbaustufe)
 
 1. **Begriffe:** möglichst automatisch aus den Primärdefinitionen abgeleitet.
