@@ -119,6 +119,13 @@ Aus `docs/UX-und-Informationsarchitektur.md` wurden in Kapitel 09 die verbindlic
 
 **Nachgeführt in Kapitel 08 und 11** sowie in der Restkonfliktliste. Fachlich offen bleiben F-02 und F-03; die übrige vollständige Quellmigration und gemeinsame Abnahme stehen noch aus.
 
+## Fachliche Harmonisierung F-02/F-03 (26.10.2026)
+
+- **Vorgang (Kapitel 05):** Vorläufige KI-Anlage setzt im beschriebenen Regelfall mindestens ein identifiziertes Ereignis voraus; dieses darf noch vorläufig sein. Eine ereignislose Vorgangsanlage ist damit nicht bereits genehmigt.
+- **Vorgangs- und Themenanalyse (Kapitel 05/06):** Bestätigte Aussagen, noch offene Vorschläge und zurückgestellte Inhalte bleiben voneinander unterscheidbar; die bestehende Historisierung des bestätigten Gesamtstands wird beachtet.
+- **Weiterhin fachlich offen:** Exakte Definition der gültigen Gesamtfassung nach einer Teilfreigabe (F-03). Bei F-02 nur eine mögliche, bisher nicht beschlossene Ausnahme von der Mindestbeziehung. F-01 ist abgeschlossen.
+- **Keine Umsetzung vorgezogen:** Keine neuen Tabellen, Rollen, UI-Schritte oder automatischen Publikationen.
+
 ## Wann ist die fachliche Abnahme möglich?
 
 Nach vollendetem Quell-/Regelabgleich, widerspruchsfreien Kapiteln, referenzierten Ausnahmen, funktionierenden internen Verweisen und einer letzten **gemeinsamen Leseprüfung**. Technische Umsetzbarkeit ist anschließend Gegenstand der iterativen Entwicklungsphase.
