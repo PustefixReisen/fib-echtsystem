@@ -56,6 +56,7 @@ Die [Abschlussprüfung mit Regeländerungsübersicht und 20 Regressionstests](PR
 
 - [Weitere fachliche Primärquellen – abschnittsorientierter Übernahmeabgleich](PR259-Weitere-Quellen-Abschnittsabgleich-2026-10-26.md): Ausgangsabschnitte, geplante Zielkapitel und zu prüfende Fachregelabweichungen.
 - [Technischer Vertragsabgleich und fünf Implementierungsblöcke](PR259-Technischer-Vertragsabgleich-und-Arbeitspakete-2026-10-26.md): statische Gegenüberstellung mit SQL-Entwurf, Migrationscode, Fachservice und UI.
+- [Live-Schema-Abgleich Shared-Apps](PR259-Live-Schema-Abgleich-Shared-Apps-2026-10-26.md): reine Metadatenprüfung; Themenbeitragsmigrationen vorhanden, zusätzliche Analyse-/Vorgangsbeitrags-/Vertiefungsmodelle noch nicht nachgewiesen.
 
 **Abnahmegrenze:** Die vorgenannten Prüfungen sind keine produktive Datenbankprüfung und kein Testlauf. Das Fachhandbuch ist noch nicht normative Primärquelle. PR #259 bleibt bis zur vollständigen Übernahme und überprüften Tests im Entwurfszustand.
 
