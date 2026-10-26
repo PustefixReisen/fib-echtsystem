@@ -19,7 +19,7 @@
 
 ## 2. Risikobegrenzte Umsetzungsblöcke
 
-### T1: Ereignis-Vorläufigkeit und Fundstellenprüfung
+### T1 ([Issue #260](https://github.com/PustefixReisen/fib-echtsystem/issues/260)): Ereignis-Vorläufigkeit und Fundstellenprüfung
 
 **Ziel:** KI-basierte Erfassung vorläufiger Ereignisse ohne neue Verbindlichkeit oder automatische Fundstellenfreigabe.
 
@@ -29,7 +29,7 @@
 - Regression: R01, R02, R04, R07 aus [Testplan](PR259-Abschlusspruefung-und-Regression-2026-10-26.md).
 - **Isolation:** ausschließlich Schema `fib`, kein Eingriff in Shared-Apps-`public`/Memorix.
 
-### T2: Vorgangsbeitrag und Vorgangsanalyse
+### T2 ([Issue #261](https://github.com/PustefixReisen/fib-echtsystem/issues/261)): Vorgangsbeitrag und Vorgangsanalyse
 
 **Ziel:** Fachmodell Vorgangsanalyse → Vorgangsbeitrag → Beitragsfreigabe → Veröffentlichung. Der Beitrag enthält Hintergrund, Erklärungen, Erkenntnisse und Sachstand.
 
@@ -39,7 +39,7 @@
 - Rechte, Sperren, Dokumentationsbelege und getrennte Veröffentlichung sichern.
 - Regression: R09, R14, R18.
 
-### T3: Analyse- und Themenlebenszyklus
+### T3 ([Issue #262](https://github.com/PustefixReisen/fib-echtsystem/issues/262)): Analyse- und Themenlebenszyklus
 
 **Ziel:** Verschiedene Freigabeebenen bei unverändertem Thema-Statusmodell und ohne Pflicht-Beobachtungsauftrag.
 
@@ -49,14 +49,14 @@
 - Vier Arbeitsbereiche in der UI konzeptionell erproben; keine künstlichen vier Pflichtfreigaben.
 - Regression: R10–R13, R19.
 
-### T4: „Mehr wissen?“ für drei öffentliche Einstiege
+### T4 ([Issue #263](https://github.com/PustefixReisen/fib-echtsystem/issues/263)): „Mehr wissen?“ für drei öffentliche Einstiege
 
 - Bestehendes fachliches Modell um Vorgang erweitern, ohne offene interne Wissensfragen mit öffentlichen Vertiefungsfragen zu vermengen.
 - Eine Vertiefungsfrage hat **genau einen** primären Bezug (Meldung, Vorgang oder Thema); Antworten quellen- und versionsgebunden.
 - Redaktionelle Freigabe und S3-Veröffentlichung getrennt prüfen.
 - Regression: R15.
 
-### T5: Öffentliche Ausgabe und RIS
+### T5 ([Issue #264](https://github.com/PustefixReisen/fib-echtsystem/issues/264)): Öffentliche Ausgabe und RIS
 
 - Öffentlichen Web-Ausgabepfad K0 und stabile URLs prüfen.
 - Vorgangsbeitrag, Meldungsverlauf und verdichtete „Neues“-Liste konsistent aus **einer** Meldungsidentität ableiten.
