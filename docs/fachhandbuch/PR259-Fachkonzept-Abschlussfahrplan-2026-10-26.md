@@ -113,6 +113,12 @@ Aus `docs/UX-und-Informationsarchitektur.md` wurden in Kapitel 09 die verbindlic
 
 **Nicht als erledigt vermerkt:** Andere UX-Detailanforderungen (Bildsprache, einzelne Seitenelemente, responsive Bedienung und spezifische Listenregeln) müssen noch Abschnitt für Abschnitt einer Fachregel oder späteren UI-Gestaltungsaufgabe zugeordnet werden.
 
+## Fachentscheidung F-01: Terminierte Veröffentlichung (26.10.2026)
+
+**Abgeschlossen:** Die Redaktion bestätigt die automatische Veröffentlichung bei der Terminierung ausdrücklich für **eine bestimmte freigegebene Fassung und einen bestimmten Termin**. Vor tatsächlicher Ausführung prüft FIB Rechte, Freigabe, Fassungsidentität und übrige Voraussetzungen erneut. Entfallen Voraussetzungen, wird nicht veröffentlicht; die Redaktion erhält einen Hinweis. Eine geänderte Fassung oder ein geänderter Termin benötigt eine erneute Bestätigung. Die allgemeine alte S3-Regel ist nur für diese terminierte Spezialhandlung anzupassen; andere S3-Aktionen bleiben geschützt.
+
+**Nachgeführt in Kapitel 08 und 11** sowie in der Restkonfliktliste. Fachlich offen bleiben F-02 und F-03; die übrige vollständige Quellmigration und gemeinsame Abnahme stehen noch aus.
+
 ## Wann ist die fachliche Abnahme möglich?
 
 Nach vollendetem Quell-/Regelabgleich, widerspruchsfreien Kapiteln, referenzierten Ausnahmen, funktionierenden internen Verweisen und einer letzten **gemeinsamen Leseprüfung**. Technische Umsetzbarkeit ist anschließend Gegenstand der iterativen Entwicklungsphase.
