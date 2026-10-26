@@ -80,6 +80,14 @@ FIB berücksichtigt dabei nachvollziehbar bestätigte, überarbeitete und abgele
 
 Die Kalibrierung verbessert Vorschläge, **legt aber weder selbst neue Themen verbindlich an noch setzt sie bestätigte Bezüge oder andere Regeln außer Kraft**. Fachliche Primärquelle: [Themen- und Vorgangslogik](../Themen-und-Vorgangslogik.md), §7. Ein konkretes Lernverfahren oder KI-Modell wird hier bewusst nicht vorgegeben.
 
+### Auswahlvollständigkeit und Herkunft der Themenbezüge
+
+Die KI schlägt weitere Ereignisse außerhalb der bereits ausgewählten Vorgänge anhand von Leitfrage, Raumbezug, Wirkungen, Akteuren und möglicher künftiger Bedeutung vor. Diese Vorauswahl erleichtert die Bearbeitung, **ersetzt aber nicht die Suche im gesamten Ereignisbestand**: Die Redaktion kann bislang nicht vorgeschlagene Ereignisse gezielt ergänzen.
+
+Wird ein Vorgang ausgewählt, werden seine zugehörigen Ereignisse im Themenkontext mitgeführt. Ein zusätzlich gewähltes Einzelereignis darf weder unbemerkt einem Vorgang zugeordnet noch mehrfach in dieselbe Themenanalyse eingerechnet werden. Auch vorhandene Meldungen und Vorgangsbeiträge sind nützliche **redaktionelle Verdichtungen**, jedoch keine unabhängigen zweiten Tatsachenbelege zu den ihnen zugrunde liegenden Fundstellen.
+
+**Beispiel:** Zur Mobilität in Feldkirchen wird das Parkraumkonzept als Vorgang ausgewählt. FIB berücksichtigt dessen Ereignisse automatisch. Ein ergänzendes Ereignis zu einem regionalen Verkehrsprojekt wird gesondert aufgenommen. Erscheint dasselbe Ereignis später ebenfalls im Parkraumvorgang, darf dies die Gewichtung des Sachverhalts nicht künstlich erhöhen.
+
 ## 06.5 Themenanalyse: Eigenständiges Verständnis
 
 Die **Themenanalyse gehört zum Thema** und entwickelt eine selbstständige, übergreifende Sicht. Sie **kopiert nicht** sämtliche Vorgangsanalysen, sondern nutzt deren bestätigte Erkenntnisse mit nachvollziehbaren Verweisen und verarbeitet ergänzende Einzelereignisse. Übergreifende Erkenntnisse dürfen in der Themenanalyse verbleiben, auch wenn kein einzelner Vorgang eindeutig als Ursprung in Frage kommt. Ein künstlicher Vorgang wird dafür nicht angelegt.
@@ -91,6 +99,16 @@ Inhalte der Analyse sind:
 - **Wirkungs- und Folgenanalyse:** unmittelbare/mittelbare und beabsichtigte/unbeabsichtigte Folgen, sachverhaltsgerechte Perspektiven.
 
 Belegte Fakten, plausible Erwartungen, Hypothesen, Widersprüche und offene Fragen bleiben deutlich unterscheidbar. Perspektiven wie Lärm, Erreichbarkeit oder Flächennutzung bilden **keinen starren Pflichtkatalog**. Die Redaktion kann KI-Perspektiven übernehmen, anpassen oder ergänzen. Eine Wirkung wird gemäß bisherigem `Wirkungsmodell.md` fachlich an einem Ereignis verankert; der Herkunfts-/Pflegekontext bestimmt, wo sie geändert werden darf. **Diese ältere Detailregel ist auf übergreifende, nicht einem einzelnen Ereignis zuordenbare Erkenntnisse abzugleichen**, bevor Datenmodell-Änderungen erfolgen.
+
+### Perspektiven und Wirkungen aus dem bestätigten Themenbestand
+
+Die Themenanalyse betrachtet den **gesamten bestätigten Themenbestand**, nicht nur den ersten oder besonders prägenden Vorgang. FIB kann aus den zugehörigen Vorgängen, Einzelereignissen, Quellen und begründeten Zusammenhängen **Perspektiven** vorschlagen. Die Redaktion kann sie übernehmen, abändern, zusammenführen oder ergänzen. Erst danach ordnet FIB die relevanten Vorgänge, Ereignisse und ihre belegten oder begründet erwarteten Wirkungen diesen Perspektiven zu.
+
+Eine Perspektive ist ein **fachlicher Betrachtungsaspekt des Themas** (beispielsweise Lärm, Erreichbarkeit oder Flächenverbrauch), keine Eigenschaft nur eines einzelnen Ereignisses und keine politische Bewertung. Herkunft, Gegenargumente und Unsicherheiten müssen erkennbar sein. Die ältere Rollenliste „Treiber / Gestaltungsbeitrag / Betroffenheit / Rahmenbedingung / Indikator“ wird nicht als zweite strukturierte Bedeutungsskala eingeführt; die bestätigte Einstufung **prägend / relevant / ergänzend** und die konkreten Perspektiven und Wirkungen erfüllen unterschiedliche, klar bezeichnete Zwecke.
+
+**Grenzfall:** Ein KI-Vorschlag leitet „Verkehrssicherheit“ nur aus dem Autobahnkreuz ab. Die Redaktion hat aber bereits einen Radverkehrsvorgang aufgenommen. Bevor sie die Perspektiven bestätigt, muss FIB auch dessen Erkenntnisse für den Vorschlag berücksichtigen. Derselbe Effekt zählt nicht mehrfach, wenn er im Ereignis, in einer Meldung und im Vorgangsbeitrag erwähnt wird.
+
+Diese Ausgestaltung folgt der vorhandenen [Themen- und Vorgangslogik](../Themen-und-Vorgangslogik.md), insbesondere §§5.1–5.5. Sie beschreibt den fachlichen Ablauf; die Darstellung der Auswahl im Editor wird später erprobt.
 
 ### 06.5.1 Vollständigkeitsprüfung und Fragen
 
