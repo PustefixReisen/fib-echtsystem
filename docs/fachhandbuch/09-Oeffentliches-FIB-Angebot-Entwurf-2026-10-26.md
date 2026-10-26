@@ -128,6 +128,16 @@ FIB entwickelt „Mehr wissen?“-Fragen **aus dem jeweiligen Sachverhalt**, sta
 
 **Grenzfall:** Fehlt für eine anspruchsvolle technische oder rechtliche Aussage eine belastbare Quelle, darf FIB die Antwort nicht aus allgemeinem KI-Wissen als gesicherte Tatsache ergänzen. Stattdessen bleibt die Frage intern als Recherche- oder Prüfbedarf erhalten oder eine öffentliche Antwort benennt den belegbar offenen Stand. Dokumentierte Positionen beteiligter Akteure bleiben von einer ausdrücklich gekennzeichneten politischen Einordnung getrennt.
 
+### Rechtliche Hintergründe und mögliche Wechselwirkungen
+
+FIB erläutert für das Verständnis notwendige Zuständigkeiten und Verfahrensregeln unmittelbar beim Sachverhalt. **Vertiefende Rechtsfragen** gehören bevorzugt zu „Mehr wissen?“. FIB benennt Rechtsquellen und erklärt ihren erkennbaren Bezug, nimmt jedoch **keine eigene verbindliche rechtliche Würdigung, Erfolgsprognose oder Rechtsberatung** vor.
+
+Eine rechtliche Aussage wird als **unmittelbare Rechtsquelle**, **amtliche Erläuterung** oder **rechtliche Einschätzung eines beteiligten Akteurs** kenntlich gemacht. Die Einschätzung einer Verwaltung in einer Vorlage darf nicht unbemerkt als eigene rechtliche Feststellung von FIB erscheinen.
+
+Auch mögliche **Wechselwirkungen zwischen getrennten Vorgängen** dürfen als belegbar begründete Frage oder Querverweis erscheinen, ohne die Vorgänge zu verschmelzen. Eine nur mögliche Folge ist ausdrücklich bedingt zu formulieren. Beispiel: Eine künftig geänderte Leinenregelung könnte die Diskussion um die Hundewiese beeinflussen; ohne Beleg ist dies keine bereits eingetretene Wirkung.
+
+Die Antworten werden vorab redaktionell geprüft und gespeichert. **Freie Live-KI-Besucherfragen gehören nicht zum vereinbarten MVP.** Die Regeln stammen aus [Mehr wissen?](../Mehr-wissen.md), §§7–12.
+
 ## 09.8 Orientierung, Einstiege und Suche
 
 Bisher vereinbarte öffentliche Hauptnavigation:
