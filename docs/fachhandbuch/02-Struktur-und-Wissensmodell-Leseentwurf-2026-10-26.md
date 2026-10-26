@@ -80,7 +80,7 @@ Die öffentliche Ansicht sollte erkennbar machen, wie ein Beschluss zu einem lau
 
 ### Öffentlichkeitslogik: Meldung und Vorgang
 
-**Zur fachlichen Entscheidung vorgeschlagen:** Eine veröffentlichte Meldung, die zu einem Vorgang gehört, wird **nicht ausschließlich im Vorgang versteckt**. Sie ist über die aktuelle Meldungsübersicht auffindbar und zugleich im chronologischen Verlauf der öffentlichen Vorgangsansicht eingebunden. Das ist **eine Meldung mit zwei Zugangswegen**, keine Verdoppelung des Datensatzes; die Beziehung wird über Meldung → Ereignis → Vorgang abgeleitet. Mehrere Meldungen desselben Vorgangs können in der aktuellen Übersicht zugunsten der Übersichtlichkeit gruppiert werden. Die konkrete öffentliche Listen- und Gruppierungslogik wird in Kapitel 09 festgelegt.
+**Fachlich vereinbart am 26.10.2026:** Eine veröffentlichte Meldung, die zu einem Vorgang gehört, wird **nicht ausschließlich im Vorgang versteckt**. Sie ist über die aktuelle Meldungsübersicht auffindbar und zugleich im chronologischen Verlauf der öffentlichen Vorgangsansicht eingebunden. Das ist **eine Meldung mit zwei Zugangswegen**, keine Verdoppelung des Datensatzes; die Beziehung wird über Meldung → Ereignis → Vorgang abgeleitet. Mehrere Meldungen desselben Vorgangs können in der aktuellen Übersicht zugunsten der Übersichtlichkeit gruppiert werden. Die konkrete öffentliche Listen- und Gruppierungslogik wird erst bei der UI-Konzeption des Benutzer-Systems in Kapitel 09 festgelegt.
 
 ### RIS: Ausgangsinformationen, Fundstellen und FIB-Objekte
 
@@ -90,6 +90,8 @@ Das externe **RIS** liefert einerseits **Sitzungsdaten** (Sitzung, Gremium, TOP/
 - **Niederschrift:** Fundstelle der Sitzung, aus der FIB die tatsächliche TOP-Behandlung, abgestimmte Beschlussfassung und Abstimmungsergebnisse erschließt. Diese Informationen gehören zu entsprechenden Behandlungs-/Beschlussereignissen.
 - **Öffentliche Sitzungs-/Beschlussansicht:** stellt Sitzung, TOP, tatsächlich beschlossenen Text, Abstimmung, Beziehung zu Vorgang/Thema und den Originalvorschlag zusammen. Eine Datei wird nicht allein aufgrund ihrer Auffindbarkeit im RIS von FIB erneut öffentlich bereitgestellt; dafür gelten die bestehenden Rechteprüfungen.
 - **Navigation:** Sitzung → TOP → Ereignis → Vorgang/Thema und zurück. Öffentliche Meldungsbezüge werden über das Ereignis abgeleitet, nicht als eigenständige doppelte Zuordnung an TOP oder Sitzung gespeichert.
+
+**Fundstellen sind Belege, keine doppelt geführte Sitzungsinformation.** Insbesondere die Beschlussvorlage und die Niederschrift sowie gegebenenfalls Anlagen sind eigenständige Fundstellen. Ihre Inhalte werden einmal als Dokumentnachweis erfasst und daraus zusätzlich für die Sitzungs-/Beschlussansicht fachlich erschlossen. Sitzungsdatum, Gremium und TOP-Nummer werden als strukturierte Merkmale der Sitzungsobjekte geführt; sie müssen nicht als künstliche weitere Fundstellen verdoppelt werden. Auch eine RIS-Webseite kann Fundstelle sein, sofern sie als konkreter Nachweis einer Aussage verwendet wird. Verweise zu den Originalfundstellen bleiben nachvollziehbar; öffentliches Wiederbereitstellen der Dateien verlangt eine gesonderte Rechteprüfung.
 
 Die Linien zu Sitzung und TOP im Diagramm sind deshalb bewusst **durchgezogen**, wo das RIS strukturierte Sitzungsdaten liefert und Dokumente den TOP belegen. Das ist eine fachliche Informationsherkunft, keine Behauptung, dass FIB jede RIS-Information unverändert übernehmen darf.
 
