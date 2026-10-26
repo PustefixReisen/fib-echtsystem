@@ -132,6 +132,18 @@ Aus `docs/UX-und-Informationsarchitektur.md` wurden in Kapitel 09 die verbindlic
 - **Kapitel 06 ergänzt:** Redaktionell angenommene, abgeänderte und verworfene Vorschläge sowie korrigierte Bedeutungseinstufungen dienen als nachvollziehbare Grundlage für künftige FIB-spezifische KI-Vorschläge; keine automatische Übernahme als verbindliche Entscheidung. Ursprungsregel: `docs/Themen-und-Vorgangslogik.md` §7.
 - **Dateiverweise:** Relative Markdown-Dateilinks der elf Kapitelleseentwürfe gegen den aktuellen Branch-Dateibaum erneut geprüft, **keine fehlenden Dateiziele**. Inhalts-/Anker- und normative Vollständigkeitsprüfung bleiben gesondert offen.
 
+## Themenauswahl und Perspektiven: weiterer Quelltransfer
+
+Aus `docs/Themen-und-Vorgangslogik.md` §§5.1–5.5 wurde in Kapitel 06 ergänzt:
+
+- KI-Vorauswahl weiterer Ereignisse mit **jederzeitiger Suche im gesamten Ereignisbestand** als redaktionellem Sicherheitsnetz.
+- Ereignisse ausgewählter Vorgänge automatisch berücksichtigen, ohne zusätzliche Vorgangszuordnung oder doppelte Gewichtung.
+- Meldungen und Vorgangsverdichtungen als **Analysekontext**, nicht als neue unabhängige Tatsachenbelege behandeln.
+- Perspektiven aus **allen bestätigten Bezügen** eines Themas entwickeln und redaktionell prüfen; danach Ereignisse/Vorgänge und Wirkungen zuordnen.
+- Frühere fünf Rollenbezeichnungen nicht als konkurrierende fachliche Skala wiedereinführen.
+
+Die konkrete Auswahl- und Dialogoberfläche bleibt der späteren iterativen UI-Phase vorbehalten. Der Regelbestand der anderen Primärquellen ist weiterhin im Migrationsabgleich.
+
 ## Wann ist die fachliche Abnahme möglich?
 
 Nach vollendetem Quell-/Regelabgleich, widerspruchsfreien Kapiteln, referenzierten Ausnahmen, funktionierenden internen Verweisen und einer letzten **gemeinsamen Leseprüfung**. Technische Umsetzbarkeit ist anschließend Gegenstand der iterativen Entwicklungsphase.
