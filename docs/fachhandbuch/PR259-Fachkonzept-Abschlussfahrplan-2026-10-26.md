@@ -85,6 +85,10 @@ Die Arbeit wurde über Kapitel 03 und 06 hinaus auf die Übergänge zwischen den
 - **Konsistenz:** Eine Analysefreigabe macht kein Thema aktiv; allein die erste Beitragsfreigabe führt Entwurf → Aktiv, Veröffentlichung bleibt getrennt. KI erfasst vorläufige Daten, nicht automatisch verbindliche Entscheidungen.
 - **Offen:** Vollständige abschnittsweise Migration der übrigen Primärquellen und finale gemeinsame Leseabnahme; Datenmodell, UI und SQL sind bewusst noch keine Abnahmevoraussetzungen.
 
+## Prozessdurchlauf Kapitel 05 (26.10.2026)
+
+**Kapitel 05** führt einen vollständigen exemplarischen Vorgang von der ersten Fundstelle über vorläufige Vorgangsanlage, automatische Erstanalyse, Fragen und nachweisbaren Beschluss bis zu Änderungspaketen, gesonderter Beitragsfreigabe/Publikation und späterer Fortschreibung. Darin wird ausdrücklich gezeigt, **wo keine manuelle Einzelentscheidung nötig ist** und wo redaktionelle Freigabe erforderlich bleibt. Das Grundstückskaufbeispiel ist hypothetisch und keine Tatsachendarstellung. Noch offen bleiben vollständiger Quellregelabgleich und gemeinsame Gesamtleseabnahme.
+
 ## Wann ist die fachliche Abnahme möglich?
 
 Nach vollendetem Quell-/Regelabgleich, widerspruchsfreien Kapiteln, referenzierten Ausnahmen, funktionierenden internen Verweisen und einer letzten **gemeinsamen Leseprüfung**. Technische Umsetzbarkeit ist anschließend Gegenstand der iterativen Entwicklungsphase.
