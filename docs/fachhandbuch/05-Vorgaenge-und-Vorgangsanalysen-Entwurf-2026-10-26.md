@@ -8,7 +8,7 @@
 
 ## 05.1 Aufgabe und Gegenstand
 
-Ein **Vorgang** verfolgt einen zusammenhängenden konkreten Sachverhalt über einen längeren Zeitraum. Er verbindet seine Ereignisse und die daraus gewonnenen Erkenntnisse zu einem aktuellen, nachvollziehbaren **Sachstand mit eigener Vorgangsanalyse**. Ein Vorgang ist weder eine veröffentlichte Meldung noch ein Thema. Er benötigt keine eigene Veröffentlichung.
+Ein **Vorgang** verfolgt einen zusammenhängenden konkreten Sachverhalt über einen längeren Zeitraum. Er verbindet seine Ereignisse und die daraus gewonnenen Erkenntnisse zu einem aktuellen, nachvollziehbaren **Sachstand mit eigener Vorgangsanalyse**. Ein Vorgang ist weder eine veröffentlichte Meldung noch ein Thema. **Seine interne Existenz und fachliche Bearbeitung setzen keine Veröffentlichung voraus.** Für die öffentliche Darstellung ist jedoch ein **eigener, getrennt freizugebender Vorgangsbeitrag** vorgesehen; die Veröffentlichung bleibt eine gesonderte Entscheidung. Ein unveröffentlichter Vorgang kann somit eine gültige Analyse besitzen, ohne bereits öffentlich sichtbar zu sein.
 
 Beispiel **„Grundstückskauf der Gemeinde Feldkirchen“**: Verhandlungsaufnahme, Vertragsabschluss und später eine Nutzungsentscheidung können verschiedene Ereignisse sein, die zur selben langfristigen Entwicklung gehören. Die Meldungen darüber sind optional und werden aus Ereignissen abgeleitet.
 
