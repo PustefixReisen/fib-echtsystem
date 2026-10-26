@@ -1,5 +1,7 @@
 # FIB-Fachhandbuch – Einstieg und Migrationsstand
 
+**[Fachliche Restkonflikte und Entscheidungsstand](PR259-Fachliche-Restkonflikte-und-Entscheidungsstand-2026-10-26.md)** – Drei echte fachliche Restfragen sind von späteren Datenmodell- und UI-Aufgaben abgegrenzt; die bereits beschlossenen Regeln bleiben unberührt.
+
 **[Fachkonzept-Abschlussfahrplan und Abnahmekriterien](PR259-Fachkonzept-Abschlussfahrplan-2026-10-26.md)** – Aktueller Fokus: fachliche Konsolidierung und gemeinsame Leseabnahme. Datenmodell, Bedienoberfläche und Implementierung folgen anschließend iterativ; die Issues #260–#264 sind nur nachgelagerte Vormerkungen.
 
 
