@@ -35,6 +35,14 @@ Die Themenanlage erzeugt noch keine Veröffentlichung. Änderungen an der Defini
 
 **Bestehende Lebenszyklusstatus beibehalten (Abgleich erforderlich):** Entwurf, Aktiv, Zurückgestellt, Archiviert. Status, Analysefreigabe, Beitragsfreigabe und öffentliche Sichtbarkeit sind **verschiedene Dimensionen**. Die bisherigen Übergangsregeln FIB-THEMA-STATUS-001 bis -007 werden vor Umstellung des Zusammenhangs zwischen erster Beitragsfreigabe und Aktiv-Status auf Widerspruch zur neuen Analysefreigabe geprüft.
 
+### Regeln zur Themendefinition und Entdeckung
+
+Ein Thema ist eine **redaktionell verantwortete Leitfrage**. Die KI erkennt mögliche übergreifende Zusammenhänge, prüft bestehende Themen auf Überschneidungen und schlägt begründete Kandidaten vor. Erst die Redaktion entscheidet, ob der Erkenntnisgewinn die Neuanlage eines Themas rechtfertigt.
+
+**FIB-THEMA-ENTDECKUNG-001:** KI-Themenkandidaten enthalten Anlass, Leitfrage, mögliche Bezüge, Abgrenzung und Dublettenhinweis. Ein umfangreicher einzelner Vorgang, etwa Kiesgrund, kann unter einer eigenständigen übergreifenden Leitfrage ein Thema begründen; Größe oder Dauer eines Vorgangs allein reichen nicht.
+
+**Beispiel:** „Autobahnkreuz München-Ost“ ist zunächst ein konkreter Vorgang. „Mobilität und Lebensqualität in Feldkirchen“ könnte ein Thema sein, sofern mehrere Entwicklungen unter einer nachvollziehbaren Frage verbunden werden.
+
 ## 06.4 Fachliche Bezüge und „Bedeutung für das Thema“
 
 Ein Thema nutzt vorzugsweise **Vorgänge** und deren Ereignisse. Ergänzende **direkte Einzelereignisse** sind erlaubt, wenn sie nicht sinnvoll durch einen bestätigten Vorgang abgedeckt sind. **Meldungen bilden keinen dritten Auswahlweg**. Derselbe Sachverhalt darf nicht aufgrund mehrfacher Darstellungen übergewichtet werden.
@@ -46,14 +54,6 @@ Die bisherige Regel FIB-THEMA-BEZUG-002 unterscheidet **Kandidat, Zugeordnet, Zu
 **Zugehörigkeit** („Gehört der Vorgang dazu?“) und **Bedeutung** („Welche Rolle spielt er für das Thema?“) sind getrennt. Die bestehenden Kategorien **prägend, relevant, ergänzend** bleiben eine redaktionelle Einstufung; FIB schlägt Bedeutung mit fachlicher Begründung und Beleglage vor. Bei neuen Ereignissen oder Erkenntnissen prüft FIB die Bedeutungsbeschreibung automatisch auf Änderungsbedarf. Redaktionell bestätigte Fassungen bleiben bis zur erneuten Entscheidung erhalten.
 
 Die Bedeutung eines fachlichen Bezugs ist **nicht** die redaktionelle Gewichtung einer Aussage im öffentlichen Themenbeitrag.
-
-### Regeln zur Themendefinition und Entdeckung
-
-Ein Thema ist eine **redaktionell verantwortete Leitfrage**. Die KI erkennt mögliche übergreifende Zusammenhänge, prüft bestehende Themen auf Überschneidungen und schlägt begründete Kandidaten vor. Erst die Redaktion entscheidet, ob der Erkenntnisgewinn die Neuanlage eines Themas rechtfertigt.
-
-**FIB-THEMA-ENTDECKUNG-001:** KI-Themenkandidaten enthalten Anlass, Leitfrage, mögliche Bezüge, Abgrenzung und Dublettenhinweis. Ein umfangreicher einzelner Vorgang, etwa Kiesgrund, kann unter einer eigenständigen übergreifenden Leitfrage ein Thema begründen; Größe oder Dauer eines Vorgangs allein reichen nicht.
-
-**Beispiel:** „Autobahnkreuz München-Ost“ ist zunächst ein konkreter Vorgang. „Mobilität und Lebensqualität in Feldkirchen“ könnte ein Thema sein, sofern mehrere Entwicklungen unter einer nachvollziehbaren Frage verbunden werden.
 
 ### Regeln zu lokalen Bezügen und Bedeutung
 
