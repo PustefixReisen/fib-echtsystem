@@ -47,6 +47,29 @@ Die bisherige Regel FIB-THEMA-BEZUG-002 unterscheidet **Kandidat, Zugeordnet, Zu
 
 Die Bedeutung eines fachlichen Bezugs ist **nicht** die redaktionelle Gewichtung einer Aussage im öffentlichen Themenbeitrag.
 
+### Regeln zur Themendefinition und Entdeckung
+
+Ein Thema ist eine **redaktionell verantwortete Leitfrage**. Die KI erkennt mögliche übergreifende Zusammenhänge, prüft bestehende Themen auf Überschneidungen und schlägt begründete Kandidaten vor. Erst die Redaktion entscheidet, ob der Erkenntnisgewinn die Neuanlage eines Themas rechtfertigt.
+
+**FIB-THEMA-ENTDECKUNG-001:** KI-Themenkandidaten enthalten Anlass, Leitfrage, mögliche Bezüge, Abgrenzung und Dublettenhinweis. Ein umfangreicher einzelner Vorgang, etwa Kiesgrund, kann unter einer eigenständigen übergreifenden Leitfrage ein Thema begründen; Größe oder Dauer eines Vorgangs allein reichen nicht.
+
+**Beispiel:** „Autobahnkreuz München-Ost“ ist zunächst ein konkreter Vorgang. „Mobilität und Lebensqualität in Feldkirchen“ könnte ein Thema sein, sofern mehrere Entwicklungen unter einer nachvollziehbaren Frage verbunden werden.
+
+### Regeln zu lokalen Bezügen und Bedeutung
+
+Thematische Zusammenhänge entstehen aus fachlich geprüften Beziehungen zu **Vorgängen** und ergänzend geeigneten **direkten Einzelereignissen**; Meldungen sind kein dritter Auswahlweg. Die KI darf Zuordnungen vorbereiten, aber weder eine negative redaktionelle Entscheidung stillschweigend übergehen noch ihre Bedeutung automatisch als verbindlich festlegen.
+
+| Kennung | Fachliche Regel |
+|---|---|
+| **FIB-THEMA-BEZUG-001** | Vorrangig Vorgänge auswählen; deren Ereignisse sind eingeschlossen. Direkte Einzelereignisse nur ergänzend; doppelte Gewichtung derselben Tatsache verhindern. |
+| **FIB-THEMA-BEZUG-002** | Vier Bezugsstatus: **Kandidat**, **Zugeordnet**, **Zurückgestellt**, **Fachlich unpassend**. KI-Herkunft ist **kein** weiterer Status. |
+| **FIB-THEMA-BEZUG-003** | Verbindliche „Bedeutung für das Thema“: **prägend**, **relevant**, **ergänzend**; KI schlägt mit Begründung vor, die Redaktion bestätigt. |
+| **FIB-THEMA-BEZUG-004/005** | Ablehnung und Zurückstellung bleiben nachvollziehbar. KI-Begründung, redaktionelle Begründung und belegende Fundstellen werden getrennt geführt. |
+| **FIB-THEMA-BEZUG-006** | Das Öffnen eines Themas startet **keine** neue KI-Bezugssuche. Der bewusste Auftrag lautet „Weitere Beziehungen vorschlagen“. |
+| **FIB-THEMA-BEZUG-007/008** | Ein bestätigter Bezug kann begründet als unpassend eingestuft werden. Ein zuvor abgelehnter Bezug gelangt bei neuem Sachstand zuerst zum **Kandidaten**, nicht direkt zu „Zugeordnet“. |
+
+**Beispiel:** Für „Mobilität in Feldkirchen“ wird der Vorgang Parkraumkonzept als „relevant“ eingestuft. Erkennt FIB später eine neue Verkehrsplanung, kann sie einen Bezugskandidaten vorschlagen. Eine zuvor als fachlich unpassend abgelehnte Zuordnung wird nicht heimlich reaktiviert.
+
 ## 06.5 Themenanalyse: Eigenständiges Verständnis
 
 Die **Themenanalyse gehört zum Thema** und entwickelt eine selbstständige, übergreifende Sicht. Sie **kopiert nicht** sämtliche Vorgangsanalysen, sondern nutzt deren bestätigte Erkenntnisse mit nachvollziehbaren Verweisen und verarbeitet ergänzende Einzelereignisse. Übergreifende Erkenntnisse dürfen in der Themenanalyse verbleiben, auch wenn kein einzelner Vorgang eindeutig als Ursprung in Frage kommt. Ein künstlicher Vorgang wird dafür nicht angelegt.
@@ -97,6 +120,20 @@ Die **Schlussprüfung** umfasst die Belegdeckung jeder wesentlichen Aussage, kla
 
 Der bestehende **sachliche Thementext** und die **optionale, getrennt editierbare „Unsere Einordnung“** sind Bestandteile derselben Beitragsfassung. Ihre redaktionelle Behandlung bleibt getrennt, ohne daraus eigenständige Veröffentlichungsobjekte abzuleiten. Die strenge Seltenheitsregel für politische Einordnungen wurde **für Meldungen** vereinbart; sie wird nicht stillschweigend als identische Frequenzregel auf Themenbeiträge übertragen.
 
+### Regeln zu Themenbeitrag und Fassungen
+
+Der öffentliche Themenbeitrag ist **nicht** die vollständige Analyse. Er wählt aussagekräftige Erkenntnisse aus, erläutert ihren Zusammenhang und kann eine eigenständig gekennzeichnete politische Einordnung enthalten. Die Redaktion kontrolliert die Fassung, Freigabe und spätere öffentliche Sichtbarkeit.
+
+| Kennung | Fachliche Regel |
+|---|---|
+| **FIB-THEMA-BEITRAG-001/002** | Sachlicher Thementext und optional „Unsere Einordnung“ bleiben getrennt. Selbstfreigabe durch Redakteure ist erlaubt; Beitragsfreigabe ist nicht gleich Veröffentlichung; KI darf keines von beiden verbindlich ausführen. |
+| **FIB-THEMA-BEITRAG-003/004/005** | Arbeits-, freigegebene und aktuell veröffentlichte Fassung bleiben unterscheidbar. Die wirklich aktuell veröffentlichte Fassung ist schreibgeschützt zugänglich; historisch maßgebliche Ausgangsstände werden transparent. |
+| **FIB-THEMA-BEITRAG-006/007/008** | Standardmäßig wird die aktuelle Arbeitsfassung angezeigt. Öffnen allein legt keine gespeicherte Version an; gespeichert wird erst eine tatsächliche Änderung. Ungespeicherte Änderungen und exklusive Bearbeitungssperren werden geschützt. |
+| **FIB-THEMA-BEITRAG-009/010/011** | Zurückziehen und Wiederveröffentlichen sind ausdrücklich bestätigte und protokollierte Handlungen. Ohne Inhaltsänderung kann eine weiterhin gültig freigegebene Fassung gesondert erneut veröffentlicht werden; geänderte Fassung braucht neue Freigabe. Weitere Originalbedingungen gelten gemäß Regelreferenz. |
+| **FIB-THEMA-VERSION-001** | Fachliche Themen-Gesamtfassung (Definition, Bezüge, Wirkungen) und öffentliche Beitragsversion sind getrennte Versionierungsebenen. |
+
+**Grenzfall:** Eine neue Arbeitsfassung wird begonnen, während die vorige Version weiterhin öffentlich ist. Die Anzeige „Aktuell veröffentlicht“ zeigt genau die noch sichtbare Fassung und nicht bloß die vorletzte Versionsnummer.
+
 ## 06.7 Fortlaufende Aktualität und öffentlicher Bezug
 
 Nach einer redaktionell freigegebenen Änderung der Themenanalyse prüft FIB automatisch, ob bereits veröffentlichte Themenbeiträge betroffen sind. Eine relevante Auswirkung erzeugt einen **Aktualisierungsvorschlag**, nicht eine automatische Änderung am öffentlichen Text. Keine neue Veröffentlichung ist nötig, wenn der Beitrag sachlich richtig und hinreichend vollständig bleibt.
@@ -135,6 +172,20 @@ Die Regelgruppen FIB-THEMA-BEZUG-001 bis -008, FIB-THEMA-STATUS-001 bis -007 und
 **Explizite fachliche Änderung der bisherigen Freigabevoraussetzung:** Es wird **nicht mehr verpflichtend ein ausgewerteter Beobachtungsauftrag** verlangt. Stattdessen müssen vor Freigabe des öffentlichen Beitrags die dafür verwendeten Aussagen in der Themenanalyse fachlich geprüft und ausreichend abgesichert sein. Die Redaktion kann Recherche bei Wissenslücken anstoßen; sie ist keine formale Pflichtübung. Der bisherige *dreiteilige* Bearbeitungsablauf wird durch **vier Arbeitsbereiche** ersetzt (Definition, Bezüge, Analyse, Beitrag), ohne vier separate obligatorische Freigaben einzuführen.
 
 **Noch technisch zu klären:** Wie Analysefassungen und Teilfreigaben referenziert werden, welche Analysefreigabe beim Widerruf einer Beitragsfreigabe wirksam bleibt sowie das genaue Verhalten bei späteren Statuswechseln und nachfolgender Veröffentlichung. Die genannten Grundübergänge werden dadurch nicht neu erfunden.
+
+### Regeln zu Status, Koordination und Berechtigungen
+
+Der viergliedrige Arbeitsbereich ist keine zusätzliche Statusmaschine. **Themenstatus**, **Analysefreigabe**, **Beitragsfreigabe** und **tatsächliche Veröffentlichung** bleiben voneinander unabhängige Sachverhalte.
+
+| Kennung | Fachliche Regel |
+|---|---|
+| **FIB-THEMA-STATUS-001/002** | Thema: **Entwurf, Aktiv, Zurückgestellt, Archiviert**. Erst die erste Beitragsfreigabe aktiviert den Entwurf; Widerruf dieser Freigabe vor erster Veröffentlichung führt zurück zu Entwurf. |
+| **FIB-THEMA-STATUS-003/005/006/007** | Zurückstellung/Archivierung sind aus Entwurf ohne Beitragsfreigabe möglich. Ein zurückgestelltes Thema darf archiviert werden. Bei Wiederaufnahme archivierter Themen gilt für zuvor nie freigegebene Fassungen Entwurf, sonst die geprüfte Wiederaufnahme nach Aktiv. Nichts wird automatisch publiziert. |
+| **FIB-THEMA-STATUS-004** | Löschung nur für noch nie veröffentlichte Themen ohne wirksame Freigabe nach expliziter Sicherheitsbestätigung; referenzierte Vorgänge/Ereignisse bleiben erhalten. |
+| **FIB-THEMA-KOORD-001/002** | Federführung koordiniert, begründet aber keine exklusiven redaktionellen Bearbeitungsrechte. Konkrete Bearbeitungssperren bleiben gesondert wirksam. |
+| **FIB-THEMA-RECHTE-001/002** | Berechtigte Redakteure und Administratoren handeln gemäß Fachbefugnis und Sperren; Selbstfreigabe ist zulässig, keine zusätzliche Publisher-Rolle nötig. |
+
+**Grenzfall:** Eine Redaktion archiviert einen noch nie freigegebenen Entwurf und nimmt ihn später wieder auf. Er wird wieder **Entwurf**, nicht unmittelbar „Aktiv“. Eine neue Analysefreigabe allein ändert auch dann nichts am Themenstatus.
 
 ## 06.9 Anforderungen an den Themeneditor (Lösung bewusst offen)
 
