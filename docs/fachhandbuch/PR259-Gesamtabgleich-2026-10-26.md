@@ -1,6 +1,6 @@
 # PR #259 – Kapitelübergreifender Konsistenz- und Vollständigkeitsabgleich
 
-**26.10.2026 · Prüfstand 1 · keine Fachabnahme**
+**26.10.2026 · Prüfstand 2 · vier fachliche Entscheidungen bestätigt; keine Gesamtabnahme**
 
 ## 1. Prüfgegenstand und Reichweite
 
@@ -80,3 +80,15 @@ Neu möglich: freigegebene Fassung später veröffentlichen. Entwurf 08 weist be
 5. SQL/API, UI und automatisierte Tests gegen das konsolidierte Modell abgleichen. Erst danach normative Ablösung und Merge.
 
 **Status:** Konsistenzprüfung der sechs Entwürfe auf Textebene durchgeführt. Acht besonders prüfbedürftige Punkte identifiziert. **Keine fachliche Gesamtabnahme.**
+
+## 6. Fachliche Entscheidungen vom 26.10.2026 (nach Prüfstand 1)
+
+**B-01 zu E-01 – Themenstatus:** Die Freigabe der Themenanalyse ist vom Themenstatus unabhängig und bewirkt **keinen** Wechsel von Entwurf nach Aktiv. Wie bisher führt erst die **erste Beitragsfreigabe** zu Aktiv. Die spätere Veröffentlichung ist separat. **Fachlich geklärt**, technische Freigabe-/Versionsabbildung noch offen.
+
+**B-02 zu E-04 – Vorläufige Ereignisse:** FIB darf Ereignisse automatisch als **vorläufig** anlegen, fachlich weiterverarbeiten und bei eindeutigem Bezug vorläufig Vorgängen/Themen zuordnen. Es besteht **keine verpflichtende redaktionelle Einzelprüfung jedes Ereignisses**. Sämtliche Fundstellen und Ereignisse bleiben redaktionell sichtbar; wichtige Unsicherheiten und Widersprüche erzeugen Prüfaufgaben. Redaktionell bestätigte Ereignisse dürfen nicht durch KI eigenmächtig verändert werden. **Fachlich geklärt**, Status-/Rechteabbildung und Vereinbarkeit mit Fundstellensichtung noch technisch und normativ zu prüfen.
+
+**B-03 zu E-05 – Übergreifende Erkenntnisse:** Vorgangs- und Themenanalysen umfassen neben Tatsachen und konkreten Ereigniswirkungen auch Erklärungs- und Hintergrundwissen sowie **eigenständige übergreifende Erkenntnisse** und Schlussfolgerungen. Solche Inhalte gehören unmittelbar zur jeweiligen Analyse; ein einzelnes Ereignis wird nicht künstlich als Anker erzeugt. Konkrete Ereigniswirkungen behalten ihre sachliche Ereignisbindung. Jede Erkenntnis benötigt Belege oder eine nachvollziehbare Herleitung und redaktionelle Bestätigung für verbindliche Nutzung. **Fachlich geklärt**, Modellierung der Analysebausteine noch offen.
+
+**B-04 zu E-07 – Qualitätssperren:** Eindeutig **belegbare schwerwiegende fachliche Fehler** verhindern die Veröffentlichung bis zu Korrektur und neuer Prüfung. Bei **begründetem, noch nicht abschließend belegtem Verdacht** erscheint ein auffälliger Prüfhinweis; die Redaktion darf nach eigener Prüfung trotzdem freigeben. **Geringfügige Unsicherheiten** erzeugen einen normalen Hinweis ohne Sperre. Unabhängige harte Rechte-/Status-/Quellen-Invarianten bleiben serverseitig verbindlich. **Fachlich geklärt**, Nachweisstandard und technische Durchsetzung noch offen.
+
+**Verbleibend:** E-02/E-03 (Bestandsregel und UI-Migration), E-06 (Teilfreigabe und Versionierung), E-08 (Validierung geplanter Veröffentlichungen), Quellabschnittsmatrix, technische Prüfung und Regressionstests. Die vier Entscheidungen sind **keine vollständige PR-Abnahme**.
