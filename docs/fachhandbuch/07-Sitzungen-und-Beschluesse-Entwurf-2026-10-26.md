@@ -56,7 +56,7 @@ FIB stellt gegenüber, was ursprünglich vorgeschlagen und was später tatsächl
 
 Behandlungen und Beschlüsse stehen über **Ereignisse** mit Vorgängen und Themen in Beziehung. Eine neue Entscheidung kann eine bestehende Vorgangsanalyse verändern oder einen Themenbeitrag aktualisierungsbedürftig machen. Diese Prüfung nutzt das allgemeine Änderungspaket- und Freigabemodell; Kapitel 07 erzeugt keine unabhängige zweite Redaktion.
 
-### 6. Öffentlichkeit informieren
+### 6. Informationen für das öffentliche FIB-Angebot bereitstellen
 
 Öffentliche Sitzungsansichten erschließen Sitzung, TOP, relevante Beschlussfassung und Abstimmungsergebnis sowie Links zum ursprünglichen Vorschlag und den zugehörigen Vorgängen/Themen. Ob zusätzlich eine Meldung sinnvoll ist, entscheidet der allgemeine Meldungsprozess; nicht jeder TOP erzeugt automatisch eine Meldung.
 
