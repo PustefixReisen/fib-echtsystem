@@ -107,6 +107,12 @@ Die Primärquelle `docs/Redaktionsworkflow.md` wurde hinsichtlich der Abschnitte
 
 **Offen:** Vollständige Abschnitts-/Regelzuordnung der übrigen Primärdokumente; diese Sichtung darf nicht als abgeschlossene Gesamtmigration gelten.
 
+## Quelltransfer: Öffentliche Suche und Aktualitätsanzeige (26.10.2026)
+
+Aus `docs/UX-und-Informationsarchitektur.md` wurden in Kapitel 09 die verbindlichen fachlichen Anforderungen zur Suche mit Alias-/Beziehungslogik, verständlichen Filtern einschließlich Beteiligung, lokaler Neuigkeitsanzeige ohne Anmeldung, optionalem Push/Badge, teilbaren Direktlinks, zielgenauer Aktualisierungsanzeige, Druckausgabe und inhaltsnahem Transparenzzugang übernommen. Die Gestaltung der Oberfläche und technischen PWA-Mechanismen bleiben offen.
+
+**Nicht als erledigt vermerkt:** Andere UX-Detailanforderungen (Bildsprache, einzelne Seitenelemente, responsive Bedienung und spezifische Listenregeln) müssen noch Abschnitt für Abschnitt einer Fachregel oder späteren UI-Gestaltungsaufgabe zugeordnet werden.
+
 ## Wann ist die fachliche Abnahme möglich?
 
 Nach vollendetem Quell-/Regelabgleich, widerspruchsfreien Kapiteln, referenzierten Ausnahmen, funktionierenden internen Verweisen und einer letzten **gemeinsamen Leseprüfung**. Technische Umsetzbarkeit ist anschließend Gegenstand der iterativen Entwicklungsphase.
