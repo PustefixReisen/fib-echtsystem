@@ -87,6 +87,8 @@ Der Vorgangsbeitrag vermittelt den aktuellen Stand, die Entwicklung, Ursachen, H
 
 **Technisch noch zu klären:** Status- und Versionsmodell für Vorgangsbeiträge, Freigaberechte und Rücknahme; bisher sind diese Regeln für Themenbeiträge weiter ausgearbeitet. Keine stillschweigende Übernahme des Themenstatusmodells.
 
+**„Mehr wissen?“ am Vorgang:** Der freigegebene Vorgangsbeitrag kann durch eigene weiterführende Fragen und quellengebundene Antworten ergänzt werden. Sie erklären relevante Hintergründe und Zusammenhänge, ohne den Vorgangsbeitrag nur zu wiederholen. Die Detailregeln für Vertiefungsfragen und ihre Freigabe gehören zu Kapitel 09.
+
 ## 05.7 Lebenszyklus: aktiv, ruhend, abgeschlossen, archiviert
 
 Das bestehende logische Datenmodell nennt für Vorgänge die Status **`aktiv`, `ruhend`, `abgeschlossen`, `archiviert`**. Diese bestehenden fachlichen Begriffe bleiben zur Prüfung erhalten; der neue Entwurf führt keine weiteren Status ein.
