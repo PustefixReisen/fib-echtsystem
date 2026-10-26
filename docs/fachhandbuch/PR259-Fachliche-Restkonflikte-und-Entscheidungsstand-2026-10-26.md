@@ -17,13 +17,13 @@
 
 ## 2. Offene **fachliche** Klärung bzw. normative Harmonisierung
 
-### F-01: Veröffentlichung mit Termin versus unmittelbar bestätigter S3-Aktion
+### F-01: Terminierte Veröffentlichung – **fachlich entschieden am 26.10.2026**
 
-**Quelle:** [Rollen, Rechte und Workflow](../Rollen-Rechte-und-Workflow.md), insbesondere §6.4: „S3 benötigt immer eine unmittelbare explizite Bestätigung unmittelbar vor der Ausführung“. **Ziel:** Kap. 08 und 11 erlauben das *Planen* einer späteren Veröffentlichung samt erneuter Prüfung vor Ausführung.
+Die Redaktion darf die automatische Veröffentlichung **einer genau bezeichneten freigegebenen Beitragsfassung zu einem genau bezeichneten Termin** ausdrücklich bestätigen. Diese **an Fassung und Termin gebundene S3-Bestätigung bei der Terminierung** genügt; eine erneute manuelle Bestätigung unmittelbar zum Termin ist nicht erforderlich.
 
-**Widerspruch:** Eine menschliche Bestätigung bei der Terminplanung ist zeitlich nicht notwendigerweise „unmittelbar vor der Ausführung“. Es darf weder stillschweigend eine unautorisierte automatische Publikation eingeführt noch das fachlich vorgesehene Planen ausgeblendet werden.
+**Verbindliche Grenzen:** Vor der technischen Ausführung prüft FIB erneut Rolle/Berechtigung, unveränderte freigegebene Fassung, gültigen Termin und sämtliche sonstigen Rechte- und Qualitätsbedingungen. Liegt eine Voraussetzung nicht mehr vor, **unterbleibt die Veröffentlichung** und die Redaktion erhält einen Hinweis beziehungsweise eine Aufgabe. Bei Änderung des Termins oder des Inhalts ist erneut ausdrücklich zu bestätigen. Die Ausnahme betrifft ausschließlich die so terminierte Veröffentlichung; für sonstige S3-Aktionen bleibt die unmittelbare Bestätigung maßgeblich.
 
-**Bis zur Fachentscheidung:** Geplante Veröffentlichung als vorgesehenes Ziel dokumentieren; tatsächliche Ausführung nur mit erfüllten geltenden S3-Anforderungen. Der genaue gültige Bestätigungszeitpunkt muss fachlich widerspruchsfrei entschieden werden, bevor die neue Primärregel verbindlich wird. Dies ist **kein bloßes SQL-/UI-Thema**.
+**Migration:** Die ältere Formulierung in [Rollen, Rechte und Workflow](../Rollen-Rechte-und-Workflow.md), §6.4, ohne Ausnahme „unmittelbar vor Ausführung“ ist **für diesen eng beschriebenen Spezialfall fachlich überholt**. Kapitel 08 und 11 enthalten das beschlossene Zielmodell. Der alte Primärwortlaut wird vor finaler normativer Ablösung nachvollziehbar harmonisiert, ohne das bestehende Rechte-/Sicherheitsverfahren vorzeitig technisch zu verändern.
 
 ### F-02: Vorläufig angelegter Vorgang und ältere Kardinalität
 
@@ -41,7 +41,7 @@
 
 - Speicherform von Analysebausteinen und Versionen, API-Endpunkte, Freigabeaktion und Sperrtechnik.
 - Konkreter Schritt-/Dialogaufbau im Themeneditor und Darstellung von Änderungspaketen.
-- Scheduling-Infrastruktur für Publikationen, nachdem der fachliche S3-Bestätigungszeitpunkt geklärt wurde.
+- Scheduling-Infrastruktur für Publikationen, auf Basis des nun festgelegten fassungs- und termingebundenen Bestätigungspunkts.
 - Technische Metadaten/Statusspalten zu vorläufigen Ereignissen, wenn ihre fachlichen Grenzen erhalten bleiben.
 
 ## 4. Vor Abschluss der Fachkonzeptmigration
@@ -55,7 +55,7 @@
 
 ## 5. Quellengestützte Präzisierung der drei Restfragen
 
-**F-01:** Die geltende Rechtequelle formuliert in §6.4 ausdrücklich eine S3-Bestätigung unmittelbar vor Ausführung. Eine Ausnahme für automatische Terminveröffentlichung ist dort nicht ausgewiesen. Die Leseentwürfe enthalten deshalb bislang **ein zusätzliches fachliches Ziel ohne gelöste Ausführungsregel**. Bis zur gemeinsamen Entscheidung darf keine vorab erteilte allgemeine Zustimmung als bestehende Ausnahme dargestellt werden.
+**F-01 ist am 26.10.2026 entschieden:** Die ausdrücklich bestätigte Terminierung einer konkreten freigegebenen Fassung ist die erforderliche gebundene S3-Bestätigung. Vor automatischer Veröffentlichung erfolgt die erneute Gültigkeitsprüfung; eine zweite manuelle Bestätigung ist nicht nötig. Die ältere Primärquelle muss diese fachliche Ausnahme bei der endgültigen Übernahme explizit aufnehmen.
 
 **F-02:** Das ältere Datenmodell nennt für die Beziehung Vorgang zu Ereignis `1..n`. Die neue automatische **vorläufige** Vorgangsanlage ist mit einer solchen Mindestverknüpfung vereinbar, wenn sie aufgrund mindestens eines bereits identifizierten Ereignisses erfolgt. Einen Ereignisbezug vollständig entbehrlich zu machen, ist aus der bisherigen Fachentscheidung **nicht ableitbar**. Daher bleibt die Mindestbeziehung als fachlicher Ausgangspunkt erhalten; technische Anlagezeitpunkte sind später zu modellieren.
 
