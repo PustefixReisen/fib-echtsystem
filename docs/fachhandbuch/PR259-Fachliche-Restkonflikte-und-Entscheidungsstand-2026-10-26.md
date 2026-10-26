@@ -59,7 +59,7 @@ Die Redaktion darf die automatische Veröffentlichung **einer genau bezeichneten
 
 **F-02:** Das ältere Datenmodell nennt für die Beziehung Vorgang zu Ereignis `1..n`. Die neue automatische **vorläufige** Vorgangsanlage ist mit einer solchen Mindestverknüpfung vereinbar, wenn sie aufgrund mindestens eines bereits identifizierten Ereignisses erfolgt. Einen Ereignisbezug vollständig entbehrlich zu machen, ist aus der bisherigen Fachentscheidung **nicht ableitbar**. Daher bleibt die Mindestbeziehung als fachlicher Ausgangspunkt erhalten; technische Anlagezeitpunkte sind später zu modellieren.
 
-**F-03:** Das Persistenzmodell, §9, historisiert die Analysebestandteile über den **bestätigten strukturierten Gesamtstand** des jeweiligen Vorgangs bzw. Themas; eigene unabhängige Versionen für einzelne Wirkungen/Perspektiven sind nicht vorgesehen. Die später bestätigte Möglichkeit, **einzelne Änderungen anzunehmen oder zurückzustellen**, hebt diese Regel nicht automatisch auf. Fachlich naheliegende Lesart ist eine neue Gesamtfassung mit ausschließlich übernommenen Änderungen und eindeutig ausgewiesenen offenen Vorschlägen. Ob diese Lesart als verbindliche Regel angenommen wird, bleibt für die gebündelte Leseabnahme ausdrücklich kenntlich.
+**F-03:** Das Persistenzmodell, §9, historisiert die Analysebestandteile über den **bestätigten strukturierten Gesamtstand** des jeweiligen Vorgangs bzw. Themas; eigene unabhängige Versionen für einzelne Wirkungen/Perspektiven sind nicht vorgesehen. Die später bestätigte Möglichkeit, **einzelne Änderungen anzunehmen oder zurückzustellen**, hebt diese Regel nicht automatisch auf. Fachlich naheliegende Lesart ist eine neue Gesamtfassung mit ausschließlich übernommenen Änderungen und eindeutig ausgewiesenen offenen Vorschlägen. Diese Regel wurde am 26.10.2026 verbindlich angenommen.
 
 **Quellen:** `docs/Rollen-Rechte-und-Workflow.md` §6.4; `docs/Persistenz-und-Lebenszyklusmodell.md` §9; `docs/Datenmodell.md`; aktuelle Kapitel 05, 06, 08 und 11.
 
@@ -68,9 +68,9 @@ Die Redaktion darf die automatische Veröffentlichung **einer genau bezeichneten
 
 **F-02:** In Kapitel 05 ist nun ausdrücklich klargestellt, dass eine automatische vorläufige Vorgangsanlage auf **mindestens einem bereits identifizierten, gegebenenfalls selbst noch vorläufigen Ereignis** basiert. Das bewahrt den fachlichen Mindestbezug des Bestandsmodells. Ob es darüber hinaus begründete Fälle einer vorläufigen Anlage *ohne jedes Ereignis* geben soll, ist durch die bisherige Entscheidung nicht gedeckt und wird **nicht stillschweigend zugelassen**. Die technische Umsetzung ist nachgelagert.
 
-**F-03:** Kapitel 05 und 06 trennen bestätigte Aussagen von offenen Vorschlägen und knüpfen die Historisierung weiter an den **bestätigten Gesamtstand**. Die präzise fachliche Regel, wann bei Teilfreigabe eine neue gültige Gesamtfassung entsteht und wie offene Elemente darin sichtbar bleiben, ist vor Abnahme noch gemeinsam festzulegen. Es wird keine zusätzliche eigenständige Teilobjekt-Versionierung eingeführt.
+**F-03:** Kapitel 05 und 06 trennen bestätigte Aussagen von offenen Vorschlägen und knüpfen die Historisierung weiter an den **bestätigten Gesamtstand**. Die Regel zur neuen gültigen Gesamtfassung nach Teilfreigabe ist am 26.10.2026 beschlossen; die technische Abbildung bleibt offen. Es wird keine zusätzliche eigenständige Teilobjekt-Versionierung eingeführt.
 
-**Priorität:** F-02 ist durch Wahrung der bestehenden Mindestbeziehung für den beschriebenen Regelfall konsistent erläutert; die Entscheidung über mögliche Ausnahmen bleibt nur relevant, wenn solche tatsächlich gewünscht werden. **F-03 ist die verbleibende konkrete fachliche Modellfrage.** F-01 wurde bereits gesondert entschieden.
+**Priorität:** F-02 ist durch Wahrung der bestehenden Mindestbeziehung für den beschriebenen Regelfall konsistent erläutert; die Entscheidung über mögliche Ausnahmen bleibt nur relevant, wenn solche tatsächlich gewünscht werden. **F-03 wurde am 26.10.2026 entschieden.** F-01 wurde bereits gesondert entschieden.
 
 
 ## 7. Konkrete Entscheidungsgrundlage für F-03
