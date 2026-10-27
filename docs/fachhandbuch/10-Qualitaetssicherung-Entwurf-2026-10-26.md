@@ -80,7 +80,7 @@ Die Qualitätsentscheidung bezieht sich auf **die betreffende Aussage und konkre
 
 ### Öffentliche Dokumente und Bilder: eigenständige Rechteprüfung
 
-Die Freigabe eines Beitrags umfasst nicht automatisch die Freigabe seiner Dokumente und Bilder. Die bisherige Primärquelle [Fachliche Plausibilitäts- und Freigaberegeln](../Fachliche-Plausibilitaets-und-Freigaberegeln.md) unterscheidet für Dateien interne Nutzung, öffentlich freigabefähige Nutzung, tatsächliche Bereitstellung und Sperrung beziehungsweise Rücknahme. Die öffentliche Bereitstellung verlangt einen **positiv geklärten Rechtezustand** und eine eigene bestätigte S3-Aktion.
+Die Freigabe eines Beitrags umfasst nicht automatisch die Freigabe seiner Dokumente und Bilder. Die bisherige Primärquelle [Fachliche Plausibilitäts- und Freigaberegeln](../Fachliche-Plausibilitaets-und-Freigaberegeln.md) unterscheidet für Dateien interne Nutzung, öffentlich freigabefähige Nutzung, tatsächliche Bereitstellung und Sperrung beziehungsweise Rücknahme. Die öffentliche Bereitstellung verlangt einen **positiv geklärten Rechtezustand** und eine eigene bestätigte S3-Aktion. Der Rechteklärungsstand unterscheidet **geklärt/zulässig**, **ungeklärt** und **nicht zulässig**. Davon getrennt wird die Bereitstellung als **nur redaktionell**, **öffentlich freigabefähig**, **öffentlich bereitgestellt** oder **gesperrt/zurückgezogen** geführt.
 
 Für Bilder sind das Nutzungsrecht am Bild und die Eignung seiner **konkreten Verwendung** getrennt zu prüfen; erforderliche Lizenz-, Datenschutz- und Persönlichkeitsrechtsbedingungen bleiben relevant. Freigabe und Rücknahme sind nachvollziehbar zu protokollieren.
 
