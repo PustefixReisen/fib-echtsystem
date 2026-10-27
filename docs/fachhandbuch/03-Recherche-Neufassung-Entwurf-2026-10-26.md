@@ -230,7 +230,7 @@ Recherche verarbeitet nicht nur Nachrichten, sondern erweitert begründet ihren 
 
 **Grenzbeispiel:** Ein Hinweis auf einen regionalen Radschnellweg kann FIB veranlassen, seinen möglichen Verlauf durch Feldkirchen aus belastbaren Quellen nachzurecherchieren. Die bloße KI-Vermutung wird dadurch noch kein dauerhaft bestätigtes Referenzwissen. Erst ein nachgewiesener Funktionsbezug darf als Grundlage weiterer Recherchen dienen.
 
-**Regelbestandskontrolle:** Diese Regelgruppen erläutern den im bisherigen Kapitel 03 definierten fachlichen Kern. Die vollständigen Originaltexte und die explizite Änderung von **FIB-RECH-SICHTUNG-001** sind weiterhin in der [Regelreferenz](03-Recherche-Fachregelreferenz-Migration-2026-10-26.md) dokumentiert. Die nur zitierte Kennung **FIB-RECH-ABLAUF-001** benötigt weiterhin einen Ursprungshinweis, bevor die Inventur normativ abgeschlossen werden kann.
+**Regelbestandskontrolle:** Diese Regelgruppen erläutern den im bisherigen Kapitel 03 definierten fachlichen Kern. Die vollständigen Originaltexte und die explizite Änderung von **FIB-RECH-SICHTUNG-001** sind weiterhin in der [Regelreferenz](03-Recherche-Fachregelreferenz-Migration-2026-10-26.md) dokumentiert. Die bisher übersehene, aber tatsächlich definierte Kennung **FIB-RECH-ABLAUF-001** steht in [Kapitel 03 (Bestand), Zeile 487](03-Recherche.md#L487): Neue Fundstelle, Ereignis und Meldung sind getrennte Entscheidungen; eine neue Quelle erzwingt keine neue Meldung. Die normative Endprüfung bleibt offen.
 
 
 ### Herkunft von Fundstellen und inkrementelle Recherche
