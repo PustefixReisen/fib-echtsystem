@@ -190,6 +190,12 @@ Eine zurückgezogene Fassung darf erneut veröffentlicht werden, wenn sie **inha
 
 Das ist die fachliche Bestandsregel **FIB-THEMA-BEITRAG-010**. Ein Publikationsrückzug ist nicht mit der Rücknahme einer noch nie öffentlich genutzten Beitragsfreigabe gleichzusetzen.
 
+### Exklusive Bearbeitungssperre
+
+Wer einen Themenbeitrag nur liest, löst keine Sperre aus. Vor dem ersten schreibenden Bearbeitungsversuch muss FIB eine **exklusive Objektsperre** erwerben. Solange sie gilt, können andere Redakteure den Beitrag lesen, aber nicht parallel ändern. Die Sperre wird während der Bearbeitung erneuert, beim regulären Ende freigegeben und verfällt, wenn sie nicht mehr erneuert wird. Eine administrative Aufhebung einer verwaisten fremden Sperre ist zu protokollieren.
+
+Eine bloße Konfliktkontrolle beim Speichern ersetzt dieses pessimistische Prinzip nicht. Es gilt fachlich auch für andere bearbeitete FIB-Objekte; der Themenbeitrag ist kein Sonderfall. Grundlage: **FIB-THEMA-BEITRAG-011** und `docs/Datenmodell.md` §20.4.
+
 ## 06.7 Fortlaufende Aktualität und öffentlicher Bezug
 
 Nach einer redaktionell freigegebenen Änderung der Themenanalyse prüft FIB automatisch, ob bereits veröffentlichte Themenbeiträge betroffen sind. Eine relevante Auswirkung erzeugt einen **Aktualisierungsvorschlag**, nicht eine automatische Änderung am öffentlichen Text. Keine neue Veröffentlichung ist nötig, wenn der Beitrag sachlich richtig und hinreichend vollständig bleibt.
