@@ -1,3 +1,9 @@
+## Bildverwaltung: Quelltransfer (27.10.2026)
+
+Die vorhandenen Festlegungen aus `docs/Visuelle-Identitaet-und-Bildkonzept.md` §14 wurden in Kapitel 08 (Bildbibliothek, Primärzuordnungen, weitere geeignete Nutzungen, Nutzungsausschlüsse, Einzelprüfung, Rechte und Freigaben) und Kapitel 09 (öffentliche Bildunterschriften, Nachweise, Alternativtexte, sachgerechte Darstellung) explizit eingearbeitet. Die optionale Funktion „Mehr zum Bild“ bleibt **nicht beschlossen für das MVP**.
+
+Für das spätere eigenständige Administrationskonzept sind die Bestandsverwaltung der Bildbibliothek und übergreifende Metadatenpflege vorzusehen. Eine konkrete Admin-Oberfläche oder neue Bildfreigabe-Rolle wird damit nicht vorweggenommen. Einzelne Rechte- und Statusregeln der bisherigen Primärquelle bleiben bis zur normativen Gesamtprüfung verbindlich.
+
 ## Regelkennungen: erster konkreter Einzelnachweis (27.10.2026)
 
 Die [Migrationsmatrix](PR259-Regelkennungen-Migrationsmatrix-2026-10-26.md) unterscheidet nun anhand von vier tatsächlich geprüften Originalkennungen zwischen **fachlich überholtem Originalwortlaut**, **inhaltlicher Abbildung in neuen Kapiteln** und **nicht aufgelöster Kennung**. Wichtigster offener Normwechsel ist die ausdrücklich beschlossene Ablösung der Pflicht-Einzelsichtung in `FIB-RECH-SICHTUNG-001`. `FIB-RECH-ABLAUF-001` bleibt mangels eigenständiger Originaldefinition als Verweisproblem markiert. Die Prüfung der übrigen Regelkennungen ist damit **nicht** als erledigt ausgewiesen.
