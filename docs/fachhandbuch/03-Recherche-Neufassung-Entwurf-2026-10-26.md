@@ -231,6 +231,18 @@ Nach einem anlassbezogenen Rückblick recherchiert FIB grundsätzlich **inkremen
 
 Grundlage: **FIB-RECH-QUELLE-010** und **FIB-RECH-RUECKBLICK-001** im bisherigen Kapitel 03.
 
+### Fundstellen: Identität, Fassungen und Prüfstatus
+
+Neue Fundstellen bleiben als Recherchekandidaten erhalten; sie sind nicht schon bestätigte Ereignisse. Eine Fundstelle darf mehrere Sachverhalte betreffen. Die bestätigte Zuordnung zu einem Ereignis benötigt eine nachvollziehbare Begründung ihres Informationsbeitrags. Die KI kann sie vorschlagen, die Redaktion entscheidet.
+
+Ein unveränderter Wiederfund verwendet dieselbe Fundstelle. Fachlich relevante Änderungen, etwa bei Kosten, Planungs- oder Beschlussinhalten, erzeugen eine neue Fassung unter derselben Identität. Bloße Layout- oder Tippfehlerkorrekturen benötigen nicht zwingend eine neue Fassung; Zweifelsfälle werden der Redaktion mit konkretem Vergleich vorgelegt. Eine neue Fundstellenfassung erzeugt nicht automatisch ein Ereignis oder eine Veröffentlichung.
+
+Die Prüfstatus heißen **Neu, Analysiert, Geprüft und Zurückgestellt**. KI-Analyse ist keine redaktionelle Prüfung; die verbindliche Zurückstellung entscheidet die Redaktion. Zurückgestellte Funde können wieder aufgenommen werden. Eine fachlich geänderte Fassung löst neue Prüfung aus; frühere Entscheidungen bleiben historisch erhalten.
+
+Rechercheergebnisse protokollieren neue Fundstellen und fachlich geänderte Fassungen, nicht jeden unveränderten Wiederfund. Die fachliche Änderungshistorie bleibt unabhängig von Aufbewahrungsfristen technischer Laufprotokolle erhalten.
+
+Grundlage: **FIB-RECH-FUND-001 bis -007** im bisherigen Kapitel 03. Die Pflichtprüfung jeder einzelnen Fundstelle wird damit nicht wieder eingeführt.
+
 ## 03.6 Konkrete Modellerprobung und Abnahmekriterien
 
 **Testfall Grundstückskauf:** Artikel wird als Fundstelle gesichert; Ereignis wird abgeleitet; späterer amtlicher Widerspruch korrigiert eine vorläufige Aussage bzw. erzeugt bei bestätigtem Ereignis einen Vorschlag; eigenständiger vorläufiger Vorgang mit Erstanalyse; Nachricht nur bei Relevanz; Folgeereignisse mit Folgemeldungen und Rückblick.
