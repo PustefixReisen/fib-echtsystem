@@ -49,7 +49,7 @@ Vorgänge und Themen verarbeiten Ereignisse unmittelbar. Themen beziehen zusätz
 
 ### 03.2.2 Analyseinhalt
 
-Die Analyse verarbeitet (1) Faktenwissen, (2) Erklärungswissen über technische, wissenschaftliche, rechtliche und sonstige Zusammenhänge sowie (3) Hintergrund- und Zusammenhangswissen zu Ursachen, Interessen, Rahmenbedingungen und Zielkonflikten. Eine systematische **Wirkungs- und Folgenanalyse** behandelt direkte und indirekte, beabsichtigte und unbeabsichtigte Folgen. Perspektiven werden sachverhaltsgerecht entwickelt und nicht auf einen starren Katalog begrenzt. Belege, Unsicherheiten, Hypothesen und Widersprüche bleiben unterscheidbar.
+Die Analyse verarbeitet (1) Faktenwissen, (2) Erklärungswissen über technische, wissenschaftliche, rechtliche und sonstige Zusammenhänge sowie (3) Hintergrund- und Zusammenhangswissen zu Ursachen, Interessen, Rahmenbedingungen und Zielkonflikten. Eine systematische **Wirkungs- und Folgenanalyse** behandelt direkte und indirekte, beabsichtigte und unbeabsichtigte Folgen. Eine **Perspektive** ist ein zunächst wertungsfreier fachlicher Betrachtungsaspekt, etwa Verkehrssicherheit, Lärm, Erreichbarkeit oder Flächenverbrauch. Unter einer solchen Perspektive untersucht FIB relevante Folgen und Zusammenhänge; sie ist weder die Sicht eines Akteurs noch bereits eine politische Bewertung. Perspektiven werden passend zur Fragestellung entwickelt und sind nicht auf einen starren Katalog begrenzt. Belege, Unsicherheiten, Hypothesen und Widersprüche bleiben unterscheidbar.
 
 Die Analyse benötigt nicht zwingend einen vorab formulierten Rechercheauftrag. Sie wertet zuerst das vorhandene Wissen aus und kann daraus Wissenslücken und Fragen ableiten. Offene Fragen werden beim jeweiligen Vorgang oder Thema dokumentiert und bei neuen Informationen erneut geprüft.
 
@@ -65,7 +65,7 @@ Gezielte Recherchen können **sowohl neue Ereignisse als auch neue Erkenntnisse*
 
 ### 03.3.1 Recherchestart
 
-Die **Standardsuche** beobachtet bekannte Quellen und sucht offen nach neuen Sachverhalten. Sie führt **nicht automatisch eine eigenständige vertiefte Erkenntnisrecherche** aus; sie darf entsprechenden Bedarf erkennen und vorschlagen.
+Die **Standardsuche** beobachtet bekannte Quellen und sucht offen nach neuen Sachverhalten. Sie führt **nicht automatisch eine eigenständige vertiefte Erkenntnisrecherche** aus; sie darf entsprechenden Bedarf erkennen und vorschlagen. Eine vertiefte Recherche kann die Redaktion insbesondere während der Bearbeitung eines Vorgangs oder Themas beauftragen. Ändert sich später der bestätigte Vorgangs- oder Themenkontext wesentlich, prüft FIB erneut, ob frühere Rechercheergebnisse noch ausreichen oder eine ergänzende beziehungsweise wiederholte Recherche vorgeschlagen werden sollte. Ohne passenden genehmigten Dauerauftrag entsteht dadurch keine automatische neue vertiefte Recherche.
 
 Redakteure können unmittelbar bei einem Ereignis, Vorgang oder Thema eine **Nachfrage** formulieren. FIB beantwortet sie zuerst aus vorhandenen Analysen und Fundstellen. Reicht das nicht, schlägt FIB einen Auftrag mit begründeten Teilfragen vor. Mit **einer redaktionellen Freigabe des Rechercheziels und seiner Grenzen** ist die operative Ausführung erlaubt. Während eines genehmigten Auftrags darf FIB innerhalb der Grenzen selbstständig recherchieren, Teilfragen ergänzen und auswerten. Eine Erweiterung des Ziels benötigt neue Freigabe.
 
@@ -199,9 +199,9 @@ Diese Absätze beschreiben **Benutzungsanforderungen**, keine fertig beschlossen
 7. **Einfache Bedienung:** KI übernimmt ausführende Arbeit; die Redaktion erhält entscheidungsrelevante, kontextbezogene Aufgaben und kontrolliert Freigaben.
 8. **Prüfbarkeit:** Rechercheabdeckung, offene Fragen, Quellenfehler, Änderungsgründe, Abhängigkeiten und Qualitätsprobleme bleiben sichtbar.
 
-Verbindliche Regelkennungen des Bestands (z. B. FIB-RECH-PRINZIP-001, FIB-RECH-HORIZONT-001/002, FIB-RECH-RELEVANZ-001 bis -004, FIB-RECH-SICHTUNG-001 und FIB-RECH-PRINZIP-002) dürfen **nicht ungeprüft ersetzt oder neu belegt** werden. Die endgültige Normfassung benötigt einen Kennungs- und Konsistenzabgleich.
+**Dokumentationshinweis (nicht Teil des fachlichen Arbeitsablaufs):** Die bisherigen Regelkennungen werden bei der Migration abgeglichen. Bereits beschlossene Abweichungen, insbesondere bei der Sichtung neuer Fundstellen, werden dokumentiert und nicht als unveränderte Übernahme ausgewiesen.
 
-**Verbindliche Detailregeln im Übergang:** Die [nach Fachaufgaben gruppierte Recherche-Fachregelreferenz](03-Recherche-Fachregelreferenz-Migration-2026-10-26.md) enthält 53 als Einzelblöcke inventarisierte Regeldefinitionen; die 54. Regel FIB-RECH-ABLAUF-001 ist im bisherigen Kapitel 03, Zeile 487, separat nachgewiesen. Sie ergänzt die lesbare Prozessbeschreibung; bis zur vollständigen fachlichen Abnahme bleibt das bisherige Kapitel 03 maßgeblich.
+**Regelreferenz für die Abnahme:** Die [Recherche-Fachregelreferenz](03-Recherche-Fachregelreferenz-Migration-2026-10-26.md) weist sämtliche **54** identifizierten Recherche-Regelkennungen einschließlich FIB-RECH-ABLAUF-001 nach. Die formale normative Endprüfung übernehme ich; sie ist keine Aufgabe der fachlichen Leserin bzw. des fachlichen Lesers. Bis zur vollständigen Abnahme bleiben die bisherigen Primärquellen verbindlich.
 
 ### 03.5a Abgleich der verbindlichen Detailregeln
 
@@ -211,7 +211,7 @@ Die nachstehende Abgrenzung präzisiert die in [der Fachregelreferenz](03-Recher
 - **Quellenstatus (QUELLE-008/009):** Kandidat, Aktiv, Pausiert, Beendet und Abgelehnt bilden den redaktionellen Quellenstatus. „Pflichtquelle“ ist eine davon unabhängige Eigenschaft. Der bestehende Übergangskatalog bleibt maßgeblich; KI-Vorschläge ändern weder Quelle noch Normstatus automatisch.
 - **Fundstellenidentität (QUELLE-010, FUND-003/004/007):** Eine Fundstelle besitzt genau eine Primärquelle. Derselbe unveränderte Inhalt wird nicht allein wegen neuer Auffindbarkeit als neuer Fund gespeichert. Relevante Inhaltsänderungen erzeugen nachvollziehbare Fassungen und Änderungssignale; technische Wiederfunde ohne neue Information nicht.
 - **Publikationswarnung (RELEVANZ-003):** Für die letzten **90 Tage** gilt: Zähler = neu veröffentlichte Beiträge mit *ausschließlich* mittelbarem, vergleichendem oder zukünftigem Feldkirchen-Bezug; Nenner = sämtliche im selben Zeitraum neu veröffentlichten Beiträge. Jeder Beitrag zählt einmal. **Über 30 %** wird eine redaktionelle Prüfung angestoßen, **keine** automatische Veröffentlichungssperre; bei Nenner null ist kein Wert berechenbar.
-- **Beobachtungsauftrag (BEOB-001 bis -004):** Die dokumentierte Hauptzuordnung zu Vorgang, Thema oder offener Frage bleibt erhalten. Dass eine Nachfrage zunächst bei einem Ereignis entstehen darf, erzeugt **nicht automatisch** eine weitere dauerhaft zulässige Primärbezugskategorie für Beobachtungsaufträge. Diese Ausnahme wird im Objektmodell geklärt.
+- **Beobachtungsauftrag (BEOB-001 bis -004):** Die dokumentierte Hauptzuordnung zu Vorgang, Thema oder offener Frage bleibt erhalten. Eine **einmalige Nachfrage zu einem Ereignis** ist möglich, ohne dafür einen dauerhaften Beobachtungsauftrag zu eröffnen. Soll die Frage über längere Zeit verfolgt werden, ordnet die Redaktion den Beobachtungsauftrag einem Vorgang, Thema oder einer offenen Frage als Hauptbezug zu. Ein eigener dauerhafter Beobachtungsauftrag mit dem Ereignis als vierter Hauptbezug ist derzeit nicht beschlossen; dies bleibt eine Frage der späteren Fachmodellprüfung.
 - **Recherchequalität (QUAL-001, REGEL-002):** Ein Abruffehler ist kein negativer Sachbefund; Regeltests müssen die Entdeckungswirkung von der Bewertungswirkung unterscheiden.
 
 **Offene Normharmonisierung:** Vorläufige Ereignisse sind weder redaktionell bestätigte Ereignisse noch Fundstellenstatus. Ihre zulässigen automatischen Schreibaktionen müssen in Kapitel 04/11 und der Fachservice-Schicht begrenzt werden. Der Quelltext von FIB-RECH-SICHTUNG-001 wird nicht allein aufgrund der neuen Ereignisautonomie uminterpretiert.
@@ -240,7 +240,7 @@ Grundlage: **FIB-RECH-FUND-001 bis -007** im bisherigen Kapitel 03. Die Pflichtp
 
 #### Pflichtquellen, Dateien und Überwachungsqualität
 
-Alle drei Quellenzugangswege speisen denselben Rechercheprozess; keiner führt unmittelbar zu fachlicher Bestätigung oder Veröffentlichung. Bekannte Pflichtquellen, insbesondere Gemeinde- und RIS-Einstiege, werden **direkt und unabhängig von Suchmaschinen** überprüft. Das umfasst neue Unterseiten, freigegebene Dokumente außerhalb von Tagesordnungen und relevante Dateiänderungen bei gleicher URL. Die Veröffentlichung einer Vorlage belegt für sich genommen noch keinen konkreten Sitzungstermin oder TOP.
+Alle drei Quellenzugangswege speisen denselben Rechercheprozess; keiner führt unmittelbar zu fachlicher Bestätigung oder Veröffentlichung. Bekannte Pflichtquellen, insbesondere Gemeinde- und RIS-Einstiege, werden **direkt und unabhängig von Suchmaschinen** überprüft. Das umfasst neue Unterseiten, freigegebene Dokumente außerhalb von Tagesordnungen und relevante Dateiänderungen bei gleicher URL. Eine **öffentlich zugängliche Beschlussvorlage kann noch keiner Sitzung und keinem TOP zugeordnet sein**. Auch dann bleibt sie als Fundstelle sichtbar und wird von der Quellenbeobachtung erfasst. Solange keine belastbaren Angaben vorliegen, darf FIB weder eine spätere Beratung noch einen Beschluss behaupten. Einige veröffentlichte Vorlagen gelangen möglicherweise überhaupt nicht zur Beratung.
 
 Unveränderte bekannte Inhalte benötigen grundsätzlich keine erneute KI-Auswertung. KI wird gezielt für semantische Analyse, relevante Veränderungen und offene Quellenentdeckung genutzt.
 
@@ -297,7 +297,7 @@ KI darf suchen, erfassen und Vorschläge machen, aber keine Fundstellen verbindl
 
 #### Drei Referenzrahmen ohne Verfälschung der Fakten
 
-FIB trennt allgemeine Quellen- und Qualitätsprinzipien, demokratisch-gesellschaftliche Maßstäbe und ausdrücklich grüne politische Wertungen. Politische Erwartungen dürfen die Tatsachenbasis nicht verändern. Grüne Wertungen erscheinen gegebenenfalls getrennt als „Unsere Einordnung“. Gesellschaftlich-demokratische Entwicklungen können auch ohne direkten Ortsbezug recherchiert werden, wenn eine mögliche konkrete Bedeutung für Feldkirchen begründet wird. Die genauen gesellschaftlich-demokratischen Bewertungskriterien sind in den bisherigen Regeln noch nicht abschließend festgelegt und werden nicht als bereits beschlossen ausgegeben (FIB-RECH-RAHMEN-001).
+FIB trennt allgemeine Quellen- und Qualitätsprinzipien, demokratisch-gesellschaftliche Maßstäbe und ausdrücklich grüne politische Wertungen. Politische Erwartungen dürfen die Tatsachenbasis nicht verändern. Grüne Wertungen erscheinen gegebenenfalls getrennt als „Unsere Einordnung“. Gesellschaftlich-demokratische Entwicklungen können auch ohne direkten Ortsbezug recherchiert werden, wenn eine mögliche konkrete Bedeutung für Feldkirchen begründet wird. Die genauen gesellschaftlich-demokratischen Bewertungskriterien sind **fachlich noch nicht beschlossen** (FIB-RECH-RAHMEN-001). Sie werden ausdrücklich als **offene Fachentscheidung** geführt und bis zur Beschlussfassung weder als verbindliche Regel noch als aktiver KI-Bewertungsmaßstab verwendet.
 
 ## 03.6 Konkrete Modellerprobung und Abnahmekriterien
 
