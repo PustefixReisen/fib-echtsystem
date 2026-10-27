@@ -314,16 +314,22 @@ Für die spätere Abnahme muss nachweisbar sein, dass jeder dieser Abläufe sowo
 
 FIB wird in gemeinsam fachlich prüfbaren Entwicklungsschritten umgesetzt. Jede neue fachliche Entscheidung ist vor oder spätestens mit der Implementierung im führenden Fachhandbuch samt Regelkennung, Auswirkungen auf Abläufe, Zustände und Rechte sowie gegebenenfalls Abnahmetest dokumentiert. Technische Entscheidungen dürfen keine neue fachliche Regel ohne Abstimmung etablieren. Ein Entwicklungsissue kann erst geschlossen werden, wenn die Dokumentationsfolgen geprüft und notwendige Änderungen übernommen sind. Grundlage: FIB-RECH-GOV-001.
 
-## 03.7 Offene Lösungsfragen und Konsistenzaufgaben
+## 03.7 Beschlossene Regeln und verbleibende Umsetzungsfragen
 
-- **Bestandsregel-Konflikt A:** Kapitel 03 v3.0 beschreibt redaktionelle Übernahme von Ereigniskandidaten; neue Fachentscheidung erlaubt **vorläufige automatische Ereigniserfassung**. Rechte, Status und Übergänge sind ausdrücklich zu harmonisieren.
-- **Bestandsregel-Konflikt B:** Kapitel 06 verlangt bisher vor Themenfreigabe einen **ausgewerteten Beobachtungsauftrag** und spricht vom **dreiteiligen Themeneditor**. Beides wurde fachlich geändert: verpflichtend ist eine **fachlich geprüfte Themenanalyse**; ein Beobachtungsauftrag ist bedarfsabhängig; künftig vier Arbeitsbereiche ohne vier Pflichtfreigaben. Kapitel 06 und Prüfungen müssen angepasst werden.
-- **Bestandsregel-Konflikt C:** Frühere Formulierungen behandeln Beobachtungsaufträge teilweise als Erkenntnisträger; die **Analyse** ist künftig fachlicher Speicherort der gewonnenen Erkenntnisse.
-- **Bestandsregel-Konflikt D:** Die aktuellen lokalen Bezugsstatus/Kandidaten („Kandidat“, „Zugeordnet“, „Zurückgestellt“, „Fachlich unpassend“) sind mit der neu vereinbarten **vorläufigen automatischen Zuordnung** und redaktioneller Verbindlichkeit abzugleichen, ohne ungeprüfte neue Status einzuführen.
-- **Abgrenzung:** Die §§03.3.3–03.3.6 enthalten notwendige **Schnittstellenbeschreibungen**. Die Primärregeln für Ereignisse/Meldungen, Vorgänge, Themen, Freigabe und Qualität sind nach vollständiger Migration in Kapitel 04/05/06/08/10 zu verankern, nicht redundant normativ an zwei Stellen.
-- **Konkrete Gestaltung offen:** Priorisierung/Anzeige von Änderungspaketen, Qualitätswarnungen, Nachfragen, Aufgabenlisten, Navigation und vierstufigem Themeneditor; Festlegung iterativ in der bestehenden Anwendung.
-- **Technik offen:** passende Datenmodellierung, automatische Wiederprüftrigger, Abstammungs-/Belegbeziehungen, Freigabe- und Prüfstatus, Schutz vor zyklischen Updates; erst nach Fach-/Regelabgleich entscheiden.
-- **Governance:** Änderungen erst nach Dokumentationsabgleich, automatisierter Konsistenzprüfung, fachlicher Abnahme und Regressionstests abschließen.
+**Bereits fachlich entschieden (keine erneute Grundsatzentscheidung erforderlich):**
+
+- Vorläufige Ereignisse darf FIB automatisch erfassen; die KI darf bestätigte Inhalte nicht stillschweigend überschreiben. Die konkrete Status- und Rechteabbildung wird mit Kapitel 04 und 11 abgeglichen.
+- Ein Themeneditor umfasst **vier Arbeitsbereiche**: Definition, fachliche Bezüge, Themenanalyse und Themenbeitrag. Das sind keine vier Pflichtfreigaben. Ein vorausgehender ausgewerteter Beobachtungsauftrag ist **keine** allgemeine Voraussetzung für die Themenbearbeitung oder Freigabe. Die Analyse wird fachlich geprüft; erste Beitragsfreigabe und Veröffentlichung sind gesonderte Entscheidungen (Kapitel 06/08).
+- Erkenntnisse gehören zur Vorgangs- oder Themenanalyse, nicht in einen Beobachtungsauftrag als dauerhaften Wissensspeicher.
+- Teilfreigaben von Analysen erzeugen nach F-03 einen neuen bestätigten Gesamtstand mit nur den angenommenen Änderungen.
+- Der Zielbereich gesellschaftlich-demokratischer Bewertung ist **noch nicht inhaltlich festgelegt**; die Kriterien werden bis dahin als ausdrücklich offene Fachentscheidung geführt, nicht als aktive KI-Regel.
+
+**Von der Dokumentation und späteren Umsetzung zu klären, ohne dich erneut mit beschlossenen Grundsätzen zu befassen:**
+
+- Die Primärregeln und ihre Kennungen werden mit Kapitel 04/06/08/10/11, Status- und Rechtemodellen sowie den geplanten Abnahmetests abgeglichen. Dazu gehören die neue vorläufige Ereigniserfassung, die begrenzten Beobachtungsauftrags-Hauptbezüge und die Status lokaler Bezüge.
+- Bei einer erheblichen Änderung am bestätigten Vorgangs- oder Themenkontext werden betroffene Analysen und frühere Rechercheergebnisse erneut auf Aktualität und ausreichende Belegdeckung geprüft. Daraus kann ein ergänzender Recherchevorschlag entstehen; automatische Ausführung bleibt an einen gültigen Auftrag gebunden.
+- Die konkrete Darstellung von Aufgaben, Änderungen, Warnungen, vier Arbeitsbereichen und Bildverwendungen wird im anschließenden Bedienkonzept erprobt. Technische Speicherung, automatische Prüftrigger und Schutz vor zyklischen Aktualisierungen folgen nach Fachabnahme.
+- Fachliche Regeländerungen benötigen aktualisierte Primärdokumentation, Querverweise und passende Prüfungen. Altquellen werden erst nach geprüfter Übernahme ersetzt.
 
 ## Quellen und Bezugsdokumente
 
