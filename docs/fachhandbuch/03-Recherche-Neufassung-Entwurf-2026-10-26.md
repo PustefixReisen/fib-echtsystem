@@ -281,6 +281,11 @@ Die **30-%-Schwelle** betrifft ausschließlich neu veröffentlichte Beiträge de
 
 Berechtigte Redakteure müssen erkennen und pflegen können, welche Orte, Quellen, Themenfelder und Verbindungen den Suchhorizont bestimmen. KI-Vorschläge und redaktionelle Festlegungen sind unterscheidbar. Grundlage: **FIB-RECH-RELEVANZ-001 bis -004** und **FIB-RECH-HORIZONT-002**.
 
+
+### Qualitätsgrenzen von Recherchen
+
+Abruffehler, leere Suchläufe und fehlgeschlagene Quellenentdeckung belegen nicht, dass es keine relevanten Nachrichten gibt. FIB kennzeichnet solche Fehler und macht wiederholte Probleme bei Pflichtquellen für die Redaktion sichtbar. Für die KI-gestützte Quellenentdeckung und Bewertung zählt zuerst nachgewiesene fachliche Qualität; erst danach werden geeignete Modelle nach Kosten ausgewählt. KI übernimmt keine Freigabe. Grundlage: FIB-RECH-QUAL-001 und -002.
+
 ## 03.6 Konkrete Modellerprobung und Abnahmekriterien
 
 **Testfall Grundstückskauf:** Artikel wird als Fundstelle gesichert; Ereignis wird abgeleitet; späterer amtlicher Widerspruch korrigiert eine vorläufige Aussage bzw. erzeugt bei bestätigtem Ereignis einen Vorschlag; eigenständiger vorläufiger Vorgang mit Erstanalyse; Nachricht nur bei Relevanz; Folgeereignisse mit Folgemeldungen und Rückblick.
