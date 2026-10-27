@@ -10,14 +10,14 @@ Für jede Kennung ist die Bestandsquelle nachgewiesen. Eine Regel darf erst als 
 
 | Regelkennung | Zielkapitel (Vorschlag) | Übernahmestand |
 |---|---|---|
-| `FIB-RECH-ABLAUF-001` | 03 Recherche | Abgleich nötig |
+| `FIB-RECH-ABLAUF-001` | 03 Recherche | Keine eigenständige Originaldefinition gefunden; Quellenverweis auflösen, nicht als migrierte Bestandsregel zählen |
 | `FIB-RECH-AUFTRAG-001` | 03 Recherche | Inhaltlich in 03.3 ergänzt; normative Detailprüfung offen |
 | `FIB-RECH-BEOB-001` | 03 Recherche | Inhaltlich in 03.3 ergänzt; normative Detailprüfung offen |
 | `FIB-RECH-BEOB-002` | 03 Recherche | Inhaltlich in 03.3 ergänzt; normative Detailprüfung offen |
 | `FIB-RECH-BEOB-003` | 03 Recherche | Inhaltlich in 03.3 ergänzt; normative Detailprüfung offen |
 | `FIB-RECH-BEOB-004` | 03 Recherche | Inhaltlich in 03.3 ergänzt; normative Detailprüfung offen |
 | `FIB-RECH-BETRIEB-001` | 03 Recherche | Inhaltlich in 03.3 ergänzt: Rechercheprovenienz Nulltreffer Wiederverwendung und Grundbetrieb; normative Detailprüfung offen |
-| `FIB-RECH-ERKENNTNIS-001` | 03 Recherche / 05–06 Analyse (Grenze prüfen) | Abgleich nötig |
+| `FIB-RECH-ERKENNTNIS-001` | 03 Recherche / 05–06 Analyse (Grenze prüfen) | Inhaltlich im Kapitel 03 ergänzt; normative Endprüfung offen |
 | `FIB-RECH-FUND-001` | 03 Recherche | Inhaltlich in 03.5 ergänzt: Fundstellenidentität Fassungen Prüfung und Änderungshistorie; normative Detailprüfung offen |
 | `FIB-RECH-FUND-002` | 03 Recherche | Inhaltlich in 03.5 ergänzt: Fundstellenidentität Fassungen Prüfung und Änderungshistorie; normative Detailprüfung offen |
 | `FIB-RECH-FUND-003` | 03 Recherche | Inhaltlich in 03.5 ergänzt: Fundstellenidentität Fassungen Prüfung und Änderungshistorie; normative Detailprüfung offen |
@@ -28,13 +28,13 @@ Für jede Kennung ist die Bestandsquelle nachgewiesen. Eine Regel darf erst als 
 | `FIB-RECH-GOV-001` | 03 Recherche / 10 Qualität (Grenze prüfen) | Inhaltlich in 03.6 dokumentiert; normative Endprüfung offen |
 | `FIB-RECH-HORIZONT-001` | 03 Recherche | Inhaltlich in 03.3/03.5 beschrieben (dynamischer Recherchehorizont); Detailabnahme offen |
 | `FIB-RECH-HORIZONT-002` | 03 Recherche | Inhaltlich in 03.5 präzisiert; normative Endprüfung offen |
-| `FIB-RECH-KONTEXT-001` | 03 Recherche | Abgleich nötig |
+| `FIB-RECH-KONTEXT-001` | 03 Recherche | Inhaltlich im Kapitel 03 ergänzt; normative Endprüfung offen |
 | `FIB-RECH-KOORD-001` | 03 Recherche | Gemeinsamer Quellen-/Fundstellenbestand im Kapitel 03 beschrieben; Detailabnahme offen |
 | `FIB-RECH-KOORD-002` | 03 Recherche | Inhaltlich in 03.3 ergänzt: Rechercheprovenienz Nulltreffer Wiederverwendung und Grundbetrieb; normative Detailprüfung offen |
 | `FIB-RECH-LAUF-001` | 03 Recherche | Inhaltlich in 03.3 ergänzt: Rechercheprovenienz Nulltreffer Wiederverwendung und Grundbetrieb; normative Detailprüfung offen |
 | `FIB-RECH-LAUF-002` | 03 Recherche | Inhaltlich in 03.3 ergänzt: Rechercheprovenienz Nulltreffer Wiederverwendung und Grundbetrieb; normative Detailprüfung offen |
 | `FIB-RECH-LAUF-003` | 03 Recherche | Inhaltlich in 03.3 ergänzt: Rechercheprovenienz Nulltreffer Wiederverwendung und Grundbetrieb; normative Detailprüfung offen |
-| `FIB-RECH-PLAN-001` | 03 Recherche | Abgleich nötig |
+| `FIB-RECH-PLAN-001` | 03 Recherche | Inhaltlich im Kapitel 03 ergänzt; normative Endprüfung offen |
 | `FIB-RECH-PRINZIP-001` | 03 Recherche | Inhaltlich in 03.2/03.3 beschrieben (offene und wissensgeleitete Recherche); Detailabnahme offen |
 | `FIB-RECH-PRINZIP-002` | 03 Recherche | Inhaltlich in 03/04/08 beschrieben (Fund ohne automatische Publikation); Detailabnahme offen |
 | `FIB-RECH-QUAL-001` | 03 Recherche / 10 Qualität (Grenze prüfen) | Inhaltlich in Kapitel 03 ergaenzt; normative Detailpruefung offen |
@@ -49,7 +49,7 @@ Für jede Kennung ist die Bestandsquelle nachgewiesen. Eine Regel darf erst als 
 | `FIB-RECH-QUELLE-008` | 03 Recherche | Inhaltlich in 03.5 ergaenzt; normative Endpruefung offen |
 | `FIB-RECH-QUELLE-009` | 03 Recherche | Inhaltlich in 03.5 ergaenzt; normative Endpruefung offen |
 | `FIB-RECH-QUELLE-010` | 03 Recherche | Inhaltlich in 03.5 ergänzt: eine Primärquelle je Fundstelle, weitere Fundorte und abgeleitete Fachbezüge; Detailabnahme offen |
-| `FIB-RECH-RAHMEN-001` | 03 Recherche | Abgleich nötig |
+| `FIB-RECH-RAHMEN-001` | 03 Recherche | Inhaltlich im Kapitel 03 ergänzt; normative Endprüfung offen |
 | `FIB-RECH-REF-001` | 03 Recherche | Inhaltlich in 03.5 ergänzt; normative Endprüfung offen |
 | `FIB-RECH-REF-002` | 03 Recherche | Inhaltlich in 03.5 ergänzt; normative Endprüfung offen |
 | `FIB-RECH-REF-003` | 03 Recherche | Inhaltlich in 03.5 ergänzt; normative Endprüfung offen |
@@ -60,8 +60,8 @@ Für jede Kennung ist die Bestandsquelle nachgewiesen. Eine Regel darf erst als 
 | `FIB-RECH-RELEVANZ-002` | 03 Recherche | Inhaltlich in 03.5 präzisiert; normative Endprüfung offen |
 | `FIB-RECH-RELEVANZ-003` | 03 Recherche | Inhaltlich in 03.5 präzisiert; normative Endprüfung offen |
 | `FIB-RECH-RELEVANZ-004` | 03 Recherche | Inhaltlich in 03.5 präzisiert; normative Endprüfung offen |
-| `FIB-RECH-ROLLE-001` | 03 Recherche / 11 Fachrechte (Grenze prüfen) | Abgleich nötig |
-| `FIB-RECH-ROLLE-002` | 03 Recherche / 11 Fachrechte (Grenze prüfen) | Abgleich nötig |
+| `FIB-RECH-ROLLE-001` | 03 Recherche / 11 Fachrechte (Grenze prüfen) | Inhaltlich im Kapitel 03 ergänzt; normative Endprüfung offen |
+| `FIB-RECH-ROLLE-002` | 03 Recherche / 11 Fachrechte (Grenze prüfen) | Inhaltlich im Kapitel 03 ergänzt; normative Endprüfung offen |
 | `FIB-RECH-RUECKBLICK-001` | 03 Recherche | Inhaltlich in 03.5 ergänzt: Anlassrückblick, danach inkrementell mit Überlappung; Detailabnahme offen |
 | `FIB-RECH-SICHTUNG-001` | 03 Recherche | **Fachlich überholt:** pauschale Pflichtsichtung aufgehoben; ersetzender Regelwortlaut und Normablösung offen |
 
