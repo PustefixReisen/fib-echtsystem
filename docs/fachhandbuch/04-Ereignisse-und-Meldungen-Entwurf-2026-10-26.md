@@ -29,6 +29,8 @@ Ein Bericht nennt die Aufnahme von Kaufverhandlungen. Das wird als Ereignis erfa
 
 FIB prüft bei einer neuen Fundstelle, ob sie einen neuen Sachverhalt, eine Ergänzung oder einen Widerspruch zu Bekanntem enthält. Die Ergebnisse werden mit Quellen und Zeitbezug dokumentiert. Gleiche Aussagen aus unterschiedlichen Fundstellen werden nicht als zusätzliche Ereignisse gezählt.
 
+**Jede Fundstelle wird fachlich eingeordnet**: FIB analysiert automatisch Herkunft, möglichen Orts- und Themenbezug, Neuigkeitswert, Belege und vorhandene Zuordnungen. Das ist zunächst eine **KI-gestützte Einordnung**, keine verbindliche persönliche Entscheidung eines Redakteurs. Sämtliche Fundstellen bleiben redaktionell sichtbar und überprüfbar. Eine **menschliche Einzelprüfung ist nicht für jeden Fund vorgeschrieben**, wohl aber bei relevanten Konflikten, notwendiger verbindlicher Zurückstellung oder vor der Freigabe öffentlicher Aussagen. 
+
 **Vorläufige, redaktionell noch nicht bestätigte Ereignisse** kann FIB selbstständig erfassen, zuordnen, fachlich weiterverarbeiten und unter nachvollziehbarer Protokollierung berichtigen. Eine verpflichtende redaktionelle Einzelbestätigung jedes Ereignisses ist **nicht** vorgesehen. Sämtliche Fundstellen und Ereignisse bleiben redaktionell einsehbar; bei wesentlichen Widersprüchen oder entscheidungsrelevanter Unsicherheit entsteht gezielt eine Prüfaufgabe. **Bereits redaktionell bestätigte Ereignisse** werden bei materiellen Korrekturen nicht unbemerkt überschrieben: FIB legt einen begründeten Vorschlag mit Belegen vor. Widersprüche bleiben nachvollziehbar.
 
 Ereignisse dürfen eigenständig bestehen. Bei erkennbarem längerfristigem Sachverhalt darf FIB einen **vorläufigen Vorgang** anlegen; die Vorgangslogik ist Kapitel 05 zugeordnet. Themen werden nur nach redaktioneller Entscheidung angelegt, dürfen aber Einzelereignisse direkt aufnehmen (Kapitel 06).
@@ -45,7 +47,9 @@ Die automatische Erfassung eines **vorläufigen Ereignisses** bedeutet weder die
 | Unklarer Widerspruch oder für Veröffentlichung entscheidende Tatsachenunsicherheit | Nachweise abgleichen, offene Frage und Prüfaufgabe formulieren | fachliche Entscheidung über ungeklärte wesentliche Aussage |
 | Nachweis zu schon redaktionell bestätigtem Ereignis | mögliche Ergänzung oder Korrektur mit genauer Änderung und Belegen vorschlagen | verbindliche Korrektur des bestätigten Ereignisses bestätigen |
 | Öffentlich relevanter Sachverhalt | sachlichen Meldungsentwurf vorbereiten, Relevanz und Quellen benennen | konkrete Textfassung freigeben, Veröffentlichung gesondert bestätigen |
-| Nicht veröffentlichungswürdiger Einzelbefund | Ereignis/Fundstelle mit Bezügen weiterhin erhalten | keine Pflicht, dennoch eine Meldung zu produzieren |
+| Nicht veröffentlichungswürdiger Einzelbefund | Ergebnis der Relevanzprüfung begründet dokumentieren, Fundstelle/Ereignis mit Bezügen erhalten; unveränderte Wiederfunde erkennen | keine Pflicht, dennoch eine Meldung zu produzieren; eine **verbindliche Zurückstellung** des Fundes bleibt redaktionelle Entscheidung |
+
+**Nicht veröffentlichen** ist keine automatische **Zurückstellung der Fundstelle**. Der Status „Zurückgestellt“ ist für eine redaktionell begründete Sichtungsentscheidung vorgesehen, während eine negative Nachrichtenrelevanzprüfung lediglich gegen eine Meldung spricht. Derselbe unveränderte Inhalt wird bei erneutem Fund nicht als neue Fundstelle angelegt; bei neuen Informationen, geändertem Kontext oder relevanten Zweifeln wird die Einordnung erneut geprüft. Ein Fund darf nicht allein wegen einer früher unterbliebenen Meldung dauerhaft von der Recherche ausgeschlossen werden.
 
 **Abgrenzung zum Rechercheprozess:** Die in Kapitel 03 festgelegte Sichtbarkeit aller Fundstellen und die risikobezogene Prüfaufgabe werden übernommen; hier wird nur erläutert, wie eine Fundstelle zu einem Ereignis und gegebenenfalls zu einer Meldung führt. Die Fundstellenstatus **Neu – Analysiert – Geprüft – Zurückgestellt** sind nicht mit dem redaktionellen Status eines Ereignisses oder einer Meldung gleichzusetzen.
 
@@ -64,7 +68,7 @@ Die Redaktion kann die Vorschläge bearbeiten, übernehmen oder verwerfen. Ereig
 
 ### 04.4.1 Inhalt einer Meldung
 
-Regelfall ist ein **kurzer, sachlicher und belegter Text** mit passender Überschrift, Kernaussage, bei Bedarf Hintergrund sowie Quellen und fachlichen Bezügen. Die Ausführlichkeit richtet sich nach Komplexität und Informationsgehalt; nicht benötigte Teile entfallen.
+Regelfall ist ein **kurzer, sachlicher und belegter Text** mit passender Überschrift, Kernaussage, bei Bedarf Hintergrund sowie Quellen und fachlichen Bezügen. Maßgeblich ist der bestehende [FIB-Sprachleitfaden](../Sprachleitfaden.md): „Im Hintergrund präzise, im Vordergrund klar“. Fachbegriffe werden verständlich erläutert; Tatsachen, Unsicherheiten und politische Einordnungen bleiben erkennbar getrennt. Die Ausführlichkeit richtet sich nach Komplexität und Informationsgehalt; nicht benötigte Teile entfallen.
 
 **Hintergrund** erklärt Sachverhalte; er ist keine politische Stellungnahme. Der Abschnitt **„Unsere Einordnung“** ist bei Meldungen **seltene Ausnahme** für besonders hohe politische Bedeutung. FIB gibt zunächst nur einen begründeten Hinweis auf diese Möglichkeit. Erst nach redaktionellem Wunsch entwirft FIB eine politische Einordnung, die klar vom sachlichen Nachrichtentext abgegrenzt wird.
 
