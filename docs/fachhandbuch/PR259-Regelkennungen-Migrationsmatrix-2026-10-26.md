@@ -63,14 +63,14 @@ Für jede Kennung ist die Bestandsquelle nachgewiesen. Eine Regel darf erst als 
 | `FIB-RECH-ROLLE-001` | 03 Recherche / 11 Fachrechte (Grenze prüfen) | Abgleich nötig |
 | `FIB-RECH-ROLLE-002` | 03 Recherche / 11 Fachrechte (Grenze prüfen) | Abgleich nötig |
 | `FIB-RECH-RUECKBLICK-001` | 03 Recherche | Abgleich nötig |
-| `FIB-RECH-SICHTUNG-001` | 03 Recherche | Abgleich nötig |
+| `FIB-RECH-SICHTUNG-001` | 03 Recherche | **Fachlich überholt:** pauschale Pflichtsichtung aufgehoben; ersetzender Regelwortlaut und Normablösung offen |
 
 ## Kapitel 06 (Themen) – 32 Kennungen
 
 | Regelkennung | Zielkapitel (Vorschlag) | Übernahmestand |
 |---|---|---|
 | `FIB-THEMA-BEITRAG-001` | 06 Themen / 08 Redaktion (Grenze prüfen) | Abgleich nötig |
-| `FIB-THEMA-BEITRAG-002` | 06 Themen / 08 Redaktion (Grenze prüfen) | Abgleich nötig |
+| `FIB-THEMA-BEITRAG-002` | 06 Themen / 08 Redaktion (Grenze prüfen) | **Inhaltlich in 06/08/11 erklärt** (separate Freigabe/Veröffentlichung; Selbstfreigabe; KI-Grenzen); normative Endprüfung offen |
 | `FIB-THEMA-BEITRAG-003` | 06 Themen / 08 Redaktion (Grenze prüfen) | Abgleich nötig |
 | `FIB-THEMA-BEITRAG-004` | 06 Themen / 08 Redaktion (Grenze prüfen) | Abgleich nötig |
 | `FIB-THEMA-BEITRAG-005` | 06 Themen / 08 Redaktion (Grenze prüfen) | Abgleich nötig |
@@ -93,7 +93,7 @@ Für jede Kennung ist die Bestandsquelle nachgewiesen. Eine Regel darf erst als 
 | `FIB-THEMA-KOORD-002` | 06 Themen / 08–11 Redaktion und Rechte (Grenze prüfen) | Abgleich nötig |
 | `FIB-THEMA-RECHTE-001` | 06 Themen / 08–11 Redaktion und Rechte (Grenze prüfen) | Abgleich nötig |
 | `FIB-THEMA-RECHTE-002` | 06 Themen / 08–11 Redaktion und Rechte (Grenze prüfen) | Abgleich nötig |
-| `FIB-THEMA-STATUS-001` | 06 Themen | Abgleich nötig |
+| `FIB-THEMA-STATUS-001` | 06 Themen | **Inhaltlich im Zielkapitel erklärt** (vier Status; Freigabe und Sichtbarkeit getrennt); normative Endprüfung offen |
 | `FIB-THEMA-STATUS-002` | 06 Themen | Abgleich nötig |
 | `FIB-THEMA-STATUS-003` | 06 Themen | Abgleich nötig |
 | `FIB-THEMA-STATUS-004` | 06 Themen | Abgleich nötig |
@@ -117,3 +117,16 @@ Die Inventur der beiden Handbuchkapitel ist **keine Gesamtinventur des Repositor
 ## Fachliche Freigabebedingung
 
 Erst wenn jede Zeile eine eindeutig benannte neue Primärregel mit nachgewiesener Aussage, geprüftem Konfliktstand und Testbezug besitzt, dürfen alte Regelstellen historisiert oder ersetzt werden. Bis dahin: **kein Merge / keine normative Umschaltung**.
+
+## Gezielter Nachweis von Regelkonflikten (27.10.2026)
+
+Die Matrix bewertet **nicht** schon deshalb eine Regel als übernommen, weil ihr Thema im Zielkapitel erwähnt wird. Für vier konkret geprüfte Fälle ergibt sich:
+
+| Originalregel | Befund im neuen Fachkonzept | Erforderlicher Abschluss |
+|---|---|---|
+| **FIB-RECH-SICHTUNG-001** | Bisheriger Wortlaut verlangt, dass Redakteure alle unmittelbaren Feldkirchen-Fundstellen durchgehen. Die später beschlossene Regel sieht dagegen vollständige Sichtbarkeit mit **gezielter Prüfung bei Entscheidungsbedarf** vor. Das ist eine **echte fachliche Ablösung**, keine bloße sprachliche Überarbeitung. | Alten Pflichtsatz bei normativer Migration ausdrücklich ersetzen, betroffene Tests anpassen; Erhalt und Revisionsfähigkeit zurückgestellter Funde sicherstellen. |
+| **FIB-THEMA-STATUS-001** | Vier Zustände **Entwurf/Aktiv/Zurückgestellt/Archiviert** und die Unterscheidung zu Beitragsfreigabe/öffentlicher Sichtbarkeit stehen in Kapitel 06. | Übergänge und Ausnahmefälle mit Originalregeln STATUS-002 bis -007 einzeln abgleichen. |
+| **FIB-THEMA-BEITRAG-002** | Analyse-, Beitrags- und Publikationsentscheidung sind in Kapitel 06/08 getrennt; Selbstfreigabe und KI-Grenzen in Kapitel 11. | Personen-/Zeitnachweis sowie Rechte- und Publikationsübergänge bei der Normablösung prüfen. |
+| **FIB-RECH-ABLAUF-001** | Kennung wird referenziert, ist aber keine als eigenständige Originalregel inventarisierte Definition. | Ursprungsstelle prüfen und entweder auf gültige Prozessregel verweisen oder formell als neue Regel definieren; **keine erfundene Originalfassung**. |
+
+Die verbleibenden Matrixzeilen bleiben bewusst bei **„Abgleich nötig“**, bis die vollständige Aussage einschließlich Grenzfällen nachgewiesen ist.
