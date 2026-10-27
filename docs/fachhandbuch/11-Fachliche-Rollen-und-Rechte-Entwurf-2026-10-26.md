@@ -131,6 +131,8 @@ Fachquelle: [Rollen, Rechte und Workflow](../Rollen-Rechte-und-Workflow.md), §�
 7. Deaktivierter Redakteur kann trotz bestehender Browsersitzung keine geschützte Änderung ausführen.
 8. Eine erstmalige öffentliche Bild- oder Dateinutzung ohne positiv geklärte Rechte wird gesperrt.
 9. Eine geplante Veröffentlichung wird vor ihrer Ausführung erneut auf Berechtigung und Gültigkeit geprüft.
+10. Ein Benutzer verliert seine Redaktionsrolle während einer offenen Sitzung. Der nächste schreibende Fachaufruf wird verweigert; vorhandene Fachhistorie und Auditnachweise bleiben erhalten.
+11. Bei einer geplanten Veröffentlichung ändert sich vor dem Termin der freigegebene Text. Der alte Terminauftrag darf die neue Fassung nicht veröffentlichen; eine neue fassungsgebundene S3-Bestätigung ist erforderlich.
 
 ## 11.11 Quellabgleich und offene Umsetzung
 
