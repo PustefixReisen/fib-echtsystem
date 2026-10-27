@@ -85,7 +85,7 @@ Die Bestandsmatrix erlaubt AI-Tasks im Grundsatz **S0/S1**, ohne bestätigende S
 
 ## 11.7 Wie werden parallele Bearbeitungen koordiniert?
 
-Eine **Federführung** organisiert Verantwortung, ist aber kein exklusives Bearbeitungsrecht. Bearbeitungssperren verhindern konkurrierendes Schreiben; andere berechtigte Redakteure können dann lesen und ggf. eine Übernahme anfragen. Eine Übernahmeanfrage verleiht keine zusätzlichen Rechte.
+Eine **Federführung** organisiert Verantwortung, ist aber kein exklusives Bearbeitungsrecht. Bearbeitungssperren verhindern konkurrierendes Schreiben; andere berechtigte Redakteure können dann lesen und ggf. eine Übernahme anfragen. Eine Übernahmeanfrage verleiht keine zusätzlichen Rechte und ändert die Federführung nicht automatisch. Die Angabe der letzten Bearbeitung dient ausschließlich der Koordination, nicht der Rechtevergabe.
 
 Admins dürfen verwaiste fremde Sperren unter Auditbedingungen aufheben. Fachlich wirksame Änderungen müssen veraltete Objektstände erkennen und dürfen keinen neueren bestätigten Stand stillschweigend überschreiben.
 
