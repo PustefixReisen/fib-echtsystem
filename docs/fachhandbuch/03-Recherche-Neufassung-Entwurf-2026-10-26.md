@@ -298,6 +298,15 @@ Referenzobjekte halten dauerhafte Identitäten und Aliase von Orten, Infrastrukt
 
 Bei fehlendem räumlichem Bezug verwendet FIB zuerst bestätigte Beziehungen, recherchiert dann selbst mit Quellen und fragt erst bei verbleibender Unsicherheit gezielt die Redaktion. Antworten und offene Fragen bleiben dokumentiert; wiederholte Nachfragen ohne neue Erkenntnisse werden vermieden. Neue Funde dürfen Referenzwissen und Suchhorizont als prüfbare Vorschläge erweitern. Referenzwissen ersetzt keinen öffentlichen Quellenbeleg (FIB-RECH-REF-001 bis -004).
 
+
+### Planung, Erkenntnisübergabe und redaktionelle Zuständigkeit
+
+FIB plant Recherchen eigenständig aus Anlass, Vorwissen, Suchraum, Quellen und geltenden Regeln. Redakteure können Suchwege und Grenzen nachvollziehen und beeinflussen; einzelne Rechercheläufe brauchen keine Vorabfreigabe. Neue Orte, Akteure und funktionale Beziehungen erweitern den dynamischen Suchkontext, ohne die offene Suche auf Stichwörter zu beschränken.
+
+Vertiefte Recherchen können Erklärungen, wissenschaftliche oder rechtliche Grundlagen sowie direkte und indirekte Wirkungen liefern. Belegte Erkenntnisse und klar gekennzeichnete Hypothesen dürfen auch ohne neues Ereignis als Vorschläge in Vorgangs- oder Themenanalysen einfließen. Ihre Übernahme bestätigt die Redaktion.
+
+KI darf suchen, erfassen und Vorschläge machen, aber keine Fundstellen verbindlich zurückstellen, veröffentlichen oder bestätigte Suchregeln eigenmächtig ändern. Redakteure pflegen Quellen, Suchräume und Beobachtungsaufträge im fachlichen Alltag; besonders geschützte Regelaktivierungen unterliegen dem Rechtekonzept. Grundlage: FIB-RECH-PLAN-001, KONTEXT-001, ERKENNTNIS-001 und ROLLE-001/-002.
+
 ## 03.6 Konkrete Modellerprobung und Abnahmekriterien
 
 **Testfall Grundstückskauf:** Artikel wird als Fundstelle gesichert; Ereignis wird abgeleitet; späterer amtlicher Widerspruch korrigiert eine vorläufige Aussage bzw. erzeugt bei bestätigtem Ereignis einen Vorschlag; eigenständiger vorläufiger Vorgang mit Erstanalyse; Nachricht nur bei Relevanz; Folgeereignisse mit Folgemeldungen und Rückblick.
