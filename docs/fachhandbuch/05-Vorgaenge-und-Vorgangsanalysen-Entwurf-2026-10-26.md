@@ -109,6 +109,8 @@ Der Vorgangsbeitrag vermittelt den aktuellen Stand, die Entwicklung, Ursachen, H
 
 **Technisch noch zu klären:** Status- und Versionsmodell für Vorgangsbeiträge, Freigaberechte und Rücknahme; bisher sind diese Regeln für Themenbeiträge weiter ausgearbeitet. Keine stillschweigende Übernahme des Themenstatusmodells.
 
+Auch die Fragen und Antworten unter „Mehr wissen?“ können mit einem **natürlichsprachlichen Korrektorat** überarbeitet werden: Die Redaktion formuliert Änderungswünsche in Alltagssprache; FIB zeigt einen nachvollziehbaren Änderungsvorschlag. Rein sprachliche Anpassungen am noch unveröffentlichten Entwurf dürfen reversibel ausgeführt werden. Neue Tatsachen, inhaltliche Umdeutungen und Änderungen an Belegen benötigen redaktionelle Prüfung und gegebenenfalls zusätzliche Recherche. Freigabe und Veröffentlichung bleiben gesonderte Entscheidungen.
+
 **„Mehr wissen?“ am Vorgang:** Der freigegebene Vorgangsbeitrag kann durch eigene weiterführende Fragen und quellengebundene Antworten ergänzt werden. Sie erklären relevante Hintergründe und Zusammenhänge, ohne den Vorgangsbeitrag nur zu wiederholen. Die Detailregeln für Vertiefungsfragen und ihre Freigabe gehören zu Kapitel 09.
 
 ### Gültiger Analysebestand bei Teilfreigaben
