@@ -44,10 +44,10 @@ Für jede Kennung ist die Bestandsquelle nachgewiesen. Eine Regel darf erst als 
 | `FIB-RECH-QUELLE-003` | 03 Recherche | In Kapitel 03 inhaltlich erfasst; Endprüfung offen |
 | `FIB-RECH-QUELLE-004` | 03 Recherche | In Kapitel 03 inhaltlich erfasst; Endprüfung offen |
 | `FIB-RECH-QUELLE-005` | 03 Recherche | In Kapitel 03 inhaltlich erfasst; Endprüfung offen |
-| `FIB-RECH-QUELLE-006` | 03 Recherche | Abgleich nötig |
-| `FIB-RECH-QUELLE-007` | 03 Recherche | Abgleich nötig |
-| `FIB-RECH-QUELLE-008` | 03 Recherche | Abgleich nötig |
-| `FIB-RECH-QUELLE-009` | 03 Recherche | Abgleich nötig |
+| `FIB-RECH-QUELLE-006` | 03 Recherche | Inhaltlich in 03.5 ergaenzt; normative Endpruefung offen |
+| `FIB-RECH-QUELLE-007` | 03 Recherche | Inhaltlich in 03.5 ergaenzt; normative Endpruefung offen |
+| `FIB-RECH-QUELLE-008` | 03 Recherche | Inhaltlich in 03.5 ergaenzt; normative Endpruefung offen |
+| `FIB-RECH-QUELLE-009` | 03 Recherche | Inhaltlich in 03.5 ergaenzt; normative Endpruefung offen |
 | `FIB-RECH-QUELLE-010` | 03 Recherche | Inhaltlich in 03.5 ergänzt: eine Primärquelle je Fundstelle, weitere Fundorte und abgeleitete Fachbezüge; Detailabnahme offen |
 | `FIB-RECH-RAHMEN-001` | 03 Recherche | Abgleich nötig |
 | `FIB-RECH-REF-001` | 03 Recherche | Abgleich nötig |
