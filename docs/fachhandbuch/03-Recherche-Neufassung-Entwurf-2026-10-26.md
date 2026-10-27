@@ -158,6 +158,11 @@ Die Recherche **liefert die Informationen und Veränderungssignale**. Die fachli
 
 Eine Tagesordnung belegt, was **vorgesehen** ist; erst geeignete spätere Quellen belegen, was tatsächlich behandelt oder beschlossen wurde. FIB kann Pressehinweise vor Verfügbarkeit einer Niederschrift finden und verknüpft diese später mit amtlichen Unterlagen, ohne einen angekündigten Beschluss als tatsächlich gefasst auszugeben. Der konkrete Abfrageplan, Änderungsabgleich und Umgang mit Ausfällen sind bei der technischen Umsetzung zu prüfen.
 
+
+### Redaktioneller Rechercheauftrag ohne vorhandenes Fachobjekt
+
+Ein Redakteur kann jederzeit eine Recherche zu einer frei formulierten Sachfrage starten, auch wenn dazu noch keine Fundstelle, kein Ereignis und weder Vorgang noch Thema existieren. Es ist keine technische Suchsyntax nötig. Ein eingegebener Suchprompt wird nicht dadurch zur verbindlichen Recherche- oder Relevanzregel (FIB-RECH-AUFTRAG-001).
+
 ## 03.4 Redaktionelle Arbeitssteuerung und Bedienanforderungen
 
 FIB führt Aufgaben für erforderliche **menschliche Entscheidungen** zusammen. Technisch erfolgreiche automatische Einzelschritte sollen die Aufgabenübersicht nicht überfluten. Offene Aufgaben können grundsätzlich von berechtigten Redakteuren selbst übernommen oder durch eine koordinierende Person zugewiesen werden. Die gemeinsame Übersicht zeigt Anlass, Objektkontext, erforderliche Handlung und Dringlichkeit und führt direkt zur Bearbeitung.
