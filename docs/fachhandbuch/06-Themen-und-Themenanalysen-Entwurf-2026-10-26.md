@@ -182,6 +182,14 @@ Erst die ausdrückliche **Freigabe** einer gespeicherten Arbeitsfassung erzeugt 
 
 Diese Anforderungen konkretisieren die bisherigen Regeln **FIB-THEMA-BEITRAG-006 bis -009**; die Bearbeitung bleibt durch das übergreifende pessimistische Objektsperrprinzip geschützt.
 
+### Publikationsrückzug und erneute Veröffentlichung
+
+Eine bereits veröffentlichte Themenbeitragsfassung kann durch einen berechtigten **Redakteur oder Administrator** mit gesonderter Aktion zurückgezogen werden. Dafür sind eine **ausdrückliche Sicherheitsbestätigung** und eine **dokumentierte Begründung** erforderlich. Person, Zeitpunkt und Grund des Rückzugs bleiben historisch nachvollziehbar. Der Rückzug beendet die öffentliche Sichtbarkeit; die freigegebene Beitragsfassung und ihre damalige Freigabe bleiben unverändert bestehen.
+
+Eine zurückgezogene Fassung darf erneut veröffentlicht werden, wenn sie **inhaltlich unverändert**, weiterhin wirksam freigegeben und unter dem aktuellen Themenstatus und den sonstigen Veröffentlichungsvoraussetzungen zulässig ist. Dazu bedarf es einer **neuen ausdrücklichen Publikationsbestätigung**, jedoch keiner erneuten Beitragsfreigabe. Ist der Inhalt verändert, benötigt FIB eine neue Arbeitsfassung, deren Freigabe und eine eigenständige Veröffentlichung.
+
+Das ist die fachliche Bestandsregel **FIB-THEMA-BEITRAG-010**. Ein Publikationsrückzug ist nicht mit der Rücknahme einer noch nie öffentlich genutzten Beitragsfreigabe gleichzusetzen.
+
 ## 06.7 Fortlaufende Aktualität und öffentlicher Bezug
 
 Nach einer redaktionell freigegebenen Änderung der Themenanalyse prüft FIB automatisch, ob bereits veröffentlichte Themenbeiträge betroffen sind. Eine relevante Auswirkung erzeugt einen **Aktualisierungsvorschlag**, nicht eine automatische Änderung am öffentlichen Text. Keine neue Veröffentlichung ist nötig, wenn der Beitrag sachlich richtig und hinreichend vollständig bleibt.
