@@ -73,7 +73,7 @@ flowchart TB
 | **Themenanalyse** | verknüpft Erkenntnisse aus Vorgängen, Belegen und Hintergrundwissen; gewinnt eigenständige Schlüsse | Wechselwirkungen verschiedener Verkehrsprojekte |
 | **Themenbeitrag** | redaktionell ausgewählte, öffentliche Darstellung auf Grundlage der Themenanalyse | Bürgernaher Überblick mit optionaler Einordnung |
 
-## 02.2b Dauerhafte Identität und nachvollziehbare Beziehungen
+## 02.2a Dauerhafte Identität und nachvollziehbare Beziehungen
 
 FIB unterscheidet einen **fachlich gültigen Stand** von seiner Änderungsgeschichte. Bestätigte Objekte und Beziehungen verschwinden nicht spurlos, wenn sie später zurückgenommen, zusammengeführt, archiviert oder ersetzt werden. Ihre früheren Stände und Gründe bleiben nachvollziehbar. Technisch gelöscht werden dürfen grundsätzlich nur noch nie fachlich wirksame Zwischenstände oder technische Dubletten.
 
@@ -87,7 +87,7 @@ Eine nicht mehr erreichbare Internetadresse ist **kein Löschgrund** für eine F
 
 Quelle: [Persistenz- und Lebenszyklusmodell](../Persistenz-und-Lebenszyklusmodell.md), §§2–12. Die konkrete Datenspeicherung wird erst nach der Fachkonzept-Abnahme gestaltet.
 
-## 02.2a RIS als Quellsystem und eigenständiger Sitzungsbereich
+## 02.2b RIS als Quellsystem und eigenständiger Sitzungsbereich
 
 **Fachliche Aufgabenteilung:** Das RIS wird wie andere Quellen durch die **gemeinsame Recherche** laufend auf neue oder geänderte Inhalte beobachtet (Kapitel 03). Die anschließende fachliche Erschließung von Sitzungen, TOPs, Beschlussvorschlägen, tatsächlichen Beschlüssen und Abstimmungen erfolgt als **eigenständiger Sitzungs- und Beschlussprozess** (Kapitel 07). Die öffentliche Besuchersicht gehört in Kapitel 09. Es entsteht **keine zweite unabhängige RIS-Rechercheinfrastruktur**.
 
