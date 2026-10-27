@@ -6,7 +6,7 @@ Für das spätere eigenständige Administrationskonzept sind die Bestandsverwalt
 
 ## Regelkennungen: erster konkreter Einzelnachweis (27.10.2026)
 
-Die [Migrationsmatrix](PR259-Regelkennungen-Migrationsmatrix-2026-10-26.md) unterscheidet nun anhand von vier tatsächlich geprüften Originalkennungen zwischen **fachlich überholtem Originalwortlaut**, **inhaltlicher Abbildung in neuen Kapiteln** und **nicht aufgelöster Kennung**. Wichtigster offener Normwechsel ist die ausdrücklich beschlossene Ablösung der Pflicht-Einzelsichtung in `FIB-RECH-SICHTUNG-001`. `FIB-RECH-ABLAUF-001` bleibt mangels eigenständiger Originaldefinition als Verweisproblem markiert. Die Prüfung der übrigen Regelkennungen ist damit **nicht** als erledigt ausgewiesen.
+Die [Migrationsmatrix](PR259-Regelkennungen-Migrationsmatrix-2026-10-26.md) unterscheidet nun anhand von vier tatsächlich geprüften Originalkennungen zwischen **fachlich überholtem Originalwortlaut**, **inhaltlicher Abbildung in neuen Kapiteln** und **nicht aufgelöster Kennung**. Wichtigster offener Normwechsel ist die ausdrücklich beschlossene Ablösung der Pflicht-Einzelsichtung in `FIB-RECH-SICHTUNG-001`. `FIB-RECH-ABLAUF-001` wurde am 27.10. in Kapitel 03 (Bestand), Zeile 487 als eigenständiger Regelabsatz gefunden; die Übernahme in die endgültige Regelreferenz bleibt nachzuweisen. Die Prüfung der übrigen Regelkennungen ist damit **nicht** als erledigt ausgewiesen.
 
 ## Quelltransfer: Fachliche Persistenz (27.10.2026)
 
