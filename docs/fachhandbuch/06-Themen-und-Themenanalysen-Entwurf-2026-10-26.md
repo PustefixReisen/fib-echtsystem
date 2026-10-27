@@ -170,6 +170,18 @@ Eine neue Arbeitsfassung baut im Regelfall auf der **zuletzt maßgeblichen Beitr
 
 Diese fachlichen Festlegungen entsprechen **FIB-THEMA-BEITRAG-004** und **FIB-THEMA-BEITRAG-005** aus dem bisherigen Kapitel 06. Technische Konflikt- und Wiederherstellungsverfahren werden erst im nachgelagerten Bedien- und Datenmodell konkretisiert.
 
+### Arbeitsfassung, Speichern und Freigabe
+
+Beim Öffnen des Beitragsbereichs erscheint eine bereits vorhandene **aktuelle Arbeitsfassung**. Die Aktion **„Aktuell veröffentlicht“** zeigt getrennt davon die tatsächlich öffentliche Fassung samt damaliger „Unsere Einordnung“ nur lesend an. Ansicht wechseln darf weder einen Entwurf überschreiben noch eine Version erzeugen.
+
+Bei der ersten Beitragserfassung steht eine leere Arbeitsfassung bereit. Wenn ein Beitrag veröffentlicht ist und noch kein neuer Arbeitsstand existiert, kann eine neue Arbeitsfassung von der aktuell veröffentlichten Fassung abgeleitet werden. Eine vorhandene Arbeitsfassung wird fortgesetzt. **Bloßes Öffnen erzeugt keinen gespeicherten Entwurf**; erst eine gespeicherte Änderung erzeugt einen Arbeitsstand.
+
+Textänderungen und Änderungen an „Unsere Einordnung“ werden ausdrücklich **gespeichert**. Ungespeicherte Änderungen müssen sichtbar sein; beim Verlassen oder Themenwechsel wird vor möglichem Verlust gewarnt. **Speichern ist weder Freigabe noch Veröffentlichung.**
+
+Erst die ausdrückliche **Freigabe** einer gespeicherten Arbeitsfassung erzeugt eine unveränderliche freigegebene Beitragsversion. Fassung, Zeitpunkt und freigebende Person sind nachweisbar. Eine noch nie veröffentlichte Freigabe kann ausdrücklich zurückgenommen werden; nach erfolgter Veröffentlichung erfolgt stattdessen gegebenenfalls ein gesonderter Publikationsrückzug. Für spätere inhaltliche Änderungen beginnt eine neue Arbeitsfassung.
+
+Diese Anforderungen konkretisieren die bisherigen Regeln **FIB-THEMA-BEITRAG-006 bis -009**; die Bearbeitung bleibt durch das übergreifende pessimistische Objektsperrprinzip geschützt.
+
 ## 06.7 Fortlaufende Aktualität und öffentlicher Bezug
 
 Nach einer redaktionell freigegebenen Änderung der Themenanalyse prüft FIB automatisch, ob bereits veröffentlichte Themenbeiträge betroffen sind. Eine relevante Auswirkung erzeugt einen **Aktualisierungsvorschlag**, nicht eine automatische Änderung am öffentlichen Text. Keine neue Veröffentlichung ist nötig, wenn der Beitrag sachlich richtig und hinreichend vollständig bleibt.
