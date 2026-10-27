@@ -89,10 +89,10 @@ Für jede Kennung ist die Bestandsquelle nachgewiesen. Eine Regel darf erst als 
 | `FIB-THEMA-BEZUG-007` | 06 Themen | Abgleich nötig |
 | `FIB-THEMA-BEZUG-008` | 06 Themen | Inhaltlich in 06.4 ergänzt; normative Detailprüfung offen |
 | `FIB-THEMA-ENTDECKUNG-001` | 06 Themen | Abgleich nötig |
-| `FIB-THEMA-KOORD-001` | 06 Themen / 08–11 Redaktion und Rechte (Grenze prüfen) | Abgleich nötig |
-| `FIB-THEMA-KOORD-002` | 06 Themen / 08–11 Redaktion und Rechte (Grenze prüfen) | Abgleich nötig |
-| `FIB-THEMA-RECHTE-001` | 06 Themen / 08–11 Redaktion und Rechte (Grenze prüfen) | Abgleich nötig |
-| `FIB-THEMA-RECHTE-002` | 06 Themen / 08–11 Redaktion und Rechte (Grenze prüfen) | Abgleich nötig |
+| `FIB-THEMA-KOORD-001` | 06 Themen / 08–11 Redaktion und Rechte (Grenze prüfen) | Inhaltlich in 06.8 ergänzt; normative Detailprüfung offen |
+| `FIB-THEMA-KOORD-002` | 06 Themen / 08–11 Redaktion und Rechte (Grenze prüfen) | Inhaltlich in 06.8 ergänzt; normative Detailprüfung offen |
+| `FIB-THEMA-RECHTE-001` | 06 Themen / 08–11 Redaktion und Rechte (Grenze prüfen) | Inhaltlich in 06.8 ergänzt; normative Detailprüfung offen |
+| `FIB-THEMA-RECHTE-002` | 06 Themen / 08–11 Redaktion und Rechte (Grenze prüfen) | Inhaltlich in 06.8 ergänzt; normative Detailprüfung offen |
 | `FIB-THEMA-STATUS-001` | 06 Themen | **Inhaltlich im Zielkapitel erklärt** (vier Status; Freigabe und Sichtbarkeit getrennt); normative Endprüfung offen |
 | `FIB-THEMA-STATUS-002` | 06 Themen | Abgleich nötig |
 | `FIB-THEMA-STATUS-003` | 06 Themen | Inhaltlich in 06.8 beschrieben; Aktualitätsprüfung, unveränderte Fassung und keine automatische Publikation vor Normablösung nochmals prüfen |
