@@ -100,6 +100,8 @@ Eine Meldung, ein Vorgang oder ein Thema kann mehrere öffentlich angebotene **V
 
 ### Fachregeln für öffentliche Vertiefungsfragen
 
+Für die **Fragen und Antworten** gibt es ein natürlichsprachliches redaktionelles Korrektorat. Änderungswünsche können frei formuliert werden; FIB macht die vorgeschlagenen Textänderungen sichtbar und rückgängig machbar. Inhaltliche Änderungen und neue Tatsachenbehauptungen werden nicht ohne Quellenprüfung und redaktionelle Bestätigung übernommen. Nach einer bereits erfolgten Freigabe entsteht für relevante Änderungen eine neue freizugebende Fassung.
+
 „Mehr wissen?“ ist ein **öffentliches Vertiefungsangebot** und keine interne offene Forschungsfrage. Der Besucher erhält eine konkrete Frage und eine sachlich beantwortete, belegte Vertiefung, ohne selbst einen KI-Dialog führen zu müssen.
 
 | Bestandteil | Verbindliche fachliche Anforderung |
