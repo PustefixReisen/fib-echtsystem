@@ -30,6 +30,8 @@ Die Redaktion soll fachliche Entscheidungen **im jeweiligen Zusammenhang** treff
 **Quellenübernahme:** Diese fachlichen Grundsätze stammen aus [Redaktionsworkflow](../Redaktionsworkflow.md), insbesondere §§2, 5–10 und 13. Die konkrete Karten-/Dialoggestaltung bleibt der späteren UI-Entwicklung vorbehalten.
 
 ## 08.4 Bearbeiten und Korrigieren
+Das natürlichsprachliche Korrektorat gilt gleichermaßen für Meldungen, Vorgangs- und Themenbeiträge sowie für **„Mehr wissen?“-Fragen und deren Antworten**. Ein sprachlicher Änderungsvorschlag darf weder den belegten Aussagegehalt noch die Quellenzuordnung stillschweigend verändern.
+
 KI erstellt sachliche Meldungs- und Themenbeitragsentwürfe, Redaktion wählt und gewichtet Aussagen. Ein gemeinsames inhaltliches und sprachliches Korrektorat verarbeitet frei formulierte Änderungswünsche. Kleine sprachliche Korrekturen an noch unveröffentlichten Entwürfen darf KI automatisch durchführen, wenn sie nachvollziehbar und umkehrbar sind. Inhaltliche Änderungen erfordern Bestätigung; nicht belegte neue Aussagen lösen Prüf-/Recherchebedarf aus.
 
 ### Bildredaktion und redaktionelle Verwendung
