@@ -37,8 +37,8 @@ Für jede Kennung ist die Bestandsquelle nachgewiesen. Eine Regel darf erst als 
 | `FIB-RECH-PLAN-001` | 03 Recherche | Abgleich nötig |
 | `FIB-RECH-PRINZIP-001` | 03 Recherche | Inhaltlich in 03.2/03.3 beschrieben (offene und wissensgeleitete Recherche); Detailabnahme offen |
 | `FIB-RECH-PRINZIP-002` | 03 Recherche | Inhaltlich in 03/04/08 beschrieben (Fund ohne automatische Publikation); Detailabnahme offen |
-| `FIB-RECH-QUAL-001` | 03 Recherche / 10 Qualität (Grenze prüfen) | Abgleich nötig |
-| `FIB-RECH-QUAL-002` | 03 Recherche / 10 Qualität (Grenze prüfen) | Abgleich nötig |
+| `FIB-RECH-QUAL-001` | 03 Recherche / 10 Qualität (Grenze prüfen) | Inhaltlich in Kapitel 03 ergaenzt; normative Detailpruefung offen |
+| `FIB-RECH-QUAL-002` | 03 Recherche / 10 Qualität (Grenze prüfen) | Inhaltlich in Kapitel 03 ergaenzt; normative Detailpruefung offen |
 | `FIB-RECH-QUELLE-001` | 03 Recherche | In Kapitel 03 inhaltlich erfasst; Endprüfung offen |
 | `FIB-RECH-QUELLE-002` | 03 Recherche | In Kapitel 03 inhaltlich erfasst; Endprüfung offen |
 | `FIB-RECH-QUELLE-003` | 03 Recherche | In Kapitel 03 inhaltlich erfasst; Endprüfung offen |
@@ -54,8 +54,8 @@ Für jede Kennung ist die Bestandsquelle nachgewiesen. Eine Regel darf erst als 
 | `FIB-RECH-REF-002` | 03 Recherche | Abgleich nötig |
 | `FIB-RECH-REF-003` | 03 Recherche | Abgleich nötig |
 | `FIB-RECH-REF-004` | 03 Recherche | Abgleich nötig |
-| `FIB-RECH-REGEL-001` | 03 Recherche / 10 Qualität (Grenze prüfen) | Abgleich nötig |
-| `FIB-RECH-REGEL-002` | 03 Recherche / 10 Qualität (Grenze prüfen) | Abgleich nötig |
+| `FIB-RECH-REGEL-001` | 03 Recherche / 10 Qualität (Grenze prüfen) | Inhaltlich in Kapitel 03 ergaenzt; normative Detailpruefung offen |
+| `FIB-RECH-REGEL-002` | 03 Recherche / 10 Qualität (Grenze prüfen) | Inhaltlich in Kapitel 03 ergaenzt; normative Detailpruefung offen |
 | `FIB-RECH-RELEVANZ-001` | 03 Recherche | Inhaltlich in 03.5 präzisiert; normative Endprüfung offen |
 | `FIB-RECH-RELEVANZ-002` | 03 Recherche | Inhaltlich in 03.5 präzisiert; normative Endprüfung offen |
 | `FIB-RECH-RELEVANZ-003` | 03 Recherche | Inhaltlich in 03.5 präzisiert; normative Endprüfung offen |
@@ -137,4 +137,4 @@ Die sechs oben aktualisierten Matrixzeilen belegen die **inhaltliche Auffindbark
 
 ## Prüfstand Qualität und Regelpflege (27.10.2026)
 
-Die Originalregeln FIB-RECH-QUAL-001/-002, FIB-RECH-REGEL-001/-002 und FIB-RECH-GOV-001 wurden in der bestehenden Regelreferenz einzeln gelesen. Wesentliche Anforderungen sind: Abruffehler begründen keinen Negativbefund; Modellqualität geht der Kostenoptimierung voraus; Änderungen des operativen Regelbestands benötigen Versionierung, Bewertungs- und Entdeckungstest sowie menschliche Aktivierung; fachliche Änderungen werden zeitgleich dokumentiert. Der direkte Transfer in Kapitel 03 konnte in diesem Arbeitsschritt nicht gespeichert werden. Die fünf Kennungen bleiben deshalb ausdrücklich auf „Abgleich nötig“.
+Die Originalregeln FIB-RECH-QUAL-001/-002, FIB-RECH-REGEL-001/-002 und FIB-RECH-GOV-001 wurden in der bestehenden Regelreferenz einzeln gelesen. Wesentliche Anforderungen sind: Abruffehler begründen keinen Negativbefund; Modellqualität geht der Kostenoptimierung voraus; Änderungen des operativen Regelbestands benötigen Versionierung, Bewertungs- und Entdeckungstest sowie menschliche Aktivierung; fachliche Änderungen werden zeitgleich dokumentiert. Die Regeln QUAL-001/-002 und REGEL-001/-002 wurden nachträglich im Kapitel 03 ergänzt. GOV-001 bleibt im Detailabgleich offen.
