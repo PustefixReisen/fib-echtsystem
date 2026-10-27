@@ -83,11 +83,11 @@ Für jede Kennung ist die Bestandsquelle nachgewiesen. Eine Regel darf erst als 
 | `FIB-THEMA-BEZUG-001` | 06 Themen | Inhaltlich in 06.4 beschrieben (Vorgänge samt Ereignissen, ergänzende Einzelereignisse, keine Doppelzählung); Detailabnahme offen |
 | `FIB-THEMA-BEZUG-002` | 06 Themen | Inhaltlich in 06.4 mit vier Bezugsstatus beschrieben; Detailabnahme offen |
 | `FIB-THEMA-BEZUG-003` | 06 Themen | Inhaltlich in 06.4 mit drei Bedeutungsstufen und Bestätigung beschrieben; Detailabnahme offen |
-| `FIB-THEMA-BEZUG-004` | 06 Themen | Abgleich nötig |
-| `FIB-THEMA-BEZUG-005` | 06 Themen | Abgleich nötig |
-| `FIB-THEMA-BEZUG-006` | 06 Themen | Abgleich nötig |
+| `FIB-THEMA-BEZUG-004` | 06 Themen | Inhaltlich in 06.4 ergänzt; normative Detailprüfung offen |
+| `FIB-THEMA-BEZUG-005` | 06 Themen | Inhaltlich in 06.4 ergänzt; normative Detailprüfung offen |
+| `FIB-THEMA-BEZUG-006` | 06 Themen | Inhaltlich in 06.4 ergänzt; normative Detailprüfung offen |
 | `FIB-THEMA-BEZUG-007` | 06 Themen | Abgleich nötig |
-| `FIB-THEMA-BEZUG-008` | 06 Themen | Abgleich nötig |
+| `FIB-THEMA-BEZUG-008` | 06 Themen | Inhaltlich in 06.4 ergänzt; normative Detailprüfung offen |
 | `FIB-THEMA-ENTDECKUNG-001` | 06 Themen | Abgleich nötig |
 | `FIB-THEMA-KOORD-001` | 06 Themen / 08–11 Redaktion und Rechte (Grenze prüfen) | Abgleich nötig |
 | `FIB-THEMA-KOORD-002` | 06 Themen / 08–11 Redaktion und Rechte (Grenze prüfen) | Abgleich nötig |
