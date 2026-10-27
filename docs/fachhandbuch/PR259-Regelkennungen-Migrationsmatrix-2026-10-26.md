@@ -134,3 +134,7 @@ Die verbleibenden Matrixzeilen bleiben bewusst bei **„Abgleich nötig“**, bi
 ## Weitere sechs geprüfte Zuordnungen (27.10.2026)
 
 Die sechs oben aktualisierten Matrixzeilen belegen die **inhaltliche Auffindbarkeit** der jeweiligen Grundregel im Leseentwurf. Sie sind **noch keine normative Abnahme** sämtlicher Unterbedingungen oder Beispiele. Insbesondere bleiben Ausnahmen, Statusübergänge und die Regeltests gesondert zu prüfen. Die übrigen Kennungen behalten ihren bisherigen Prüfstatus.
+
+## Prüfstand Qualität und Regelpflege (27.10.2026)
+
+Die Originalregeln FIB-RECH-QUAL-001/-002, FIB-RECH-REGEL-001/-002 und FIB-RECH-GOV-001 wurden in der bestehenden Regelreferenz einzeln gelesen. Wesentliche Anforderungen sind: Abruffehler begründen keinen Negativbefund; Modellqualität geht der Kostenoptimierung voraus; Änderungen des operativen Regelbestands benötigen Versionierung, Bewertungs- und Entdeckungstest sowie menschliche Aktivierung; fachliche Änderungen werden zeitgleich dokumentiert. Der direkte Transfer in Kapitel 03 konnte in diesem Arbeitsschritt nicht gespeichert werden. Die fünf Kennungen bleiben deshalb ausdrücklich auf „Abgleich nötig“.
