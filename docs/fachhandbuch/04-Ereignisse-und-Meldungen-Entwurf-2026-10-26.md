@@ -12,6 +12,9 @@ FIB unterscheidet die **Erfassung von Sachverhalten** von der **öffentlichen Be
 
 FIB soll relevante Informationen möglichst umfassend erfassen, aber nur berichtenswerte Sachverhalte öffentlich vermitteln. Die Entscheidung über die Veröffentlichung bleibt bei der Redaktion.
 
+
+**Bildverwendung im öffentlichen Beitrag:** Eine öffentliche Meldung kann ein geeignetes Bild aus der FIB-internen Bildersammlung erhalten. Die Zuordnung ist eine eigene redaktionelle Bildverwendung; Bildrechte, sachlicher Motivbezug und konkrete öffentliche Freigabe werden getrennt geprüft.
+
 ## 04.2 Gesamtprozess
 
 **Fundstelle sichern → Sachverhalt erkennen → neues oder bestehendes Ereignis bestimmen → ggf. Ereignis fortschreiben / korrigieren → Veröffentlichungsrelevanz prüfen → optionalen Meldungsentwurf erstellen → redaktionell prüfen und freigeben → veröffentlichen → spätere Entwicklungen auf Aktualisierungsbedarf prüfen.**
