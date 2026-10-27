@@ -67,6 +67,16 @@ Eine Veröffentlichung setzt die für **ihre konkreten Aussagen** tragfähige An
 ## 08.7 Aktualisierung
 Neue Ereignisse und Erkenntnisse führen zur Prüfung veröffentlichter Inhalte. FIB schlägt gegebenenfalls Aktualisierungen, Folgemeldungen oder belegte Korrekturen vor. Bei wesentlichen Korrekturen muss öffentlich erkennbar sein, was und warum geändert wurde. Veröffentlichung bleibt redaktionelle Entscheidung.
 
+### Bildbibliothek und redaktionelle Bildverwendung
+
+FIB verwaltet wiederverwendbare Inhaltsbilder in einer **Bildbibliothek**. Jedes Bild kann eine **Primärzuordnung** zu einem konkreten Ort, Objekt, Ereignis, Vorgang oder Inhalt, weitere fachlich passende Verwendungen und ausdrückliche **Ausschlüsse („Nicht verwenden für“) ** erhalten. Schlagworte unterstützen Suche und KI-Vorschläge; bestätigte Zuordnungen und Ausschlüsse haben Vorrang. Der Redakteur arbeitet dabei mit fachlichen Namen statt technischen IDs.
+
+**Jede Verwendung wird einzeln geprüft.** Ein Bild darf mehrfach eingesetzt werden, wenn sein konkreter Sachbezug und die Nutzungsrechte dies erlauben. Für Meldungen gilt ein strenger Maßstab: Das Bild muss den konkreten Sachverhalt, Ort oder Gegenstand zeigen; bloße Symbolmotive genügen nicht. Für Themen sind repräsentative Motive zulässig, sofern sie nicht täuschen. **Kein Bild ist besser als ein sachlich falsches Bild.**
+
+Vor der öffentlichen Nutzung sind Herkunft, Urheber-/Bildnachweis, Nutzungsbefugnis, öffentliche Freigabe, gegebenenfalls Datenschutzprüfung sowie Bildunterschrift und motivbezogener Alternativtext dokumentiert. Aufnahmeort und Aufnahmedatum werden ergänzt, soweit hilfreich. Die öffentliche Verwendung setzt die Rechteprüfung **für genau diesen Einsatz** voraus.
+
+Nach fachlichen Aktualisierungen prüft FIB, ob das Bild noch zum Sachstand passt. Ein bloßer Bildwechsel ist keine neue sachliche Meldung. Die Primärregeln stehen in [Visuelle Identität und Bildkonzept](../Visuelle-Identitaet-und-Bildkonzept.md), §14; die Gestaltung der Bibliotheksoberfläche folgt erst bei der UI-Erprobung.
+
 ## 08.8 Abgrenzung und offene Konsistenzprüfung
 Primärdefinitionen zu Ereignis/Meldung in Kapitel 04, Vorgangsanalysen in 05, Themen/Analysen in 06, Qualitätskriterien in 10 sowie fachlichen Rechten in 11. **Fachlich geklärt:** Analysefreigabe verändert den Themenstatus nicht; erst die erste Beitragsfreigabe aktiviert ein Thema. **Fachlich entschieden:** F-03 schreibt bei Teilfreigaben den bestätigten Gesamtstand ausschließlich durch angenommene Änderungen fort; F-01 erlaubt die ausdrücklich bestätigte, fassungs- und termingebundene automatische Veröffentlichung nach erneuter Ausführungsprüfung. **Noch nachzuweisen:** normative Harmonisierung der bisherigen Primärregeln, Status-/Rechtematrix sowie die konsistente Umsetzung von Bearbeitungssperren und Aufgabenzuweisung. Der S3-Bestätigungspunkt liegt bei der verbindlichen Terminierung; vor der automatischen Ausführung werden die Voraussetzungen erneut geprüft. Kein neuer Dauerstatus und keine technische Implementierung durch diesen Text.
 
