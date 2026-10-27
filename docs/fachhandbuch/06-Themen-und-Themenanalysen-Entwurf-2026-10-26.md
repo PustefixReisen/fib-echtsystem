@@ -108,7 +108,7 @@ Inhalte der Analyse sind:
 - **Hintergrund- und Zusammenhangswissen:** Ursachen, Abhängigkeiten, Interessen und Zielkonflikte;
 - **Wirkungs- und Folgenanalyse:** unmittelbare/mittelbare und beabsichtigte/unbeabsichtigte Folgen, sachverhaltsgerechte Perspektiven.
 
-Belegte Fakten, plausible Erwartungen, Hypothesen, Widersprüche und offene Fragen bleiben deutlich unterscheidbar. Perspektiven wie Lärm, Erreichbarkeit oder Flächennutzung bilden **keinen starren Pflichtkatalog**. Die Redaktion kann KI-Perspektiven übernehmen, anpassen oder ergänzen. Eine Wirkung wird gemäß bisherigem `Wirkungsmodell.md` fachlich an einem Ereignis verankert; der Herkunfts-/Pflegekontext bestimmt, wo sie geändert werden darf. **Diese ältere Detailregel ist auf übergreifende, nicht einem einzelnen Ereignis zuordenbare Erkenntnisse abzugleichen**, bevor Datenmodell-Änderungen erfolgen.
+Belegte Fakten, plausible Erwartungen, Hypothesen, Widersprüche und offene Fragen bleiben deutlich unterscheidbar. Perspektiven wie Lärm, Erreichbarkeit oder Flächennutzung bilden **keinen starren Pflichtkatalog**. Die Redaktion kann KI-Perspektiven übernehmen, anpassen oder ergänzen. Eine Wirkung wird gemäß bisherigem `Wirkungsmodell.md` fachlich an einem Ereignis verankert; der Herkunfts-/Pflegekontext bestimmt, wo sie geändert werden darf. **Übergreifende Analyseerkenntnisse sind davon getrennt:** Sie gehören in die Themenanalyse und benötigen keinen künstlichen Ereignisanker. Die technische Abbildung wird erst nach der Fachabnahme geklärt.
 
 ### Perspektiven und Wirkungen aus dem bestätigten Themenbestand
 
