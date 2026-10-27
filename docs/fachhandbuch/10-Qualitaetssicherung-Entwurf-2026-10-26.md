@@ -33,7 +33,7 @@ Teilfreigabe lässt bestätigte Teilbereiche nutzbar und andere offen; die redak
 ## 10.5 Sprachqualität und KI-Korrektorat
 Meldungen und Themenbeiträge nutzen ein gemeinsames Korrektorat für **sprachliche** und **inhaltliche** redaktionelle Änderungswünsche. Kleinere sprachliche Verbesserungen an noch unveröffentlichten Entwürfen darf FIB automatisch vornehmen, wenn Änderungen nachvollziehbar und rückgängig machbar sind. Inhaltliche Änderungen bedürfen redaktioneller Bestätigung. Neue unbelegte Tatsachenwünsche führen zu einem Hinweis oder Recherchevorschlag.
 
-Öffentliche Sprache ist verständlich und sachlich, mit Kernaussage früh, nachvollziehbarem roten Faden, korrekt benannten Grenzen und knapper Erläuterung unvertrauter Fachbegriffe beim ersten relevanten Auftreten. Eine Erläuterung darf den Quelleninhalt nicht umdeuten. „Unsere Einordnung“ bleibt von Tatsachen getrennt.
+Öffentliche Sprache ist verständlich und sachlich, mit Kernaussage früh, nachvollziehbarem roten Faden, korrekt benannten Grenzen und knapper Erläuterung unvertrauter Fachbegriffe beim ersten relevanten Auftreten. Eine Erläuterung darf den Quelleninhalt nicht umdeuten. „Unsere Einordnung“ bleibt von Tatsachen getrennt. Bei politischen Einordnungen bleiben Zielkonflikte erkennbar; Motive anderer werden nicht unbelegt unterstellt und Personen oder Gruppen nicht abgewertet. Die internen Sprachmodi dürfen keine zusätzlichen, widersprechenden öffentlichen Sprachregeln erzeugen.
 
 ## 10.6 Gemeinsame Schlussprüfung vor Veröffentlichung
 Eine gemeinsame KI-gestützte Schlussprüfung deckt drei Blickrichtungen ab:
