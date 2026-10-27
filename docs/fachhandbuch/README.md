@@ -17,21 +17,9 @@ Hier entsteht die **einzige fachliche Primärdokumentation** des FIB-Echtsystems
 
 Projektübergreifender Standard: [pustivo – Fachliches Dokumentationsmodell](https://github.com/PustefixReisen/pustivo/blob/main/docs/governance/Fachliches-Dokumentationsmodell.md).
 
-## Geplante fachliche Kapitel
+## Fachkapitel und Arbeitsstand
 
-| Kapitel | Inhalt | Status |
-|---|---|---|
-| 01 Grundlagen | Zweck, Feldkirchen-Bezug, Grundsätze | geplant |
-| 02 Wissensmodell | Inhaltsobjekte und Beziehungen | geplant |
-| [03 Recherche](03-Recherche.md) | Beobachtung, Quellen, Fundstellen, Relevanz | Konsolidierungsentwurf 0.1; Quellenabgleich offen |
-| 04 Ereignisse und Meldungen | Erkennung, Aufbereitung, Fortschreibung | geplant |
-| 05 Vorgänge | Status, Ereignisbeziehungen, Sachstand | geplant |
-| [06 Themen](06-Themen.md) | Definition, lokale Bezüge, redaktionelle Bedeutung, Beitragslebenszyklus | Konsolidierungsentwurf 2.5; Quellenabgleich offen |
-| 07 Sitzungen und Beschlüsse | RIS, Vorlagen, Beschlüsse | geplant |
-| 08 Redaktion | Rollen im Arbeitsablauf, Prüfung, Freigabe, Veröffentlichung | geplant |
-| 09 Öffentliches Angebot | Navigation, Darstellung, Mehr wissen | geplant |
-| 10 Qualität | Plausibilität, Quellenbindung, Sprache und Transparenz | geplant |
-| 11 Fachliche Rechte | Fachliche Handlungsbefugnisse; technische Authentifizierung bleibt in Security-Dokumentation | geplant |
+Die frühere Planungstabelle mit überwiegend „geplant“ ist durch die nachstehende **Elf-Kapitel-Lesefassung** überholt. Alle elf Entwürfe sind vorhanden; ihre vollständige Quellmigration, sprachliche Konsolidierung und fachliche Abnahme sind noch offen. Die früheren Fachkapitel 03 und 06 bleiben während der Prüfung als Primärquellen bestehen.
 
 ## Zusammenhängende Lesefassung in PR #259 (26.10.2026)
 
