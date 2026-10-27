@@ -14,6 +14,9 @@ Beispiel **„Mobilität in Feldkirchen“**: Autobahnkreuz München-Ost, Parkra
 
 **Abgrenzung:** Themen werden durch die Redaktion angelegt. FIB darf begründete Themenkandidaten einschließlich Leitfrage, möglicher Bezüge und Dublettenprüfung vorbereiten, aber nicht eigenständig verbindlich ein neues Thema eröffnen.
 
+
+**Bildverwendung im öffentlichen Beitrag:** Ein öffentlicher Themenbeitrag kann Bilder aus der FIB-internen Bildersammlung verwenden. Die Redaktion wählt sachlich passende Motive aus; eine allgemeine Freigabe des Bildes ersetzt nicht die Prüfung und Bestätigung seiner konkreten öffentlichen Verwendung.
+
 ## 06.2 Gesamtmodell: Definition → Bezüge → Analyse → Beitrag
 
 Die zukünftige Themenbearbeitung umfasst **vier fachliche Arbeitsbereiche**:
