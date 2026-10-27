@@ -1,3 +1,7 @@
+## Regelkennungen: erster konkreter Einzelnachweis (27.10.2026)
+
+Die [Migrationsmatrix](PR259-Regelkennungen-Migrationsmatrix-2026-10-26.md) unterscheidet nun anhand von vier tatsächlich geprüften Originalkennungen zwischen **fachlich überholtem Originalwortlaut**, **inhaltlicher Abbildung in neuen Kapiteln** und **nicht aufgelöster Kennung**. Wichtigster offener Normwechsel ist die ausdrücklich beschlossene Ablösung der Pflicht-Einzelsichtung in `FIB-RECH-SICHTUNG-001`. `FIB-RECH-ABLAUF-001` bleibt mangels eigenständiger Originaldefinition als Verweisproblem markiert. Die Prüfung der übrigen Regelkennungen ist damit **nicht** als erledigt ausgewiesen.
+
 ## Quelltransfer: Fachliche Persistenz (27.10.2026)
 
 Kapitel 02 erläutert jetzt aus `docs/Persistenz-und-Lebenszyklusmodell.md` §§2–12 die stabilen Identitäten, das Verbot spurlosen Löschens bestätigter Objekte und wirksamer Beziehungen, die Trennung von historisch dokumentierten Sachverhalten und technischen Betriebsdaten, die Herkunft von Fundstellen auch bei ausgefallenen URLs sowie die Historisierung von Analysen über bestätigte Gesamtstände gemäß F-03.
