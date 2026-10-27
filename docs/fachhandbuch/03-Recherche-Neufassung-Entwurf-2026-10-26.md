@@ -216,25 +216,6 @@ Die nachstehende Abgrenzung präzisiert die in [der Fachregelreferenz](03-Recher
 
 **Offene Normharmonisierung:** Vorläufige Ereignisse sind weder redaktionell bestätigte Ereignisse noch Fundstellenstatus. Ihre zulässigen automatischen Schreibaktionen müssen in Kapitel 04/11 und der Fachservice-Schicht begrenzt werden. Der Quelltext von FIB-RECH-SICHTUNG-001 wird nicht allein aufgrund der neuen Ereignisautonomie uminterpretiert.
 
-### Fachregeln zu Referenzwissen, Erkenntnisqualität und Regelpflege
-
-Recherche verarbeitet nicht nur Nachrichten, sondern erweitert begründet ihren eigenen Wissens- und Suchkontext. Diese Rückkopplung benötigt nachvollziehbare Voraussetzungen, damit automatisch entdeckte Verbindungen nicht unbemerkt als gesicherte Fakten gelten.
-
-| Regelgruppe | Konkrete fachliche Festlegung |
-|---|---|
-| **KONTEXT-001, REF-003** | Neue sachlich belegte Orts-, Infrastruktur-, Akteurs- und Funktionsbezüge erweitern den Recherchehorizont zunächst als überprüfbare Ergänzungen; KI-Vorschläge sind keine automatisch bestätigten Referenzbeziehungen. |
-| **REF-001/002/004** | Referenzobjekte beschreiben langlebige Identitäten und begründete Beziehungen, nicht wechselnde aktuelle Sachstände. Zuerst werden vorhandene geprüfte Beziehungen verwendet, dann fehlende Bezüge recherchiert und bei verbleibender Unsicherheit redaktionell geprüft. |
-| **ERKENNTNIS-001** | Vertiefte Recherche berücksichtigt fachliche, technische, rechtliche und wissenschaftliche Grundlagen sowie Wirkungen und Zielkonflikte. Ergebnisse und Wissenslücken fließen als belegte Vorschläge in die zugehörigen Vorgangs- oder Themenanalysen, nicht in einen eigenständigen, ungeprüften Erkenntnisbestand. |
-| **RAHMEN-001** | Allgemeine Quellen-/Qualitätsmaßstäbe, demokratisch-gesellschaftliche Relevanz und spezifisch grüne Wertmaßstäbe bleiben getrennt; eine politische Einordnung wird nicht als neutrale Tatsache ausgegeben. |
-| **ROLLE-001/002** | FIB darf vorbereiten und begründete Vorschläge machen. Verbindliche Quellen-/Suchhorizont-Entscheidungen, Zurückstellungen und Veröffentlichungen bleiben an redaktionelle Befugnisse gebunden; Redakteure pflegen den fachlichen Suchkontext. |
-| **QUAL-002, REGEL-001/002** | Fachliche Ergebnisqualität geht vor reiner KI-Kostenoptimierung. Operative Such- und Relevanzregeln sind versioniert; Änderungstests untersuchen **Bewertungswirkung** und **Entdeckungswirkung** getrennt. |
-| **GOV-001** | Fehlende Funktionen werden im Fachdialog und anhand überprüfbarer Umsetzungsschritte konkretisiert; fachliche Geltung entsteht nicht allein durch Implementierung. |
-
-**Grenzbeispiel:** Ein Hinweis auf einen regionalen Radschnellweg kann FIB veranlassen, seinen möglichen Verlauf durch Feldkirchen aus belastbaren Quellen nachzurecherchieren. Die bloße KI-Vermutung wird dadurch noch kein dauerhaft bestätigtes Referenzwissen. Erst ein nachgewiesener Funktionsbezug darf als Grundlage weiterer Recherchen dienen.
-
-**Regelbestandskontrolle:** Diese Regelgruppen erläutern den im bisherigen Kapitel 03 definierten fachlichen Kern. Die vollständigen Originaltexte und die explizite Änderung von **FIB-RECH-SICHTUNG-001** sind weiterhin in der [Regelreferenz](03-Recherche-Fachregelreferenz-Migration-2026-10-26.md) dokumentiert. Die bisher übersehene, aber tatsächlich definierte Kennung **FIB-RECH-ABLAUF-001** steht in [Kapitel 03 (Bestand), Zeile 487](03-Recherche.md#L487): Neue Fundstelle, Ereignis und Meldung sind getrennte Entscheidungen; eine neue Quelle erzwingt keine neue Meldung. Die normative Endprüfung bleibt offen.
-
-
 ### 03.5b Quellen, Fundstellen und Nachweise
 
 ### Herkunft von Fundstellen und inkrementelle Recherche
