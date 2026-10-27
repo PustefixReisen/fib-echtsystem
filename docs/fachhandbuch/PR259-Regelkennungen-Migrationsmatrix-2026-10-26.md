@@ -69,9 +69,9 @@ Für jede Kennung ist die Bestandsquelle nachgewiesen. Eine Regel darf erst als 
 
 | Regelkennung | Zielkapitel (Vorschlag) | Übernahmestand |
 |---|---|---|
-| `FIB-THEMA-BEITRAG-001` | 06 Themen / 08 Redaktion (Grenze prüfen) | Originalregel identifiziert; Detailabgleich mit Kapitel 06 erforderlich |
+| `FIB-THEMA-BEITRAG-001` | 06 Themen / 08 Redaktion (Grenze prüfen) | Inhaltlich in Kapitel 06 jetzt explizit beschrieben; normative Endprüfung offen |
 | `FIB-THEMA-BEITRAG-002` | 06 Themen / 08 Redaktion (Grenze prüfen) | **Inhaltlich in 06/08/11 erklärt** (separate Freigabe/Veröffentlichung; Selbstfreigabe; KI-Grenzen); normative Endprüfung offen |
-| `FIB-THEMA-BEITRAG-003` | 06 Themen / 08 Redaktion (Grenze prüfen) | Originalregel identifiziert; Detailabgleich mit Kapitel 06 erforderlich |
+| `FIB-THEMA-BEITRAG-003` | 06 Themen / 08 Redaktion (Grenze prüfen) | Inhaltlich in Kapitel 06 jetzt explizit beschrieben; normative Endprüfung offen |
 | `FIB-THEMA-BEITRAG-004` | 06 Themen / 08 Redaktion (Grenze prüfen) | Inhaltlich in 06.6 ergänzt: tatsächlich veröffentlichte Fassung inklusive damaliger Einordnung schreibgeschützt sichtbar; Normprüfung offen |
 | `FIB-THEMA-BEITRAG-005` | 06 Themen / 08 Redaktion (Grenze prüfen) | Inhaltlich in 06.6 ergänzt: maßgebliche Ausgangsfassung kenntlich; bewusste Abweichung; Normprüfung offen |
 | `FIB-THEMA-BEITRAG-006` | 06 Themen / 08 Redaktion (Grenze prüfen) | Inhaltlich in 06.6 ergänzt; normative Detailprüfung offen |
@@ -86,21 +86,21 @@ Für jede Kennung ist die Bestandsquelle nachgewiesen. Eine Regel darf erst als 
 | `FIB-THEMA-BEZUG-004` | 06 Themen | Inhaltlich in 06.4 ergänzt; normative Detailprüfung offen |
 | `FIB-THEMA-BEZUG-005` | 06 Themen | Inhaltlich in 06.4 ergänzt; normative Detailprüfung offen |
 | `FIB-THEMA-BEZUG-006` | 06 Themen | Inhaltlich in 06.4 ergänzt; normative Detailprüfung offen |
-| `FIB-THEMA-BEZUG-007` | 06 Themen | Originalregel identifiziert; Detailabgleich mit Kapitel 06 erforderlich |
+| `FIB-THEMA-BEZUG-007` | 06 Themen | Inhaltlich in Kapitel 06 jetzt explizit beschrieben; normative Endprüfung offen |
 | `FIB-THEMA-BEZUG-008` | 06 Themen | Inhaltlich in 06.4 ergänzt; normative Detailprüfung offen |
-| `FIB-THEMA-ENTDECKUNG-001` | 06 Themen | Originalregel identifiziert; Detailabgleich mit Kapitel 06 erforderlich |
+| `FIB-THEMA-ENTDECKUNG-001` | 06 Themen | Inhaltlich in Kapitel 06 jetzt explizit beschrieben; normative Endprüfung offen |
 | `FIB-THEMA-KOORD-001` | 06 Themen / 08–11 Redaktion und Rechte (Grenze prüfen) | Inhaltlich in 06.8 ergänzt; normative Detailprüfung offen |
 | `FIB-THEMA-KOORD-002` | 06 Themen / 08–11 Redaktion und Rechte (Grenze prüfen) | Inhaltlich in 06.8 ergänzt; normative Detailprüfung offen |
 | `FIB-THEMA-RECHTE-001` | 06 Themen / 08–11 Redaktion und Rechte (Grenze prüfen) | Inhaltlich in 06.8 ergänzt; normative Detailprüfung offen |
 | `FIB-THEMA-RECHTE-002` | 06 Themen / 08–11 Redaktion und Rechte (Grenze prüfen) | Inhaltlich in 06.8 ergänzt; normative Detailprüfung offen |
 | `FIB-THEMA-STATUS-001` | 06 Themen | **Inhaltlich im Zielkapitel erklärt** (vier Status; Freigabe und Sichtbarkeit getrennt); normative Endprüfung offen |
-| `FIB-THEMA-STATUS-002` | 06 Themen | Originalregel identifiziert; Detailabgleich mit Kapitel 06 erforderlich |
+| `FIB-THEMA-STATUS-002` | 06 Themen | Inhaltlich in Kapitel 06 jetzt explizit beschrieben; normative Endprüfung offen |
 | `FIB-THEMA-STATUS-003` | 06 Themen | Inhaltlich in 06.8 beschrieben; Aktualitätsprüfung, unveränderte Fassung und keine automatische Publikation vor Normablösung nochmals prüfen |
 | `FIB-THEMA-STATUS-004` | 06 Themen | Inhaltlich in 06.8 beschrieben; Löschgrenzen, Sicherheitsbestätigung und Erhalt anderer Objekte vor Normablösung nochmals prüfen |
 | `FIB-THEMA-STATUS-005` | 06 Themen | Inhaltlich in 06.8: Entwurf darf vor erster Beitragsfreigabe zurückgestellt oder archiviert werden; Normprüfung offen |
 | `FIB-THEMA-STATUS-006` | 06 Themen | Inhaltlich in 06.8: Zurückgestellt zu Archiviert ohne Aktiv-Zwischenstatus; Normprüfung offen |
 | `FIB-THEMA-STATUS-007` | 06 Themen | Inhaltlich in 06.8: Archiv-Wiederaufnahme je frühere Freigabe nach Entwurf oder Aktiv; Normprüfung offen |
-| `FIB-THEMA-VERSION-001` | 06 Themen | Originalregel identifiziert; Detailabgleich mit Kapitel 06 erforderlich |
+| `FIB-THEMA-VERSION-001` | 06 Themen | Inhaltlich in Kapitel 06 jetzt explizit beschrieben; normative Endprüfung offen |
 
 ## Prioritäre inhaltliche Konflikte
 
