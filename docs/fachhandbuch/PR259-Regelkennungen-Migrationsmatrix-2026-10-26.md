@@ -72,8 +72,8 @@ Für jede Kennung ist die Bestandsquelle nachgewiesen. Eine Regel darf erst als 
 | `FIB-THEMA-BEITRAG-001` | 06 Themen / 08 Redaktion (Grenze prüfen) | Abgleich nötig |
 | `FIB-THEMA-BEITRAG-002` | 06 Themen / 08 Redaktion (Grenze prüfen) | **Inhaltlich in 06/08/11 erklärt** (separate Freigabe/Veröffentlichung; Selbstfreigabe; KI-Grenzen); normative Endprüfung offen |
 | `FIB-THEMA-BEITRAG-003` | 06 Themen / 08 Redaktion (Grenze prüfen) | Abgleich nötig |
-| `FIB-THEMA-BEITRAG-004` | 06 Themen / 08 Redaktion (Grenze prüfen) | Detailprüfung offen: unmittelbar sichtbare aktuell veröffentlichte Fassung samt damaliger Einordnung explizit nachweisen |
-| `FIB-THEMA-BEITRAG-005` | 06 Themen / 08 Redaktion (Grenze prüfen) | Detailprüfung offen: Ausgangsfassung neuer Arbeitsversion und bewusst abweichende Auswahl explizit nachweisen |
+| `FIB-THEMA-BEITRAG-004` | 06 Themen / 08 Redaktion (Grenze prüfen) | Inhaltlich in 06.6 ergänzt: tatsächlich veröffentlichte Fassung inklusive damaliger Einordnung schreibgeschützt sichtbar; Normprüfung offen |
+| `FIB-THEMA-BEITRAG-005` | 06 Themen / 08 Redaktion (Grenze prüfen) | Inhaltlich in 06.6 ergänzt: maßgebliche Ausgangsfassung kenntlich; bewusste Abweichung; Normprüfung offen |
 | `FIB-THEMA-BEITRAG-006` | 06 Themen / 08 Redaktion (Grenze prüfen) | Abgleich nötig |
 | `FIB-THEMA-BEITRAG-007` | 06 Themen / 08 Redaktion (Grenze prüfen) | Abgleich nötig |
 | `FIB-THEMA-BEITRAG-008` | 06 Themen / 08 Redaktion (Grenze prüfen) | Abgleich nötig |
