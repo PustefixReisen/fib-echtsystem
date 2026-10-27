@@ -5,6 +5,8 @@
 **[Fachkonzept-Abschlussfahrplan und Abnahmekriterien](PR259-Fachkonzept-Abschlussfahrplan-2026-10-26.md)** – Aktueller Fokus: fachliche Konsolidierung und gemeinsame Leseabnahme. Datenmodell, Bedienoberfläche und Implementierung folgen anschließend iterativ; die Issues #260–#264 sind nur nachgelagerte Vormerkungen.
 
 
+**[Wegweiser zur gemeinsamen Leseabnahme](PR259-Leseabnahme-Wegweiser-2026-10-27.md)** – Lesereihenfolge der elf Kapitel, bereits getroffene Entscheidungen, konkrete Abschlussprüfungen und Grenze zur späteren technischen Umsetzung.
+
 ## Dokumentstand
 
 | Version | Stand | Verantwortlich |
