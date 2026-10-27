@@ -259,6 +259,12 @@ Der viergliedrige Arbeitsbereich ist keine zusätzliche Statusmaschine. **Themen
 
 **Grenzfall:** Eine Redaktion archiviert einen noch nie freigegebenen Entwurf und nimmt ihn später wieder auf. Er wird wieder **Entwurf**, nicht unmittelbar „Aktiv“. Eine neue Analysefreigabe allein ändert auch dann nichts am Themenstatus.
 
+### Federführung, Sperrinhaber und fachliche Rechte
+
+Die **Federführung** benennt die dauerhaft koordinierende Person, aber gibt ihr keine exklusiven Bearbeitungsrechte. Die Karte **„Redaktionelle Koordination“** unterscheidet daher Federführung und **aktuellen Sperrinhaber**. Bei fremder aktiver Sperre bleibt das Thema lesbar, die Bearbeitung ist jedoch gesperrt. Die Anzeige spiegelt den bestehenden Sperrstand wider und begründet keine zusätzliche Sperre.
+
+Redakteure und Administratoren dürfen grundsätzlich dieselben regulären Themenaktionen ausführen. Bei Freigabe, Veröffentlichung, Löschung und Wiederaufnahme gelten jedoch die jeweiligen besonderen fachlichen Voraussetzungen. Nur Administratoren dürfen fremde verwaiste Sperren aufheben; diese Handlung wird auditiert. Diese Unterscheidung entspricht **FIB-THEMA-KOORD-001/002** und **FIB-THEMA-RECHTE-001/002**.
+
 ## 06.9 Anforderungen an den Themeneditor (Lösung bewusst offen)
 
 Der Themeneditor muss die vier Arbeitsbereiche Definition, Bezüge, Analyse und Beitrag in einer verständlichen, **nicht starren** Struktur erschließen. Im Arbeitskontext sollen die Redaktion unter anderem erreichen können:
