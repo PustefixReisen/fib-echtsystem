@@ -263,6 +263,14 @@ Die Redaktion kann öffentliche Links, Dateien und nicht öffentlich erreichbare
 
 Die Redaktion muss für dauerhaft beobachtete Quellen den **letzten erfolgreichen Abruf, Fehler und mögliche Beobachtungslücken** erkennen. Fachlich relevante Änderungen bleiben in ihren früheren und neuen Informationsständen nachvollziehbar. Grundlage: **FIB-RECH-QUELLE-001 bis -005**.
 
+### Entdeckung und Lebenszyklus neuer Quellen
+
+FIB entdeckt auch ohne konkreten Anlass regelmäßig bislang unbekannte Quellen mit unmittelbarem oder begründbarem mittelbarem Feldkirchen-Bezug. Neue Quellen werden zunächst mit Herkunft und Begründung als **Kandidaten** geführt. Fundstellen solcher Kandidaten dürfen schon analysiert werden; dadurch wird die Quelle weder dauerhaft aktiviert noch etwas veröffentlicht.
+
+Der redaktionelle Quellenstatus lautet **Kandidat, Aktiv, Pausiert, Beendet oder Abgelehnt**. Die Kennzeichnung **Pflichtquelle** ist davon unabhängig. Redaktionell zulässige Übergänge sind Kandidat → Aktiv/Abgelehnt, Aktiv → Pausiert/Beendet, Pausiert → Aktiv/Beendet und Abgelehnt/Beendet → Aktiv nach erneuter Prüfung. Die KI schlägt Wechsel nur vor. Pausierung und Beendigung werden begründet; bei Pflichtquellen warnt FIB vor Beobachtungslücken.
+
+Ein Abruffehler führt nicht automatisch zum Statuswechsel. Historische Fundstellen bleiben bei jeder Statusänderung erhalten. Grundlage: **FIB-RECH-QUELLE-006 bis -009**.
+
 ## 03.6 Konkrete Modellerprobung und Abnahmekriterien
 
 **Testfall Grundstückskauf:** Artikel wird als Fundstelle gesichert; Ereignis wird abgeleitet; späterer amtlicher Widerspruch korrigiert eine vorläufige Aussage bzw. erzeugt bei bestätigtem Ereignis einen Vorschlag; eigenständiger vorläufiger Vorgang mit Erstanalyse; Nachricht nur bei Relevanz; Folgeereignisse mit Folgemeldungen und Rückblick.
