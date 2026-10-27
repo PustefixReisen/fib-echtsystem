@@ -106,6 +106,8 @@ Fehleranfällige Sachverhalte (z. B. RIS-Vorlage vs. Beschluss, Ereignisdublette
 7. Zentraler belegbarer Widerspruch blockiert Veröffentlichung; nach Korrektur wird neu geprüft.
 8. Geringe Unsicherheit erzeugt Hinweis, keinen willkürlichen Blocker.
 9. Neue amtliche Information löst dringende Korrekturprüfung einer alten Veröffentlichung aus; Aufgabe bleibt auch bei archiviertem Thema sichtbar.
+10. Eine neu veröffentlichte RIS-Vorlage ohne bestätigten Sitzungstermin wird als Fundstelle erkannt, aber nicht automatisch einem konkreten TOP oder Beschluss zugewiesen.
+11. Eine zeitlich geplante Veröffentlichung mit später entzogener Freigabe wird zur Ausführung gesperrt; eine unveränderte, weiter gültige Fassung darf nach einmaliger terminbezogener S3-Bestätigung automatisch erscheinen.
 
 ## 10.11 Konsistenz- und Umsetzungspunkte
 - **Normabgleich** mit `docs/Fachliche-Plausibilitaets-und-Freigaberegeln.md`: serverseitige Invarianten von KI-gesteuerten semantischen Qualitätsprüfungen sauber abgrenzen.
