@@ -82,7 +82,7 @@ Die Qualitätsentscheidung bezieht sich auf **die betreffende Aussage und konkre
 
 Die Freigabe eines Beitrags umfasst nicht automatisch die Freigabe seiner Dokumente und Bilder. Die bisherige Primärquelle [Fachliche Plausibilitäts- und Freigaberegeln](../Fachliche-Plausibilitaets-und-Freigaberegeln.md) unterscheidet für Dateien interne Nutzung, öffentlich freigabefähige Nutzung, tatsächliche Bereitstellung und Sperrung beziehungsweise Rücknahme. Die öffentliche Bereitstellung verlangt einen **positiv geklärten Rechtezustand** und eine eigene bestätigte S3-Aktion. Der Rechteklärungsstand unterscheidet **geklärt/zulässig**, **ungeklärt** und **nicht zulässig**. Davon getrennt wird die Bereitstellung als **nur redaktionell**, **öffentlich freigabefähig**, **öffentlich bereitgestellt** oder **gesperrt/zurückgezogen** geführt.
 
-Für Bilder sind das Nutzungsrecht am Bild und die Eignung seiner **konkreten Verwendung** getrennt zu prüfen; erforderliche Lizenz-, Datenschutz- und Persönlichkeitsrechtsbedingungen bleiben relevant. Freigabe und Rücknahme sind nachvollziehbar zu protokollieren.
+Für Bilder sind das Nutzungsrecht am Bild und die Eignung seiner **konkreten Verwendung** getrennt zu prüfen; erforderliche Lizenz-, Datenschutz- und Persönlichkeitsrechtsbedingungen bleiben relevant. Freigabe und Rücknahme sind mit entscheidender Person, Zeitpunkt, betroffener Verwendung, zugrunde liegendem Rechte-/Freigabestand und gegebenenfalls Rücknahmegrund nachvollziehbar zu protokollieren.
 
 **Beispiel:** Eine öffentlich abrufbare RIS-PDF darf als Fundstelle intern ausgewertet und über ihren Originalfundort nachgewiesen werden. Die öffentliche Abrufbarkeit allein ist jedoch **keine** automatische Berechtigung, dieselbe Datei durch FIB erneut bereitzustellen.
 
