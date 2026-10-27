@@ -14,6 +14,9 @@ Beispiel **„Grundstückskauf der Gemeinde Feldkirchen“**: Verhandlungsaufnah
 
 Die Aufgabe der Vorgangsbearbeitung besteht darin, die zeitliche Entwicklung fachlich richtig abzubilden, Hintergrund und mögliche Folgen verständlich zu untersuchen, Wissenslücken zu bearbeiten und bestätigte Erkenntnisse auch für zugehörige Themen nutzbar zu machen.
 
+
+**Bildverwendung im öffentlichen Beitrag:** Ein öffentlicher Vorgangsbeitrag kann geeignete Bilder aus der FIB-internen Bildersammlung erhalten. Die redaktionelle Zuordnung und öffentliche Bildverwendung sind von der fachlichen Analyse und der Beitragsfreigabe unterscheidbar; dafür gelten die gesonderten Rechte- und Qualitätsprüfungen.
+
 ## 05.2 Gesamtmodell und Verbindungen
 
 - **Ereignisse** beschreiben nachgewiesene Veränderungen. Ein Ereignis kann ohne Vorgang bestehen. Ein Vorgang verbindet grundsätzlich ein oder mehrere Ereignisse; die bisherige logische Kardinalität Vorgang → Ereignis `1..n` ist in `docs/Datenmodell.md` dokumentiert ; auch die vorläufige Vorgangsanlage erfordert mindestens ein identifiziertes, gegebenenfalls selbst vorläufiges Ereignis (F-02).
