@@ -26,7 +26,7 @@ Für jede Kennung ist die Bestandsquelle nachgewiesen. Eine Regel darf erst als 
 | `FIB-RECH-FUND-006` | 03 Recherche | Abgleich nötig |
 | `FIB-RECH-FUND-007` | 03 Recherche | Abgleich nötig |
 | `FIB-RECH-GOV-001` | 03 Recherche / 10 Qualität (Grenze prüfen) | Abgleich nötig |
-| `FIB-RECH-HORIZONT-001` | 03 Recherche | Abgleich nötig |
+| `FIB-RECH-HORIZONT-001` | 03 Recherche | Inhaltlich in 03.3/03.5 beschrieben (dynamischer Recherchehorizont); Detailabnahme offen |
 | `FIB-RECH-HORIZONT-002` | 03 Recherche | Abgleich nötig |
 | `FIB-RECH-KONTEXT-001` | 03 Recherche | Abgleich nötig |
 | `FIB-RECH-KOORD-001` | 03 Recherche | Abgleich nötig |
@@ -35,8 +35,8 @@ Für jede Kennung ist die Bestandsquelle nachgewiesen. Eine Regel darf erst als 
 | `FIB-RECH-LAUF-002` | 03 Recherche | Abgleich nötig |
 | `FIB-RECH-LAUF-003` | 03 Recherche | Abgleich nötig |
 | `FIB-RECH-PLAN-001` | 03 Recherche | Abgleich nötig |
-| `FIB-RECH-PRINZIP-001` | 03 Recherche | Abgleich nötig |
-| `FIB-RECH-PRINZIP-002` | 03 Recherche | Abgleich nötig |
+| `FIB-RECH-PRINZIP-001` | 03 Recherche | Inhaltlich in 03.2/03.3 beschrieben (offene und wissensgeleitete Recherche); Detailabnahme offen |
+| `FIB-RECH-PRINZIP-002` | 03 Recherche | Inhaltlich in 03/04/08 beschrieben (Fund ohne automatische Publikation); Detailabnahme offen |
 | `FIB-RECH-QUAL-001` | 03 Recherche / 10 Qualität (Grenze prüfen) | Abgleich nötig |
 | `FIB-RECH-QUAL-002` | 03 Recherche / 10 Qualität (Grenze prüfen) | Abgleich nötig |
 | `FIB-RECH-QUELLE-001` | 03 Recherche | Abgleich nötig |
@@ -80,9 +80,9 @@ Für jede Kennung ist die Bestandsquelle nachgewiesen. Eine Regel darf erst als 
 | `FIB-THEMA-BEITRAG-009` | 06 Themen / 08 Redaktion (Grenze prüfen) | Abgleich nötig |
 | `FIB-THEMA-BEITRAG-010` | 06 Themen / 08 Redaktion (Grenze prüfen) | Abgleich nötig |
 | `FIB-THEMA-BEITRAG-011` | 06 Themen / 08 Redaktion (Grenze prüfen) | Abgleich nötig |
-| `FIB-THEMA-BEZUG-001` | 06 Themen | Abgleich nötig |
-| `FIB-THEMA-BEZUG-002` | 06 Themen | Abgleich nötig |
-| `FIB-THEMA-BEZUG-003` | 06 Themen | Abgleich nötig |
+| `FIB-THEMA-BEZUG-001` | 06 Themen | Inhaltlich in 06.4 beschrieben (Vorgänge samt Ereignissen, ergänzende Einzelereignisse, keine Doppelzählung); Detailabnahme offen |
+| `FIB-THEMA-BEZUG-002` | 06 Themen | Inhaltlich in 06.4 mit vier Bezugsstatus beschrieben; Detailabnahme offen |
+| `FIB-THEMA-BEZUG-003` | 06 Themen | Inhaltlich in 06.4 mit drei Bedeutungsstufen und Bestätigung beschrieben; Detailabnahme offen |
 | `FIB-THEMA-BEZUG-004` | 06 Themen | Abgleich nötig |
 | `FIB-THEMA-BEZUG-005` | 06 Themen | Abgleich nötig |
 | `FIB-THEMA-BEZUG-006` | 06 Themen | Abgleich nötig |
@@ -130,3 +130,7 @@ Die Matrix bewertet **nicht** schon deshalb eine Regel als übernommen, weil ihr
 | **FIB-RECH-ABLAUF-001** | Kennung wird referenziert, ist aber keine als eigenständige Originalregel inventarisierte Definition. | Ursprungsstelle prüfen und entweder auf gültige Prozessregel verweisen oder formell als neue Regel definieren; **keine erfundene Originalfassung**. |
 
 Die verbleibenden Matrixzeilen bleiben bewusst bei **„Abgleich nötig“**, bis die vollständige Aussage einschließlich Grenzfällen nachgewiesen ist.
+
+## Weitere sechs geprüfte Zuordnungen (27.10.2026)
+
+Die sechs oben aktualisierten Matrixzeilen belegen die **inhaltliche Auffindbarkeit** der jeweiligen Grundregel im Leseentwurf. Sie sind **noch keine normative Abnahme** sämtlicher Unterbedingungen oder Beispiele. Insbesondere bleiben Ausnahmen, Statusübergänge und die Regeltests gesondert zu prüfen. Die übrigen Kennungen behalten ihren bisherigen Prüfstatus.
