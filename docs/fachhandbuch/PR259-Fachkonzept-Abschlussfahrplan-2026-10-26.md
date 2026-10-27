@@ -1,3 +1,9 @@
+## Quellabgleich: Fakten-Rückprüfung (27.10.2026)
+
+Kapitel 10 enthält jetzt die konkrete Rückprüfung wesentlicher Aussagen einer Textfassung gegen bestätigte Fakten und Fundstellen gemäß `docs/KI-Leitfaden.md` §§13 und 16. Besonders geprüft werden Beträge, Daten, Abstimmungsergebnisse, Entscheidungsstände, Zuständigkeiten, Kausalbehauptungen und rechtliche Zuschreibungen. Unbelegte Aussagen müssen belegt, abgeschwächt, zugeschrieben oder entfernt werden. Ein Abnahmebeispiel unterscheidet eine bloße Beschlussvorlage von einer tatsächlich nachgewiesenen Entscheidung.
+
+Die vollständige normative Inventur aller Primärquellen und die abschließende gemeinsame Leseabnahme stehen weiterhin aus.
+
 # PR #259 – Fachkonzept: fachliche Abschlussprüfung und Abnahmeweg
 
 **Stand 26.10.2026 · Fokus ausschließlich Fachkonzept.** Diese Übersicht trennt strikt die **fachliche Fertigstellung** von späteren Datenmodell-, Bedienoberflächen- und Implementierungsarbeiten. Die fünf Umsetzungsissues #260–#264 sind **nachgelagert** und begründen keine fachliche Sperre.
