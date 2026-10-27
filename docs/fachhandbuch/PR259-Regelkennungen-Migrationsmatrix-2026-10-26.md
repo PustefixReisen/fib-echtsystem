@@ -39,11 +39,11 @@ Für jede Kennung ist die Bestandsquelle nachgewiesen. Eine Regel darf erst als 
 | `FIB-RECH-PRINZIP-002` | 03 Recherche | Inhaltlich in 03/04/08 beschrieben (Fund ohne automatische Publikation); Detailabnahme offen |
 | `FIB-RECH-QUAL-001` | 03 Recherche / 10 Qualität (Grenze prüfen) | Abgleich nötig |
 | `FIB-RECH-QUAL-002` | 03 Recherche / 10 Qualität (Grenze prüfen) | Abgleich nötig |
-| `FIB-RECH-QUELLE-001` | 03 Recherche | Abgleich nötig |
-| `FIB-RECH-QUELLE-002` | 03 Recherche | Abgleich nötig |
-| `FIB-RECH-QUELLE-003` | 03 Recherche | Abgleich nötig |
-| `FIB-RECH-QUELLE-004` | 03 Recherche | Abgleich nötig |
-| `FIB-RECH-QUELLE-005` | 03 Recherche | Abgleich nötig |
+| `FIB-RECH-QUELLE-001` | 03 Recherche | In Kapitel 03 inhaltlich erfasst; Endprüfung offen |
+| `FIB-RECH-QUELLE-002` | 03 Recherche | In Kapitel 03 inhaltlich erfasst; Endprüfung offen |
+| `FIB-RECH-QUELLE-003` | 03 Recherche | In Kapitel 03 inhaltlich erfasst; Endprüfung offen |
+| `FIB-RECH-QUELLE-004` | 03 Recherche | In Kapitel 03 inhaltlich erfasst; Endprüfung offen |
+| `FIB-RECH-QUELLE-005` | 03 Recherche | In Kapitel 03 inhaltlich erfasst; Endprüfung offen |
 | `FIB-RECH-QUELLE-006` | 03 Recherche | Abgleich nötig |
 | `FIB-RECH-QUELLE-007` | 03 Recherche | Abgleich nötig |
 | `FIB-RECH-QUELLE-008` | 03 Recherche | Abgleich nötig |
