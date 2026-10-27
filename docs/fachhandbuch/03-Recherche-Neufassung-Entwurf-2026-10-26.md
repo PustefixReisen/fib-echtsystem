@@ -291,6 +291,13 @@ Abruffehler, leere Suchläufe und fehlgeschlagene Quellenentdeckung belegen nich
 
 Die Recherche verwendet einen strukturierten, versionierten Regelstand, dessen Fassung je Recherchelauf nachvollziehbar bleibt. Regeländerungen enthalten Ausgangsfassung, Vorschlag und Begründung. Vor der Aktivierung werden zwei getrennte Wirkungen getestet: die neue Bewertung bereits bekannter Fundstellen und die zusätzlichen oder entfallenden Entdeckungen in einer Probe-Recherche. Auch zuvor abgelehnte und grenzwertige Funde gehören zum Vergleich. Tests verändern den produktiven Fachbestand nicht. Nur eine berechtigte redaktionelle Person aktiviert eine Änderung nach dokumentierter Prüfung; fachlich kritische Verschlechterungen schließen dies aus. Grundlage: FIB-RECH-REGEL-001 und -002.
 
+
+### Referenzwissen und räumliche Klärung
+
+Referenzobjekte halten dauerhafte Identitäten und Aliase von Orten, Infrastrukturen und Akteuren fest, nicht veränderliche Planungsstände. Geeignete Beziehungen sind etwa „liegt in“, „verbindet“ oder „versorgt“. Solche Beziehungen benötigen nachprüfbare Herkunft und redaktionelle Bestätigung; ein KI-Vorschlag genügt nicht.
+
+Bei fehlendem räumlichem Bezug verwendet FIB zuerst bestätigte Beziehungen, recherchiert dann selbst mit Quellen und fragt erst bei verbleibender Unsicherheit gezielt die Redaktion. Antworten und offene Fragen bleiben dokumentiert; wiederholte Nachfragen ohne neue Erkenntnisse werden vermieden. Neue Funde dürfen Referenzwissen und Suchhorizont als prüfbare Vorschläge erweitern. Referenzwissen ersetzt keinen öffentlichen Quellenbeleg (FIB-RECH-REF-001 bis -004).
+
 ## 03.6 Konkrete Modellerprobung und Abnahmekriterien
 
 **Testfall Grundstückskauf:** Artikel wird als Fundstelle gesichert; Ereignis wird abgeleitet; späterer amtlicher Widerspruch korrigiert eine vorläufige Aussage bzw. erzeugt bei bestätigtem Ereignis einen Vorschlag; eigenständiger vorläufiger Vorgang mit Erstanalyse; Nachricht nur bei Relevanz; Folgeereignisse mit Folgemeldungen und Rückblick.
