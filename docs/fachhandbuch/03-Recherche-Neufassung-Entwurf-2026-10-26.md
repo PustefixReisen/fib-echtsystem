@@ -253,6 +253,16 @@ Rechercheergebnisse protokollieren neue Fundstellen und fachlich geänderte Fass
 
 Grundlage: **FIB-RECH-FUND-001 bis -007** im bisherigen Kapitel 03. Die Pflichtprüfung jeder einzelnen Fundstelle wird damit nicht wieder eingeführt.
 
+### Pflichtquellen, Dateien und Überwachungsqualität
+
+Alle drei Quellenzugangswege speisen denselben Rechercheprozess; keiner führt unmittelbar zu fachlicher Bestätigung oder Veröffentlichung. Bekannte Pflichtquellen, insbesondere Gemeinde- und RIS-Einstiege, werden **direkt und unabhängig von Suchmaschinen** überprüft. Das umfasst neue Unterseiten, freigegebene Dokumente außerhalb von Tagesordnungen und relevante Dateiänderungen bei gleicher URL. Die Veröffentlichung einer Vorlage belegt für sich genommen noch keinen konkreten Sitzungstermin oder TOP.
+
+Unveränderte bekannte Inhalte benötigen grundsätzlich keine erneute KI-Auswertung. KI wird gezielt für semantische Analyse, relevante Veränderungen und offene Quellenentdeckung genutzt.
+
+Die Redaktion kann öffentliche Links, Dateien und nicht öffentlich erreichbare Quellen einbringen. **Interne Verwertung und öffentliche Bereitstellung sind getrennte Rechtefragen.** Ein hochgeladenes PDF wird nicht allein durch die interne Speicherung öffentlich; hierfür sind positiv geklärte Nutzungsrechte und Freigabe nötig. Nicht öffentliche Quellen dürfen nicht als öffentlich einsehbare Belege ausgegeben werden.
+
+Die Redaktion muss für dauerhaft beobachtete Quellen den **letzten erfolgreichen Abruf, Fehler und mögliche Beobachtungslücken** erkennen. Fachlich relevante Änderungen bleiben in ihren früheren und neuen Informationsständen nachvollziehbar. Grundlage: **FIB-RECH-QUELLE-001 bis -005**.
+
 ## 03.6 Konkrete Modellerprobung und Abnahmekriterien
 
 **Testfall Grundstückskauf:** Artikel wird als Fundstelle gesichert; Ereignis wird abgeleitet; späterer amtlicher Widerspruch korrigiert eine vorläufige Aussage bzw. erzeugt bei bestätigtem Ereignis einen Vorschlag; eigenständiger vorläufiger Vorgang mit Erstanalyse; Nachricht nur bei Relevanz; Folgeereignisse mit Folgemeldungen und Rückblick.
