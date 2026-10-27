@@ -77,7 +77,7 @@ Die Redaktion darf die automatische Veröffentlichung **einer genau bezeichneten
 
 Die bisherigen Entscheidungen tragen bereits folgende Anforderungen: Eine redaktionelle Freigabe darf **einzelne Änderungen** eines Analyse-Änderungspakets annehmen und die übrigen zurückstellen. Bestätigte Aussagen sind geschützt; Analysebestandteile werden über den bestätigten **Gesamtstand des zugehörigen Vorgangs oder Themas** historisiert.
 
-**Fachlich naheliegende, aber noch nicht abgenommene Konsolidierungsregel:**
+**Verbindlich beschlossene F-03-Regel (26.10.2026):**
 
 1. Die Redaktion prüft die einzeln vorgeschlagenen Änderungen anhand ihres Beleg- und Unsicherheitsstands.
 2. Bei einer Teilfreigabe entsteht ein **neuer bestätigter Gesamtstand**, der den bisherigen bestätigten Stand mit **ausschließlich den angenommenen Änderungen** verbindet.
@@ -87,7 +87,7 @@ Die bisherigen Entscheidungen tragen bereits folgende Anforderungen: Eine redakt
 
 **Prüffall:** Die bisher bestätigte Aussage A bleibt richtig. Das Änderungspaket enthält neue Aussagen B und C. Die Redaktion bestätigt B, stellt C zurück. Der neue bestätigte Gesamtstand umfasst A+B; C verbleibt als offener Vorschlag. Es entsteht keine eigenständige verbindliche „Version von B“, die das Gesamtversionsmodell unterläuft.
 
-**Entscheidungspunkt für die gemeinsame Leseabnahme:** Soll dieser Grundsatz in Kapitel 05, 06 und 08 als endgültige fachliche Regel gelten? Die genaue Speicherung ist ausdrücklich nicht Teil der Entscheidung.
+**Umsetzung der beschlossenen Regel:** F-03 gilt in den Kapiteln 05, 06, 08 und 11. Die genaue Speicherung ist nicht Teil dieser Fachentscheidung.
 
 
 
