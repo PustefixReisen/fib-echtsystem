@@ -11,11 +11,11 @@ Für jede Kennung ist die Bestandsquelle nachgewiesen. Eine Regel darf erst als 
 | Regelkennung | Zielkapitel (Vorschlag) | Übernahmestand |
 |---|---|---|
 | `FIB-RECH-ABLAUF-001` | 03 Recherche | Abgleich nötig |
-| `FIB-RECH-AUFTRAG-001` | 03 Recherche | Abgleich nötig |
-| `FIB-RECH-BEOB-001` | 03 Recherche | Abgleich nötig |
-| `FIB-RECH-BEOB-002` | 03 Recherche | Abgleich nötig |
-| `FIB-RECH-BEOB-003` | 03 Recherche | Abgleich nötig |
-| `FIB-RECH-BEOB-004` | 03 Recherche | Abgleich nötig |
+| `FIB-RECH-AUFTRAG-001` | 03 Recherche | Inhaltlich in 03.3 ergänzt; normative Detailprüfung offen |
+| `FIB-RECH-BEOB-001` | 03 Recherche | Inhaltlich in 03.3 ergänzt; normative Detailprüfung offen |
+| `FIB-RECH-BEOB-002` | 03 Recherche | Inhaltlich in 03.3 ergänzt; normative Detailprüfung offen |
+| `FIB-RECH-BEOB-003` | 03 Recherche | Inhaltlich in 03.3 ergänzt; normative Detailprüfung offen |
+| `FIB-RECH-BEOB-004` | 03 Recherche | Inhaltlich in 03.3 ergänzt; normative Detailprüfung offen |
 | `FIB-RECH-BETRIEB-001` | 03 Recherche | Abgleich nötig |
 | `FIB-RECH-ERKENNTNIS-001` | 03 Recherche / 05–06 Analyse (Grenze prüfen) | Abgleich nötig |
 | `FIB-RECH-FUND-001` | 03 Recherche | Abgleich nötig |
