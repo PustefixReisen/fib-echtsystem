@@ -556,3 +556,11 @@ Diese beiden **fachlichen Grundsatzentscheidungen sind abgestimmt**. Die technis
 
 Die Lese-Neufassung beschreibt die Abgrenzung in **§ 03.5a**. Erst nach Verifikation des vollständigen Regelbestands und seiner Grenzfälle kann diese Migrationsreferenz als verbindliche Primärnorm eingestuft werden.
 
+
+## Ergänzung der Inventur: FIB-RECH-ABLAUF-001 (27.10.2026)
+
+**Originalfundstelle:** [bisheriges Kapitel 03, Zeile 487](03-Recherche.md#L487). Die Regel steht dort als fett hervorgehobener Regelabsatz, nicht als eigener Detailblock; sie fehlte deshalb in der anfänglichen 53er-Extraktion.
+
+**FIB-RECH-ABLAUF-001 – Drei getrennte fachliche Entscheidungen.** Neue Fundstelle, neues Ereignis und neue Meldung sind drei verschiedene Entscheidungen. Mehrere Fundstellen dürfen ein vorhandenes Ereignis ergänzen; eine neue Quelle begründet keine neue Meldung. Bei wesentlicher neuer Sachinformation wird zuerst die Fortschreibung eines vorhandenen Ereignisses und Vorgangs geprüft.
+
+**Zielnachweis:** [Recherchekapitel 03](03-Recherche-Neufassung-Entwurf-2026-10-26.md) und [Ereignisse/Meldungen 04](04-Ereignisse-und-Meldungen-Entwurf-2026-10-26.md). Der Regelursprung ist aufgeklärt, die vollständige normative Endabnahme bleibt von der inhaltlichen Auffindbarkeit getrennt.
