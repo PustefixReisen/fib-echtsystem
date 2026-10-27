@@ -25,7 +25,7 @@ Für jede Kennung ist die Bestandsquelle nachgewiesen. Eine Regel darf erst als 
 | `FIB-RECH-FUND-005` | 03 Recherche | Inhaltlich in 03.5 ergänzt: Fundstellenidentität Fassungen Prüfung und Änderungshistorie; normative Detailprüfung offen |
 | `FIB-RECH-FUND-006` | 03 Recherche | Inhaltlich in 03.5 ergänzt: Fundstellenidentität Fassungen Prüfung und Änderungshistorie; normative Detailprüfung offen |
 | `FIB-RECH-FUND-007` | 03 Recherche | Inhaltlich in 03.5 ergänzt: Fundstellenidentität Fassungen Prüfung und Änderungshistorie; normative Detailprüfung offen |
-| `FIB-RECH-GOV-001` | 03 Recherche / 10 Qualität (Grenze prüfen) | Abgleich nötig |
+| `FIB-RECH-GOV-001` | 03 Recherche / 10 Qualität (Grenze prüfen) | Inhaltlich in 03.6 dokumentiert; normative Endprüfung offen |
 | `FIB-RECH-HORIZONT-001` | 03 Recherche | Inhaltlich in 03.3/03.5 beschrieben (dynamischer Recherchehorizont); Detailabnahme offen |
 | `FIB-RECH-HORIZONT-002` | 03 Recherche | Inhaltlich in 03.5 präzisiert; normative Endprüfung offen |
 | `FIB-RECH-KONTEXT-001` | 03 Recherche | Abgleich nötig |
