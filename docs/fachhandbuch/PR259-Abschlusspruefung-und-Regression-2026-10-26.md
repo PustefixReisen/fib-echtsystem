@@ -7,8 +7,8 @@
 | Gegenstand | Ergebnis | Quelle |
 |---|---|---|
 | Kapitel 01–11 | Elf zusammenhängende Leseentwürfe verlinkt | [Handbuch-Einstieg](README.md) |
-| Recherche-Regelbestand | 53 eigenständig definierte Originalregeln textlich erfasst | [Recherche-Regelreferenz](03-Recherche-Fachregelreferenz-Migration-2026-10-26.md) |
-| Recherche-Sonderfall | Eine zusätzliche, nur erwähnte Kennung **FIB-RECH-ABLAUF-001** weiterhin unaufgelöst | [Quellstellenabgleich](PR259-Regelmigration-Quellstellenabgleich-2026-10-26.md) |
+| Recherche-Regelbestand | 53 Regeldefinitionen in der Referenz erfasst; weitere Ablaufregel im Original nachgewiesen | [Recherche-Regelreferenz](03-Recherche-Fachregelreferenz-Migration-2026-10-26.md) |
+| Recherche-Sonderfall | **FIB-RECH-ABLAUF-001** in Kapitel 03 (Bestand), Zeile 487 als eigenständiger Regelabsatz gefunden; Referenzmigration noch ausstehend | [Quellstellenabgleich](PR259-Regelmigration-Quellstellenabgleich-2026-10-26.md) |
 | Themen-Regelbestand | 32 eigenständig definierte Originalregeln textlich erfasst | [Themen-Regelreferenz](06-Themen-Fachregelreferenz-Migration-2026-10-26.md) |
 | Fundstellensichtung | Keine generelle menschliche Pflicht-Einzelprüfung; stattdessen alle Fundstellen sichtbar, gezielte Prüfaufgaben | [Recherche-Neufassung §03.5a](03-Recherche-Neufassung-Entwurf-2026-10-26.md) |
 | Themenfreigabe | Analysestand ohne Themenstatuswechsel; erste Beitragsfreigabe Entwurf → Aktiv; Veröffentlichung getrennt | [Themen-Neufassung §06.8a](06-Themen-und-Themenanalysen-Entwurf-2026-10-26.md) |
@@ -59,7 +59,7 @@ Die folgenden **prüfbaren Testszenarien** sind Abnahmeanforderungen, **keine be
 
 **Derzeit nicht belegt:**
 1. Gesamter Quellabschnitts-Nachweis auch für Fachkonzept, Datenmodell, UX, RIS, Redaktion, Rollen/Rechte, Qualität und KI-Leitfaden; zwei bisherige Kapitel allein genügen nicht.
-2. Vollständige Einzelregel-Harmonisierung einschließlich Originalregel **FIB-RECH-ABLAUF-001** und der veränderten Pflichtsichtung.
+2. Vollständige Einzelregel-Harmonisierung einschließlich jetzt lokalisierter **FIB-RECH-ABLAUF-001** und der veränderten Pflichtsichtung.
 3. **Erst nach der Fachkonzept-Abnahme:** Datenbankschema-, API- und Rechteabgleich in der iterativen Entwicklung.
 4. **Erst nach der Fachkonzept-Abnahme:** UI-Abgleich und gemeinsame Erprobung; fachlich vereinbart sind Anforderungen, keine fertigen Screens.
 5. **Erst bei der technischen Abnahme:** Regressionstests R01–R20 und bestehende Tests ausführen und protokollieren.
