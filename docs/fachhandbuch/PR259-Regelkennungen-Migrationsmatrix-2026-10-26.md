@@ -10,7 +10,7 @@ Für jede Kennung ist die Bestandsquelle nachgewiesen. Eine Regel darf erst als 
 
 | Regelkennung | Zielkapitel (Vorschlag) | Übernahmestand |
 |---|---|---|
-| `FIB-RECH-ABLAUF-001` | 03 Recherche | Keine eigenständige Originaldefinition gefunden; Quellenverweis auflösen, nicht als migrierte Bestandsregel zählen |
+| `FIB-RECH-ABLAUF-001` | 03 Recherche / 04 Ereignisse und Meldungen | **Originaldefinition in Kapitel 03 Zeile 487 gefunden**: Fundstelle, Ereignis, Meldung getrennt entscheiden; noch mit Zielkapiteln abgleichen |
 | `FIB-RECH-AUFTRAG-001` | 03 Recherche | Inhaltlich in 03.3 ergänzt; normative Detailprüfung offen |
 | `FIB-RECH-BEOB-001` | 03 Recherche | Inhaltlich in 03.3 ergänzt; normative Detailprüfung offen |
 | `FIB-RECH-BEOB-002` | 03 Recherche | Inhaltlich in 03.3 ergänzt; normative Detailprüfung offen |
