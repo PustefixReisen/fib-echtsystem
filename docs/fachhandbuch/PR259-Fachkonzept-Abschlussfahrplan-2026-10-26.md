@@ -1,3 +1,9 @@
+## Quelltransfer: Fachliche Persistenz (27.10.2026)
+
+Kapitel 02 erläutert jetzt aus `docs/Persistenz-und-Lebenszyklusmodell.md` §§2–12 die stabilen Identitäten, das Verbot spurlosen Löschens bestätigter Objekte und wirksamer Beziehungen, die Trennung von historisch dokumentierten Sachverhalten und technischen Betriebsdaten, die Herkunft von Fundstellen auch bei ausgefallenen URLs sowie die Historisierung von Analysen über bestätigte Gesamtstände gemäß F-03.
+
+Die Einzelprüfung sämtlicher Status- und Übergangsregeln der Fachobjekte bleibt bis zur normativen Gesamtabnahme gesondert nachzuweisen.
+
 ## Quellabgleich Kapitel 11: Benutzer und Rechteentzug (27.10.2026)
 
 Kapitel 11 integriert nun zusätzliche fachliche Vorgaben aus `docs/Rollen-Rechte-und-Workflow.md` §§9–9.2: interne Einladung ohne Selbstregistrierung, Benutzerdeaktivierung vor Löschung mit Historienprüfung, zeitnahe serverseitige Wirksamkeit von Rollenentzug, erneute Berechtigungsprüfung vor S2-/S3-Handlungen sowie die Trennung von Federführung, Bearbeitungssperre und tatsächlicher Rollenberechtigung. Die Auditpflicht für Administratoren bei Aufhebung fremder verwaister Sperren bleibt erhalten.
