@@ -88,6 +88,16 @@ Wird ein Vorgang ausgewählt, werden seine zugehörigen Ereignisse im Themenkont
 
 **Beispiel:** Zur Mobilität in Feldkirchen wird das Parkraumkonzept als Vorgang ausgewählt. FIB berücksichtigt dessen Ereignisse automatisch. Ein ergänzendes Ereignis zu einem regionalen Verkehrsprojekt wird gesondert aufgenommen. Erscheint dasselbe Ereignis später ebenfalls im Parkraumvorgang, darf dies die Gewichtung des Sachverhalts nicht künstlich erhöhen.
 
+### Abgelehnte und zurückgestellte Themenbezüge erneut prüfen
+
+Eine redaktionelle Entscheidung **„Fachlich unpassend“** bleibt bestehen, auch wenn die KI später dieselbe Beziehung erneut vorschlägt. Neue Tatsachen oder eine veränderte Themendefinition können eine **neue redaktionelle Prüfung** begründen. Dabei führt die Wiederaufnahme zunächst zurück zu **Kandidat**; erst nach ausdrücklicher Bestätigung wird daraus **Zugeordnet**. Ein direkter Übergang von „Fachlich unpassend“ zu „Zugeordnet“ ist ausgeschlossen. Zurückgestellte Bezüge können entsprechend neu bewertet werden.
+
+KI-Vorschlag, Herkunft und KI-Begründung sind von der redaktionell verbindlichen Begründung zu unterscheiden. Die belegenden Ereignisse und Quellen müssen nachvollziehbar sein; redaktionelle Zusammenfassungen dürfen nicht als zusätzliche unabhängige Belege gezählt werden.
+
+Beim bloßen Öffnen eines Themas werden vorhandene Kandidaten angezeigt, **ohne automatisch eine neue KI-Suche zu starten**. Neue Vorschläge werden ausdrücklich über **„Weitere Beziehungen vorschlagen“** angefordert; eigene Recherchen und Zuordnungen durch die Redaktion bleiben möglich.
+
+Grundlage: **FIB-THEMA-BEZUG-004, -005, -006 und -008** im bisherigen Kapitel 06.
+
 ## 06.5 Themenanalyse: Eigenständiges Verständnis
 
 Die **Themenanalyse gehört zum Thema** und entwickelt eine selbstständige, übergreifende Sicht. Sie **kopiert nicht** sämtliche Vorgangsanalysen, sondern nutzt deren bestätigte Erkenntnisse mit nachvollziehbaren Verweisen und verarbeitet ergänzende Einzelereignisse. Übergreifende Erkenntnisse dürfen in der Themenanalyse verbleiben, auch wenn kein einzelner Vorgang eindeutig als Ursprung in Frage kommt. Ein künstlicher Vorgang wird dafür nicht angelegt.
