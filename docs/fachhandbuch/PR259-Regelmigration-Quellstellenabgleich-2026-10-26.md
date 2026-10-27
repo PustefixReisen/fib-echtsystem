@@ -10,7 +10,7 @@ Jede Bestandsregel wird bis zur Abnahme mit Quelle, Aussage, neuem Zielabschnitt
 
 | Regel | Bestandsbezeichnung | Quellstelle | Vorgesehene Primärstelle | Status |
 |---|---|---|---|---|
-| `FIB-RECH-ABLAUF-001` | Regeltitel im Quelltext noch gesondert lokalisieren | [Zeile 487](03-Recherche.md#L487) | 03 Recherche | offen |
+| `FIB-RECH-ABLAUF-001` | Eigenständige Regeldefinition als hervorgehobener Absatz (kein Detailblock): Fundstelle, Ereignis und Meldung getrennt entscheiden | [Zeile 487](03-Recherche.md#L487) | 03/04 Ereignisse und Meldungen | Ursprung geklärt; normative Endprüfung offen |
 | `FIB-RECH-AUFTRAG-001` | Recherche aus redaktioneller Sachfrage. | [Zeile 261](03-Recherche.md#L261) | 03 Recherche | offen |
 | `FIB-RECH-BEOB-001` | Eindeutiger Primärbezug. | [Zeile 381](03-Recherche.md#L381) | 03 Recherche | offen |
 | `FIB-RECH-BEOB-002` | Suchstrategie nicht festschreiben. | [Zeile 383](03-Recherche.md#L383) | 03 Recherche | offen |
