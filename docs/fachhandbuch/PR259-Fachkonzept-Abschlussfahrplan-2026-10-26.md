@@ -156,6 +156,12 @@ Aus `docs/Sitzungs-und-Beschlussmodell.md` §§9–11 sind die abgeleiteten Navi
 
 Die bislang pauschal als fehlend bezeichneten TOP-, Fassungs- und Niederschriftregeln sind jetzt im Fachkapitel prozessorientiert erläutert. **Die Einzelinventur auf Ebene jeder bisherigen Detailaussage bleibt dennoch offen**; der Leseentwurf ersetzt die Primärquelle noch nicht.
 
+## Quellabgleich Kapitel 04: Zeitliche Logik (27.10.2026)
+
+Kapitel 04 erläutert jetzt aus `docs/Fachkonzept.md` §7 den Unterschied zwischen ursprünglichem Ereignisdatum, fachlichem Aktualisierungsdatum und technischen Bearbeitungen. Eine rein technische Änderung zählt nicht als fachliche Neuigkeit. Fachlich wesentliche Ergänzungen bleiben mitsamt dem ursprünglichen Ereigniszeitpunkt nachvollziehbar und können die öffentliche Neuigkeitsanzeige auslösen. Damit ist die fachliche Grundlage für die Regeln in Kapitel 09 verknüpft.
+
+**Noch offen:** Die Einzelinventur der übrigen Primärregeln, Status- und Rechtebedingungen und gemeinsame Leseabnahme. F-01 und F-03 sind bereits fachlich entschieden; weitere Technik-/Schemafragen gehören in den folgenden Umsetzungsabschnitt.
+
 ## Wann ist die fachliche Abnahme möglich?
 
 Nach vollendetem Quell-/Regelabgleich, widerspruchsfreien Kapiteln, referenzierten Ausnahmen, funktionierenden internen Verweisen und einer letzten **gemeinsamen Leseprüfung**. Technische Umsetzbarkeit ist anschließend Gegenstand der iterativen Entwicklungsphase.
