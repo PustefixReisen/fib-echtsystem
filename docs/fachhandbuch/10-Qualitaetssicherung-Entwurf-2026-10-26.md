@@ -108,6 +108,8 @@ Fehleranfällige Sachverhalte (z. B. RIS-Vorlage vs. Beschluss, Ereignisdublette
 9. Neue amtliche Information löst dringende Korrekturprüfung einer alten Veröffentlichung aus; Aufgabe bleibt auch bei archiviertem Thema sichtbar.
 10. Eine neu veröffentlichte RIS-Vorlage ohne bestätigten Sitzungstermin wird als Fundstelle erkannt, aber nicht automatisch einem konkreten TOP oder Beschluss zugewiesen.
 11. Eine zeitlich geplante Veröffentlichung mit später entzogener Freigabe wird zur Ausführung gesperrt; eine unveränderte, weiter gültige Fassung darf nach einmaliger terminbezogener S3-Bestätigung automatisch erscheinen.
+12. Eine intern gespeicherte RIS-PDF ohne geklärte öffentliche Bereitstellungsrechte bleibt intern nutzbar; FIB stellt sie öffentlich nicht als eigene Datei bereit.
+13. Eine freigegebene Antwort unter „Mehr wissen?“ ist genau einer Meldung, einem Vorgang oder einem Thema als primärem Kontext zugeordnet und enthält nachvollziehbare Quellen.
 
 ## 10.11 Konsistenz- und Umsetzungspunkte
 - **Normabgleich** mit `docs/Fachliche-Plausibilitaets-und-Freigaberegeln.md`: serverseitige Invarianten von KI-gesteuerten semantischen Qualitätsprüfungen sauber abgrenzen.
