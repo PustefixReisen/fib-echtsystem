@@ -72,8 +72,8 @@ Für jede Kennung ist die Bestandsquelle nachgewiesen. Eine Regel darf erst als 
 | `FIB-THEMA-BEITRAG-001` | 06 Themen / 08 Redaktion (Grenze prüfen) | Abgleich nötig |
 | `FIB-THEMA-BEITRAG-002` | 06 Themen / 08 Redaktion (Grenze prüfen) | **Inhaltlich in 06/08/11 erklärt** (separate Freigabe/Veröffentlichung; Selbstfreigabe; KI-Grenzen); normative Endprüfung offen |
 | `FIB-THEMA-BEITRAG-003` | 06 Themen / 08 Redaktion (Grenze prüfen) | Abgleich nötig |
-| `FIB-THEMA-BEITRAG-004` | 06 Themen / 08 Redaktion (Grenze prüfen) | Abgleich nötig |
-| `FIB-THEMA-BEITRAG-005` | 06 Themen / 08 Redaktion (Grenze prüfen) | Abgleich nötig |
+| `FIB-THEMA-BEITRAG-004` | 06 Themen / 08 Redaktion (Grenze prüfen) | Detailprüfung offen: unmittelbar sichtbare aktuell veröffentlichte Fassung samt damaliger Einordnung explizit nachweisen |
+| `FIB-THEMA-BEITRAG-005` | 06 Themen / 08 Redaktion (Grenze prüfen) | Detailprüfung offen: Ausgangsfassung neuer Arbeitsversion und bewusst abweichende Auswahl explizit nachweisen |
 | `FIB-THEMA-BEITRAG-006` | 06 Themen / 08 Redaktion (Grenze prüfen) | Abgleich nötig |
 | `FIB-THEMA-BEITRAG-007` | 06 Themen / 08 Redaktion (Grenze prüfen) | Abgleich nötig |
 | `FIB-THEMA-BEITRAG-008` | 06 Themen / 08 Redaktion (Grenze prüfen) | Abgleich nötig |
@@ -97,9 +97,9 @@ Für jede Kennung ist die Bestandsquelle nachgewiesen. Eine Regel darf erst als 
 | `FIB-THEMA-STATUS-002` | 06 Themen | Abgleich nötig |
 | `FIB-THEMA-STATUS-003` | 06 Themen | Inhaltlich in 06.8 beschrieben; Aktualitätsprüfung, unveränderte Fassung und keine automatische Publikation vor Normablösung nochmals prüfen |
 | `FIB-THEMA-STATUS-004` | 06 Themen | Inhaltlich in 06.8 beschrieben; Löschgrenzen, Sicherheitsbestätigung und Erhalt anderer Objekte vor Normablösung nochmals prüfen |
-| `FIB-THEMA-STATUS-005` | 06 Themen | Abgleich nötig |
-| `FIB-THEMA-STATUS-006` | 06 Themen | Abgleich nötig |
-| `FIB-THEMA-STATUS-007` | 06 Themen | Abgleich nötig |
+| `FIB-THEMA-STATUS-005` | 06 Themen | Inhaltlich in 06.8: Entwurf darf vor erster Beitragsfreigabe zurückgestellt oder archiviert werden; Normprüfung offen |
+| `FIB-THEMA-STATUS-006` | 06 Themen | Inhaltlich in 06.8: Zurückgestellt zu Archiviert ohne Aktiv-Zwischenstatus; Normprüfung offen |
+| `FIB-THEMA-STATUS-007` | 06 Themen | Inhaltlich in 06.8: Archiv-Wiederaufnahme je frühere Freigabe nach Entwurf oder Aktiv; Normprüfung offen |
 | `FIB-THEMA-VERSION-001` | 06 Themen | Abgleich nötig |
 
 ## Prioritäre inhaltliche Konflikte
