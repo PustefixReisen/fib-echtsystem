@@ -43,7 +43,7 @@ flowchart LR
   F --> VE["Gesonderte Veröffentlichung"]
 ```
 
-Die Arbeitsfolge variiert je nach Gegenstand. Für **Analysen** ist eine fachliche **Teilfreigabe** möglich. Bei **Beiträgen** wird eine bestimmte Fassung freigegeben; Veröffentlichung ist eine eigenständige Handlung, sofort oder später terminiert. Eine freigegebene Vorgangsanalyse ersetzt nicht die Beitragsfreigabe des **Vorgangsbeitrags**. Entsprechendes gilt für Themenanalysen und Themenbeiträge.
+Die Arbeitsfolge variiert je nach Gegenstand. Für **Analysen** ist eine fachliche **Teilfreigabe** möglich (F-03: neuer bestätigter Gesamtstand nur mit angenommenen Änderungen; offene Vorschläge bleiben getrennt). Bei **Beiträgen** wird eine bestimmte Fassung freigegeben; Veröffentlichung ist eine eigenständige Handlung, sofort oder später terminiert. Eine freigegebene Vorgangsanalyse ersetzt nicht die Beitragsfreigabe des **Vorgangsbeitrags**. Entsprechendes gilt für Themenanalysen und Themenbeiträge.
 
 Die Analysefreigabe verändert den **Themenstatus** nicht; der Wechsel von Entwurf zu Aktiv erfolgt nach der bestehenden Regel bei der **ersten Beitragsfreigabe**.
 
