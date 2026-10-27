@@ -29,7 +29,7 @@ Für jede Kennung ist die Bestandsquelle nachgewiesen. Eine Regel darf erst als 
 | `FIB-RECH-HORIZONT-001` | 03 Recherche | Inhaltlich in 03.3/03.5 beschrieben (dynamischer Recherchehorizont); Detailabnahme offen |
 | `FIB-RECH-HORIZONT-002` | 03 Recherche | Abgleich nötig |
 | `FIB-RECH-KONTEXT-001` | 03 Recherche | Abgleich nötig |
-| `FIB-RECH-KOORD-001` | 03 Recherche | Abgleich nötig |
+| `FIB-RECH-KOORD-001` | 03 Recherche | Gemeinsamer Quellen-/Fundstellenbestand im Kapitel 03 beschrieben; Detailabnahme offen |
 | `FIB-RECH-KOORD-002` | 03 Recherche | Abgleich nötig |
 | `FIB-RECH-LAUF-001` | 03 Recherche | Abgleich nötig |
 | `FIB-RECH-LAUF-002` | 03 Recherche | Abgleich nötig |
@@ -48,7 +48,7 @@ Für jede Kennung ist die Bestandsquelle nachgewiesen. Eine Regel darf erst als 
 | `FIB-RECH-QUELLE-007` | 03 Recherche | Abgleich nötig |
 | `FIB-RECH-QUELLE-008` | 03 Recherche | Abgleich nötig |
 | `FIB-RECH-QUELLE-009` | 03 Recherche | Abgleich nötig |
-| `FIB-RECH-QUELLE-010` | 03 Recherche | Abgleich nötig |
+| `FIB-RECH-QUELLE-010` | 03 Recherche | Inhaltlich in 03.5 ergänzt: eine Primärquelle je Fundstelle, weitere Fundorte und abgeleitete Fachbezüge; Detailabnahme offen |
 | `FIB-RECH-RAHMEN-001` | 03 Recherche | Abgleich nötig |
 | `FIB-RECH-REF-001` | 03 Recherche | Abgleich nötig |
 | `FIB-RECH-REF-002` | 03 Recherche | Abgleich nötig |
@@ -62,7 +62,7 @@ Für jede Kennung ist die Bestandsquelle nachgewiesen. Eine Regel darf erst als 
 | `FIB-RECH-RELEVANZ-004` | 03 Recherche | Abgleich nötig |
 | `FIB-RECH-ROLLE-001` | 03 Recherche / 11 Fachrechte (Grenze prüfen) | Abgleich nötig |
 | `FIB-RECH-ROLLE-002` | 03 Recherche / 11 Fachrechte (Grenze prüfen) | Abgleich nötig |
-| `FIB-RECH-RUECKBLICK-001` | 03 Recherche | Abgleich nötig |
+| `FIB-RECH-RUECKBLICK-001` | 03 Recherche | Inhaltlich in 03.5 ergänzt: Anlassrückblick, danach inkrementell mit Überlappung; Detailabnahme offen |
 | `FIB-RECH-SICHTUNG-001` | 03 Recherche | **Fachlich überholt:** pauschale Pflichtsichtung aufgehoben; ersetzender Regelwortlaut und Normablösung offen |
 
 ## Kapitel 06 (Themen) – 32 Kennungen
