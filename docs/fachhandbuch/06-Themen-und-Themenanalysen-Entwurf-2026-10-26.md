@@ -206,6 +206,11 @@ Wer einen Themenbeitrag nur liest, löst keine Sperre aus. Vor dem ersten schrei
 
 Eine bloße Konfliktkontrolle beim Speichern ersetzt dieses pessimistische Prinzip nicht. Es gilt fachlich auch für andere bearbeitete FIB-Objekte; der Themenbeitrag ist kein Sonderfall. Grundlage: **FIB-THEMA-BEITRAG-011** und `docs/Datenmodell.md` §20.4.
 
+
+### Fachliche Gesamtfassung und öffentlicher Beitrag
+
+Ein Thema besitzt einen bestätigten fachlichen Gesamtstand und davon getrennte Beitragsfassungen. Änderungen an Definition, Bezügen oder Analyse können einen neuen bestätigten Gesamtstand nach F-03 ergeben, ohne einen öffentlichen Beitrag zu ändern. Der Beitragsversionsverlauf zeigt vor allem freigegebene Beiträge; frühere fachliche Gesamtstände bleiben intern nachvollziehbar. Der Beitrag trennt sachlichen Thementext von der optionalen „Unsere Einordnung“; KI-Vorschläge und redaktionelle Texte bleiben unterscheidbar.
+
 ## 06.7 Fortlaufende Aktualität und öffentlicher Bezug
 
 Nach einer redaktionell freigegebenen Änderung der Themenanalyse prüft FIB automatisch, ob bereits veröffentlichte Themenbeiträge betroffen sind. Eine relevante Auswirkung erzeugt einen **Aktualisierungsvorschlag**, nicht eine automatische Änderung am öffentlichen Text. Keine neue Veröffentlichung ist nötig, wenn der Beitrag sachlich richtig und hinreichend vollständig bleibt.
