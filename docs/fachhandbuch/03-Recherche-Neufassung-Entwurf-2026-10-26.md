@@ -286,6 +286,11 @@ Berechtigte Redakteure müssen erkennen und pflegen können, welche Orte, Quelle
 
 Abruffehler, leere Suchläufe und fehlgeschlagene Quellenentdeckung belegen nicht, dass es keine relevanten Nachrichten gibt. FIB kennzeichnet solche Fehler und macht wiederholte Probleme bei Pflichtquellen für die Redaktion sichtbar. Für die KI-gestützte Quellenentdeckung und Bewertung zählt zuerst nachgewiesene fachliche Qualität; erst danach werden geeignete Modelle nach Kosten ausgewählt. KI übernimmt keine Freigabe. Grundlage: FIB-RECH-QUAL-001 und -002.
 
+
+### Pflege des operativen Regelbestands
+
+Die Recherche verwendet einen strukturierten, versionierten Regelstand, dessen Fassung je Recherchelauf nachvollziehbar bleibt. Regeländerungen enthalten Ausgangsfassung, Vorschlag und Begründung. Vor der Aktivierung werden zwei getrennte Wirkungen getestet: die neue Bewertung bereits bekannter Fundstellen und die zusätzlichen oder entfallenden Entdeckungen in einer Probe-Recherche. Auch zuvor abgelehnte und grenzwertige Funde gehören zum Vergleich. Tests verändern den produktiven Fachbestand nicht. Nur eine berechtigte redaktionelle Person aktiviert eine Änderung nach dokumentierter Prüfung; fachlich kritische Verschlechterungen schließen dies aus. Grundlage: FIB-RECH-REGEL-001 und -002.
+
 ## 03.6 Konkrete Modellerprobung und Abnahmekriterien
 
 **Testfall Grundstückskauf:** Artikel wird als Fundstelle gesichert; Ereignis wird abgeleitet; späterer amtlicher Widerspruch korrigiert eine vorläufige Aussage bzw. erzeugt bei bestätigtem Ereignis einen Vorschlag; eigenständiger vorläufiger Vorgang mit Erstanalyse; Nachricht nur bei Relevanz; Folgeereignisse mit Folgemeldungen und Rückblick.
