@@ -50,10 +50,10 @@ Für jede Kennung ist die Bestandsquelle nachgewiesen. Eine Regel darf erst als 
 | `FIB-RECH-QUELLE-009` | 03 Recherche | Inhaltlich in 03.5 ergaenzt; normative Endpruefung offen |
 | `FIB-RECH-QUELLE-010` | 03 Recherche | Inhaltlich in 03.5 ergänzt: eine Primärquelle je Fundstelle, weitere Fundorte und abgeleitete Fachbezüge; Detailabnahme offen |
 | `FIB-RECH-RAHMEN-001` | 03 Recherche | Abgleich nötig |
-| `FIB-RECH-REF-001` | 03 Recherche | Abgleich nötig |
-| `FIB-RECH-REF-002` | 03 Recherche | Abgleich nötig |
-| `FIB-RECH-REF-003` | 03 Recherche | Abgleich nötig |
-| `FIB-RECH-REF-004` | 03 Recherche | Abgleich nötig |
+| `FIB-RECH-REF-001` | 03 Recherche | Inhaltlich in 03.5 ergänzt; normative Endprüfung offen |
+| `FIB-RECH-REF-002` | 03 Recherche | Inhaltlich in 03.5 ergänzt; normative Endprüfung offen |
+| `FIB-RECH-REF-003` | 03 Recherche | Inhaltlich in 03.5 ergänzt; normative Endprüfung offen |
+| `FIB-RECH-REF-004` | 03 Recherche | Inhaltlich in 03.5 ergänzt; normative Endprüfung offen |
 | `FIB-RECH-REGEL-001` | 03 Recherche / 10 Qualität (Grenze prüfen) | Inhaltlich in Kapitel 03 ergaenzt; normative Detailpruefung offen |
 | `FIB-RECH-REGEL-002` | 03 Recherche / 10 Qualität (Grenze prüfen) | Inhaltlich in Kapitel 03 ergaenzt; normative Detailpruefung offen |
 | `FIB-RECH-RELEVANZ-001` | 03 Recherche | Inhaltlich in 03.5 präzisiert; normative Endprüfung offen |
