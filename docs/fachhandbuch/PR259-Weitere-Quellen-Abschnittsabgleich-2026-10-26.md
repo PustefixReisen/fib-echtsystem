@@ -41,6 +41,8 @@ Jede Primärquelle wird nach ihrem **fachlichen Gehalt** zugeordnet. Reine techn
 5. **„Mehr wissen?“** zusätzlich beim Vorgang; jede Vertiefungsfrage weiterhin genau einem primären Kontext zugeordnet.
 6. **Neues:** bei Bedarf Darstellung mehrerer Meldungen eines Vorgangs verdichten, keine Datenobjekte zusammenführen.
 7. **Vorläufige Ereignisse** können automatisiert entstehen, bestätigte Ereignisse bleiben vor stillschweigender KI-Änderung geschützt.
+8. **F-01 – geplante Veröffentlichung:** ausdrücklich bestätigte konkrete Fassung und Termin gelten als S3-Bestätigung bei Terminierung; vor Ausführung erneute serverseitige Voraussetzungenprüfung, aber keine zweite manuelle Bestätigung. Der ältere S3-Wortlaut in Rollen/Rechte §6.4 muss dafür harmonisiert werden.
+9. **F-03 – Teilfreigabe der Analyse:** angenommene Änderungen ergeben einen neuen bestätigten Gesamtstand; offene Vorschläge werden nicht Teil dieses Standes. Frühere bestätigte Stände bleiben nachvollziehbar.
 
 Diese fachlichen Änderungen dürfen bei der endgültigen Normmigration **nicht als wortgetreue Übernahmen** verbucht werden.
 
