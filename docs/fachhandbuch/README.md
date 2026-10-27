@@ -7,6 +7,10 @@
 
 **[Wegweiser zur gemeinsamen Leseabnahme](PR259-Leseabnahme-Wegweiser-2026-10-27.md)** – Lesereihenfolge der elf Kapitel, bereits getroffene Entscheidungen, konkrete Abschlussprüfungen und Grenze zur späteren technischen Umsetzung.
 
+**[Gesamtlesefassung](FIB-Fachkonzept-Gesamtlesefassung-2026-10-27.md)** – der zusammenhängende fachliche Ablauf aller elf Kapitel.
+
+**[Quellenabgleich – Prüfprotokoll](PR259-Quellenabgleich-Abschlussprotokoll-2026-10-27.md)** – Primärquellen, bewusste Normänderungen und noch nicht einzeln nachgewiesene Details.
+
 ## Dokumentstand
 
 | Version | Stand | Verantwortlich |
