@@ -537,9 +537,9 @@ Diese beiden **fachlichen Grundsatzentscheidungen sind abgestimmt**. Die technis
 
 ## Fehlende oder nur indirekte Regelkennungen
 
-- `FIB-RECH-ABLAUF-001` ist im bisherigen Kapitel als Kennung erwähnt, aber nicht als eigenständige fett gesetzte Regeldefinition ausgeführt; Ursprung und Wortlaut sind vor Regelabschluss zu ermitteln.
+- `FIB-RECH-ABLAUF-001` steht als eigenständige fett gesetzte Regeldefinition im bisherigen Kapitel 03, Zeile 487, und ist unten ergänzend inventarisiert.
 
-**Inventur:** 53 eigenständige Regeldefinitionen mit Originalkennungen; 1 zusätzliche referenzierte Kennung offen.
+**Inventur:** 53 ursprüngliche Detailblöcke und zusätzlich 1 eigenständige Regeldefinition im Fließtext (FIB-RECH-ABLAUF-001); insgesamt 54 nachgewiesene Recherche-Kennungen. Normative Endprüfung offen.
 
 ## Fachliche Harmonisierung vom 26.10.2026 – differenzierter Abgleich
 
