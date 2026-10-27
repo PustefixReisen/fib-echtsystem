@@ -29,7 +29,7 @@ flowchart TB
     E["Ereignis"]
     V["Vorgang"] --> AV["Vorgangsanalyse"]
     T["Thema"] --> AT["Themenanalyse"]
-    E <-->|"0 bis viele"| V
+    E <-->|"mindestens 1 Ereignis je Vorgang"| V
     V <-->|"0 bis viele"| T
     E <-->|"zusätzlicher Bezug"| T
   end
