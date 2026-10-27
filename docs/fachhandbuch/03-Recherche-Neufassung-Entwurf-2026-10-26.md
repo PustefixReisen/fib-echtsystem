@@ -307,6 +307,11 @@ Vertiefte Recherchen können Erklärungen, wissenschaftliche oder rechtliche Gru
 
 KI darf suchen, erfassen und Vorschläge machen, aber keine Fundstellen verbindlich zurückstellen, veröffentlichen oder bestätigte Suchregeln eigenmächtig ändern. Redakteure pflegen Quellen, Suchräume und Beobachtungsaufträge im fachlichen Alltag; besonders geschützte Regelaktivierungen unterliegen dem Rechtekonzept. Grundlage: FIB-RECH-PLAN-001, KONTEXT-001, ERKENNTNIS-001 und ROLLE-001/-002.
 
+
+### Drei Referenzrahmen ohne Verfälschung der Fakten
+
+FIB trennt allgemeine Quellen- und Qualitätsprinzipien, demokratisch-gesellschaftliche Maßstäbe und ausdrücklich grüne politische Wertungen. Politische Erwartungen dürfen die Tatsachenbasis nicht verändern. Grüne Wertungen erscheinen gegebenenfalls getrennt als „Unsere Einordnung“. Gesellschaftlich-demokratische Entwicklungen können auch ohne direkten Ortsbezug recherchiert werden, wenn eine mögliche konkrete Bedeutung für Feldkirchen begründet wird. Die genauen gesellschaftlich-demokratischen Bewertungskriterien sind in den bisherigen Regeln noch nicht abschließend festgelegt und werden nicht als bereits beschlossen ausgegeben (FIB-RECH-RAHMEN-001).
+
 ## 03.6 Konkrete Modellerprobung und Abnahmekriterien
 
 **Testfall Grundstückskauf:** Artikel wird als Fundstelle gesichert; Ereignis wird abgeleitet; späterer amtlicher Widerspruch korrigiert eine vorläufige Aussage bzw. erzeugt bei bestätigtem Ereignis einen Vorschlag; eigenständiger vorläufiger Vorgang mit Erstanalyse; Nachricht nur bei Relevanz; Folgeereignisse mit Folgemeldungen und Rückblick.
