@@ -112,12 +112,19 @@ Quelle: [Fachkonzept](../Fachkonzept.md), §7; die konkrete Anzeige von Neuigkei
 6. **Politische Einordnung:** Im Regelfall kein Einordnungsentwurf; lediglich bei außergewöhnlich hoher Bedeutung ein begründeter Hinweis, danach nur auf Anforderung der Redaktion ein Textvorschlag.
 7. **Dringlicher Änderungsbedarf:** Eine neue belastbare Information widerspricht einer veröffentlichten Meldung; entsprechende Aufgabe erscheint hervorgehoben.
 
-## 04.8 Konsistenz- und Umsetzungspunkte
+## 04.8 Bereits geklärte Grundsätze und noch auszuführender Abgleich
 
-- **Quellabgleich:** `docs/Fachkonzept.md` §§4.1, 5, 7, 11; `docs/Redaktionsworkflow.md` §§2–5, 9–11; `docs/Begriffe.md`, `docs/Datenmodell.md`, `docs/Persistenz-und-Lebenszyklusmodell.md`; Kap. 03/06 des Fachhandbuchs.
-- **Widerspruch:** Die ältere schematische Formulierung `Ereignis → Meldung → Vorgang → Thema` darf **nicht** als zwingende Datenverarbeitung verstanden werden. Die Vorgangsbeziehung läuft über Ereignisse; die Meldung ist optional. Fachkonzept §5 und Begriffsverweise entsprechend prüfen.
-- **Widerspruch:** Die ältere pauschale Pflicht zur redaktionellen Ereignisübernahme muss mit vorläufiger automatischer Erfassung und den bisherigen Fundstellensichtungsrechten abgeglichen werden; letzteres bleibt gewährleistet.
-- **Status- und Rechteprüfung:** Event-/Meldungszustände, Versionierung, geplante Veröffentlichung und fachliche Korrekturen gegen vorhandenes Schema und Tests prüfen, **ohne neue Statuswerte als automatisch beschlossen auszugeben**.
-- **Offene Bedienlösung:** Textkorrektur, Meldungskette, Evidenzdarstellung und dringende Aktualisierungsaufgaben werden iterativ in der bestehenden Anwendung erprobt.
+**Fachlich entschieden – keine neue Freigabefrage:**
 
-**Kein Merge dieses Entwurfs vor vollständigem Regel-, Rechte- und Implementierungsabgleich.**
+- Fundstellen werden grundsätzlich von FIB analysiert und eingeordnet, aber **nicht zwingend einzeln durch einen Menschen bestätigt**. Redaktionelle Sichtbarkeit und gezielte Prüfaufträge bleiben erhalten. Verbindliche Zurückstellung ist keine automatische Folge fehlender Veröffentlichungsrelevanz.
+- Eine Fundstelle kann mehrere Ereignisse belegen, mehrere Fundstellen dasselbe Ereignis. **Die Meldung ist optional**, Vorgänge und Themen verarbeiten Ereignisse unabhängig von ihrer Veröffentlichung.
+- Vorläufige Ereignisse dürfen automatisiert entstehen. Bereits bestätigte Ereignisse dürfen bei materiellen Änderungen nur über einen redaktionell zu entscheidenden Änderungsvorschlag berichtigt werden.
+- Meldungen folgen dem [Sprachleitfaden](../Sprachleitfaden.md); konkrete öffentliche Bildverwendungen können auf der internen Bildersammlung beruhen, benötigen aber eine eigene Rechte- und Freigabeprüfung.
+
+**Dokumentations- und Umsetzungsarbeit, die nicht zur fachlichen Kapitelabnahme vorgelegt werden muss:**
+
+- Die Altquellen `docs/Fachkonzept.md` §§4.1, 5, 7, 11, `docs/Redaktionsworkflow.md`, `docs/Begriffe.md`, `docs/Datenmodell.md`, `docs/Persistenz-und-Lebenszyklusmodell.md` sowie Kapitel 03/06 werden gegen diese Beschlüsse nachverfolgt. Ein älteres Schema `Ereignis → Meldung → Vorgang → Thema` ist **keine** verpflichtende Fachobjektkette.
+- Die alte allgemeine Fundstellen-Einzelprüfpflicht und die pauschale redaktionelle Ereignisübernahme sind gemäß beschlossener Automatik fachlich zu harmonisieren. Die vollständige Regelkennungs-, Status-, Rechte- und Versionsprüfung ist vor normativer Ablösung erforderlich.
+- Die technische Umsetzung der Wiederfunderkennung, von Korrekturversionen, bereits bestätigten Ereignissen, Publikationsterminen und Bildverwendungen wird nach der Fachabnahme getestet. Konkrete Oberflächen für Meldungskette, Textkorrektur, Belege und dringliche Aufgaben werden iterativ erprobt.
+
+**Status:** Fachlicher Leseentwurf; die Beschlüsse sind im Kapitel erfasst. Die formale Migrations- und Implementierungsprüfung ist noch nicht abgeschlossen; die ursprünglichen Primärquellen bleiben bis zur geprüften Ablösung erhalten.
