@@ -108,6 +108,18 @@ FIB verwendet keine öffentliche Selbstregistrierung für die Redaktion. Für Re
 
 Rollenentzug und Deaktivierung müssen serverseitig wirksam sein – auch wenn ein Browser noch eine Sitzung gespeichert hat. Die eigentliche Entscheidung über Fachrechte liegt in den **Fachservices**; RLS und Datenbankregeln bilden zusätzliche Schutzschichten. Für fachlich wirksame oder besonders geschützte Aktionen werden Akteur, Zeitpunkt, betroffene Objekte, relevante Änderungen, Berechtigungsprüfung und Bestätigung nachvollziehbar auditiert.
 
+### Benutzerlebenszyklus und laufende Sitzungen
+
+FIB bietet **keine öffentliche Selbstregistrierung**. Ein Administrator richtet interne Benutzer ein und legt die FIB-Rolle fest; die eingeladene Person schließt ihre Passwort- und MFA-Einrichtung selbst ab. Erst ein aktiver Anwendungszugang mit erfüllten Sicherheitsanforderungen berechtigt zur Arbeit.
+
+Beim Austritt wird ein Benutzer im Regelfall **deaktiviert**. Eine endgültige Löschung ist nur möglich, wenn keine erforderlichen Fachreferenzen oder Auditnachweise verloren gehen; andernfalls bleibt die Deaktivierung maßgeblich.
+
+**Entzug von Rechten wirkt serverseitig:** Eine noch geöffnete Browsersitzung darf entzogene Befugnisse nicht fortschreiben. Vor besonders wirksamen Freigabe- und Veröffentlichungsaktionen prüft FIB daher erneut den aktuellen Benutzer- und Rollenstatus.
+
+**Koordination ist keine Berechtigung:** Federführung, letzte Bearbeitung, Sperren und Übernahmeanfragen zeigen Zuständigkeiten und verhindern Bearbeitungskonflikte; sie verleihen keine neuen Fachrechte. Eine Übernahmeanfrage ändert die Federführung nicht automatisch. Das Aufheben verwaister fremder Sperren durch Administratoren ist zu protokollieren.
+
+Fachquelle: [Rollen, Rechte und Workflow](../Rollen-Rechte-und-Workflow.md), §§9–9.2.
+
 ## 11.10 Abnahmefälle
 
 1. Redakteur verfasst, bestätigt und veröffentlicht eine Meldung, ohne Adminrolle.
