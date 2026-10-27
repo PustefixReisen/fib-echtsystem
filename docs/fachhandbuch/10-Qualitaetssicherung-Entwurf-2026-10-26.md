@@ -43,6 +43,18 @@ Eine gemeinsame KI-gestützte Schlussprüfung deckt drei Blickrichtungen ab:
 
 Die Oberfläche zeigt **wesentliche Probleme und Lösungsvorschläge**, nicht lange Listen bestandener Einzeltests. Die Schlussprüfung ist **keine zusätzliche unabhängige Freigabestufe**.
 
+### Tatsachenbehauptungen vor Freigabe rückprüfen
+
+Vor einer Beitragsfreigabe zerlegt FIB die wesentlichen Tatsachenbehauptungen der konkreten Textfassung und gleicht sie mit dem bestätigten Sachstand und den dokumentierten Quellen ab. Die Prüfung erfolgt **vom Text zurück zur Faktenbasis**, nicht allein anhand sprachlicher Plausibilität.
+
+Besondere Aufmerksamkeit erhalten **Namen und Funktionen, Beträge, Daten, Zuständigkeiten, Abstimmungsergebnisse, Entscheidungsstatus, behauptete Ursache-Wirkungs-Zusammenhänge und rechtliche Aussagen**. Begriffe wie „beschlossen“, „genehmigt“, „abgelehnt“, „wegen“ oder „deshalb“ dürfen keine Sicherheit vorspiegeln, die die Quellen nicht tragen.
+
+Unzureichend gestützte Aussagen werden mit Belegen ergänzt, fachlich abgeschwächt, einer Quelle ausdrücklich zugeschrieben oder entfernt. Eine sprachlich gelungene Darstellung ersetzt diese Rückprüfung nicht.
+
+**Prüfbeispiel:** Eine Vorlage empfiehlt einen Grundstückskauf, die Abstimmung ist noch nicht dokumentiert. Ein Meldungsentwurf behauptet „Der Gemeinderat hat den Kauf beschlossen“. Die Fakten-Rückprüfung beanstandet den unbelegten Beschlussstatus; eine Veröffentlichung mit dieser Feststellung wird bis zur Korrektur verhindert.
+
+Quelle: [KI-Leitfaden](../KI-Leitfaden.md), §§13 und 16.
+
 ## 10.7 Blockierende Fehler und Hinweise
 Die bestehende Regelarchitektur unterscheidet **harte fachliche Invarianten** und **semantische Plausibilitätsprüfungen**:
 - Objektiv unzulässige Aktionen wie fehlende Rechte/Freigaben, ungültige Statusübergänge, fehlende notwendige Quellen oder ungeklärte Rechte zur Medienverwendung müssen technisch blockiert werden.
