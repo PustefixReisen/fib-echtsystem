@@ -182,6 +182,8 @@ Die bisher vereinbarte Zielqualität **WCAG 2.2 AA** bleibt bestehen. Die konkre
 
 ### Bilder im öffentlichen Angebot
 
+**Bildquelle und Zuordnung:** Meldungen, Vorgangsbeiträge und Themenbeiträge können geeignete Bilder aus der **FIB-internen Bildersammlung** verwenden. Die interne Bildverwaltung ermöglicht Wiederverwendung; jede konkrete Verwendung wird jedoch separat dem öffentlichen Inhalt zugeordnet und auf Motivbezug, Nutzungsrechte, Beschriftung und Freigabe geprüft. Der Bildbestand allein bewirkt keine Veröffentlichung. Die im Demonstrator bereits erprobte Bilddarstellung ist Ausgangspunkt für die spätere UI-Gestaltung, nicht automatisch Nachweis sämtlicher Rechteprüfungen.
+
 Inhaltsbilder dürfen die Aussage nicht verfälschen. Bei Meldungen müssen sie einen konkreten Sachbezug haben; bei Themen können sie einen nachvollziehbar repräsentativen Aspekt zeigen. Geeignete Bilder werden mit sachlicher Bildunterschrift, erforderlichem Urheber-/Rechtehinweis und motivbezogenem Alternativtext ausgegeben. Wesentliche Information steht nicht ausschließlich im Bild.
 
 Bilder werden proportional und ohne irreführenden Ausschnitt dargestellt. Auf kleinen Bildschirmen bleiben Lesereihenfolge von Bild, Text und Bildunterschrift sowie der Bildnachweis erhalten. Ein Bild darf entfallen, wenn kein geeignetes Motiv verfügbar ist.
