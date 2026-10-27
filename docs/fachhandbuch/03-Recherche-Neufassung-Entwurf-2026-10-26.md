@@ -6,6 +6,8 @@
 
 > **Geltung und Migration:** Dieser Text ersetzt die bestehenden Fachregeln noch nicht. Er beschreibt das im Dialog vereinbarte Zielmodell. Widersprüche zu älteren Regeln sind weiter unten ausdrücklich benannt und vor der endgültigen Übernahme mit den Primärquellen, Regelkennungen, Code und Tests abzugleichen. Fachlich übergreifende Passagen sind an die künftigen Kapitel 02, 04, 05, 06, 08 und 10 anzuschließen. Keine zusätzlichen DB-Objekte oder UI-Pflichten werden hiermit technisch festgelegt.
 
+**Leseorientierung:** Ziel und Suchraum (§03.1), Fachobjekte (§03.2), Ablauf (§03.3), redaktionelle Steuerung (§03.4), Detailregeln (§03.5), Prüffälle (§03.6), offene Punkte (§03.7). Der Detailregelteil enthält noch Migrationswiederholungen, die vor der gemeinsamen Leseabnahme zusammenzuführen sind.
+
 ## 03.1 Fachliche Aufgabe und Ziele
 
 FIB soll relevante Informationen zu Feldkirchen und zu begründet mittelbar bedeutsamen Entwicklungen entdecken, sichern und für die redaktionelle Arbeit nutzbar machen. Die Recherche dient zwei Zielen: **Sachverhalte und Veränderungen entdecken** sowie **bekannte Sachverhalte verstehen und erklären**. Sie ist bewusst breiter als die spätere öffentliche Veröffentlichung. Fundstellen sind Nachweise; ihre Erfassung ist noch keine Veröffentlichung.
