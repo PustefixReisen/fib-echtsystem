@@ -1,3 +1,9 @@
+## Quellabgleich Kapitel 11: Benutzer und Rechteentzug (27.10.2026)
+
+Kapitel 11 integriert nun zusätzliche fachliche Vorgaben aus `docs/Rollen-Rechte-und-Workflow.md` §§9–9.2: interne Einladung ohne Selbstregistrierung, Benutzerdeaktivierung vor Löschung mit Historienprüfung, zeitnahe serverseitige Wirksamkeit von Rollenentzug, erneute Berechtigungsprüfung vor S2-/S3-Handlungen sowie die Trennung von Federführung, Bearbeitungssperre und tatsächlicher Rollenberechtigung. Die Auditpflicht für Administratoren bei Aufhebung fremder verwaister Sperren bleibt erhalten.
+
+Dies ist ein Teilabgleich; die Gesamtmigration und Leseabnahme sind noch nicht abgeschlossen.
+
 ## Quellabgleich: Fakten-Rückprüfung (27.10.2026)
 
 Kapitel 10 enthält jetzt die konkrete Rückprüfung wesentlicher Aussagen einer Textfassung gegen bestätigte Fakten und Fundstellen gemäß `docs/KI-Leitfaden.md` §§13 und 16. Besonders geprüft werden Beträge, Daten, Abstimmungsergebnisse, Entscheidungsstände, Zuständigkeiten, Kausalbehauptungen und rechtliche Zuschreibungen. Unbelegte Aussagen müssen belegt, abgeschwächt, zugeschrieben oder entfernt werden. Ein Abnahmebeispiel unterscheidet eine bloße Beschlussvorlage von einer tatsächlich nachgewiesenen Entscheidung.
