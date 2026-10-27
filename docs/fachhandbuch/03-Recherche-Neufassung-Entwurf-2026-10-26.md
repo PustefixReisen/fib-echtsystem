@@ -201,7 +201,7 @@ Diese Absätze beschreiben **Benutzungsanforderungen**, keine fertig beschlossen
 
 Verbindliche Regelkennungen des Bestands (z. B. FIB-RECH-PRINZIP-001, FIB-RECH-HORIZONT-001/002, FIB-RECH-RELEVANZ-001 bis -004, FIB-RECH-SICHTUNG-001 und FIB-RECH-PRINZIP-002) dürfen **nicht ungeprüft ersetzt oder neu belegt** werden. Die endgültige Normfassung benötigt einen Kennungs- und Konsistenzabgleich.
 
-**Verbindliche Detailregeln im Übergang:** Die [nach Fachaufgaben gruppierte Recherche-Fachregelreferenz](03-Recherche-Fachregelreferenz-Migration-2026-10-26.md) übernimmt die 53 vorhandenen Regeldefinitionen mit unveränderten Kennungen und ausgewiesenen Konflikten. Sie ergänzt die lesbare Prozessbeschreibung; bis zur vollständigen fachlichen Abnahme bleibt das bisherige Kapitel 03 maßgeblich.
+**Verbindliche Detailregeln im Übergang:** Die [nach Fachaufgaben gruppierte Recherche-Fachregelreferenz](03-Recherche-Fachregelreferenz-Migration-2026-10-26.md) enthält 53 als Einzelblöcke inventarisierte Regeldefinitionen; die 54. Regel FIB-RECH-ABLAUF-001 ist im bisherigen Kapitel 03, Zeile 487, separat nachgewiesen. Sie ergänzt die lesbare Prozessbeschreibung; bis zur vollständigen fachlichen Abnahme bleibt das bisherige Kapitel 03 maßgeblich.
 
 ### 03.5a Abgleich der verbindlichen Detailregeln
 
