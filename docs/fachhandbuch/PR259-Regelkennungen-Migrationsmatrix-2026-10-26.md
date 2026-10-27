@@ -129,7 +129,7 @@ Die Matrix bewertet **nicht** schon deshalb eine Regel als übernommen, weil ihr
 | **FIB-THEMA-BEITRAG-002** | Analyse-, Beitrags- und Publikationsentscheidung sind in Kapitel 06/08 getrennt; Selbstfreigabe und KI-Grenzen in Kapitel 11. | Personen-/Zeitnachweis sowie Rechte- und Publikationsübergänge bei der Normablösung prüfen. |
 | **FIB-RECH-ABLAUF-001** | Kennung ist als hervorgehobene eigenständige Regeldefinition in Kapitel 03, Zeile 487 nachgewiesen. | Regel in die abschließende Normmigration aufnehmen; Übergang Fundstelle → Ereignis → optionale Meldung in Kapitel 03/04 konsistent prüfen. |
 
-Die verbleibenden Matrixzeilen bleiben bewusst bei **„Abgleich nötig“**, bis die vollständige Aussage einschließlich Grenzfällen nachgewiesen ist.
+Die inhaltliche Zuordnung der 54 Recherche- und 32 Themenkennungen ist weitgehend erfolgt; der vollständige Einzelregel-Nachweis einschließlich Ausnahmen und Grenzfällen bleibt Gegenstand der normativen Schlussprüfung.
 
 ## Weitere sechs geprüfte Zuordnungen (27.10.2026)
 
@@ -137,4 +137,4 @@ Die sechs oben aktualisierten Matrixzeilen belegen die **inhaltliche Auffindbark
 
 ## Prüfstand Qualität und Regelpflege (27.10.2026)
 
-Die Originalregeln FIB-RECH-QUAL-001/-002, FIB-RECH-REGEL-001/-002 und FIB-RECH-GOV-001 wurden in der bestehenden Regelreferenz einzeln gelesen. Wesentliche Anforderungen sind: Abruffehler begründen keinen Negativbefund; Modellqualität geht der Kostenoptimierung voraus; Änderungen des operativen Regelbestands benötigen Versionierung, Bewertungs- und Entdeckungstest sowie menschliche Aktivierung; fachliche Änderungen werden zeitgleich dokumentiert. Die Regeln QUAL-001/-002 und REGEL-001/-002 wurden nachträglich im Kapitel 03 ergänzt. GOV-001 bleibt im Detailabgleich offen.
+Die Originalregeln FIB-RECH-QUAL-001/-002, FIB-RECH-REGEL-001/-002 und FIB-RECH-GOV-001 wurden in der bestehenden Regelreferenz einzeln gelesen. Wesentliche Anforderungen sind: Abruffehler begründen keinen Negativbefund; Modellqualität geht der Kostenoptimierung voraus; Änderungen des operativen Regelbestands benötigen Versionierung, Bewertungs- und Entdeckungstest sowie menschliche Aktivierung; fachliche Änderungen werden zeitgleich dokumentiert. Die Regeln QUAL-001/-002 und REGEL-001/-002 wurden nachträglich im Kapitel 03 ergänzt. GOV-001 ist mittlerweile ebenfalls im Kapitel 03 inhaltlich ausgeführt; die normative Endprüfung bleibt offen.
