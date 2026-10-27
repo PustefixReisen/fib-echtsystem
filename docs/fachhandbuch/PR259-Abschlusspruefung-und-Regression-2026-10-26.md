@@ -55,17 +55,17 @@ Die folgenden **prüfbaren Testszenarien** sind Abnahmeanforderungen, **keine be
 | R19 | Eine unsichere KI-Plausibilitätswarnung kann begründet redaktionell beurteilt werden; belegter schwerwiegender Fehler verhindert Veröffentlichung. | 10 |
 | R20 | In fremdgesperrtem Bearbeitungskontext bleibt die Ansicht lesbar, aber nicht überschreibbar; Admin-Entsperrung wird auditiert. | 08/11 |
 
-## 4. Bedingungen für eine tatsächlich abschließende PR-Freigabe
+## 4. Fachliche Abnahme und technische Abnahme sind getrennt
 
 **Derzeit nicht belegt:**
 1. Gesamter Quellabschnitts-Nachweis auch für Fachkonzept, Datenmodell, UX, RIS, Redaktion, Rollen/Rechte, Qualität und KI-Leitfaden; zwei bisherige Kapitel allein genügen nicht.
 2. Vollständige Einzelregel-Harmonisierung einschließlich Originalregel **FIB-RECH-ABLAUF-001** und der veränderten Pflichtsichtung.
-3. Datenbankschema-/API-/RLS-Abgleich, insbesondere Vorläufigkeit, Analysen/Teilfreigaben, Beitragsfassung eines Vorgangs, „Mehr wissen?“ am Vorgang und Veröffentlichungstermine.
-4. UI-Abgleich mit bestehendem Themeneditor und Veröffentlichungspfaden; fachlich vereinbart sind Anforderungen, **keine fertigen Screens**.
-5. Ausführung und Protokollierung geeigneter Regressionstests (R01–R20) sowie bestehender Tests.
+3. **Erst nach der Fachkonzept-Abnahme:** Datenbankschema-, API- und Rechteabgleich in der iterativen Entwicklung.
+4. **Erst nach der Fachkonzept-Abnahme:** UI-Abgleich und gemeinsame Erprobung; fachlich vereinbart sind Anforderungen, keine fertigen Screens.
+5. **Erst bei der technischen Abnahme:** Regressionstests R01–R20 und bestehende Tests ausführen und protokollieren.
 6. Fachliche Gesamtabnahme und Freigabe zur Ablösung alter Primärquellen; danach erst etwaige Umstellung auf nicht-Draft und Merge.
 
-**Warum keine automatische Freigabe?** Ein Dokumentations-PR kann ohne einen geprüften Datenmodell- und Regressionstestnachweis nicht als vollständiger, verbindlicher fachlicher und technischer Systemabschluss gelten. Das ist keine zusätzliche fachliche Grundsatzfrage an die Projektleitung, sondern eine überprüfbare Arbeitsbedingung.
+**Wichtig:** Die fachliche Abnahme des Handbuchs ist nicht von fertig implementierten Datenbank-, UI- oder Teständerungen abhängig. Die technische Abnahme folgt als eigener Meilenstein.
 
 ## 5. Überleitung in die Implementierung
 
