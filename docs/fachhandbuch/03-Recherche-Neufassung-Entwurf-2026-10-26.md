@@ -325,7 +325,7 @@ FIB trennt allgemeine Quellen- und Qualitätsprinzipien, demokratisch-gesellscha
 Für die spätere Abnahme muss nachweisbar sein, dass jeder dieser Abläufe sowohl fachlich nachvollziehbar als auch ohne unnötige Pflichtdialoge bearbeitbar ist.
 
 
-### Querschnittsregel zur Weiterentwicklung des Fachkonzepts
+### 03.6.1 Dokumentationspflicht bei der weiteren Umsetzung
 
 FIB wird in gemeinsam fachlich prüfbaren Entwicklungsschritten umgesetzt. Jede neue fachliche Entscheidung ist vor oder spätestens mit der Implementierung im führenden Fachhandbuch samt Regelkennung, Auswirkungen auf Abläufe, Zustände und Rechte sowie gegebenenfalls Abnahmetest dokumentiert. Technische Entscheidungen dürfen keine neue fachliche Regel ohne Abstimmung etablieren. Ein Entwicklungsissue kann erst geschlossen werden, wenn die Dokumentationsfolgen geprüft und notwendige Änderungen übernommen sind. Grundlage: FIB-RECH-GOV-001.
 
