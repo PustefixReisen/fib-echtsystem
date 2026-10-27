@@ -212,6 +212,15 @@ Recherche verarbeitet nicht nur Nachrichten, sondern erweitert begründet ihren 
 
 **Regelbestandskontrolle:** Diese Regelgruppen erläutern den im bisherigen Kapitel 03 definierten fachlichen Kern. Die vollständigen Originaltexte und die explizite Änderung von **FIB-RECH-SICHTUNG-001** sind weiterhin in der [Regelreferenz](03-Recherche-Fachregelreferenz-Migration-2026-10-26.md) dokumentiert. Die nur zitierte Kennung **FIB-RECH-ABLAUF-001** benötigt weiterhin einen Ursprungshinweis, bevor die Inventur normativ abgeschlossen werden kann.
 
+
+### Herkunft von Fundstellen und inkrementelle Recherche
+
+Jede Fundstelle hat **genau eine primäre Quelle**. Weitere Fundorte desselben Inhalts dürfen ergänzend gespeichert werden, ohne neue Fundstellen zu erzeugen. Beziehungen einer Quelle zu Vorgängen und Themen ergeben sich aus den belegten Ereignissen und deren fachlichen Beziehungen; sie werden nicht als zweite unabhängige Quellzuordnung gepflegt.
+
+Nach einem anlassbezogenen Rückblick recherchiert FIB grundsätzlich **inkrementell ab dem letzten erfolgreichen Lauf**, mit einem angemessenen Überlappungsfenster. Die grundsätzlich sechs Monate umfassende Rückschau ist kein täglich zu wiederholendes Standardsuchfenster. Eine reine Textänderung an einer Leitfrage löst keinen neuen Rückblick aus; bei fachlich erweitertem Suchraum werden gezielt die neuen Teilbereiche überprüft.
+
+Grundlage: **FIB-RECH-QUELLE-010** und **FIB-RECH-RUECKBLICK-001** im bisherigen Kapitel 03.
+
 ## 03.6 Konkrete Modellerprobung und Abnahmekriterien
 
 **Testfall Grundstückskauf:** Artikel wird als Fundstelle gesichert; Ereignis wird abgeleitet; späterer amtlicher Widerspruch korrigiert eine vorläufige Aussage bzw. erzeugt bei bestätigtem Ereignis einen Vorschlag; eigenständiger vorläufiger Vorgang mit Erstanalyse; Nachricht nur bei Relevanz; Folgeereignisse mit Folgemeldungen und Rückblick.
