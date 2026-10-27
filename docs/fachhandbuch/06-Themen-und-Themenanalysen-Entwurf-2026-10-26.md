@@ -162,6 +162,14 @@ Der öffentliche Themenbeitrag ist **nicht** die vollständige Analyse. Er wähl
 
 **Grenzfall:** Eine neue Arbeitsfassung wird begonnen, während die vorige Version weiterhin öffentlich ist. Die Anzeige „Aktuell veröffentlicht“ zeigt genau die noch sichtbare Fassung und nicht bloß die vorletzte Versionsnummer.
 
+### Aktuell veröffentlichte Fassung und Ausgangsbasis einer Bearbeitung
+
+Während die Redaktion eine neue Beitragsfassung bearbeitet, bleibt die **tatsächlich aktuell veröffentlichte Fassung** unverändert und im Themeneditor direkt **schreibgeschützt einsehbar**. Dazu gehört auch die damals veröffentlichte optionale **„Unsere Einordnung“**. Der aktuell öffentliche Stand ist nicht zwingend die unmittelbar vorherige Versionsnummer; ein vollständiger historischer Versionsverlauf ist davon getrennt zugänglich.
+
+Eine neue Arbeitsfassung baut im Regelfall auf der **zuletzt maßgeblichen Beitragsfassung** auf. FIB zeigt die Ausgangsfassung ausdrücklich an. Eine ältere oder widerrufene Fassung darf nicht unbemerkt zur Grundlage werden; eine abweichende Ausgangsbasis verlangt eine bewusste redaktionelle Entscheidung.
+
+Diese fachlichen Festlegungen entsprechen **FIB-THEMA-BEITRAG-004** und **FIB-THEMA-BEITRAG-005** aus dem bisherigen Kapitel 06. Technische Konflikt- und Wiederherstellungsverfahren werden erst im nachgelagerten Bedien- und Datenmodell konkretisiert.
+
 ## 06.7 Fortlaufende Aktualität und öffentlicher Bezug
 
 Nach einer redaktionell freigegebenen Änderung der Themenanalyse prüft FIB automatisch, ob bereits veröffentlichte Themenbeiträge betroffen sind. Eine relevante Auswirkung erzeugt einen **Aktualisierungsvorschlag**, nicht eine automatische Änderung am öffentlichen Text. Keine neue Veröffentlichung ist nötig, wenn der Beitrag sachlich richtig und hinreichend vollständig bleibt.
