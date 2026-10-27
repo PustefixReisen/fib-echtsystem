@@ -16,7 +16,7 @@ FIB soll relevante Informationen möglichst umfassend erfassen, aber nur bericht
 
 **Fundstelle sichern → Sachverhalt erkennen → neues oder bestehendes Ereignis bestimmen → ggf. Ereignis fortschreiben / korrigieren → Veröffentlichungsrelevanz prüfen → optionalen Meldungsentwurf erstellen → redaktionell prüfen und freigeben → veröffentlichen → spätere Entwicklungen auf Aktualisierungsbedarf prüfen.**
 
-Parallel können Ereignisse direkt Vorgängen und Themen zugeordnet werden. Das setzt weder eine Meldung noch einen Themenbeitrag voraus. Die Kette ist keine Pflichtabfolge für jedes Ereignis.
+Parallel können Ereignisse direkt Vorgängen und Themen zugeordnet werden. Das setzt weder eine Meldung noch einen Themenbeitrag voraus. Die Kette ist keine Pflichtabfolge für jedes Ereignis. Eine neue Fundstelle führt nicht automatisch zu einem neuen Ereignis oder einer Meldung (FIB-RECH-ABLAUF-001).
 
 ### 04.2.1 Beispiel Grundstückskauf Feldkirchen
 
