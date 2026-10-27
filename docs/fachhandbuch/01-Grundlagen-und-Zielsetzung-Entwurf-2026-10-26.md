@@ -52,6 +52,8 @@ FIB soll mit geringem laufendem Redaktionsaufwand arbeiten: KI beobachtet Quelle
 
 Ein Berechtigungskonzept schützt die fachlichen Entscheidungen und Daten; administrative Rechte sind keine Voraussetzung für normale redaktionelle Freigaben.
 
+**KI-Modellunabhängigkeit ist ein wesentliches Gestaltungsprinzip von FIB.** Fachliche Regeln, Datenbestände, Entscheidungen und Arbeitsabläufe gehören zum System und dürfen nicht von einem bestimmten KI-Anbieter oder Modell abhängen. Verschiedene Modelle sollen je nach Aufgabe eingesetzt, anhand überprüfbarer Qualitätsmaßstäbe verglichen und bei Bedarf ausgetauscht werden können. Wo mehrere Modelle zusammenarbeiten, dient dies der Qualitätssicherung und einem wirtschaftlichen Betrieb – nicht der Verlagerung redaktioneller Verantwortung auf die KI. Einzelheiten stehen in **Kapitel 10** und im bestehenden Dokument `docs/KI-Qualitaet-und-Modellunabhaengigkeit.md`.
+
 ## 01.6 Welche Qualitätsansprüche gelten?
 
 - Tatsachenbehauptungen sind mit geeigneten Quellen oder fachlich bestätigtem Erkenntnisstand zu begründen.
