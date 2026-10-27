@@ -140,7 +140,7 @@ Die Objekte sind nicht allein nach ihrer Darstellung zu unterscheiden, sondern n
 
 Wissen entsteht nicht erst mit einer öffentlichen Meldung: Die **Analyse** ist der interne fachliche Erkenntnisstand. Sie unterscheidet Fakten, Erklärungswissen, Hintergründe, konkrete Wirkungen, übergreifende Schlussfolgerungen sowie Unsicherheiten und offene Fragen.
 
-Eine konkrete Wirkung wird – sofern zutreffend – mit ihrem Ereignisbezug dokumentiert. **Eine übergreifende Schlussfolgerung muss dagegen nicht künstlich an ein einzelnes Ereignis gebunden werden.** Sie gehört unmittelbar zur Vorgangs- oder Themenanalyse und wird durch Quellen und nachvollziehbare Herleitungen gestützt.
+Eine als Fachobjekt geführte **Wirkung** ist stets genau einem Ereignis zugeordnet und besitzt zusätzlich einen fachlichen Herkunftskontext (Vorgang oder Thema). Nur dieser Herkunftskontext darf ihre bestätigte Aussage fachlich ändern; andere Analysen verwenden sie, ohne konkurrierende Fassungen anzulegen. **Eine übergreifende Schlussfolgerung muss dagegen nicht künstlich an ein einzelnes Ereignis gebunden werden.** Sie gehört unmittelbar zur Vorgangs- oder Themenanalyse und wird durch Quellen und nachvollziehbare Herleitungen gestützt.
 
 Beispiel: Einzelereignisse betreffen Autobahnkreuz, Parkraum und Radverkehr. Die Themenanalyse kann zusätzlich untersuchen, **wie diese Planungen zusammenwirken**. Diese Aussage ist mehr als die Wiederholung einer Einzelwirkung.
 
