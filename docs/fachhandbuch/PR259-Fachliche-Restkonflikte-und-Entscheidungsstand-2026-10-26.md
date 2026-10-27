@@ -15,7 +15,7 @@
 | Inhaltskette und RIS | Dokument/Vorlage, tatsächliche Sitzung, Beschluss und Meldung getrennt, ihre Beziehungen nachvollziehbar | 02/07 |
 | Blocker | Nachgewiesener schwerwiegender Fehler blockiert; bloßer unbewiesener KI-Verdacht löst Prüfhinweis aus | 10 |
 
-## 2. Offene **fachliche** Klärung bzw. normative Harmonisierung
+## 2. Beschlossene Fachfragen und verbleibende normative Harmonisierung
 
 ### F-01: Terminierte Veröffentlichung – **fachlich entschieden am 26.10.2026**
 
@@ -25,17 +25,17 @@ Die Redaktion darf die automatische Veröffentlichung **einer genau bezeichneten
 
 **Migration:** Die ältere Formulierung in [Rollen, Rechte und Workflow](../Rollen-Rechte-und-Workflow.md), §6.4, ohne Ausnahme „unmittelbar vor Ausführung“ ist **für diesen eng beschriebenen Spezialfall fachlich überholt**. Kapitel 08 und 11 enthalten das beschlossene Zielmodell. Der alte Primärwortlaut wird vor finaler normativer Ablösung nachvollziehbar harmonisiert, ohne das bestehende Rechte-/Sicherheitsverfahren vorzeitig technisch zu verändern.
 
-### F-02: Vorläufig angelegter Vorgang und ältere Kardinalität
+### F-02: Vorläufig angelegter Vorgang – bestehender Mindestbezug
 
 **Quellen:** [Datenmodell](../Datenmodell.md), Kapitel 05. Das ältere Fachmodell verlangt grundsätzlich eine Ereignisbeziehung `Vorgang → Ereignis 1..n`; das neue Modell erlaubt frühe vorläufige Anlage.
 
-**Klärungsbedarf:** Gilt der Mindestbezug bereits bei jedem automatischen vorläufigen Vorgang oder erst nach fachlicher Bestätigung? Solange offen, vorläufige Vorgänge grundsätzlich an mindestens einem **nachweisbaren Bezugsevent** ausrichten und fachliche Ausnahmen ausdrücklich nachweisen statt stillschweigend zuzulassen.
+**Für das vereinbarte Zielmodell festgehalten:** Auch die automatische vorläufige Vorgangsanlage setzt mindestens ein identifiziertes, gegebenenfalls noch vorläufiges Ereignis voraus. Eine Ausnahme für Vorgänge ohne jeden Ereignisbezug wurde nicht beschlossen. Die genaue technische Verankerung des Bezugs ist nachgelagert.
 
-### F-03: Status- und Freigabewirksamkeit von Teilanalysen
+### F-03: Teilfreigaben – **beschlossen am 26.10.2026**
 
 **Quellen:** [Persistenz-/Lebenszyklusmodell](../Persistenz-und-Lebenszyklusmodell.md) §9; [Wirkungsmodell](../Wirkungsmodell.md) §10; Kap. 05/06/08.
 
-**Bereits entschieden:** Aussagenbezogene redaktionelle Teilfreigabe möglich, Übernahme einzelner Änderungsvorschläge möglich, bestätigte Aussagen geschützt. **Offen:** Was ist bei teilweise bestätigter Analyse der für spätere öffentliche Beiträge verbindliche „gültige Gesamtstand“? Ein fachlicher Konsolidierungsgrundsatz (nachvollziehbare gültige Aussagen, ausdrücklich ausgeschlossene Entwurfsbehauptungen, historischer Bezug) ist vor der normativen Freigabe noch präzise festzulegen; konkrete Datenbankstruktur erst danach.
+**Verbindliche Entscheidung:** Eine redaktionell bestätigte Teilfreigabe erzeugt einen neuen gültigen bestätigten Gesamtstand aus dem vorigen bestätigten Gesamtstand und ausschließlich den angenommenen Änderungen. Offene und zurückgestellte Vorschläge bleiben davon getrennt erhalten; frühere bestätigte Gesamtstände bleiben rekonstruierbar. Die Ausgestaltung im physischen Datenmodell ist nachgelagert.
 
 ## 3. Reine Implementierungs-/Bedienfragen – keine weitere Fachentscheidung nötig
 
@@ -49,7 +49,7 @@ Die Redaktion darf die automatische Veröffentlichung **einer genau bezeichneten
 - Jede bisher verbindliche **fachliche Primärquellsektion** erhalten, in die Zielkapitel integrieren oder begründet als Technik-/Governancequelle weiterführen.
 - Entgegenstehende ältere Regelwortlaute ausdrücklich als geändert markieren; nicht zwei gegensätzliche Regeln zugleich für neu verbindlich erklären.
 - Quellen, Querverweise und Entscheidungsnachweise vollständig prüfen.
-- Die drei offenen Fachpunkte **F-01 bis F-03** in der gemeinsamen Leseabnahme konkret und gebündelt entscheiden, nicht mit SQL-/UI-Rückfragen vermischen.
+- F-01 und F-03 als beschlossen behandeln, F-02 ohne erfundene Ausnahme am bestehenden Mindestbezug ausrichten. In der Leseabnahme die konsistente Umsetzung der Beschlüsse kontrollieren, keine bereits gefällten Entscheidungen neu zur Abstimmung stellen.
 
 **Status:** Präzise fachliche Restfragen sichtbar; keine Behauptung einer abgeschlossenen Gesamtregelübernahme.
 
