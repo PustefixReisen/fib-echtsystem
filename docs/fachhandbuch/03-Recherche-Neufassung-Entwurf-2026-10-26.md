@@ -218,7 +218,7 @@ Die nachstehende Abgrenzung präzisiert die in [der Fachregelreferenz](03-Recher
 
 ### 03.5b Quellen, Fundstellen und Nachweise
 
-### Herkunft von Fundstellen und inkrementelle Recherche
+#### Herkunft von Fundstellen und inkrementelle Recherche
 
 Jede Fundstelle hat **genau eine primäre Quelle**. Weitere Fundorte desselben Inhalts dürfen ergänzend gespeichert werden, ohne neue Fundstellen zu erzeugen. Beziehungen einer Quelle zu Vorgängen und Themen ergeben sich aus den belegten Ereignissen und deren fachlichen Beziehungen; sie werden nicht als zweite unabhängige Quellzuordnung gepflegt.
 
@@ -226,7 +226,7 @@ Nach einem anlassbezogenen Rückblick recherchiert FIB grundsätzlich **inkremen
 
 Grundlage: **FIB-RECH-QUELLE-010** und **FIB-RECH-RUECKBLICK-001** im bisherigen Kapitel 03.
 
-### Fundstellen: Identität, Fassungen und Prüfstatus
+#### Fundstellen: Identität, Fassungen und Prüfstatus
 
 Neue Fundstellen bleiben als Recherchekandidaten erhalten; sie sind nicht schon bestätigte Ereignisse. Eine Fundstelle darf mehrere Sachverhalte betreffen. Die bestätigte Zuordnung zu einem Ereignis benötigt eine nachvollziehbare Begründung ihres Informationsbeitrags. Die KI kann sie vorschlagen, die Redaktion entscheidet.
 
@@ -238,7 +238,7 @@ Rechercheergebnisse protokollieren neue Fundstellen und fachlich geänderte Fass
 
 Grundlage: **FIB-RECH-FUND-001 bis -007** im bisherigen Kapitel 03. Die Pflichtprüfung jeder einzelnen Fundstelle wird damit nicht wieder eingeführt.
 
-### Pflichtquellen, Dateien und Überwachungsqualität
+#### Pflichtquellen, Dateien und Überwachungsqualität
 
 Alle drei Quellenzugangswege speisen denselben Rechercheprozess; keiner führt unmittelbar zu fachlicher Bestätigung oder Veröffentlichung. Bekannte Pflichtquellen, insbesondere Gemeinde- und RIS-Einstiege, werden **direkt und unabhängig von Suchmaschinen** überprüft. Das umfasst neue Unterseiten, freigegebene Dokumente außerhalb von Tagesordnungen und relevante Dateiänderungen bei gleicher URL. Die Veröffentlichung einer Vorlage belegt für sich genommen noch keinen konkreten Sitzungstermin oder TOP.
 
@@ -248,7 +248,7 @@ Die Redaktion kann öffentliche Links, Dateien und nicht öffentlich erreichbare
 
 Die Redaktion muss für dauerhaft beobachtete Quellen den **letzten erfolgreichen Abruf, Fehler und mögliche Beobachtungslücken** erkennen. Fachlich relevante Änderungen bleiben in ihren früheren und neuen Informationsständen nachvollziehbar. Grundlage: **FIB-RECH-QUELLE-001 bis -005**.
 
-### Entdeckung und Lebenszyklus neuer Quellen
+#### Entdeckung und Lebenszyklus neuer Quellen
 
 FIB entdeckt auch ohne konkreten Anlass regelmäßig bislang unbekannte Quellen mit unmittelbarem oder begründbarem mittelbarem Feldkirchen-Bezug. Neue Quellen werden zunächst mit Herkunft und Begründung als **Kandidaten** geführt. Fundstellen solcher Kandidaten dürfen schon analysiert werden; dadurch wird die Quelle weder dauerhaft aktiviert noch etwas veröffentlicht.
 
