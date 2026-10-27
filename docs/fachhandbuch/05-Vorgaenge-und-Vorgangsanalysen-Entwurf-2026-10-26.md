@@ -16,7 +16,7 @@ Die Aufgabe der Vorgangsbearbeitung besteht darin, die zeitliche Entwicklung fac
 
 ## 05.2 Gesamtmodell und Verbindungen
 
-- **Ereignisse** beschreiben nachgewiesene Veränderungen. Ein Ereignis kann ohne Vorgang bestehen. Ein Vorgang verbindet grundsätzlich ein oder mehrere Ereignisse; die bisherige logische Kardinalität Vorgang → Ereignis `1..n` ist in `docs/Datenmodell.md` dokumentiert und vor automatischer Vorgangsanlage gegen vorläufige Bearbeitungszustände zu prüfen.
+- **Ereignisse** beschreiben nachgewiesene Veränderungen. Ein Ereignis kann ohne Vorgang bestehen. Ein Vorgang verbindet grundsätzlich ein oder mehrere Ereignisse; die bisherige logische Kardinalität Vorgang → Ereignis `1..n` ist in `docs/Datenmodell.md` dokumentiert ; auch die vorläufige Vorgangsanlage erfordert mindestens ein identifiziertes, gegebenenfalls selbst vorläufiges Ereignis (F-02).
 - **Fundstellen** sichern die zugrunde liegenden Informationsnachweise, einschließlich ergänzender und widersprechender Belege.
 - **Vorgangsanalyse** ist ein abhängiger fachlicher Bestandteil des Vorgangs, keine unabhängig verwaltete allgemeine Wissensdatenbank.
 - **Gezielte Rechercheaufträge** können aus Fragen zum Vorgang entstehen; längerfristige Form ist der Beobachtungsauftrag. Die Ergebnisse erzeugen bei Bedarf nachvollziehbare Änderungsvorschläge für die Analyse.
