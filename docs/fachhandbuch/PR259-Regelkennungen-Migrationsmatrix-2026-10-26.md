@@ -78,7 +78,7 @@ Für jede Kennung ist die Bestandsquelle nachgewiesen. Eine Regel darf erst als 
 | `FIB-THEMA-BEITRAG-007` | 06 Themen / 08 Redaktion (Grenze prüfen) | Inhaltlich in 06.6 ergänzt; normative Detailprüfung offen |
 | `FIB-THEMA-BEITRAG-008` | 06 Themen / 08 Redaktion (Grenze prüfen) | Inhaltlich in 06.6 ergänzt; normative Detailprüfung offen |
 | `FIB-THEMA-BEITRAG-009` | 06 Themen / 08 Redaktion (Grenze prüfen) | Inhaltlich in 06.6 ergänzt; normative Detailprüfung offen |
-| `FIB-THEMA-BEITRAG-010` | 06 Themen / 08 Redaktion (Grenze prüfen) | Abgleich nötig |
+| `FIB-THEMA-BEITRAG-010` | 06 Themen / 08 Redaktion (Grenze prüfen) | Inhaltlich in 06.6 ergänzt: begründeter Rückzug und erneute Publikationsbestätigung; normative Detailprüfung offen |
 | `FIB-THEMA-BEITRAG-011` | 06 Themen / 08 Redaktion (Grenze prüfen) | Abgleich nötig |
 | `FIB-THEMA-BEZUG-001` | 06 Themen | Inhaltlich in 06.4 beschrieben (Vorgänge samt Ereignissen, ergänzende Einzelereignisse, keine Doppelzählung); Detailabnahme offen |
 | `FIB-THEMA-BEZUG-002` | 06 Themen | Inhaltlich in 06.4 mit vier Bezugsstatus beschrieben; Detailabnahme offen |
