@@ -168,6 +168,16 @@ Ein Redakteur kann jederzeit eine Recherche zu einer frei formulierten Sachfrage
 
 Ein Beobachtungsauftrag hat genau einen primären Bezug: Vorgang, Thema oder offene Frage. Seine fachliche Frage, Herkunft, Begründung, Status und Änderungshistorie werden geführt. Fest vorgegebene Suchwörter, Quellenlisten oder eine Priorität sind nicht generell erforderlich. Aktivierung, Pausierung und Beendigung entscheidet die Redaktion; die KI darf sie nur vorschlagen. Pausierung und Beendigung werden begründet dokumentiert. Es gelten Aktiv, Pausiert und Beendet, ohne zusätzlichen Status (FIB-RECH-BEOB-001 bis -004).
 
+### Recherchelauf: Ergebnis und Wiederverwendung
+
+FIB führt auch ohne Einzelauftrag regelmäßig offene Recherchen durch. Redaktionelle Rechercheaufträge und Beobachtungsaufträge ergänzen diesen Grundbetrieb; keiner dieser Wege darf automatisch verbindliche Zurückstellungen oder Veröffentlichungen auslösen.
+
+Jeder **Recherchelauf** hält Frage und Anlass, Zeitpunkt, gegebenenfalls auslösenden Auftrag, verwendeten fachlichen Regel- und Kontextstand, Ergebnisse, neue oder geänderte Fundstellen und wesentliche Fehler nachvollziehbar fest. Eine gezielte Recherche endet mit einer Übersicht über gesicherte Erkenntnisse, vorhandenes Vorwissen, Belege, Unsicherheiten und mögliche Folgeschritte.
+
+**Auch ein Lauf ohne Treffer hat ein Ergebnis** mit Suchumfang und Grenzen. Null Treffer beweisen nicht, dass der gesuchte Sachverhalt nicht existiert. Vorarbeiten dürfen wiederverwendet werden, wenn ihre Aktualität und mögliche Überholung geprüft sind. Mehrere Recherchen behalten eigenständige Fragen und Ergebnisse, auch wenn sie dieselben Fundstellen nutzen. Fachliche Provenienz und technische Rohprotokolle sind getrennt.
+
+Grundlage: **FIB-RECH-LAUF-001 bis -003**, **FIB-RECH-KOORD-002** und **FIB-RECH-BETRIEB-001**.
+
 ## 03.4 Redaktionelle Arbeitssteuerung und Bedienanforderungen
 
 FIB führt Aufgaben für erforderliche **menschliche Entscheidungen** zusammen. Technisch erfolgreiche automatische Einzelschritte sollen die Aufgabenübersicht nicht überfluten. Offene Aufgaben können grundsätzlich von berechtigten Redakteuren selbst übernommen oder durch eine koordinierende Person zugewiesen werden. Die gemeinsame Übersicht zeigt Anlass, Objektkontext, erforderliche Handlung und Dringlichkeit und führt direkt zur Bearbeitung.
