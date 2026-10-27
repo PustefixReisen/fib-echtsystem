@@ -235,6 +235,8 @@ Recherche verarbeitet nicht nur Nachrichten, sondern erweitert begründet ihren 
 **Regelbestandskontrolle:** Diese Regelgruppen erläutern den im bisherigen Kapitel 03 definierten fachlichen Kern. Die vollständigen Originaltexte und die explizite Änderung von **FIB-RECH-SICHTUNG-001** sind weiterhin in der [Regelreferenz](03-Recherche-Fachregelreferenz-Migration-2026-10-26.md) dokumentiert. Die bisher übersehene, aber tatsächlich definierte Kennung **FIB-RECH-ABLAUF-001** steht in [Kapitel 03 (Bestand), Zeile 487](03-Recherche.md#L487): Neue Fundstelle, Ereignis und Meldung sind getrennte Entscheidungen; eine neue Quelle erzwingt keine neue Meldung. Die normative Endprüfung bleibt offen.
 
 
+### 03.5b Quellen, Fundstellen und Nachweise
+
 ### Herkunft von Fundstellen und inkrementelle Recherche
 
 Jede Fundstelle hat **genau eine primäre Quelle**. Weitere Fundorte desselben Inhalts dürfen ergänzend gespeichert werden, ohne neue Fundstellen zu erzeugen. Beziehungen einer Quelle zu Vorgängen und Themen ergeben sich aus den belegten Ereignissen und deren fachlichen Beziehungen; sie werden nicht als zweite unabhängige Quellzuordnung gepflegt.
