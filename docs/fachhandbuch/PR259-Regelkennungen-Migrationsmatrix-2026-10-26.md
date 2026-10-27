@@ -74,10 +74,10 @@ Für jede Kennung ist die Bestandsquelle nachgewiesen. Eine Regel darf erst als 
 | `FIB-THEMA-BEITRAG-003` | 06 Themen / 08 Redaktion (Grenze prüfen) | Abgleich nötig |
 | `FIB-THEMA-BEITRAG-004` | 06 Themen / 08 Redaktion (Grenze prüfen) | Inhaltlich in 06.6 ergänzt: tatsächlich veröffentlichte Fassung inklusive damaliger Einordnung schreibgeschützt sichtbar; Normprüfung offen |
 | `FIB-THEMA-BEITRAG-005` | 06 Themen / 08 Redaktion (Grenze prüfen) | Inhaltlich in 06.6 ergänzt: maßgebliche Ausgangsfassung kenntlich; bewusste Abweichung; Normprüfung offen |
-| `FIB-THEMA-BEITRAG-006` | 06 Themen / 08 Redaktion (Grenze prüfen) | Abgleich nötig |
-| `FIB-THEMA-BEITRAG-007` | 06 Themen / 08 Redaktion (Grenze prüfen) | Abgleich nötig |
-| `FIB-THEMA-BEITRAG-008` | 06 Themen / 08 Redaktion (Grenze prüfen) | Abgleich nötig |
-| `FIB-THEMA-BEITRAG-009` | 06 Themen / 08 Redaktion (Grenze prüfen) | Abgleich nötig |
+| `FIB-THEMA-BEITRAG-006` | 06 Themen / 08 Redaktion (Grenze prüfen) | Inhaltlich in 06.6 ergänzt; normative Detailprüfung offen |
+| `FIB-THEMA-BEITRAG-007` | 06 Themen / 08 Redaktion (Grenze prüfen) | Inhaltlich in 06.6 ergänzt; normative Detailprüfung offen |
+| `FIB-THEMA-BEITRAG-008` | 06 Themen / 08 Redaktion (Grenze prüfen) | Inhaltlich in 06.6 ergänzt; normative Detailprüfung offen |
+| `FIB-THEMA-BEITRAG-009` | 06 Themen / 08 Redaktion (Grenze prüfen) | Inhaltlich in 06.6 ergänzt; normative Detailprüfung offen |
 | `FIB-THEMA-BEITRAG-010` | 06 Themen / 08 Redaktion (Grenze prüfen) | Abgleich nötig |
 | `FIB-THEMA-BEITRAG-011` | 06 Themen / 08 Redaktion (Grenze prüfen) | Abgleich nötig |
 | `FIB-THEMA-BEZUG-001` | 06 Themen | Inhaltlich in 06.4 beschrieben (Vorgänge samt Ereignissen, ergänzende Einzelereignisse, keine Doppelzählung); Detailabnahme offen |
