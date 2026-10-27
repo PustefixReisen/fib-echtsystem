@@ -30,7 +30,6 @@ Jede Primärquelle wird nach ihrem **fachlichen Gehalt** zugeordnet. Reine techn
 | [Sprachleitfaden](../Sprachleitfaden.md): bürgernahe Erläuterung und Einordnung | 10 | Qualitätsanforderungen lesbar; Detailkriterien vor normativer Übernahme prüfen |
 | [KI-Leitfaden](../KI-Leitfaden.md) und [KI-Qualität](../KI-Qualitaet-und-Modellunabhaengigkeit.md) | 03/08/10; technischer Betrieb separat | KI-Aufgaben, Transparenz und Mindestqualität im Grundsatz; providerbezogene Technik bleibt außerhalb des Fachhandbuchs |
 | [Navigation Redaktion/Recherche](../Navigation-Inhalte-Redaktion-Recherche.md) | 08; öffentliche Navigation 09 getrennt | Arbeits-/Zugangskontext und Trennung interne/öffentliche Navigation berücksichtigen |
-
 | Bildkonzept §14 (`docs/Visuelle-Identitaet-und-Bildkonzept.md`) | 08 / 09; Administration später | Bildbibliothek, Bildrechte und öffentliche Darstellung in 08/09 behandelt; Detailabgleich noch erforderlich |
 
 ## Ausdrückliche fachliche Abweichungen gegenüber den noch gültigen Quellen
