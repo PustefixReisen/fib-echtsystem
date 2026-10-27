@@ -211,6 +211,15 @@ Eine bloße Konfliktkontrolle beim Speichern ersetzt dieses pessimistische Prinz
 
 Ein Thema besitzt einen bestätigten fachlichen Gesamtstand und davon getrennte Beitragsfassungen. Änderungen an Definition, Bezügen oder Analyse können einen neuen bestätigten Gesamtstand nach F-03 ergeben, ohne einen öffentlichen Beitrag zu ändern. Der Beitragsversionsverlauf zeigt vor allem freigegebene Beiträge; frühere fachliche Gesamtstände bleiben intern nachvollziehbar. Der Beitrag trennt sachlichen Thementext von der optionalen „Unsere Einordnung“; KI-Vorschläge und redaktionelle Texte bleiben unterscheidbar.
 
+
+### Freigabewiderruf, Beziehungswechsel und Themenkandidaten
+
+Die erste Beitragsfreigabe macht einen Themenentwurf aktiv. Wird diese erste Freigabe noch vor der ersten Veröffentlichung widerrufen, kehrt das Thema in den Status Entwurf zurück. Eine Analysefreigabe allein bewirkt keinen Statuswechsel.
+
+Eine bereits zugeordnete Themenbeziehung darf unmittelbar als fachlich unpassend bewertet werden, wenn ihre Eignung entfällt. Die Redaktion begründet dies; die frühere Entscheidung bleibt nachvollziehbar. Bei der erneuten Zulassung eines vorher abgelehnten Bezugs gilt dagegen der Zwischenschritt Kandidat.
+
+Die KI schlägt neue Themen begründet vor und berücksichtigt bestehende Themen, Leitfragen, zeitliche Tragweite, Zielkonflikte und Erkenntnisgewinn. Die Redaktion prüft Dubletten und entscheidet über die Anlage. Ein besonders umfangreicher Einzelvorgang kann ebenfalls ein eigenes Thema rechtfertigen.
+
 ## 06.7 Fortlaufende Aktualität und öffentlicher Bezug
 
 Nach einer redaktionell freigegebenen Änderung der Themenanalyse prüft FIB automatisch, ob bereits veröffentlichte Themenbeiträge betroffen sind. Eine relevante Auswirkung erzeugt einen **Aktualisierungsvorschlag**, nicht eine automatische Änderung am öffentlichen Text. Keine neue Veröffentlichung ist nötig, wenn der Beitrag sachlich richtig und hinreichend vollständig bleibt.
