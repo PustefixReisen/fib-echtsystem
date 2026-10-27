@@ -180,6 +180,14 @@ FIB muss auf mobilen und größeren Geräten dieselben wesentlichen Inhalte verm
 
 Die bisher vereinbarte Zielqualität **WCAG 2.2 AA** bleibt bestehen. Die konkrete Umsetzung der Bedienoberfläche gehört in die anschließende iterative UI-Phase. Primärquelle: [UX und Informationsarchitektur](../UX-und-Informationsarchitektur.md), §20.
 
+### Bilder im öffentlichen Angebot
+
+Inhaltsbilder dürfen die Aussage nicht verfälschen. Bei Meldungen müssen sie einen konkreten Sachbezug haben; bei Themen können sie einen nachvollziehbar repräsentativen Aspekt zeigen. Geeignete Bilder werden mit sachlicher Bildunterschrift, erforderlichem Urheber-/Rechtehinweis und motivbezogenem Alternativtext ausgegeben. Wesentliche Information steht nicht ausschließlich im Bild.
+
+Bilder werden proportional und ohne irreführenden Ausschnitt dargestellt. Auf kleinen Bildschirmen bleiben Lesereihenfolge von Bild, Text und Bildunterschrift sowie der Bildnachweis erhalten. Ein Bild darf entfallen, wenn kein geeignetes Motiv verfügbar ist.
+
+Das zusätzliche **„Mehr zum Bild“** mit Motivwissen ist ausdrücklich **noch keine verbindliche MVP-Funktion**. Die Gestaltungs- und Rechtequelle bleibt [Visuelle Identität und Bildkonzept](../Visuelle-Identitaet-und-Bildkonzept.md), §14.
+
 ## 09.10 Öffentliche Ausgabe folgt redaktioneller Freigabe
 
 Keine vorläufige KI-Erkenntnis, keine interne Analyse und kein neu erfasstes Ereignis wird allein aufgrund seiner Existenz öffentlich. Die relevanten Informationen benötigen die im Redaktionsteil festgelegten Prüfungen, Freigaben und Veröffentlichungsentscheidungen.
