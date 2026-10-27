@@ -55,6 +55,10 @@ Die folgenden **prüfbaren Testszenarien** sind Abnahmeanforderungen, **keine be
 | R19 | Eine unsichere KI-Plausibilitätswarnung kann begründet redaktionell beurteilt werden; belegter schwerwiegender Fehler verhindert Veröffentlichung. | 10 |
 | R20 | In fremdgesperrtem Bearbeitungskontext bleibt die Ansicht lesbar, aber nicht überschreibbar; Admin-Entsperrung wird auditiert. | 08/11 |
 
+| R21 | Ein Redakteur bestätigt eine terminierte Veröffentlichung für genau eine freigegebene Beitragsfassung. Ohne zweite manuelle Bestätigung wird zum Termin nur veröffentlicht, wenn Fassung, Berechtigung und Freigabe unverändert gültig sind; sonst unterbleibt die Veröffentlichung mit begründetem Hinweis. Eine Termin-/Fassungsänderung erfordert erneute S3-Bestätigung. | 08/10/11 |
+| R22 | Ein öffentlich verwendetes Bild erhält Nutzungs- und Urhebernachweis, Bildunterschrift und Alt-Text; eine neue Verwendung durchläuft erneut Rechte- und Sachbezugstest. Fehlende Rechte verhindern die öffentliche Bildverwendung, nicht zwingend die textliche Veröffentlichung. | 08/09/10/11 |
+| R23 | Eine Teilfreigabe einer Vorgangs- oder Themenanalyse erstellt einen neuen bestätigten Gesamtstand ausschließlich mit angenommenen Änderungen. Offene Vorschläge und frühere Gesamtstände bleiben getrennt nachvollziehbar. | 05/06/08 |
+
 ## 4. Fachliche Abnahme und technische Abnahme sind getrennt
 
 **Derzeit nicht belegt:**
