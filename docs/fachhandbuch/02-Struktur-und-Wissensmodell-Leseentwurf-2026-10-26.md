@@ -65,7 +65,7 @@ flowchart TB
 | **Quelle** | Herkunft von Informationen | Gemeinderats-RIS, Presse, Fachbehörde |
 | **Fundstelle** | konkrete auffindbare Information bzw. Dokument mit Nachweis | Beschlussvorlage, Presseartikel, Fachstudie |
 | **Ereignis** | sachlich relevante Entwicklung | Gemeinde fasst einen Beschluss |
-| **Meldung** | optionaler öffentlicher Bericht über ein Ereignis | Kurzmeldung zum Beschluss |
+| **Meldung** | optionaler öffentlicher Bericht über genau ein Ereignis; ein Ereignis hat höchstens eine zugehörige Meldung, spätere Folgemeldungen beruhen auf eigenen Folgeereignissen | Kurzmeldung zum Beschluss |
 | **Vorgang** | länger andauernder konkreter Sachverhalt, verbindet Ereignisse | Parkraumkonzept Feldkirchen |
 | **Vorgangsbeitrag** | freigegebener öffentlicher Erkenntnistext über Sachstand, Hintergründe, Erklärungen, Wirkungen und offene Fragen | Öffentliche Erklärung zum Autobahnkreuz-Umbau |
 | **Vorgangsanalyse** | erklärt und bewertet den überprüfbaren Sachstand eines Vorgangs | Ziele, Ursachen, Wirkungen, Unsicherheiten |
