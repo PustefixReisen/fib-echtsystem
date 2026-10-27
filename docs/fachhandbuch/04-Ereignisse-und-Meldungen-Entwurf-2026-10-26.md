@@ -85,6 +85,16 @@ FIB prüft bei neuen Ereignissen, Korrekturen und Erkenntnissen, ob bereits öff
 
 Dringender sachlicher Korrekturbedarf muss in der redaktionellen Aufgabenübersicht **sichtbar hervorgehoben** werden, auch wenn ein zugeordneter Vorgang abgeschlossen oder ein Thema archiviert ist. Dringlichkeit ist von politischer Bedeutung und allgemeiner Nachrichtenrelevanz verschieden. Die Redaktion kann vorgeschlagene Prioritäten ändern.
 
+### Zeitbezug und Aktualisierungsrelevanz
+
+FIB unterscheidet **Ereignisdatum**, **fachliches Aktualisierungsdatum** und rein technische Bearbeitungszeitpunkte. Die spätere Korrektur einer Meldung verändert nicht rückwirkend das Datum des ursprünglichen Ereignisses. Auch Vorgänge und Themen erhalten einen fachlichen Änderungsstand; technische Wartung darf diesen nicht künstlich aktualisieren.
+
+Für die öffentliche Anzeige und Benachrichtigung zählen **neue Meldungen** und **inhaltlich bedeutsame Änderungen** an bereits veröffentlichten Informationen. Rein technische oder sprachlich-redaktionelle Bearbeitungen sind kein neuer Nachrichtenanlass. Eine Aktualisierung bereits veröffentlichter Inhalte muss erkennen lassen, welche fachliche Aussage neu oder berichtigt wurde.
+
+**Beispiel:** Eine ältere Meldung zum Parkraumkonzept erhält nach einer neuen Entscheidung eine wesentliche Ergänzung. Das ursprüngliche Ereignisdatum bleibt erhalten; die fachliche Aktualisierung wird eigens kenntlich gemacht und kann unter „Neu seit letztem Besuch“ erscheinen. Eine bloße Layoutkorrektur darf dieselbe Wirkung nicht auslösen.
+
+Quelle: [Fachkonzept](../Fachkonzept.md), §7; die konkrete Anzeige von Neuigkeiten wird in Kapitel 09 erklärt.
+
 ## 04.7 Abnahmeszenarien
 
 1. **Zwei Fundstellen, ein Ereignis:** Zeitungsartikel und amtliche Vorlage belegen denselben Beschluss, ohne Dublettenereignis.
