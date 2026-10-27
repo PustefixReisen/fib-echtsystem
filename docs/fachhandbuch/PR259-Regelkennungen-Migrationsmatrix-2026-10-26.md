@@ -27,7 +27,7 @@ Für jede Kennung ist die Bestandsquelle nachgewiesen. Eine Regel darf erst als 
 | `FIB-RECH-FUND-007` | 03 Recherche | Inhaltlich in 03.5 ergänzt: Fundstellenidentität Fassungen Prüfung und Änderungshistorie; normative Detailprüfung offen |
 | `FIB-RECH-GOV-001` | 03 Recherche / 10 Qualität (Grenze prüfen) | Abgleich nötig |
 | `FIB-RECH-HORIZONT-001` | 03 Recherche | Inhaltlich in 03.3/03.5 beschrieben (dynamischer Recherchehorizont); Detailabnahme offen |
-| `FIB-RECH-HORIZONT-002` | 03 Recherche | Abgleich nötig |
+| `FIB-RECH-HORIZONT-002` | 03 Recherche | Inhaltlich in 03.5 präzisiert; normative Endprüfung offen |
 | `FIB-RECH-KONTEXT-001` | 03 Recherche | Abgleich nötig |
 | `FIB-RECH-KOORD-001` | 03 Recherche | Gemeinsamer Quellen-/Fundstellenbestand im Kapitel 03 beschrieben; Detailabnahme offen |
 | `FIB-RECH-KOORD-002` | 03 Recherche | Inhaltlich in 03.3 ergänzt: Rechercheprovenienz Nulltreffer Wiederverwendung und Grundbetrieb; normative Detailprüfung offen |
@@ -56,10 +56,10 @@ Für jede Kennung ist die Bestandsquelle nachgewiesen. Eine Regel darf erst als 
 | `FIB-RECH-REF-004` | 03 Recherche | Abgleich nötig |
 | `FIB-RECH-REGEL-001` | 03 Recherche / 10 Qualität (Grenze prüfen) | Abgleich nötig |
 | `FIB-RECH-REGEL-002` | 03 Recherche / 10 Qualität (Grenze prüfen) | Abgleich nötig |
-| `FIB-RECH-RELEVANZ-001` | 03 Recherche | Abgleich nötig |
-| `FIB-RECH-RELEVANZ-002` | 03 Recherche | Abgleich nötig |
-| `FIB-RECH-RELEVANZ-003` | 03 Recherche | Abgleich nötig |
-| `FIB-RECH-RELEVANZ-004` | 03 Recherche | Abgleich nötig |
+| `FIB-RECH-RELEVANZ-001` | 03 Recherche | Inhaltlich in 03.5 präzisiert; normative Endprüfung offen |
+| `FIB-RECH-RELEVANZ-002` | 03 Recherche | Inhaltlich in 03.5 präzisiert; normative Endprüfung offen |
+| `FIB-RECH-RELEVANZ-003` | 03 Recherche | Inhaltlich in 03.5 präzisiert; normative Endprüfung offen |
+| `FIB-RECH-RELEVANZ-004` | 03 Recherche | Inhaltlich in 03.5 präzisiert; normative Endprüfung offen |
 | `FIB-RECH-ROLLE-001` | 03 Recherche / 11 Fachrechte (Grenze prüfen) | Abgleich nötig |
 | `FIB-RECH-ROLLE-002` | 03 Recherche / 11 Fachrechte (Grenze prüfen) | Abgleich nötig |
 | `FIB-RECH-RUECKBLICK-001` | 03 Recherche | Inhaltlich in 03.5 ergänzt: Anlassrückblick, danach inkrementell mit Überlappung; Detailabnahme offen |
