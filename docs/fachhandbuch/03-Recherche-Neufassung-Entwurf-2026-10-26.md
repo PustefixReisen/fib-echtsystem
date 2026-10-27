@@ -256,7 +256,9 @@ Der redaktionelle Quellenstatus lautet **Kandidat, Aktiv, Pausiert, Beendet oder
 
 Ein Abruffehler führt nicht automatisch zum Statuswechsel. Historische Fundstellen bleiben bei jeder Statusänderung erhalten. Grundlage: **FIB-RECH-QUELLE-006 bis -009**.
 
-### Relevanzprüfung und redaktionell sichtbarer Suchhorizont
+### 03.5c Relevanz, Qualität und Regelpflege
+
+#### Relevanzprüfung und redaktionell sichtbarer Suchhorizont
 
 **Ortsbezug und Themenbezug** sind eigenständige Achsen. Unmittelbare Veröffentlichungen über Feldkirchen werden möglichst umfassend erfasst, auch wenn noch kein Vorgang oder Thema dazu existiert und der Inhalt unpolitisch ist. Eine lückenlose Abdeckung aller denkbaren Quellen ist nicht garantierbar; Ausfälle und Lücken bleiben sichtbar.
 
@@ -267,24 +269,24 @@ Die **30-%-Schwelle** betrifft ausschließlich neu veröffentlichte Beiträge de
 Berechtigte Redakteure müssen erkennen und pflegen können, welche Orte, Quellen, Themenfelder und Verbindungen den Suchhorizont bestimmen. KI-Vorschläge und redaktionelle Festlegungen sind unterscheidbar. Grundlage: **FIB-RECH-RELEVANZ-001 bis -004** und **FIB-RECH-HORIZONT-002**.
 
 
-### Qualitätsgrenzen von Recherchen
+#### Qualitätsgrenzen von Recherchen
 
 Abruffehler, leere Suchläufe und fehlgeschlagene Quellenentdeckung belegen nicht, dass es keine relevanten Nachrichten gibt. FIB kennzeichnet solche Fehler und macht wiederholte Probleme bei Pflichtquellen für die Redaktion sichtbar. Für die KI-gestützte Quellenentdeckung und Bewertung zählt zuerst nachgewiesene fachliche Qualität; erst danach werden geeignete Modelle nach Kosten ausgewählt. KI übernimmt keine Freigabe. Grundlage: FIB-RECH-QUAL-001 und -002.
 
 
-### Pflege des operativen Regelbestands
+#### Pflege des operativen Regelbestands
 
 Die Recherche verwendet einen strukturierten, versionierten Regelstand, dessen Fassung je Recherchelauf nachvollziehbar bleibt. Regeländerungen enthalten Ausgangsfassung, Vorschlag und Begründung. Vor der Aktivierung werden zwei getrennte Wirkungen getestet: die neue Bewertung bereits bekannter Fundstellen und die zusätzlichen oder entfallenden Entdeckungen in einer Probe-Recherche. Auch zuvor abgelehnte und grenzwertige Funde gehören zum Vergleich. Tests verändern den produktiven Fachbestand nicht. Nur eine berechtigte redaktionelle Person aktiviert eine Änderung nach dokumentierter Prüfung; fachlich kritische Verschlechterungen schließen dies aus. Grundlage: FIB-RECH-REGEL-001 und -002.
 
 
-### Referenzwissen und räumliche Klärung
+#### Referenzwissen und räumliche Klärung
 
 Referenzobjekte halten dauerhafte Identitäten und Aliase von Orten, Infrastrukturen und Akteuren fest, nicht veränderliche Planungsstände. Geeignete Beziehungen sind etwa „liegt in“, „verbindet“ oder „versorgt“. Solche Beziehungen benötigen nachprüfbare Herkunft und redaktionelle Bestätigung; ein KI-Vorschlag genügt nicht.
 
 Bei fehlendem räumlichem Bezug verwendet FIB zuerst bestätigte Beziehungen, recherchiert dann selbst mit Quellen und fragt erst bei verbleibender Unsicherheit gezielt die Redaktion. Antworten und offene Fragen bleiben dokumentiert; wiederholte Nachfragen ohne neue Erkenntnisse werden vermieden. Neue Funde dürfen Referenzwissen und Suchhorizont als prüfbare Vorschläge erweitern. Referenzwissen ersetzt keinen öffentlichen Quellenbeleg (FIB-RECH-REF-001 bis -004).
 
 
-### Planung, Erkenntnisübergabe und redaktionelle Zuständigkeit
+#### Planung, Erkenntnisübergabe und redaktionelle Zuständigkeit
 
 FIB plant Recherchen eigenständig aus Anlass, Vorwissen, Suchraum, Quellen und geltenden Regeln. Redakteure können Suchwege und Grenzen nachvollziehen und beeinflussen; einzelne Rechercheläufe brauchen keine Vorabfreigabe. Neue Orte, Akteure und funktionale Beziehungen erweitern den dynamischen Suchkontext, ohne die offene Suche auf Stichwörter zu beschränken.
 
@@ -293,7 +295,7 @@ Vertiefte Recherchen können Erklärungen, wissenschaftliche oder rechtliche Gru
 KI darf suchen, erfassen und Vorschläge machen, aber keine Fundstellen verbindlich zurückstellen, veröffentlichen oder bestätigte Suchregeln eigenmächtig ändern. Redakteure pflegen Quellen, Suchräume und Beobachtungsaufträge im fachlichen Alltag; besonders geschützte Regelaktivierungen unterliegen dem Rechtekonzept. Grundlage: FIB-RECH-PLAN-001, KONTEXT-001, ERKENNTNIS-001 und ROLLE-001/-002.
 
 
-### Drei Referenzrahmen ohne Verfälschung der Fakten
+#### Drei Referenzrahmen ohne Verfälschung der Fakten
 
 FIB trennt allgemeine Quellen- und Qualitätsprinzipien, demokratisch-gesellschaftliche Maßstäbe und ausdrücklich grüne politische Wertungen. Politische Erwartungen dürfen die Tatsachenbasis nicht verändern. Grüne Wertungen erscheinen gegebenenfalls getrennt als „Unsere Einordnung“. Gesellschaftlich-demokratische Entwicklungen können auch ohne direkten Ortsbezug recherchiert werden, wenn eine mögliche konkrete Bedeutung für Feldkirchen begründet wird. Die genauen gesellschaftlich-demokratischen Bewertungskriterien sind in den bisherigen Regeln noch nicht abschließend festgelegt und werden nicht als bereits beschlossen ausgegeben (FIB-RECH-RAHMEN-001).
 
