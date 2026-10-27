@@ -271,6 +271,16 @@ Der redaktionelle Quellenstatus lautet **Kandidat, Aktiv, Pausiert, Beendet oder
 
 Ein Abruffehler führt nicht automatisch zum Statuswechsel. Historische Fundstellen bleiben bei jeder Statusänderung erhalten. Grundlage: **FIB-RECH-QUELLE-006 bis -009**.
 
+### Relevanzprüfung und redaktionell sichtbarer Suchhorizont
+
+**Ortsbezug und Themenbezug** sind eigenständige Achsen. Unmittelbare Veröffentlichungen über Feldkirchen werden möglichst umfassend erfasst, auch wenn noch kein Vorgang oder Thema dazu existiert und der Inhalt unpolitisch ist. Eine lückenlose Abdeckung aller denkbaren Quellen ist nicht garantierbar; Ausfälle und Lücken bleiben sichtbar.
+
+Auch außerhalb Feldkirchens gelegene Entwicklungen können relevant sein, wenn ein konkreter räumlicher, institutioneller, infrastruktureller, vergleichender oder künftiger kommunaler Bezug begründet werden kann. Bloße thematische Ähnlichkeit reicht nicht. Eingetretene Auswirkungen, plausible Entwicklungen und bloße Möglichkeiten sind sprachlich zu unterscheiden.
+
+Die **30-%-Schwelle** betrifft ausschließlich neu veröffentlichte Beiträge der letzten **90 Tage**, deren lokaler Bezug nur mittelbar, vergleichend oder künftig ist. Jeder Beitrag zählt einmal; bei null Veröffentlichungen wird keine Quote ermittelt. **Mehr als 30 %** löst eine redaktionelle Warnung aus, niemals ein automatisches Recherche- oder Veröffentlichungsverbot.
+
+Berechtigte Redakteure müssen erkennen und pflegen können, welche Orte, Quellen, Themenfelder und Verbindungen den Suchhorizont bestimmen. KI-Vorschläge und redaktionelle Festlegungen sind unterscheidbar. Grundlage: **FIB-RECH-RELEVANZ-001 bis -004** und **FIB-RECH-HORIZONT-002**.
+
 ## 03.6 Konkrete Modellerprobung und Abnahmekriterien
 
 **Testfall Grundstückskauf:** Artikel wird als Fundstelle gesichert; Ereignis wird abgeleitet; späterer amtlicher Widerspruch korrigiert eine vorläufige Aussage bzw. erzeugt bei bestätigtem Ereignis einen Vorschlag; eigenständiger vorläufiger Vorgang mit Erstanalyse; Nachricht nur bei Relevanz; Folgeereignisse mit Folgemeldungen und Rückblick.
