@@ -1,31 +1,3 @@
-## Bildverwaltung: Quelltransfer (27.10.2026)
-
-Die vorhandenen Festlegungen aus `docs/Visuelle-Identitaet-und-Bildkonzept.md` §14 wurden in Kapitel 08 (Bildbibliothek, Primärzuordnungen, weitere geeignete Nutzungen, Nutzungsausschlüsse, Einzelprüfung, Rechte und Freigaben) und Kapitel 09 (öffentliche Bildunterschriften, Nachweise, Alternativtexte, sachgerechte Darstellung) explizit eingearbeitet. Die optionale Funktion „Mehr zum Bild“ bleibt **nicht beschlossen für das MVP**.
-
-Für das spätere eigenständige Administrationskonzept sind die Bestandsverwaltung der Bildbibliothek und übergreifende Metadatenpflege vorzusehen. Eine konkrete Admin-Oberfläche oder neue Bildfreigabe-Rolle wird damit nicht vorweggenommen. Einzelne Rechte- und Statusregeln der bisherigen Primärquelle bleiben bis zur normativen Gesamtprüfung verbindlich.
-
-## Regelkennungen: erster konkreter Einzelnachweis (27.10.2026)
-
-Die [Migrationsmatrix](PR259-Regelkennungen-Migrationsmatrix-2026-10-26.md) unterscheidet nun anhand von vier tatsächlich geprüften Originalkennungen zwischen **fachlich überholtem Originalwortlaut**, **inhaltlicher Abbildung in neuen Kapiteln** und **nicht aufgelöster Kennung**. Wichtigster offener Normwechsel ist die ausdrücklich beschlossene Ablösung der Pflicht-Einzelsichtung in `FIB-RECH-SICHTUNG-001`. `FIB-RECH-ABLAUF-001` wurde am 27.10. in Kapitel 03 (Bestand), Zeile 487 als eigenständiger Regelabsatz gefunden; die Übernahme in die endgültige Regelreferenz bleibt nachzuweisen. Die Prüfung der übrigen Regelkennungen ist damit **nicht** als erledigt ausgewiesen.
-
-## Quelltransfer: Fachliche Persistenz (27.10.2026)
-
-Kapitel 02 erläutert jetzt aus `docs/Persistenz-und-Lebenszyklusmodell.md` §§2–12 die stabilen Identitäten, das Verbot spurlosen Löschens bestätigter Objekte und wirksamer Beziehungen, die Trennung von historisch dokumentierten Sachverhalten und technischen Betriebsdaten, die Herkunft von Fundstellen auch bei ausgefallenen URLs sowie die Historisierung von Analysen über bestätigte Gesamtstände gemäß F-03.
-
-Die Einzelprüfung sämtlicher Status- und Übergangsregeln der Fachobjekte bleibt bis zur normativen Gesamtabnahme gesondert nachzuweisen.
-
-## Quellabgleich Kapitel 11: Benutzer und Rechteentzug (27.10.2026)
-
-Kapitel 11 integriert nun zusätzliche fachliche Vorgaben aus `docs/Rollen-Rechte-und-Workflow.md` §§9–9.2: interne Einladung ohne Selbstregistrierung, Benutzerdeaktivierung vor Löschung mit Historienprüfung, zeitnahe serverseitige Wirksamkeit von Rollenentzug, erneute Berechtigungsprüfung vor S2-/S3-Handlungen sowie die Trennung von Federführung, Bearbeitungssperre und tatsächlicher Rollenberechtigung. Die Auditpflicht für Administratoren bei Aufhebung fremder verwaister Sperren bleibt erhalten.
-
-Dies ist ein Teilabgleich; die Gesamtmigration und Leseabnahme sind noch nicht abgeschlossen.
-
-## Quellabgleich: Fakten-Rückprüfung (27.10.2026)
-
-Kapitel 10 enthält jetzt die konkrete Rückprüfung wesentlicher Aussagen einer Textfassung gegen bestätigte Fakten und Fundstellen gemäß `docs/KI-Leitfaden.md` §§13 und 16. Besonders geprüft werden Beträge, Daten, Abstimmungsergebnisse, Entscheidungsstände, Zuständigkeiten, Kausalbehauptungen und rechtliche Zuschreibungen. Unbelegte Aussagen müssen belegt, abgeschwächt, zugeschrieben oder entfernt werden. Ein Abnahmebeispiel unterscheidet eine bloße Beschlussvorlage von einer tatsächlich nachgewiesenen Entscheidung.
-
-Die vollständige normative Inventur aller Primärquellen und die abschließende gemeinsame Leseabnahme stehen weiterhin aus.
-
 # PR #259 – Fachkonzept: fachliche Abschlussprüfung und Abnahmeweg
 
 **Stand 26.10.2026 · Fokus ausschließlich Fachkonzept.** Diese Übersicht trennt strikt die **fachliche Fertigstellung** von späteren Datenmodell-, Bedienoberflächen- und Implementierungsarbeiten. Die fünf Umsetzungsissues #260–#264 sind **nachgelagert** und begründen keine fachliche Sperre.
@@ -200,3 +172,33 @@ Nach vollendetem Quell-/Regelabgleich, widerspruchsfreien Kapiteln, referenziert
 ## F-03: Beschluss in den Fachkapiteln umgesetzt (26.10.2026)
 
 Die verbindlich beschlossene Gesamtstandsregel ist jetzt in Kapitel 05 (Vorgangsanalysen), Kapitel 06 (Themenanalysen) und Kapitel 08 (redaktioneller Freigabeprozess) eingetragen. Der separate [F-03-Beschluss](PR259-F03-Beschluss-2026-10-26.md) ist der Entscheidungsnachweis. Offene Änderungsvorschläge werden nicht Teil des gültigen bestätigten Gesamtstands. Verbleibende Aufgaben betreffen Detailmigration und technische Ausgestaltung, nicht die fachliche Grundentscheidung.
+
+## Ergänzende Quellabgleiche vom 27.10.2026
+
+## Bildverwaltung: Quelltransfer (27.10.2026)
+
+Die vorhandenen Festlegungen aus `docs/Visuelle-Identitaet-und-Bildkonzept.md` §14 wurden in Kapitel 08 (Bildbibliothek, Primärzuordnungen, weitere geeignete Nutzungen, Nutzungsausschlüsse, Einzelprüfung, Rechte und Freigaben) und Kapitel 09 (öffentliche Bildunterschriften, Nachweise, Alternativtexte, sachgerechte Darstellung) explizit eingearbeitet. Die optionale Funktion „Mehr zum Bild“ bleibt **nicht beschlossen für das MVP**.
+
+Für das spätere eigenständige Administrationskonzept sind die Bestandsverwaltung der Bildbibliothek und übergreifende Metadatenpflege vorzusehen. Eine konkrete Admin-Oberfläche oder neue Bildfreigabe-Rolle wird damit nicht vorweggenommen. Einzelne Rechte- und Statusregeln der bisherigen Primärquelle bleiben bis zur normativen Gesamtprüfung verbindlich.
+
+## Regelkennungen: erster konkreter Einzelnachweis (27.10.2026)
+
+Die [Migrationsmatrix](PR259-Regelkennungen-Migrationsmatrix-2026-10-26.md) unterscheidet nun anhand von vier tatsächlich geprüften Originalkennungen zwischen **fachlich überholtem Originalwortlaut**, **inhaltlicher Abbildung in neuen Kapiteln** und **nicht aufgelöster Kennung**. Wichtigster offener Normwechsel ist die ausdrücklich beschlossene Ablösung der Pflicht-Einzelsichtung in `FIB-RECH-SICHTUNG-001`. `FIB-RECH-ABLAUF-001` wurde am 27.10. in Kapitel 03 (Bestand), Zeile 487 als eigenständiger Regelabsatz gefunden; die Übernahme in die endgültige Regelreferenz bleibt nachzuweisen. Die Prüfung der übrigen Regelkennungen ist damit **nicht** als erledigt ausgewiesen.
+
+## Quelltransfer: Fachliche Persistenz (27.10.2026)
+
+Kapitel 02 erläutert jetzt aus `docs/Persistenz-und-Lebenszyklusmodell.md` §§2–12 die stabilen Identitäten, das Verbot spurlosen Löschens bestätigter Objekte und wirksamer Beziehungen, die Trennung von historisch dokumentierten Sachverhalten und technischen Betriebsdaten, die Herkunft von Fundstellen auch bei ausgefallenen URLs sowie die Historisierung von Analysen über bestätigte Gesamtstände gemäß F-03.
+
+Die Einzelprüfung sämtlicher Status- und Übergangsregeln der Fachobjekte bleibt bis zur normativen Gesamtabnahme gesondert nachzuweisen.
+
+## Quellabgleich Kapitel 11: Benutzer und Rechteentzug (27.10.2026)
+
+Kapitel 11 integriert nun zusätzliche fachliche Vorgaben aus `docs/Rollen-Rechte-und-Workflow.md` §§9–9.2: interne Einladung ohne Selbstregistrierung, Benutzerdeaktivierung vor Löschung mit Historienprüfung, zeitnahe serverseitige Wirksamkeit von Rollenentzug, erneute Berechtigungsprüfung vor S2-/S3-Handlungen sowie die Trennung von Federführung, Bearbeitungssperre und tatsächlicher Rollenberechtigung. Die Auditpflicht für Administratoren bei Aufhebung fremder verwaister Sperren bleibt erhalten.
+
+Dies ist ein Teilabgleich; die Gesamtmigration und Leseabnahme sind noch nicht abgeschlossen.
+
+## Quellabgleich: Fakten-Rückprüfung (27.10.2026)
+
+Kapitel 10 enthält jetzt die konkrete Rückprüfung wesentlicher Aussagen einer Textfassung gegen bestätigte Fakten und Fundstellen gemäß `docs/KI-Leitfaden.md` §§13 und 16. Besonders geprüft werden Beträge, Daten, Abstimmungsergebnisse, Entscheidungsstände, Zuständigkeiten, Kausalbehauptungen und rechtliche Zuschreibungen. Unbelegte Aussagen müssen belegt, abgeschwächt, zugeschrieben oder entfernt werden. Ein Abnahmebeispiel unterscheidet eine bloße Beschlussvorlage von einer tatsächlich nachgewiesenen Entscheidung.
+
+Die vollständige normative Inventur aller Primärquellen und die abschließende gemeinsame Leseabnahme stehen weiterhin aus.
