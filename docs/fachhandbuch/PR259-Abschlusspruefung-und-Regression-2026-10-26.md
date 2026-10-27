@@ -61,12 +61,12 @@ Die folgenden **prüfbaren Testszenarien** sind Abnahmeanforderungen, **keine be
 
 ## 4. Fachliche Abnahme und technische Abnahme sind getrennt
 
-**Derzeit nicht belegt:**
+**Noch nachzuweisen, getrennt nach fachlicher und technischer Abnahme:**
 1. Gesamter Quellabschnitts-Nachweis auch für Fachkonzept, Datenmodell, UX, RIS, Redaktion, Rollen/Rechte, Qualität und KI-Leitfaden; zwei bisherige Kapitel allein genügen nicht.
 2. Vollständige Einzelregel-Harmonisierung einschließlich jetzt lokalisierter **FIB-RECH-ABLAUF-001** und der veränderten Pflichtsichtung.
 3. **Erst nach der Fachkonzept-Abnahme:** Datenbankschema-, API- und Rechteabgleich in der iterativen Entwicklung.
 4. **Erst nach der Fachkonzept-Abnahme:** UI-Abgleich und gemeinsame Erprobung; fachlich vereinbart sind Anforderungen, keine fertigen Screens.
-5. **Erst bei der technischen Abnahme:** Regressionstests R01–R20 und bestehende Tests ausführen und protokollieren.
+5. **Erst bei der technischen Abnahme:** Regressionstests R01–R23 und bestehende Tests ausführen und protokollieren.
 6. Fachliche Gesamtabnahme und Freigabe zur Ablösung alter Primärquellen; danach erst etwaige Umstellung auf nicht-Draft und Merge.
 
 **Wichtig:** Die fachliche Abnahme des Handbuchs ist nicht von fertig implementierten Datenbank-, UI- oder Teständerungen abhängig. Die technische Abnahme folgt als eigener Meilenstein.
