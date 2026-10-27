@@ -18,13 +18,13 @@ Für jede Kennung ist die Bestandsquelle nachgewiesen. Eine Regel darf erst als 
 | `FIB-RECH-BEOB-004` | 03 Recherche | Inhaltlich in 03.3 ergänzt; normative Detailprüfung offen |
 | `FIB-RECH-BETRIEB-001` | 03 Recherche | Abgleich nötig |
 | `FIB-RECH-ERKENNTNIS-001` | 03 Recherche / 05–06 Analyse (Grenze prüfen) | Abgleich nötig |
-| `FIB-RECH-FUND-001` | 03 Recherche | Abgleich nötig |
-| `FIB-RECH-FUND-002` | 03 Recherche | Abgleich nötig |
-| `FIB-RECH-FUND-003` | 03 Recherche | Abgleich nötig |
-| `FIB-RECH-FUND-004` | 03 Recherche | Abgleich nötig |
-| `FIB-RECH-FUND-005` | 03 Recherche | Abgleich nötig |
-| `FIB-RECH-FUND-006` | 03 Recherche | Abgleich nötig |
-| `FIB-RECH-FUND-007` | 03 Recherche | Abgleich nötig |
+| `FIB-RECH-FUND-001` | 03 Recherche | Inhaltlich in 03.5 ergänzt: Fundstellenidentität Fassungen Prüfung und Änderungshistorie; normative Detailprüfung offen |
+| `FIB-RECH-FUND-002` | 03 Recherche | Inhaltlich in 03.5 ergänzt: Fundstellenidentität Fassungen Prüfung und Änderungshistorie; normative Detailprüfung offen |
+| `FIB-RECH-FUND-003` | 03 Recherche | Inhaltlich in 03.5 ergänzt: Fundstellenidentität Fassungen Prüfung und Änderungshistorie; normative Detailprüfung offen |
+| `FIB-RECH-FUND-004` | 03 Recherche | Inhaltlich in 03.5 ergänzt: Fundstellenidentität Fassungen Prüfung und Änderungshistorie; normative Detailprüfung offen |
+| `FIB-RECH-FUND-005` | 03 Recherche | Inhaltlich in 03.5 ergänzt: Fundstellenidentität Fassungen Prüfung und Änderungshistorie; normative Detailprüfung offen |
+| `FIB-RECH-FUND-006` | 03 Recherche | Inhaltlich in 03.5 ergänzt: Fundstellenidentität Fassungen Prüfung und Änderungshistorie; normative Detailprüfung offen |
+| `FIB-RECH-FUND-007` | 03 Recherche | Inhaltlich in 03.5 ergänzt: Fundstellenidentität Fassungen Prüfung und Änderungshistorie; normative Detailprüfung offen |
 | `FIB-RECH-GOV-001` | 03 Recherche / 10 Qualität (Grenze prüfen) | Abgleich nötig |
 | `FIB-RECH-HORIZONT-001` | 03 Recherche | Inhaltlich in 03.3/03.5 beschrieben (dynamischer Recherchehorizont); Detailabnahme offen |
 | `FIB-RECH-HORIZONT-002` | 03 Recherche | Abgleich nötig |
