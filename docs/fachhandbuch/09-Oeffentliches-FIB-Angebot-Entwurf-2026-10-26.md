@@ -118,7 +118,7 @@ Für die **Fragen und Antworten** gibt es ein natürlichsprachliches redaktionel
 
 ### Wie wählt FIB geeignete Vertiefungsfragen aus?
 
-FIB entwickelt „Mehr wissen?“-Fragen **aus dem jeweiligen Sachverhalt**, statt überall dieselben Standardfragen einzublenden. Die ursprüngliche fachliche Ausarbeitung [„Mehr wissen?“](../Mehr-wissen.md) gilt hierbei ergänzend zur Objekt- und Freigabelogik des [Vertiefungsmodells](../Mehr-wissen-Modell.md).
+FIB entwickelt „Mehr wissen?“-Fragen **aus dem jeweiligen Sachverhalt**, statt überall dieselben Standardfragen einzublenden. Die Vorschläge dürfen auch aus der bestätigten **Vorgangs- oder Themenanalyse** entstehen: etwa zu Erklärungen, fachlichen Hintergründen, Ursachen, Wirkungen und Zielkonflikten. Die Redaktion stimmt die Auswahl **im Dialog mit der KI über ein natürlichsprachliches Korrektorat** ab: Sie kann Fragen hinzufügen, entfernen, zusammenfassen, umformulieren, priorisieren und Antworten gezielt überarbeiten lassen. Inhaltliche Änderungen benötigen die reguläre Belegprüfung und redaktionelle Bestätigung; veröffentlichte Antworten werden nur über freigegebene neue Fassungen geändert. Die ursprüngliche fachliche Ausarbeitung [„Mehr wissen?“](../Mehr-wissen.md) gilt hierbei ergänzend zur Objekt- und Freigabelogik des [Vertiefungsmodells](../Mehr-wissen-Modell.md).
 
 1. Zunächst klärt FIB, ob der Einstieg eine Meldung, einen Vorgang oder ein Thema betrifft.
 2. Anschließend berücksichtigt es den örtlichen Bezug, die Handlungsmöglichkeiten Feldkirchens, die zeitliche Entwicklung und offene fachliche Zusammenhänge.
@@ -145,7 +145,7 @@ Die Antworten werden vorab redaktionell geprüft und gespeichert. **Freie Live-K
 Bisher vereinbarte öffentliche Hauptnavigation:
 - **Neues:** veröffentlichte Meldungen.
 - **Im Blick:** gemeinsame Liste aus Vorgängen und Themen.
-- **Sitzungen:** anstehende und vergangene Sitzungen.
+- **Sitzungen:** anstehende und vergangene Sitzungen; **im Dashboard ausschließlich als kompakte Einträge mit ihrem Status**. Ein Klick führt zur jeweiligen Sitzungsansicht mit Tagesordnung, TOPs und weiteren Details. Keine vollständigen Sitzungsinhalte im Dashboard.
 - **Suche:** struktur- und textbasierte Suche.
 
 Die Startseite orientiert in drei Bereichen: **Neue Entwicklungen**, **Anstehende Sitzungen** und **Im Blick**. Die Kennzeichnung **„Neu seit letztem Besuch“** wird innerhalb dieser Bereiche verwendet, nicht als selbstständiger vierter Block.
@@ -167,6 +167,12 @@ Die öffentliche Suche führt **Meldungen, Vorgänge, Themen, Sitzungen, TOPs, B
 Öffentliche Meldungen, Vorgänge, Themen und Sitzungen erhalten teilbare Direktlinks. Wer einem Link auf eine Aktualisierung folgt, soll die **konkret neue Information** erkennen können. Druckausgaben bewahren Sachstand, Datum, Quellen und Einordnung ohne unnötige Navigation.
 
 **Transparenz** soll vom jeweiligen Inhalt aus unmittelbar erreichbar sein. Sie erklärt redaktionelle Verantwortung, KI-Unterstützung, Quellen, mögliche Unsicherheit und die Unterscheidung zwischen Sachinformation und „Unsere Einordnung“. Grundlage ist [UX und Informationsarchitektur](../UX-und-Informationsarchitektur.md), insbesondere §§14 und 16–18; konkrete Bediengestaltung erfolgt später.
+
+### Automatisierte Informationsangebote – Anforderungen für die spätere Planung
+
+FIB soll ergänzend zur Website **abonnierbare Informationen über neue und wesentlich geänderte öffentliche Inhalte** anbieten können. Vorgesehen sind insbesondere **RSS-Feeds** und **Newsletter**. Dabei sollen neben neuen Meldungen auch relevante Aktualisierungen bereits veröffentlichter **Vorgangs- und Themenbeiträge** erkennbar sein; rein technische oder redaktionelle Kleinkorrekturen lösen nicht automatisch eine erneute Nachricht aus.
+
+**Die fachliche und technische Detailplanung ist bewusst zurückgestellt**, bis die Implementierung des öffentlichen FIB-Angebots beginnt. Dann werden insbesondere Auswahl und Zusammenfassung der Änderungen, Kanäle, Versandrhythmus, Abonnements, Einwilligungen, Datenschutz und Abmeldemöglichkeiten konkretisiert. Diese Erwähnung legt weder ein fertiges Newsletterverfahren noch konkrete RSS-Endpunkte fest.
 
 ## 09.9 Vertrauen, Transparenz und Aktualität
 
