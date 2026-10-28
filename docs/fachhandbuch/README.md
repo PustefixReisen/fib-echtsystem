@@ -75,3 +75,12 @@ Die [Inventur und Zuordnung](../Fachhandbuch-Inventur-2026-10-22.md) erfasst Aus
 | Version | Datum | Änderung |
 |---|---|---|
 | 0.1 | 22.10.2026 | Fachhandbuch als Aufbauziel, geplante Kapitel, begrenzte Sekundärsichten und Migrationsregel angelegt. |
+
+## Regelmigration (Stand 28.10.2026)
+
+Die fachliche Durchsicht der elf Kapitel ist abgeschlossen. Die normative Migration wird zusätzlich anhand zweier dokumentierter Vollständigkeitsachsen geprüft:
+
+- [86 historische Regelkennungen mit Originaltextnachweis und offenen Einzelprüfungen](PR259-Regelmigration-Kennungsregister-2026-10-28.md)
+- [18 eigenständige Fachprimärquellen mit insgesamt 260 inhaltlichen Hauptabschnitten](PR259-Regelmigration-Abschnittsregister-2026-10-28.md)
+
+**Wichtig:** Ein inventarisierter oder verlinkter Originaltext gilt nicht automatisch als inhaltlich gleichwertig in die neue Norm übernommen. Bis zur belegten Einzeläquivalenz und Auflösung der gekennzeichneten Konflikte bleiben die Original-Fachquellen ergänzend maßgeblich. Diese Verweisstruktur verhindert Informationsverlust, ersetzt aber nicht den normativen Einzelabgleich. Der Entwurfs-PR darf nicht allein aufgrund der Inhaltsfreigaben als vollständig normmigriert bezeichnet werden.
