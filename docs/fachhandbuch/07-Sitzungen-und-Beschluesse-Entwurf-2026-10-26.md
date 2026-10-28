@@ -92,7 +92,7 @@ Diese Erläuterung konkretisiert das bisherige [Sitzungs- und Beschlussmodell](.
 
 TOP-Status und Abstimmungsergebnis sind verschieden. FIB unterscheidet angekündigte, vertagte, behandelte und abgesetzte Tagesordnungspunkte. Zwischen TOP und Ereignis sind mehrere begründete Beziehungen zulässig.
 
-Aus einer veröffentlichten Vorlage entstehen noch keine bestätigten Beschlusspunkte oder Abstimmungen. Erst eine geeignete Niederschrift belegt die tatsächlich abgestimmten Texte. Bei mehreren Abstimmungen bleiben Beschlusspunkt, seine unterschiedlichen Fassungen und Abstimmungsergebnisse nachvollziehbar. Der Ausgangsvorschlag bleibt zum Vergleich erhalten.
+Aus einer veröffentlichten Vorlage entstehen noch keine bestätigten Beschlusspunkte oder Abstimmungen. **Vor Erscheinen der Niederschrift** dürfen geeignete Presseberichte oder andere belastbare Quellen einen **vorläufigen, ausdrücklich quellengekennzeichneten Beschlussstand** und eine darauf bezogene Meldung begründen. Sie ersetzen jedoch **nicht** die amtliche Verifikation des genauen Beschlusswortlauts, der Beschlusspunkte und der Abstimmungsergebnisse. Diese erfolgt anhand der geeigneten Niederschrift beziehungsweise eines gleichwertigen amtlichen Nachweises. Bei mehreren Abstimmungen bleiben Beschlusspunkt, seine unterschiedlichen Fassungen und Abstimmungsergebnisse nachvollziehbar. Der Ausgangsvorschlag bleibt zum Vergleich erhalten.
 
 Zweifelhafte Zuordnungen zu TOP, Ereignis, Abstimmung oder Beschlusstext müssen redaktionell geprüft werden und werden nicht automatisch fachlich wirksam.
 
