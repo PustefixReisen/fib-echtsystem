@@ -60,6 +60,7 @@ Ein Issue darf mehrere Umsetzungsschritte auslösen. Bei umfangreichen Vorhaben 
 | U2 Redaktions-App | **In Arbeit** | vertikale Umsetzung begonnen: erster echter UI-Slice `Dashboard → Ereignisdetail → Koordination`; weitere Fachfunktionen werden jeweils zusammen mit ihrem UI-Arbeitsablauf angebunden |
 | U3 Öffentliche FIB-Seite / PWA | **Geplant** | Besucheroberfläche mit `Neues | Im Blick | Sitzungen | Suche`, Detailseiten, PWA, Teilen, Transparenz und Neuigkeitsstatus |
 | U4 Recherche / AI Tasks / KI-Funktionen | **Geplant** | Quellenbeobachtung, Quellenentdeckung, Rechercheläufe, Ereigniserkennung, Entwurfserstellung, Routing und Qualitätskontrollen |
+| U4 Informationsgewinnung – Untersuchungs-/Machbarkeitsschwerpunkt (#265) | **Geplant** | Pflichtquellen-Abdeckung technisch nachweisen, offene Suche mit systematischen Suchstrategien entwickeln, verblindeten Trefferquotentest durchführen und Kosten/Mehrtreffer vergleichen; Auswahl vor produktiver Implementierung |
 | U5 Veröffentlichung / Deployment / Betrieb | **Geplant** | S3-Publish-Prozess, statischer Build, Deployment, Monitoring, Backup/Restore und betriebliche Automatisierung |
 | U6 Integration / Pilot / Go-live-Vorbereitung | **Geplant** | End-to-End-Tests, Demonstrator-Regressionen, Usability-Feinschliff, Datenmigration, Pilotbetrieb und Vorbereitung der realen Go-live-Abnahme |
 
