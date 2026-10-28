@@ -158,7 +158,7 @@ FIB beobachtet das Feldkirchner Ratsinformationssystem **laufend über dieselbe 
 
 Die Recherche **liefert die Informationen und Veränderungssignale**. Die fachlich eigenständige Aufbereitung von Sitzungen, TOPs, Behandlung, Beschlusspunkten, beschlossenen Fassungen und Abstimmungen erfolgt in **Kapitel 07 – Sitzungen und Beschlüsse**, nicht als paralleles Recherchesystem. Fundstellen und strukturierte Sitzungsinformationen bleiben dabei logisch getrennt, aber nachvollziehbar verknüpft.
 
-Eine Tagesordnung belegt, was **vorgesehen** ist; erst geeignete spätere Quellen belegen, was tatsächlich behandelt oder beschlossen wurde. FIB kann Pressehinweise vor Verfügbarkeit einer Niederschrift finden und verknüpft diese später mit amtlichen Unterlagen, ohne einen angekündigten Beschluss als tatsächlich gefasst auszugeben. Der konkrete Abfrageplan, Änderungsabgleich und Umgang mit Ausfällen sind bei der technischen Umsetzung zu prüfen.
+Eine Tagesordnung belegt, was **vorgesehen** ist; erst geeignete spätere Quellen belegen, was tatsächlich behandelt oder beschlossen wurde. FIB ordnet externe Presseberichte über Gemeinderatssitzungen **ausschließlich der jeweiligen Sitzung als Ganzes** zu; sie erscheinen dort als informelle Berichterstattung. **TOP-bezogene Konkretisierungen einschließlich Beschlusspunkt, geänderter Beschlussfassung und Abstimmungsergebnis dürfen nur aus dem RIS übernommen werden.** Eine Pressefundstelle erzeugt deshalb weder einen vorläufigen TOP-Beschluss noch eine TOP-Zuordnung, kann aber die Prüfung einer allgemeinen Sitzungsmeldung anregen. Der konkrete Abfrageplan, Änderungsabgleich und Umgang mit Ausfällen sind bei der technischen Umsetzung zu prüfen.
 
 
 ### Redaktioneller Rechercheauftrag ohne vorhandenes Fachobjekt
