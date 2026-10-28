@@ -61,3 +61,8 @@ Die konkreten Kriterien des **demokratisch-gesellschaftlichen Referenzrahmens** 
 ## Abnahmepfad
 
 Fachlich ist zunächst die Lesefassung mit den Vertiefungskapiteln gemeinsam zu prüfen. Vor normativer Ablösung der Altquellen folgt der belegbare Einzelregelabgleich (insbesondere markierte Lücken) und die dokumentierte fachliche Freigabe. Erst danach beginnt die iterative Umsetzung von Datenmodell, UI, Fachservices und technischen Tests. 
+
+## Ergänzender Migrationsstand 28.10.2026
+
+Die fachliche Lesedurchsicht der Kapitel 01–11 ist vom Auftraggeber abgeschlossen. Die daraus resultierenden neuen Entscheidungen und Korrekturen sind in den Kapitelentwürfen dokumentiert. Das neue [Kennungsregister mit 86 eindeutigen Bestandsregeln](PR259-Regelmigration-Kennungsregister-2026-10-28.md) stellt nun den gezählten Bestand der beiden bisherigen Regelkapitel und den Vorrang der neu beschlossenen Abweichungen nachvollziehbar dar. **Die Sicherung eines Wortlauts oder die Bestätigung des Fachkapitels ist kein Nachweis, dass jede Einzelregel inklusive aller Ausnahmen widerspruchsfrei migriert wurde.** Insbesondere bleibt die Gegenüberstellung der vier Statusbezeichnungen lokaler Themenbezüge fachlich/technisch zu klären, bevor die Altquelle abgelöst wird.
+
