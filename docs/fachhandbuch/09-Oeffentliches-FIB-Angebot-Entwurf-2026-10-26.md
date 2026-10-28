@@ -198,6 +198,10 @@ Bilder werden proportional und ohne irreführenden Ausschnitt dargestellt. Auf k
 
 Das zusätzliche **„Mehr zum Bild“** mit Motivwissen ist ausdrücklich **noch keine verbindliche MVP-Funktion**. Die Gestaltungs- und Rechtequelle bleibt [Visuelle Identität und Bildkonzept](../Visuelle-Identitaet-und-Bildkonzept.md), §14.
 
+### Besucheranalyse – fachliche Abgrenzung
+
+FIB soll später anhand **datensparsamer, möglichst aggregierter Nutzungskennzahlen** erkennen können, welche öffentlichen Inhalte und Funktionen tatsächlich genutzt werden und wo Besucher bei der Orientierung Schwierigkeiten haben. Die Besucheranalyse ist fachlich von der redaktionellen Inhaltsbewertung und dem persönlichen Merkmal „Neu seit letztem Besuch“ getrennt. **Planung und Administration** der Messung gehören in das eigenständige Administrationskonzept. Konkrete Trackingverfahren, Einwilligungen, Datenschutzanforderungen und Berichtsansichten werden erst im Zuge der Implementierung des öffentlichen Angebots entschieden.
+
 ## 09.10 Öffentliche Ausgabe folgt redaktioneller Freigabe
 
 Keine vorläufige KI-Erkenntnis, keine interne Analyse und kein neu erfasstes Ereignis wird allein aufgrund seiner Existenz öffentlich. Die relevanten Informationen benötigen die im Redaktionsteil festgelegten Prüfungen, Freigaben und Veröffentlichungsentscheidungen.
