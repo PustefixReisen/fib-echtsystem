@@ -96,6 +96,18 @@ FIB bewertet KI-Modelle **aufgabenspezifisch** nach Faktentreue, Belegdeckung, V
 
 Fehleranfällige Sachverhalte (z. B. RIS-Vorlage vs. Beschluss, Ereignisdublette, Grundstückskauf, Autobahnkreuz, mittelbarer Feldkirchen-Bezug, fehlende Quelle, überhöhte Schlussfolgerung) werden als Regressionstests aufgenommen. Regelversion, verwendete Belege und ggf. Modellversion sind für nachvollziehbare Prüfungen zu dokumentieren.
 
+### Zeitplan und Darstellung der KI-Modellprüfung
+
+**Betriebsvorschlag zur späteren Konkretisierung:** Im Pilotbetrieb erfolgt eine **monatliche** Auswertung von Ergebnisqualität, Fehlerraten, Kontrollstichprobe, Eskalationshäufigkeit und tatsächlichen Kosten **je FIB-Aufgabe**. Im regulären Betrieb ist mindestens eine **vierteljährliche** Überprüfung sinnvoll; bei auffälligem Qualitätsabfall, stark veränderten Kosten oder Modellwechsel ist zusätzlich eine anlassbezogene Prüfung erforderlich. Dies ist ein Planungsansatz, kein bereits beschlossener verpflichtender Turnus.
+
+Ergebnisse werden in einer **administrativen KI-Qualitäts- und Kostenübersicht** dargestellt: Modell/Rolle, Aufgabenart, Testumfang, Qualitätsmerkmale, Fehlertypen, Eskalations- und Stichprobenergebnisse, Kosten sowie Entwicklung im Zeitverlauf. Für die Redaktion erscheinen nur handlungsrelevante Qualitätswarnungen und Prüfaufgaben; der vollständige Modellvergleich ist Administrationsaufgabe. Einzelheiten und Schwellen werden im späteren Administrationskonzept festgelegt.
+
+### Regelmäßiger Umgang mit amtlichen RIS-Dokumenten
+
+Bei offiziell öffentlich bereitgestellten **kommunalen Beschlussvorlagen und Niederschriften** soll FIB eine **einfach zu bedienende, dokumentklassenbezogene Rechteprüfung** ermöglichen. Nach § 5 UrhG können solche amtlichen Texte als amtliche Werke urheberrechtlich nicht geschützt sein, soweit sie die gesetzlichen Voraussetzungen erfüllen. Die pauschale Annahme „im RIS öffentlich = in FIB vollständig erneut veröffentlichbar“ ist dennoch unzulässig: Drittinhalte, Datenschutz, Veröffentlichungsbedingungen und Quellen-/Änderungskennzeichnung sind zu prüfen.
+
+Die fachliche Zielvorgabe ist, gleichartige unauffällige amtliche Dokumente nach geklärter Rechtsgrundlage **ohne wiederkehrende manuelle Einzelbestätigung** verfügbar zu machen; nur Ausnahmen und ungeklärte Fälle werden vor öffentlicher Volltextausgabe angehalten. Anlagen Dritter werden getrennt behandelt. Diese vereinfachte Regel benötigt vor technischer Aktivierung die dokumentierte rechtliche Prüfung des konkreten RIS und der betroffenen Dokumentklassen.
+
 ## 10.10 Abnahmefälle
 1. Amtliche Vorlage widerspricht Medienbericht; FIB unterscheidet gesicherten Stand und Annahme.
 2. Ereignis wird aufgrund zweiter Quelle nicht doppelt gezählt.
