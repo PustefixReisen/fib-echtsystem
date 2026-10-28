@@ -84,3 +84,5 @@ Die fachliche Durchsicht der elf Kapitel ist abgeschlossen. Die normative Migrat
 - [18 eigenständige Fachprimärquellen mit insgesamt 260 inhaltlichen Hauptabschnitten](PR259-Regelmigration-Abschnittsregister-2026-10-28.md)
 
 **Wichtig:** Ein inventarisierter oder verlinkter Originaltext gilt nicht automatisch als inhaltlich gleichwertig in die neue Norm übernommen. Bis zur belegten Einzeläquivalenz und Auflösung der gekennzeichneten Konflikte bleiben die Original-Fachquellen ergänzend maßgeblich. Diese Verweisstruktur verhindert Informationsverlust, ersetzt aber nicht den normativen Einzelabgleich. Der Entwurfs-PR darf nicht allein aufgrund der Inhaltsfreigaben als vollständig normmigriert bezeichnet werden.
+
+- [Konsolidierter Quellenabgleich und Vorrangregel (28.10.2026)](PR259-Konsolidierter-Quellenabgleich-2026-10-28.md): aufgelöste fachliche Normwidersprüche, beibehaltene Detailregeln, ausdrücklich verbleibende Einzelnormprüfung.
