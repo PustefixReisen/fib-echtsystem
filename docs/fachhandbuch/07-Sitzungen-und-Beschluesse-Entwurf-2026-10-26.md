@@ -32,17 +32,17 @@ FIB unterscheidet zwei **ergänzende Sichtweisen auf dieselben RIS-Inhalte**:
 | Tatsächlich beschlossener Text | **Beschlusspunkt/Fassung**, durch Niederschrift oder andere geeignete Quellen belegt |
 | Abstimmungsergebnis | **Abstimmung**, mit beschlossener Fassung und Nachweis verknüpft |
 
-Die Sitzung und ihre TOPs sind eigenständige fachliche Objekte. **Eine Vorlage ist eine Fundstelle, nicht bereits der Beschluss.** Eine Niederschrift kann als Beleg für mehrere Beschlusspunkte dienen. Die bloße öffentliche Abrufbarkeit einer PDF rechtfertigt nicht automatisch ihre erneute öffentliche Bereitstellung durch FIB.
+Die Sitzung und ihre TOPs sind eigenständige fachliche Objekte. **Eine Vorlage ist eine Fundstelle, nicht bereits der Beschluss.** Eine Niederschrift kann als Beleg für mehrere Beschlusspunkte dienen. Für TOP-bezogene Beschlussvorlagen und Niederschriften soll FIB **neben URL und Herkunft den vollständigen erschlossenen Dokumenttext** dauerhaft verfügbar halten, damit der Inhalt trotz störanfälliger RIS-PDF-Links und wechselnder Browserunterstützung lesbar und recherchierbar bleibt. **Interne Speicherung und öffentliche Wiedergabe des Volltexts sind jedoch getrennte Rechtefragen:** Die öffentliche FIB-Anzeige erfolgt nur, soweit hierfür eine belastbare rechtliche Grundlage oder Nutzungsbefugnis besteht. Bis dahin werden belegte Sachinformationen, zulässige Auszüge und der Original-Link verwendet. **Anlagen Dritter** (beispielsweise Gutachten) werden nicht automatisch vollständig übernommen oder über FIB öffentlich wiedergegeben; FIB führt grundsätzlich ihren Quellenlink und die erforderlichen Metadaten. Die bloße öffentliche Abrufbarkeit einer PDF rechtfertigt nicht automatisch ihre erneute öffentliche Bereitstellung durch FIB.
 
 ## 07.3 Fachlicher Ablauf
 
 ### 1. Sitzung und Tagesordnung erkennen
 
-Die Recherche erkennt eine Sitzung, ihren Termin, das Gremium und die zugehörigen TOPs. Das Sitzungsmodell erfasst bzw. aktualisiert diese Informationen. Die Agenda kündigt einen Gegenstand an, beweist aber nicht dessen spätere Behandlung oder Beschlussfassung. Ein bereits bekannter Vorgang kann so frühzeitig eine anstehende Befassung erhalten.
+Die Recherche erkennt eine Sitzung, ihren Termin, das Gremium und die zugehörigen TOPs. **Nur einem konkreten TOP zugeordnete Beschlussvorlagen werden in den FIB-Sitzungsbestand übernommen.** Frei zugängliche Vorlagen ohne TOP-Zuordnung werden im Rahmen dieses fachlichen Sitzungsprozesses nicht erfasst. Das Sitzungsmodell erfasst bzw. aktualisiert diese Informationen. Die Agenda kündigt einen Gegenstand an, beweist aber nicht dessen spätere Behandlung oder Beschlussfassung. Ein bereits bekannter Vorgang kann so frühzeitig eine anstehende Befassung erhalten.
 
 ### 2. Vorlagen und Anlagen erschließen
 
-FIB verknüpft die Beschlussvorlage als Fundstelle mit dem passenden TOP. Aus ihr erschließt FIB den **Vorschlag**, einschließlich möglicher Entscheidungsalternativen und Begründungen. Die Veröffentlichung einer Vorlage kann ein eigenes Ereignis sein und damit einen Vorgang fortschreiben oder eine Meldung anregen. Es entsteht daraus noch **kein tatsächlich gefasster Beschluss**.
+FIB verknüpft die Beschlussvorlage als Fundstelle mit dem passenden TOP. Aus ihr erschließt FIB den **Vorschlag**, einschließlich möglicher Entscheidungsalternativen und Begründungen. Die Veröffentlichung eines dem TOP zugeordneten Beschlussvorschlags kann ein eigenes Ereignis sein und damit Vorgänge und Themen fachlich fortschreiben; **sie löst für sich genommen regelmäßig keine Meldung aus**. Eine spätere tatsächliche Beschlussfassung ist ein weiteres Ereignis. Eine Meldung zu einer wichtigen Entscheidung ist möglich, insbesondere wenn sie für einen bestehenden Vorgang berichtenswert ist. Die Meldung wird über ihr Ereignis automatisch im betreffenden Vorgangsverlauf sichtbar. Es entsteht daraus noch **kein tatsächlich gefasster Beschluss**.
 
 ### 3. Beratung und tatsächliche Entscheidung nachvollziehen
 
@@ -54,7 +54,7 @@ FIB stellt gegenüber, was ursprünglich vorgeschlagen und was später tatsächl
 
 ### 5. Wirkungen auf Ereignisse, Vorgänge und Themen prüfen
 
-Behandlungen und Beschlüsse stehen über **Ereignisse** mit Vorgängen und Themen in Beziehung. Eine neue Entscheidung kann eine bestehende Vorgangsanalyse verändern oder einen Themenbeitrag aktualisierungsbedürftig machen. Diese Prüfung nutzt das allgemeine Änderungspaket- und Freigabemodell; Kapitel 07 erzeugt keine unabhängige zweite Redaktion.
+Beschlussvorschlag, tatsächliche Beschlussfassung und spätere Veröffentlichung der Niederschrift sind **unterscheidbare Ereignisse**, soweit sie fachlich relevant sind. Sie bleiben für Vorgänge und Themen auswertbar, auch wenn keine Meldung entsteht. Eine wichtige Beschlussfassung kann eine Meldung begründen und darüber automatisch im zugehörigen Vorgang erscheinen. **Die Veröffentlichung der Niederschrift löst ebenfalls eine Meldungsprüfung aus**; dabei wird der tatsächliche Erkenntnisgewinn berücksichtigt, damit nicht lediglich ein bereits zuverlässig berichteter Beschluss doppelt gemeldet wird. Neue Entscheidungen können Vorgangsanalysen und Themenbeiträge aktualisierungsbedürftig machen. Diese Prüfung nutzt das allgemeine Änderungspaket- und Freigabemodell; Kapitel 07 erzeugt keine unabhängige zweite Redaktion.
 
 ### 6. Informationen für das öffentliche FIB-Angebot bereitstellen
 
@@ -74,7 +74,7 @@ Eine Beschlussvorlage beschreibt zunächst die **beabsichtigte Entscheidung**. F
 
 **Mehrere Beschlusspunkte** eines TOPs können unterschiedliche Entscheidungen enthalten. Auch **mehrere Abstimmungen** zu einem Tagesordnungspunkt sind kein Widerspruch, sondern müssen der jeweils betroffenen Fassung oder dem jeweiligen Beschlusspunkt zugeordnet werden. Die ursprünglich vorgesehene Fassung darf dabei nicht durch den letztlich beschlossenen Wortlaut ersetzt werden.
 
-**Niederschrift und Genehmigung:** Eine zunächst vorläufige Niederschrift ist als solcher Quellenstand kenntlich zu machen; ihre spätere Genehmigung oder Berichtigung ist eine weitere, nachvollziehbare Entwicklung. Wo geeignete amtliche Unterlagen noch fehlen, darf eine Pressequelle als gekennzeichneter Hinweis dienen, nicht als stillschweigend amtlich bestätigtes Ergebnis.
+**Niederschrift und Genehmigung:** Eine zunächst vorläufige Niederschrift ist als solcher Quellenstand kenntlich zu machen; ihre spätere Genehmigung oder Berichtigung ist eine weitere, nachvollziehbare Entwicklung. Solange eine amtliche Niederschrift fehlt, werden **Presseberichte über die Sitzung**, etwa aus dem Münchner Merkur, als eigene Fundstellen möglichst der richtigen Sitzung und den betroffenen TOPs zugeordnet. FIB kann daraus bereits vorläufige Beschlussereignisse und bei Nachrichtenrelevanz Meldungen ableiten. Die Herkunft als Pressebericht und noch fehlende amtliche Bestätigung bleiben deutlich sichtbar. Die später veröffentlichte Niederschrift wird dagegen geprüft und kann die frühere Darstellung bestätigen, präzisieren oder einen Korrekturvorschlag auslösen. Der bloße Zeitpunkt ihrer Veröffentlichung rechtfertigt keine unbelegte zweite Beschlussmeldung.
 
 **Beispiel:** Beim Grundstückskauf der Gemeinde Feldkirchen enthält die Vorlage einen Beschlussvorschlag. Erst wenn ein geeigneter Nachweis zur Sitzung vorliegt, kann FIB berichten, ob und mit welcher Fassung darüber entschieden wurde. Änderungen des Kaufgegenstands oder der Bedingungen sind als Unterschied zwischen vorgeschlagenem und beschlossenem Stand zu beschreiben.
 
