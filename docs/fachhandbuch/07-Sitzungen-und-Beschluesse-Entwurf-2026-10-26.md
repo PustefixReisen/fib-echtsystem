@@ -119,6 +119,10 @@ Diese Regeln stammen aus dem [Sitzungs- und Beschlussmodell](../Sitzungs-und-Bes
 4. Niederschrift ist noch nicht verfügbar: FIB kennzeichnet Unsicherheit bzw. den vorläufigen Informationsstand, ohne die tatsächliche Entscheidung zu erfinden.
 5. Ein TOP betrifft Parkraumkonzept und Mobilitätsthema: FIB verknüpft die Information über das Ereignis mit Vorgang und Thema.
 6. Späterer RIS-Nachweis korrigiert einen früheren Pressebericht: Änderungsvorschlag mit prüfbaren Belegen und ggf. Korrekturaufgabe für öffentliche Inhalte.
+7. RIS veröffentlicht eine Vorlage **ohne TOP**: keine systematische Erfassung als Beschlussvorlage im Sitzungsbestand; keine erfundene Sitzung oder Beschlussfassung.
+8. Ein Merkur-Bericht erscheint unmittelbar nach der Sitzung: FIB ordnet ihn der Sitzung und gegebenenfalls den TOPs zu, dokumentiert einen vorläufigen Beschlussstand und prüft eine Meldung; die spätere Niederschrift kann ihn bestätigen oder berichtigen.
+9. Eine TOP-bezogene Vorlage ist im Originalbrowser nicht lesbar: FIB hält den erschlossenen vollständigen Text mit URL und Provenienz vor; öffentliche Volltextanzeige erfolgt nur bei geklärter Befugnis. Gutachten Dritter werden nicht automatisch gespiegelt.
+10. Veröffentlichung einer Niederschrift zu bereits gemeldetem Beschluss: neues Ereignis und erneute Prüfung auf neuen Informationswert, aber keine doppelte Meldung ohne sachliche neue Aussage.
 
 ## 07.6 Übergabe und offene Migration
 
