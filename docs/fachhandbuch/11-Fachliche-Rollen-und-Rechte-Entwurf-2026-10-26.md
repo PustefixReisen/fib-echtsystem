@@ -25,10 +25,10 @@ Das bestehende Konzept trennt Aktionsstufen:
 
 | Stufe | Sinn | Beispiel |
 |---|---|---|
-| **S0 – Lesen/Analysieren** | vorhandene zulässige Informationen auswerten | Vorgangsanalyse anzeigen, Rechercheergebnis lesen |
-| **S1 – Vorschlag/Entwurf** | noch nicht verbindliche Vorarbeit | Meldungstext vorschlagen, Themenkandidaten erkennen |
-| **S2 – Fachlich wirksam ändern** | bestätigten internen Sachstand ändern | Ereignis bestätigen, Themenbezug redaktionell festlegen |
-| **S3 – Öffentlich/normativ wirksam** | besonders geschützte Freigabe, Veröffentlichung oder normative Änderung | Beitrag veröffentlichen, Datei öffentlich bereitstellen, geschützten Referenzmaßstab aktivieren |
+| **Einsehen** (S0) | vorhandene zulässige Informationen auswerten | Vorgangsanalyse anzeigen, Rechercheergebnis lesen |
+| **Vorbereiten** (S1) | noch nicht verbindliche Vorarbeit | Meldungstext vorschlagen, Themenkandidaten erkennen |
+| **Bestätigen** (S2) | bestätigten internen Sachstand ändern | Ereignis bestätigen, Themenbezug redaktionell festlegen |
+| **Freigeben** (S3) | besonders geschützte Freigabe, Veröffentlichung oder normative Änderung | Beitrag veröffentlichen, Datei öffentlich bereitstellen, geschützten Referenzmaßstab aktivieren |
 
 Eine normale Rechercheausführung darf nicht durch ihre technische Ausführung zur öffentlichen Freigabe werden. **Eine allgemeine Freigabe für die eigenständige Ausführung eines klar begrenzten Rechercheauftrags** ist von einer Freigabe späterer Erkenntnisse zu unterscheiden.
 
@@ -60,7 +60,7 @@ Die Aktionsstufen ersetzen die **konkrete Handlung** nicht. Insbesondere die vor
 | Themenbezug und Bedeutung für das Thema verbindlich festlegen | Kandidat/Einstufung vorschlagen | ja | ja | negativ bestätigte Entscheidung nicht automatisch aufheben |
 | Analyse (teilweise) freigeben | nein | ja | ja | keine öffentliche Beitragsfreigabe, kein Thema-Statuswechsel |
 | Meldung, Vorgangs- oder Themenbeitrag freigeben | nein | ja, auch eigene Fassung | ja | freigegebene konkrete Fassung fixieren |
-| Freigegebenen Beitrag veröffentlichen oder zurückziehen | nein | ja | ja | eigener ausdrücklicher S3-Schritt, aktueller Zustand erneut prüfen |
+| Freigegebenen Beitrag veröffentlichen oder zurückziehen | nein | ja | ja | eigener ausdrücklicher Freigabeschritt, aktueller Zustand erneut prüfen |
 | Redaktionelle Federführung übernehmen | nein | gemäß Koordination | gemäß Koordination | keine exklusiven Fachrechte durch Federführung |
 | Bestehende fremde Bearbeitungssperre außerordentlich lösen | nein | kein generelles Sonderrecht | nur nach begründeter Schutzprüfung | Audit, keine unbemerkte parallele Bearbeitung |
 | FIB-Benutzer und Rollen verwalten | nein | nein | ja | separate geschützte Administration |
@@ -71,17 +71,17 @@ Diese Matrix erläutert die fachliche Verantwortung. Konkrete Authentifizierung,
 
 ## 11.5 Wann muss ausdrücklich bestätigt werden?
 
-Bei risikoarmen eindeutigen S2-Einzeländerungen kann die klare Handlungsanweisung eines berechtigten Redakteurs genügen. Bei mehrdeutigen, folgenreichen oder mehrere Objekte betreffenden Änderungen ist eine erkennbare Vorher-/Nachher-Prüfung und ausdrückliche Bestätigung erforderlich.
+Bei risikoarmen eindeutigen Einzeländerungen der Kategorie „Bestätigen“ kann die klare Handlungsanweisung eines berechtigten Redakteurs genügen. Bei mehrdeutigen, folgenreichen oder mehrere Objekte betreffenden Änderungen ist eine erkennbare Vorher-/Nachher-Prüfung und ausdrückliche Bestätigung erforderlich.
 
-Für **S3** gilt weiterhin eine ausdrückliche Bestätigung. Die bisherige Rechtequelle verlangt sie grundsätzlich unmittelbar vor Ausführung; für **terminierte Veröffentlichungen** gilt die nachfolgend beschlossene, eng begrenzte fassungs- und termingebundene Ausnahme. Dazu gehören insbesondere Veröffentlichung und Rücknahme, die erstmalige öffentliche Bereitstellung interner Dokumente sowie die erste öffentliche Verwendung eines Bildes. Vor Ausführung werden Rechte, Objektzustand, Version und Schutzbedingungen serverseitig erneut geprüft.
+Für **Freigeben** gilt weiterhin eine ausdrückliche Bestätigung. Die bisherige Rechtequelle verlangt sie grundsätzlich unmittelbar vor Ausführung; für **terminierte Veröffentlichungen** gilt die nachfolgend beschlossene, eng begrenzte fassungs- und termingebundene Ausnahme. Dazu gehören insbesondere Veröffentlichung und Rücknahme, die erstmalige öffentliche Bereitstellung interner Dokumente sowie die erste öffentliche Verwendung eines Bildes. Vor Ausführung werden Rechte, Objektzustand, Version und Schutzbedingungen serverseitig erneut geprüft.
 
-**Beschlossene Ausnahme für terminierte Veröffentlichung:** Eine berechtigte Person bestätigt bei der Terminierung als S3-Handlung ausdrücklich **eine bestimmte freigegebene Fassung und einen bestimmten Veröffentlichungstermin**. Die automatische Ausführung zu diesem Termin verlangt keine zweite manuelle Bestätigung. FIB prüft unmittelbar vor Ausführung Berechtigung, gültige Freigabe, Fassungsidentität, Termin und sonstige Voraussetzungen erneut. Bei negativen Prüfergebnissen bleibt die Veröffentlichung aus und die Redaktion erhält eine Aufgabe. Änderungen an Fassung oder Termin verlangen eine erneute gebundene Bestätigung. Andere S3-Aktionen bleiben bei der bisherigen unmittelbaren Bestätigung.
+**Beschlossene Ausnahme für terminierte Veröffentlichung:** Eine berechtigte Person bestätigt bei der Terminierung als Freigabehandlung ausdrücklich **eine bestimmte freigegebene Fassung und einen bestimmten Veröffentlichungstermin**. Die automatische Ausführung zu diesem Termin verlangt keine zweite manuelle Bestätigung. FIB prüft unmittelbar vor Ausführung Berechtigung, gültige Freigabe, Fassungsidentität, Termin und sonstige Voraussetzungen erneut. Bei negativen Prüfergebnissen bleibt die Veröffentlichung aus und die Redaktion erhält eine Aufgabe. Änderungen an Fassung oder Termin verlangen eine erneute gebundene Bestätigung. Andere Freigabehandlungen bleiben bei der bisherigen unmittelbaren Bestätigung.
 
 ## 11.6 Welche Freiheiten hat die KI bei vorläufigen Daten?
 
 **Fachlich neu bestätigt:** FIB darf vorläufige Ereignisse selbstständig erfassen, zuordnen und fachlich weiterverarbeiten, ohne für jedes Ereignis eine Pflicht zur redaktionellen Einzelbestätigung auszulösen. Alle Quellen und Ereignisse bleiben sichtbar; wesentliche Unsicherheit oder fachliche Konflikte lösen gezielte Prüfaufgaben aus.
 
-Die Bestandsmatrix erlaubt AI-Tasks im Grundsatz **S0/S1**, ohne bestätigende S2-/S3-Aktionen. Deshalb muss die technische Modellierung ausdrücklich unterscheiden zwischen **reversibler vorläufiger Anlage** und **verbindlicher fachlicher Bestätigung**. Diese neue Fachanforderung bedeutet **keine pauschale Befugniserweiterung der KI**.
+Die Bestandsmatrix erlaubt AI-Tasks im Grundsatz **Einsehen/Vorbereiten**, ohne bestätigende S2-/Freigabehandlungen. Deshalb muss die technische Modellierung ausdrücklich unterscheiden zwischen **reversibler vorläufiger Anlage** und **verbindlicher fachlicher Bestätigung**. Diese neue Fachanforderung bedeutet **keine pauschale Befugniserweiterung der KI**.
 
 ## 11.7 Wie werden parallele Bearbeitungen koordiniert?
 
@@ -134,12 +134,12 @@ Fachquelle: [Rollen, Rechte und Workflow](../Rollen-Rechte-und-Workflow.md), §�
 8. Eine erstmalige öffentliche Bild- oder Dateinutzung ohne positiv geklärte Rechte wird gesperrt.
 9. Eine geplante Veröffentlichung wird vor ihrer Ausführung erneut auf Berechtigung und Gültigkeit geprüft.
 10. Ein Benutzer verliert seine Redaktionsrolle während einer offenen Sitzung. Der nächste schreibende Fachaufruf wird verweigert; vorhandene Fachhistorie und Auditnachweise bleiben erhalten.
-11. Bei einer geplanten Veröffentlichung ändert sich vor dem Termin der freigegebene Text. Der alte Terminauftrag darf die neue Fassung nicht veröffentlichen; eine neue fassungsgebundene S3-Bestätigung ist erforderlich.
+11. Bei einer geplanten Veröffentlichung ändert sich vor dem Termin der freigegebene Text. Der alte Terminauftrag darf die neue Fassung nicht veröffentlichen; eine neue fassungsgebundene Freigabebestätigung ist erforderlich.
 
 ## 11.11 Quellabgleich und offene Umsetzung
 
-- **Vollständig zu übernehmen:** bestehende Fachfunktionsmatrix, S0–S3-Bestätigungslogik, Schutzklassen, Adminvorbehalte, serverseitige Revalidierung, Sperren, Audits und technische Zugangsgrenzen aus `docs/Rollen-Rechte-und-Workflow.md`.
-- **Neu zu konkretisieren:** vorläufige KI-Ereigniserfassung innerhalb S1, Freigabe/Versionierung von Vorgangsbeiträgen, teilfreigegebene Analysen, zeitgesteuerte Veröffentlichung sowie Aufgabenübernahme und -zuweisung.
+- **Vollständig zu übernehmen:** bestehende Fachfunktionsmatrix, S0–Freigabebestätigungslogik, Schutzklassen, Adminvorbehalte, serverseitige Revalidierung, Sperren, Audits und technische Zugangsgrenzen aus `docs/Rollen-Rechte-und-Workflow.md`.
+- **Neu zu konkretisieren:** vorläufige KI-Ereigniserfassung innerhalb von „Vorbereiten“, Freigabe/Versionierung von Vorgangsbeiträgen, teilfreigegebene Analysen, zeitgesteuerte Veröffentlichung sowie Aufgabenübernahme und -zuweisung.
 - **Fachkapitel:** Fachprozesse in 03–07; Entscheidungsabläufe in 08; öffentliche Darstellung in 09; Qualitätsblocker in 10.
 - **Technische Sicherheit:** gesonderte Security-/ADR- und RLS-Dokumentation bleibt maßgeblich; dieses Kapitel ist keine Freigabe zur Änderung von Benutzerkonten oder Authentifizierung.
 
