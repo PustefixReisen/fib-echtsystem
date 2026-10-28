@@ -280,7 +280,7 @@
 | Thema | Befund | Kein stillschweigender Migrationsschluss |
 |---|---|---|
 | Lokale Bezüge | Alter Regeltext verwendet *Kandidat, Zugeordnet, Zurückgestellt, Fachlich unpassend*; in anderen Abstimmungen wurden *Kandidat, prüfen, gesichert, abgelehnt* erwähnt. | Nicht ohne klare fachliche Synonym-/Statusentscheidung umbenennen oder technische Werte umstellen. |
-| Relevanzquote | Frühere 30-%-Warnschwelle für erweiterte Relevanz war an neu veröffentlichte Beiträge geknüpft; neues Modell unterscheidet Meldungen, Vorgangsbeiträge und Themenbeiträge. | Grundgesamtheit und Mehrfachzählung bei veränderten Beitragsarten präzisieren. |
+| Relevanzquote | **Kein Widerspruch.** Die bestätigte 30-%-Warnschwelle bleibt über alle neu veröffentlichten Beiträge im rollierenden 90-Tage-Zeitraum bestehen; jede Veröffentlichung zählt einmal. | Nur technisch korrekt anwenden, keine erneute Fachentscheidung. |
 | Demokrat. Referenzmaßstab | Konkrete Bewertungs- und Referenzkriterien fehlen weiterhin als Beschluss. | Keine freigegebene KI-Bewertungsnorm vortäuschen. |
 | RIS-Dokumente | Volltextübernahme/öffentliche Anzeige gewünscht, Drittinhalte ausgeschlossen bzw. gesondert; Rechtelage noch nicht klassenweise verifiziert. | Keine pauschale Veröffentlichungsbefugnis behaupten. |
 | S3-Terminierung | Bisherige Regel verlangte Unmittelbarkeit; jüngerer Beschluss erlaubt fassungs- und termingebundene Vorabbestätigung. | Nur eng begrenzte Ausnahme übernehmen, sonstige Schutzmechanismen beibehalten. |
