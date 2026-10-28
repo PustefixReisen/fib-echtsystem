@@ -279,7 +279,7 @@
 
 | Thema | Befund | Kein stillschweigender Migrationsschluss |
 |---|---|---|
-| Lokale Bezüge | Alter Regeltext verwendet *Kandidat, Zugeordnet, Zurückgestellt, Fachlich unpassend*; in anderen Abstimmungen wurden *Kandidat, prüfen, gesichert, abgelehnt* erwähnt. | Nicht ohne klare fachliche Synonym-/Statusentscheidung umbenennen oder technische Werte umstellen. |
+| Lokale Bezüge | **Kein nachgewiesener Normkonflikt:** Die bestehende Regel `FIB-THEMA-BEZUG-002` und das fachlich bestätigte Kapitel 06 verwenden übereinstimmend *Kandidat, Zugeordnet, Zurückgestellt, Fachlich unpassend*. Andere Begriffe tauchten in früheren Diskussionen auf, sind hier aber nicht als gültiger Ersatz belegt. | Die vier übereinstimmenden Statusbegriffe gelten für die Fachmigration. Nur die technische Implementierung ist gesondert gegen diese Fachnorm zu prüfen; keine neue Entscheidung anfordern. |
 | Relevanzquote | **Kein Widerspruch.** Die bestätigte 30-%-Warnschwelle bleibt über alle neu veröffentlichten Beiträge im rollierenden 90-Tage-Zeitraum bestehen; jede Veröffentlichung zählt einmal. | Nur technisch korrekt anwenden, keine erneute Fachentscheidung. |
 | Demokrat. Referenzmaßstab | Konkrete Bewertungs- und Referenzkriterien fehlen weiterhin als Beschluss. | Keine freigegebene KI-Bewertungsnorm vortäuschen. |
 | RIS-Dokumente | Volltextübernahme/öffentliche Anzeige gewünscht, Drittinhalte ausgeschlossen bzw. gesondert; Rechtelage noch nicht klassenweise verifiziert. | Keine pauschale Veröffentlichungsbefugnis behaupten. |
