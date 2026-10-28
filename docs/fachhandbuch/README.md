@@ -76,6 +76,10 @@ Die [Inventur und Zuordnung](../Fachhandbuch-Inventur-2026-10-22.md) erfasst Aus
 |---|---|---|
 | 0.1 | 22.10.2026 | Fachhandbuch als Aufbauziel, geplante Kapitel, begrenzte Sekundärsichten und Migrationsregel angelegt. |
 
+## Verbindliche Übernahmeregel für die Fachkonzept-Konsolidierung
+
+Die fachlich bestätigten Prozesskapitel 01–11 werden durch die [Normative Übernahme der Bestandsregeln](PR259-Normative-%C3%9Cbernahme-2026-10-28.md) ergänzt. Dort stehen die **Vorrangregeln, ausdrücklich ersetzten Altformulierungen, unveränderten Fachregeln und ergänzend geltenden Quelltexte**. Die Originalquellen dürfen deshalb nicht stillschweigend verworfen werden; eine spätere physische Zusammenführung ist redaktionelle Folgearbeit und keine zweite fachliche Entscheidungsrunde. Das Dokument regelt die fachliche Geltung, nicht die technische Implementierung.
+
 ## Regelmigration (Stand 28.10.2026)
 
 Die fachliche Durchsicht der elf Kapitel ist abgeschlossen. Die normative Migration wird zusätzlich anhand zweier dokumentierter Vollständigkeitsachsen geprüft:
