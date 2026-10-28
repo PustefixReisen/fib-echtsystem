@@ -137,6 +137,8 @@ FIB prüft **jede fachlich relevante Änderung** des thematischen Sachstands auf
 
 Prüfreihenfolge: **zuerst direkt betroffene Analysebereiche, danach Widersprüche und Folgewirkungen in anderen Bereichen**. Bei Änderungsbedarf bildet FIB ein **zusammenhängendes Änderungspaket** mit Ausgangserkenntnis, Belegen, betroffenen Aussagen, Vorschlägen und offenem Prüfbedarf. Die Redaktion darf darin einzelne Änderungen übernehmen, bearbeiten, zurückstellen oder ablehnen; ein Paket darf **teilweise erledigt** werden.
 
+**Natürlichsprachliche Nachfragen** können zunächst eine Antwort allein aus dem vorhandenen Wissen liefern. Erkennt FIB dabei neue belastbare Informationen, einen Widerspruch oder eine notwendige Neubewertung, kann es **getrennte, belegte Änderungsvorschläge** für die Themendefinition, den bestätigten Analysestand und/oder den Themenbeitrag erstellen. Die Antwort selbst ändert keines dieser Objekte verbindlich. Die Redaktion entscheidet pro betroffenem Objekt und Änderung; bei einer teilweisen Analysefreigabe gilt F-03. Eine Änderung des veröffentlichten Beitrags benötigt eine neue Fassung mit eigener Freigabe und Veröffentlichung. Fehlendes Wissen kann stattdessen einen gezielten Recherchevorschlag auslösen.
+
 Freigegebene Analyseinhalte werden niemals unbemerkt überschrieben. FIB prüft nach bestätigten Änderungen die fachlichen Auswirkungen **zwischen Themen- und Vorgangsanalysen in beide Richtungen** sowie bei konkretem Bezug zu anderen Themen; bekannte Erkenntnisse sollen keine Aktualisierungsschleifen auslösen.
 
 ### 06.5.3 Analysequalität und Freigabe
@@ -149,7 +151,7 @@ Die **aussagenbezogene Teilfreigabe** ist fachlich vereinbart: Nur ausdrücklich
 
 ## 06.6 Themenbeitrag: Redaktionelle Darstellung
 
-Die Themenanalyse soll möglichst sachgerecht und differenziert sein. Der **Themenbeitrag** vermittelt die wichtigsten Erkenntnisse **verständlich, sachlich und quellengestützt** und ist **keine zweite eigenständige Analyse**.
+Die Themenanalyse soll möglichst sachgerecht und differenziert sein. Der **Themenbeitrag** vermittelt die wichtigsten Erkenntnisse **verständlich, sachlich und quellengestützt** und ist **keine zweite eigenständige Analyse**. Gerade bei breiten Themen wie „Mobilität und Lebensqualität in Feldkirchen“ soll der Hauptbeitrag **überblickshaft, lebendig und Interesse weckend** bleiben, ohne wesentliche Unsicherheiten zu verschweigen. Vertiefende Fragen, Beispiele, Hintergründe und Detailerklärungen werden gezielt in redaktionell freigegebene, quellengebundene **„Mehr wissen?“-Fragen und Antworten** ausgelagert. Diese ersetzen weder wichtige Kernaussagen noch notwendige Belege des Hauptbeitrags.
 
 FIB schlägt **Hauptaussagen und ergänzende Schwerpunkte** mit Begründung vor. Die Redaktion darf Auswahl und Gewichtung verändern sowie eigene Schwerpunkte formulieren. FIB prüft, ob diese durch die Analyse gedeckt sind, und weist andernfalls auf Wissenslücken oder Recherchebedarf hin.
 
