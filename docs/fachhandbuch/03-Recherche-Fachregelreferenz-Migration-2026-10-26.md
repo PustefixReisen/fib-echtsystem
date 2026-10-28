@@ -564,3 +564,12 @@ Die Lese-Neufassung beschreibt die Abgrenzung in **§ 03.5a**. Erst nach Verifik
 **FIB-RECH-ABLAUF-001 – Drei getrennte fachliche Entscheidungen.** Neue Fundstelle, neues Ereignis und neue Meldung sind drei verschiedene Entscheidungen. Mehrere Fundstellen dürfen ein vorhandenes Ereignis ergänzen; eine neue Quelle begründet keine neue Meldung. Bei wesentlicher neuer Sachinformation wird zuerst die Fortschreibung eines vorhandenen Ereignisses und Vorgangs geprüft.
 
 **Zielnachweis:** [Recherchekapitel 03](03-Recherche-Neufassung-Entwurf-2026-10-26.md) und [Ereignisse/Meldungen 04](04-Ereignisse-und-Meldungen-Entwurf-2026-10-26.md). Der Regelursprung ist aufgeklärt, die vollständige normative Endabnahme bleibt von der inhaltlichen Auffindbarkeit getrennt.
+
+
+## Normative Übernahme- und Abweichungsfestlegung (28.10.2026)
+
+Die oben wiedergegebenen **54 historischen Regelkennungen** (53 Einzelblöcke plus `FIB-RECH-ABLAUF-001`) bleiben als vollständiger Detailregelbestand referenziert. **Die ursprüngliche Formulierung in `FIB-RECH-SICHTUNG-001`, wonach Redakteure alle Fundstellen durchgehen müssen, ist überholt:** Die KI analysiert alle neuen Fundstellen; die Redaktion erhält gezielte Aufgaben bei Unsicherheit, Widerspruch oder verbindlichem Entscheidungsbedarf. Alle Fundstellen bleiben zugänglich. Die KI darf Fundstellen nicht verbindlich zurückstellen, löschen oder veröffentlichen.
+
+`FIB-RECH-RELEVANZ-003` bleibt **unverändert**: Warnschwelle mehr als 30 % über die letzten 90 Tage, bezogen auf neu veröffentlichte Beiträge, jeder Beitrag einmal, keine Recherchebegrenzung. `FIB-RECH-RAHMEN-001` wahrt die Trennung von Faktengrundlage, demokratisch-gesellschaftlicher Prüfung und politischer Einordnung; **konkrete noch unbeschlossene Bewertungskriterien werden nicht aktiviert**. Zur RIS-Verarbeitung gilt neu: Presseberichte über Sitzungen nur **auf Sitzungsebene**; TOP-Beschlüsse und Abstimmungsergebnisse nur aus dem RIS (Kapitel 07).
+
+**Geltung:** Die nicht widersprechenden Details aller hier vollständig dokumentierten Regeln sind ergänzende Fachanforderungen der neuen Prozesskapitel 03/04/05/06/10/11. Jüngere, ausdrücklich bestätigte Änderungen in den elf Kapiteln haben Vorrang. Diese Referenz bewahrt auch Statuswerte, Sonderfälle, Identitäten, Beziehungen, Quellenklassen und Qualitätstests, wenn sie im flüssigen Fachtext nicht erneut ausgeschrieben sind.
