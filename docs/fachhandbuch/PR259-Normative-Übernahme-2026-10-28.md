@@ -41,3 +41,20 @@ Der demokratisch-gesellschaftliche Bewertungsmaßstab ist in seiner konkreten Au
 ## Abgrenzung der Abnahme
 
 Die fachliche Durchsicht aller elf Kapitel ist erfolgt. Mit dieser Übernahmeregel sind alte Detailquellen und ihre Ausnahmen **ohne stillschweigende Streichung** in die neue Regelordnung eingebunden. Dies ist eine normative **Konsolidierung durch Verweis**, keine Behauptung eines vollständig ausgeführten, satzweisen Regressionstests und keine technische Abnahme. Eine spätere rein redaktionelle Zusammenführung der verbleibenden Details in die Kapitel darf den Regelinhalt nicht verändern.
+
+## Fachliche Konsistenz-Prüffälle der Übernahme
+
+| Prüffall | Erwartetes fachliches Ergebnis |
+|---|---|
+| Neue Fundstelle aus bekannter Pflichtquelle | KI-Sichtung und Provenienz; keine obligatorische menschliche Einzelabnahme und keine automatische Meldung. |
+| Erweitert relevanter Fund trotz Überschreiten der Quote | Relevante Information bleibt erhalten; 30 % löst Prüfung aus, keinen Ausschluss. |
+| Schon bestätigte Themenbeziehung | Der Status **Zugeordnet** und seine Bedeutung bleiben erhalten; KI-Vorschläge ändern nicht stillschweigend. |
+| Abgelehnter Themenbezug wird erneut vorgeschlagen | Zuerst **Kandidat**, nicht direkt **Zugeordnet**, soweit die historische Regel zur Wiederaufnahme greift. |
+| Analyseänderung teilweise bestätigt | Neuer bestätigter Gesamtstand enthält nur angenommene Änderungen; übrige Vorschläge bleiben getrennt. |
+| Themenanalyse bestätigt, Beitrag noch nicht freigegeben | Thema bleibt **Entwurf**. |
+| Terminierte Veröffentlichung mit veränderter Fassung | Nicht automatisch veröffentlichen; erneute ausdrückliche fassungs-/termingebundene Bestätigung erforderlich. |
+| Presse berichtet über Gemeinderatssitzung vor RIS-Niederschrift | Externe Berichterstattung **nur auf Sitzungsebene**; keine aus Presse gewonnenen TOP-Beschlüsse oder Abstimmungen. |
+| RIS-Niederschrift erscheint | Belegte TOP-Fassung und Abstimmung aus RIS auswerten; separate Prüfung auf Aktualisierungs-/Meldungsbedarf. |
+| KI will bestätigtem Bestand widersprechen | Änderungspaket oder fachliche Prüfaufgabe; keine stille verbindliche Änderung. |
+
+Diese Prüffälle sind **fachliche Soll-Anforderungen**, keine behaupteten ausgeführten Softwaretests.
