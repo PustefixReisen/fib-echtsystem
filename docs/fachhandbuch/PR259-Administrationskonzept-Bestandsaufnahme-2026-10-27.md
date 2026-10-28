@@ -20,6 +20,12 @@ FIB benötigt ein eigenes Administrationskonzept als aus bestehenden Vereinbarun
 | Öffentliche Nutzung und Besucheranalyse | `docs/UX-und-Informationsarchitektur.md`; **weitere Primärquellen noch zu ermitteln** | Bereits dokumentiert: lokale, anmeldefreie Anzeige „Neu seit letztem Besuch“ und freiwillige Push-Funktion. Eine belastbare Regelbasis zur aggregierten Besuchsanalyse ist mit den bislang überprüften Abschnitten **noch nicht belegt**. |
 | Betrieb, Fehler und Datenpflege | `docs/Persistenz-und-Lebenszyklusmodell.md`; `docs/Recherche-und-Quellenmonitor.md` §13 | Fachhistorie erhalten, Betriebsdaten abgrenzen, Quellenfehler nachvollziehen; Details der Betriebsüberwachung und Verwaltung separat inventarisieren |
 
+## Ergänzung 28.10.2026 – Besucheranalyse und KI-Prüfbericht
+
+Die **aggregierte, datensparsame Besucheranalyse** des öffentlichen FIB-Angebots gehört in das eigenständige **Administrationskonzept**; fachliche Zweckbestimmung und Transparenz werden im öffentlichen Fachkapitel 09 berücksichtigt. Als Planungsfragen werden vorgemerkt: Aufrufe von Meldungen, Vorgängen und Themen, Nutzungswege und Suchanfragen, Nutzung von „Mehr wissen?“, RSS und Newslettern. **Konkrete Messverfahren, Rechtsgrundlagen, Einwilligungserfordernisse, Löschfristen und Darstellung der Auswertungen sind noch nicht festgelegt.** Es wird weder ein persönliches Besucherprofil noch Tracking ohne rechtliche Prüfung als beschlossen vorausgesetzt.
+
+Der administrative **KI-Qualitäts- und Kostenbericht** soll Qualitätswerte je FIB-Aufgabe, Kontrollstichproben, Fehlerarten, Modell-/Routingentscheidungen, Kosten und zeitliche Entwicklung enthalten. Zur Planung stehen monatliche Auswertungen im Pilotbetrieb und mindestens vierteljährliche im Regelbetrieb sowie anlassbezogene Prüfungen; die endgültige Taktung ist bei Implementierungsbeginn festzulegen.
+
 ## Empfohlene Gliederung des späteren Administrationskonzepts
 
 1. Ziel, Rollen und administrative Verantwortlichkeiten
