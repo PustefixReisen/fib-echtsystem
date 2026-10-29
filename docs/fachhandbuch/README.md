@@ -6,8 +6,8 @@
 
 | Kapitel | Verbindliche Lesefassung | Historisches Kapitel | Ergänzende Fachregelreferenz |
 |---|---|---|---|
-| **03 Recherche** | [03 Recherche und Erkenntnisverarbeitung](03-Recherche-Neufassung-Entwurf-2026-10-26.md) | [03 Recherche – historisch](03-Recherche.md) | [Fachregelreferenz 03](03-Recherche-Fachregelreferenz-Migration-2026-10-26.md) |
-| **06 Themen** | [06 Themen und Themenanalysen](06-Themen-und-Themenanalysen-Entwurf-2026-10-26.md) | [06 Themen – historisch](06-Themen.md) | [Fachregelreferenz 06](06-Themen-Fachregelreferenz-Migration-2026-10-26.md) |
+| **03 Recherche** | [03 Recherche und Erkenntnisverarbeitung](03-Recherche.md) | [03 Recherche – historisch](archiv/03-Recherche-Historischer-Stand-2026-10.md) | [Fachregelreferenz 03](03-Recherche-Fachregelreferenz-Migration-2026-10-26.md) |
+| **06 Themen** | [06 Themen und Themenanalysen](06-Themen.md) | [06 Themen – historisch](archiv/06-Themen-Historischer-Stand-2026-10.md) | [Fachregelreferenz 06](06-Themen-Fachregelreferenz-Migration-2026-10-26.md) |
 
 **Leseregel:** Zunächst die neue Lesefassung verwenden. Die alten Kapitel sind keine konkurrierende aktuelle Fassung. Ihre nicht widersprechenden Detailregeln gelten ergänzend; im Zweifel hat die jüngere ausdrücklich bestätigte Fachentscheidung Vorrang. Eine Umbenennung und Bereinigung historischer Statusvermerke sind noch sinnvoll, dürfen aber keine Regelinhalte ändern.
 
@@ -47,10 +47,10 @@ Die frühere Planungstabelle mit überwiegend „geplant“ ist durch die nachst
 |---|---|
 | 01 Grundlagen | [01 – Grundlagen und Zielsetzung](01-Grundlagen-und-Zielsetzung-Entwurf-2026-10-26.md) |
 | 02 Wissensmodell | [02 – Struktur- und Wissensmodell](02-Struktur-und-Wissensmodell-Leseentwurf-2026-10-26.md) |
-| 03 Recherche | [03 – Recherche, Neufassung](03-Recherche-Neufassung-Entwurf-2026-10-26.md) |
+| 03 Recherche | [03 – Recherche, Neufassung](03-Recherche.md) |
 | 04 Ereignisse und Meldungen | [04 – Ereignisse und Meldungen](04-Ereignisse-und-Meldungen-Entwurf-2026-10-26.md) |
 | 05 Vorgänge | [05 – Vorgänge und Vorgangsanalysen](05-Vorgaenge-und-Vorgangsanalysen-Entwurf-2026-10-26.md) |
-| 06 Themen | [06 – Themen und Themenanalysen](06-Themen-und-Themenanalysen-Entwurf-2026-10-26.md) |
+| 06 Themen | [06 – Themen und Themenanalysen](06-Themen.md) |
 | 07 Sitzungen und Beschlüsse | [07 – Sitzungen und Beschlüsse](07-Sitzungen-und-Beschluesse-Entwurf-2026-10-26.md) |
 | 08 Redaktion | [08 – Redaktion und Veröffentlichung](08-Redaktion-und-Veroeffentlichung-Entwurf-2026-10-26.md) |
 | 09 Öffentliches Angebot | [09 – Öffentliches FIB-Angebot](09-Oeffentliches-FIB-Angebot-Entwurf-2026-10-26.md) |
