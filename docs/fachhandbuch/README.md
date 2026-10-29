@@ -1,5 +1,17 @@
 # FIB-Fachhandbuch – Einstieg und Migrationsstand
 
+## Verbindliche Kapitel 03 und 06 (Fachabnahme 29.10.2026)
+
+**Maßgeblich sind die am 29.10.2026 fachlich abgenommenen Neufassungen aus PR #259.** Alte Statushinweise „Entwurf“ bzw. „nicht abgenommen“ in Dateinamen und Kopfzeilen sind historische Metadaten und durch die Abnahme überholt. Es gelten die bestätigten neuen Kapitel mit den ergänzenden, nicht widersprechenden Altregeln gemäß der [normativen Übernahmeregel](PR259-Normative-%C3%9Cbernahme-2026-10-28.md).
+
+| Kapitel | Verbindliche Lesefassung | Historisches Kapitel | Ergänzende Fachregelreferenz |
+|---|---|---|---|
+| **03 Recherche** | [03 Recherche und Erkenntnisverarbeitung](03-Recherche-Neufassung-Entwurf-2026-10-26.md) | [03 Recherche – historisch](03-Recherche.md) | [Fachregelreferenz 03](03-Recherche-Fachregelreferenz-Migration-2026-10-26.md) |
+| **06 Themen** | [06 Themen und Themenanalysen](06-Themen-und-Themenanalysen-Entwurf-2026-10-26.md) | [06 Themen – historisch](06-Themen.md) | [Fachregelreferenz 06](06-Themen-Fachregelreferenz-Migration-2026-10-26.md) |
+
+**Leseregel:** Zunächst die neue Lesefassung verwenden. Die alten Kapitel sind keine konkurrierende aktuelle Fassung. Ihre nicht widersprechenden Detailregeln gelten ergänzend; im Zweifel hat die jüngere ausdrücklich bestätigte Fachentscheidung Vorrang. Eine Umbenennung und Bereinigung historischer Statusvermerke sind noch sinnvoll, dürfen aber keine Regelinhalte ändern.
+
+
 **[Fachliche Restkonflikte und Entscheidungsstand](PR259-Fachliche-Restkonflikte-und-Entscheidungsstand-2026-10-26.md)** – Drei echte fachliche Restfragen sind von späteren Datenmodell- und UI-Aufgaben abgegrenzt; die bereits beschlossenen Regeln bleiben unberührt.
 
 **[Fachkonzept-Abschlussfahrplan und Abnahmekriterien](PR259-Fachkonzept-Abschlussfahrplan-2026-10-26.md)** – Aktueller Fokus: fachliche Konsolidierung und gemeinsame Leseabnahme. Datenmodell, Bedienoberfläche und Implementierung folgen anschließend iterativ; die Issues #260–#264 sind nur nachgelagerte Vormerkungen.
