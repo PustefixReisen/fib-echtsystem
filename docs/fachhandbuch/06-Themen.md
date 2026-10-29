@@ -1,448 +1,328 @@
-# 06 – Themen
+> **Verbindliche Lesefassung seit der Fachabnahme am 29.10.2026 (PR #259).** Veraltete Entwurfs- und Migrationshinweise im übernommenen Haupttext beschreiben dessen damaligen Bearbeitungsstand und sind durch die Abnahme überholt. Nicht widersprechende historische Detailregeln gelten gemäß der [Übernahmeregel](PR259-Normative-%C3%9Cbernahme-2026-10-28.md) ergänzend. Frühere Fassung: [Archiv](archiv/06-Themen-Historischer-Stand-2026-10.md).
 
-## Dokumentstand
+# 06 – Themen und Themenanalysen
 
-| Version | Stand | Verantwortlich |
+| Stand | Status | Quelle |
 |---|---|---|
-| 2.7 – Freigabeablauf vor Regelgruppe erläutert | 22.10.2026 | Projektverantwortung – erstellt mit KI-Unterstützung |
+| 26.10.2026 | **Fachlicher Integrationsentwurf, noch nicht abgenommen** | Dialog 25.–26.10., bestehendes Kapitel 06 v2.7, Datenmodell sowie Kapitel-Entwürfe 03–05 |
 
-> **Übernahmestatus:** Dieses Kapitel bündelt bereits beschlossene Fachregeln; während des Abgleichs bleiben die in [der Inventur](../Fachhandbuch-Inventur-2026-10-22.md) bezeichneten bisherigen Primärquellen verbindlich. Abweichungen und offene Fragen sind unten markiert. Erst die fachlich geprüfte vollständige Übernahme schaltet dieses Kapitel zur alleinigen Primärquelle.
+> **Migrationsschutz:** Das bestehende `06-Themen.md` bleibt unverändert. Dieser Text beschreibt das neu vereinbarte Zielmodell in prozessorientierter Form. Er führt **keine neuen technischen Zustände, Datenbankobjekte oder Rechte** stillschweigend ein. Vor Ablösung des Bestands: abschnittsweiser Regelnachweis, Status-/Rechteprüfung, Tests und fachliche Abnahme.
 
-## 6.1 Begriff, Ziel und Entstehung
+## 06.1 Aufgabe und Grenzen
 
-Ein **Thema** ist eine übergeordnete Fragestellung, die mehrere unterschiedliche Vorgänge, Ereignisse, Perspektiven oder Rahmenbedingungen verbindet und dadurch zusätzlichen Erklärungsgewinn für Feldkirchen schafft. Ein einzelner länger laufender Vorgang ist nicht allein deshalb ein Thema.
+Ein **Thema** ist eine bewusst redaktionell festgelegte, übergreifende Fragestellung mit zusätzlichem Erklärungsgewinn. Es verbindet relevante Vorgänge und ergänzende Ereignisse unter einer fachlichen Leitfrage. Ein Thema ist weder die bloße Ansammlung von Meldungen noch einfach ein großer Vorgang. Es erschließt Zusammenhänge, Ursachen, Wirkungen, Unsicherheiten und kommunale Bedeutung für die Bevölkerung.
 
-### Fachlicher Zusammenhang
+Beispiel **„Mobilität in Feldkirchen“**: Autobahnkreuz München-Ost, Parkraumkonzept, Radverkehr und gegebenenfalls weitere Entwicklungen bleiben eigene Vorgänge beziehungsweise Ereignisse. Das Thema untersucht ihre Zusammenhänge und vermittelt ausgewählte Erkenntnisse in einem öffentlichen **Themenbeitrag**.
 
-Im FIB-Wissensmodell beantworten **Ereignisse** die Frage, was geschehen ist, **Meldungen** berichten darüber, und **Vorgänge** führen Ereignisse zu einem konkreten Sachverhalt zusammen. Ein **Thema** geht bewusst darüber hinaus: Es verbindet mehrere Sachverhalte unter einer gemeinsamen Frage, damit Bürgerinnen und Bürger Entwicklungen, Zusammenhänge und kommunale Handlungsmöglichkeiten verstehen können. Es ist keine bloße Sammlung von Meldungen.
-
-Beispiel Mobilität: Der Ausbau des Autobahnkreuzes München-Ost, ein Radschnellweg und die örtliche Verkehrsplanung sind unterschiedliche Vorgänge. Ein Thema kann fragen, wie sich Mobilität und Erreichbarkeit in Feldkirchen entwickeln. Es betrachtet die Vorgänge gemeinsam, ohne deren Eigenständigkeit aufzuheben.
-
-Wie im [Fachkonzept – Zielbild und Wissensstruktur](../Fachkonzept.md) gilt: Das Informationsangebot erschließt den **aktuellen Wissensstand**, unterscheidet gesicherte Sachinformation von **„Unsere Einordnung“** und stellt einen nachvollziehbaren Feldkirchen-Bezug her. Dieses Kapitel erläutert die speziellen Regeln für Themen; die grundlegende Fachlogik wird nicht nochmals abweichend festgelegt.
-
-Themen werden aus dem FIB-Wissensbestand erkannt oder redaktionell neu angelegt. KI-Themenkandidaten und redaktionelle Neuanlagen werden vor Übernahme auf gleiche oder ähnliche bestehende Themen geprüft. Die Redaktion kann Leitfrage und Abgrenzung schärfen, Aspekte ergänzen oder verwerfen und Rechercheaufträge auslösen. Neue, noch unbelegte Aspekte bleiben bis zur Prüfung Recherchebedarf, nicht gesicherte Tatsachen.
-
-**Beobachtungsaufträge als Grundlage der Themenentwicklung:** Themen werden nicht allein aus Ereignissen und Meldungen entwickelt. Sie benötigen auch Erkenntnisse über Ursachen, rechtliche, wissenschaftliche und technische Hintergründe, Wirkungszusammenhänge sowie direkte und mittelbare Folgen einschließlich möglicher Nebenwirkungen. Diese sachverhaltsbezogenen Vertiefungen werden insbesondere durch Beobachtungsaufträge erschlossen. Ein Thema kann verknüpfte Beobachtungsaufträge mit deren offenen Fragen, Fundstellen und Erkenntnissen heranziehen, auch wenn keine neue Meldung oder kein neues Ereignis entstanden ist. FIB schlägt daraus begründete Änderungen an Themenbeschreibung, Perspektiven und der Bedeutung zugeordneter Vorgänge für das Thema vor. Die Redaktion prüft und übernimmt die Vorschläge. Beobachtungswissen darf nicht ohne Prüfung des konkreten Bezugs verallgemeinert werden. Die Bearbeitungsansicht des Themas macht diese Beobachtungsbezüge und Vorschläge zugänglich; die genaue UI-Ausgestaltung wird im Bedienkonzept abgestimmt.
-
-**Quellen:** [Fachkonzept §4.3](../Fachkonzept.md), [Themen- und Vorgangslogik §§3–6](../Themen-und-Vorgangslogik.md).
-
-**Freigabevoraussetzung Erkenntnisebene:** Ein Themenentwurf darf ohne Beobachtungsauftrag angelegt und bearbeitet werden. Vor der erstmaligen fachlichen Freigabe muss jedoch mindestens ein dem Thema zugeordneter Beobachtungsauftrag tatsächlich ausgewertet worden sein. Die Auswertung dokumentiert untersuchte Fragen, verfügbare Belege, Erkenntnisstand sowie weiterhin offene Fragen und Unsicherheiten. Ein aktiver oder bereits beendeter Auftrag kann dafür herangezogen werden; seine bloße Existenz genügt nicht. Neue Erkenntnisse sind keine Pflicht, und unbelegte Aussagen dürfen nicht zur Erfüllung der Voraussetzung erzeugt werden. Die Redaktion prüft die Auswertung und entscheidet über die Freigabe. Der bestehende dreiteilige Themenbearbeitungsablauf bleibt unverändert.
-
-**Wann gilt ein Beobachtungsauftrag für die Themenfreigabe als ausgewertet?** FIB hat die übergeordnete Beobachtungsfrage und ihre wesentlichen Teilfragen anhand des vorhandenen Wissens und geeigneter Fundstellen bearbeitet. Das Ergebnis unterscheidet belegte Tatsachen, fachliche Erklärungen und noch zu prüfende Annahmen; es benennt die verwendeten Belege sowie verbleibende Wissenslücken und Unsicherheiten. Die Redaktion prüft die Auswertung und bestätigt ausdrücklich, dass sie als Erkenntnisgrundlage für die Freigabe des konkreten Themas ausreicht. Weder eine Mindestzahl neuer Fundstellen noch das Erzielen bestimmter Erkenntnisse ist erforderlich. Eine bloße Durchführung der Recherche oder die Existenz eines Beobachtungsauftrags gilt nicht als ausreichende Auswertung.
-
-## 6.2 Definition und Bearbeitungsbereiche
-
-Die Bearbeitung eines Themas dient nicht nur dem Schreiben eines Textes. Zunächst wird geklärt, **welche Frage** beantwortet werden soll, **welche lokalen Entwicklungen** dafür tatsächlich aussagekräftig sind und **welche Erkenntnisse** daraus für Leserinnen und Leser entstehen. Darum unterscheidet FIB die Definition, die fachlichen Bezüge und die öffentliche Darstellung.
-
-Die dauerhafte Themenbearbeitung umfasst drei jederzeit erreichbare Bereiche: **Themadefinition**, **Lokale Bezüge** und **Beitrag**. Dies ist keine verpflichtende lineare Schrittfolge. Die Themadefinition enthält insbesondere Titel, Leitfrage und Erläuterung. Die redaktionelle Koordination erfolgt über die Federführung. **Themadefinition** legt Gegenstand und Grenzen fest; **Lokale Bezüge** machen den tatsächlichen Informationsunterbau prüfbar; **Beitrag** formuliert daraus die öffentliche Erklärung. Diese Bereiche hängen fachlich zusammen, aber die Redaktion kann sie jederzeit erneut bearbeiten: Neue Ereignisse können Bezüge verändern, daraus kann sich eine präzisere Leitfrage ergeben und anschließend eine neue Textfassung.
-
-Die drei Bereiche sind **keine drei Freigabestufen**. Ihre unterschiedlichen Status und Folgen werden in §6.5 erläutert.
-
-**Quellen:** [Themen- und Vorgangslogik §12](../Themen-und-Vorgangslogik.md), [Fachentwurf §§2–3](../Fachentwurf-Themenbearbeitung-2026-10-20.md).
-
-### Vier Bausteine der Themenentwicklung
-
-**Lokale Bezüge** entstehen fachlich über zugeordnete Vorgänge und ergänzende Einzelereignisse. Sie dokumentieren die konkreten Entwicklungen, auf denen das Thema beruht. Erkenntnisse sind kein zusätzlicher Typ lokaler Bezüge.
-
-**Beobachtungsaufträge** erschließen eigenständig sachverhaltsgebundene Erkenntnisse über Ursachen, rechtliche, wissenschaftliche und technische Hintergründe, Wirkungen und mögliche Nebenfolgen. Ein Thema kann auf zugehörige Aufträge mit Fragen, Auswertungen und Fundstellen zugreifen, auch ohne neues Ereignis. **Vorgänge** können zusätzlich eigene und aus Beobachtungsaufträgen gewonnene Erkenntnisse einbringen; sie werden bei der redaktionellen Bewertung der Bedeutung eines Vorgangs für das Thema berücksichtigt.
-
-**Themenbeitrag:** Die Redaktion verarbeitet Ereignisse und Erkenntnisse im Beitragstext zu einer verständlichen Gesamtdarstellung und gibt dessen Fassung nach Prüfung frei. Die fachliche Prüfung von Erkenntnissen beginnt bereits vor der Textfreigabe: Belege, konkreter Geltungsbereich, Unsicherheiten und Hypothesen werden bei der Übernahme in die Themenbearbeitung geprüft. Eine Beobachtungsauswertung ersetzt keine redaktionelle Beitragsfreigabe.
-
-## 6.3 Lokale Bezüge
-
-### Wozu braucht ein Thema lokale Bezüge?
-
-Eine übergeordnete Frage wird erst durch konkrete lokale Vorgänge und Ereignisse verständlich und überprüfbar. **Lokale Bezüge** dokumentieren, auf welchen Sachverhalten ein Thema beruht und weshalb diese dazu gehören. Ohne solche Bezüge droht ein Thema zu allgemein zu werden. Die Redaktion kann nachvollziehen, was den Kern des Themas prägt, was zusätzlichen Kontext liefert und welche Zusammenhänge noch unzureichend belegt sind.
-
-Es gibt zwei unterschiedliche Entscheidungen: **Gehört dieser Sachverhalt überhaupt zum Thema?** Das beantwortet der *Zuordnungsstatus*. **Wie wichtig ist er für die Erklärung?** Das beantwortet erst bei bestätigter Zuordnung die *Bedeutung für das Thema*. Beispielsweise kann der Ausbau des Autobahnkreuzes „Zugeordnet“ und zugleich „Prägend“ sein; eine weitere Verkehrsstudie kann „Kandidat“ sein, obwohl die KI sie als „Relevant“ vorschlägt. Der KI-Vorschlag allein macht sie nicht zum bestätigten Themenbestandteil.
+**Abgrenzung:** Themen werden durch die Redaktion angelegt. FIB darf begründete Themenkandidaten einschließlich Leitfrage, möglicher Bezüge und Dublettenprüfung vorbereiten, aber nicht eigenständig verbindlich ein neues Thema eröffnen.
 
 
-<details>
-<summary><strong>Verbindliche Regeln zu lokalen Bezügen (FIB-THEMA-BEZUG-001 bis -006)</strong></summary>
+**Bildverwendung im öffentlichen Beitrag:** Ein öffentlicher Themenbeitrag kann Bilder aus der FIB-internen Bildersammlung verwenden. Die Redaktion wählt sachlich passende Motive aus; eine allgemeine Freigabe des Bildes ersetzt nicht die Prüfung und Bestätigung seiner konkreten öffentlichen Verwendung.
 
-**FIB-THEMA-BEZUG-001 – Auswahlbasis.** Ein Thema wird vorzugsweise durch die Auswahl ganzer Vorgänge gebildet. Ihre zugehörigen Ereignisse werden automatisch berücksichtigt. **Ergänzende direkte Einzelereignisse** sind zulässig, wenn sie nicht bereits über einen bestätigten Themenvorgang abgedeckt sind. Meldungen bilden keinen dritten Auswahlweg. Dieselbe Tatsache wird nicht mehrfach gewichtet, nur weil sie als Fundstelle, Ereignis, Meldung und Vorgang erscheint.
+## 06.2 Gesamtmodell: Definition → Bezüge → Analyse → Beitrag
 
-**FIB-THEMA-BEZUG-002 – Vier redaktionelle Zuordnungsstatus.** Lokale Bezüge haben die fachlichen Zustände:
+Die zukünftige Themenbearbeitung umfasst **vier fachliche Arbeitsbereiche**:
 
-| Status | Fachliche Bedeutung |
+1. **Themendefinition:** Gegenstand, Ziel, Leitfrage, räumlicher und sachlicher Geltungsbereich.
+2. **Fachliche Bezüge:** Betroffene Vorgänge und ergänzende Einzelereignisse sowie nachvollziehbare „Bedeutung für das Thema“.
+3. **Themenanalyse:** Eigenständige fachliche Analyse, Wissenslücken, gezielte Recherchen, Qualität und Analysefreigabe.
+4. **Themenbeitrag:** Auswahl öffentlicher Schwerpunkte, Textentwurf, KI-Korrektorat, Qualitätsprüfung, Beitragsfreigabe und Veröffentlichung.
+
+Das sind **vier Bearbeitungsbereiche, nicht vier formelle Pflichtfreigaben**. Sie sind jederzeit erreichbar und bilden keinen zwingenden linearen Ablauf. Bearbeitung und konkrete Navigation werden **direkt im Echtsystem iterativ erprobt**. Der bisherige dreiteilige Editor ist als vorhandener Implementierungsstand zu betrachten, nicht als endgültige fachliche Zielstruktur.
+
+**Zwei verschiedene Freigaben:** Die fachlich geprüfte **Themenanalyse** wird unabhängig vom konkreten **Themenbeitrag** freigegeben. Erst anschließend kann eine konkrete öffentliche Textfassung gesondert freigegeben und veröffentlicht werden. Es ist **nicht erforderlich**, vor jeder Themenfreigabe einen Beobachtungsauftrag auszuwerten.
+
+## 06.3 Themendefinition und Entstehung
+
+Die Redaktion legt Leitfrage, Gegenstand und Abgrenzung fest und kann sie später ändern. FIB unterstützt Themenvorschläge aus neuen Ereignissen, Mustern und bestehenden Vorgängen. Es prüft ähnliche vorhandene Themen; die Redaktion entscheidet über Anlage, Zusammenführung, Abgrenzung und Zurückstellung von Kandidaten.
+
+Die Themenanlage erzeugt noch keine Veröffentlichung. Änderungen an der Definition lösen eine **gezielte Prüfung** aus, ob vorhandene Bezüge, Analyseinhalte, offene Fragen und der öffentliche Beitrag noch passend sind. Bereits bestätigte Inhalte werden nicht stillschweigend ersetzt.
+
+**Bestehende Lebenszyklusstatus beibehalten (Abgleich erforderlich):** Entwurf, Aktiv, Zurückgestellt, Archiviert. Status, Analysefreigabe, Beitragsfreigabe und öffentliche Sichtbarkeit sind **verschiedene Dimensionen**. Die bisherigen Übergangsregeln FIB-THEMA-STATUS-001 bis -007 werden vor Umstellung des Zusammenhangs zwischen erster Beitragsfreigabe und Aktiv-Status auf Widerspruch zur neuen Analysefreigabe geprüft.
+
+### Regeln zur Themendefinition und Entdeckung
+
+Ein Thema ist eine **redaktionell verantwortete Leitfrage**. Die KI erkennt mögliche übergreifende Zusammenhänge, prüft bestehende Themen auf Überschneidungen und schlägt begründete Kandidaten vor. Erst die Redaktion entscheidet, ob der Erkenntnisgewinn die Neuanlage eines Themas rechtfertigt.
+
+**FIB-THEMA-ENTDECKUNG-001:** KI-Themenkandidaten enthalten Anlass, Leitfrage, mögliche Bezüge, Abgrenzung und Dublettenhinweis. Ein umfangreicher einzelner Vorgang, etwa Kiesgrund, kann unter einer eigenständigen übergreifenden Leitfrage ein Thema begründen; Größe oder Dauer eines Vorgangs allein reichen nicht.
+
+**Beispiel:** „Autobahnkreuz München-Ost“ ist zunächst ein konkreter Vorgang. „Mobilität und Lebensqualität in Feldkirchen“ könnte ein Thema sein, sofern mehrere Entwicklungen unter einer nachvollziehbaren Frage verbunden werden.
+
+## 06.4 Fachliche Bezüge und „Bedeutung für das Thema“
+
+Ein Thema nutzt vorzugsweise **Vorgänge** und deren Ereignisse. Ergänzende **direkte Einzelereignisse** sind erlaubt, wenn sie nicht sinnvoll durch einen bestätigten Vorgang abgedeckt sind. **Meldungen bilden keinen dritten Auswahlweg**. Derselbe Sachverhalt darf nicht aufgrund mehrfacher Darstellungen übergewichtet werden.
+
+FIB erkennt neue unmittelbare und **begründet mittelbare** Beziehungen, auch ohne ausdrückliche Ortsnennung, wenn eine konkrete räumliche, funktionale oder fachliche Verbindung vorliegt. Eindeutige Beziehungen können als **vorläufige Kandidaten** entstehen; zweifelhafte werden zunächst mit erlaubten Informationsmitteln geprüft und bei verbleibendem Entscheidungsbedarf der Redaktion vorgelegt.
+
+Die bisherige Regel FIB-THEMA-BEZUG-002 unterscheidet **Kandidat, Zugeordnet, Zurückgestellt, Fachlich unpassend**; die neue automatische Vorprüfung erfordert **keinen fünften Status**. Bestehende bestätigte/abgelehnte Beziehungen werden nicht automatisch umgewidmet. Herkunft aus der KI ist keine Statusart.
+
+**Zugehörigkeit** („Gehört der Vorgang dazu?“) und **Bedeutung** („Welche Rolle spielt er für das Thema?“) sind getrennt. Die bestehenden Kategorien **prägend, relevant, ergänzend** bleiben eine redaktionelle Einstufung; FIB schlägt Bedeutung mit fachlicher Begründung und Beleglage vor. Bei neuen Ereignissen oder Erkenntnissen prüft FIB die Bedeutungsbeschreibung automatisch auf Änderungsbedarf. Redaktionell bestätigte Fassungen bleiben bis zur erneuten Entscheidung erhalten.
+
+Die Bedeutung eines fachlichen Bezugs ist **nicht** die redaktionelle Gewichtung einer Aussage im öffentlichen Themenbeitrag.
+
+### Regeln zu lokalen Bezügen und Bedeutung
+
+Thematische Zusammenhänge entstehen aus fachlich geprüften Beziehungen zu **Vorgängen** und ergänzend geeigneten **direkten Einzelereignissen**; Meldungen sind kein dritter Auswahlweg. Die KI darf Zuordnungen vorbereiten, aber weder eine negative redaktionelle Entscheidung stillschweigend übergehen noch ihre Bedeutung automatisch als verbindlich festlegen.
+
+| Kennung | Fachliche Regel |
 |---|---|
-| **Kandidat** | Als möglicher Bezug erfasst; noch nicht verbindlich zugeordnet |
-| **Zugeordnet** | Redaktionell als Themenbezug bestätigt |
-| **Zurückgestellt** | Der Bezug bleibt sichtbar, ist aber vorläufig nicht bestätigt |
-| **Fachlich unpassend** | Redaktionell als ungeeignet beurteilt; Entscheidung bleibt nachvollziehbar |
+| **FIB-THEMA-BEZUG-001** | Vorrangig Vorgänge auswählen; deren Ereignisse sind eingeschlossen. Direkte Einzelereignisse nur ergänzend; doppelte Gewichtung derselben Tatsache verhindern. |
+| **FIB-THEMA-BEZUG-002** | Vier Bezugsstatus: **Kandidat**, **Zugeordnet**, **Zurückgestellt**, **Fachlich unpassend**. KI-Herkunft ist **kein** weiterer Status. |
+| **FIB-THEMA-BEZUG-003** | Verbindliche „Bedeutung für das Thema“: **prägend**, **relevant**, **ergänzend**; KI schlägt mit Begründung vor, die Redaktion bestätigt. |
+| **FIB-THEMA-BEZUG-004/005** | Ablehnung und Zurückstellung bleiben nachvollziehbar. KI-Begründung, redaktionelle Begründung und belegende Fundstellen werden getrennt geführt. |
+| **FIB-THEMA-BEZUG-006** | Das Öffnen eines Themas startet **keine** neue KI-Bezugssuche. Der bewusste Auftrag lautet „Weitere Beziehungen vorschlagen“. |
+| **FIB-THEMA-BEZUG-007/008** | Ein bestätigter Bezug kann begründet als unpassend eingestuft werden. Ein zuvor abgelehnter Bezug gelangt bei neuem Sachstand zuerst zum **Kandidaten**, nicht direkt zu „Zugeordnet“. |
 
-Status und Herkunft sind verschiedene Dimensionen: **KI-Vorschlag** bezeichnet eine Herkunft, nicht einen fünften Status. Der Status **Zurückgestellt** eines Bezugs darf nicht mit dem gleichnamigen *Themenstatus* verwechselt werden.
+**Beispiel:** Für „Mobilität in Feldkirchen“ wird der Vorgang Parkraumkonzept als „relevant“ eingestuft. Erkennt FIB später eine neue Verkehrsplanung, kann sie einen Bezugskandidaten vorschlagen. Eine zuvor als fachlich unpassend abgelehnte Zuordnung wird nicht heimlich reaktiviert.
 
-**FIB-THEMA-BEZUG-003 – Bedeutung für das Thema.** Für bestätigte Bezüge entscheidet die Redaktion verbindlich über **prägend** (für das Thema wesentlich), **relevant** (wesentlicher Erklärungsbeitrag) oder **ergänzend** (zusätzlicher Kontext). Die KI darf eine Einstufung mit Begründung vorschlagen; ohne redaktionelle Prüfung und Bestätigung ist sie nicht wirksam. Die Einstufung ist keine automatisch errechnete Kennzahl.
+### Wie verbessert die Redaktion langfristig die KI-Vorschläge?
 
-**FIB-THEMA-BEZUG-004 – Fachlich unpassend und Neubewertung.** Eine negative fachliche Entscheidung bleibt dokumentiert und darf nicht durch einen KI-Vorschlag automatisch aufgehoben werden. Neue Tatsachen oder eine geänderte Themendefinition können eine erneute redaktionelle Prüfung auslösen; die Redaktion entscheidet über eine neue Zuordnung. Dasselbe gilt sinngemäß für zurückgestellte Bezüge.
+Redaktionelle Entscheidungen verbessern nicht nur einen einzelnen Beitrag. Sie zeigen FIB auch, **welche Arten von Zusammenhängen und Themenabgrenzungen in Feldkirchen tatsächlich sinnvoll sind**. Diese Kalibrierung ist eine fachliche Rückkopplung, keine automatische Übergabe redaktioneller Entscheidungshoheit an die KI.
 
-**FIB-THEMA-BEZUG-005 – Begründung und Herkunft.** KI-Vorschlag, Herkunft und dessen Begründung sind von der redaktionell bearbeiteten verbindlichen Begründung zu unterscheiden. Die Belegbasis soll aus relevanten Ereignissen und Quellen nachvollziehbar sein; redaktionelle Zusammenfassungen sind keine zusätzlichen unabhängigen Belege.
+FIB berücksichtigt dabei nachvollziehbar bestätigte, überarbeitete und abgelehnte Themenkandidaten; bestätigte Dubletten- oder Abgrenzungsentscheidungen; ergänzte fehlende Aspekte; nachträglich entdeckte Vorgänge und Ereignisse; korrigierte Bedeutungseinstufungen sowie bestätigte oder verworfene Analyseperspektiven. Die redaktionelle Entscheidung bleibt mit ihrem Anlass und ihrer Begründung auffindbar.
 
-**FIB-THEMA-BEZUG-006 – Vorschlagssuche.** Das Öffnen eines Themas zeigt gespeicherte Kandidaten und löst **keine** neue KI-Suche aus. Eine gezielte Suche wird ausdrücklich mit **„Weitere Beziehungen vorschlagen“** gestartet. Die Redaktion darf außerdem Vorgänge und geeignete Einzelereignisse selbst suchen und aufnehmen.
+**Beispiel:** Die Redaktion verwirft wiederholt den Vorschlag, ein einmaliges örtliches Ereignis ohne übergreifende Leitfrage als eigenständiges Thema zu führen. FIB soll diesen Maßstab bei künftigen Vorschlägen berücksichtigen, ohne deshalb ähnliche neue Sachverhalte pauschal zu unterdrücken.
 
-**Quelle:** [Themen- und Vorgangslogik §§5.1–5.4, 12](../Themen-und-Vorgangslogik.md), [Issue #149](https://github.com/PustefixReisen/fib-echtsystem/issues/149), [Issue #164](https://github.com/PustefixReisen/fib-echtsystem/issues/164); technischer Nachweis [PR #172](https://github.com/PustefixReisen/fib-echtsystem/pull/172).
+Die Kalibrierung verbessert Vorschläge, **legt aber weder selbst neue Themen verbindlich an noch setzt sie bestätigte Bezüge oder andere Regeln außer Kraft**. Fachliche Primärquelle: [Themen- und Vorgangslogik](../Themen-und-Vorgangslogik.md), §7. Ein konkretes Lernverfahren oder KI-Modell wird hier bewusst nicht vorgegeben.
 
-</details>
+### Auswahlvollständigkeit und Herkunft der Themenbezüge
 
-## 6.4 Perspektiven und Wirkungen
+Die KI schlägt weitere Ereignisse außerhalb der bereits ausgewählten Vorgänge anhand von Leitfrage, Raumbezug, Wirkungen, Akteuren und möglicher künftiger Bedeutung vor. Diese Vorauswahl erleichtert die Bearbeitung, **ersetzt aber nicht die Suche im gesamten Ereignisbestand**: Die Redaktion kann bislang nicht vorgeschlagene Ereignisse gezielt ergänzen.
 
-### Perspektiven: sachliche Fragen statt einer starren Kategorienliste
+Wird ein Vorgang ausgewählt, werden seine zugehörigen Ereignisse im Themenkontext mitgeführt. Ein zusätzlich gewähltes Einzelereignis darf weder unbemerkt einem Vorgang zugeordnet noch mehrfach in dieselbe Themenanalyse eingerechnet werden. Auch vorhandene Meldungen und Vorgangsbeiträge sind nützliche **redaktionelle Verdichtungen**, jedoch keine unabhängigen zweiten Tatsachenbelege zu den ihnen zugrunde liegenden Fundstellen.
 
-Eine **Perspektive** bezeichnet einen fachlichen Blickwinkel, unter dem mehrere Sachverhalte eines Themas gemeinsam untersucht werden. Beispiele sind Lärm, Verkehrssicherheit, Erreichbarkeit, Flächenverbrauch oder kommunaler Handlungsspielraum.
+**Beispiel:** Zur Mobilität in Feldkirchen wird das Parkraumkonzept als Vorgang ausgewählt. FIB berücksichtigt dessen Ereignisse automatisch. Ein ergänzendes Ereignis zu einem regionalen Verkehrsprojekt wird gesondert aufgenommen. Erscheint dasselbe Ereignis später ebenfalls im Parkraumvorgang, darf dies die Gewichtung des Sachverhalts nicht künstlich erhöhen.
 
-**Es gibt nach dem bisherigen Fachkonzept keinen abschließenden, verpflichtenden Perspektivenkatalog.** Die Redaktion kann KI-Vorschläge übernehmen, abwählen, umbenennen, zusammenführen und eigene Perspektiven ergänzen. Perspektiven werden für **das jeweilige Thema** bestätigt – nicht für jeden Vorgang erneut als neue Kategorie angelegt. Ein wiederverwendbarer Vorschlagskatalog könnte später bei der Vereinheitlichung helfen; ob er technisch geführt werden soll, ist **noch nicht entschieden**.
+### Abgelehnte und zurückgestellte Themenbezüge erneut prüfen
 
-Beispiel: Beim Mobilitätsthema kann „Verkehrssicherheit“ eine Perspektive sein. Der Autobahnausbau und ein Radschnellweg werden beide unter dieser Frage betrachtet, auch wenn die konkreten Folgen verschieden sind. Der Blickwinkel benennt **was untersucht wird**, nicht bereits das Ergebnis.
+Eine redaktionelle Entscheidung **„Fachlich unpassend“** bleibt bestehen, auch wenn die KI später dieselbe Beziehung erneut vorschlägt. Neue Tatsachen oder eine veränderte Themendefinition können eine **neue redaktionelle Prüfung** begründen. Dabei führt die Wiederaufnahme zunächst zurück zu **Kandidat**; erst nach ausdrücklicher Bestätigung wird daraus **Zugeordnet**. Ein direkter Übergang von „Fachlich unpassend“ zu „Zugeordnet“ ist ausgeschlossen. Zurückgestellte Bezüge können entsprechend neu bewertet werden.
 
-### Wirkungen: konkrete, belegte oder begründet erwartete Folgen
+KI-Vorschlag, Herkunft und KI-Begründung sind von der redaktionell verbindlichen Begründung zu unterscheiden. Die belegenden Ereignisse und Quellen müssen nachvollziehbar sein; redaktionelle Zusammenfassungen dürfen nicht als zusätzliche unabhängige Belege gezählt werden.
 
-Eine **Wirkung** (in der App auch „Auswirkung“) beschreibt **was ein Ereignis verändert, verändert hat oder voraussichtlich verändern könnte**. Sie ist konkreter als die Perspektive und hat eine nachvollziehbare Grundlage. Die Wirkung ist fachlich **an einem Ereignis verankert**; sie kann im Kontext eines Vorgangs oder Themas erarbeitet werden. Der jeweilige Herkunftskontext bestimmt, wo sie gepflegt werden darf.
+Beim bloßen Öffnen eines Themas werden vorhandene Kandidaten angezeigt, **ohne automatisch eine neue KI-Suche zu starten**. Neue Vorschläge werden ausdrücklich über **„Weitere Beziehungen vorschlagen“** angefordert; eigene Recherchen und Zuordnungen durch die Redaktion bleiben möglich.
 
-| Perspektive | Beispielhafte Wirkung | Charakter |
-|---|---|---|
-| Flächenverbrauch | Für den Straßenausbau wird zusätzliche Fläche beansprucht. | Konkret zu belegende Folge |
-| Erreichbarkeit | Eine geplante durchgängige Radverbindung könnte Wege sicherer und direkter machen. | Erwartete Wirkung; Prognose kenntlich machen |
-| Lärm | Eine geänderte Verkehrsführung könnte Anwohnende anders belasten. | Prüfbare Erwartung, noch kein erwiesener Effekt |
+Grundlage: **FIB-THEMA-BEZUG-004, -005, -006 und -008** im bisherigen Kapitel 06.
 
-Eine gute Wirkungsbeschreibung nennt möglichst **betroffenen Sachverhalt, Veränderung, räumlichen/zeitlichen Bezug und Beleg oder Unsicherheit**. Besteht noch keine tragfähige Grundlage, wird die Aussage als mögliche Wirkung bzw. Klärungsbedarf behandelt und nicht als eingetretene Tatsache ausgegeben. Unterschiedliche, auch gegenläufige Wirkungen dürfen nebeneinander stehen.
+## 06.5 Themenanalyse: Eigenständiges Verständnis
 
-**Trennung der drei Ebenen:** *Perspektive* = „Welchen Aspekt betrachten wir?“; *Wirkung* = „Was ändert sich nachweislich oder möglicherweise?“; *Unsere Einordnung* = „Wie bewerten die GRÜNEN Feldkirchen dies anhand ihrer Ziele?“. Eine Wirkung ist deshalb weder automatisch positiv oder negativ noch bereits eine politische Bewertung.
+Die **Themenanalyse gehört zum Thema** und entwickelt eine selbstständige, übergreifende Sicht. Sie **kopiert nicht** sämtliche Vorgangsanalysen, sondern nutzt deren bestätigte Erkenntnisse mit nachvollziehbaren Verweisen und verarbeitet ergänzende Einzelereignisse. Übergreifende Erkenntnisse dürfen in der Themenanalyse verbleiben, auch wenn kein einzelner Vorgang eindeutig als Ursprung in Frage kommt. Ein künstlicher Vorgang wird dafür nicht angelegt.
 
-Die KI kann aus **allen bestätigten Bezügen** Perspektiven und Wirkungen mit Quellenbezug vorschlagen. Die Redaktion entscheidet, welche Perspektiven zum Thema gehören; Wirkungsbehauptungen bleiben belegpflichtig.
+Inhalte der Analyse sind:
+- **Faktenwissen:** belegte Sachverhalte und zeitliche Entwicklung;
+- **Erklärungswissen:** technische, rechtliche, wissenschaftliche und sonstige fachliche Zusammenhänge;
+- **Hintergrund- und Zusammenhangswissen:** Ursachen, Abhängigkeiten, Interessen und Zielkonflikte;
+- **Wirkungs- und Folgenanalyse:** unmittelbare/mittelbare und beabsichtigte/unbeabsichtigte Folgen, sachverhaltsgerechte Perspektiven.
 
-**Quellen:** [Themen- und Vorgangslogik §5.5](../Themen-und-Vorgangslogik.md) und [Begriffe – Perspektive/Wirkung](../Begriffe.md).
+Belegte Fakten, plausible Erwartungen, Hypothesen, Widersprüche und offene Fragen bleiben deutlich unterscheidbar. Perspektiven wie Lärm, Erreichbarkeit oder Flächennutzung bilden **keinen starren Pflichtkatalog**. Die Redaktion kann KI-Perspektiven übernehmen, anpassen oder ergänzen. Eine Wirkung wird gemäß bisherigem `Wirkungsmodell.md` fachlich an einem Ereignis verankert; der Herkunfts-/Pflegekontext bestimmt, wo sie geändert werden darf. **Übergreifende Analyseerkenntnisse sind davon getrennt:** Sie gehören in die Themenanalyse und benötigen keinen künstlichen Ereignisanker. Die technische Abbildung wird erst nach der Fachabnahme geklärt.
 
-## 6.5 Beitrag, Version und Freigabe
+### Perspektiven und Wirkungen aus dem bestätigten Themenbestand
 
-### Drei fachliche Einheiten – drei getrennte Entscheidungen
+Die Themenanalyse betrachtet den **gesamten bestätigten Themenbestand**, nicht nur den ersten oder besonders prägenden Vorgang. FIB kann aus den zugehörigen Vorgängen, Einzelereignissen, Quellen und begründeten Zusammenhängen **Perspektiven** vorschlagen. Die Redaktion kann sie übernehmen, abändern, zusammenführen oder ergänzen. Erst danach ordnet FIB die relevanten Vorgänge, Ereignisse und ihre belegten oder begründet erwarteten Wirkungen diesen Perspektiven zu.
 
-Zur Verständlichkeit betrachten wir zuerst **jedes Objekt für sich** und erst in §6.6 ihre gegenseitigen Abhängigkeiten.
+Eine Perspektive ist ein **fachlicher Betrachtungsaspekt des Themas** (beispielsweise Lärm, Erreichbarkeit oder Flächenverbrauch), keine Eigenschaft nur eines einzelnen Ereignisses und keine politische Bewertung. Herkunft, Gegenargumente und Unsicherheiten müssen erkennbar sein. Die ältere Rollenliste „Treiber / Gestaltungsbeitrag / Betroffenheit / Rahmenbedingung / Indikator“ wird nicht als zweite strukturierte Bedeutungsskala eingeführt; die bestätigte Einstufung **prägend / relevant / ergänzend** und die konkreten Perspektiven und Wirkungen erfüllen unterschiedliche, klar bezeichnete Zwecke.
 
-**A. Themendefinition (gesamtes Thema).** Sie beschreibt Leitfrage, Abgrenzung und Kontext. Der Themenstatus bezeichnet den *Lebenszyklus des ganzen Themas*: **Entwurf → Aktiv**, gegebenenfalls **Zurückgestellt** oder **Archiviert**. Seine Aktivität sagt **noch nichts darüber**, ob eine Beitragsfassung aktuell öffentlich sichtbar ist. Inhaltliche Änderungen an einer bereits bestätigten Definition bleiben nachvollziehbar.
+**Grenzfall:** Ein KI-Vorschlag leitet „Verkehrssicherheit“ nur aus dem Autobahnkreuz ab. Die Redaktion hat aber bereits einen Radverkehrsvorgang aufgenommen. Bevor sie die Perspektiven bestätigt, muss FIB auch dessen Erkenntnisse für den Vorschlag berücksichtigen. Derselbe Effekt zählt nicht mehrfach, wenn er im Ereignis, in einer Meldung und im Vorgangsbeitrag erwähnt wird.
 
-**B. Lokale Beziehung (je Vorgang oder ergänzendes Ereignis).** Jede einzelne Beziehung hat ihren eigenen **Zuordnungsstatus**: **Kandidat, Zugeordnet, Zurückgestellt, Fachlich unpassend**. Sie sagt, ob dieser konkrete Bezug für die Themenanalyse redaktionell akzeptiert wurde. Nur bei „Zugeordnet“ ist seine bestätigte **Bedeutung** (prägend/relevant/ergänzend) verbindlich. Diese Bedeutung ist **kein weiterer Status**. Auch Herkunft aus der KI ist kein Status. Mehrere Beziehungen desselben Themas dürfen gleichzeitig unterschiedliche Zustände haben.
+Diese Ausgestaltung folgt der vorhandenen [Themen- und Vorgangslogik](../Themen-und-Vorgangslogik.md), insbesondere §§5.1–5.5. Sie beschreibt den fachlichen Ablauf; die Darstellung der Auswahl im Editor wird später erprobt.
 
-**C. Beitrag (Textfassung).** Der Beitrag setzt den bestätigten Kenntnisstand für die Öffentlichkeit um. Eine **Arbeitsfassung** enthält sachlichen Thementext und optional die getrennt editierbare **„Unsere Einordnung“**. Die Redaktion kann eine konkrete *Fassung* freigeben; eine solche Freigabe darf bis zur ersten Veröffentlichung dieser Fassung zurückgenommen werden. **Veröffentlichung ist ein zusätzlicher ausdrücklicher Schritt**, der eine freigegebene Fassung nach außen sichtbar macht. Der Sachtext und die optionale Einordnung sind **Bestandteile derselben Beitragsfassung**, keine zwei unabhängig zu veröffentlichenden Objekte.
+### 06.5.1 Vollständigkeitsprüfung und Fragen
 
-Die drei Einheiten bilden **keine Statushierarchie**: Eine zugeordnete Beziehung ist nicht automatisch ein freigegebener Beitrag; ein aktives Thema ist nicht automatisch veröffentlicht. Gleichwohl bestehen **fachliche Abhängigkeiten**, die §6.6 erläutert.
+FIB prüft bei Erstellung und wesentlichen Änderungen der Themenanalyse **innerhalb der vereinbarten Themendefinition**, ob wesentliche Perspektiven, Sachverhalte und Zusammenhänge fehlen. Die KI schlägt Fragen und Teilfragen mit Begründung vor und versucht zuerst Antworten anhand des vorhandenen Wissens zu geben.
 
-### Wie bleiben Bearbeitung, Freigabe und Veröffentlichung getrennt?
+Redakteure dürfen unmittelbar beim Thema eigene **Nachfragen in natürlicher Sprache** stellen. Bei zusätzlichen Wissenslücken entsteht ein vorgeschlagener gezielter Rechercheauftrag, der durch redaktionelle **Freigabe des Ziels** ausführbar wird. Einmalige Recherchen und längerfristige Beobachtungsaufträge nutzen denselben Mechanismus; innerhalb des genehmigten Umfangs darf FIB autonom weiterrecherchieren, außerhalb nur nach erneuter Freigabe.
 
-Für Redakteure ist entscheidend, dass sie einen Beitrag bearbeiten können, ohne den veröffentlichten Stand unbeabsichtigt zu verändern. Beim Öffnen eines veröffentlichten Beitrags sehen sie ihre Arbeitsfassung; die aktuelle öffentliche Fassung kann daneben schreibgeschützt eingesehen werden. Eine neue Arbeitsfassung baut grundsätzlich auf der maßgeblichen bisherigen Fassung auf. Das ausdrückliche Speichern übernimmt Änderungen nur in den Arbeitsstand – es veröffentlicht nichts. Erst die gesonderte Freigabe erzeugt eine unveränderliche Beitragsfassung; eine Veröffentlichung ist eine weitere bewusste Entscheidung. Ältere freigegebene Fassungen bleiben nachvollziehbar.
+Fragen, Antworten, Belege, offene Punkte und zugehörige Rechercheaufträge bleiben im Themenkontext auffindbar. Offene Fragen werden bei passenden neuen Fundstellen und wesentlichen Analyseaktualisierungen wieder bewertet. Nicht jede Frage muss vor Analysefreigabe abschließend geklärt sein.
 
-Bei ungespeicherten Änderungen warnt FIB vor Datenverlust. Eine laufende Bearbeitung ist für andere Redakteure lesbar, aber nicht gleichzeitig schreibbar; die dauerhafte redaktionelle Federführung ist nicht mit der aktuellen Bearbeitungssperre gleichzusetzen.
+### 06.5.2 Fortschreibung, Änderungspakete und wechselseitige Prüfung
 
-### Warum braucht der Beitrag eine eigene Freigabe?
+FIB prüft **jede fachlich relevante Änderung** des thematischen Sachstands auf Auswirkungen in der Themenanalyse: neue Ereignisse, geänderte Vorgangsanalysen, neue eigene Erkenntnisse, veränderte Bezüge und redaktionelle Korrekturen.
 
-Bei Änderungen an Beziehungen, Perspektiven oder der Themendefinition kann der öffentliche Text fachlich überholt sein. Deshalb darf eine neue Arbeitsfassung **nicht stillschweigend** die bisherige veröffentlichte Fassung überschreiben. Redakteure können weiterarbeiten, ohne einen fertigen öffentlichen Informationsstand sofort zu verändern. Eine neue geänderte Fassung benötigt eine neue Freigabe.
+Prüfreihenfolge: **zuerst direkt betroffene Analysebereiche, danach Widersprüche und Folgewirkungen in anderen Bereichen**. Bei Änderungsbedarf bildet FIB ein **zusammenhängendes Änderungspaket** mit Ausgangserkenntnis, Belegen, betroffenen Aussagen, Vorschlägen und offenem Prüfbedarf. Die Redaktion darf darin einzelne Änderungen übernehmen, bearbeiten, zurückstellen oder ablehnen; ein Paket darf **teilweise erledigt** werden.
 
-<details>
-<summary><strong>Verbindliche Regeln zu Beitrag, Fassungen und Freigabe</strong></summary>
+**Natürlichsprachliche Nachfragen** können zunächst eine Antwort allein aus dem vorhandenen Wissen liefern. Erkennt FIB dabei neue belastbare Informationen, einen Widerspruch oder eine notwendige Neubewertung, kann es **getrennte, belegte Änderungsvorschläge** für die Themendefinition, den bestätigten Analysestand und/oder den Themenbeitrag erstellen. Die Antwort selbst ändert keines dieser Objekte verbindlich. Die Redaktion entscheidet pro betroffenem Objekt und Änderung; bei einer teilweisen Analysefreigabe gilt F-03. Eine Änderung des veröffentlichten Beitrags benötigt eine neue Fassung mit eigener Freigabe und Veröffentlichung. Fehlendes Wissen kann stattdessen einen gezielten Recherchevorschlag auslösen.
 
-**FIB-THEMA-BEITRAG-001 – Zwei getrennte Textteile.** Der Beitrag enthält den sachlichen **Thementext** und die optionale, gesonderte **„Unsere Einordnung“**. KI-Textvorschläge bleiben von der redaktionell bearbeiteten Fassung unterscheidbar.
+Freigegebene Analyseinhalte werden niemals unbemerkt überschrieben. FIB prüft nach bestätigten Änderungen die fachlichen Auswirkungen **zwischen Themen- und Vorgangsanalysen in beide Richtungen** sowie bei konkretem Bezug zu anderen Themen; bekannte Erkenntnisse sollen keine Aktualisierungsschleifen auslösen.
 
-**FIB-THEMA-BEITRAG-002 – Freigabe und Veröffentlichung.** Redaktionelle Freigabe ist eine eigenständige Handlung und **nicht automatisch eine öffentliche Veröffentlichung**. Freigaben/Veröffentlichungen werden mit Person und Zeitpunkt nachvollziehbar dokumentiert. Redakteure dürfen eigene Beitragsfassungen selbst freigeben und veröffentlichen; es gibt kein zwingendes Vier-Augen-Prinzip. KI darf weder eigenständig freigeben noch veröffentlichen.
+### 06.5.3 Analysequalität und Freigabe
 
-**FIB-THEMA-BEITRAG-003 – Fassungen.** Freigegebene Beitragsfassungen bleiben im Versionsverlauf nachvollziehbar. Davon getrennt werden fachlich wesentliche Änderungen an Definition und Bezügen intern versioniert. Eine neue geänderte Fassung benötigt eine eigene Freigabe.
+FIB liefert zur Analysefreigabe eine kompakte **fachliche Qualitätsbeurteilung** mit **Beleglage, Widersprüchen, Unsicherheiten und wesentlichen Wissenslücken**. Ausreichend belegte Teile der Analyse können freigegeben werden; unklare oder ungenügend gestützte Teile bleiben vorläufig oder zurückgestellt.
 
-**Quelle:** [Themen- und Vorgangslogik §12](../Themen-und-Vorgangslogik.md), [Fachentwurf §§3.3, 8](../Fachentwurf-Themenbearbeitung-2026-10-20.md).
+**Eine fachlich geprüfte Themenanalyse ist die Voraussetzung für die spätere Beitragsfreigabe**, **kein verpflichtend ausgewerteter Beobachtungsauftrag**. Vorläufige Einschätzungen können bei entsprechender fachlicher Freigabe nur **mit offengelegter Unsicherheit** öffentlich dargestellt werden, nicht als gesicherte Tatsachen. Zurückgestellte Inhalte dürfen nicht als bestätigte Erkenntnisse in den Beitragsentwurf übernommen werden.
 
-**FIB-THEMA-BEITRAG-004 – Aktuelle Veröffentlichung direkt einsehbar.** Während der Bearbeitung einer neuen Arbeitsfassung bleibt die aktuell veröffentlichte Beitragsfassung unverändert. In der Redaktion muss die **tatsächlich aktuell veröffentlichte Fassung** einschließlich ihrer damaligen optionalen „Unsere Einordnung“ unmittelbar und schreibgeschützt einsehbar sein. Sie ist nicht zwingend die unmittelbar vorherige Versionsnummer. Der historische Versionsverlauf bleibt davon getrennt verfügbar.
+Die **aussagenbezogene Teilfreigabe** ist fachlich vereinbart: Nur ausdrücklich bestätigte Inhalte gelten als bestätigt, offene Vorschläge bleiben unterscheidbar und werden nicht als gesichertes Wissen in einen Beitrag übernommen. Die bisherige Historisierung über den **bestätigten Gesamtstand des Themas** bleibt dabei maßgeblicher Ausgangspunkt. **F-03 beschlossen am 26.10.2026:** Eine Teilfreigabe ergibt einen neuen bestätigten Gesamtstand aus dem vorherigen Stand und ausschließlich den angenommenen Änderungen. Offene Vorschläge bleiben getrennt; frühere bestätigte Stände bleiben erhalten. Die technische Umsetzung folgt später.
 
-**FIB-THEMA-BEITRAG-005 – Ausgangsbasis einer neuen Arbeitsfassung.** Eine neue Arbeitsfassung soll grundsätzlich auf der zuletzt maßgeblichen Beitragsfassung aufbauen; die verwendete Ausgangsfassung ist erkennbar. Eine ältere oder widerrufene Fassung darf nicht unbemerkt die Grundlage bilden. Eine abweichende Ausgangsbasis bedarf einer bewussten redaktionellen Auswahl. Die exakte Konflikt-/Wiederherstellungslogik ist vor der Implementierung zu spezifizieren.
+## 06.6 Themenbeitrag: Redaktionelle Darstellung
 
-**FIB-THEMA-BEITRAG-006 – Standardansicht bei der Beitragserfassung.** Öffnet die Redaktion den Beitragsbereich eines bereits veröffentlichten Themas, wird **die aktuelle Arbeitsfassung** als Standardansicht angezeigt. Die **tatsächlich aktuell veröffentlichte Fassung** ist daneben über eine unmittelbar erreichbare, eindeutig beschriftete Aktion **„Aktuell veröffentlicht“** schreibgeschützt einsehbar, einschließlich der zu dieser Publikation gehörenden „Unsere Einordnung“. Das Umschalten darf weder den Entwurf überschreiben noch stillschweigend eine neue Arbeitsfassung oder Publikation auslösen. Der Versionsverlauf ist eine davon getrennte Funktion. Die Neuanlage und Ableitung einer Arbeitsfassung richten sich nach FIB-THEMA-BEITRAG-007.
+Die Themenanalyse soll möglichst sachgerecht und differenziert sein. Der **Themenbeitrag** vermittelt die wichtigsten Erkenntnisse **verständlich, sachlich und quellengestützt** und ist **keine zweite eigenständige Analyse**. Gerade bei breiten Themen wie „Mobilität und Lebensqualität in Feldkirchen“ soll der Hauptbeitrag **überblickshaft, lebendig und Interesse weckend** bleiben, ohne wesentliche Unsicherheiten zu verschweigen. Vertiefende Fragen, Beispiele, Hintergründe und Detailerklärungen werden gezielt in redaktionell freigegebene, quellengebundene **„Mehr wissen?“-Fragen und Antworten** ausgelagert. Diese ersetzen weder wichtige Kernaussagen noch notwendige Belege des Hauptbeitrags.
 
-**FIB-THEMA-BEITRAG-007 – Entstehung und Wiederaufnahme einer Arbeitsfassung.** Beim erstmaligen Erfassen eines Beitrags bietet FIB eine **leere Arbeitsfassung** an. Ist bereits ein Beitrag veröffentlicht und existiert noch keine neuere Arbeitsfassung, wird zur Bearbeitung eine neue Arbeitsfassung **auf Basis der tatsächlich aktuell veröffentlichten Fassung** angeboten. Existiert bereits eine aktuelle Arbeitsfassung, wird **diese fortgesetzt**, statt einen weiteren Entwurf anzulegen. Das bloße Öffnen oder Anzeigen des Beitragsbereichs **legt noch keinen neuen persistenten Arbeitsstand und keine formale Beitragsversion** an; erst das Speichern einer Änderung begründet einen neuen gespeicherten Arbeitsstand. Die formale freigegebene Beitragsversion entsteht weiterhin erst bei Freigabe. Die verwendete Ausgangsfassung bleibt nachvollziehbar. Das manuelle Speichern richtet sich nach FIB-THEMA-BEITRAG-008. Der exklusive Schreibzugriff richtet sich nach der übergreifenden Bearbeitungssperre (§20.4 des Datenmodells); keine optimistische Parallelbearbeitung.
+FIB schlägt **Hauptaussagen und ergänzende Schwerpunkte** mit Begründung vor. Die Redaktion darf Auswahl und Gewichtung verändern sowie eigene Schwerpunkte formulieren. FIB prüft, ob diese durch die Analyse gedeckt sind, und weist andernfalls auf Wissenslücken oder Recherchebedarf hin.
 
-**FIB-THEMA-BEITRAG-008 – Speichern und ungespeicherte Änderungen.** Redaktionelle Änderungen am sachlichen Thementext und der optionalen „Unsere Einordnung“ werden über die ausdrücklich betätigte Aktion **Speichern** als Arbeitsstand übernommen. Sobald Felder vom zuletzt gespeicherten Stand abweichen, zeigt die Bedienoberfläche deutlich **„Ungespeicherte Änderungen“** an. Vor dem Verlassen der Bearbeitung oder dem Wechsel zu einem anderen Thema mit ungespeicherten Änderungen wird eine Warnung mit einer bewussten Entscheidung zum Verwerfen oder Verbleiben angezeigt; versehentlicher Datenverlust ist zu verhindern. **Speichern bedeutet weder Freigabe noch Veröffentlichung.** Eine automatische Freigabe oder Publikation durch diesen Vorgang ist unzulässig. Technische Einzelheiten der Navigation und browserseitigen Abfangmöglichkeiten sind getrennt zu prüfen.
+Die Redaktion kann einen Entwurf direkt bearbeiten oder das gemeinsame **KI-gestützte inhaltliche Korrektorat** durch natürlichsprachliche Änderungswünsche verwenden. FIB erstellt prüfbare Textvorschläge, vergleicht sie mit den belegten Analyseinhalten und erfindet fehlende Grundlagen nicht. Kleine **sprachliche** Verbesserungen am unveröffentlichten Entwurf darf FIB unter nachvollziehbarer, rückgängig machbarer Änderung selbstständig vornehmen; **inhaltliche** Änderungen brauchen redaktionelle Bestätigung.
 
-**FIB-THEMA-BEITRAG-009 – Freigabe einer Beitragsfassung.** Eine gespeicherte Arbeitsfassung wird erst durch die ausdrücklich bestätigte Aktion **Freigeben** zur unveränderlichen Beitragsversion. Freigebende Person, Zeitpunkt und betroffene Fassung werden protokolliert. Ein berechtigter Redakteur darf den eigenen Beitrag ohne zweite Person freigeben. Eine noch nie veröffentlichte Freigabe darf ausdrücklich zurückgenommen werden; die frühere Entscheidung bleibt in der Historie. Bei bereits veröffentlichter Fassung ist keine Freigaberücknahme zulässig: Für ein Ende der Sichtbarkeit ist der gesonderte Publikationsrückzug zuständig. Eine freigegebene Fassung wird nicht nachträglich verändert; weitere Bearbeitung erfolgt in einer neuen Arbeitsfassung mit erneuter Freigabe. Freigabe löst keine Veröffentlichung aus.
+Die **Schlussprüfung** umfasst die Belegdeckung jeder wesentlichen Aussage, klare Darstellung von Unsicherheit, Widersprüche, Schwerpunktsetzung und Sprache. Ein **schwerwiegender, belegbarer fachlicher Fehler** verhindert die Veröffentlichung bis zur Korrektur; geringere Unsicherheiten werden angezeigt und redaktionell entschieden.
 
-**FIB-THEMA-BEITRAG-011 – Pessimistische Objektsperre während der Bearbeitung.** Für die Bearbeitung eines Themenbeitrags gilt das bereits fachlich vereinbarte **pessimistische Sperrprinzip auf Objektebene**: Bearbeitet ein Redakteur das Objekt, können andere Redakteure es **nur lesen**, nicht parallel verändern. Die Sperre ist vor dem Beginn einer schreibenden Bearbeitung wirksam; eine alleinige Konfliktprüfung erst beim Speichern ist kein Ersatz. Die geltende übergreifende Primärregel steht in [Datenmodell §20.4](../Datenmodell.md): Lesen erzeugt keine Sperre; beim ersten Bearbeitungsversuch wird die Sperre angefordert, währenddessen erneuert und bei regulärem Ende freigegeben; ohne Erneuerung verfällt sie, und eine administrative Aufhebung verwaister Sperren wird auditiert. Die technische Umsetzung und Tests sind gesondert zu prüfen. Für andere FIB-Objekte ist dieselbe übergreifende Regel maßgeblich; dieses Kapitel legt keine abweichende Beitragssonderlogik fest.
+**Beitragsfreigabe** fixiert die geprüfte Fassung; **Veröffentlichung** erfolgt gesondert, sofort oder zeitgesteuert. Veröffentlichte Fassungen bleiben unverändert, bis eine neue freigegebene Fassung ausdrücklich veröffentlicht wird. Die frühere Fassung und Änderungs-/Korrekturhistorie bleiben nachvollziehbar.
 
-**FIB-THEMA-KOORD-002 – Anzeige der aktuellen Bearbeitungssperre.** Die Karte **„Redaktionelle Koordination“** zeigt an, wenn ein anderer Redakteur das Objekt aktuell zur Bearbeitung gesperrt hat. Für weitere Benutzer ist das Objekt dann nur lesbar; Bearbeitungsaktionen bleiben gesperrt. **Aktueller Bearbeiter/Sperrinhaber** und **dauerhafte Federführung** sind voneinander zu unterscheiden: Die Federführung verschafft keine exklusiven Bearbeitungsrechte. Die Anzeige übernimmt den tatsächlichen Sperrstand gemäß [Datenmodell §20.4](../Datenmodell.md); sie erzeugt selbst keine Sperre. Das pessimistischen Sperrkonzept ist für alle betroffenen Objekte einheitlich anzuwenden.
+Der bestehende **sachliche Thementext** und die **optionale, getrennt editierbare „Unsere Einordnung“** sind Bestandteile derselben Beitragsfassung. Ihre redaktionelle Behandlung bleibt getrennt, ohne daraus eigenständige Veröffentlichungsobjekte abzuleiten. Die strenge Seltenheitsregel für politische Einordnungen wurde **für Meldungen** vereinbart; sie wird nicht stillschweigend als identische Frequenzregel auf Themenbeiträge übertragen.
 
-</details>
+### Regeln zu Themenbeitrag und Fassungen
 
-## 6.6 Zusammenspiel und Lebenszyklus
+Der öffentliche Themenbeitrag ist **nicht** die vollständige Analyse. Er wählt aussagekräftige Erkenntnisse aus, erläutert ihren Zusammenhang und kann eine eigenständig gekennzeichnete politische Einordnung enthalten. Die Redaktion kontrolliert die Fassung, Freigabe und spätere öffentliche Sichtbarkeit.
 
-### Plausibilitätsregeln für zulässige Zustandsübergänge
-
-Die Regeln zu Zustandsübergängen sind **fachliche Plausibilitäts- und Geschäftsregeln**: Sie beschreiben zulässige Aktionen, notwendige Vorbedingungen und fachliche Folgen an Thema, lokalen Beziehungen, Beitragsfassungen und Veröffentlichung. Die technische Durchsetzung und eine später aus den Primärregeln abgeleitete Status-/Rechteübersicht müssen auf diese Regeln Bezug nehmen.
-
-### 6.6.1 Thema: Zustände, Übergänge und Rechte
-
-### Übersicht: Themenstatus-Übergänge
-
-Die Tabellen stehen bewusst **vor** den erläuternden Regeln. Sie sind eine fachliche Orientierung, keine Behauptung über bereits implementierte Serverprüfungen.
-
-| Ausgangslage | Aktion / Ziel | Voraussetzung |
-|---|---|---|
-| Neues Thema | **Entwurf** | Redaktionelle Anlage und Dublettprüfung |
-| Entwurf | **Aktiv** | Erste Beitragsfreigabe |
-| Entwurf | **Zurückgestellt** oder **Archiviert** | Ausdrückliche redaktionelle Entscheidung |
-| Aktiv | **Entwurf** | Nur Rücknahme der ersten Freigabe vor erster Veröffentlichung |
-| Aktiv | **Zurückgestellt** oder **Archiviert** | Redaktionelle Entscheidung; öffentliche Sichtbarkeit endet |
-| Zurückgestellt | **Archiviert** | Redaktionelle Entscheidung |
-| Zurückgestellt | **Aktiv** | Redaktionelle Wiederaufnahme und Aktualitätsprüfung |
-| Archiviert, noch nie freigegeben | **Entwurf** | Ausdrückliche Wiederaufnahmebestätigung; noch keine Beitragsfreigabe |
-| Archiviert, früher freigegeben | **Aktiv** | Ausnahme-Wiederaufnahme, ausdrückliche Bestätigung, Aktualitätsprüfung |
-| Archiviert | **Zurückgestellt** | **Kein regulärer Übergang** |
-| Noch nie veröffentlicht und keine wirksame Freigabe | **Löschen** | Sicherheitsabfrage; referenzierte Vorgänge und Ereignisse bleiben erhalten |
-
-### Übersicht: Berechtigungen über alle Themenobjekte
-
-| Aktion | Redakteur | Administrator | Zusätzliche Voraussetzung |
-|---|---|---|---|
-| Themendefinition anlegen und bearbeiten | Ja | Ja | Objektsperre beachten |
-| Thema zurückstellen, archivieren, wiederaufnehmen | Ja | Ja | Bestätigte Übergänge und Aktualitätsprüfung |
-| Thema löschen | Ja | Ja | Nur wenn fachlich zulässig; Sicherheitsabfrage |
-| Lokalen Bezug zuordnen, zurückstellen, ablehnen oder erneut prüfen | Ja | Ja | Dokumentierte redaktionelle Entscheidung |
-| Arbeitsfassung bearbeiten und speichern | Ja | Ja | Exklusiver Schreibzugriff auf das Objekt |
-| Beitragsfassung freigeben, Freigabe vor Erstpublikation zurücknehmen | Ja | Ja | Gesonderte Bestätigung und Audit |
-| Veröffentlichen, zurückziehen, erneut veröffentlichen | Ja | Ja | Jeweilige Publikationsvoraussetzungen und Bestätigung |
-| Fremde offensichtlich verwaiste Objektsperre administrativ aufheben | **Nein** | **Ja** | Nur im Ausnahmefall; Audit |
-
-Die Federführung begründet keine exklusiven Änderungsrechte. Für alle fachlich schreibenden Aktionen gilt zusätzlich das übergreifende pessimistische Sperrverfahren nach [Datenmodell §20.4](../Datenmodell.md). Die Tabelle ist eine **fachliche Berechtigungsentscheidung**, kein Nachweis vollständiger technischer Umsetzung.
-
-**FIB-THEMA-RECHTE-002 – Gleiche reguläre Fachberechtigungen.** Redakteure und Administratoren besitzen für reguläre Themenaktionen einschließlich lokaler Bezüge, Beitragsbearbeitung und Freigabe die gleichen fachlichen Befugnisse. Nur die **administrative Aufhebung fremder verwaister Sperren** ist Administratoren vorbehalten und zu auditieren. Alle fachlichen Zustandsbedingungen gelten weiterhin.
-
-**FIB-THEMA-RECHTE-001 – Redaktionelle Eigenverantwortung.** Redakteure und Administratoren dürfen die in der Übersicht genannten Themenstatus-Aktionen ausführen. Die **Federführung** ist keine exklusive Bearbeitungsberechtigung. Für Freigabe, Publikation, Löschung und ausnahmsweise Wiederaufnahme gelten die jeweils zusätzlichen fachlichen Bedingungen. Die konkreten serverseitigen Rollen- und Zustandsprüfungen bleiben Teil der technischen Abnahme.
-
-**Geklärter Sonderfall:** Ein archivierter, noch nie freigegebener Entwurf wird bei Wiederaufnahme wieder **Entwurf**, nicht Aktiv. Erst die erste Beitragsfreigabe macht ihn Aktiv.
-
-### Gemeinsam bestätigte zusätzliche Themenübergänge (22.10.2026)
-
-**FIB-THEMA-STATUS-005 – Zurückstellen und Archivieren vor erster Aktivierung.** Ein Thema im Zustand **Entwurf** darf durch ausdrückliche redaktionelle Entscheidung entweder **Zurückgestellt** oder **Archiviert** werden. Eine erste Beitragsfreigabe ist dafür nicht erforderlich; die Zustimmung zur Zustandsänderung ist nicht mit einer Beitragsfreigabe gleichzusetzen.
-
-**FIB-THEMA-STATUS-006 – Archivierung nach Zurückstellung.** Ein **Zurückgestelltes** Thema darf unmittelbar **Archiviert** werden. Der Zwischenzustand Aktiv ist dafür nicht erforderlich.
-
-**FIB-THEMA-STATUS-007 – Wiederaufnahme aus dem Archiv.** Der direkte Übergang **Archiviert → Zurückgestellt** wird **nicht** als reguläre Aktion angeboten. Bei früher bereits freigegebenen archivierten Themen erfolgt die ausdrücklich bestätigte, dokumentierte Wiederaufnahme nach **Aktiv** unter den in FIB-THEMA-STATUS-003 festgelegten Aktualitätsbedingungen. Ein **noch nie freigegebener archivierter Entwurf** wird dagegen ausdrücklich in den Status **Entwurf** wiederaufgenommen; erst seine erste Beitragsfreigabe führt ihn nach Aktiv.
-
-Diese zusätzlichen Übergänge und die fachlichen Berechtigungen sind **beschlossen**. Die technische Umsetzung und Prüfung gegen bestehende Rollenrechte stehen noch aus.
-
-
-### 6.6.2 Lokale Beziehung: Zustände und Übergänge
-
-### Übersicht: Übergänge lokaler Bezüge
-
-| Von | Nach | Voraussetzung |
-|---|---|---|
-| Kandidat | Zugeordnet | Redaktion bestätigt Bedeutung und Begründung |
-| Kandidat | Zurückgestellt | Redaktion vertagt Entscheidung |
-| Kandidat | Fachlich unpassend | Begründete redaktionelle Ablehnung |
-| Zugeordnet | Zurückgestellt | Vorläufige Herausnahme aus bestätigtem Bestand |
-| Zugeordnet | Fachlich unpassend | Begründete fachliche Neubewertung |
-| Zurückgestellt | Zugeordnet | Erneute Prüfung und Bestätigung |
-| Zurückgestellt | Fachlich unpassend | Redaktionelle Ablehnung |
-| Fachlich unpassend | Kandidat | Neue Sachlage oder veränderte Themendefinition |
-| Fachlich unpassend | Zugeordnet | **Nicht unmittelbar zulässig** |
-
-Die Tabelle steht vor den Einzelregeln. Alle Entscheidungen werden nachvollziehbar dokumentiert. Die KI darf erneute Prüfung vorschlagen, aber keinen Status eigenständig wechseln lassen.
-
-**FIB-THEMA-BEZUG-007 – Neubewertung bestätigter Bezüge.** Eine zugeordnete Beziehung darf unmittelbar als fachlich unpassend eingestuft werden, wenn ihre fachliche Eignung entfällt. Begründung und frühere Entscheidung bleiben historisch nachvollziehbar.
-
-**FIB-THEMA-BEZUG-008 – Zweistufige Wiederaufnahme abgelehnter Bezüge.** Ein fachlich unpassender Bezug kann bei veränderter Faktenlage oder Themendefinition zunächst wieder Kandidat werden. Erst nach erneuter Prüfung und ausdrücklicher redaktioneller Bestätigung ist Zugeordnet zulässig. Der direkte Übergang von Fachlich unpassend zu Zugeordnet ist ausgeschlossen.
-
-
-### 6.6.3 Beitrag: Fassungen, Freigabe und Veröffentlichung
-
-### Übersicht: Beitragsfassung, Freigabe und Veröffentlichung
-
-| Ausgangslage | Aktion / Ergebnis | Voraussetzung / Folge |
-|---|---|---|
-| Arbeitsfassung | Speichern | Verändert keine bereits veröffentlichte Fassung |
-| Arbeitsfassung | **Freigeben** | Berechtigter Redakteur oder Administrator; Freigabe protokollieren |
-| Freigegebene, noch nie veröffentlichte Fassung | Freigabe **zurücknehmen** | Vor Erstveröffentlichung dieser Fassung; historisieren |
-| Freigegebene Fassung | **Veröffentlichen** | Gesonderte bestätigte Aktion und zulässiger Themenstatus |
-| Veröffentlichte Fassung | Überarbeiten | Neue Arbeitsfassung; bisherige Veröffentlichung bleibt unverändert |
-| Neue freigegebene Fassung | Veröffentlichen | Ersetzt die bisher öffentlich sichtbare Fassung bei gesonderter Publikation |
-| Zurückgestelltes / archiviertes Thema | Sichtbarkeit beenden | Fassungen und Freigaben bleiben historisch erhalten |
-| Veröffentlichte Fassung | **Veröffentlichung zurückziehen** | Redaktion/Admin bestätigt ausdrücklich, begründet; öffentliche Sichtbarkeit endet |
-| Zurückgezogene Veröffentlichung, Inhalt unverändert und Freigabe weiter gültig | **Erneut veröffentlichen** | Erneute ausdrückliche Publikationsbestätigung, keine neue Beitragsfreigabe |
-| Zurückgezogene Veröffentlichung, Inhalt verändert | **Neue Fassung freigeben und veröffentlichen** | Gesonderte Freigabe und gesonderte Publikation |
-| Zurückgezogene Veröffentlichung | **Historie einsehen** | Frühere Fassung, Freigabe und Rückzugsentscheidung bleiben dokumentiert |
-
-Die optionale **„Unsere Einordnung“** gehört zur Beitragsfassung. Sie ist ein eigener Textteil, **kein gesonderter Freigabe- oder Publikationsstatus**. Weitergehende Berechtigungsdetails und besondere Übergänge werden im gemeinsamen fachlichen Abgleich vervollständigt.
-
-
-**FIB-THEMA-BEITRAG-010 – Publikationsrückzug und erneute Veröffentlichung.** Berechtigte **Redakteure und Administratoren** dürfen eine Veröffentlichung durch eine gesonderte Aktion mit ausdrücklicher Sicherheitsbestätigung und **dokumentierter Begründung** zurückziehen. Dies beendet die öffentliche Sichtbarkeit, verändert aber weder die freigegebene Fassung noch ihre historische Freigabe. Wer, wann und warum zurückgezogen hat, bleibt nachvollziehbar. Eine zuvor veröffentlichte Fassung darf erneut sichtbar werden, wenn sie **inhaltlich unverändert und weiterhin gültig freigegeben** ist und der zulässige Themenstatus sowie sonstige Veröffentlichungsvoraussetzungen erfüllt sind; eine **neue ausdrückliche Publikationsbestätigung**, aber keine erneute Beitragsfreigabe ist erforderlich. Bei inhaltlicher Änderung sind eine neue Arbeitsfassung, Freigabe und gesonderte Veröffentlichung notwendig. Historische Veröffentlichungen bleiben dokumentiert.
-
-### 6.6.4 Zusammenspiel und Prüfarten
-
-### Zwei Arten von Übergangsprüfungen
-
-Das bestehende FIB-Regelwerk unterscheidet **harte fachliche Invarianten** von **semantischen Plausibilitätsprüfungen**. Diese Unterscheidung gilt ausdrücklich auch für Statusänderungen an Themen, lokalen Bezügen und Beitragsfassungen.
-
-- **Harte Invariante:** Eine objektiv unzulässige Aktion (beispielsweise Veröffentlichung einer nicht freigegebenen Fassung, ein nicht erlaubter Übergang oder eine Handlung ohne erforderliches Recht) muss **serverseitig blockiert** werden. Eine KI-Empfehlung darf sie nicht überstimmen.
-- **Semantische Plausibilitätsprüfung:** Gibt es mehrere fachlich vertretbare Entscheidungen (beispielsweise, ob ein großer Einzelvorgang ein eigenständiges Thema rechtfertigt), erhält die Redaktion einen begründeten Prüfhinweis und trifft die Entscheidung. Die KI darf dazu Vorschläge machen, aber nicht eigenständig bestätigen.
-
-Das Ziel ist **kein gigantischer Katalog theoretischer Statuskombinationen**, sondern eine nachvollziehbare, objektbezogene Regelung jeder fachlichen Aktion: *Ausgangslage → erforderliche Rolle und Voraussetzungen → Entscheidung/Bestätigung → zulässiger neuer Zustand → Audit und Folgeaktionen*. Die genaue Vollständigkeitsprüfung der Übergänge bleibt im [Issue #153](https://github.com/PustefixReisen/fib-echtsystem/issues/153) als Entwicklungs- und Testaufgabe erfasst.
-
-**Quelle:** [Fachliche Plausibilitäts- und Freigaberegeln §§2–4](../Fachliche-Plausibilitaets-und-Freigaberegeln.md).
-
-### Nur die notwendigen Abhängigkeiten prüfen
-
-FIB führt die drei Einheiten getrennt; es wird **nicht jede denkbare Statuskombination als eigener Zustand** verwaltet. Stattdessen prüft das System bei einer fachlichen Aktion die erforderlichen Voraussetzungen und Folgen.
-
-| Wenn die Redaktion … | Dann ist entscheidend … |
+| Kennung | Fachliche Regel |
 |---|---|
-| einen lokalen Bezug bestätigt | Nur diese Beziehung wird **Zugeordnet**; Thema und Beitrag werden dadurch nicht freigegeben oder veröffentlicht. |
-| einen Bezug zurückstellt oder ablehnt | Die Beziehung bleibt nachvollziehbar, ist aber nicht Teil des bestätigten Bestands. Eine bereits veröffentlichte Textfassung ändert sich dadurch nicht automatisch; redaktioneller Aktualisierungsbedarf kann entstehen. |
-| die Themendefinition überarbeitet | Der fachliche Themenstand wird fortgeschrieben. Es entsteht **nicht automatisch** eine neue öffentliche Beitragsfassung. |
-| eine Arbeitsfassung speichert | Nur der Entwurf ändert sich; bisher freigegebene/veröffentlichte Fassungen bleiben erhalten. |
-| erstmals eine Beitragsfassung freigibt | Das Thema wechselt von **Entwurf** nach **Aktiv**; die Veröffentlichung steht weiter aus. |
-| die freigegebene Fassung veröffentlicht | Diese Fassung wird öffentlich sichtbar – getrennt von der Freigabe und unter Berücksichtigung des zulässigen Themenstatus. |
-| ein Thema zurückstellt oder archiviert | Seine öffentliche Sichtbarkeit endet; alte Freigaben, Versionen und Beziehungen bleiben historisch nachvollziehbar. |
-| ein Thema wiederaufnimmt | Eine Aktualitätsprüfung ist nötig; die Rückkehr nach **Aktiv** veröffentlicht nichts automatisch. Bei inhaltlich geänderter Fassung ist eine erneute Freigabe erforderlich. |
+| **FIB-THEMA-BEITRAG-001/002** | Sachlicher Thementext und optional „Unsere Einordnung“ bleiben getrennt. Selbstfreigabe durch Redakteure ist erlaubt; Beitragsfreigabe ist nicht gleich Veröffentlichung; KI darf keines von beiden verbindlich ausführen. |
+| **FIB-THEMA-BEITRAG-003/004/005** | Arbeits-, freigegebene und aktuell veröffentlichte Fassung bleiben unterscheidbar. Die wirklich aktuell veröffentlichte Fassung ist schreibgeschützt zugänglich; historisch maßgebliche Ausgangsstände werden transparent. |
+| **FIB-THEMA-BEITRAG-006/007/008** | Standardmäßig wird die aktuelle Arbeitsfassung angezeigt. Öffnen allein legt keine gespeicherte Version an; gespeichert wird erst eine tatsächliche Änderung. Ungespeicherte Änderungen und exklusive Bearbeitungssperren werden geschützt. |
+| **FIB-THEMA-BEITRAG-009/010/011** | Zurückziehen und Wiederveröffentlichen sind ausdrücklich bestätigte und protokollierte Handlungen. Ohne Inhaltsänderung kann eine weiterhin gültig freigegebene Fassung gesondert erneut veröffentlicht werden; geänderte Fassung braucht neue Freigabe. Weitere Originalbedingungen gelten gemäß Regelreferenz. |
+| **FIB-THEMA-VERSION-001** | Fachliche Themen-Gesamtfassung (Definition, Bezüge, Wirkungen) und öffentliche Beitragsversion sind getrennte Versionierungsebenen. |
 
-### Ein durchgängiges Beispiel
+**Grenzfall:** Eine neue Arbeitsfassung wird begonnen, während die vorige Version weiterhin öffentlich ist. Die Anzeige „Aktuell veröffentlicht“ zeigt genau die noch sichtbare Fassung und nicht bloß die vorletzte Versionsnummer.
 
-Ein **aktives** Mobilitätsthema hat zwei **zugeordnete** Vorgänge und einen weiteren **Kandidaten**. Die Redaktion erhält neue Erkenntnisse, korrigiert eine Wirkung und erstellt eine neue Arbeitsfassung mit angepasstem Sachtext und optional neuer Einordnung. Die bisherige **freigegebene und veröffentlichte** Fassung bleibt zunächst sichtbar. Erst wenn die neue Fassung redaktionell **freigegeben** und danach ausdrücklich **veröffentlicht** wird, ändert sich die öffentliche Darstellung.
+### Aktuell veröffentlichte Fassung und Ausgangsbasis einer Bearbeitung
 
-**Merksatz:** *Themenstatus steuert den Lebenszyklus, Beziehungsstatus den bestätigten Erkenntnisbestand, Beitragsfreigabe den geprüften Text und Veröffentlichung die öffentliche Sichtbarkeit.*
+Während die Redaktion eine neue Beitragsfassung bearbeitet, bleibt die **tatsächlich aktuell veröffentlichte Fassung** unverändert und im Themeneditor direkt **schreibgeschützt einsehbar**. Dazu gehört auch die damals veröffentlichte optionale **„Unsere Einordnung“**. Der aktuell öffentliche Stand ist nicht zwingend die unmittelbar vorherige Versionsnummer; ein vollständiger historischer Versionsverlauf ist davon getrennt zugänglich.
 
-Die Tabelle erklärt Grundregeln, **keine vollständige Übergangsmatrix**. Spezialfälle, notwendige Berechtigungen und unzulässige Kombinationen müssen gesondert gegen Datenmodell, Services und fachliche Entscheidungen geprüft werden; daraus wird nicht stillschweigend ein weiterer Status eingeführt.
+Eine neue Arbeitsfassung baut im Regelfall auf der **zuletzt maßgeblichen Beitragsfassung** auf. FIB zeigt die Ausgangsfassung ausdrücklich an. Eine ältere oder widerrufene Fassung darf nicht unbemerkt zur Grundlage werden; eine abweichende Ausgangsbasis verlangt eine bewusste redaktionelle Entscheidung.
 
-**FIB-THEMA-STATUS-001 – Fachliche Zustände.** Der Themenlebenszyklus unterscheidet **Entwurf, Aktiv, Zurückgestellt, Archiviert**. Status, Freigabe und tatsächlich bestehende öffentliche Sichtbarkeit sind getrennte Informationen. „Zurückgestellt“ beendet die aktuelle öffentliche Sichtbarkeit vorläufig; „Archiviert“ ist eine auf Dauer angelegte Herausnahme.
+Diese fachlichen Festlegungen entsprechen **FIB-THEMA-BEITRAG-004** und **FIB-THEMA-BEITRAG-005** aus dem bisherigen Kapitel 06. Technische Konflikt- und Wiederherstellungsverfahren werden erst im nachgelagerten Bedien- und Datenmodell konkretisiert.
 
-**FIB-THEMA-STATUS-002 – Erste Freigabe.** Die erste Beitragsfreigabe führt einen Themenentwurf nach **Aktiv**. Wird diese erste Freigabe *vor der ersten Veröffentlichung* widerrufen, führt dies zurück zu **Entwurf**.
+### Arbeitsfassung, Speichern und Freigabe
 
-**FIB-THEMA-STATUS-003 – Wiederaufnahme.** Ein zurückgestelltes oder ausnahmsweise archiviertes Thema darf nach redaktioneller Bestätigung und dokumentierter Aktualitätsprüfung wieder aktiv werden. Ein unveränderter, bereits freigegebener Beitrag benötigt dann keine neue Freigabe; ein geänderter schon. Wiederaufnahme löst **niemals automatisch eine Veröffentlichung** aus.
+Beim Öffnen des Beitragsbereichs erscheint eine bereits vorhandene **aktuelle Arbeitsfassung**. Die Aktion **„Aktuell veröffentlicht“** zeigt getrennt davon die tatsächlich öffentliche Fassung samt damaliger „Unsere Einordnung“ nur lesend an. Ansicht wechseln darf weder einen Entwurf überschreiben noch eine Version erzeugen.
 
-**FIB-THEMA-STATUS-004 – Löschen.** Ein noch nie veröffentlichtes Thema ohne aktuell wirksame Freigabe darf nach ausdrücklicher Sicherheitsbestätigung gelöscht werden. Vorgänge und Ereignisse bleiben dabei erhalten; historische Nachweise und interne Lösch-/Auditregeln sind gesondert zu berücksichtigen.
+Bei der ersten Beitragserfassung steht eine leere Arbeitsfassung bereit. Wenn ein Beitrag veröffentlicht ist und noch kein neuer Arbeitsstand existiert, kann eine neue Arbeitsfassung von der aktuell veröffentlichten Fassung abgeleitet werden. Eine vorhandene Arbeitsfassung wird fortgesetzt. **Bloßes Öffnen erzeugt keinen gespeicherten Entwurf**; erst eine gespeicherte Änderung erzeugt einen Arbeitsstand.
 
-**Quelle:** [Themen- und Vorgangslogik §12](../Themen-und-Vorgangslogik.md), [Fachentwurf §§4, 8–9](../Fachentwurf-Themenbearbeitung-2026-10-20.md).
+Textänderungen und Änderungen an „Unsere Einordnung“ werden ausdrücklich **gespeichert**. Ungespeicherte Änderungen müssen sichtbar sein; beim Verlassen oder Themenwechsel wird vor möglichem Verlust gewarnt. **Speichern ist weder Freigabe noch Veröffentlichung.**
 
-## 6.7 Themenentdeckung und Berücksichtigung redaktioneller Erfahrungen
+Erst die ausdrückliche **Freigabe** einer gespeicherten Arbeitsfassung erzeugt eine unveränderliche freigegebene Beitragsversion. Fassung, Zeitpunkt und freigebende Person sind nachweisbar. Eine noch nie veröffentlichte Freigabe kann ausdrücklich zurückgenommen werden; nach erfolgter Veröffentlichung erfolgt stattdessen gegebenenfalls ein gesonderter Publikationsrückzug. Für spätere inhaltliche Änderungen beginnt eine neue Arbeitsfassung.
 
-### Wie kommt es zur Entdeckung oder Anlage eines Themas?
+Diese Anforderungen konkretisieren die bisherigen Regeln **FIB-THEMA-BEITRAG-006 bis -009**; die Bearbeitung bleibt durch das übergreifende pessimistische Objektsperrprinzip geschützt.
 
-Ein **neues Thema kann jederzeit redaktionell manuell angelegt werden**: Die Redaktion beschreibt eine Leitfrage, einen Arbeitstitel und gegebenenfalls bekannte Vorgänge. Die KI unterstützt auf Anforderung bei der Abgrenzungs- und Dublettprüfung sowie beim Ermitteln möglicher weiterer Bezüge. Der manuelle Weg setzt keine vorangegangene automatische KI-Erkennung voraus.
+### Publikationsrückzug und erneute Veröffentlichung
 
-Der zweite Weg ist die **KI-gestützte Themenentdeckung**. Sie sucht nach übergeordneten Zusammenhängen, die über einzelne Vorgänge hinausgehen. Ein solcher Such- und Vorschlagslauf kann insbesondere ausgelöst werden, wenn:
+Eine bereits veröffentlichte Themenbeitragsfassung kann durch einen berechtigten **Redakteur oder Administrator** mit gesonderter Aktion zurückgezogen werden. Dafür sind eine **ausdrückliche Sicherheitsbestätigung** und eine **dokumentierte Begründung** erforderlich. Person, Zeitpunkt und Grund des Rückzugs bleiben historisch nachvollziehbar. Der Rückzug beendet die öffentliche Sichtbarkeit; die freigegebene Beitragsfassung und ihre damalige Freigabe bleiben unverändert bestehen.
 
-1. die Redaktion aus einem Thema, Vorgang oder einer neu erkannten Entwicklung heraus ausdrücklich eine Themenprüfung anfordert;
-2. eine laufende Recherche neue Vorgänge, Ereignisse oder bislang übersehene Entwicklungen identifiziert, die mehrere Sachverhalte verbinden könnten;
-3. ein vorgesehener periodischer Recherche-/Erkennungslauf unabhängig von bereits bekannten Themen neue Muster im Wissensbestand prüft.
+Eine zurückgezogene Fassung darf erneut veröffentlicht werden, wenn sie **inhaltlich unverändert**, weiterhin wirksam freigegeben und unter dem aktuellen Themenstatus und den sonstigen Veröffentlichungsvoraussetzungen zulässig ist. Dazu bedarf es einer **neuen ausdrücklichen Publikationsbestätigung**, jedoch keiner erneuten Beitragsfreigabe. Ist der Inhalt verändert, benötigt FIB eine neue Arbeitsfassung, deren Freigabe und eine eigenständige Veröffentlichung.
 
-**Auslöser** und **fachliches Ergebnis** sind zu trennen: Ein neuer Vorgang rechtfertigt nicht automatisch ein neues Thema. Die KI analysiert unter anderem wiederkehrende Fragestellungen, gemeinsame Ziele oder Zielkonflikte, mehrere unabhängige Vorgänge, einen Feldkirchen-Bezug und den Erklärungsgewinn der übergeordneten Betrachtung. Sie liefert einen **begründeten Themenkandidaten** mit Leitfrage, Bezügen, möglichen Perspektiven und Unsicherheiten. **Die Redaktion** entscheidet nach Dublett-/Ähnlichkeitsprüfung über Anlage, Einordnung in ein vorhandenes Thema oder Verwerfung.
+Das ist die fachliche Bestandsregel **FIB-THEMA-BEITRAG-010**. Ein Publikationsrückzug ist nicht mit der Rücknahme einer noch nie öffentlich genutzten Beitragsfreigabe gleichzusetzen.
 
-Die genauen automatischen Auslöser, Laufintervalle und Betriebswege sind als **technische Umsetzungsplanung** auszugestalten; ein fachlich vorgesehener Auslöser bedeutet nicht, dass er bereits produktiv aktiviert ist. Die unabhängige breite Quellenentdeckung wird in Kapitel 03 primär behandelt.
+### Exklusive Bearbeitungssperre
 
-### Referenzfall „Kiesgrund“ – Vorgang und möglicher Themenanlass unterscheiden
+Wer einen Themenbeitrag nur liest, löst keine Sperre aus. Vor dem ersten schreibenden Bearbeitungsversuch muss FIB eine **exklusive Objektsperre** erwerben. Solange sie gilt, können andere Redakteure den Beitrag lesen, aber nicht parallel ändern. Die Sperre wird während der Bearbeitung erneuert, beim regulären Ende freigegeben und verfällt, wenn sie nicht mehr erneuert wird. Eine administrative Aufhebung einer verwaisten fremden Sperre ist zu protokollieren.
 
-Beim Test des Themenkandidaten **Wohnen** wies die Redaktion auf die bislang unzureichend berücksichtigte Entwicklung des Baugebiets **„Kiesgrund“** hin. Damit wurde ein bedeutender Vorgang bzw. Recherchebedarf ergänzt. **Wegen Umfang, zeitlicher Tragweite und möglicher Auswirkungen auf mehrere kommunale Fragestellungen ist „Kiesgrund“ zugleich ein begründeter Themenkandidat.** Eine solche Ausnahme kann die Redaktion als eigenständiges Thema eröffnen, wenn eine übergeordnete Leitfrage und eigenständiger Erklärungsgewinn erkennbar sind. Die KI soll diese Option mit Begründung anbieten, nicht automatisch entscheiden. Der Vorgang kann beispielsweise unter den übergeordneten Themen *Wohnen* und *Ortsentwicklung* relevant sein.
+Eine bloße Konfliktkontrolle beim Speichern ersetzt dieses pessimistische Prinzip nicht. Es gilt fachlich auch für andere bearbeitete FIB-Objekte; der Themenbeitrag ist kein Sonderfall. Grundlage: **FIB-THEMA-BEITRAG-011** und `docs/Datenmodell.md` §20.4.
 
-Die KI soll solche Vorhaben künftig auch ohne bereits hinterlegten Themenbegriff entdecken können: über ortsbezogene und themenunabhängige Recherche, räumliche Referenzen, Quellenhinweise sowie die Prüfung von Größe, zeitlicher Tragweite, kommunaler Relevanz und möglichen Bezügen zu bestehenden Themen. Ob eine **neue übergeordnete Leitfrage** erforderlich ist, wird erst durch den Vergleich mit bestehenden Themen entschieden. Größe und Tragweite sind gewichtige Anhaltspunkte, aber keine automatische Themenfreigabe. Die redaktionelle Entscheidung darf einen besonders umfangreichen einzelnen Vorgang als eigenes Thema behandeln, sofern dessen übergeordnete Bedeutung begründet ist.
 
-**Prüfziel:** Kiesgrund muss ohne vorhandenen Suchbegriff als relevantes Vorhaben erkannt werden; die KI soll sowohl die Zuordnung zu bestehenden Themen als auch die Option eines begründeten eigenen Themenkandidaten anbieten. Die Redaktion entscheidet.
+### Fachliche Gesamtfassung und öffentlicher Beitrag
 
-### „KI-Kalibrierung“ heißt: Redaktionelle Entscheidungen als Referenzwissen nutzen
+Ein Thema besitzt einen bestätigten fachlichen Gesamtstand und davon getrennte Beitragsfassungen. Änderungen an Definition, Bezügen oder Analyse können einen neuen bestätigten Gesamtstand nach F-03 ergeben, ohne einen öffentlichen Beitrag zu ändern. Der Beitragsversionsverlauf zeigt vor allem freigegebene Beiträge; frühere fachliche Gesamtstände bleiben intern nachvollziehbar. Der Beitrag trennt sachlichen Thementext von der optionalen „Unsere Einordnung“; KI-Vorschläge und redaktionelle Texte bleiben unterscheidbar.
 
-Mit **Kalibrierung** ist gemeint, dass spätere KI-Vorschläge redaktionell bestätigte, korrigierte oder verworfene Fälle berücksichtigen sollen. Das ist **kein automatisches Nachtrainieren des KI-Modells**. Die Anwendung stellt der jeweils eingesetzten KI bei einem konkreten Themenfindungsauftrag passende, aktuelle und bestätigte Informationen aus FIB als Kontext zur Verfügung.
 
-Fachlich zu unterscheiden sind drei Informationsarten:
+### Freigabewiderruf, Beziehungswechsel und Themenkandidaten
 
-| Wissensart | Beispiel | Verbindlichkeit und vorgesehene Quelle |
+Die erste Beitragsfreigabe macht einen Themenentwurf aktiv. Wird diese erste Freigabe noch vor der ersten Veröffentlichung widerrufen, kehrt das Thema in den Status Entwurf zurück. Eine Analysefreigabe allein bewirkt keinen Statuswechsel.
+
+Eine bereits zugeordnete Themenbeziehung darf unmittelbar als fachlich unpassend bewertet werden, wenn ihre Eignung entfällt. Die Redaktion begründet dies; die frühere Entscheidung bleibt nachvollziehbar. Bei der erneuten Zulassung eines vorher abgelehnten Bezugs gilt dagegen der Zwischenschritt Kandidat.
+
+Die KI schlägt neue Themen begründet vor und berücksichtigt bestehende Themen, Leitfragen, zeitliche Tragweite, Zielkonflikte und Erkenntnisgewinn. Die Redaktion prüft Dubletten und entscheidet über die Anlage. Ein besonders umfangreicher Einzelvorgang kann ebenfalls ein eigenes Thema rechtfertigen.
+
+## 06.7 Fortlaufende Aktualität und öffentlicher Bezug
+
+Nach einer redaktionell freigegebenen Änderung der Themenanalyse prüft FIB automatisch, ob bereits veröffentlichte Themenbeiträge betroffen sind. Eine relevante Auswirkung erzeugt einen **Aktualisierungsvorschlag**, nicht eine automatische Änderung am öffentlichen Text. Keine neue Veröffentlichung ist nötig, wenn der Beitrag sachlich richtig und hinreichend vollständig bleibt.
+
+Wesentliche oder dringend korrekturbedürftige Veröffentlichungen erscheinen in der gemeinsamen Aufgabenübersicht **sichtbar priorisiert**, auch bei zurückgestellten oder archivierten Themen. **Dringlichkeit** und **öffentliche/politische Relevanz** sind verschiedene Dimensionen.
+
+## 06.8 Lebenszyklus, Rollen und Status – Bestandsregeln erhalten, Konflikte klären
+
+Die geltenden Bestandsregeln unterscheiden:
+- **Themenstatus:** Entwurf, Aktiv, Zurückgestellt, Archiviert.
+- **Status lokaler Beziehungen:** Kandidat, Zugeordnet, Zurückgestellt, Fachlich unpassend.
+- **Bedeutung bestätigter Bezüge:** prägend, relevant, ergänzend.
+- **Beitragsfassung:** Arbeitsfassung, Freigabe und gesonderte Veröffentlichung sowie historisierte Rücknahme-/Wiederaufnahmefälle.
+
+Die Regelgruppen FIB-THEMA-BEZUG-001 bis -008, FIB-THEMA-STATUS-001 bis -007 und FIB-THEMA-BEITRAG-* bleiben während der Migration nachweisbare Bestandsreferenzen. **Die später beschlossenen Änderungen zur Analysefreigabe und zum Beobachtungsauftrag sind fachlich entschieden**; entgegenstehende Sätze der älteren Quellen dürfen nicht als noch gültiges Zielmodell ausgegeben werden. Die neue Analysefreigabe wird **nicht vorschnell als zusätzliche Themenstatusmaschine** eingeführt. Redakteure/Administratoren haben bisher grundsätzlich dieselben regulären Fachbefugnisse; die Bearbeitungssperren und Admin-Sonderfälle bleiben zu beachten. Freigabe und Veröffentlichung sind verschiedene Entscheidungen.
+
+**Fachlich entschieden am 26.10.2026:** Die **Analysefreigabe verändert den Themenstatus nicht**. Ein Thema kann eine freigegebene Analyse besitzen und dennoch im Status **Entwurf** stehen. **Erst die erste Beitragsfreigabe** führt wie bisher von Entwurf nach Aktiv; die Veröffentlichung erfolgt gesondert. Technische Versions- und Berechtigungsregeln sind damit noch nicht abgenommen.
+
+### 06.8a Bestandsübergänge und neue Analysefreigabe
+
+**Abgleich 26.10.2026:** Die schon geltenden Zustände **Entwurf, Aktiv, Zurückgestellt, Archiviert** werden beibehalten. Weder die automatische Erstellung einer Analyse noch ihre redaktionelle (Teil-)Freigabe führen zu einem Statuswechsel. Erst die **erste Beitragsfreigabe** ändert Entwurf → Aktiv; eine Veröffentlichung ist ein eigener, ausdrücklich zu bestätigender Schritt.
+
+| Aktion | Statuswirkung | Veröffentlichungswirkung |
 |---|---|---|
-| **Fachliche Regeln und Prüfkriterien** | Wann ist etwas Thema statt bloß Vorgang? Wie funktioniert die Dublettprüfung? | Versionierte Primärregeln im Fachhandbuch; verwendete Regelversion im KI-Auftrag nachvollziehbar |
-| **Bestätigter FIB-Wissensbestand** | Themen, Leitfragen, bestätigte Vorgänge/Bezüge, Referenzobjekte und Quellen | Persistenter redaktionell bestätigter Datenbestand und bestätigtes Referenzwissen; vgl. [Datenmodell §9](../Datenmodell.md) |
-| **Redaktionelle Entscheidungserfahrungen** | KI-Themenvorschlag verworfen; Bezüge korrigiert; „Kiesgrund“ fehlte; Vorgang statt eigenständigem Thema | Noch zu spezifizierende, nachvollziehbare Entscheidungs-/Feedbackhistorie mit Fallkontext, Begründung, Ergebnis und ggf. Gültigkeitsstand |
+| Analyse erzeugen, prüfen oder teilweise freigeben | keine | keine |
+| Erste Themenbeitragsfassung freigeben | Entwurf → Aktiv | keine automatische Veröffentlichung |
+| Erste Beitragsfreigabe **vor erster Veröffentlichung** widerrufen | Aktiv → Entwurf, sofern diese erstmalige Freigabe maßgeblich war | keine |
+| Thema im Entwurf zurückstellen oder archivieren | Entwurf → Zurückgestellt / Archiviert | keine |
+| Zurückgestelltes Thema archivieren | Zurückgestellt → Archiviert | keine |
+| Früher freigegebenes, archiviertes Thema nach Aktualitätsprüfung wiederaufnehmen | Archiviert → Aktiv | keine automatische Veröffentlichung |
+| Noch nie freigegebenen archivierten Themenentwurf wiederaufnehmen | Archiviert → Entwurf | keine |
+| Veröffentlichte Beitragsfassung zurückziehen | Themenstatus bleibt eigenständig zu prüfen | bisher sichtbare Fassung wird verborgen; Freigabe- und Publikationshistorie bleiben erhalten |
 
-Ein **KI-Auftrag zur Themenentdeckung** benötigt daraus einen zweckbezogenen Kontext: gültige fachliche Erkennungsregeln, aktuelle bestätigte Themen zur Dublettprüfung, relevante Ereignisse/Vorgänge/Quellen sowie vergleichbare dokumentierte Entscheidungen. Nicht der gesamte Datenbestand muss ungefiltert an ein KI-Modell übergeben werden. Der Kontext ist modellunabhängig aufzubereiten, sodass unterschiedliche KI-Anbieter dieselben maßgeblichen FIB-Regeln und Fallinformationen erhalten können.
+**FIB-THEMA-STATUS-001 bis -007**, **FIB-THEMA-BEITRAG-002/003/010** und **FIB-THEMA-VERSION-001** bleiben die referenzierten Bestandsregeln. Die neue Analysefreigabe ist eine **zusätzliche fachliche Entscheidung**, keine zusätzliche Themenstatusart.
 
-**Umsetzungslücke:** Das bestehende Datenmodell beschreibt bestätigtes Referenzwissen, insbesondere Orte, Bezeichnungen und Beziehungen. Damit ist noch **nicht** festgelegt oder nachgewiesen, dass alle redaktionellen Entscheidungen bereits als wiederverwendbare Kalibrierungsfälle persistiert, ausgewählt und bei jedem KI-Auftrag übergeben werden. Persistenzschema, Auswahlregeln, Versionsbezug, Kontextaufbereitung und Regressionstests sind vor einer produktiven Aussage über „lernende KI“ technisch zu spezifizieren und nachzuweisen. Es wird **keine autonome Übernahme einer KI-Empfehlung** daraus abgeleitet.
+**Explizite fachliche Änderung der bisherigen Freigabevoraussetzung:** Es wird **nicht mehr verpflichtend ein ausgewerteter Beobachtungsauftrag** verlangt. Stattdessen müssen vor Freigabe des öffentlichen Beitrags die dafür verwendeten Aussagen in der Themenanalyse fachlich geprüft und ausreichend abgesichert sein. Die Redaktion kann Recherche bei Wissenslücken anstoßen; sie ist keine formale Pflichtübung. Der bisherige *dreiteilige* Bearbeitungsablauf wird durch **vier Arbeitsbereiche** ersetzt (Definition, Bezüge, Analyse, Beitrag), ohne vier separate obligatorische Freigaben einzuführen.
 
-**Quellen:** [Themen- und Vorgangslogik §§3–4, 7–9](../Themen-und-Vorgangslogik.md), [KI-Qualität und Modellunabhängigkeit](../KI-Qualitaet-und-Modellunabhaengigkeit.md), [Datenmodell §9](../Datenmodell.md).
+**Noch technisch zu klären:** Wie Analysefassungen und Teilfreigaben referenziert werden, welche Analysefreigabe beim Widerruf einer Beitragsfreigabe wirksam bleibt sowie das genaue Verhalten bei späteren Statuswechseln und nachfolgender Veröffentlichung. Die genannten Grundübergänge werden dadurch nicht neu erfunden.
 
-### Was eine öffentliche Themendarstellung verständlich machen soll
+### Regeln zu Status, Koordination und Berechtigungen
 
-Besucher sollen neben der Leitfrage und dem Feldkirchen-Bezug die prägenden Vorgänge, ergänzenden Ereignisse, Perspektiven, sachlichen Wirkungen, relevanten Hintergrund und offene Wissenslücken erkennen können. Auch Änderungen des Themenverständnisses müssen nachvollziehbar sein. Öffentliche Darstellung und Benutzerführung werden in **Kapitel 09** vertieft; die Fachregeln zu Themen und Bezügen bleiben in diesem Kapitel.
+Der viergliedrige Arbeitsbereich ist keine zusätzliche Statusmaschine. **Themenstatus**, **Analysefreigabe**, **Beitragsfreigabe** und **tatsächliche Veröffentlichung** bleiben voneinander unabhängige Sachverhalte.
 
-**Quellen:** [Themen- und Vorgangslogik §§7–9 und 11](../Themen-und-Vorgangslogik.md).
+| Kennung | Fachliche Regel |
+|---|---|
+| **FIB-THEMA-STATUS-001/002** | Thema: **Entwurf, Aktiv, Zurückgestellt, Archiviert**. Erst die erste Beitragsfreigabe aktiviert den Entwurf; Widerruf dieser Freigabe vor erster Veröffentlichung führt zurück zu Entwurf. |
+| **FIB-THEMA-STATUS-003/005/006/007** | Zurückstellung/Archivierung sind aus Entwurf ohne Beitragsfreigabe möglich. Ein zurückgestelltes Thema darf archiviert werden. Bei Wiederaufnahme archivierter Themen gilt für zuvor nie freigegebene Fassungen Entwurf, sonst die geprüfte Wiederaufnahme nach Aktiv. Nichts wird automatisch publiziert. |
+| **FIB-THEMA-STATUS-004** | Löschung nur für noch nie veröffentlichte Themen ohne wirksame Freigabe nach expliziter Sicherheitsbestätigung; referenzierte Vorgänge/Ereignisse bleiben erhalten. |
+| **FIB-THEMA-KOORD-001/002** | Federführung koordiniert, begründet aber keine exklusiven redaktionellen Bearbeitungsrechte. Konkrete Bearbeitungssperren bleiben gesondert wirksam. |
+| **FIB-THEMA-RECHTE-001/002** | Berechtigte Redakteure und Administratoren handeln gemäß Fachbefugnis und Sperren; Selbstfreigabe ist zulässig, keine zusätzliche Publisher-Rolle nötig. |
 
-## 6.8 Klärungs- und Umsetzungslücken
+**Grenzfall:** Eine Redaktion archiviert einen noch nie freigegebenen Entwurf und nimmt ihn später wieder auf. Er wird wieder **Entwurf**, nicht unmittelbar „Aktiv“. Eine neue Analysefreigabe allein ändert auch dann nichts am Themenstatus.
 
-- **Vorhandene Altquellen:** [Begriffe.md](../Begriffe.md) und [Fachentwurf](../Fachentwurf-Themenbearbeitung-2026-10-20.md) führen die Vier-Status-Entscheidung noch als offen. Das ist eine **veraltete Formulierung**, keine aktuelle fünfte Statusoption. Bereinigung nach Übernahmeprüfung.
-- **Abgelehnte Kandidaten:** Die sechs bereits beschlossenen Ablehnungsgrund-Kategorien stehen in [Issue #149](https://github.com/PustefixReisen/fib-echtsystem/issues/149). Ob und wie sie für alle Statuswechsel und direkte Ereignisbezüge gelten, benötigt beim Einbau der ergänzenden Einzelereignisse noch technische und fachliche Abnahme.
-- **Detailbedingungen der Bezugsübergänge:** Die vereinbarten Übergänge stehen verbindlich in §6.6.2. Noch zu prüfen sind die vollständig zugeordneten Ablehnungsgrund-Kategorien, Zusatzbelege und serverseitigen Prüffälle; dies ändert die beschlossene Matrix nicht.
-- **KI-Folgeprüfungen:** Ereignisgesteuerte und monatliche, modellunabhängig versionierte Bedeutungsprüfung gemäß Issue #149 ist beschlossenes Ziel, aber nicht mit einer bereits produktiv laufenden Automatisierung gleichzusetzen.
-- **K0-Ausspielung:** Die technisch vorgesehene Veröffentlichung darf nicht als bereits aktiv bereitstehender öffentlicher Publikationsweg dargestellt werden.
+### Federführung, Sperrinhaber und fachliche Rechte
 
-## 6.9 Abgleich der älteren Fachquellen: Fassung und Datenmodell
+Die **Federführung** benennt die dauerhaft koordinierende Person, aber gibt ihr keine exklusiven Bearbeitungsrechte. Die Karte **„Redaktionelle Koordination“** unterscheidet daher Federführung und **aktuellen Sperrinhaber**. Bei fremder aktiver Sperre bleibt das Thema lesbar, die Bearbeitung ist jedoch gesperrt. Die Anzeige spiegelt den bestehenden Sperrstand wider und begründet keine zusätzliche Sperre.
 
-Dieser Abschnitt erläutert bereits beschlossene Regeln, deren **technischer Realisierungsstand separat zu prüfen** ist.
+Redakteure und Administratoren dürfen grundsätzlich dieselben regulären Themenaktionen ausführen. Bei Freigabe, Veröffentlichung, Löschung und Wiederaufnahme gelten jedoch die jeweiligen besonderen fachlichen Voraussetzungen. Nur Administratoren dürfen fremde verwaiste Sperren aufheben; diese Handlung wird auditiert. Diese Unterscheidung entspricht **FIB-THEMA-KOORD-001/002** und **FIB-THEMA-RECHTE-001/002**.
 
-**FIB-THEMA-VERSION-001 – Zwei unterschiedliche Versionierungsebenen.** Eine Themenbearbeitung kann die fachliche **Gesamtfassung** verändern (beispielsweise Definition, Abgrenzung, bestätigte Bezüge oder Wirkungen), ohne unmittelbar eine neue veröffentlichte Beitragsfassung hervorzubringen. Davon getrennt steht die **Beitragsfassung** mit expliziter redaktioneller Freigabe und gegebenenfalls Veröffentlichung. Im redaktionellen Versionsverlauf werden vorrangig freigegebene Beitragsfassungen angezeigt; die wesentlichen Änderungen der Gesamtfassung bleiben intern nachvollziehbar. Ihre technische Verknüpfung ist noch nicht abschließend spezifiziert.
+## 06.9 Anforderungen an den Themeneditor (Lösung bewusst offen)
 
-**FIB-THEMA-KOORD-001 – Federführung ohne exklusive Bearbeitungsrechte.** Die redaktionelle Koordination verwendet die vorhandene Federführung eines FIB-Benutzers. Sie begründet **keine ausschließlich dieser Person vorbehaltene Bearbeitungsberechtigung** und ersetzt nicht die fachlichen Rollen-/Freigaberegeln.
+Der Themeneditor muss die vier Arbeitsbereiche Definition, Bezüge, Analyse und Beitrag in einer verständlichen, **nicht starren** Struktur erschließen. Im Arbeitskontext sollen die Redaktion unter anderem erreichen können:
+- prüfbare Bezüge/Bedeutungen und Herkunft/Belege;
+- Analyse, Qualitätsbeurteilung, Teilfreigaben, Änderungspakete;
+- Fragen/Antworten und genehmigungsfähige Recherchen;
+- Schwerpunktsetzung, Beitragsentwurf, KI-Korrektorat und Veröffentlichungsfreigabe.
 
-**FIB-THEMA-ENTDECKUNG-001 – Themenkandidat statt automatischer Neuanlage.** Die KI-Themenanalyse berücksichtigt bestehende Themen, lokale Quellen und Beziehungen sowie fachliche Merkmale wie übergreifende Leitfrage, zeitliche Tragweite, Zielkonflikte und Mehrwert. Ein Kandidat wird begründet und als Vorschlag kenntlich gemacht. Die Redaktion entscheidet über die Neuanlage nach Dublettprüfung; auch ein besonders umfassender Einzelvorgang wie Kiesgrund kann dabei ein eigenständiges Thema rechtfertigen.
+Daraus wird **keine Pflicht**, jeden Vorgang in vier festen Dialogschritten zu bearbeiten. Auch ist die konkrete Platzierung von Funktionen (Editor oder gemeinsame Aufgabensteuerung) **noch nicht abschließend entschieden**. Sie wird mit echten Anwendungsfällen im bestehenden Echtsystem iterativ erprobt und danach fachlich dokumentiert.
 
-### Verbindlichkeit und offene technische Nachweise
+Die [Fachregelreferenz mit allen 32 bestehenden Themenregeln](06-Themen-Fachregelreferenz-Migration-2026-10-26.md) ergänzt die Prozessbeschreibung. Ihre Originaltexte sind für den Abgleich gesichert; fachliche Abweichungen und noch nicht geprüfte Status-/Freigaberegeln sind dort ausdrücklich verzeichnet. Die bisherige Quelle bleibt bis zum geprüften Abschluss verbindlich.
 
-Die fachliche Aussage zur Federführung und die beiden Versionierungsebenen wurden bereits im [Fachentwurf §7](../Fachentwurf-Themenbearbeitung-2026-10-20.md) mit [Datenmodell §4.6](../Datenmodell.md) abgeglichen. Die [Themen- und Vorgangslogik §10](../Themen-und-Vorgangslogik.md) benennt daneben technische Modellfolgen (Beziehungs- und Protokollstruktur, Analyseherkunft, Dublettenprüfung). Sie bleiben im Datenmodell beziehungsweise den technischen Entwicklungsaufgaben zu überprüfen und werden hier **nicht als bereits implementiert behauptet**.
+## 06.10 Abnahmeszenarien
 
-## 6.10 Ergebnis des Quellenabgleichs
+1. **Themenanlage:** FIB schlägt „Mobilität in Feldkirchen“ vor; Redaktion entscheidet, legt Leitfrage fest, prüft Dubletten.
+2. **Fachliche Bezüge:** Autobahnkreuz, Parkraumkonzept und Radschnellweg werden mit nachvollziehbarer Bedeutung vorgeschlagen, aber nicht automatisch endgültig bestätigt; weitere passende Einzelereignisse sind zulässig.
+3. **Themenanalyse:** Die KI nutzt bestätigte Vorgangsanalysen und ergänzt eine eigenständige Betrachtung von Zielkonflikten; übergreifende Erkenntnisse brauchen keinen künstlichen Vorgang.
+4. **Vollständigkeit:** Fehlender ÖPNV-Aspekt führt zu Fragen und ggf. Recherchevorschlag; eine Teilfreigabe der übrigen belegten Analyse ist möglich.
+5. **Auswirkungen:** Neue Verkehrsprognose verändert den Autobahnvorgang; FIB prüft das Mobilitätsthema gezielt und schlägt ein Änderungspaket vor.
+6. **Schwerpunkte und Korrektorat:** Redaktion ergänzt Finanzierungsfrage, FIB prüft Wissensgrundlage und empfiehlt ggf. Recherche statt ungesicherte Behauptung.
+7. **Publikation:** Fachlich bestätigte Analyse, gesondert freigegebener Themenbeitrag, zeitgesteuerte Veröffentlichung; spätere Analyseänderung löst nur bei sachlichem Bedarf einen Aktualisierungsvorschlag aus.
+8. **Editorbedienung:** Alle vier Bereiche erreichbar, ohne vier Pflichtfreigaben und ohne feste Reihenfolge.
 
-Der Abgleich mit Fachkonzept, Themen- und Vorgangslogik, Fachentwurf, Begriffsverzeichnis, Datenmodell und fachlichen Plausibilitätsregeln bestätigt die Grundstruktur. Noch nicht freigegeben ist jedoch die Ablösung dieser Altquellen.
+## 06.11 Offene Konsistenz- und Lösungsfragen
 
-| Prüffeld | Befund | Ausstehender Nachweis |
-|---|---|---|
-| Thema und Vorgang | Grundabgrenzung und Kiesgrund-Ausnahme beschrieben | Gemeinsame fachliche Abnahme |
-| Zuordnungsstatus | Vier Zustände verbindlich; in Begriffe.md steht noch irreführend „KI-Vorschlag“ als Status | Altquelle erst nach Gesamtübernahme bereinigen |
-| Perspektiven und Wirkungen | Thema-Perspektive und ereignisverankerte Wirkung abgeglichen | Abgeleitetes Glossar später prüfen |
-| Thema und Beitrag | Eigenständiger Themenlebenszyklus, Gesamt- und Beitragsversion | Technische Zuordnung in Issue #153 nachweisen |
-| Veröffentlichung | Freigabe getrennt von Publikation, direkte Einsicht öffentlicher Fassung | Implementierung und Rechteprüfung in Issue #153 |
-| Statuswechsel | Harte Regeln versus semantische Prüfung unterschieden | Vollständige Aktionen-/Rechtematrix prüfen |
-| KI-Referenzwissen | Fachliche Zielsetzung erläutert | Speicherung und Abruf in Issue #183 |
-| Recherche und öffentliche Darstellung | Thema-bezogene Aussagen übernommen | Detailquellen in Kapitel 03 und 09 konsolidieren |
+1. **Beschlossene Freigabeänderung nachführen:** Die fachliche Entscheidung ist getroffen und in §§06.5/06.8a formuliert. Vor einer normativen Ablösung sind noch die entgegenstehenden älteren Primärquellen und abhängigen Testanforderungen nachweisbar zu aktualisieren. Dies ist keine offene fachliche Grundsatzfrage.
+2. **Lebenszyklus:** Fachlicher Statusübergang bei erster Beitragsfreigabe ist in §06.8a geklärt; technische Daten-/Versionsbeziehungen, Teilfreigabe und Rücknahmefälle prüfen.
+3. **Teilfreigabe und Versionierung:** Inhaltseinheiten, gültige Fassung, Historie und Schutz vor unbemerkter Überschreibung mit bestehendem Gesamtversionsmodell abgleichen.
+4. **Wirkungen und übergreifende Erkenntnisse:** Bestehende Ereignisverankerung einzelner Wirkungen versus themenbezogene Zusammenhänge ohne Einzelereignis gemeinsam konsistent modellieren.
+5. **Bezugsstatus:** Automatische Kandidaten mit verbindlicher redaktioneller Zuordnung und Bedeutung vereinbaren, ohne neuen Status zu erfinden.
+6. **UI:** Den vierstufigen Themeneditor erst im Echtsystem prototypisch erweitern und praktisch testen; bestehende Bedienmuster erhalten, keine parallele UI-Prototypentwicklung.
+7. **Regel- und Rechteabgleich:** Kapitel 02/03/04/05/08/10, Bestandsregel-IDs, Technikkontrakte, Regressionstests und Fachhandbuch-Sekundärsichten auf Konsistenz prüfen.
 
-Die Kapitelversion bleibt ein **Konsolidierungsentwurf**. Dieser Quellenabgleich ist keine Aussage, dass die technische Umsetzung bereits vollständig erfolgt ist.
+## Herkunft und Nachweise
 
-## Übernahmematrix dieses Kapitels
-
-| Bestehende Quelle | Übernommene Bereiche | Noch zu prüfen |
-|---|---|---|
-| `Fachkonzept.md` | Thema als Wissensobjekt | übrige Querverweise |
-| `Themen-und-Vorgangslogik.md` | §§3–6, 12 | §10 (technische Modellfolgen) nun abgegrenzt; Detailabgleich mit Kap. 03/09 weiterhin offen |
-| `Fachentwurf-Themenbearbeitung-2026-10-20.md` | §§2–4, 8–9 | §7 zu Federführung/Versionierung aufgenommen; Berechtigungsdetails weiter abzugleichen |
-| `Begriffe.md` | lokale Bezüge, Bedeutung, Status | übrige Perspektiven- und Wirkungsdefinitionen |
-| `Datenmodell.md` | fachlicher Statusbezug, Gesamt-/Beitragsversionen | übrige fachliche Kardinalitäten, technische Versionierungsverknüpfung |
-| `Fachliche-Plausibilitaets-und-Freigaberegeln.md` | harte Invarianten und semantische Prüfungen | allgemeine Medienfreigaben gehören in andere Kapitel |
-| Issues #149/#164 | beschlossene Kandidaten-/Statusregeln | Wiederaufnahme- und Ablehnungsmatrix |
-
-## Änderungshistorie
-
-| Version | Datum | Änderung |
-|---|---|---|
-| 2.7 | 23.10.2026 | Redaktioneller Ablauf für Arbeitsfassung, Speichern, Freigabe, Veröffentlichung und Sperre vor gebündeltem Regeltext erläutert. |
-| 2.6 | 23.10.2026 | Lesestandard: lokale Bezüge und Beitragsfassungen mit einführendem Fachtext und zusammengefassten einklappbaren Regelgruppen; Regelwortlaut beibehalten. |
-| 2.5 | 22.10.2026 | Abschließender Tabellen-/Regelabgleich: doppelte Rechteübersicht entfernt, Altformulierungen präzisiert, verbleibende Kapitelgrenzen offen. |
-| 2.4 | 22.10.2026 | Reguläre Rechte von Redaktion und Administration vereinheitlicht; nur administrative Sperraufhebung ausgenommen. |
-| 2.3 | 22.10.2026 | Sonderfall archivierter, nie freigegebener Entwürfe fachlich bestätigt: Wiederaufnahme nach Entwurf. |
-| 2.2 | 22.10.2026 | Konsistenzprüfung der Beitragserfassung; veraltete offene Verweise aktualisiert und übergreifende Objektsperre an Datenmodell §20.4 rückgebunden. |
-| 2.1 | 22.10.2026 | Anzeige aktiver Objektsperren in der Karte Redaktionelle Koordination ergänzt; Federführung getrennt. |
-| 2.0 | 22.10.2026 | Vereinbartes pessimistisches Objektsperrprinzip für die Beitragserfassung klargestellt. |
-| 1.9 | 22.10.2026 | Publikationsrückzug mit Begründung, Rechten, Historie und Wiederveröffentlichung bestätigt; Übergangstabelle ergänzt. |
-| 1.8 | 22.10.2026 | Freigabeverfahren, Selbstfreigabe, Rücknahme vor Publikation und Änderungsfassung bestätigt. |
-| 1.7 | 22.10.2026 | Manuelles Speichern, sichtbare Änderungsmarkierung, Verlassenswarnung und Trennung von Freigabe/Publikation gemeinsam bestätigt. |
-| 1.6 | 22.10.2026 | Drei Fälle zur Entstehung/Fortsetzung einer Arbeitsfassung und keine persistente Neuanlage beim bloßen Öffnen bestätigt. |
-| 1.5 | 22.10.2026 | Standardansicht Arbeitsfassung und separate unveränderliche Ansicht „Aktuell veröffentlicht“ gemeinsam bestätigt. |
-| 1.4 | 22.10.2026 | Statusübersichten und Übergangsregeln zentral in 6.6 nach Thema, Beziehung und Beitrag geordnet; keine Fachentscheidung geändert. |
-| 1.3 | 22.10.2026 | Gemeinsam beschlossene Statusübergänge lokaler Bezüge und zweistufige Wiederprüfung dokumentiert. |
-| 1.2 | 22.10.2026 | Themen-Berechtigungen bestätigt und Status-/Übergangsübersichten vor Detailregeln für Thema, lokalen Bezug und Beitrag angeordnet. |
-| 1.1 | 22.10.2026 | Drei zusätzliche Übergangsregeln gemeinsam entschieden: Entwurf zurückstellen/archivieren, Zurückgestellt archivieren, kein direkter Archiviert→Zurückgestellt-Übergang. |
-| 1.0 | 22.10.2026 | Ergebnis des Altquellenabgleichs und offene Freigabekriterien dokumentiert. |
-| 0.9 | 22.10.2026 | Altquellen zur Unterscheidung blockierender Zustandsinvarianten und redaktioneller Plausibilitätsprüfungen abgeglichen. |
-| 0.8 | 22.10.2026 | Quellenabgleich für Federführung, zwei Versionierungsebenen und Modellfolgen ergänzt, ohne Implementierungsstand vorwegzunehmen. |
-| 0.7 | 22.10.2026 | Kiesgrund als besonders umfangreichen Vorgang und möglichen eigenständigen Themenkandidaten nach redaktioneller Entscheidung präzisiert. |
-| 0.6 | 22.10.2026 | Manuelle Themenanlage und KI-Suchanlässe abgegrenzt; Kiesgrund als übersehener Vorgang präzisiert; Kalibrierung als kontextgestützte Nutzung redaktioneller Entscheidungen mit offener Persistenz-/Laufzeitlücke beschrieben. |
-| 0.5 | 22.10.2026 | Fehlende Altabschnitte zu Themenentdeckung, Kiesgrund, KI-Kalibrierung und öffentlicher Darstellung eingeordnet; fachliche Zielkapitel abgegrenzt. |
-| 0.4 | 22.10.2026 | Neue Beitragsregeln zur unmittelbaren Anzeige des veröffentlichten Standes und Ausgangsbasis neuer Fassungen; Statusübergänge als Plausibilitätsregeln klassifiziert. |
-| 0.3 | 22.10.2026 | Perspektiven als erweiterbare Themenblickwinkel und Wirkungen als belegte/erwartete Ereignisfolgen erläutert; Status je Objekt statt Gesamtmatrix erklärt. |
-| 0.2 | 22.10.2026 | Fachliche Absicht und Wissensmodell erläutert; Statusdimensionen mit gemeinsamen Beispielen und Folgen erklärt. |
-| 0.1 | 22.10.2026 | Erste regelbasierte Zusammenführung des Themenbereichs, 13 Regelkennungen, Quellverweise und offene Abgleichpunkte. |
+- `docs/fachhandbuch/06-Themen.md` (Bestandsfassung 2.7, 22.10.2026)
+- `docs/Datenmodell.md`, `docs/Themen-und-Vorgangslogik.md`, `docs/Persistenz-und-Lebenszyklusmodell.md`
+- `docs/fachhandbuch/03-Recherche-Neufassung-Entwurf-2026-10-26.md`
+- `docs/fachhandbuch/05-Vorgaenge-und-Vorgangsanalysen-Entwurf-2026-10-26.md`
+- Fachliche Modellerprobung im Dialog 25.–26.10.2026
