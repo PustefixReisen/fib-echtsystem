@@ -90,3 +90,7 @@ Die fachliche Durchsicht der elf Kapitel ist abgeschlossen. Die normative Migrat
 **Wichtig:** Ein inventarisierter oder verlinkter Originaltext gilt nicht automatisch als inhaltlich gleichwertig in die neue Norm übernommen. Bis zur belegten Einzeläquivalenz und Auflösung der gekennzeichneten Konflikte bleiben die Original-Fachquellen ergänzend maßgeblich. Diese Verweisstruktur verhindert Informationsverlust, ersetzt aber nicht den normativen Einzelabgleich. Der Entwurfs-PR darf nicht allein aufgrund der Inhaltsfreigaben als vollständig normmigriert bezeichnet werden.
 
 - [Konsolidierter Quellenabgleich und Vorrangregel (28.10.2026)](PR259-Konsolidierter-Quellenabgleich-2026-10-28.md): aufgelöste fachliche Normwidersprüche, beibehaltene Detailregeln, ausdrücklich verbleibende Einzelnormprüfung.
+
+## Fachkonzept – Abschlussstand 29.10.2026
+
+[**Abnahmevorlage und Abschlussprüfbericht für PR #259**](PR259-Fachkonzept-Abnahmevorlage-2026-10-29.md). Die elf Kapitel wurden fachlich einzeln bestätigt und die [Regelhierarchie samt ergänzender Bestandsquellen](PR259-Normative-%C3%9Cbernahme-2026-10-28.md) ist dokumentiert. Die Endabnahme des Gesamtwerks sowie die tatsächlichen Merge-/CI-Voraussetzungen bleiben gesonderte Abschlussbedingungen. Die vier nicht blockierenden Folgeaufgaben sind als GitHub-Issues #266–#269 erfasst.
