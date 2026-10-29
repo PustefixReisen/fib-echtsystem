@@ -1,0 +1,25 @@
+import assert from 'node:assert/strict';
+import {reconcileSourceObservation, updateSourceCheckpoint} from '../../packages/domain-contracts/src/source-monitor.js';
+
+const now = '2026-10-29T18:00:00Z';
+const first = reconcileSourceObservation('gemeinde', 'm-1', 'https://feldkirchen.de/example', 'hash-a', now);
+assert.equal(first.status, 'new');
+assert.equal(first.review, true);
+assert.equal(first.observation.revision, 1);
+const same = reconcileSourceObservation('gemeinde','m-1','https://feldkirchen.de/example','hash-a',now,first.observation);
+assert.equal(same.status, 'unchanged');
+assert.equal(same.review, false);
+assert.equal(same.observation.revision,1);
+const changed = reconcileSourceObservation('gemeinde','m-1','https://feldkirchen.de/example','hash-b',now,same.observation);
+assert.equal(changed.status,'changed');
+assert.equal(changed.observation.revision,2);
+assert.equal(changed.observation.firstSeenAt,now);
+assert.throws(() => reconcileSourceObservation('gemeinde','m-2','https://feldkirchen.de/example','hash-c',now,changed.observation));
+const initial = {scopeId:'gemeinde',lastSuccessAt:'2026-10-29T12:00:00Z'};
+const fail = updateSourceCheckpoint(initial,now,false,'Network failure');
+assert.equal(fail.lastSuccessAt,initial.lastSuccessAt);
+assert.equal(fail.gapSince,initial.lastSuccessAt);
+const success = updateSourceCheckpoint(fail,'2026-10-29T20:00:00Z',true);
+assert.equal(success.gapSince,undefined);
+assert.equal(success.lastError,undefined);
+console.log('U4 source monitoring domain cases passed');
