@@ -8,3 +8,5 @@ export * from './mfa.js';
 export * from './coordination.js';
 export * from './user-management.js';
 export * from './editorial-write.js';
+export * from './u4-source-discovery.js';
+export * from './u4-source-monitor-run.js';
