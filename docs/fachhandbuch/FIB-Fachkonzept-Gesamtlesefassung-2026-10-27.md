@@ -78,4 +78,4 @@ Federführung ist organisatorische Verantwortung und kein Sonderrecht. Sperren s
 
 **Spätere Umsetzung:** Datenbanktabellen, technische Schnittstellen, konkrete UI-Prototypen, KI-Routing-Implementierung und technische Tests sind nicht Gegenstand der Fachkonzept-Lesefreigabe.
 
-**Prüfgrundlagen:** [Quellabschnittsmatrix](PR259-Weitere-Quellen-Abschnittsabgleich-2026-10-26.md), [Regelkennungen](PR259-Regelkennungen-Migrationsmatrix-2026-10-26.md), [fachlicher Entscheidungsstand](PR259-Fachliche-Restkonflikte-und-Entscheidungsstand-2026-10-26.md), [Abnahme- und Regressionstests](PR259-Abschlusspruefung-und-Regression-2026-10-26.md).
+**Prüfgrundlagen:** [Quellabschnittsmatrix](archiv/pr259/PR259-Weitere-Quellen-Abschnittsabgleich-2026-10-26.md), [Regelkennungen](archiv/pr259/PR259-Regelkennungen-Migrationsmatrix-2026-10-26.md), [fachlicher Entscheidungsstand](archiv/pr259/PR259-Fachliche-Restkonflikte-und-Entscheidungsstand-2026-10-26.md), [Abnahme- und Regressionstests](archiv/pr259/PR259-Abschlusspruefung-und-Regression-2026-10-26.md).
