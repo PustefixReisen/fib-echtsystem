@@ -1,14 +1,14 @@
-> **Verbindliche Lesefassung seit der Fachabnahme am 29.10.2026 (PR #259).** Veraltete Entwurfs- und Migrationshinweise im übernommenen Haupttext beschreiben dessen damaligen Bearbeitungsstand und sind durch die Abnahme überholt. Nicht widersprechende historische Detailregeln gelten gemäß der [Übernahmeregel](PR259-Normative-%C3%9Cbernahme-2026-10-28.md) ergänzend. Frühere Fassung: [Archiv](archiv/03-Recherche-Historischer-Stand-2026-10.md).
+> **Verbindliche Fassung seit der Fachabnahme am 29.10.2026 (PR #259).** Die 54 bestätigten Recherche-Regelkennungen sind in dieses Kapitel integriert. Jüngere ausdrücklich bestätigte Fachentscheidungen haben Vorrang vor widersprechenden historischen Formulierungen. Frühere Fassung: [Archiv](archiv/03-Recherche-Historischer-Stand-2026-10.md).
 
 # 03 – Recherche und Erkenntnisverarbeitung
 
 | Stand | Status | Grundlage |
 |---|---|---|
-| 26.10.2026 | **Diskussions- und Integrationsentwurf, noch nicht fachlich abgenommen** | Fachdialog 25.–26.10.2026, bisheriges Kapitel 03 v3.0 und Kapitel 06 |
+| 29.10.2026 | **Fachlich abgenommen und verbindlich** | Fachdialog 25.–29.10.2026, PR #259, integrierter Bestand von 54 Recherche-Regelkennungen |
 
-> **Geltung und Migration:** Dieser Text ersetzt die bestehenden Fachregeln noch nicht. Er beschreibt das im Dialog vereinbarte Zielmodell. Widersprüche zu älteren Regeln sind weiter unten ausdrücklich benannt und vor der endgültigen Übernahme mit den Primärquellen, Regelkennungen, Code und Tests abzugleichen. Fachlich übergreifende Passagen sind an die künftigen Kapitel 02, 04, 05, 06, 08 und 10 anzuschließen. Keine zusätzlichen DB-Objekte oder UI-Pflichten werden hiermit technisch festgelegt.
+> **Geltung:** Dieses Kapitel ist die fachliche Primärquelle für Recherche und Erkenntnisverarbeitung. Historische Quellen dienen nur noch dem Nachweis der Herkunft und früherer Fassungen. Technische Umsetzung, Datenbankobjekte und UI-Details benötigen weiterhin ihre jeweils vorgesehenen technischen Prüfungen.
 
-**Leseorientierung:** Ziel und Suchraum (§03.1), Fachobjekte (§03.2), Ablauf (§03.3), redaktionelle Steuerung (§03.4), Detailregeln (§03.5), Prüffälle (§03.6), offene Punkte (§03.7). Der Detailregelteil enthält noch Migrationswiederholungen, die vor der gemeinsamen Leseabnahme zusammenzuführen sind.
+**Leseorientierung:** Ziel und Suchraum (§03.1), Fachobjekte (§03.2), Ablauf (§03.3), redaktionelle Steuerung (§03.4), Detailregeln (§03.5), Prüffälle (§03.6) und offene Umsetzungspunkte (§03.7).
 
 ## 03.1 Fachliche Aufgabe und Ziele
 
@@ -20,7 +20,7 @@ Die bestehende redaktionelle Warnschwelle für **ausschließlich mittelbar, verg
 
 ### Fachregeln zu Aufgabe, Suchraum und Relevanz
 
-Die Recherche soll nicht bloß bereits bekannte FIB-Gegenstände bestätigen. Der verbindliche Rahmen erklärt deshalb **gleichermaßen** die offene Entdeckung und die zielgerichtete Suche. Einzelheiten und historische Wortlaute stehen in der [Recherche-Fachregelreferenz](03-Recherche-Fachregelreferenz-Migration-2026-10-26.md).
+Die Recherche soll nicht bloß bereits bekannte FIB-Gegenstände bestätigen. Der verbindliche Rahmen erklärt deshalb **gleichermaßen** die offene Entdeckung und die zielgerichtete Suche. Die dazugehörigen Detailregeln mit ihren bestehenden Kennungen sind in diesem Kapitel integriert; historische Wortlaute bleiben ausschließlich im Archiv nachvollziehbar.
 
 | Regel | Konkrete fachliche Festlegung |
 |---|---|
@@ -203,11 +203,11 @@ Diese Absätze beschreiben **Benutzungsanforderungen**, keine fertig beschlossen
 
 **Dokumentationshinweis (nicht Teil des fachlichen Arbeitsablaufs):** Die bisherigen Regelkennungen werden bei der Migration abgeglichen. Bereits beschlossene Abweichungen, insbesondere bei der Sichtung neuer Fundstellen, werden dokumentiert und nicht als unveränderte Übernahme ausgewiesen.
 
-**Regelreferenz für die Abnahme:** Die [Recherche-Fachregelreferenz](03-Recherche-Fachregelreferenz-Migration-2026-10-26.md) weist sämtliche **54** identifizierten Recherche-Regelkennungen einschließlich FIB-RECH-ABLAUF-001 nach. Die formale normative Endprüfung übernehme ich; sie ist keine Aufgabe der fachlichen Leserin bzw. des fachlichen Lesers. Bis zur vollständigen Abnahme bleiben die bisherigen Primärquellen verbindlich.
+**Regelbestand:** Dieses Kapitel enthält sämtliche **54** bestätigten Recherche-Regelkennungen einschließlich FIB-RECH-ABLAUF-001. Die separate Migrationsreferenz ist nur noch historischer Nachweis und wird archiviert.
 
 ### 03.5a Abgleich der verbindlichen Detailregeln
 
-Die nachstehende Abgrenzung präzisiert die in [der Fachregelreferenz](03-Recherche-Fachregelreferenz-Migration-2026-10-26.md) erhaltenen Bestandsregeln, ohne deren ursprüngliche Kennungen neu zu verwenden:
+Die nachstehende Abgrenzung präzisiert die in diesem Kapitel integrierten Bestandsregeln, ohne deren ursprüngliche Kennungen neu zu vergeben:
 
 - **Fundstellen-Sichtung (FIB-RECH-SICHTUNG-001 / FUND-005):** Jede erfasste Fundstelle mit unmittelbarem Feldkirchen-Bezug bleibt für die Redaktion auffindbar und prüfbar. Ihre Prüfstatus lauten **Neu, Analysiert, Geprüft, Zurückgestellt**. Analyse durch KI ist noch keine menschliche Prüfung; verbindliche Zurückstellung und fachliche Prüfung sind redaktionelle Entscheidungen. Die KI kann währenddessen ein **gesondertes vorläufiges Ereignis** aus der Fundstelle ableiten, ohne dadurch deren Fundstellen-Prüfstatus auf „Geprüft“ zu setzen. „Redakteur muss die Fundstellen durchgehen“ beschreibt den vorgesehenen Sichtungsprozess, **keine Pflicht, jedes automatisch abgeleitete vorläufige Ereignis einzeln zu bestätigen**. **Fachlich entschieden am 26.10.2026:** Eine verpflichtende menschliche Einzelprüfung jeder Fundstelle entfällt. Sämtliche Funde bleiben für Redakteure einsehbar und filterbar. Bei relevanter Unsicherheit, Widersprüchen oder notwendiger redaktioneller Entscheidung entsteht eine gezielte Prüfaufgabe. KI darf nicht verbindlich zurückstellen, löschen oder veröffentlichen. Die vorherige allgemeine Einzelprüfpflicht in FIB-RECH-SICHTUNG-001 wird damit ausdrücklich geändert und ist bei der Normmigration nachzuführen.
 - **Quellenstatus (QUELLE-008/009):** Kandidat, Aktiv, Pausiert, Beendet und Abgelehnt bilden den redaktionellen Quellenstatus. „Pflichtquelle“ ist eine davon unabhängige Eigenschaft. Der bestehende Übergangskatalog bleibt maßgeblich; KI-Vorschläge ändern weder Quelle noch Normstatus automatisch.
