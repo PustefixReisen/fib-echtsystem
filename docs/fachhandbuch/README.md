@@ -2,14 +2,14 @@
 
 ## Verbindliche Kapitel 03 und 06 (Fachabnahme 29.10.2026)
 
-**Maßgeblich sind die am 29.10.2026 fachlich abgenommenen Neufassungen aus PR #259.** Alte Statushinweise „Entwurf“ bzw. „nicht abgenommen“ in Dateinamen und Kopfzeilen sind historische Metadaten und durch die Abnahme überholt. Es gelten die bestätigten neuen Kapitel mit den ergänzenden, nicht widersprechenden Altregeln gemäß der [normativen Übernahmeregel](PR259-Normative-%C3%9Cbernahme-2026-10-28.md).
+**Maßgeblich sind die am 29.10.2026 fachlich abgenommenen Neufassungen aus PR #259.** Veraltete Entwurfs- und Migrationsvermerke im übernommenen Kapiteltext dokumentieren dessen damaligen Bearbeitungsstand; maßgeblich ist die Fachabnahme vom 29.10.2026. Es gelten die bestätigten neuen Kapitel mit den ergänzenden, nicht widersprechenden Altregeln gemäß der [normativen Übernahmeregel](PR259-Normative-%C3%9Cbernahme-2026-10-28.md).
 
 | Kapitel | Verbindliche Lesefassung | Historisches Kapitel | Ergänzende Fachregelreferenz |
 |---|---|---|---|
 | **03 Recherche** | [03 Recherche und Erkenntnisverarbeitung](03-Recherche.md) | [03 Recherche – historisch](archiv/03-Recherche-Historischer-Stand-2026-10.md) | [Fachregelreferenz 03](03-Recherche-Fachregelreferenz-Migration-2026-10-26.md) |
 | **06 Themen** | [06 Themen und Themenanalysen](06-Themen.md) | [06 Themen – historisch](archiv/06-Themen-Historischer-Stand-2026-10.md) | [Fachregelreferenz 06](06-Themen-Fachregelreferenz-Migration-2026-10-26.md) |
 
-**Leseregel:** Zunächst die neue Lesefassung verwenden. Die alten Kapitel sind keine konkurrierende aktuelle Fassung. Ihre nicht widersprechenden Detailregeln gelten ergänzend; im Zweifel hat die jüngere ausdrücklich bestätigte Fachentscheidung Vorrang. Eine Umbenennung und Bereinigung historischer Statusvermerke sind noch sinnvoll, dürfen aber keine Regelinhalte ändern.
+**Leseregel:** Zunächst die neue Lesefassung verwenden. Die alten Kapitel sind keine konkurrierende aktuelle Fassung. Ihre nicht widersprechenden Detailregeln gelten ergänzend; im Zweifel hat die jüngere ausdrücklich bestätigte Fachentscheidung Vorrang. Die gültigen Kapitel tragen jetzt die einheitlichen Standarddateinamen; die historischen Fassungen sind im Archiv gesichert.
 
 
 **[Fachliche Restkonflikte und Entscheidungsstand](PR259-Fachliche-Restkonflikte-und-Entscheidungsstand-2026-10-26.md)** – Drei echte fachliche Restfragen sind von späteren Datenmodell- und UI-Aufgaben abgegrenzt; die bereits beschlossenen Regeln bleiben unberührt.
