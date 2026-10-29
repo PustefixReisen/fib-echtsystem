@@ -2,26 +2,15 @@
 
 ## Verbindliche Kapitel 03 und 06 (Fachabnahme 29.10.2026)
 
-**Maßgeblich sind die am 29.10.2026 fachlich abgenommenen Neufassungen aus PR #259.** Veraltete Entwurfs- und Migrationsvermerke im übernommenen Kapiteltext dokumentieren dessen damaligen Bearbeitungsstand; maßgeblich ist die Fachabnahme vom 29.10.2026. Es gelten die bestätigten neuen Kapitel mit den ergänzenden, nicht widersprechenden Altregeln gemäß der [normativen Übernahmeregel](PR259-Normative-%C3%9Cbernahme-2026-10-28.md).
+Die fachlich abgenommenen Lesefassungen stehen unter den **einfachen Kapiteldateinamen** und enthalten jetzt ihren jeweiligen **verbindlichen Regelteil direkt im Anschluss an die Prozessbeschreibung**:
 
-| Kapitel | Verbindliche Lesefassung | Historisches Kapitel | Ergänzende Fachregelreferenz |
+| Kapitel | Gültiges Fachkapitel mit Detailregeln | Historische Fassung | Zusätzlicher Migrationsnachweis |
 |---|---|---|---|
-| **03 Recherche** | [03 Recherche und Erkenntnisverarbeitung](03-Recherche.md) | [03 Recherche – historisch](archiv/03-Recherche-Historischer-Stand-2026-10.md) | [Fachregelreferenz 03](03-Recherche-Fachregelreferenz-Migration-2026-10-26.md) |
-| **06 Themen** | [06 Themen und Themenanalysen](06-Themen.md) | [06 Themen – historisch](archiv/06-Themen-Historischer-Stand-2026-10.md) | [Fachregelreferenz 06](06-Themen-Fachregelreferenz-Migration-2026-10-26.md) |
+| 03 Recherche | [03-Recherche.md](03-Recherche.md) – **54 Detailregeln enthalten** | [Archiv 03](archiv/03-Recherche-Historischer-Stand-2026-10.md) | [Regelreferenz 03](03-Recherche-Fachregelreferenz-Migration-2026-10-26.md) |
+| 06 Themen | [06-Themen.md](06-Themen.md) – **32 Detailregeln enthalten** | [Archiv 06](archiv/06-Themen-Historischer-Stand-2026-10.md) | [Regelreferenz 06](06-Themen-Fachregelreferenz-Migration-2026-10-26.md) |
 
-**Leseregel:** Zunächst die neue Lesefassung verwenden. Die alten Kapitel sind keine konkurrierende aktuelle Fassung. Ihre nicht widersprechenden Detailregeln gelten ergänzend; im Zweifel hat die jüngere ausdrücklich bestätigte Fachentscheidung Vorrang. Die gültigen Kapitel tragen jetzt die einheitlichen Standarddateinamen; die historischen Fassungen sind im Archiv gesichert.
+**Geltung:** Die älteren Regeltexte werden im Regelteil aus Gründen der Nachvollziehbarkeit mit ihren Kennungen geführt. Soweit jüngere ausdrücklich bestätigte Fachentscheidungen widersprechen, gelten diese neueren Regeln. Insbesondere sind die pauschale menschliche Einzelprüfung jeder Fundstelle sowie die Ableitung von TOP-Beschlüssen aus Presseberichten überholt. Historische Entwurfsdateien und separate Regelreferenzen sind keine konkurrierenden Hauptkapitel.
 
-
-**[Fachliche Restkonflikte und Entscheidungsstand](PR259-Fachliche-Restkonflikte-und-Entscheidungsstand-2026-10-26.md)** – Drei echte fachliche Restfragen sind von späteren Datenmodell- und UI-Aufgaben abgegrenzt; die bereits beschlossenen Regeln bleiben unberührt.
-
-**[Fachkonzept-Abschlussfahrplan und Abnahmekriterien](PR259-Fachkonzept-Abschlussfahrplan-2026-10-26.md)** – Aktueller Fokus: fachliche Konsolidierung und gemeinsame Leseabnahme. Datenmodell, Bedienoberfläche und Implementierung folgen anschließend iterativ; die Issues #260–#264 sind nur nachgelagerte Vormerkungen.
-
-
-**[Wegweiser zur gemeinsamen Leseabnahme](PR259-Leseabnahme-Wegweiser-2026-10-27.md)** – Lesereihenfolge der elf Kapitel, bereits getroffene Entscheidungen, konkrete Abschlussprüfungen und Grenze zur späteren technischen Umsetzung.
-
-**[Gesamtlesefassung](FIB-Fachkonzept-Gesamtlesefassung-2026-10-27.md)** – der zusammenhängende fachliche Ablauf aller elf Kapitel.
-
-**[Quellenabgleich – Prüfprotokoll](PR259-Quellenabgleich-Abschlussprotokoll-2026-10-27.md)** – Primärquellen, bewusste Normänderungen und noch nicht einzeln nachgewiesene Details.
 
 ## Dokumentstand
 
