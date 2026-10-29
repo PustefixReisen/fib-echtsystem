@@ -335,7 +335,7 @@ FIB wird in gemeinsam fachlich prüfbaren Entwicklungsschritten umgesetzt. Jede 
 
 ## Quellen und Bezugsdokumente
 
-- Bestehendes [Kapitel 03 – Recherche](03-Recherche.md) (Konsolidierungsstand 23.10.2026)
-- Bestehendes [Kapitel 06 – Themen](06-Themen.md) (ältere Freigabe- und Editorregeln)
+- Bestehendes [Kapitel 03 – Recherche](archiv/03-Recherche-Historischer-Stand-2026-10.md) (Konsolidierungsstand 23.10.2026)
+- Bestehendes [Kapitel 06 – Themen](archiv/06-Themen-Historischer-Stand-2026-10.md) (ältere Freigabe- und Editorregeln)
 - [Fachhandbuch-Einstieg](README.md) und [Quellinventur](../Fachhandbuch-Inventur-2026-10-22.md)
 - Fachdialog zur Modellerprobung „Grundstückskauf / Autobahnkreuz / Mobilität“ am 25.–26.10.2026 (Entscheidungsgrundlage; im nächsten Schritt als referenzierbarer Entscheidungsnachweis dauerhaft zu dokumentieren)
