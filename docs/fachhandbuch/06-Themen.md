@@ -1,12 +1,12 @@
-> **Verbindliche Lesefassung seit der Fachabnahme am 29.10.2026 (PR #259).** Veraltete Entwurfs- und Migrationshinweise im übernommenen Haupttext beschreiben dessen damaligen Bearbeitungsstand und sind durch die Abnahme überholt. Nicht widersprechende historische Detailregeln gelten gemäß der [Übernahmeregel](PR259-Normative-%C3%9Cbernahme-2026-10-28.md) ergänzend. Frühere Fassung: [Archiv](archiv/06-Themen-Historischer-Stand-2026-10.md).
+> **Verbindliche Fassung seit der Fachabnahme am 29.10.2026 (PR #259).** Die 32 bestätigten Themen-Regelkennungen sind in dieses Kapitel integriert. Jüngere ausdrücklich bestätigte Fachentscheidungen haben Vorrang vor widersprechenden historischen Formulierungen. Frühere Fassung: [Archiv](archiv/06-Themen-Historischer-Stand-2026-10.md).
 
 # 06 – Themen und Themenanalysen
 
 | Stand | Status | Quelle |
 |---|---|---|
-| 26.10.2026 | **Fachlicher Integrationsentwurf, noch nicht abgenommen** | Dialog 25.–26.10., bestehendes Kapitel 06 v2.7, Datenmodell sowie Kapitel-Entwürfe 03–05 |
+| 29.10.2026 | **Fachlich abgenommen und verbindlich** | Fachdialog 25.–29.10.2026, PR #259, integrierter Bestand von 32 Themen-Regelkennungen |
 
-> **Migrationsschutz:** Das bestehende `06-Themen.md` bleibt unverändert. Dieser Text beschreibt das neu vereinbarte Zielmodell in prozessorientierter Form. Er führt **keine neuen technischen Zustände, Datenbankobjekte oder Rechte** stillschweigend ein. Vor Ablösung des Bestands: abschnittsweiser Regelnachweis, Status-/Rechteprüfung, Tests und fachliche Abnahme.
+> **Geltung:** Dieses Kapitel ist die fachliche Primärquelle für Themen und Themenanalysen. Historische Quellen dienen nur noch dem Nachweis der Herkunft und früherer Fassungen. Neue technische Zustände, Datenbankobjekte oder Rechte entstehen weiterhin nicht ohne die dafür vorgesehenen technischen und fachlichen Prüfungen.
 
 ## 06.1 Aufgabe und Grenzen
 
@@ -296,7 +296,7 @@ Der Themeneditor muss die vier Arbeitsbereiche Definition, Bezüge, Analyse und 
 
 Daraus wird **keine Pflicht**, jeden Vorgang in vier festen Dialogschritten zu bearbeiten. Auch ist die konkrete Platzierung von Funktionen (Editor oder gemeinsame Aufgabensteuerung) **noch nicht abschließend entschieden**. Sie wird mit echten Anwendungsfällen im bestehenden Echtsystem iterativ erprobt und danach fachlich dokumentiert.
 
-Die [Fachregelreferenz mit allen 32 bestehenden Themenregeln](06-Themen-Fachregelreferenz-Migration-2026-10-26.md) ergänzt die Prozessbeschreibung. Ihre Originaltexte sind für den Abgleich gesichert; fachliche Abweichungen und noch nicht geprüfte Status-/Freigaberegeln sind dort ausdrücklich verzeichnet. Die bisherige Quelle bleibt bis zum geprüften Abschluss verbindlich.
+Dieses Kapitel enthält die **32 bestätigten Themen-Regelkennungen** direkt in der Prozessbeschreibung und den zugehörigen Regelgruppen. Die separate Migrationsreferenz ist nur noch historischer Nachweis und wird archiviert.
 
 ## 06.10 Abnahmeszenarien
 
