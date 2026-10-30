@@ -4,14 +4,19 @@
 import {handleRis} from '../fib-u4-ris-pilot/index.ts';
 
 const MAX_BATCHES = 8;
+// Leave headroom below Supabase Free Edge's 150-second response timeout.
+const MAX_ELAPSED_MS = 90000;
 export default {async fetch(req:Request){
  if(req.method!=='POST')return handleRis(req,'scheduler');
  let input:{cadence?:'daily'|'weekly';commit?:boolean;pdfBackfill?:boolean};
  try{input=await req.clone().json()}catch{return Response.json({error:'invalid_request'},{status:400})}
  if(input.commit!==true||input.pdfBackfill===true||!['daily','weekly'].includes(input.cadence??''))
   return Response.json({error:'invalid_scheduler_payload'},{status:400});
+ const started=Date.now();
  let latest:Record<string,unknown>={};
  for(let batch=1;batch<=MAX_BATCHES;batch++){
+  if(batch>1 && Date.now()-started>=MAX_ELAPSED_MS)
+   return Response.json({...latest,batches:batch-1,error:'ris_continuation_needed',reason:'runtime_budget'},{status:503});
   const result=await handleRis(req.clone(),'scheduler');
   if(!result.ok)return result;
   latest=await result.json() as Record<string,unknown>;
