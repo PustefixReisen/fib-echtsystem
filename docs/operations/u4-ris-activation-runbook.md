@@ -27,6 +27,15 @@ Shared-Apps Supabase: Vault `supabase_vault` 0.3.1 ist installiert;
 
 ## Vorbereitende Prüfungen (lesen, keine Betriebsänderung)
 
+Die maschinenlesbare Vorprüfung kann mit `npm run u4:ris:preflight`
+und einer ausschließlich serverseitig gesetzten `FIB_DATABASE_URL` gestartet
+werden. Sie verwendet `BEGIN READ ONLY`, liest nur installierte Erweiterungen
+und das Vorhandensein der FIB-Tabellen; sie legt **keine** Jobs, Secrets oder
+Erweiterungen an. Ihr Ergebnis `schedulerReadyForCommissioning` bedeutet
+nur, dass die erforderlichen Erweiterungen installiert sind – **keine**
+Betriebsfreigabe oder erfolgreich nachgewiesene Cron-/Secret-Konfiguration.
+
+
 1. Prüfen, ob die drei Erweiterungen vorhanden sind:
    `select extname,extversion from pg_extension where extname in ('pg_cron','pg_net','supabase_vault');`
 2. Prüfen, ob beide RIS-Endpunkte deployt sind und ob die JWT-Gateway-Einstellung
