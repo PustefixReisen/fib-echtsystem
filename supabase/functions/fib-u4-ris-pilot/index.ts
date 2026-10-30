@@ -16,6 +16,16 @@ function extract(html:string,url:string){
  }
  return {docs:[...docs],navigation:[...navigation]};
 }
+async function pdfHash(url:string){
+ const u=valid(url);if(!u||new URL(u).pathname.toLowerCase()!=='/getfile.asp')throw new Error('invalid_pdf_url');
+ const resp=await fetch(u,{signal:AbortSignal.timeout(20000),headers:{accept:'application/pdf','user-agent':'FIB-U4-RIS-Pilot/0.2'}});
+ if(!resp.ok)throw new Error('PDF HTTP '+resp.status);
+ const length=Number(resp.headers.get('content-length')??'0');if(length>25000000)throw new Error('pdf_too_large');
+ const data=new Uint8Array(await resp.arrayBuffer());if(data.length>25000000)throw new Error('pdf_too_large');
+ if(data.length<5||new TextDecoder().decode(data.subarray(0,5))!=='%PDF-')throw new Error('invalid_pdf_response');
+ const hash=await crypto.subtle.digest('SHA-256',data);
+ return [...new Uint8Array(hash)].map(x=>x.toString(16).padStart(2,'0')).join('');
+}
 async function page(url:string){
  const resp=await fetch(url,{signal:AbortSignal.timeout(15000),headers:{accept:'text/html','user-agent':'FIB-U4-RIS-Pilot/0.1'}});
  if(!resp.ok)throw new Error('RIS HTTP '+resp.status);
@@ -43,7 +53,7 @@ export default {async fetch(req:Request){
   if(scopes.length!==1)throw new Error('ris_scope_unavailable');
   const scopeId=scopes[0].id as string;
   const rows=await sql.unsafe('select cursor_state from fib.ris_scan_cursors where scope_id=$1::uuid',[scopeId]);
-  const previous=rows[0]?.cursor_state as {pending:string[];visited:string[];documents:string[];failures:{url:string;error:string}[]} | undefined;
+  const previous=rows[0]?.cursor_state as {pending:string[];visited:string[];documents:string[];pdfOffset?:number;failures:{url:string;error:string}[]} | undefined;
   const previousSerialized=previous?JSON.stringify(previous):null;
   const cycleRestart=Boolean(previous && previous.pending.length===0 && previous.failures.length===0);
   const visited=new Set(cycleRestart?[]:(previous?.visited??[]));
@@ -64,10 +74,22 @@ export default {async fetch(req:Request){
     for(const linked of result.navigation)if(!known.has(linked)){known.add(linked);pending.push(linked);}
    }catch(err){failures.push({url:u,error:String(err).slice(0,140)});pending.push(u);break;}
   }
-  const current={pending,visited:[...visited],documents:[...knownDocs],failures};
+  const current={pending,visited:[...visited],documents:[...knownDocs],failures,pdfOffset:previous?.pdfOffset??0};
   const complete=pending.length===0&&!failures.length;
   const newly=current.documents.filter(x=>!previous?.documents?.includes(x));
   if(payload.commit!==true)return reply({mode:'dry_run',processed,documents:current.documents.length,newCount:newly.length,pending:pending.length,complete,failures:failures.length,cycleRestart,firstFailure:failures[0]?.error??null});
+  const pdfs:{url:string;hash:string}[]=[];
+  const target=current.documents.length;
+  const budget=Math.min(2,target);
+  for(let i=0;i<budget;i++){
+   const idx=(current.pdfOffset+i)%target;
+   const url=current.documents[idx];
+   try{pdfs.push({url,hash:await pdfHash(url)});}catch(e){return reply({error:'ris_pdf_check_failed',detail:String(e).slice(0,180),url},422);}
+  }
+  current.pdfOffset=target?(current.pdfOffset+budget)%target:0;
+  const previousHashes=pdfs.length?await sql.unsafe('select canonical_url,content_fingerprint from fib.source_observations where scope_id=$1::uuid and canonical_url=any($2::text[])',[scopeId,pdfs.map(x=>x.url)]):[];
+  const byUrl=new Map(previousHashes.map(x=>[x.canonical_url as string,x.content_fingerprint as string]));
+  const changedCount=pdfs.filter(x=>{const old=byUrl.get(x.url);return Boolean(old && !old.startsWith('ris:') && old!==x.hash)}).length;
   const stamp=new Date().toISOString();
   await sql.begin(async tx=>{
    const locked=await tx.unsafe("select id from fib.source_scopes where id=$1::uuid and status='candidate' for update",[scopeId]);
@@ -78,12 +100,20 @@ export default {async fetch(req:Request){
     const id='ris:'+u;
     await tx.unsafe('insert into fib.source_observations(scope_id,external_id,canonical_url,content_fingerprint,first_seen_at,last_seen_at,revision) values ($1::uuid,$2,$3,$4,$5,$5,1) on conflict(scope_id,external_id) do update set last_seen_at=excluded.last_seen_at',[scopeId,id,u,id,stamp]);
    }
+   for(const {url,hash} of pdfs){
+     const id='ris:'+url;
+     await tx.unsafe(`insert into fib.source_observations(scope_id,external_id,canonical_url,content_fingerprint,first_seen_at,last_seen_at,revision)
+       values ($1::uuid,$2,$3,$4,$5,$5,1)
+       on conflict(scope_id,external_id) do update set
+       revision=case when fib.source_observations.content_fingerprint like 'ris:%' or fib.source_observations.content_fingerprint=excluded.content_fingerprint then fib.source_observations.revision else fib.source_observations.revision+1 end,
+       content_fingerprint=excluded.content_fingerprint,last_seen_at=excluded.last_seen_at`,[scopeId,id,url,hash,stamp]);
+   }
    await tx.unsafe('insert into fib.ris_scan_cursors(scope_id,cursor_state,updated_at) values ($1::uuid,$2::jsonb,now()) on conflict(scope_id) do update set cursor_state=excluded.cursor_state,updated_at=now()',[scopeId,sql.json(current)]);
    const reason=complete?null:failures.length?'RIS window fetch failed':'Historical scan not yet complete';
-   await tx.unsafe('insert into fib.source_runs(scope_id,started_at,completed_at,status,items_seen,items_new,items_changed,error_detail) values ($1::uuid,$2,$2,$3,$4,$5,0,$6)',[scopeId,stamp,complete?'succeeded':'failed',current.documents.length,newly.length,reason]);
+   await tx.unsafe('insert into fib.source_runs(scope_id,started_at,completed_at,status,items_seen,items_new,items_changed,error_detail) values ($1::uuid,$2,$2,$3,$4,$5,$7,$6)',[scopeId,stamp,complete?'succeeded':'failed',current.documents.length,newly.length,reason,changedCount]);
    await tx.unsafe('update fib.source_scopes set last_attempt_at=$2,last_success_at=case when $3 then $2 else last_success_at end,gap_since=case when $3 then null else coalesce(gap_since,$2) end,last_error=$4,updated_at=now() where id=$1::uuid',[scopeId,stamp,complete,reason]);
   });
-  return reply({mode:'candidate_test',processed,documents:current.documents.length,newCount:newly.length,pending:pending.length,complete,failures:failures.length,cycleRestart});
+  return reply({mode:'candidate_test',processed,documents:current.documents.length,newCount:newly.length,pending:pending.length,complete,failures:failures.length,cycleRestart,pdfChecked:pdfs.length,pdfChanged:changedCount});
  }catch(e){return reply({error:'ris_pilot_failed',detail:String(e).slice(0,180)},502)}
  finally{await sql.end()}
 }};
