@@ -2,6 +2,8 @@ import assert from 'node:assert/strict';
 import {discoverSource, parseSourceListing, fingerprintDetail, U4_PILOT_TARGETS} from '../../packages/fachservices/src/u4-source-discovery.js';
 import {reconcileSourceObservation,updateSourceCheckpoint} from '../../packages/domain-contracts/src/source-monitor.js';
 
+async function main() {
+
 const news=U4_PILOT_TARGETS[0]!;
 const ris=U4_PILOT_TARGETS[2]!;
 const listing='<html><body><a href="/aktuelles/aktuelle-news/aktuelle-meldungen/vernissage-2026">Vernissage 2026</a><a href="https://unrelated.example/evil">Fremdquelle</a><a href="/aktuelles/aktuelle-news/aktuelle-meldungen/nachrichten-archiv">Archiv</a></body></html>';
@@ -36,4 +38,22 @@ await assert.rejects(()=>discoverSource(news,async()=>({ok:false,status:503,text
 const previous={scopeId:'scope',lastSuccessAt:'2026-10-29T12:00:00Z'};
 const failure=updateSourceCheckpoint(previous,'2026-10-29T18:00:00Z',false,'503');
 assert.equal(failure.gapSince,previous.lastSuccessAt);
-console.log('U4 HTML source discovery cases passed');
+
+const pdfUrl='https://buergerinfo-feldkirchen.digitalfabrix.de/getfile.asp?id=75813&type=do';
+const pdfBytes=new TextEncoder().encode('%PDF-1.7 example fixture');
+const pdfFingerprint=await fingerprintDetail(pdfUrl,async()=>({
+  ok:true,status:200,text:async()=>{throw new Error('Should not decode PDF as HTML')},
+  headers:{get:()=> 'application/pdf'},
+  arrayBuffer:async()=>pdfBytes.buffer
+}));
+assert.equal(pdfFingerprint.length,64);
+await assert.rejects(()=>fingerprintDetail(pdfUrl,async()=>({
+  ok:true,status:200,text:async()=>'<html>login page</html>',
+  headers:{get:()=> 'text/html'},
+  arrayBuffer:async()=>new TextEncoder().encode('<html>login page</html>').buffer
+})),/Unexpected PDF response/);
+
+console.log('U4 HTML and PDF source discovery cases passed');
+
+}
+void main().catch(error=>{console.error(error);process.exitCode=1;});

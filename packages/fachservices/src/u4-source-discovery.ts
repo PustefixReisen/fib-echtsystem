@@ -7,7 +7,7 @@ export type MonitorTarget = {
   origin: string;
 };
 export type DiscoveredLink = { externalId: string; url: string; title: string; kind: RisKind | 'news'; fingerprint: string };
-export type FetchResponse = { ok: boolean; status: number; text(): Promise<string> };
+export type FetchResponse = { ok: boolean; status: number; text(): Promise<string>; arrayBuffer?(): Promise<ArrayBuffer>; headers?: { get(name:string): string|null } };
 export type HttpGet = (url: string) => Promise<FetchResponse>;
 
 export const U4_PILOT_TARGETS: readonly MonitorTarget[] = [
@@ -60,7 +60,7 @@ export function parseSourceListing(target: MonitorTarget, html: string): Discove
     if(!url) continue;
     const path=new URL(url).pathname.toLowerCase();
     if(isRis){
-      if(!/^\/(?:si|to|vo|do|getfile)\d+\.asp$/.test(path)) continue;
+      if(!(/^\/(?:si|to|vo|do)\d+\.asp$/.test(path) || path === '/getfile.asp')) continue;
       // A document list is also a source of nested links; avoid treating it as a publication.
       if(path.endsWith('/do0040.asp')) continue;
     } else {
@@ -86,8 +86,15 @@ export async function discoverSource(target: MonitorTarget, http: HttpGet): Prom
 export async function fingerprintDetail(url: string, http: HttpGet): Promise<string> {
   const response=await http(url);
   if(!response.ok) throw new Error('Detail returned HTTP '+response.status);
+  const contentType=response.headers?.get('content-type')?.toLowerCase() ?? '';
+  const path=new URL(url).pathname.toLowerCase();
+  if(contentType.includes('pdf') || path.endsWith('/getfile.asp') || path.endsWith('.pdf')) {
+    if(!response.arrayBuffer) throw new Error('PDF content requires binary-capable HTTP adapter');
+    const bytes=new Uint8Array(await response.arrayBuffer());
+    if(bytes.length<5 || String.fromCharCode(...bytes.slice(0,5)) !== '%PDF-') throw new Error('Unexpected PDF response');
+    return createHash('sha256').update(bytes).digest('hex');
+  }
   const html=await response.text();
   if(!html.trim() || !/<(?:html|body)\b/i.test(html)) throw new Error('Empty detail document');
-  // This captures changes conservatively; layout changes may trigger unnecessary follow-up.
   return createHash('sha256').update(clean(html)).digest('hex');
 }

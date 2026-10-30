@@ -1,6 +1,8 @@
 import assert from 'node:assert/strict';
 import {SqlU4SourceMonitorStorage} from '../../packages/fachservices/src/u4-source-monitor-sql.js';
 
+async function main() {
+
 const calls:{sql:string;params:readonly unknown[]}[]=[];
 const fake={
   async queryOne<T>(sql:string,params:readonly unknown[]):Promise<T|null>{
@@ -22,3 +24,6 @@ assert.equal(calls.length,5);
 assert.ok(calls.every(c=>c.sql.includes('$1')));
 assert.ok(calls.some(c=>c.sql.includes('on conflict(scope_id,external_id)')));
 console.log('U4 SQL adapter contract checks passed');
+
+}
+void main().catch(error=>{console.error(error);process.exitCode=1;});
