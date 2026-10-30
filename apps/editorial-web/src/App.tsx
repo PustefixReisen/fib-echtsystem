@@ -741,6 +741,26 @@ export function App() {
     finally{setU4Busy(false)}
   }
 
+  async function runRisCombinedAcceptance() {
+    if(sessionContext?.role!=='admin'||state!=='aal2'||u4Busy)return;
+    if(!window.confirm('Beide RIS-Prüfpläne (30 und 120 Tage) vollständig testen? Höchstens 8 kontrollierte Teilaufrufe, keine Zeitsteuerung.'))return;
+    setU4Busy(true);setU4Error(null);setU4Result(null);
+    try {
+      for(const cadence of ['daily','weekly'] as const) {
+        let complete=false;
+        for(let part=0;part<4;part++) {
+          const {data,error}=await supabase.functions.invoke<Record<string,unknown>>('fib-u4-ris-pilot',{body:{commit:true,cadence}});
+          if(error||!data||data.error){setU4Error('RIS '+cadence+' · Paket '+(part+1)+': '+String(data?.detail??data?.error??error?.message??'Abruf fehlgeschlagen'));return;}
+          setU4Result({...data,ris:true});
+          if(Number(data.failures??0)>0){setU4Error('RIS '+cadence+': Abruffehler; Prüfstand wurde zur Wiederaufnahme gespeichert.');return;}
+          if(data.complete===true){complete=true;break;}
+        }
+        if(!complete){setU4Error('RIS '+cadence+': maximale Paketanzahl erreicht; der Prüfstand ist gespeichert.');return;}
+      }
+    }catch(err){setU4Error(err instanceof Error?err.message:'Verbindungsfehler');}
+    finally{setU4Busy(false)}
+  }
+
   async function runRisPdfBackfill() {
     if(sessionContext?.role!=='admin' || state!=='aal2' || u4Busy)return;
     if(!window.confirm('Bis zu 16 kleine Pakete zur nachträglichen RIS-PDF-Inhaltsprüfung starten? Keine automatische Dauerüberwachung.'))return;
@@ -1718,6 +1738,7 @@ export function App() {
                     <button type="button" disabled={u4Busy} onClick={()=>void runRisPilot(false)}>RIS nur prüfen</button>
                     <button type="button" disabled={u4Busy} onClick={()=>void runRisPilot(true)}>RIS-Testlauf speichern</button>
                     <button type="button" disabled={u4Busy} onClick={()=>void runRisPilot(true,'weekly')}>RIS-120-Tage-Prüfung testen</button>
+                    <button type="button" disabled={u4Busy} onClick={()=>void runRisCombinedAcceptance()}>RIS-Betriebsprüfung gesamt testen</button>
                     <button type="button" disabled={u4Busy} onClick={()=>void runRisPdfBackfill()}>RIS-PDFs gesammelt prüfen</button>
                   </div>
                 </div>
