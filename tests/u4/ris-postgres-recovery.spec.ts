@@ -16,7 +16,7 @@ let outage=false, invalidPdf=false, rejectCommit=false;
 const scope='33333333-3333-4333-8333-333333333333';
 
 async function setup(){
- await pool.query('create schema if not exists fib');
+ // Dedicated ephemeral CI database: clear the earlier generic U4 fixture schema.\n await pool.query('drop schema if exists fib cascade');\n await pool.query('create schema fib');
  await pool.query("create table fib.app_users(user_id text,role text,active boolean,setup_status text)");
  await pool.query("insert into fib.app_users values ('22222222-2222-4222-8222-222222222222','admin',true,'active')");
  await pool.query('create table fib.source_scopes(id uuid primary key, scope_key text,status text,last_attempt_at timestamptz,last_success_at timestamptz,gap_since timestamptz,last_error text,updated_at timestamptz)');
