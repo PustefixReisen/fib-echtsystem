@@ -29,7 +29,7 @@ export function extractRisAgendaRows(html:string, pageUrl:string):RisAgendaEvide
     const docs=[...new Set(urls.filter(u=>new URL(u).pathname.toLowerCase()==='/getfile.asp' && new URL(u).searchParams.has('id')))];
     const text=body.replace(/<[^>]*>/g,' ').replace(/&nbsp;|&#160;/gi,' ').replace(/\s+/g,' ').trim();
     const firstCell=body.match(/<td\b[^>]*>([\s\S]*?)<\/td>/i)?.[1]?.replace(/<[^>]*>/g,' ').trim()??'';
-    const topNumber=/^(?:TOP\s*)?(\d{1,2}(?:\.\d{1,2})?)\.?$/i.exec(firstCell)?.[1];
+    const topNumber=/^(?:TOP\s*)?(\d{1,2}(?:\.\d{1,2})?)\.?$/i.exec(firstCell)?.[1] ?? /^(?:&Ouml;|Ö)\s+(\d{1,2}(?:\.\d{1,2})?)\b/i.exec(text)?.[1];
     result.push({proposalUrl:proposals[0],documentUrls:docs,rowText:text.slice(0,300),evidence:'same-html-row',...(topNumber?{topNumber}:{})});
     seen.add(proposals[0]);
   }

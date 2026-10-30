@@ -1,5 +1,6 @@
 import {parseSourceListing, fingerprintDetail,U4_PILOT_TARGETS} from '../packages/fachservices/src/u4-source-discovery.js';
 import {collectRisPageEvidence} from '../packages/fachservices/src/u4-ris-link-evidence.js';
+import {extractRisAgendaRows} from '../packages/fachservices/src/u4-ris-agenda-evidence.js';
 
 const http=async (url:string)=> {
   const timeout=AbortSignal.timeout(15000);
@@ -33,6 +34,8 @@ async function run(){
   const sessionHtml=await sessionResponse.text();
   const sessionLinks=parseSourceListing({key:'feldkirchen-ris-session',url:sessionUrl,origin:new URL(sessionUrl).origin},sessionHtml);
   const evidence=collectRisPageEvidence(sessionUrl,sessionLinks);
+  const agendaRows=extractRisAgendaRows(sessionHtml,sessionUrl);
+  console.log(JSON.stringify({scope:'ris-agenda-row-validation',count:agendaRows.length,topNumbers:agendaRows.map(x=>x.topNumber??null),documents:agendaRows.map(x=>x.documentUrls.length),rowStarts:agendaRows.map(x=>x.rowText.slice(0,100))}));
   const proposals=evidence.filter(e=>e.relation==='session-proposal');
   const attachments=evidence.filter(e=>e.relation==='session-document');
   if(!proposals.length||!attachments.length)throw new Error('Missing RIS session document/proposal links');
