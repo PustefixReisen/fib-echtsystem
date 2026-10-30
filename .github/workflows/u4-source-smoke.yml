@@ -6,6 +6,10 @@ on:
       - "scripts/u4-source-smoke.mjs"
       - "packages/fachservices/src/u4-source-discovery.ts"
       - "tests/u4/source-discovery.spec.ts"
+      - "tests/u4/source-run-recovery.spec.ts"
+      - "tests/u4/source-monitor-sql.spec.ts"
+      - "packages/fachservices/src/u4-source-monitor-run.ts"
+      - "packages/fachservices/src/u4-source-monitor-sql.ts"
       - ".github/workflows/u4-source-smoke.yml"
 jobs:
   probe:
