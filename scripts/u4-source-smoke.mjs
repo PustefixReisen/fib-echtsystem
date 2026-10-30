@@ -22,8 +22,8 @@ for(const [name,url] of targets){
     }
     if(name==="RIS Dokumentfreigaben") {
       // Diagnostic samples only: never assume the RIS navigation parameter encodes a date.
-      const plain=body.replace(/<script\\b[^>]*>[\\s\\S]*?<\\/script>/gi," ").replace(/<style\\b[^>]*>[\\s\\S]*?<\\/style>/gi," ").replace(/<[^>]+>/g," ").replace(/&nbsp;|&#160;/gi," ").replace(/\\s+/g," ");
-      const dates=[...plain.matchAll(/\\b(?:[0-3]?\\d[.]\\s*[01]?\\d[.]\\s*20\\d\\d|20\\d\\d-[01]\\d-[0-3]\\d)\\b/g)].slice(0,12).map(m=>m[0]);
+      const plain=body.replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi," ").replace(/<style\b[^>]*>[\s\S]*?<\/style>/gi," ").replace(/<[^>]+>/g," ").replace(/&nbsp;|&#160;/gi," ").replace(/\s+/g," ");
+      const dates=[...plain.matchAll(/\b(?:[0-3]?\d[.]\s*[01]?\d[.]\s*20\d\d|20\d\d-[01]\d-[0-3]\d)\b/g)].slice(0,12).map(m=>m[0]);
       const headings=[...plain.matchAll(/.{0,45}(?:freigab|veröffentlich|eingestellt|datum|dokument).{0,55}/gi)].slice(0,8).map(m=>m[0].trim());
       console.log(JSON.stringify({name,risVisibleDateSamples:dates,risTextContextSamples:headings,warning:"Samples not verified publication dates; smcadat semantics unknown"}));
     }
