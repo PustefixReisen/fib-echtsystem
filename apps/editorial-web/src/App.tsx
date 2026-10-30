@@ -720,7 +720,7 @@ export function App() {
     if(commit && !window.confirm('Testdaten der Gemeinde-Nachrichten in Shared-Apps speichern?'))return;
     setU4Busy(true);setU4Error(null);setU4Result(null);
     try {
-      const {data,error}=await supabase.functions.invoke<Record<string,unknown>>('fib-u4-pilot',{body:{commit}});
+      const {data,error}=await supabase.functions.invoke<Record<string,unknown>>('fib-u4-pilot',{body:{commit,cadence}});
       if(error || !data || data.error) {
         setU4Error(String(data?.error ?? error?.message ?? 'Abruf fehlgeschlagen'));return;
       }
@@ -729,7 +729,7 @@ export function App() {
     finally{setU4Busy(false)}
   }
 
-  async function runRisPilot(commit:boolean) {
+  async function runRisPilot(commit:boolean,cadence:'daily'|'weekly'='daily') {
     if(sessionContext?.role!=='admin' || state!=='aal2' || u4Busy)return;
     if(commit && !window.confirm('RIS-Testdaten speichern und offenen historischen Rückblick fortsetzen?'))return;
     setU4Busy(true);setU4Error(null);setU4Result(null);
@@ -1717,6 +1717,7 @@ export function App() {
                   <div style={{display:'flex',gap:'.75rem',flexWrap:'wrap'}}>
                     <button type="button" disabled={u4Busy} onClick={()=>void runRisPilot(false)}>RIS nur prüfen</button>
                     <button type="button" disabled={u4Busy} onClick={()=>void runRisPilot(true)}>RIS-Testlauf speichern</button>
+                    <button type="button" disabled={u4Busy} onClick={()=>void runRisPilot(true,'weekly')}>RIS-120-Tage-Prüfung testen</button>
                     <button type="button" disabled={u4Busy} onClick={()=>void runRisPdfBackfill()}>RIS-PDFs gesammelt prüfen</button>
                   </div>
                 </div>
@@ -1727,6 +1728,7 @@ export function App() {
                   {u4Result.ris===true && u4Result.backfill===true && <p>PDF-Nachprüfung: {String(u4Result.pdfChecked)} PDFs im letzten Paket geprüft · Noch offen: {String(u4Result.backfillRemaining)}</p>}
                   {u4Result.ris ? <>
                     <p>RIS-Dokumentverweise: {String(u4Result.documents)} · Neue Verweise: {String(u4Result.newCount)} · Noch zu prüfende Freigabeansichten: {String(u4Result.pending)} · Alle gefundenen Ansichten geprüft: {u4Result.complete?'Ja':'Nein'}</p>
+                    {typeof u4Result.coverageStatus==='string' && <p>Rückblick ({u4Result.cadence==='weekly'?'120':'30'} Tage) · benötigt ab: {String(u4Result.requiredSince)} · frühester belegter Start: {String(u4Result.earliestObserved??'unbekannt')} · Nachweis: {u4Result.coverageStatus==='candidate'?'Startdatum ausreichend; Vollständigkeit nicht belegt':u4Result.coverageStatus==='in_progress'?'Prüfung läuft':u4Result.coverageStatus==='insufficient'?'Rückblick nicht ausreichend':'Nicht nachgewiesen'}</p>}
                     {Array.isArray(u4Result.releaseViews) && u4Result.releaseViews.length>0 && <details><summary>Belegte RIS-Freigabezeiträume ({u4Result.releaseViews.length} Ansichten)</summary><ul>
                       {(u4Result.releaseViews as {url?:string;releaseSince?:string|null;checkedAt?:string}[]).map((view,i)=><li key={view.url??i}>Freigaben seit: {view.releaseSince??'nicht ermittelbar'} · geprüft: {view.checkedAt?new Date(view.checkedAt).toLocaleString('de-DE'):'–'} · <a href={view.url} target="_blank" rel="noopener noreferrer">RIS-Ansicht öffnen</a></li>)}
                     </ul><p>Der angezeigte Freigabestart ist kein Beleg für das Veröffentlichungsdatum einzelner Dokumente oder die vollständige historische Abdeckung.</p></details>}
