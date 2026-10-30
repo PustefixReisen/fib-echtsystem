@@ -1,0 +1,11 @@
+import assert from 'node:assert/strict';
+import {readFileSync} from 'node:fs';
+const edge=readFileSync('supabase/functions/fib-u4-ris-pilot/index.ts','utf8');
+assert.match(edge,/cadenceStates/);
+assert.match(edge,/lastCompleteAt/);
+assert.match(edge,/activeErrors/);
+assert.match(edge,/sourceError/);
+assert.match(edge,/items_changed,error_detail,cadence/);
+assert.match(edge,/sql\.json\(stored\)/);
+assert.doesNotMatch(edge,/last_error=reason/);
+console.log('Separate daily and weekly RIS persistence contracts verified');
