@@ -20,6 +20,8 @@ export async function persistRisReleaseBatch(input:{
   // Serialise scope commits so a cursor and its observations cannot diverge.
   const scope=await tx.queryOne<{id:string}>('select id from fib.source_scopes where id=$1 and status=$2 for update',[scopeId,'candidate']);
   if(!scope)throw new Error('RIS scope unavailable for pilot');
+  const locked=await tx.queryOne<{cursor_state:unknown}>('select cursor_state from fib.ris_scan_cursors where scope_id=$1',[scopeId]);
+  if(JSON.stringify(locked?.cursor_state??null)!==JSON.stringify(previous??null))throw new Error('RIS cursor changed during fetch; restart batch');
   for(const url of fresh){
    const id='ris:'+url;
    const fingerprint=createHash('sha256').update(url).digest('hex');
