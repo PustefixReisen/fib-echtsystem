@@ -44,7 +44,7 @@ export class SqlU4SourceMonitorStorage implements U4SourceMonitorStorage {
     if(!row)throw new Error('Failed to save checkpoint');
   }
   private async logRun(r:{scopeId:string;status:'succeeded'|'failed';seen:number;newCount:number;changedCount:number;error?:string},db:Pick<U4Sql,'queryOne'>):Promise<void>{
-    const row=await this.db.queryOne<{id:string}>(`
+    const row=await db.queryOne<{id:string}>(`
       insert into fib.source_runs(scope_id,started_at,completed_at,status,items_seen,items_new,items_changed,error_detail)
       values ($1,now(),now(),$2,$3,$4,$5,$6) returning id`,
       [r.scopeId,r.status,r.seen,r.newCount,r.changedCount,r.error??null]);
