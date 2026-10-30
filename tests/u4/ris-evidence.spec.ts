@@ -1,0 +1,13 @@
+import assert from 'node:assert/strict';
+import {collectRisPageEvidence} from '../../packages/fachservices/src/u4-ris-link-evidence.js';
+import {parseSourceListing} from '../../packages/fachservices/src/u4-source-discovery.js';
+const base='https://buergerinfo-feldkirchen.digitalfabrix.de';
+const target={key:'feldkirchen-ris-session' as const,url:base+'/si0057.asp?__ksinr=1032&smcmode=32832',origin:base};
+const html='<html><body><a href="vo0050.asp?__kvonr=8640">Vorlage</a><a href="getfile.asp?id=75854&type=do">PDF</a></body></html>';
+const links=parseSourceListing(target,html);
+assert.equal(links.length,2);
+const evidence=collectRisPageEvidence(target.url,links);
+assert.deepEqual(evidence.map(x=>x.relation),['session-proposal','session-document']);
+assert.ok(evidence.every(x=>x.certainty==='page-link-only'));
+assert.equal(collectRisPageEvidence(base+'/do0040.asp',links).length,0);
+console.log('U4 RIS evidence classification passed');
