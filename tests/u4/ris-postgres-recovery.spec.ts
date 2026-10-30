@@ -19,7 +19,7 @@ async function setup(){
  // Dedicated ephemeral CI database: clear the earlier generic U4 fixture schema.
  await pool.query('drop schema if exists fib cascade');
  await pool.query('create schema fib');
- await pool.query("create table fib.app_users(user_id text,role text,active boolean,setup_status text)");
+ await pool.query("create table fib.app_users(user_id uuid,role text,active boolean,setup_status text)");
  await pool.query("insert into fib.app_users values ('22222222-2222-4222-8222-222222222222','admin',true,'active')");
  await pool.query('create table fib.source_scopes(id uuid primary key, scope_key text,status text,last_attempt_at timestamptz,last_success_at timestamptz,gap_since timestamptz,last_error text,updated_at timestamptz)');
  await pool.query("insert into fib.source_scopes(id,scope_key,status) values ($1,'ris-dokumentliste','candidate')",[scope]);
