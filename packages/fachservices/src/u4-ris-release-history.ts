@@ -10,6 +10,7 @@ export function risReleaseHistoryLinks(html:string,listingUrl:string):string[]{
       const u=new URL((match[1]??'').replace(/&amp;/g,'&'),base);
       if(u.origin!==base.origin||u.protocol!=='https:'||!/^\/do0040\.asp$/i.test(u.pathname))continue;
       if(!/^\d{7}$/.test(u.searchParams.get('smcadat')??''))continue;
+      u.hash='';
       urls.add(u.href);
     }catch{}
   }

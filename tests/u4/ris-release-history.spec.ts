@@ -8,4 +8,5 @@ assert.equal(entry.documentUrls.length,1);
 assert.equal(entry.listingDateParameter,null);
 assert.equal(risReleaseWindow(html,url+'&smcadat=2461343').listingDateParameter,'2461343');
 assert.equal(risReleaseHistoryLinks('<a href="https://evil.invalid/do0040.asp?smcadat=2461343">falsch</a>',url).length,0);
+assert.deepEqual(risReleaseHistoryLinks('<a href="do0040.asp?smcadat=2461343&amp;smcmode=32832">a</a><a href="do0040.asp?smcadat=2461343&amp;smcmode=32832#">b</a>',url).length,1);
 console.log('U4 RIS release history navigation tests passed');
