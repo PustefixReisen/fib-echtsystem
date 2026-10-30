@@ -7,7 +7,7 @@ export type MonitorTarget = {
   origin: string;
 };
 export type DiscoveredLink = { externalId: string; url: string; title: string; kind: RisKind | 'news'; fingerprint: string };
-export type FetchResponse = { ok: boolean; status: number; text(): Promise<string> };
+export type FetchResponse = { ok: boolean; status: number; text(): Promise<string>; arrayBuffer?(): Promise<ArrayBuffer>; headers?: { get(name:string): string|null } };
 export type HttpGet = (url: string) => Promise<FetchResponse>;
 
 export const U4_PILOT_TARGETS: readonly MonitorTarget[] = [
