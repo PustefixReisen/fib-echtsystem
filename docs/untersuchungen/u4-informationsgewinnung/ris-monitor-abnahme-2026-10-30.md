@@ -27,3 +27,25 @@ Statt „Historisch vollständig“: **„Alle gefundenen Freigabeansichten gepr
 
 ## Entscheidung
 Die technische Pilotintegration und der Wiederanlauf sind erfolgreich erprobt. **Eine regelmäßige automatische RIS-Überwachung bleibt deaktiviert**, bis Überlappung, Inhaltsänderungserkennung, historische Abdeckungsgrenze und fachliche Verknüpfung ausreichend geprüft sind. Keine Veröffentlichung aus diesem Pilotbetrieb.
+
+
+## Ermittlung der Betriebsregeln – Evidenzprüfung 30.10.2026
+
+### Vorhandene Nachweise
+- Fünf gespeicherte RIS-Freigabeansichten (eine aktuelle Einstiegsliste und vier datumsparametrisierte Navigationsadressen).
+- 94 unterschiedliche PDF-Verweise; für alle 94 wurde ein SHA-256-Inhalts-Fingerabdruck gespeichert.
+- Erstbeobachtung in FIB am 30.10.2026. Das ist **nicht** gleichbedeutend mit dem Veröffentlichungsdatum im RIS.
+- Kein geprüfter Nachweis, dass ein Navigationsparameter `smcadat` unmittelbar ein Kalenderdatum codiert. Die Bedeutung darf nicht aus der Zahl geraten werden.
+- Keine hinreichende Stichprobe nachträglicher Freigaben oder PDF-Austausche, aus der eine verlässliche Überlappungsfrist berechnet werden kann.
+
+### Betriebsregeln (vorläufig; keine Freigabe für Zeitsteuerung)
+1. Eine Quelle erhält einen eigenständigen Zustand für **Scan vollständig durchlaufen**, **historisch abgedeckt ab Datum** und **Inhalte vollständig geprüft**. Diese Zustände dürfen nicht vermischt werden.
+2. Die aktuelle Freigabeliste wird bei jedem neuen Zyklus erneut aufgerufen. In der RIS-Navigation gefundene frühere Ansichten werden nach einer dokumentierten, nachweislich ausreichenden Überlappungsregel erneut geprüft.
+3. Die Intervallwahl „täglich“ und „30 Tage Rückblick“ ist zunächst eine **zu testende Hypothese**, keine geprüfte Betriebsvorgabe.
+4. Neue und bekannte PDF-Verweise werden auf Inhaltsänderung geprüft. Abruffehler erzeugen keinen positiven Inhaltsprüfungs-Nachweis und dürfen den betroffenen Checkpoint nicht überschreiben.
+5. Nicht vollständig bearbeitete, aber fehlerfreie Prüfpakete tragen den Status `partial`, echte Fehler `failed`; versäumte Läufe müssen bis zur erfolgreichen Nachholung als Lücke erkennbar bleiben.
+6. Vollständigkeitsangaben erfordern verifizierte Veröffentlichungsdaten sowie eine bestätigte untere Erfassungsgrenze. Die aktuelle UI-Aussage „Historisch vollständig“ darf ausschließlich als technischer Abschluss aller gefundenen Ansichten interpretiert und soll ersetzt werden.
+7. Sitzungsüberwachung und Dokumentfreigabeüberwachung bleiben getrennt; Zuordnungen zu Sitzung/TOP/Vorlage benötigen einen Beleg.
+
+### Nächste Abnahmeprüfung
+An mindestens zwei zeitlich versetzten RIS-Prüfständen Veröffentlichungs- und Änderungsdaten aus den RIS-Quellen ermitteln; ältere Nachträge gezielt als Referenzfälle erfassen. Erst danach eine konkrete Rückblickfrist und Wiederholungsfrequenz als verbindliche Betriebseinstellung festlegen. Bis dahin **kein Cron und keine automatische Veröffentlichung**.
