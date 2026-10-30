@@ -48,17 +48,19 @@ export default {async fetch(req:Request){
  try{
   const allowed=await sql.unsafe("select 1 from fib.app_users where user_id=$1::uuid and role='admin' and active=true and setup_status='active' limit 1",[user.id]);
   if(!allowed.length)return reply({error:'admin_required'},403);
-  const payload=await req.json().catch(()=>({})) as {commit?:boolean};
+  const payload=await req.json().catch(()=>({})) as {commit?:boolean;pdfBackfill?:boolean};
+  const backfill=payload.pdfBackfill===true && payload.commit===true;
   const scopes=await sql.unsafe("select id from fib.source_scopes where scope_key='ris-dokumentliste' and status='candidate'");
   if(scopes.length!==1)throw new Error('ris_scope_unavailable');
   const scopeId=scopes[0].id as string;
   const rows=await sql.unsafe('select cursor_state from fib.ris_scan_cursors where scope_id=$1::uuid',[scopeId]);
   const previous=rows[0]?.cursor_state as {pending:string[];visited:string[];documents:string[];pdfOffset?:number;failures:{url:string;error:string}[]} | undefined;
   const previousSerialized=previous?JSON.stringify(previous):null;
-  const cycleRestart=Boolean(previous && previous.pending.length===0 && previous.failures.length===0);
+  if(backfill && (!previous || previous.pending.length!==0 || previous.failures.length!==0))return reply({error:'backfill_requires_completed_ris_scan'},409);
+  const cycleRestart=Boolean(!backfill && previous && previous.pending.length===0 && previous.failures.length===0);
   const visited=new Set(cycleRestart?[]:(previous?.visited??[]));
   const knownDocs=new Set(previous?.documents??[]);
-  const pending=[...(cycleRestart?[entry]:(previous?.pending?.length?previous.pending:[entry]))];
+  const pending=[...(backfill?[]:cycleRestart?[entry]:(previous?.pending?.length?previous.pending:[entry]))];
   const known=new Set([...visited,...pending]);
   const failures=[...(previous?.failures??[])];
   let processed=0;
@@ -80,13 +82,13 @@ export default {async fetch(req:Request){
   if(payload.commit!==true)return reply({mode:'dry_run',processed,documents:current.documents.length,newCount:newly.length,pending:pending.length,complete,failures:failures.length,cycleRestart,firstFailure:failures[0]?.error??null});
   const pdfs:{url:string;hash:string}[]=[];
   const target=current.documents.length;
-  const budget=Math.min(6,target);
+  const budget=backfill?Math.min(6,Math.max(0,target-current.pdfOffset)):Math.min(6,target);
   for(let i=0;i<budget;i++){
    const idx=(current.pdfOffset+i)%target;
    const url=current.documents[idx];
    try{pdfs.push({url,hash:await pdfHash(url)});}catch(e){return reply({error:'ris_pdf_check_failed',detail:String(e).slice(0,180),url},422);}
   }
-  current.pdfOffset=target?(current.pdfOffset+budget)%target:0;
+  current.pdfOffset=backfill?current.pdfOffset+budget:(target?(current.pdfOffset+budget)%target:0);
   const previousHashes=pdfs.length?await sql.unsafe('select canonical_url,content_fingerprint from fib.source_observations where scope_id=$1::uuid and canonical_url=any($2::text[])',[scopeId,pdfs.map(x=>x.url)]):[];
   const byUrl=new Map(previousHashes.map(x=>[x.canonical_url as string,x.content_fingerprint as string]));
   const changedCount=pdfs.filter(x=>{const old=byUrl.get(x.url);return Boolean(old && !old.startsWith('ris:') && old!==x.hash)}).length;
@@ -113,7 +115,7 @@ export default {async fetch(req:Request){
    await tx.unsafe('insert into fib.source_runs(scope_id,started_at,completed_at,status,items_seen,items_new,items_changed,error_detail) values ($1::uuid,$2,$2,$3,$4,$5,$7,$6)',[scopeId,stamp,complete?'succeeded':failures.length?'failed':'partial',current.documents.length,newly.length,reason,changedCount]);
    await tx.unsafe('update fib.source_scopes set last_attempt_at=$2,last_success_at=case when $3 then $2 else last_success_at end,gap_since=case when $3 then null when $4::text is null then gap_since else coalesce(gap_since,$2) end,last_error=$4,updated_at=now() where id=$1::uuid',[scopeId,stamp,complete,reason]);
   });
-  return reply({mode:'candidate_test',processed,documents:current.documents.length,newCount:newly.length,pending:pending.length,complete,failures:failures.length,cycleRestart,pdfChecked:pdfs.length,pdfChanged:changedCount});
+  return reply({mode:'candidate_test',processed,documents:current.documents.length,newCount:newly.length,pending:pending.length,complete,failures:failures.length,cycleRestart,pdfChecked:pdfs.length,pdfChanged:changedCount,backfill,backfillRemaining:backfill?Math.max(0,target-current.pdfOffset):null});
  }catch(e){return reply({error:'ris_pilot_failed',detail:String(e).slice(0,180)},502)}
  finally{await sql.end()}
 }};
