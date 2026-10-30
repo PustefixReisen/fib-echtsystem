@@ -4,6 +4,8 @@ on:
   pull_request:
     paths:
       - "scripts/u4-source-smoke.mjs"
+      - "packages/fachservices/src/u4-source-discovery.ts"
+      - "tests/u4/source-discovery.spec.ts"
       - ".github/workflows/u4-source-smoke.yml"
 jobs:
   probe:
@@ -18,3 +20,9 @@ jobs:
           node-version: "22"
       - name: Probe Gemeinde and RIS endpoints
         run: node scripts/u4-source-smoke.mjs
+      - name: Install workspace dependencies
+        run: npm ci
+      - name: Verify U4 source parser tests
+        run: npm run test:u4
+      - name: Verify core type contracts
+        run: npm run typecheck:core
