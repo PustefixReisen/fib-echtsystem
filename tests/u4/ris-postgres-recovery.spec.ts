@@ -11,14 +11,14 @@ const pool=new pg.Pool({connectionString:process.env.U4_TEST_DATABASE_URL});
 const origin='https://buergerinfo-feldkirchen.digitalfabrix.de';
 const entry=origin+'/do0040.asp?smcmode=32832';
 const pdf=origin+'/getfile.asp?id=100';
-const jwt=['e30',Buffer.from(JSON.stringify({sub:'test-user',aal:'aal2'})).toString('base64url'),'sig'].join('.');
+const jwt=['e30',Buffer.from(JSON.stringify({sub:'22222222-2222-4222-8222-222222222222',aal:'aal2'})).toString('base64url'),'sig'].join('.');
 let outage=false, invalidPdf=false, rejectCommit=false;
 const scope='33333333-3333-4333-8333-333333333333';
 
 async function setup(){
  await pool.query('create schema if not exists fib');
  await pool.query("create table fib.app_users(user_id text,role text,active boolean,setup_status text)");
- await pool.query("insert into fib.app_users values ('test-user','admin',true,'active')");
+ await pool.query("insert into fib.app_users values ('22222222-2222-4222-8222-222222222222','admin',true,'active')");
  await pool.query('create table fib.source_scopes(id uuid primary key, scope_key text,status text,last_attempt_at timestamptz,last_success_at timestamptz,gap_since timestamptz,last_error text,updated_at timestamptz)');
  await pool.query("insert into fib.source_scopes(id,scope_key,status) values ($1,'ris-dokumentliste','candidate')",[scope]);
  await pool.query('create table fib.ris_scan_cursors(scope_id uuid primary key,cursor_state jsonb,updated_at timestamptz)');
@@ -46,7 +46,7 @@ function sqlClient(client:pg.Pool|pg.PoolClient){
  return sql;
 }
 const fetchMock=async(url:string)=>{
- if(url.endsWith('/auth/v1/user'))return Response.json({id:'test-user'});
+ if(url.endsWith('/auth/v1/user'))return Response.json({id:'22222222-2222-4222-8222-222222222222'});
  if(url===entry){
    if(outage)throw Error('RIS connection timed out');
    return new Response('<html><body>Dokumente mit Freigabe seit 02.07.2026 <a href="'+pdf+'">PDF</a></body></html>');
