@@ -36,4 +36,19 @@ await assert.rejects(()=>discoverSource(news,async()=>({ok:false,status:503,text
 const previous={scopeId:'scope',lastSuccessAt:'2026-10-29T12:00:00Z'};
 const failure=updateSourceCheckpoint(previous,'2026-10-29T18:00:00Z',false,'503');
 assert.equal(failure.gapSince,previous.lastSuccessAt);
-console.log('U4 HTML source discovery cases passed');
+
+const pdfUrl='https://buergerinfo-feldkirchen.digitalfabrix.de/getfile.asp?id=75813&type=do';
+const pdfBytes=new TextEncoder().encode('%PDF-1.7 example fixture');
+const pdfFingerprint=await fingerprintDetail(pdfUrl,async()=>({
+  ok:true,status:200,text:async()=>{throw new Error('Should not decode PDF as HTML')},
+  headers:{get:()=> 'application/pdf'},
+  arrayBuffer:async()=>pdfBytes.buffer
+}));
+assert.equal(pdfFingerprint.length,64);
+await assert.rejects(()=>fingerprintDetail(pdfUrl,async()=>({
+  ok:true,status:200,text:async()=>'<html>login page</html>',
+  headers:{get:()=> 'text/html'},
+  arrayBuffer:async()=>new TextEncoder().encode('<html>login page</html>').buffer
+})),/Unexpected PDF response/);
+
+console.log('U4 HTML and PDF source discovery cases passed');
