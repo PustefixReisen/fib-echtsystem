@@ -37,10 +37,10 @@ erfolgen.
    oder CI-Dateien einchecken.
 3. **Mehrpaket-Verarbeitung:** Der RIS-Kern verarbeitet maximal zwei Ansichten
    pro Prüfpaket. Der technische Scheduler-Endpunkt verarbeitet bis zu acht
-   Pakete je Aufruf. Ein offener Rest liefert `ris_continuation_needed` (HTTP 503),
+   Pakete je Aufruf, höchstens bis zum Ablauf eines 90-Sekunden-Zeitbudgets. Ein offener Rest liefert `ris_continuation_needed` (HTTP 503),
    ein RIS-Fehler `ris_retry_needed` (HTTP 503). Dies ist **keine** erfolgreiche
    vollständige Überwachung. Der spätere Zeitplan muss diese Zustände erkennen
-   und kontrolliert nachholen.
+   und kontrolliert nachholen. Das Zeitbudget ist eine Obergrenze zwischen Paketen, kein Abbruch eines bereits laufenden RIS-/PDF-Abrufs.
 4. **Fehlernachholung:** Bei RIS-Ausfall muss der gespeicherte Rückstand bestehen
    bleiben und zeitnah erneut abgearbeitet werden. PDF-Fehler dürfen weder den
    Cursor noch die erfolgreiche Laufmarkierung weiterschieben.
