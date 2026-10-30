@@ -47,3 +47,16 @@
 Modell und Anbieter (OpenAI/Anthropic/Mistral), Tarif-/Tokenverbrauch, KI-Kaskade, technische Abrufverfahren (RSS/HTML/RIS), Laufintervall, Wartungs- und Abrufkosten. Diese Entscheidungen sollen anhand protokollierter Echtmessungen erfolgen.
 
 **Nicht mehr offen:** die grundsätzliche Trennung der beiden Wege, das Ziel vollständiger Quellenbeobachtung innerhalb expliziter Scopes, RIS-Aufnahme ohne KI-Filter und die kombinierte offene Suche.
+
+## 6. Verbindliche Präzisierung vom 30.10.2026
+
+Die Anforderungen aus [Fachhandbuch §03.1b](../../fachhandbuch/03-Recherche.md) gelten für U4 zusätzlich. Insbesondere:
+1. Quellenstatus, **Beobachtungsstufe Kern/Ergänzung** und Pflichtquellenkennzeichen getrennt speichern; Scope explizit definieren und Testabruf verlangen.
+2. Quellenregister als Admin-Workflow mit Quelle hinzufügen, Scope anlegen, generisches Verfahren auswählen, Probeabruf, Freigabe und Status-/Fehleranzeige implementieren.
+3. Adapter ohne individuelle Programmierung für geeignete standardisierte Feeds (RSS/Atom, Sitemap, ICS, JSON/XML), HTML-Listen mittels konfigurierbarer Vorlage sowie vorhandene Verzeichnis-/Dokumenteingänge vorsehen; die Verfügbarkeit wird je Zugang geprüft, nicht vorab behauptet. E-Mail/Newsletter und Uploads als optionale weitere Eingangskanäle planen. Nicht unterstützte Plattformen verlangen Spezialadapter.
+4. Auf aktuellen/überlappenden Listen **jeden** Eintrag erkennen; ältere **übernommene, relevante** Fundstellen gezielt erneut auf Änderungen prüfen. Keine routinemäßige Detail-Neubewertung älterer nicht übernommener Inhalte; separat Nachträge im Archiv sowie RIS-Dokumentfreigaben sicher erkennen.
+5. Relevanz **nach** dem deterministischen Erkennen mehrstufig feststellen: direkte Ortsnennung, Referenzobjekte und räumlich-funktionale Auswirkungen. Unklare Fälle nachrecherchieren statt verwerfen. Prüffälle: Radschnellweg München–Markt Schwaben (Route durch Feldkirchen ohne Ortsnennung) und geplantes Windrad Aschheim (mögliche, zu belegende Betroffenheit).
+6. Erfassungsqualität (Scope-Abdeckung, Lücken, neue/verspätete Einträge) und inhaltliche Relevanzqualität (falsch abgelehnte örtliche Beziehungen, Nachrecherche) getrennt messen.
+7. Für Quellenkandidaten zunächst Landkreis München und ausgewählte kommunale, regionale und infrastrukturelle Veröffentlichungsbereiche aufnehmen, ohne komplette fremde Websites pauschal als erfasst zu melden. Technische und KI-Aufwände so verteilen, dass örtliche Relevanz Vorrang vor rein thematischer Zusatzrecherche behält.
+
+**Status:** Fachanforderung festgelegt; noch kein Beleg, dass alle genannten Quellentypen oder die Adminverwaltung implementiert sind.
