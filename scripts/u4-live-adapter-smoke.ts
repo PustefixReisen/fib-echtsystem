@@ -35,7 +35,7 @@ async function run(){
   const sessionLinks=parseSourceListing({key:'feldkirchen-ris-session',url:sessionUrl,origin:new URL(sessionUrl).origin},sessionHtml);
   const evidence=collectRisPageEvidence(sessionUrl,sessionLinks);
   const agendaRows=extractRisAgendaRows(sessionHtml,sessionUrl);
-  console.log(JSON.stringify({scope:'ris-agenda-row-validation',count:agendaRows.length,topNumbers:agendaRows.map(x=>x.topNumber??null),documents:agendaRows.map(x=>x.documentUrls.length)}));
+  console.log(JSON.stringify({scope:'ris-agenda-row-validation',count:agendaRows.length,topNumbers:agendaRows.map(x=>x.topNumber??null),documents:agendaRows.map(x=>x.documentUrls.length),rowStarts:agendaRows.map(x=>x.rowText.slice(0,100))}));
   const proposals=evidence.filter(e=>e.relation==='session-proposal');
   const attachments=evidence.filter(e=>e.relation==='session-document');
   if(!proposals.length||!attachments.length)throw new Error('Missing RIS session document/proposal links');
