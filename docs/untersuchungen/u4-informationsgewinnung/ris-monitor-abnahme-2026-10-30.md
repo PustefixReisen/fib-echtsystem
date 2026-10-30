@@ -49,3 +49,11 @@ Die technische Pilotintegration und der Wiederanlauf sind erfolgreich erprobt. *
 
 ### Nächste Abnahmeprüfung
 An mindestens zwei zeitlich versetzten RIS-Prüfständen Veröffentlichungs- und Änderungsdaten aus den RIS-Quellen ermitteln; ältere Nachträge gezielt als Referenzfälle erfassen. Erst danach eine konkrete Rückblickfrist und Wiederholungsfrequenz als verbindliche Betriebseinstellung festlegen. Bis dahin **kein Cron und keine automatische Veröffentlichung**.
+
+
+## RIS-Freigabezeitraum – live geprüfter Quellenbeleg
+Am 30.10.2026 hat die lesende GitHub-U4-Diagnose auf `do0040.asp?smcmode=32832` (HTTP 200) die sichtbare Überschrift **„Dokumente mit Freigabe seit 23.10.2026“** ausgegeben. Die RIS-Navigation weist ausdrücklich Links „1 Tag zurück“, „1 Monat zurück“ und „120 Tage zurück“ aus. Die Diagnose zeigte auch verschiedene Sitzungsdaten auf derselben Freigabeseite.
+
+**Folgerung:** Die Seite nennt eine untere Grenze des **angezeigten Freigabezeitraums**. Sie ist nicht mit dem Sitzungsdatum oder dem Freigabedatum eines einzelnen PDFs gleichzusetzen. Die bisher gespeicherten fünf Navigationsadressen sind kein geprüfter historischer Abdeckungsnachweis; konkrete Datumstexte der tatsächlich abgerufenen Ansichten müssen separat geprüft und gespeichert werden.
+
+Der Parameter `smcadat` wird weiterhin nicht ohne ausdrücklichen Quellenbeleg als Datum interpretiert. Die UI soll künftig den aus einer RIS-Seitenüberschrift tatsächlich erkannten Freigabestart ausweisen (mit Abrufdatum und Quelladresse); bei fehlendem Nachweis bleibt die Abdeckung „nicht bestimmt“.
