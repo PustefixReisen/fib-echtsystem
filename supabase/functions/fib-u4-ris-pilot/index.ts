@@ -41,6 +41,15 @@ async function page(url:string){
  const html=await resp.text();if(!/<(?:html|body|a)\b/i.test(html))throw new Error('RIS invalid HTML');
  return extract(html,url);
 }
+function coverage(views:{url:string;releaseSince:string|null;checkedAt:string}[],visited:string[],pending:string[],failures:{url:string;error:string}[],cadence:'daily'|'weekly'){
+ const lookbackDays=cadence==='daily'?30:120;
+ const now=new Date();const threshold=new Date(Date.UTC(now.getUTCFullYear(),now.getUTCMonth(),now.getUTCDate()-lookbackDays)).toISOString().slice(0,10);
+ const active=new Set(visited);
+ const dates=views.filter(v=>active.has(v.url)&&v.releaseSince&&/^\d{4}-\d{2}-\d{2}$/.test(v.releaseSince)).map(v=>v.releaseSince as string).sort();
+ const earliest=dates[0]??null;
+ const status=failures.length?'failed':pending.length?'in_progress':!earliest?'unverified':earliest>threshold?'insufficient':'candidate';
+ return {cadence,requiredSince:threshold,earliestObserved:earliest,coverageStatus:status,coverageWarning:'Freigabestart ist kein Nachweis lückenloser Erfassung'};
+}
 export default {async fetch(req:Request){
  if(req.method==='OPTIONS')return new Response(null,{status:204,headers:cors});
  if(req.method!=='POST')return reply({error:'method_not_allowed'},405);
@@ -57,8 +66,10 @@ export default {async fetch(req:Request){
  try{
   const allowed=await sql.unsafe("select 1 from fib.app_users where user_id=$1::uuid and role='admin' and active=true and setup_status='active' limit 1",[user.id]);
   if(!allowed.length)return reply({error:'admin_required'},403);
-  const payload=await req.json().catch(()=>({})) as {commit?:boolean;pdfBackfill?:boolean};
+  const payload=await req.json().catch(()=>({})) as {commit?:boolean;pdfBackfill?:boolean;cadence?:'daily'|'weekly'};
   const backfill=payload.pdfBackfill===true && payload.commit===true;
+  if(payload.cadence && payload.cadence!=='daily'&&payload.cadence!=='weekly')return reply({error:'invalid_cadence'},400);
+  const cadence=payload.cadence??'daily';
   const scopes=await sql.unsafe("select id from fib.source_scopes where scope_key='ris-dokumentliste' and status='candidate'");
   if(scopes.length!==1)throw new Error('ris_scope_unavailable');
   const scopeId=scopes[0].id as string;
@@ -89,8 +100,9 @@ export default {async fetch(req:Request){
   }
   const current={pending,visited:[...visited],documents:[...knownDocs],failures,pdfOffset:previous?.pdfOffset??0,releaseViews:[...releaseViews.values()]};
   const complete=pending.length===0&&!failures.length;
+  const coverageResult=coverage(current.releaseViews,current.visited,current.pending,current.failures,cadence);
   const newly=current.documents.filter(x=>!previous?.documents?.includes(x));
-  if(payload.commit!==true)return reply({mode:'dry_run',processed,documents:current.documents.length,newCount:newly.length,pending:pending.length,complete,failures:failures.length,cycleRestart,firstFailure:failures[0]?.error??null,releaseViews:current.releaseViews});
+  if(payload.commit!==true)return reply({mode:'dry_run',processed,documents:current.documents.length,newCount:newly.length,pending:pending.length,complete,failures:failures.length,cycleRestart,firstFailure:failures[0]?.error??null,releaseViews:current.releaseViews,...coverageResult});
   const pdfs:{url:string;hash:string}[]=[];
   const target=current.documents.length;
   const budget=backfill?Math.min(6,Math.max(0,target-current.pdfOffset)):Math.min(6,target);
@@ -126,7 +138,7 @@ export default {async fetch(req:Request){
    await tx.unsafe('insert into fib.source_runs(scope_id,started_at,completed_at,status,items_seen,items_new,items_changed,error_detail) values ($1::uuid,$2,$2,$3,$4,$5,$7,$6)',[scopeId,stamp,complete?'succeeded':failures.length?'failed':'partial',current.documents.length,newly.length,reason,changedCount]);
    await tx.unsafe('update fib.source_scopes set last_attempt_at=$2,last_success_at=case when $3 then $2 else last_success_at end,gap_since=case when $3 then null when $4::text is null then gap_since else coalesce(gap_since,$2) end,last_error=$4,updated_at=now() where id=$1::uuid',[scopeId,stamp,complete,reason]);
   });
-  return reply({mode:'candidate_test',processed,documents:current.documents.length,newCount:newly.length,pending:pending.length,complete,failures:failures.length,cycleRestart,pdfChecked:pdfs.length,pdfChanged:changedCount,releaseViews:current.releaseViews,backfill,backfillRemaining:backfill?Math.max(0,target-current.pdfOffset):null});
+  return reply({mode:'candidate_test',processed,documents:current.documents.length,newCount:newly.length,pending:pending.length,complete,failures:failures.length,cycleRestart,pdfChecked:pdfs.length,pdfChanged:changedCount,releaseViews:current.releaseViews,...coverageResult,backfill,backfillRemaining:backfill?Math.max(0,target-current.pdfOffset):null});
  }catch(e){return reply({error:'ris_pilot_failed',detail:String(e).slice(0,180)},502)}
  finally{await sql.end()}
 }};
