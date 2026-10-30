@@ -82,7 +82,7 @@ export default {async fetch(req:Request){
   if(payload.commit!==true)return reply({mode:'dry_run',processed,documents:current.documents.length,newCount:newly.length,pending:pending.length,complete,failures:failures.length,cycleRestart,firstFailure:failures[0]?.error??null});
   const pdfs:{url:string;hash:string}[]=[];
   const target=current.documents.length;
-  const budget=backfill?Math.min(12,Math.max(0,target-current.pdfOffset)):Math.min(6,target);
+  const budget=backfill?Math.min(6,Math.max(0,target-current.pdfOffset)):Math.min(6,target);
   for(let i=0;i<budget;i++){
    const idx=(current.pdfOffset+i)%target;
    const url=current.documents[idx];
