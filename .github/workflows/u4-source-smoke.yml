@@ -4,6 +4,8 @@ on:
   pull_request:
     paths:
       - "scripts/u4-source-smoke.mjs"
+      - "packages/fachservices/src/u4-ris-coverage-verification.ts"
+      - "tests/u4/ris-coverage-verification.spec.ts"
       - "packages/fachservices/src/u4-ris-monitor-policy.ts"
       - "tests/u4/ris-monitor-policy.spec.ts"
       - "supabase/functions/fib-u4-ris-pilot/index.ts"

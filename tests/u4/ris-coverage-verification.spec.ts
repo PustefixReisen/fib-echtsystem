@@ -1,0 +1,11 @@
+import assert from 'node:assert/strict';
+import {planRisChecks} from '../../packages/fachservices/src/u4-ris-monitor-policy.js';
+import {assessRisCoverage} from '../../packages/fachservices/src/u4-ris-coverage-verification.js';
+const [daily,weekly]=planRisChecks('2026-10-30');
+const views=[{url:'https://example.test/do0040.asp',releaseSince:'2026-07-02',checkedAt:'2026-10-30T15:37:12Z'}];
+assert.equal(assessRisCoverage(daily,views,true).status,'candidate');
+assert.equal(assessRisCoverage(weekly,views,true).status,'candidate');
+assert.equal(assessRisCoverage(weekly,views,false).status,'unverified');
+assert.equal(assessRisCoverage(weekly,[{...views[0],releaseSince:'2026-09-30'}],true).status,'insufficient');
+assert.equal(assessRisCoverage(weekly,[{...views[0],releaseSince:null}],true).status,'unverified');
+console.log('RIS coverage evidence checks passed');
