@@ -44,10 +44,15 @@ erfolgen.
 4. **Fehlernachholung:** Bei RIS-Ausfall muss der gespeicherte Rückstand bestehen
    bleiben und zeitnah erneut abgearbeitet werden. PDF-Fehler dürfen weder den
    Cursor noch die erfolgreiche Laufmarkierung weiterschieben.
-5. **Parallelität:** Gleichzeitige Prüfläufe auf demselben RIS-Cursor ausschließen
-   oder mit transaktionaler Sperre sicher serialisieren. Bestehende
-   `cursor_changed_retry`-Erkennung allein ist kein Auftrag zur grenzenlosen
-   Wiederholung.
+5. **Parallelität:** Der technische Scheduler verwendet eine dedizierte PostgreSQL-Verbindung
+   mit einem sitzungsgebundenen Advisory Lock (41004, 4001) über alle RIS-Pakete.
+   Ein zweiter Scheduler-Aufruf erhält HTTP 409 (`ris_scan_already_running`), ohne
+   Prüfpakete auszuführen. Der Zugang wird **vor** dem DB-Zugriff geprüft.
+   Der interaktive manuelle Weg nutzt diese Scheduler-Sperre nicht; seine bestehende
+   transaktionale `cursor_changed_retry`-Konflikterkennung schützt gegen
+   gleichzeitige Cursor-Schreibvorgänge. Der manuelle Zugriff ist daher bei
+   aktiviertem Scheduler betrieblich zu koordinieren. Noch zu prüfen:
+   Real-PostgreSQL-Kollisionstest mit parallelen Scheduler-Aufrufen.
 6. Laufgrenzen, Laufprotokolle, Warnungen und eine Pause-Funktion mit
    isolierten Tests nachweisen; Kosten/Limits des Free-Plans prüfen.
 7. Nach Ende des manuellen Tests einmalige technische Betriebsabnahme;
