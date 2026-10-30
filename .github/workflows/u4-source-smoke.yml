@@ -4,6 +4,8 @@ on:
   pull_request:
     paths:
       - "scripts/u4-source-smoke.mjs"
+      - "tests/u4/ris-runtime-recovery.spec.ts"
+      - "package.json"
       - "tests/u4/ris-due-checks.spec.ts"
       - "tests/u4/ris-cadence-persistence.spec.ts"
       - "packages/fachservices/src/u4-ris-coverage-verification.ts"
