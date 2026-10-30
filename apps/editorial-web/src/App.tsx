@@ -13,7 +13,7 @@ import assistantIcon from '../../../assets/brand/icons/fib-assistent.svg';
 import './app.css';
 
 type AuthState = 'checking' | 'auth_error' | 'signed_out' | 'aal1_no_factor' | 'aal1_factor_available' | 'aal2';
-type EditorialView = 'dashboard' | 'event' | 'events' | 'topics' | 'profile' | 'users';
+type EditorialView = 'dashboard' | 'event' | 'events' | 'topics' | 'profile' | 'users' | 'u4pilot';
 type TopicData = { id:string; title:string; guiding_question:string | null; description:string | null; status:string };
 type TopicProposal = { id:string; topic_id:string; process_id:string; suggested_significance:string; suggested_rationale:string; status:string; origin:string; process_title:string; topic_title:string };
 type TopicContributionVersion = {id:string;version_no:number;body:string;editorial_assessment:string|null;approved_at:string;revoked_at:string|null;published_at:string|null;ended_at:string|null};
@@ -209,6 +209,9 @@ export function App() {
   const [profileMessage, setProfileMessage] = useState<string | null>(null);
   const [adminUsers, setAdminUsers] = useState<AdminUser[]>([]);
   const [adminUsersLoading, setAdminUsersLoading] = useState(false);
+  const [u4Busy,setU4Busy] = useState(false);
+  const [u4Result,setU4Result] = useState<Record<string,unknown>|null>(null);
+  const [u4Error,setU4Error] = useState<string|null>(null);
   const [adminInviteName, setAdminInviteName] = useState('');
   const [adminInviteEmail, setAdminInviteEmail] = useState('');
   const [adminInviteRole, setAdminInviteRole] = useState<'editor' | 'admin'>('editor');
@@ -710,6 +713,20 @@ export function App() {
   async function loadEditorialStart() {
     if (invitationMode && invitationPasswordPending) return;
     if (await loadSessionContext()) await Promise.all([loadEvent(), loadCoordinationState()]);
+  }
+
+  async function runU4Pilot(commit:boolean) {
+    if(sessionContext?.role!=='admin' || state!=='aal2' || u4Busy)return;
+    if(commit && !window.confirm('Testdaten der Gemeinde-Nachrichten in Shared-Apps speichern?'))return;
+    setU4Busy(true);setU4Error(null);setU4Result(null);
+    try {
+      const {data,error}=await supabase.functions.invoke<Record<string,unknown>>('fib-u4-pilot',{body:{commit}});
+      if(error || !data || data.error) {
+        setU4Error(String(data?.error ?? error?.message ?? 'Abruf fehlgeschlagen'));return;
+      }
+      setU4Result(data);
+    }catch(err){setU4Error(err instanceof Error?err.message:'Verbindungsfehler');}
+    finally{setU4Busy(false)}
   }
 
   async function loadAdminUsers() {
@@ -1320,7 +1337,7 @@ export function App() {
           {isAdmin && (
             <div className="nav-section admin-section">
               <p className="nav-heading">Administration</p>
-              <button className="nav-item" disabled>Tasks & Läufe</button>
+              <button className={view === 'u4pilot' ? 'nav-item active' : 'nav-item'} aria-current={view === 'u4pilot' ? 'page' : undefined} onClick={() => navigateTo('u4pilot')}>Tasks & Läufe</button>
               <button className="nav-item" disabled>KI & Kosten</button>
               <button className="nav-item" disabled>Referenzsystem</button>
               <button className={view === 'users' ? 'nav-item active' : 'nav-item'} aria-current={view === 'users' ? 'page' : undefined} onClick={() => navigateTo('users')}>Benutzer & Rollen</button>
@@ -1647,6 +1664,34 @@ export function App() {
             <section className="panel muted-panel dashboard-workbasket card-headed">
               <h2>Arbeitskorb</h2>
               <p>Offene oder bewusst zurückgestellte Entscheidungen. Er bleibt nachgeordnet und ist kein Pflicht-Zwischenschritt für jede Bearbeitung.</p>
+            </section>
+          </>
+        )}
+
+        {view === 'u4pilot' && isAdmin && (
+          <>
+            <nav className="breadcrumbs" aria-label="Brotkrumen">
+              <button onClick={() => navigateTo('dashboard')}>Dashboard</button>
+              <span>›</span><span aria-current="page">Tasks & Läufe</span>
+            </nav>
+            <div className="page-heading"><div><p className="eyebrow">Administration · U4</p><h1>Quellenmonitor testen</h1>
+              <p>Kontrollierter Test der Gemeinde-Nachrichten. Keine automatische Überwachung.</p></div></div>
+            <section className="panel card-headed">
+              <div className="section-heading"><h2>Gemeinde Feldkirchen – Nachrichten</h2></div>
+              <div style={{padding:'1rem'}}>
+                <p>Der lesende Test zeigt erkannte Veröffentlichungen. Der Speichertest legt technische Beobachtungen, aber keine redaktionellen Meldungen an.</p>
+                <div style={{display:'flex',gap:'.75rem',flexWrap:'wrap'}}>
+                  <button type="button" disabled={u4Busy} onClick={()=>void runU4Pilot(false)}>Nur prüfen (ohne Speicherung)</button>
+                  <button type="button" disabled={u4Busy} onClick={()=>void runU4Pilot(true)}>Testdaten speichern</button>
+                </div>
+                {u4Busy && <p role="status">Quellenabruf läuft …</p>}
+                {u4Error && <p role="alert">Fehler: {u4Error}</p>}
+                {u4Result && <div aria-live="polite">
+                  <p><strong>Ergebnis:</strong> {u4Result.mode==='dry_run'?'Lesender Test':'Speichertest'}</p>
+                  <p>Erkannt: {String(u4Result.detected ?? u4Result.seen ?? '–')} · Neu: {String(u4Result.newCount ?? '–')} · Verändert: {String(u4Result.changedCount ?? '–')}</p>
+                  {Array.isArray(u4Result.urls) && <details><summary>Erkannte Seiten anzeigen</summary><ul>{u4Result.urls.map((url,i)=><li key={i}>{String(url)}</li>)}</ul></details>}
+                </div>}
+              </div>
             </section>
           </>
         )}
