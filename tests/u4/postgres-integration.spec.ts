@@ -45,6 +45,21 @@ async function main(){
   assert.equal(logs.rows.length,4);
   const after=await pool.query('select gap_since from fib.source_scopes where id=$1',[scopeId]);
   assert.equal(after.rows[0].gap_since,null);
-  console.log('U4 PostgreSQL repeat/failure/recovery integration passed');
+  // Force a SQL failure after a valid insert and prove the whole success transaction rolls back.
+  const observation={scopeId,externalId:'atomic-valid',url, fingerprint:'test',
+    firstSeenAt:'2026-10-30T09:20:00Z',lastSeenAt:'2026-10-30T09:20:00Z',revision:1};
+  await assert.rejects(()=>store.commitSuccess({
+    observations:[observation,{...observation,scopeId:'invalid-uuid',externalId:'atomic-invalid'}],
+    checkpoint:{scopeId,lastAttemptAt:'2026-10-30T09:20:00Z',lastSuccessAt:'2026-10-30T09:20:00Z'},
+    result:{scopeId,success:true,seen:2,newCount:2,changedCount:0}
+  }));
+  const atomic=await pool.query("select count(*)::int as count from fib.source_observations where external_id='atomic-valid'");
+  assert.equal(atomic.rows[0].count,0);
+  const unchanged=await pool.query('select last_success_at from fib.source_scopes where id=$1',[scopeId]);
+  assert.equal(unchanged.rows[0].last_success_at.toISOString(),'2026-10-30T09:15:00.000Z');
+  const noExtraRun=await pool.query('select count(*)::int as count from fib.source_runs');
+  assert.equal(noExtraRun.rows[0].count,4);
+
+  console.log('U4 PostgreSQL repeat/failure/recovery/atomic rollback integration passed');
 }
 void main().catch(e=>{console.error(e);process.exitCode=1}).finally(()=>pool.end());
