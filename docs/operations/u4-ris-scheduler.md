@@ -35,10 +35,12 @@ erfolgen.
 2. Hochentropisches Secret serverseitig erzeugen, sicher verwahren, an beiden
    Seiten bereitstellen und Rotation/Widerruf testen. Niemals als Klartext in SQL
    oder CI-Dateien einchecken.
-3. **Mehrpaket-Verarbeitung:** Eine Invocation verarbeitet maximal zwei
-   RIS-Ansichten. Ein Zeitplan muss daher weitere Pakete kontrolliert nachholen,
-   bis der Prüfstand abgeschlossen ist. Zwischenantworten mit `complete=false`
-   dürfen nicht als erfolgreich abgeschlossene Überwachung gelten.
+3. **Mehrpaket-Verarbeitung:** Der RIS-Kern verarbeitet maximal zwei Ansichten
+   pro Prüfpaket. Der technische Scheduler-Endpunkt verarbeitet bis zu acht
+   Pakete je Aufruf. Ein offener Rest liefert `ris_continuation_needed` (HTTP 503),
+   ein RIS-Fehler `ris_retry_needed` (HTTP 503). Dies ist **keine** erfolgreiche
+   vollständige Überwachung. Der spätere Zeitplan muss diese Zustände erkennen
+   und kontrolliert nachholen.
 4. **Fehlernachholung:** Bei RIS-Ausfall muss der gespeicherte Rückstand bestehen
    bleiben und zeitnah erneut abgearbeitet werden. PDF-Fehler dürfen weder den
    Cursor noch die erfolgreiche Laufmarkierung weiterschieben.
