@@ -5,6 +5,7 @@ on:
       - 'packages/fachservices/src/u4-source-monitor-run.ts'
       - 'packages/fachservices/src/u4-source-monitor-sql.ts'
       - 'tests/u4/postgres-integration.spec.ts'
+      - 'tests/u4/ris-postgres-recovery.spec.ts'
       - '.github/workflows/u4-postgres-integration.yml'
       - 'package.json'
 jobs:
@@ -36,3 +37,7 @@ jobs:
         env:
           U4_TEST_DATABASE_URL: postgres://postgres:integration_only@localhost:5432/fib_u4_test
         run: npx tsx tests/u4/postgres-integration.spec.ts
+      - name: RIS handler failure, recovery and rollback against real PostgreSQL
+        env:
+          U4_TEST_DATABASE_URL: postgres://postgres:integration_only@localhost:5432/fib_u4_test
+        run: npx tsx tests/u4/ris-postgres-recovery.spec.ts
