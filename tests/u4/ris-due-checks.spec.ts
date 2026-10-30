@@ -1,0 +1,13 @@
+import assert from 'node:assert/strict';
+import {dueRisChecks} from '../../packages/fachservices/src/u4-ris-monitor-policy.js';
+const none=dueRisChecks('2026-10-30',{});
+assert.equal(none[0].reason,'never_completed');assert.equal(none[1].due,true);
+const base={daily:{lastCompleteAt:'2026-10-29T18:00:00Z',pending:[],failures:[]},weekly:{lastCompleteAt:'2026-10-25T18:00:00Z',pending:[],failures:[]}};
+let result=dueRisChecks('2026-10-30',base);
+assert.equal(result[0].reason,'due');assert.equal(result[1].reason,'not_due');
+result=dueRisChecks('2026-11-02',base);
+assert.equal(result[1].reason,'due');assert.equal(result[1].overdueDays,1);
+result=dueRisChecks('2026-10-30',{...base,weekly:{...base.weekly,failures:[{error:'timeout'}]}});
+assert.equal(result[1].reason,'recovery_needed');
+assert.throws(()=>dueRisChecks('2026-02-30',{}));
+console.log('RIS overdue and error recovery planning passed');
