@@ -5,6 +5,7 @@ async function main() {
 
 const calls:{sql:string;params:readonly unknown[]}[]=[];
 const fake={
+  async transaction<T>(work:(tx:typeof fake)=>Promise<T>):Promise<T>{return work(fake)},
   async queryOne<T>(sql:string,params:readonly unknown[]):Promise<T|null>{
     calls.push({sql,params});
     if(sql.includes('from fib.source_scopes')) return {id:'scope',last_success_at:null,last_attempt_at:null,gap_since:null,last_error:null} as T;
@@ -17,10 +18,9 @@ const fake={
 const store=new SqlU4SourceMonitorStorage(fake);
 assert.equal((await store.getCheckpoint('scope')).lastSuccessAt,undefined);
 assert.equal(await store.getObservation('scope','entry'),undefined);
-await store.saveObservation({scopeId:'scope',externalId:'entry',url:'https://example.org/a',fingerprint:'abc',firstSeenAt:'2026-10-30T08:00:00Z',lastSeenAt:'2026-10-30T08:00:00Z',revision:1});
-await store.saveCheckpoint({scopeId:'scope',lastAttemptAt:'2026-10-30T08:01:00Z',gapSince:'2026-10-29T22:00:00Z',lastError:'timeout'});
-await store.logRun({scopeId:'scope',status:'failed',seen:1,newCount:1,changedCount:0,error:'timeout'});
-assert.equal(calls.length,5);
+await store.commitSuccess({observations:[{scopeId:'scope',externalId:'entry',url:'https://example.org/a',fingerprint:'abc',firstSeenAt:'2026-10-30T08:00:00Z',lastSeenAt:'2026-10-30T08:00:00Z',revision:1}],checkpoint:{scopeId:'scope',lastAttemptAt:'2026-10-30T08:00:00Z'},result:{scopeId:'scope',success:true,seen:1,newCount:1,changedCount:0}});
+await store.commitFailure({checkpoint:{scopeId:'scope',lastAttemptAt:'2026-10-30T08:01:00Z',gapSince:'2026-10-29T22:00:00Z',lastError:'timeout'},result:{scopeId:'scope',success:false,seen:1,newCount:0,changedCount:0,error:'timeout'}});
+assert.equal(calls.length,7);
 assert.ok(calls.every(c=>c.sql.includes('$1')));
 assert.ok(calls.some(c=>c.sql.includes('on conflict(scope_id,external_id)')));
 console.log('U4 SQL adapter contract checks passed');
