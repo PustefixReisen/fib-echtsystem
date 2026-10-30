@@ -10,3 +10,4 @@ export * from './user-management.js';
 export * from './editorial-write.js';
 export * from './u4-source-discovery.js';
 export * from './u4-source-monitor-run.js';
+export * from './u4-source-monitor-sql.js';
