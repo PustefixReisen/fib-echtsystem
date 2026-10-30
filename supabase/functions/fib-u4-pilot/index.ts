@@ -3,7 +3,12 @@ import postgres from 'npm:postgres@3.4.7';
 const endpoint='https://www.feldkirchen.de/aktuelles/aktuelle-news/aktuelle-meldungen';
 const base='https://www.feldkirchen.de';
 const scopeKey='gemeinde-nachrichten';
-const json=(data:unknown,status=200)=>Response.json(data,{status,headers:{'cache-control':'no-store'}});
+const cors = {
+  'access-control-allow-origin':'https://fib.pustivo.de',
+  'access-control-allow-headers':'authorization, apikey, x-client-info, content-type',
+  'access-control-allow-methods':'POST, OPTIONS',
+};
+const json=(data:unknown,status=200)=>Response.json(data,{status,headers:{...cors,'cache-control':'no-store'}});
 async function sha(s:string) {
   const d=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(s));
   return [...new Uint8Array(d)].map(b=>b.toString(16).padStart(2,'0')).join('');
@@ -32,6 +37,7 @@ async function fetchHtml(url:string){
 }
 export default {
  async fetch(req:Request){
+  if(req.method==='OPTIONS')return new Response(null,{status:204,headers:cors});
   if(req.method!=='POST')return json({error:'method_not_allowed'},405);
   const auth=req.headers.get('authorization');
   if(!auth?.startsWith('Bearer '))return json({error:'authentication_required'},401);
