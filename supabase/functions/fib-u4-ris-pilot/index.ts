@@ -8,18 +8,18 @@ function valid(href:string,base=entry):string|null{
 }
 function extract(html:string,url:string){
  const docs=new Set<string>(),navigation=new Set<string>();
- for(const m of html.matchAll(/<a\\b[^>]*href\\s*=\\s*["']([^"']+)["']/gi)){
+ for(const m of html.matchAll(/<a\b[^>]*href\s*=\s*["']([^"']+)["']/gi)){
   const u=valid(m[1]??'',url);if(!u)continue;
   const parsed=new URL(u);
   if(parsed.pathname.toLowerCase()==='/getfile.asp'&&parsed.searchParams.has('id'))docs.add(u);
-  if(parsed.pathname.toLowerCase()==='/do0040.asp'&&/^\\d{7}$/.test(parsed.searchParams.get('smcadat')??''))navigation.add(u);
+  if(parsed.pathname.toLowerCase()==='/do0040.asp'&&/^\d{7}$/.test(parsed.searchParams.get('smcadat')??''))navigation.add(u);
  }
  return {docs:[...docs],navigation:[...navigation]};
 }
 async function page(url:string){
  const resp=await fetch(url,{signal:AbortSignal.timeout(15000),headers:{accept:'text/html','user-agent':'FIB-U4-RIS-Pilot/0.1'}});
  if(!resp.ok)throw new Error('RIS HTTP '+resp.status);
- const html=await resp.text();if(!/<(?:html|body|a)\\b/i.test(html))throw new Error('RIS invalid HTML');
+ const html=await resp.text();if(!/<(?:html|body|a)\b/i.test(html))throw new Error('RIS invalid HTML');
  return extract(html,url);
 }
 export default {async fetch(req:Request){
@@ -66,7 +66,7 @@ export default {async fetch(req:Request){
   const current={pending,visited:[...visited],documents:[...knownDocs],failures};
   const complete=pending.length===0&&!failures.length;
   const newly=current.documents.filter(x=>!previous?.documents?.includes(x));
-  if(payload.commit!==true)return reply({mode:'dry_run',processed,documents:current.documents.length,newCount:newly.length,pending:pending.length,complete,failures:failures.length});
+  if(payload.commit!==true)return reply({mode:'dry_run',processed,documents:current.documents.length,newCount:newly.length,pending:pending.length,complete,failures:failures.length,firstFailure:failures[0]?.error??null});
   const stamp=new Date().toISOString();
   await sql.begin(async tx=>{
    const locked=await tx.unsafe("select id from fib.source_scopes where id=$1::uuid and status='candidate' for update",[scopeId]);
