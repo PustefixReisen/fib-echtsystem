@@ -16,3 +16,6 @@ Die tägliche 30-Tage-Prüfung und wöchentliche 120-Tage-Prüfung besitzen getr
 
 ## Noch offene Abnahme
 Nach Deployment beide Modi separat in echten RIS-Läufen prüfen, insbesondere Wiederaufnahme nach Abruffehler, überlappende Prüfläufe, absichtlich ausfallende Quelle und Aufholung versäumter Zeitpläne. Es existiert noch kein zeitgesteuerter Orchestrator. Vor der Aktivierung muss außerdem die fachliche Datenabdeckung validiert werden.
+
+## Einmalige Betriebsprüfung
+Die Redaktion besitzt zusätzlich eine ausdrücklich manuell auslösbare Gesamtprüfung für beide Pläne. Ein Administrator bestätigt einmal; anschließend werden je Plan höchstens vier Teilaufrufe (maximal zwei RIS-Freigabeansichten je Aufruf) sequenziell durchgeführt. Ein Fehler beendet die Kette sofort; gespeicherte Zwischenstände bleiben bestehen. Die Gesamtprüfung richtet weder einen Cron-Job ein noch erteilt sie automatisch eine Betriebsfreigabe.
