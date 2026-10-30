@@ -50,6 +50,18 @@ function coverage(views:{url:string;releaseSince:string|null;checkedAt:string}[]
  const status=failures.length?'failed':pending.length?'in_progress':!earliest?'unverified':earliest>threshold?'insufficient':'candidate';
  return {cadence,requiredSince:threshold,earliestObserved:earliest,coverageStatus:status,coverageWarning:'Freigabestart ist kein Nachweis lückenloser Erfassung'};
 }
+function dueStatus(states:Record<string,{lastCompleteAt?:string|null;pending?:string[];failures?:unknown[]}>,now=new Date()) {
+ const today=Date.UTC(now.getUTCFullYear(),now.getUTCMonth(),now.getUTCDate());
+ return (['daily','weekly'] as const).map(cadence=>{
+  const state=states[cadence];
+  if(!state?.lastCompleteAt)return {cadence,due:true,reason:'never_completed',overdueDays:null};
+  const last=new Date(state.lastCompleteAt);
+  const next=Date.UTC(last.getUTCFullYear(),last.getUTCMonth(),last.getUTCDate()+(cadence==='daily'?1:7));
+  const overdueDays=Math.max(0,Math.floor((today-next)/86400000));
+  const recovery=Boolean(state.pending?.length||state.failures?.length);
+  return {cadence,due:recovery||today>=next,reason:recovery?'recovery_needed':today>=next?'due':'not_due',overdueDays};
+ });
+}
 export default {async fetch(req:Request){
  if(req.method==='OPTIONS')return new Response(null,{status:204,headers:cors});
  if(req.method!=='POST')return reply({error:'method_not_allowed'},405);
@@ -109,7 +121,7 @@ export default {async fetch(req:Request){
   const sourceError=activeErrors.length?'RIS-Prüflücke: '+activeErrors.join(', '):null;
   const stored={...current,cadenceStates};
   const newly=current.documents.filter(x=>!previous?.documents?.includes(x));
-  if(payload.commit!==true)return reply({mode:'dry_run',processed,documents:current.documents.length,newCount:newly.length,pending:pending.length,complete,failures:failures.length,cycleRestart,firstFailure:failures[0]?.error??null,releaseViews:current.releaseViews,...coverageResult,cadenceStates});
+  if(payload.commit!==true)return reply({mode:'dry_run',processed,documents:current.documents.length,newCount:newly.length,pending:pending.length,complete,failures:failures.length,cycleRestart,firstFailure:failures[0]?.error??null,releaseViews:current.releaseViews,...coverageResult,cadenceStates,dueChecks:dueStatus(cadenceStates)});
   const pdfs:{url:string;hash:string}[]=[];
   const target=current.documents.length;
   const budget=backfill?Math.min(6,Math.max(0,target-current.pdfOffset)):Math.min(6,target);
@@ -145,7 +157,7 @@ export default {async fetch(req:Request){
    await tx.unsafe('insert into fib.source_runs(scope_id,started_at,completed_at,status,items_seen,items_new,items_changed,error_detail,cadence) values ($1::uuid,$2,$2,$3,$4,$5,$7,$6,$8)',[scopeId,stamp,runStatus,current.documents.length,newly.length,reason,changedCount,cadence]);
    await tx.unsafe('update fib.source_scopes set last_attempt_at=$2,last_success_at=case when $3 then $2 else last_success_at end,gap_since=case when $4::text is null then null else coalesce(gap_since,$2) end,last_error=$4,updated_at=now() where id=$1::uuid',[scopeId,stamp,complete,sourceError]);
   });
-  return reply({mode:'candidate_test',processed,documents:current.documents.length,newCount:newly.length,pending:pending.length,complete,failures:failures.length,cycleRestart,pdfChecked:pdfs.length,pdfChanged:changedCount,releaseViews:current.releaseViews,...coverageResult,cadenceStates,activeErrors,backfill,backfillRemaining:backfill?Math.max(0,target-current.pdfOffset):null});
+  return reply({mode:'candidate_test',processed,documents:current.documents.length,newCount:newly.length,pending:pending.length,complete,failures:failures.length,cycleRestart,pdfChecked:pdfs.length,pdfChanged:changedCount,releaseViews:current.releaseViews,...coverageResult,cadenceStates,dueChecks:dueStatus(cadenceStates),activeErrors,backfill,backfillRemaining:backfill?Math.max(0,target-current.pdfOffset):null});
  }catch(e){return reply({error:'ris_pilot_failed',detail:String(e).slice(0,180)},502)}
  finally{await sql.end()}
 }};
