@@ -6,6 +6,8 @@ on:
       - "scripts/u4-source-smoke.mjs"
       - "packages/fachservices/src/u4-source-discovery.ts"
       - "tests/u4/source-discovery.spec.ts"
+      - "tests/u4/ris-window-scan.spec.ts"
+      - "packages/fachservices/src/u4-ris-window-scan.ts"
       - "tests/u4/ris-release-history.spec.ts"
       - "packages/fachservices/src/u4-ris-release-history.ts"
       - "tests/u4/ris-agenda-evidence.spec.ts"
