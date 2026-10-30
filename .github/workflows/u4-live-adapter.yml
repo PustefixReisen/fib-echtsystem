@@ -1,0 +1,20 @@
+name: U4 live adapter verification
+on:
+  pull_request:
+    paths:
+      - "scripts/u4-live-adapter-smoke.ts"
+      - ".github/workflows/u4-live-adapter.yml"
+      - "packages/fachservices/src/u4-source-discovery.ts"
+jobs:
+  live:
+    runs-on: ubuntu-latest
+    timeout-minutes: 4
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: npm install --ignore-scripts --no-audit --no-fund --no-package-lock
+      - run: npx tsx scripts/u4-live-adapter-smoke.ts
