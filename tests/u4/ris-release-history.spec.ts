@@ -1,0 +1,11 @@
+import assert from 'node:assert/strict';
+import {risReleaseHistoryLinks,risReleaseWindow} from '../../packages/fachservices/src/u4-ris-release-history.js';
+const url='https://buergerinfo-feldkirchen.digitalfabrix.de/do0040.asp?smcmode=32832';
+const html='<a href="do0040.asp?smcadat=2461343&amp;smcmode=32832">1 Tag zurück</a><a href="do0040.asp?smcadat=2461314&amp;smcmode=32832">Monat zurück</a><a href="getfile.asp?id=75813&amp;type=do">PDF</a><a href="getfile.asp?id=75813&amp;type=do">PDF</a>';
+assert.equal(risReleaseHistoryLinks(html,url).length,2);
+const entry=risReleaseWindow(html,url);
+assert.equal(entry.documentUrls.length,1);
+assert.equal(entry.listingDateParameter,null);
+assert.equal(risReleaseWindow(html,url+'&smcadat=2461343').listingDateParameter,'2461343');
+assert.equal(risReleaseHistoryLinks('<a href="https://evil.invalid/do0040.asp?smcadat=2461343">falsch</a>',url).length,0);
+console.log('U4 RIS release history navigation tests passed');
