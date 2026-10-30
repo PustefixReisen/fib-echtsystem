@@ -12,6 +12,15 @@ assert.equal(items[0]?.url,'https://www.feldkirchen.de/aktuelles/aktuelle-news/a
 const risLinks=parseSourceListing(ris,'<html><body><a href="si0057.asp?__ksinr=1032&amp;smcmode=32832">29. Oktober Gemeinderat</a><a href="vo0050.asp?__kvonr=5395">Wegfall Zuschuss Vorlage</a><a href="getfile.asp?id=7">Anlage</a></body></html>');
 assert.deepEqual(risLinks.map(x=>x.kind),['session','proposal','attachment']);
 assert.equal(risLinks[0]?.url.includes('&smcmode='),true);
+
+// Regression against the actual current + archive URL shapes (municipality site).
+const actualArchive = U4_PILOT_TARGETS[1]!;
+const archived = parseSourceListing(actualArchive,
+  '<html><body><a href="/aktuelles/aktuelle-news/aktuelle-meldungen/nachrichten-archiv/katastrophenschutz-leuchttuerme-feldkirchen">Katastrophenschutz-Leuchttürme Feldkirchen</a></body></html>');
+assert.equal(archived.length,1);
+assert.equal(archived[0]?.kind,'news');
+assert.ok(archived[0]?.url.endsWith('/nachrichten-archiv/katastrophenschutz-leuchttuerme-feldkirchen'));
+
 const http=async(url:string)=>({ok:true,status:200,text:async()=>url.includes('/vernissage-2026')?'<html><body>Neue Details</body></html>':listing});
 const discovered=await discoverSource(news,http);
 assert.equal(discovered.length,1);
