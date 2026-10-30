@@ -7,8 +7,8 @@ function valid(href:string,base=entry):string|null{
  try{const u=new URL(href.replace(/&amp;/g,'&'),base);u.hash='';if(u.protocol!=='https:'||u.origin!==origin)return null;return u.href;}catch{return null;}
 }
 function releaseSince(html:string):string|null{
- const plain=html.replace(/<script\\b[^>]*>[\\s\\S]*?<\\/script>/gi,' ').replace(/<style\\b[^>]*>[\\s\\S]*?<\\/style>/gi,' ').replace(/<[^>]+>/g,' ').replace(/&nbsp;|&#160;/gi,' ').replace(/\\s+/g,' ');
- const m=plain.match(/Dokumente\\s+mit\\s+Freigabe\\s+seit\\s+([0-3]?\\d)\\.([01]?\\d)\\.(20\\d\\d)/i);
+ const plain=html.replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi,' ').replace(/<style\b[^>]*>[\s\S]*?<\/style>/gi,' ').replace(/<[^>]+>/g,' ').replace(/&nbsp;|&#160;/gi,' ').replace(/\s+/g,' ');
+ const m=plain.match(/Dokumente\s+mit\s+Freigabe\s+seit\s+([0-3]?\d)\.([01]?\d)\.(20\d\d)/i);
  if(!m)return null;
  const d=Number(m[1]),month=Number(m[2]),year=Number(m[3]);
  const date=new Date(Date.UTC(year,month-1,d));
