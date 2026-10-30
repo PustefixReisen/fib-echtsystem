@@ -60,3 +60,7 @@ Die Anforderungen aus [Fachhandbuch §03.1b](../../fachhandbuch/03-Recherche.md)
 7. Für Quellenkandidaten zunächst Landkreis München und ausgewählte kommunale, regionale und infrastrukturelle Veröffentlichungsbereiche aufnehmen, ohne komplette fremde Websites pauschal als erfasst zu melden. Technische und KI-Aufwände so verteilen, dass örtliche Relevanz Vorrang vor rein thematischer Zusatzrecherche behält.
 
 **Status:** Fachanforderung festgelegt; noch kein Beleg, dass alle genannten Quellentypen oder die Adminverwaltung implementiert sind.
+
+## 7. Redaktionelle Klärung bei Unsicherheit (30.10.2026)
+
+FIB klärt Relevanzunsicherheit zunächst selbst anhand gesicherten Wissens, Quellen und gezielter Nachrecherche. Ist eine relevante Unsicherheit noch offen, erzeugt FIB eine konkrete, begründete und möglichst gebündelte Frage an die Redaktion; sie betrifft nicht nur räumliche, sondern auch andere fachliche Relevanz. Antwort und Begründung werden nachvollziehbar protokolliert, überprüfbare Beziehungen wiederverwendet. Keine wiederholte Frage zu bereits ausreichend geklärten Beziehungen, keine künstliche Senkung der Rückfragen durch Verwerfen potenziell relevanter Fundstellen. Abnahme: unsichere räumliche Verbindung als Frage, redaktionelle Bestätigung/Ablehnung/ungeklärt, Wiederverwendung bestätigter Information und Messung der Rückfragelast.
