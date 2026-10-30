@@ -40,6 +40,10 @@ export default {
   const verify=await fetch(baseUrl+'/auth/v1/user',{headers:{apikey:anon,authorization:auth}});
   if(!verify.ok)return json({error:'invalid_auth'},403);
   const user=await verify.json() as {id:string};
+  const token=auth.slice(7);
+  let claims:{aal?:string;sub?:string};
+  try{const part=token.split('.')[1];claims=JSON.parse(atob((part??'').replace(/-/g,'+').replace(/_/g,'/')))}catch{return json({error:'invalid_claims'},403)}
+  if(claims.sub!==user.id || claims.aal!=='aal2')return json({error:'mfa_required'},403);
   const sql=postgres(dbUrl,{max:1,prepare:false,connect_timeout:5,idle_timeout:5});
   try{
    const allowed=await sql.unsafe("select 1 from fib.app_users where user_id=$1::uuid and role='admin' and active=true and setup_status='active' limit 1",[user.id]);
