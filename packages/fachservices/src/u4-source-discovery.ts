@@ -46,7 +46,7 @@ function classifyRis(url: string, label: string): RisKind {
   if(/^\/si\d+\.asp/.test(path)) return 'session';
   if(/^\/to\d+\.asp/.test(path)) return 'agenda-item';
   if(/^\/vo\d+\.asp/.test(path)) return 'proposal';
-  if(/^\/getfile\.asp/.test(path)) return 'attachment';
+      if(!(/^\\/(?:si|to|vo|do)\\d+\\.asp$/.test(path) || path === '/getfile.asp')) continue;
   if(/niederschrift/i.test(label)) return 'minutes';
   if(/beschluss(?!vorlage)/i.test(label)) return 'resolution';
   return 'attachment';
