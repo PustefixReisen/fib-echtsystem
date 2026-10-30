@@ -1,0 +1,19 @@
+name: U4 live RIS release windows
+on:
+  pull_request:
+    paths:
+      - 'scripts/u4-ris-real-window.ts'
+      - '.github/workflows/u4-ris-real-window.yml'
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    timeout-minutes: 4
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: npm install --ignore-scripts --no-audit --no-fund --no-package-lock
+      - run: npx tsx scripts/u4-ris-real-window.ts
