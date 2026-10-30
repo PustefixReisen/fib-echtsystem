@@ -10,4 +10,7 @@ assert.equal(rows[0].evidence,'same-html-row');
 assert.equal(rows[1].documentUrls.length,0);
 const ambiguous='<table><tr><td>4</td><td><a href="vo0050.asp?__kvonr=8640">A</a><a href="vo0050.asp?__kvonr=8641">B</a><a href="getfile.asp?id=1">PDF</a></td></tr></table>';
 assert.equal(extractRisAgendaRows(ambiguous,base).length,0);
+const actualStyle='<table><tr><td>&amp;Ouml;</td><td>2</td><td><a href="vo0050.asp?__kvonr=8640">Vorlage</a></td></tr></table>';
+const actualStyleRows=extractRisAgendaRows(actualStyle,base);
+assert.equal(actualStyleRows[0]?.topNumber,'2');
 console.log('U4 RIS same-row conservative association tests passed');
