@@ -74,16 +74,18 @@ export default {async fetch(req:Request){
   if(scopes.length!==1)throw new Error('ris_scope_unavailable');
   const scopeId=scopes[0].id as string;
   const rows=await sql.unsafe('select cursor_state from fib.ris_scan_cursors where scope_id=$1::uuid',[scopeId]);
-  const previous=rows[0]?.cursor_state as {pending:string[];visited:string[];documents:string[];pdfOffset?:number;releaseViews?:{url:string;releaseSince:string|null;checkedAt:string}[];failures:{url:string;error:string}[]} | undefined;
+  const previous=rows[0]?.cursor_state as {pending:string[];visited:string[];documents:string[];pdfOffset?:number;releaseViews?:{url:string;releaseSince:string|null;checkedAt:string}[];failures:{url:string;error:string}[]; cadenceStates?:Record<string,{pending:string[];visited:string[];failures:{url:string;error:string}[];releaseViews:{url:string;releaseSince:string|null;checkedAt:string}[];lastCompleteAt:string|null;lastFailedAt?:string|null;lastStatus?:'succeeded'|'partial'|'failed';lastError?:string|null}>} | undefined;
   const previousSerialized=previous?JSON.stringify(previous):null;
   if(backfill && (!previous || previous.pending.length!==0 || previous.failures.length!==0))return reply({error:'backfill_requires_completed_ris_scan'},409);
-  const cycleRestart=Boolean(!backfill && previous && previous.pending.length===0 && previous.failures.length===0);
-  const visited=new Set(cycleRestart?[]:(previous?.visited??[]));
+  const priorState=previous?.cadenceStates?.[cadence];
+  const activeState=priorState??(previous && !previous.cadenceStates?{pending:previous.pending,visited:previous.visited,failures:previous.failures,releaseViews:previous.releaseViews??[],lastCompleteAt:null}:undefined);
+  const cycleRestart=Boolean(!backfill && activeState && activeState.pending.length===0 && activeState.failures.length===0);
+  const visited=new Set(cycleRestart?[]:(activeState?.visited??[]));
   const knownDocs=new Set(previous?.documents??[]);
-  const pending=[...(backfill?[]:cycleRestart?[entry]:(previous?.pending?.length?previous.pending:[entry]))];
+  const pending=[...(backfill?[]:cycleRestart?[entry]:(activeState?.pending?.length?activeState.pending:[entry]))];
   const known=new Set([...visited,...pending]);
-  const failures=[...(previous?.failures??[])];
-  const releaseViews=new Map((previous?.releaseViews??[]).map(x=>[x.url,x]));
+  const failures=[...(activeState?.failures??[])];
+  const releaseViews=new Map((activeState?.releaseViews??[]).map(x=>[x.url,x]));
   let processed=0;
   while(pending.length && processed<2){
    const u=valid(pending.shift()!);
@@ -101,8 +103,13 @@ export default {async fetch(req:Request){
   const current={pending,visited:[...visited],documents:[...knownDocs],failures,pdfOffset:previous?.pdfOffset??0,releaseViews:[...releaseViews.values()]};
   const complete=pending.length===0&&!failures.length;
   const coverageResult=coverage(current.releaseViews,current.visited,current.pending,current.failures,cadence);
+  const runStatus=complete?'succeeded':failures.length?'failed':'partial';
+  const cadenceStates={...(previous?.cadenceStates??{}),[cadence]:{pending:current.pending,visited:current.visited,failures:current.failures,releaseViews:current.releaseViews,lastCompleteAt:complete?new Date().toISOString():(activeState?.lastCompleteAt??null),lastFailedAt:failures.length?new Date().toISOString():(activeState?.lastFailedAt??null),lastStatus:runStatus,lastError:failures.length?failures[0]?.error??'RIS-Abruffehler':null}};
+  const activeErrors=Object.entries(cadenceStates).filter(([,v])=>v.failures.length>0).map(([key])=>key);
+  const sourceError=activeErrors.length?'RIS-Prüflücke: '+activeErrors.join(', '):null;
+  const stored={...current,cadenceStates};
   const newly=current.documents.filter(x=>!previous?.documents?.includes(x));
-  if(payload.commit!==true)return reply({mode:'dry_run',processed,documents:current.documents.length,newCount:newly.length,pending:pending.length,complete,failures:failures.length,cycleRestart,firstFailure:failures[0]?.error??null,releaseViews:current.releaseViews,...coverageResult});
+  if(payload.commit!==true)return reply({mode:'dry_run',processed,documents:current.documents.length,newCount:newly.length,pending:pending.length,complete,failures:failures.length,cycleRestart,firstFailure:failures[0]?.error??null,releaseViews:current.releaseViews,...coverageResult,cadenceStates});
   const pdfs:{url:string;hash:string}[]=[];
   const target=current.documents.length;
   const budget=backfill?Math.min(6,Math.max(0,target-current.pdfOffset)):Math.min(6,target);
@@ -133,12 +140,12 @@ export default {async fetch(req:Request){
        revision=case when fib.source_observations.content_fingerprint like 'ris:%' or fib.source_observations.content_fingerprint=excluded.content_fingerprint then fib.source_observations.revision else fib.source_observations.revision+1 end,
        content_fingerprint=excluded.content_fingerprint,last_seen_at=excluded.last_seen_at`,[scopeId,id,url,hash,stamp]);
    }
-   await tx.unsafe('insert into fib.ris_scan_cursors(scope_id,cursor_state,updated_at) values ($1::uuid,$2::jsonb,now()) on conflict(scope_id) do update set cursor_state=excluded.cursor_state,updated_at=now()',[scopeId,sql.json(current)]);
+   await tx.unsafe('insert into fib.ris_scan_cursors(scope_id,cursor_state,updated_at) values ($1::uuid,$2::jsonb,now()) on conflict(scope_id) do update set cursor_state=excluded.cursor_state,updated_at=now()',[scopeId,sql.json(stored)]);
    const reason=failures.length?'RIS window fetch failed':null;
-   await tx.unsafe('insert into fib.source_runs(scope_id,started_at,completed_at,status,items_seen,items_new,items_changed,error_detail) values ($1::uuid,$2,$2,$3,$4,$5,$7,$6)',[scopeId,stamp,complete?'succeeded':failures.length?'failed':'partial',current.documents.length,newly.length,reason,changedCount]);
-   await tx.unsafe('update fib.source_scopes set last_attempt_at=$2,last_success_at=case when $3 then $2 else last_success_at end,gap_since=case when $3 then null when $4::text is null then gap_since else coalesce(gap_since,$2) end,last_error=$4,updated_at=now() where id=$1::uuid',[scopeId,stamp,complete,reason]);
+   await tx.unsafe('insert into fib.source_runs(scope_id,started_at,completed_at,status,items_seen,items_new,items_changed,error_detail,cadence) values ($1::uuid,$2,$2,$3,$4,$5,$7,$6,$8)',[scopeId,stamp,runStatus,current.documents.length,newly.length,reason,changedCount,cadence]);
+   await tx.unsafe('update fib.source_scopes set last_attempt_at=$2,last_success_at=case when $3 then $2 else last_success_at end,gap_since=case when $4::text is null then null else coalesce(gap_since,$2) end,last_error=$4,updated_at=now() where id=$1::uuid',[scopeId,stamp,complete,sourceError]);
   });
-  return reply({mode:'candidate_test',processed,documents:current.documents.length,newCount:newly.length,pending:pending.length,complete,failures:failures.length,cycleRestart,pdfChecked:pdfs.length,pdfChanged:changedCount,releaseViews:current.releaseViews,...coverageResult,backfill,backfillRemaining:backfill?Math.max(0,target-current.pdfOffset):null});
+  return reply({mode:'candidate_test',processed,documents:current.documents.length,newCount:newly.length,pending:pending.length,complete,failures:failures.length,cycleRestart,pdfChecked:pdfs.length,pdfChanged:changedCount,releaseViews:current.releaseViews,...coverageResult,cadenceStates,activeErrors,backfill,backfillRemaining:backfill?Math.max(0,target-current.pdfOffset):null});
  }catch(e){return reply({error:'ris_pilot_failed',detail:String(e).slice(0,180)},502)}
  finally{await sql.end()}
 }};
