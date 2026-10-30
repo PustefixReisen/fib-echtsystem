@@ -45,7 +45,7 @@ function coverage(views:{url:string;releaseSince:string|null;checkedAt:string}[]
  const lookbackDays=cadence==='daily'?30:120;
  const now=new Date();const threshold=new Date(Date.UTC(now.getUTCFullYear(),now.getUTCMonth(),now.getUTCDate()-lookbackDays)).toISOString().slice(0,10);
  const active=new Set(visited);
- const dates=views.filter(v=>active.has(v.url)&&v.releaseSince&&/^\\d{4}-\\d{2}-\\d{2}$/.test(v.releaseSince)).map(v=>v.releaseSince as string).sort();
+ const dates=views.filter(v=>active.has(v.url)&&v.releaseSince&&/^\d{4}-\d{2}-\d{2}$/.test(v.releaseSince)).map(v=>v.releaseSince as string).sort();
  const earliest=dates[0]??null;
  const status=failures.length?'failed':pending.length?'in_progress':!earliest?'unverified':earliest>threshold?'insufficient':'candidate';
  return {cadence,requiredSince:threshold,earliestObserved:earliest,coverageStatus:status,coverageWarning:'Freigabestart ist kein Nachweis lückenloser Erfassung'};
