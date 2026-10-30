@@ -15,6 +15,11 @@ for(const [name,url] of targets){
     const body=await res.text();
     const anchors=[...body.matchAll(/<a\b[^>]*href\s*=\s*["']([^"']+)["']/gi)].length;
     const valid=res.ok && contentType.includes("html") && anchors>0;
+    if(name.startsWith("RIS")) {
+      const all=[...body.matchAll(/<a\\b[^>]*href\\s*=\\s*["\x27]([^"\x27]+)["\x27][^>]*>([\\s\\S]*?)<\\/a>/gi)];
+      const refs=all.map(m=>({href:m[1],title:m[2].replace(/<[^>]*>/g," ").replace(/\\s+/g," ").trim().slice(0,80)})).filter(x=>/(si\\d+|to\\d+|vo\\d+|getfile|do\\d+|antrag|beschluss|niederschrift)/i.test(x.href+" "+x.title)).slice(0,22);
+      console.log(JSON.stringify({name,linkSamples:refs}));
+    }
     if(!valid) failures++;
     console.log(JSON.stringify({name,status:res.status,contentType,bytes:body.length,anchors,valid,finalUrl:res.url,issue:valid?null:"Bad status/type/no links"}));
   }catch(e){failures++;console.log(JSON.stringify({name,error:String(e)}));}
