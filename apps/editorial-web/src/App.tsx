@@ -729,6 +729,18 @@ export function App() {
     finally{setU4Busy(false)}
   }
 
+  async function runRisPilot(commit:boolean) {
+    if(sessionContext?.role!=='admin' || state!=='aal2' || u4Busy)return;
+    if(commit && !window.confirm('RIS-Testdaten speichern und offenen historischen Rückblick fortsetzen?'))return;
+    setU4Busy(true);setU4Error(null);setU4Result(null);
+    try {
+      const {data,error}=await supabase.functions.invoke<Record<string,unknown>>('fib-u4-ris-pilot',{body:{commit}});
+      if(error || !data || data.error) {setU4Error(String(data?.detail ?? data?.error ?? error?.message ?? 'RIS-Abruf fehlgeschlagen'));return;}
+      setU4Result({...data,ris:true});
+    }catch(err){setU4Error(err instanceof Error?err.message:'Verbindungsfehler');}
+    finally{setU4Busy(false)}
+  }
+
   async function loadAdminUsers() {
     if (sessionContext?.role !== 'admin') return;
     setAdminUsersLoading(true);
@@ -1684,11 +1696,19 @@ export function App() {
                   <button type="button" disabled={u4Busy} onClick={()=>void runU4Pilot(false)}>Nur prüfen (ohne Speicherung)</button>
                   <button type="button" disabled={u4Busy} onClick={()=>void runU4Pilot(true)}>Testdaten speichern</button>
                 </div>
+                <div style={{marginTop:'1.5rem'}}>
+                  <h3>RIS – Dokumentfreigaben (Pilot)</h3>
+                  <p>Pro Lauf werden höchstens zwei historische Freigabefenster geprüft. Unvollständige historische Erfassung wird ausdrücklich angezeigt; es werden keine Beschlüsse erzeugt.</p>
+                  <div style={{display:'flex',gap:'.75rem',flexWrap:'wrap'}}>
+                    <button type="button" disabled={u4Busy} onClick={()=>void runRisPilot(false)}>RIS nur prüfen</button>
+                    <button type="button" disabled={u4Busy} onClick={()=>void runRisPilot(true)}>RIS-Testlauf speichern</button>
+                  </div>
+                </div>
                 {u4Busy && <p role="status">Quellenabruf läuft …</p>}
                 {u4Error && <p role="alert">Fehler: {u4Error}</p>}
                 {u4Result && <div aria-live="polite">
                   <p><strong>Ergebnis:</strong> {u4Result.mode==='dry_run'?'Lesender Test':'Speichertest'}</p>
-                  <p>Erkannt: {String(u4Result.detected ?? u4Result.seen ?? '–')} · Neu: {String(u4Result.newCount ?? '–')} · Verändert: {String(u4Result.changedCount ?? '–')}</p>
+                  {u4Result.ris ? <p>RIS-Dokumente: {String(u4Result.documents)} · Neu: {String(u4Result.newCount)} · Noch offene Zeitfenster: {String(u4Result.pending)} · Historisch vollständig: {u4Result.complete?'Ja':'Nein'}</p> : <p>Erkannt: {String(u4Result.detected ?? u4Result.seen ?? '–')} · Neu: {String(u4Result.newCount ?? '–')} · Verändert: {String(u4Result.changedCount ?? '–')}</p>}
                   {Array.isArray(u4Result.urls) && <details><summary>Erkannte Seiten anzeigen</summary><ul>{u4Result.urls.map((url,i)=><li key={i}>{String(url)}</li>)}</ul></details>}
                 </div>}
               </div>
