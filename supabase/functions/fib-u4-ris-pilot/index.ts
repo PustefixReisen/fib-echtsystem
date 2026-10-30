@@ -6,6 +6,15 @@ const reply=(body:unknown,status=200)=>Response.json(body,{status,headers:{...co
 function valid(href:string,base=entry):string|null{
  try{const u=new URL(href.replace(/&amp;/g,'&'),base);u.hash='';if(u.protocol!=='https:'||u.origin!==origin)return null;return u.href;}catch{return null;}
 }
+function releaseSince(html:string):string|null{
+ const plain=html.replace(/<script\\b[^>]*>[\\s\\S]*?<\\/script>/gi,' ').replace(/<style\\b[^>]*>[\\s\\S]*?<\\/style>/gi,' ').replace(/<[^>]+>/g,' ').replace(/&nbsp;|&#160;/gi,' ').replace(/\\s+/g,' ');
+ const m=plain.match(/Dokumente\\s+mit\\s+Freigabe\\s+seit\\s+([0-3]?\\d)\\.([01]?\\d)\\.(20\\d\\d)/i);
+ if(!m)return null;
+ const d=Number(m[1]),month=Number(m[2]),year=Number(m[3]);
+ const date=new Date(Date.UTC(year,month-1,d));
+ if(date.getUTCFullYear()!==year||date.getUTCMonth()!==month-1||date.getUTCDate()!==d)return null;
+ return date.toISOString().slice(0,10);
+}
 function extract(html:string,url:string){
  const docs=new Set<string>(),navigation=new Set<string>();
  for(const m of html.matchAll(/<a\b[^>]*href\s*=\s*["']([^"']+)["']/gi)){
@@ -14,7 +23,7 @@ function extract(html:string,url:string){
   if(parsed.pathname.toLowerCase()==='/getfile.asp'&&parsed.searchParams.has('id'))docs.add(u);
   if(parsed.pathname.toLowerCase()==='/do0040.asp'&&/^\d{7}$/.test(parsed.searchParams.get('smcadat')??''))navigation.add(u);
  }
- return {docs:[...docs],navigation:[...navigation]};
+ return {docs:[...docs],navigation:[...navigation],releaseSince:releaseSince(html)};
 }
 async function pdfHash(url:string){
  const u=valid(url);if(!u||new URL(u).pathname.toLowerCase()!=='/getfile.asp')throw new Error('invalid_pdf_url');
@@ -54,7 +63,7 @@ export default {async fetch(req:Request){
   if(scopes.length!==1)throw new Error('ris_scope_unavailable');
   const scopeId=scopes[0].id as string;
   const rows=await sql.unsafe('select cursor_state from fib.ris_scan_cursors where scope_id=$1::uuid',[scopeId]);
-  const previous=rows[0]?.cursor_state as {pending:string[];visited:string[];documents:string[];pdfOffset?:number;failures:{url:string;error:string}[]} | undefined;
+  const previous=rows[0]?.cursor_state as {pending:string[];visited:string[];documents:string[];pdfOffset?:number;releaseViews?:{url:string;releaseSince:string|null;checkedAt:string}[];failures:{url:string;error:string}[]} | undefined;
   const previousSerialized=previous?JSON.stringify(previous):null;
   if(backfill && (!previous || previous.pending.length!==0 || previous.failures.length!==0))return reply({error:'backfill_requires_completed_ris_scan'},409);
   const cycleRestart=Boolean(!backfill && previous && previous.pending.length===0 && previous.failures.length===0);
@@ -63,6 +72,7 @@ export default {async fetch(req:Request){
   const pending=[...(backfill?[]:cycleRestart?[entry]:(previous?.pending?.length?previous.pending:[entry]))];
   const known=new Set([...visited,...pending]);
   const failures=[...(previous?.failures??[])];
+  const releaseViews=new Map((previous?.releaseViews??[]).map(x=>[x.url,x]));
   let processed=0;
   while(pending.length && processed<2){
    const u=valid(pending.shift()!);
@@ -72,14 +82,15 @@ export default {async fetch(req:Request){
     const result=await page(u);
     if(!result.docs.length&&!result.navigation.length)throw new Error('empty_release_page');
     result.docs.forEach(x=>knownDocs.add(x));visited.add(u);
+    releaseViews.set(u,{url:u,releaseSince:result.releaseSince,checkedAt:new Date().toISOString()});
     for(let i=failures.length-1;i>=0;i--)if(failures[i].url===u)failures.splice(i,1);
     for(const linked of result.navigation)if(!known.has(linked)){known.add(linked);pending.push(linked);}
    }catch(err){failures.push({url:u,error:String(err).slice(0,140)});pending.push(u);break;}
   }
-  const current={pending,visited:[...visited],documents:[...knownDocs],failures,pdfOffset:previous?.pdfOffset??0};
+  const current={pending,visited:[...visited],documents:[...knownDocs],failures,pdfOffset:previous?.pdfOffset??0,releaseViews:[...releaseViews.values()]};
   const complete=pending.length===0&&!failures.length;
   const newly=current.documents.filter(x=>!previous?.documents?.includes(x));
-  if(payload.commit!==true)return reply({mode:'dry_run',processed,documents:current.documents.length,newCount:newly.length,pending:pending.length,complete,failures:failures.length,cycleRestart,firstFailure:failures[0]?.error??null});
+  if(payload.commit!==true)return reply({mode:'dry_run',processed,documents:current.documents.length,newCount:newly.length,pending:pending.length,complete,failures:failures.length,cycleRestart,firstFailure:failures[0]?.error??null,releaseViews:current.releaseViews});
   const pdfs:{url:string;hash:string}[]=[];
   const target=current.documents.length;
   const budget=backfill?Math.min(6,Math.max(0,target-current.pdfOffset)):Math.min(6,target);
@@ -115,7 +126,7 @@ export default {async fetch(req:Request){
    await tx.unsafe('insert into fib.source_runs(scope_id,started_at,completed_at,status,items_seen,items_new,items_changed,error_detail) values ($1::uuid,$2,$2,$3,$4,$5,$7,$6)',[scopeId,stamp,complete?'succeeded':failures.length?'failed':'partial',current.documents.length,newly.length,reason,changedCount]);
    await tx.unsafe('update fib.source_scopes set last_attempt_at=$2,last_success_at=case when $3 then $2 else last_success_at end,gap_since=case when $3 then null when $4::text is null then gap_since else coalesce(gap_since,$2) end,last_error=$4,updated_at=now() where id=$1::uuid',[scopeId,stamp,complete,reason]);
   });
-  return reply({mode:'candidate_test',processed,documents:current.documents.length,newCount:newly.length,pending:pending.length,complete,failures:failures.length,cycleRestart,pdfChecked:pdfs.length,pdfChanged:changedCount,backfill,backfillRemaining:backfill?Math.max(0,target-current.pdfOffset):null});
+  return reply({mode:'candidate_test',processed,documents:current.documents.length,newCount:newly.length,pending:pending.length,complete,failures:failures.length,cycleRestart,pdfChecked:pdfs.length,pdfChanged:changedCount,releaseViews:current.releaseViews,backfill,backfillRemaining:backfill?Math.max(0,target-current.pdfOffset):null});
  }catch(e){return reply({error:'ris_pilot_failed',detail:String(e).slice(0,180)},502)}
  finally{await sql.end()}
 }};
