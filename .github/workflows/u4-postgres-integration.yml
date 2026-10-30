@@ -6,6 +6,7 @@ on:
       - 'packages/fachservices/src/u4-source-monitor-sql.ts'
       - 'tests/u4/postgres-integration.spec.ts'
       - 'tests/u4/ris-postgres-recovery.spec.ts'
+      - 'tests/u4/ris-postgres-advisory-lock.spec.ts'
       - '.github/workflows/u4-postgres-integration.yml'
       - 'package.json'
 jobs:
@@ -41,3 +42,8 @@ jobs:
         env:
           U4_TEST_DATABASE_URL: postgres://postgres:integration_only@localhost:5432/fib_u4_test
         run: npx tsx tests/u4/ris-postgres-recovery.spec.ts
+
+      - name: RIS scheduler session-lock contention with real PostgreSQL
+        env:
+          U4_TEST_DATABASE_URL: postgres://postgres:integration_only@localhost:5432/fib_u4_test
+        run: npx tsx tests/u4/ris-postgres-advisory-lock.spec.ts
