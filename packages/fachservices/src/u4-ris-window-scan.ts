@@ -84,6 +84,7 @@ export async function scanRisReleaseBatch(
    if(window.documentUrls.length===0 && links.length===0)throw new Error('Empty RIS release listing without navigation');
    window.documentUrls.forEach(d=>documents.add(d));
    visited.add(url);
+   for(let i=failures.length-1;i>=0;i--)if(failures[i]?.url===url)failures.splice(i,1);
    for(const link of links)if(!known.has(link)){known.add(link);pending.push(link);}
   } catch(e){
    failures.push({url,error:e instanceof Error?e.message:String(e)});
