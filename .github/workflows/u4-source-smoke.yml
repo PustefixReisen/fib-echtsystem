@@ -4,6 +4,7 @@ on:
   pull_request:
     paths:
       - "scripts/u4-source-smoke.mjs"
+      - "tests/u4/ris-scheduler-batches.spec.ts"
       - "tests/u4/ris-handler-fault-injection.spec.ts"
       - "tests/u4/ris-runtime-recovery.spec.ts"
       - "package.json"
@@ -14,6 +15,8 @@ on:
       - "packages/fachservices/src/u4-ris-monitor-policy.ts"
       - "tests/u4/ris-monitor-policy.spec.ts"
       - "supabase/functions/fib-u4-ris-pilot/index.ts"
+      - "supabase/functions/fib-u4-ris-scheduled/index.ts"
+      - "supabase/config.toml"
       - "packages/fachservices/src/u4-source-discovery.ts"
       - "tests/u4/source-discovery.spec.ts"
       - "tests/u4/ris-pdf-change-check.spec.ts"

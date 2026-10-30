@@ -62,22 +62,40 @@ function dueStatus(states:Record<string,{lastCompleteAt?:string|null;pending?:st
   return {cadence,due:recovery||today>=next,reason:recovery?'recovery_needed':today>=next?'due':'not_due',overdueDays};
  });
 }
-export default {async fetch(req:Request){
+export async function handleRis(req:Request,mode:'interactive'|'scheduler'='interactive'){
+ if(mode==='scheduler'){
+  if(Deno.env.get('FIB_RIS_AUTOMATION_ENABLED')!=='true')return reply({error:'scheduler_disabled'},503);
+  const expected=Deno.env.get('FIB_RIS_SCHEDULER_TOKEN');
+  const provided=req.headers.get('x-fib-ris-scheduler');
+  if(!expected||expected.length<32||!provided)return reply({error:'scheduler_forbidden'},403);
+  const enc=new TextEncoder();
+  const hashes=await Promise.all([crypto.subtle.digest('SHA-256',enc.encode(expected)),crypto.subtle.digest('SHA-256',enc.encode(provided))]);
+  const a=new Uint8Array(hashes[0]),b=new Uint8Array(hashes[1]);
+  let delta=0;for(let i=0;i<a.length;i++)delta|=a[i]^b[i];
+  if(delta!==0)return reply({error:'scheduler_forbidden'},403);
+ }
+
  if(req.method==='OPTIONS')return new Response(null,{status:204,headers:cors});
  if(req.method!=='POST')return reply({error:'method_not_allowed'},405);
- const auth=req.headers.get('authorization');if(!auth?.startsWith('Bearer '))return reply({error:'authentication_required'},401);
+ const auth=req.headers.get('authorization');if(mode==='interactive'&&!auth?.startsWith('Bearer '))return reply({error:'authentication_required'},401);
  const base=Deno.env.get('SUPABASE_URL'),anon=Deno.env.get('SUPABASE_ANON_KEY'),dbUrl=Deno.env.get('FIB_DATABASE_URL');
  if(!base||!anon||!dbUrl)return reply({error:'runtime_not_configured'},503);
- const verification=await fetch(base+'/auth/v1/user',{headers:{apikey:anon,authorization:auth}});
- if(!verification.ok)return reply({error:'invalid_auth'},403);
- const user=await verification.json() as {id:string};
- let claims:{sub?:string;aal?:string};
- try{claims=JSON.parse(atob(auth.slice(7).split('.')[1].replace(/-/g,'+').replace(/_/g,'/')))}catch{return reply({error:'invalid_claims'},403)}
- if(claims.sub!==user.id||claims.aal!=='aal2')return reply({error:'mfa_required'},403);
+ let interactiveUserId:string|null=null;
+ if(mode==='interactive'){
+  const verification=await fetch(base+'/auth/v1/user',{headers:{apikey:anon!,authorization:auth!}});
+  if(!verification.ok)return reply({error:'invalid_auth'},403);
+  const user=await verification.json() as {id:string};
+  let claims:{sub?:string;aal?:string};
+  try{claims=JSON.parse(atob(auth!.slice(7).split('.')[1].replace(/-/g,'+').replace(/_/g,'/')))}catch{return reply({error:'invalid_claims'},403)}
+  if(claims.sub!==user.id||claims.aal!=='aal2')return reply({error:'mfa_required'},403);
+  interactiveUserId=user.id;
+ }
  const sql=postgres(dbUrl,{max:1,prepare:false,connect_timeout:5,idle_timeout:5});
  try{
-  const allowed=await sql.unsafe("select 1 from fib.app_users where user_id=$1::uuid and role='admin' and active=true and setup_status='active' limit 1",[user.id]);
-  if(!allowed.length)return reply({error:'admin_required'},403);
+  if(mode==='interactive'){
+   const allowed=await sql.unsafe("select 1 from fib.app_users where user_id=$1::uuid and role='admin' and active=true and setup_status='active' limit 1",[interactiveUserId]);
+   if(!allowed.length)return reply({error:'admin_required'},403);
+  }
   const payload=await req.json().catch(()=>({})) as {commit?:boolean;pdfBackfill?:boolean;cadence?:'daily'|'weekly'};
   const backfill=payload.pdfBackfill===true && payload.commit===true;
   if(payload.cadence && payload.cadence!=='daily'&&payload.cadence!=='weekly')return reply({error:'invalid_cadence'},400);
@@ -88,6 +106,10 @@ export default {async fetch(req:Request){
   const rows=await sql.unsafe('select cursor_state from fib.ris_scan_cursors where scope_id=$1::uuid',[scopeId]);
   const previous=rows[0]?.cursor_state as {pending:string[];visited:string[];documents:string[];pdfOffset?:number;releaseViews?:{url:string;releaseSince:string|null;checkedAt:string}[];failures:{url:string;error:string}[]; cadenceStates?:Record<string,{pending:string[];visited:string[];failures:{url:string;error:string}[];releaseViews:{url:string;releaseSince:string|null;checkedAt:string}[];lastCompleteAt:string|null;lastFailedAt?:string|null;lastStatus?:'succeeded'|'partial'|'failed';lastError?:string|null}>} | undefined;
   const previousSerialized=previous?JSON.stringify(previous):null;
+  if(mode==='scheduler'){
+   const checks=dueStatus(previous?.cadenceStates??{});
+   if(!checks.find(x=>x.cadence===cadence)?.due)return reply({mode:'scheduler',skipped:'not_due',dueChecks:checks});
+  }
   if(backfill && (!previous || previous.pending.length!==0 || previous.failures.length!==0))return reply({error:'backfill_requires_completed_ris_scan'},409);
   const priorState=previous?.cadenceStates?.[cadence];
   const activeState=priorState??(previous && !previous.cadenceStates?{pending:previous.pending,visited:previous.visited,failures:previous.failures,releaseViews:previous.releaseViews??[],lastCompleteAt:null}:undefined);
@@ -160,4 +182,5 @@ export default {async fetch(req:Request){
   return reply({mode:'candidate_test',processed,documents:current.documents.length,newCount:newly.length,pending:pending.length,complete,failures:failures.length,cycleRestart,pdfChecked:pdfs.length,pdfChanged:changedCount,releaseViews:current.releaseViews,...coverageResult,cadenceStates,dueChecks:dueStatus(cadenceStates),activeErrors,backfill,backfillRemaining:backfill?Math.max(0,target-current.pdfOffset):null});
  }catch(e){return reply({error:'ris_pilot_failed',detail:String(e).slice(0,180)},502)}
  finally{await sql.end()}
-}};
+}
+export default {fetch(req:Request){return handleRis(req,'interactive')}};

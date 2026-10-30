@@ -2,3 +2,8 @@ project_id = "apaubomxffcwtzjimori"
 
 [functions.fib-get-event]
 verify_jwt = true
+
+# Only this isolated scheduler function accepts non-JWT requests;
+# its handler requires a long secret and explicit enable flag.
+[functions.fib-u4-ris-scheduled]
+verify_jwt = false
