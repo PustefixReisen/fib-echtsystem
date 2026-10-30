@@ -9,9 +9,12 @@ const db={
  }
 };
 const store=new SqlRisScanCursorStorage(db);
+async function main(){
 await db.transaction(tx=>store.save('scope',cursor,tx));
 assert.deepEqual(JSON.parse(saved),cursor);
 let threw=false;
 try{await store.save('scope',cursor,db)}catch{threw=true}
 assert.equal(threw,true);
 console.log('U4 RIS cursor SQL transaction checks passed');
+}
+void main().catch(e=>{console.error(e);process.exitCode=1});
