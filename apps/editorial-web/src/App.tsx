@@ -741,6 +741,21 @@ export function App() {
     finally{setU4Busy(false)}
   }
 
+  async function runRisPdfBackfill() {
+    if(sessionContext?.role!=='admin' || state!=='aal2' || u4Busy)return;
+    if(!window.confirm('Bis zu 8 kleine Pakete zur nachträglichen RIS-PDF-Inhaltsprüfung starten? Keine automatische Dauerüberwachung.'))return;
+    setU4Busy(true);setU4Error(null);setU4Result(null);
+    try {
+      for(let batch=0;batch<8;batch++) {
+        const {data,error}=await supabase.functions.invoke<Record<string,unknown>>('fib-u4-ris-pilot',{body:{commit:true,pdfBackfill:true}});
+        if(error||!data||data.error){setU4Error('PDF-Paket '+(batch+1)+': '+String(data?.detail??data?.error??error?.message??'Abruf fehlgeschlagen'));return;}
+        setU4Result({...data,ris:true});
+        if(data.backfillRemaining===0)return;
+      }
+    }catch(err){setU4Error(err instanceof Error?err.message:'Verbindungsfehler');}
+    finally{setU4Busy(false)}
+  }
+
   async function loadAdminUsers() {
     if (sessionContext?.role !== 'admin') return;
     setAdminUsersLoading(true);
@@ -1702,12 +1717,14 @@ export function App() {
                   <div style={{display:'flex',gap:'.75rem',flexWrap:'wrap'}}>
                     <button type="button" disabled={u4Busy} onClick={()=>void runRisPilot(false)}>RIS nur prüfen</button>
                     <button type="button" disabled={u4Busy} onClick={()=>void runRisPilot(true)}>RIS-Testlauf speichern</button>
+                    <button type="button" disabled={u4Busy} onClick={()=>void runRisPdfBackfill()}>RIS-PDFs gesammelt prüfen</button>
                   </div>
                 </div>
                 {u4Busy && <p role="status">Quellenabruf läuft …</p>}
                 {u4Error && <p role="alert">Fehler: {u4Error}</p>}
                 {u4Result && <div aria-live="polite">
                   <p><strong>Ergebnis:</strong> {u4Result.mode==='dry_run'?'Lesender Test':'Speichertest'}</p>
+                  {u4Result.ris && u4Result.backfill===true && <p>PDF-Nachprüfung: {String(u4Result.pdfChecked)} PDFs im letzten Paket geprüft · Noch offen: {String(u4Result.backfillRemaining)}</p>}
                   {u4Result.ris ? <p>RIS-Dokumente: {String(u4Result.documents)} · Neu: {String(u4Result.newCount)} · Noch offene Zeitfenster: {String(u4Result.pending)} · Historisch vollständig: {u4Result.complete?'Ja':'Nein'}</p> : <p>Erkannt: {String(u4Result.detected ?? u4Result.seen ?? '–')} · Neu: {String(u4Result.newCount ?? '–')} · Verändert: {String(u4Result.changedCount ?? '–')}</p>}
                   {Array.isArray(u4Result.urls) && <details><summary>Erkannte Seiten anzeigen</summary><ul>{u4Result.urls.map((url,i)=><li key={i}>{String(url)}</li>)}</ul></details>}
                 </div>}
