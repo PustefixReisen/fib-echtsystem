@@ -6,6 +6,8 @@ on:
       - "scripts/u4-source-smoke.mjs"
       - "packages/fachservices/src/u4-source-discovery.ts"
       - "tests/u4/source-discovery.spec.ts"
+      - "tests/u4/ris-batch-persistence.spec.ts"
+      - "packages/fachservices/src/u4-ris-batch-persistence.ts"
       - "tests/u4/ris-cursor-sql.spec.ts"
       - "packages/fachservices/src/u4-ris-cursor-sql.ts"
       - "tests/u4/ris-window-scan.spec.ts"
