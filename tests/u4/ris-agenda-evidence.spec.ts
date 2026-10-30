@@ -1,0 +1,13 @@
+import assert from 'node:assert/strict';
+import {extractRisAgendaRows} from '../../packages/fachservices/src/u4-ris-agenda-evidence.js';
+const base='https://buergerinfo-feldkirchen.digitalfabrix.de/si0057.asp?__ksinr=1032';
+const html='<table><tr><td>2</td><td><a href="vo0050.asp?__kvonr=8640">Vorlage</a><a href="getfile.asp?id=75854&amp;type=do">PDF</a></td></tr><tr><td>3</td><td><a href="vo0050.asp?__kvonr=8641">Vorlage</a></td></tr></table>';
+const rows=extractRisAgendaRows(html,base);
+assert.equal(rows.length,2);
+assert.equal(rows[0].topNumber,'2');
+assert.equal(rows[0].documentUrls.length,1);
+assert.equal(rows[0].evidence,'same-html-row');
+assert.equal(rows[1].documentUrls.length,0);
+const ambiguous='<table><tr><td>4</td><td><a href="vo0050.asp?__kvonr=8640">A</a><a href="vo0050.asp?__kvonr=8641">B</a><a href="getfile.asp?id=1">PDF</a></td></tr></table>';
+assert.equal(extractRisAgendaRows(ambiguous,base).length,0);
+console.log('U4 RIS same-row conservative association tests passed');
