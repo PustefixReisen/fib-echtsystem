@@ -21,7 +21,7 @@ jobs:
       - name: Probe Gemeinde and RIS endpoints
         run: node scripts/u4-source-smoke.mjs
       - name: Install workspace dependencies
-        run: npm ci
+        run: npm install --ignore-scripts --no-audit --no-fund --no-package-lock
       - name: Verify U4 source parser tests
         run: npm run test:u4
       - name: Verify core type contracts
