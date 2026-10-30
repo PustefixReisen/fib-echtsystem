@@ -8,6 +8,7 @@ on:
       - 'tests/u4/ris-postgres-recovery.spec.ts'
       - 'tests/u4/ris-postgres-advisory-lock.spec.ts'
       - 'scripts/ris-scheduler-preflight.ts'
+      - 'scripts/ris-cron-plan.ts'
       - '.github/workflows/u4-postgres-integration.yml'
       - 'package.json'
 jobs:
@@ -53,3 +54,6 @@ jobs:
         env:
           FIB_DATABASE_URL: postgres://postgres:integration_only@localhost:5432/fib_u4_test
         run: npm run u4:ris:preflight
+
+      - name: Verify static RIS Cron plan never activates a job
+        run: npm run u4:ris:cron-plan
