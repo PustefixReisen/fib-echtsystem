@@ -26,3 +26,5 @@ for(const [name,url] of targets){
   finally{clearTimeout(timer)}
 }
 if(failures) {console.error(failures+" source checks failed; sources must remain candidate");process.exitCode=1;}
+
+// Diagnostic never persists responses.
