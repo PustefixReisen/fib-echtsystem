@@ -14,6 +14,7 @@ const db={
  async transaction<T>(work:(tx:{queryOne<X>(sql:string,p:readonly unknown[]):Promise<X|null>})=>Promise<T>):Promise<T>{
   return work({async queryOne<X>(sql:string,p:readonly unknown[]):Promise<X|null>{
    if(sql.includes('source_scopes where'))return {id:'scope'} as X;
+   if(sql.includes('from fib.ris_scan_cursors'))return state?{cursor_state:state} as X:null;
    if(sql.includes('source_observations'))observationWrites++;
    if(sql.includes('ris_scan_cursors'))state=JSON.parse(String(p[1]));
    if(sql.includes('source_runs'))statuses.push(String(p[1]));
