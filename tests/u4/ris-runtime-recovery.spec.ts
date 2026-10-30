@@ -7,7 +7,7 @@ import vm from 'node:vm';
 // This cannot replace a fault-injection integration test of database transactions.
 const edge=readFileSync('supabase/functions/fib-u4-ris-pilot/index.ts','utf8');
 const start=edge.indexOf('function coverage(');
-const end=edge.indexOf("export async function handleRis(",start);
+const end=edge.indexOf("export async function verifyRisScheduler(",start);
 assert.ok(start>=0&&end>start,'RIS runtime policy source found');
 const js=ts.transpileModule(edge.slice(start,end),{compilerOptions:{target:ts.ScriptTarget.ES2022,module:ts.ModuleKind.None}}).outputText;
 const context=vm.createContext({Date,Set,Object,Math});
