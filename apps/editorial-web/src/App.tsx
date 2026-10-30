@@ -1725,7 +1725,12 @@ export function App() {
                 {u4Result && <div aria-live="polite">
                   <p><strong>Ergebnis:</strong> {u4Result.mode==='dry_run'?'Lesender Test':'Speichertest'}</p>
                   {u4Result.ris===true && u4Result.backfill===true && <p>PDF-Nachprüfung: {String(u4Result.pdfChecked)} PDFs im letzten Paket geprüft · Noch offen: {String(u4Result.backfillRemaining)}</p>}
-                  {u4Result.ris ? <p>RIS-Dokumente: {String(u4Result.documents)} · Neu: {String(u4Result.newCount)} · Noch offene Zeitfenster: {String(u4Result.pending)} · Historisch vollständig: {u4Result.complete?'Ja':'Nein'}</p> : <p>Erkannt: {String(u4Result.detected ?? u4Result.seen ?? '–')} · Neu: {String(u4Result.newCount ?? '–')} · Verändert: {String(u4Result.changedCount ?? '–')}</p>}
+                  {u4Result.ris ? <>
+                    <p>RIS-Dokumentverweise: {String(u4Result.documents)} · Neue Verweise: {String(u4Result.newCount)} · Noch zu prüfende Freigabeansichten: {String(u4Result.pending)} · Alle gefundenen Ansichten geprüft: {u4Result.complete?'Ja':'Nein'}</p>
+                    {Array.isArray(u4Result.releaseViews) && u4Result.releaseViews.length>0 && <details><summary>Belegte RIS-Freigabezeiträume ({u4Result.releaseViews.length} Ansichten)</summary><ul>
+                      {(u4Result.releaseViews as {url?:string;releaseSince?:string|null;checkedAt?:string}[]).map((view,i)=><li key={view.url??i}>Freigaben seit: {view.releaseSince??'nicht ermittelbar'} · geprüft: {view.checkedAt?new Date(view.checkedAt).toLocaleString('de-DE'):'–'} · <a href={view.url} target="_blank" rel="noopener noreferrer">RIS-Ansicht öffnen</a></li>)}
+                    </ul><p>Der angezeigte Freigabestart ist kein Beleg für das Veröffentlichungsdatum einzelner Dokumente oder die vollständige historische Abdeckung.</p></details>}
+                  </> : <p>Erkannt: {String(u4Result.detected ?? u4Result.seen ?? '–')} · Neu: {String(u4Result.newCount ?? '–')} · Verändert: {String(u4Result.changedCount ?? '–')}</p>}
                   {Array.isArray(u4Result.urls) && <details><summary>Erkannte Seiten anzeigen</summary><ul>{u4Result.urls.map((url,i)=><li key={i}>{String(url)}</li>)}</ul></details>}
                 </div>}
               </div>
