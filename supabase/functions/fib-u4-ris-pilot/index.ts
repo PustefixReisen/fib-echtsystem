@@ -111,7 +111,7 @@ export default {async fetch(req:Request){
    await tx.unsafe('insert into fib.ris_scan_cursors(scope_id,cursor_state,updated_at) values ($1::uuid,$2::jsonb,now()) on conflict(scope_id) do update set cursor_state=excluded.cursor_state,updated_at=now()',[scopeId,sql.json(current)]);
    const reason=failures.length?'RIS window fetch failed':null;
    await tx.unsafe('insert into fib.source_runs(scope_id,started_at,completed_at,status,items_seen,items_new,items_changed,error_detail) values ($1::uuid,$2,$2,$3,$4,$5,$7,$6)',[scopeId,stamp,complete?'succeeded':failures.length?'failed':'partial',current.documents.length,newly.length,reason,changedCount]);
-   await tx.unsafe('update fib.source_scopes set last_attempt_at=$2,last_success_at=case when $3 then $2 else last_success_at end,gap_since=case when $3 then null when $4 is null then gap_since else coalesce(gap_since,$2) end,last_error=$4,updated_at=now() where id=$1::uuid',[scopeId,stamp,complete,reason]);
+   await tx.unsafe('update fib.source_scopes set last_attempt_at=$2,last_success_at=case when $3 then $2 else last_success_at end,gap_since=case when $3 then null when $4::text is null then gap_since else coalesce(gap_since,$2) end,last_error=$4,updated_at=now() where id=$1::uuid',[scopeId,stamp,complete,reason]);
   });
   return reply({mode:'candidate_test',processed,documents:current.documents.length,newCount:newly.length,pending:pending.length,complete,failures:failures.length,cycleRestart,pdfChecked:pdfs.length,pdfChanged:changedCount});
  }catch(e){return reply({error:'ris_pilot_failed',detail:String(e).slice(0,180)},502)}
