@@ -743,10 +743,10 @@ export function App() {
 
   async function runRisPdfBackfill() {
     if(sessionContext?.role!=='admin' || state!=='aal2' || u4Busy)return;
-    if(!window.confirm('Bis zu 8 kleine Pakete zur nachträglichen RIS-PDF-Inhaltsprüfung starten? Keine automatische Dauerüberwachung.'))return;
+    if(!window.confirm('Bis zu 16 kleine Pakete zur nachträglichen RIS-PDF-Inhaltsprüfung starten? Keine automatische Dauerüberwachung.'))return;
     setU4Busy(true);setU4Error(null);setU4Result(null);
     try {
-      for(let batch=0;batch<8;batch++) {
+      for(let batch=0;batch<16;batch++) {
         const {data,error}=await supabase.functions.invoke<Record<string,unknown>>('fib-u4-ris-pilot',{body:{commit:true,pdfBackfill:true}});
         if(error||!data||data.error){setU4Error('PDF-Paket '+(batch+1)+': '+String(data?.detail??data?.error??error?.message??'Abruf fehlgeschlagen'));return;}
         setU4Result({...data,ris:true});
