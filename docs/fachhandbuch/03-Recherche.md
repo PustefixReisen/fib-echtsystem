@@ -60,6 +60,14 @@ Die Informationsgewinnung nutzt **zwei unterschiedliche, sich ergänzende Betrie
 
 **Vollständigkeitsprotokoll:** Für jeden Scope dokumentiert FIB Prüfzeitraum, tatsächlich gelesene Seiten/Rubriken, technische Einträge, neu erkannte Einträge, zu prüfende und übernommene Fundstellen, zuletzt erfolgreichen Lauf, Fehler, offene Nachholfenster und Grenzen der Abdeckung. Eine leere, unvollständige oder unzugängliche Antwort ist kein Negativnachweis. Die Trennung zwischen kurzlebigen technischen Sichtungsdaten nicht relevanter Einträge und langfristig aufbewahrten relevanten Fundstellen verhindert unnötige Kosten; soweit für Dubletten- und Lückenerkennung nötig, können kompakte Kennungen/Prüfmetadaten bestehen bleiben.
 
+### Redaktionelle Klärung verbleibender Relevanzunsicherheit
+
+Bei unsicherer örtlicher **oder sonstiger fachlicher Relevanz** versucht FIB zuerst eine selbstständige Klärung aus Quellen, gesichertem Kontext, räumlichen Referenzobjekten und bei Bedarf gezielter Nachrecherche. Bleibt eine entscheidungserhebliche Unsicherheit, kann FIB eine konkrete und begründete Frage als redaktionelle Aufgabe stellen. Die Frage nennt die Fundstelle, die vermutete Beziehung, verfügbare Belege und den bislang ungeklärten Punkt. Antwortmöglichkeiten sollen einfach sein (Bestätigen, Ablehnen, Noch unklar) und bei Bedarf eine Begründung zulassen.
+
+Bestätigte oder abgelehnte räumliche Beziehungen werden mit Herkunft, Begründung und Prüfstatus nachvollziehbar gespeichert und bei späteren Fundstellen wiederverwendet. Eine redaktionelle Entscheidung zu einer Fundstelle ist nicht automatisch eine allgemeingültige räumliche Tatsache. Ungeklärte Fälle bleiben erkennbar; sie dürfen nicht allein zur Verringerung der Rückfragen als irrelevant aussortiert werden.
+
+Zur Begrenzung der redaktionellen Belastung vermeidet FIB wiederholte Fragen zu geklärten Beziehungen, bündelt sachlich gleiche Unklarheiten, priorisiert nach möglicher örtlicher Bedeutung und zeigt Rückfragen in einem gemeinsamen Arbeitsvorrat statt als ungefilterte Einzelbenachrichtigungen. FIB misst Anzahl, Anteil, Wiederholungen und Klärungserfolg der Rückfragen; Auffälligkeiten führen zur Verbesserung von Kontextwissen und Recherchelogik, nicht zum stillen Verwerfen möglicher Treffer.
+
 ## 03.2 Fachliches Gesamtmodell
 
 ### 03.2.1 Grundobjekte und Informationsbeziehungen
