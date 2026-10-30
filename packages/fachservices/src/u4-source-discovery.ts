@@ -33,7 +33,7 @@ function hrefs(html: string): {url:string;title:string}[] {
   }
   return results;
 }
-function normalize(target: MonitorTarget, candidate: string): string | undefined {
+function normalize(target: MonitorTarget, candidate: string): string |       if(!(/^\/(?:si|to|vo|do)\d+\.asp$/.test(path) || path === '/getfile.asp')) continue; {
   try {
     const url=new URL(candidate,target.url);
     if(url.protocol!=='https:' || url.origin!==target.origin) return undefined;
@@ -46,7 +46,7 @@ function classifyRis(url: string, label: string): RisKind {
   if(/^\/si\d+\.asp/.test(path)) return 'session';
   if(/^\/to\d+\.asp/.test(path)) return 'agenda-item';
   if(/^\/vo\d+\.asp/.test(path)) return 'proposal';
-      if(!(/^\\/(?:si|to|vo|do)\\d+\\.asp$/.test(path) || path === '/getfile.asp')) continue;
+  if(/^\/getfile\.asp/.test(path)) return 'attachment';
   if(/niederschrift/i.test(label)) return 'minutes';
   if(/beschluss(?!vorlage)/i.test(label)) return 'resolution';
   return 'attachment';
