@@ -2,6 +2,8 @@ import assert from 'node:assert/strict';
 import {discoverSource, parseSourceListing, fingerprintDetail, U4_PILOT_TARGETS} from '../../packages/fachservices/src/u4-source-discovery.js';
 import {reconcileSourceObservation,updateSourceCheckpoint} from '../../packages/domain-contracts/src/source-monitor.js';
 
+async function main() {
+
 const news=U4_PILOT_TARGETS[0]!;
 const ris=U4_PILOT_TARGETS[2]!;
 const listing='<html><body><a href="/aktuelles/aktuelle-news/aktuelle-meldungen/vernissage-2026">Vernissage 2026</a><a href="https://unrelated.example/evil">Fremdquelle</a><a href="/aktuelles/aktuelle-news/aktuelle-meldungen/nachrichten-archiv">Archiv</a></body></html>';
@@ -52,3 +54,6 @@ await assert.rejects(()=>fingerprintDetail(pdfUrl,async()=>({
 })),/Unexpected PDF response/);
 
 console.log('U4 HTML and PDF source discovery cases passed');
+
+}
+void main().catch(error=>{console.error(error);process.exitCode=1;});
