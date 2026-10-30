@@ -45,9 +45,10 @@ export default {async fetch(req:Request){
   const rows=await sql.unsafe('select cursor_state from fib.ris_scan_cursors where scope_id=$1::uuid',[scopeId]);
   const previous=rows[0]?.cursor_state as {pending:string[];visited:string[];documents:string[];failures:{url:string;error:string}[]} | undefined;
   const previousSerialized=previous?JSON.stringify(previous):null;
-  const visited=new Set(previous?.visited??[]);
+  const cycleRestart=Boolean(previous && previous.pending.length===0 && previous.failures.length===0);
+  const visited=new Set(cycleRestart?[]:(previous?.visited??[]));
   const knownDocs=new Set(previous?.documents??[]);
-  const pending=[...(previous?.pending?.length?previous.pending:[entry])];
+  const pending=[...(cycleRestart?[entry]:(previous?.pending?.length?previous.pending:[entry]))];
   const known=new Set([...visited,...pending]);
   const failures=[...(previous?.failures??[])];
   let processed=0;
@@ -66,7 +67,7 @@ export default {async fetch(req:Request){
   const current={pending,visited:[...visited],documents:[...knownDocs],failures};
   const complete=pending.length===0&&!failures.length;
   const newly=current.documents.filter(x=>!previous?.documents?.includes(x));
-  if(payload.commit!==true)return reply({mode:'dry_run',processed,documents:current.documents.length,newCount:newly.length,pending:pending.length,complete,failures:failures.length,firstFailure:failures[0]?.error??null});
+  if(payload.commit!==true)return reply({mode:'dry_run',processed,documents:current.documents.length,newCount:newly.length,pending:pending.length,complete,failures:failures.length,cycleRestart,firstFailure:failures[0]?.error??null});
   const stamp=new Date().toISOString();
   await sql.begin(async tx=>{
    const locked=await tx.unsafe("select id from fib.source_scopes where id=$1::uuid and status='candidate' for update",[scopeId]);
@@ -82,7 +83,7 @@ export default {async fetch(req:Request){
    await tx.unsafe('insert into fib.source_runs(scope_id,started_at,completed_at,status,items_seen,items_new,items_changed,error_detail) values ($1::uuid,$2,$2,$3,$4,$5,0,$6)',[scopeId,stamp,complete?'succeeded':'failed',current.documents.length,newly.length,reason]);
    await tx.unsafe('update fib.source_scopes set last_attempt_at=$2,last_success_at=case when $3 then $2 else last_success_at end,gap_since=case when $3 then null else coalesce(gap_since,$2) end,last_error=$4,updated_at=now() where id=$1::uuid',[scopeId,stamp,complete,reason]);
   });
-  return reply({mode:'candidate_test',processed,documents:current.documents.length,newCount:newly.length,pending:pending.length,complete,failures:failures.length});
+  return reply({mode:'candidate_test',processed,documents:current.documents.length,newCount:newly.length,pending:pending.length,complete,failures:failures.length,cycleRestart});
  }catch(e){return reply({error:'ris_pilot_failed',detail:String(e).slice(0,180)},502)}
  finally{await sql.end()}
 }};
