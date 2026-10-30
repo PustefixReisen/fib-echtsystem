@@ -61,6 +61,7 @@ const fakeFetch=async(url:string)=>{
 };
 const source=readFileSync('supabase/functions/fib-u4-ris-pilot/index.ts','utf8')
  .replace(/^import postgres from .*;\s*/,'const postgres = globalThis.__postgres;\n')
+ .replace("export async function verifyRisScheduler(","async function verifyRisScheduler(")
  .replace("export async function handleRis(req:Request,mode:'interactive'|'scheduler'='interactive'){", "globalThis.__handler = {async fetch(req:Request,mode:'interactive'|'scheduler'='interactive'){")
  .replace("export default {fetch(req:Request){return handleRis(req,'interactive')}};", "};");
 const js=ts.transpileModule(source,{compilerOptions:{target:ts.ScriptTarget.ES2022,module:ts.ModuleKind.None}}).outputText;

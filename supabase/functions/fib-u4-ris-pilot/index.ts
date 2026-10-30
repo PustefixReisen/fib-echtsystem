@@ -62,17 +62,21 @@ function dueStatus(states:Record<string,{lastCompleteAt?:string|null;pending?:st
   return {cadence,due:recovery||today>=next,reason:recovery?'recovery_needed':today>=next?'due':'not_due',overdueDays};
  });
 }
+export async function verifyRisScheduler(req:Request):Promise<Response|null>{
+ if(Deno.env.get('FIB_RIS_AUTOMATION_ENABLED')!=='true')return reply({error:'scheduler_disabled'},503);
+ const expected=Deno.env.get('FIB_RIS_SCHEDULER_TOKEN');
+ const provided=req.headers.get('x-fib-ris-scheduler');
+ if(!expected||expected.length<32||!provided)return reply({error:'scheduler_forbidden'},403);
+ const enc=new TextEncoder();
+ const hashes=await Promise.all([crypto.subtle.digest('SHA-256',enc.encode(expected)),crypto.subtle.digest('SHA-256',enc.encode(provided))]);
+ const a=new Uint8Array(hashes[0]),b=new Uint8Array(hashes[1]);
+ let delta=0;for(let i=0;i<a.length;i++)delta|=a[i]^b[i];
+ return delta===0?null:reply({error:'scheduler_forbidden'},403);
+}
 export async function handleRis(req:Request,mode:'interactive'|'scheduler'='interactive'){
  if(mode==='scheduler'){
-  if(Deno.env.get('FIB_RIS_AUTOMATION_ENABLED')!=='true')return reply({error:'scheduler_disabled'},503);
-  const expected=Deno.env.get('FIB_RIS_SCHEDULER_TOKEN');
-  const provided=req.headers.get('x-fib-ris-scheduler');
-  if(!expected||expected.length<32||!provided)return reply({error:'scheduler_forbidden'},403);
-  const enc=new TextEncoder();
-  const hashes=await Promise.all([crypto.subtle.digest('SHA-256',enc.encode(expected)),crypto.subtle.digest('SHA-256',enc.encode(provided))]);
-  const a=new Uint8Array(hashes[0]),b=new Uint8Array(hashes[1]);
-  let delta=0;for(let i=0;i<a.length;i++)delta|=a[i]^b[i];
-  if(delta!==0)return reply({error:'scheduler_forbidden'},403);
+  const denied=await verifyRisScheduler(req);
+  if(denied)return denied;
  }
 
  if(req.method==='OPTIONS')return new Response(null,{status:204,headers:cors});

@@ -4,14 +4,20 @@ import ts from 'typescript';
 import vm from 'node:vm';
 
 const file=readFileSync('supabase/functions/fib-u4-ris-scheduled/index.ts','utf8');
-const source=file.replace(/^import \{handleRis\} from .*;\s*/m,'')
+const source=file.replace(/^import .*;\s*/gm,'')
  .replace('export default {async fetch(', 'globalThis.__scheduler = {async fetch(');
 const js=ts.transpileModule(source,{compilerOptions:{module:ts.ModuleKind.None,target:ts.ScriptTarget.ES2022}}).outputText;
 let hits=0;
+let inUse=false;
+let unlocks=0;
+let lockCalls=0;
+let denied:Response|null=null;
+const postgres=()=>({unsafe:async(q:string)=>{if(q.includes('pg_try_advisory_lock')){lockCalls++;if(inUse)return [{acquired:false}];inUse=true;return [{acquired:true}]};if(q.includes('pg_advisory_unlock')){unlocks++;inUse=false;return [{pg_advisory_unlock:true}]};throw new Error(q)},end:async()=>{}});
+const Deno={env:{get:(k:string)=>k==='FIB_DATABASE_URL'?'postgres://fixture':null}};
 let elapsed=0;
 const FakeDate={now:()=>elapsed};
 let steps:Array<{complete?:boolean;failures?:number;skipped?:string}>=[];
-const ctx:any=vm.createContext({Response,Request,Number,Date:FakeDate,
+const ctx:any=vm.createContext({Response,Request,Number,Date:FakeDate,postgres,Deno,verifyRisScheduler:async()=>denied,
  handleRis:async()=>{hits++;return Response.json(steps.shift()??{complete:false,failures:0})}});
 vm.runInContext(js,ctx);
 const req=(cadence='daily',commit=true,pdfBackfill=false)=>new Request('https://function.test',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({cadence,commit,pdfBackfill})});
@@ -49,6 +55,19 @@ async function main(){
  assert.equal(budget.batches,1);
  assert.equal(hits,1);
  ctx.handleRis=prior;
+ assert.equal(inUse,false);
+ assert.equal(lockCalls,unlocks);
+ inUse=true;
+ response=await ctx.__scheduler.fetch(req());
+ assert.equal(response.status,409);
+ assert.equal((await response.json()).error,'ris_scan_already_running');
+ inUse=false;
+ denied=Response.json({error:'scheduler_forbidden'},{status:403});
+ const priorCalls=lockCalls;
+ response=await ctx.__scheduler.fetch(req());
+ assert.equal(response.status,403);
+ assert.equal(lockCalls,priorCalls);
+ denied=null;
  console.log('RIS scheduler bounded batch continuation and retry tests passed');
 }
 void main().catch(e=>{console.error(e);process.exitCode=1});
