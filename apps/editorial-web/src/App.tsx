@@ -720,7 +720,7 @@ export function App() {
     if(commit && !window.confirm('Testdaten der Gemeinde-Nachrichten in Shared-Apps speichern?'))return;
     setU4Busy(true);setU4Error(null);setU4Result(null);
     try {
-      const {data,error}=await supabase.functions.invoke<Record<string,unknown>>('fib-u4-pilot',{body:{commit,cadence}});
+      const {data,error}=await supabase.functions.invoke<Record<string,unknown>>('fib-u4-pilot',{body:{commit}});
       if(error || !data || data.error) {
         setU4Error(String(data?.error ?? error?.message ?? 'Abruf fehlgeschlagen'));return;
       }
@@ -734,7 +734,7 @@ export function App() {
     if(commit && !window.confirm('RIS-Testdaten speichern und offenen historischen Rückblick fortsetzen?'))return;
     setU4Busy(true);setU4Error(null);setU4Result(null);
     try {
-      const {data,error}=await supabase.functions.invoke<Record<string,unknown>>('fib-u4-ris-pilot',{body:{commit}});
+      const {data,error}=await supabase.functions.invoke<Record<string,unknown>>('fib-u4-ris-pilot',{body:{commit,cadence}});
       if(error || !data || data.error) {setU4Error(String(data?.detail ?? data?.error ?? error?.message ?? 'RIS-Abruf fehlgeschlagen'));return;}
       setU4Result({...data,ris:true});
     }catch(err){setU4Error(err instanceof Error?err.message:'Verbindungsfehler');}
