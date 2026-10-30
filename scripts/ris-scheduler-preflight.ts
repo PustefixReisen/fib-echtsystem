@@ -3,6 +3,7 @@ import pg from 'pg';
 // Explicitly read-only preflight. Never creates extensions, schedules jobs,
 // reads Vault secrets, or activates a function.
 const url=process.env.FIB_DATABASE_URL;
+async function main(){
 if(!url){console.error('FIB_DATABASE_URL not configured; no connection made');process.exitCode=2;}
 else{
  const pool=new pg.Pool({connectionString:url,max:1,connectionTimeoutMillis:5000});
@@ -29,3 +30,6 @@ else{
  }catch(e){console.error('RIS preflight failed:',e instanceof Error?e.message:String(e));process.exitCode=1;}
  finally{await pool.end();}
 }
+
+}
+void main().catch(err=>{console.error(err);process.exitCode=1});
