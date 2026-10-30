@@ -1,4 +1,5 @@
 import {parseSourceListing, fingerprintDetail,U4_PILOT_TARGETS} from '../packages/fachservices/src/u4-source-discovery.js';
+import {collectRisPageEvidence} from '../packages/fachservices/src/u4-ris-link-evidence.js';
 
 const http=async (url:string)=> {
   const timeout=AbortSignal.timeout(15000);
@@ -26,6 +27,16 @@ async function run(){
       console.log(JSON.stringify({pdfDocumentChecked:true,sha256Length:fingerprint.length}));
     }
   }
+  const sessionUrl='https://buergerinfo-feldkirchen.digitalfabrix.de/si0057.asp?__ksinr=1032&smcmode=32832';
+  const sessionResponse=await http(sessionUrl);
+  if(!sessionResponse.ok)throw new Error('Session HTTP '+sessionResponse.status);
+  const sessionHtml=await sessionResponse.text();
+  const sessionLinks=parseSourceListing({key:'feldkirchen-ris-session',url:sessionUrl,origin:new URL(sessionUrl).origin},sessionHtml);
+  const evidence=collectRisPageEvidence(sessionUrl,sessionLinks);
+  const proposals=evidence.filter(e=>e.relation==='session-proposal');
+  const attachments=evidence.filter(e=>e.relation==='session-document');
+  if(!proposals.length||!attachments.length)throw new Error('Missing RIS session document/proposal links');
+  console.log(JSON.stringify({scope:'feldkirchen-ris-session',proposals:proposals.length,attachments:attachments.length,certainty:'page-link-only'}));
   console.log('Live U4 source adapter test passed');
 }
 void run().catch(error=>{console.error(error);process.exitCode=1});
