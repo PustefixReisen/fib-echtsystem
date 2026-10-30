@@ -15,14 +15,14 @@ vm.runInContext(js,context);
 const coverage=context.coverage as (v:unknown[],visited:string[],pending:string[],failures:unknown[],cadence:string)=>{coverageStatus:string};
 const dueStatus=context.dueStatus as (states:Record<string,unknown>,now:Date)=>Array<{cadence:string;due:boolean;reason:string}>;
 
-const views=[{url:'https://example.invalid/view',releaseSince:'2026-07-02',checkedAt:'2026-10-30T16:49:00Z'}];
+const views=[{url:'https://example.invalid/view',releaseSince:'2020-01-02',checkedAt:'2026-10-30T16:49:00Z'}];
 const visited=[views[0].url];
 assert.equal(coverage(views,visited,[],[],'weekly').coverageStatus,'candidate');
 assert.equal(coverage(views,visited,[],[],'daily').coverageStatus,'candidate');
 assert.equal(coverage(views,visited,['retry'],[],'daily').coverageStatus,'in_progress');
 assert.equal(coverage(views,visited,['retry'],[{url:'retry',error:'timeout'}],'daily').coverageStatus,'failed');
 assert.equal(coverage([{...views[0],releaseSince:null}],visited,[],[],'weekly').coverageStatus,'unverified');
-assert.equal(coverage([{...views[0],releaseSince:'2026-10-25'}],visited,[],[],'weekly').coverageStatus,'insufficient');
+assert.equal(coverage([{...views[0],releaseSince:'2099-10-25'}],visited,[],[],'weekly').coverageStatus,'insufficient');
 const base={
  daily:{lastCompleteAt:'2026-10-30T16:49:07Z',pending:[],failures:[]},
  weekly:{lastCompleteAt:'2026-10-30T16:49:21Z',pending:[],failures:[]}
