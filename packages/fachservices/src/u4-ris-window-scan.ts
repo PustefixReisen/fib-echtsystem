@@ -64,10 +64,11 @@ export async function scanRisReleaseBatch(
   u.hash='';
   return u.href;
  };
- const visited=new Set((previous?.visited??[]).map(validate));
+ const restart=Boolean(previous && previous.pending.length===0 && previous.failures.length===0);
+ const visited=new Set((restart?[]:(previous?.visited??[])).map(validate));
  const documents=new Set(previous?.documents??[]);
  const failures=[...(previous?.failures??[])];
- const pending=(previous?.pending??[entryUrl]).map(validate).filter(u=>!visited.has(u));
+ const pending=(restart?[entryUrl]:(previous?.pending??[entryUrl])).map(validate).filter(u=>!visited.has(u));
  const known=new Set([...visited,...pending]);
  let processed=0;
  while(pending.length && processed<maxWindows){
