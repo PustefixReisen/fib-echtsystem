@@ -16,9 +16,9 @@ for(const [name,url] of targets){
     const anchors=[...body.matchAll(/<a\b[^>]*href\s*=\s*["']([^"']+)["']/gi)].length;
     const valid=res.ok && contentType.includes("html") && anchors>0;
     if(name.startsWith("RIS")) {
-      const all=[...body.matchAll(/<a\\b[^>]*href\\s*=\\s*[\"']([^\"']+)[\"'][^>]*>([\\s\\S]*?)<\\/a>/gi)];
-      const refs=all.map(m=>({href:m[1],title:m[2].replace(/<[^>]*>/g," ").replace(/\\s+/g," ").trim().slice(0,80)})).filter(x=>/(si\\d+|to\\d+|vo\\d+|getfile|do\\d+|antrag|beschluss|niederschrift)/i.test(x.href+" "+x.title)).slice(0,22);
-      console.log(JSON.stringify({name,linkSamples:refs}));
+      const links = body.split("href=").slice(1).map(fragment => fragment.slice(0,150));
+      const samples = links.filter(link => ["si0057","to0050","vo0050","getfile","do0040"].some(key => link.includes(key))).slice(0,20);
+      console.log(JSON.stringify({name,risLinkSamples:samples}));
     }
     if(!valid) failures++;
     console.log(JSON.stringify({name,status:res.status,contentType,bytes:body.length,anchors,valid,finalUrl:res.url,issue:valid?null:"Bad status/type/no links"}));
