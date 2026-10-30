@@ -16,6 +16,9 @@ async function main(){
  assert.equal(first.complete,false); assert.equal(first.cursor.pending.length,1);
  const second=await scanRisReleaseBatch(a,get,1,first.cursor);
  assert.equal(second.complete,true); assert.equal(second.cursor.documents.length,2);
+ const repeat=await scanRisReleaseBatch(a,get,2,second.cursor);
+ assert.equal(repeat.complete,true);assert.equal(repeat.processed,2);
+ assert.equal(repeat.cursor.documents.length,2);
  let rejected=false;
  try{await scanRisReleaseBatch(a,get,1,{pending:['https://evil.invalid/do0040.asp'],visited:[],documents:[],failures:[]})}catch{rejected=true}
  assert.equal(rejected,true);
