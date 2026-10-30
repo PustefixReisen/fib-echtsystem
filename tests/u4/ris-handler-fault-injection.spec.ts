@@ -64,10 +64,11 @@ const source=readFileSync('supabase/functions/fib-u4-ris-pilot/index.ts','utf8')
  .replace("export async function handleRis(req:Request,mode:'interactive'|'scheduler'='interactive'){", "globalThis.__handler = {async fetch(req:Request,mode:'interactive'|'scheduler'='interactive'){")
  .replace("export default {fetch(req:Request){return handleRis(req,'interactive')}};", "};");
 const js=ts.transpileModule(source,{compilerOptions:{target:ts.ScriptTarget.ES2022,module:ts.ModuleKind.None}}).outputText;
+const settings:Record<string,string>={SUPABASE_URL:'https://auth.test',SUPABASE_ANON_KEY:'test',FIB_DATABASE_URL:'test'};
 const context:any=vm.createContext({
  __postgres:fakePostgres,fetch:fakeFetch,Request,Response,URL,URLSearchParams,
- TextDecoder,Uint8Array,Date,Set,Map,AbortSignal,crypto:webcrypto,atob,
- Deno:{env:{get:(key:string)=>({SUPABASE_URL:'https://auth.test',SUPABASE_ANON_KEY:'test',FIB_DATABASE_URL:'test'} as Record<string,string>)[key]}},
+ TextDecoder,TextEncoder,Uint8Array,Date,Set,Map,AbortSignal,crypto:webcrypto,atob,
+ Deno:{env:{get:(key:string)=>settings[key]}},
 });
 vm.runInContext(js,context);
 async function run(cadence:'daily'|'weekly'){
@@ -76,6 +77,23 @@ async function run(cadence:'daily'|'weekly'){
  return {status:resp.status,body:await resp.json()};
 }
 async function main(){
+ // Scheduler cannot run without explicit opt-in and secret, even with no JWT.
+ const schedulerReq=(token:string)=>new Request('https://function.test',{method:'POST',headers:{'x-fib-ris-scheduler':token,'content-type':'application/json'},body:JSON.stringify({commit:true,cadence:'daily'})});
+ let response=await context.__handler.fetch(schedulerReq('x'.repeat(36)),'scheduler');
+ assert.equal(response.status,503);
+ settings.FIB_RIS_AUTOMATION_ENABLED='true';
+ settings.FIB_RIS_SCHEDULER_TOKEN='correct-purpose-limited-secret-0123456789';
+ response=await context.__handler.fetch(schedulerReq('wrong-purpose-limited-secret-012345678'),'scheduler');
+ assert.equal(response.status,403);
+ assert.equal(db.runs.length,0);
+ response=await context.__handler.fetch(schedulerReq(settings.FIB_RIS_SCHEDULER_TOKEN),'scheduler');
+ assert.equal(response.status,200);
+ const scheduled=await response.json();
+ assert.equal(scheduled.complete,true);
+ response=await context.__handler.fetch(schedulerReq(settings.FIB_RIS_SCHEDULER_TOKEN),'scheduler');
+ assert.equal(response.status,200);
+ assert.equal((await response.json()).skipped,'not_due');
+ settings.FIB_RIS_AUTOMATION_ENABLED='false';
  const weekly=await run('weekly');
  assert.equal(weekly.status,200);assert.equal(weekly.body.complete,true);
  assert.equal(db.cursor?.cadenceStates.weekly.pending.length,0);
@@ -111,7 +129,7 @@ async function main(){
  assert.equal(concurrency.status,502);
  assert.equal(JSON.stringify(db.cursor),before);
  assert.equal(db.runs.length,count);
- assert.deepEqual(db.runs.map(x=>x.status),['succeeded','failed','succeeded']);
+ assert.deepEqual(db.runs.map(x=>x.status),['succeeded','succeeded','failed','succeeded']);
  console.log('RIS Edge HTTP/SQL fault-injection and recovery: OK');
 }
 void main().catch(e=>{console.error(e);process.exitCode=1});
