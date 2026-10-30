@@ -1724,7 +1724,7 @@ export function App() {
                 {u4Error && <p role="alert">Fehler: {u4Error}</p>}
                 {u4Result && <div aria-live="polite">
                   <p><strong>Ergebnis:</strong> {u4Result.mode==='dry_run'?'Lesender Test':'Speichertest'}</p>
-                  {u4Result.ris && u4Result.backfill===true && <p>PDF-Nachprüfung: {String(u4Result.pdfChecked)} PDFs im letzten Paket geprüft · Noch offen: {String(u4Result.backfillRemaining)}</p>}
+                  {u4Result.ris===true && u4Result.backfill===true && <p>PDF-Nachprüfung: {String(u4Result.pdfChecked)} PDFs im letzten Paket geprüft · Noch offen: {String(u4Result.backfillRemaining)}</p>}
                   {u4Result.ris ? <p>RIS-Dokumente: {String(u4Result.documents)} · Neu: {String(u4Result.newCount)} · Noch offene Zeitfenster: {String(u4Result.pending)} · Historisch vollständig: {u4Result.complete?'Ja':'Nein'}</p> : <p>Erkannt: {String(u4Result.detected ?? u4Result.seen ?? '–')} · Neu: {String(u4Result.newCount ?? '–')} · Verändert: {String(u4Result.changedCount ?? '–')}</p>}
                   {Array.isArray(u4Result.urls) && <details><summary>Erkannte Seiten anzeigen</summary><ul>{u4Result.urls.map((url,i)=><li key={i}>{String(url)}</li>)}</ul></details>}
                 </div>}
