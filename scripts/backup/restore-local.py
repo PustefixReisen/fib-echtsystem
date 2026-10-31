@@ -34,7 +34,9 @@ try:
  pattern=r'ALTER TABLE ONLY fib\.([a-z_]+)\s+ADD CONSTRAINT [^;]+?FOREIGN KEY \(([a-z_]+)\) REFERENCES auth\.users\(id\)'
  for table,col in re.findall(pattern,post,re.S):
   sql(f'INSERT INTO auth.users SELECT DISTINCT "{col}" FROM fib."{table}" WHERE "{col}" IS NOT NULL ON CONFLICT DO NOTHING;')
- run(base+['--dbname=postgres','--section=post-data'],data)
+ # Full archive pass also restores section-less ACL/RLS entries omitted by section filters.
+ sql('DROP SCHEMA fib CASCADE;')
+ run(base+['--dbname=postgres'],data)
  tables=sql("SELECT tablename FROM pg_tables WHERE schemaname='fib' ORDER BY tablename;").splitlines()
  counts={t:int(sql('SELECT count(*) FROM fib."'+t.replace('"','""')+'";')) for t in tables}
  rls=int(sql("SELECT count(*) FROM pg_class c JOIN pg_namespace n ON n.oid=c.relnamespace WHERE n.nspname='fib' AND c.relkind='r' AND c.relrowsecurity;"))
