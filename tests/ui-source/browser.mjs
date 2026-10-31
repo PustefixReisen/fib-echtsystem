@@ -185,6 +185,8 @@ try {
   await page.getByText("Niederschriftsgenehmigung mit späterem Sitzungsbeleg bestätigt.").waitFor();
   await page.getByText("Niederschriftsgenehmigung:", { exact: false }).waitFor();
   await page.getByLabel("Tagesordnungspunkt", { exact: true }).selectOption("t2");
+  await page.getByLabel("Begründung für die nächste Entscheidung *", { exact: true })
+    .fill("Dokument und Bezug anhand der Originalquelle geprüft.");
 
   const event = await page.evaluate(
     () =>
