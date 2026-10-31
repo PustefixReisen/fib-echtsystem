@@ -133,6 +133,14 @@ export function SourceWorkspace({
     [yes, setYes] = useState(""),
     [no, setNo] = useState(""),
     [abstention, setAbstention] = useState("");
+  const [statusValue, setStatusValue] = useState("unknown");
+  const [statusDocumentId, setStatusDocumentId] = useState("");
+  const [statusQuote, setStatusQuote] = useState("");
+  const [approvingSessionId, setApprovingSessionId] = useState("");
+  const [approvingSession, setApprovingSession] = useState<Row | null>(null);
+  const [approvalDocumentId, setApprovalDocumentId] = useState("");
+  const [approvalQuote, setApprovalQuote] = useState("");
+  const [approvalChoices, setApprovalChoices] = useState<Row[]>([]);
   const [dirty, setDirty] = useState(false);
   const dirtyRef = useRef(false);
   dirtyRef.current = dirty;
@@ -222,6 +230,17 @@ export function SourceWorkspace({
       setTopId("");
       setDocId("");
       setRationale("");
+      setStatusValue("unknown");
+      setStatusDocumentId("");
+      setStatusQuote("");
+      setApprovingSessionId("");
+      setApprovingSession(null);
+      setApprovalDocumentId("");
+      setApprovalQuote("");
+      const candidateList = await api({ action: "ris_sessions", search: "" });
+      setApprovalChoices((candidateList.sessions ?? []).filter((item: Row) =>
+        item.id !== id && item.session_date > d.session.session_date
+      ));
       await loadChoices();
     });
   }
@@ -254,6 +273,16 @@ export function SourceWorkspace({
       (d: Row) => !d.agenda_id || d.agenda_id === topId,
     ) ?? [];
   const selectedDoc = documents.find((d) => d.id === docId);
+  const confirmedStatusDocuments = (session?.documents ?? []).filter((d: Row) =>
+    d.status === "confirmed" && d.latest_version_id &&
+    (!topId || !d.agenda_id || d.agenda_id === topId) &&
+    (statusValue === "unknown" || statusValue === "announced" ||
+      d.kind === "minutes" || d.kind === "decision")
+  );
+  const approvalDocuments = (approvingSession?.documents ?? []).filter((d: Row) =>
+    d.status === "confirmed" && d.kind === "minutes" &&
+    !d.agenda_id && d.latest_version_id
+  );
   const versions = detail?.versions ?? [];
   const currentUrl =
     finding?.original_url ?? document?.source_url ?? observation?.canonical_url;
@@ -352,6 +381,51 @@ export function SourceWorkspace({
     if (session) await refreshSession();
     else if (finding)
       setDetail(await api({ action: "source_read", findingId: finding.id }));
+  }
+  async function saveAgendaStatus() {
+    if (!topId || !statusDocumentId || !statusQuote.trim() || !rationale.trim()) return;
+    const evidence = confirmedStatusDocuments.find((d: Row) => d.id === statusDocumentId);
+    if (!evidence) return;
+    await run(async () => {
+      await api({
+        action: "ris_review_agenda_status",
+        agendaId: topId,
+        status: statusValue,
+        versionId: evidence.latest_version_id,
+        evidenceQuote: statusQuote.trim(),
+        rationale: rationale.trim(),
+      });
+      await refreshSession();
+    }, "Verfahrensstand mit Quellenbeleg geprüft.");
+  }
+  async function loadApprovingSession(id: string) {
+    setApprovingSessionId(id);
+    setApprovingSession(null);
+    setApprovalDocumentId("");
+    setApprovalQuote("");
+    setDirty(true);
+    if (!id) return;
+    await run(async () => {
+      const d = await api({ action: "ris_read", sessionId: id });
+      if (!session || d.session.session_date <= session.session.session_date)
+        throw Error("Genehmigende Sitzung muss zeitlich später liegen.");
+      setApprovingSession(d);
+    });
+  }
+  async function saveMinutesApproval() {
+    const evidence = approvalDocuments.find((d: Row) => d.id === approvalDocumentId);
+    if (!session || !evidence || !approvalQuote.trim() || !rationale.trim()) return;
+    await run(async () => {
+      await api({
+        action: "ris_confirm_minutes_approval",
+        sessionId: session.session.id,
+        approvingSessionId,
+        versionId: evidence.latest_version_id,
+        evidenceQuote: approvalQuote.trim(),
+        rationale: rationale.trim(),
+      });
+      await refreshSession();
+    }, "Niederschriftsgenehmigung mit späterem Sitzungsbeleg bestätigt.");
   }
   async function reviewSuggestion(s: Row, status: string, relation = false) {
     await run(async () => {
@@ -1029,6 +1103,78 @@ export function SourceWorkspace({
                 </>
               )}
             </Card>
+            {top && (
+              <Card title="Verfahrensstand prüfen">
+                <p>Nur anhand der aktuell bestätigten Dokumentfassung. Ohne wortgetreuen Beleg keine Statusänderung.</p>
+                <label>
+                  Verfahrensstand
+                  <select aria-label="Verfahrensstand" value={statusValue}
+                    onChange={(e) => { setStatusValue(e.target.value); setStatusDocumentId(""); setStatusQuote(""); setDirty(true); }}>
+                    <option value="unknown">Unbekannt</option>
+                    <option value="announced">Angekündigt</option>
+                    <option value="deferred">Zurückgestellt</option>
+                    <option value="treated">Behandelt</option>
+                    <option value="withdrawn">Zurückgezogen</option>
+                  </select>
+                </label>
+                <label>
+                  Belegtes Dokument
+                  <select aria-label="Beleg für Verfahrensstand" value={statusDocumentId}
+                    onChange={(e) => { setStatusDocumentId(e.target.value); setStatusQuote(""); setDirty(true); }}>
+                    <option value="">Bitte bestätigtes Dokument auswählen</option>
+                    {confirmedStatusDocuments.map((d: Row) => (
+                      <option key={d.id} value={d.id}>{label(d.kind)} · {d.source_url}</option>
+                    ))}
+                  </select>
+                </label>
+                {confirmedStatusDocuments.find((d: Row) => d.id === statusDocumentId) && (
+                  <p><Link url={confirmedStatusDocuments.find((d: Row) => d.id === statusDocumentId)?.source_url}>Originalbeleg kontrollieren</Link></p>
+                )}
+                <label>Wortgetreuer Textbeleg *
+                  <textarea aria-label="Wortgetreuer Beleg für Verfahrensstand"
+                    value={statusQuote} onChange={(e) => { setStatusQuote(e.target.value); setDirty(true); }} />
+                </label>
+                <button disabled={busy || !statusDocumentId || !statusQuote.trim() || !rationale.trim()}
+                  onClick={() => void saveAgendaStatus()}>Verfahrensstand ausdrücklich bestätigen</button>
+              </Card>
+            )}
+            {!top && session.session.minutes_approval !== "approved" && (
+              <Card title="Niederschriftsgenehmigung prüfen">
+                <p>Die Veröffentlichung einer Niederschrift genügt nicht. Erforderlich ist ein wortgetreuer Genehmigungsbeleg aus einer späteren Sitzung.</p>
+                <label>Genehmigende Sitzung
+                  <select aria-label="Genehmigende Sitzung" value={approvingSessionId}
+                    onChange={(e) => void loadApprovingSession(e.target.value)}>
+                    <option value="">Spätere Sitzung auswählen</option>
+                    {approvalChoices.map((item: Row) => (
+                      <option key={item.id} value={item.id}>{date(item.session_date)} · {item.reference ?? item.committee_name ?? "Sitzung"}</option>
+                    ))}
+                  </select>
+                </label>
+                {approvingSession && (
+                  <>
+                    <p><Link url={approvingSession.session.source_url}>Spätere Sitzung im Original öffnen</Link></p>
+                    <label>Bestätigte Niederschrift der späteren Sitzung
+                      <select aria-label="Genehmigungsdokument" value={approvalDocumentId}
+                        onChange={(e) => { setApprovalDocumentId(e.target.value); setApprovalQuote(""); setDirty(true); }}>
+                        <option value="">Dokument auswählen</option>
+                        {approvalDocuments.map((d: Row) => (
+                          <option key={d.id} value={d.id}>{d.source_url}</option>
+                        ))}
+                      </select>
+                    </label>
+                    {approvalDocuments.find((d: Row) => d.id === approvalDocumentId) && (
+                      <p><Link url={approvalDocuments.find((d: Row) => d.id === approvalDocumentId)?.source_url}>Genehmigungsbeleg kontrollieren</Link></p>
+                    )}
+                    <label>Wortgetreuer Genehmigungsbeleg *
+                      <textarea aria-label="Wortgetreuer Genehmigungsbeleg"
+                        value={approvalQuote} onChange={(e) => { setApprovalQuote(e.target.value); setDirty(true); }} />
+                    </label>
+                  </>
+                )}
+                <button disabled={busy || !approvingSession || !approvalDocumentId || !approvalQuote.trim() || !rationale.trim()}
+                  onClick={() => void saveMinutesApproval()}>Niederschriftsgenehmigung ausdrücklich bestätigen</button>
+              </Card>
+            )}
             <Card title="Vorlagen und Beschlussvorschläge">
               {(session.proposals ?? [])
                 .filter((p: Row) => p.agenda_id === topId)
