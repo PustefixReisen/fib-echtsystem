@@ -1379,6 +1379,7 @@ export function SourceWorkspace({
                           await api({
                             action: "ris_review_document",
                             linkId: docId,
+                            versionId: selectedDoc?.latest_version_id,
                             kind: docKind,
                             status,
                             rationale,

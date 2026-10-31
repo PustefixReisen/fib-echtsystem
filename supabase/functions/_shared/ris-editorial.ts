@@ -181,6 +181,12 @@ export async function risEditorial(
       "select * from fib.ris_document_links where id=$1 for update",
       [input.linkId],
     );
+    // The browser supplies the exact version it displayed. Older internal callers
+    // may classify a link without a version; this does not confirm any decision.
+    if (input.versionId !== undefined) {
+      const document = await one(tx, "select latest_version_id from fib.ris_documents where id=$1 for update", [old.document_id]);
+      if (!input.versionId || document.latest_version_id !== input.versionId) throw Error("stale_ris_review");
+    }
     if (kind === "minutes" && old.agenda_id)
       throw Error("minutes_are_session_wide");
     if (status === "confirmed" && kind === "unknown")
@@ -190,7 +196,7 @@ export async function risEditorial(
       "update fib.ris_document_links set kind=$2,status=$3,reviewed_by=$4,reviewed_at=now() where id=$1",
       [old.id, kind, status, actor.userId],
     );
-    await audit(tx, actor, action, old.id, { old, kind, status, rationale });
+    await audit(tx, actor, action, old.id, { old, kind, status, rationale, versionId: input.versionId ?? null });
     return { id: old.id };
   }
   if (action === "ris_accept_finding") {

@@ -291,6 +291,7 @@ async function main() {
     200,
   );
   assert.equal((await call(null)).status, 400);
+  assert.equal((await call({action:"ris_review_document",kind:"proposal",status:"confirmed"})).status,409);
   assert.equal(
     (await call({ action: "ris_suggest", origin: "ai" })).status,
     403,

@@ -64,6 +64,31 @@ async function main() {
     "insert into fib.source_observations(scope_id,external_id,canonical_url,content_fingerprint,first_seen_at,last_seen_at,revision) values($1,$2,$2,$3,now(),now(),1)",
     [scope, article, provenance.responseSha256.detail],
   );
+  const risLink = await first("select id from fib.ris_document_links limit 1");
+  const client = await pool.connect();
+  try {
+    await client.query("begin");
+    await client.query("set local role fib_runtime");
+    await assert.rejects(
+      () =>
+        risEditorial(
+          { unsafe: async (q, p) => (await client.query(q, p)).rows },
+          actor,
+          {
+            action: "ris_review_document",
+            linkId: risLink.id,
+            versionId: crypto.randomUUID(),
+            kind: "proposal",
+            status: "confirmed",
+            rationale: "Überholter Browserstand",
+          },
+        ),
+      /stale_ris_review/,
+    );
+  } finally {
+    await client.query("rollback");
+    client.release();
+  }
   const before = await first(
     "select (select count(*) from fib.events) events,(select count(*) from fib.messages) messages",
   );
