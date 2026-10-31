@@ -154,7 +154,7 @@ try {
   await page.getByText("Dokumentzuordnung geprüft.", { exact: true }).waitFor();
   // Evidence-bound status verification: missing exact quote is rejected.
   const statusPanel = panel("Verfahrensstand prüfen");
-  await statusPanel.getByLabel("Verfahrensstand", { exact: true }).selectOption("treated");
+  await statusPanel.getByLabel("Verfahrensstand", { exact: true }).selectOption("announced");
   await statusPanel.getByLabel("Beleg für Verfahrensstand", { exact: true }).selectOption("link2");
   await statusPanel.getByLabel("Wortgetreuer Beleg für Verfahrensstand").fill("Nicht belegter Text");
   await statusPanel.getByRole("button", { name: "Verfahrensstand ausdrücklich bestätigen" }).click();
