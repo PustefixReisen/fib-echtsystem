@@ -2,7 +2,7 @@
 
 | Version | Stand | Bearbeitung |
 |---|---|---|
-| 5.0 | 31.10.2026 | Entwicklung mit KI-Unterstützung, Auftrag Josef Walter |
+| 5.1 | 31.10.2026 | Entwicklung mit KI-Unterstützung, Auftrag Josef Walter |
 
 **Gesamturteil: integrierte technische Abnahme der definierten Referenzabläufe bestanden; U4 insgesamt bleibt teilweise umgesetzt.**
 PRs #346/#347 sind integriert. PR #348 ergänzt persistente RIS-Fachobjekte,
@@ -22,6 +22,11 @@ und node-postgres aufgedeckt und korrigiert: serialisierte Snapshots, Prüfverme
 Vorschläge und Fundstellenmetadaten werden als Text gebunden und serverseitig
 nach JSONB gewandelt. Zugängliche Namen der Textfelder bleiben nach Neuladen stabil.
 Es ist keine neue Datenbankmigration erforderlich.
+
+Für die persönliche fachliche Prüfung sind seit #354 / PR #355 ein
+[lokaler Zugang und eine Anwenderanleitung](u4-persoenliche-nutzerabnahme.md) vorbereitet.
+[Technische Einrichtung und Bereitstellungsgrenze](u4-user-acceptance-setup.md):
+noch keine beim Nutzer gestartete oder extern erreichbare Abnahmeumgebung.
 
 ## Was der Nachweis bedeutet
 
@@ -250,6 +255,7 @@ und der Übergabeservice werden erst nach gesonderter Betriebsfreigabe bereitges
 
 | Version | Änderung |
 |---|---|
+| 5.1 | Persönlichen lokalen Abnahmezugang und Nutzeranleitung #354/#355 verknüpft; keine behauptete Bereitstellung |
 | 5.0 | Integrierten Prüfstand und tatsächlichen JSON-Treiberbefund ergänzt; Belegdialoge #350 berücksichtigt |
 | 4.0 | Reguläre UI-Komponenten, gemeinsame Quellenaktionen, Browser-/Datenbanknachweis und ausstehende Nutzer-/Produktivabnahme |
 | 3.0 | Reale Referenzfixtures, isolierte Integration, explizite vier Abnahmekategorien und verbleibende Implementierungslücken |

@@ -7,6 +7,7 @@ import events from "../../supabase/functions/fib-get-event/index.ts";
 import ris from "../../supabase/functions/fib-u4-ris-pilot/index.ts";
 import news from "../../supabase/functions/fib-u4-pilot/index.ts";
 const root = Deno.env.get("RUNNER_TEMP")!;
+const results = Deno.env.get("FIB_TEST_RESULTS_DIR") ?? "ris-e2e-results";
 const database = new URL(Deno.env.get("FIB_DATABASE_URL")!);
 if (
   database.hostname !== "127.0.0.1" ||
@@ -47,7 +48,13 @@ globalThis.fetch = async (input: RequestInfo | URL, init?: RequestInit) => {
           [1032, 1031]
             .map((id) => `<a href="si0057.asp?__ksinr=${id}">Sitzung</a>`)
             .join("") +
-          [75714, 75790, ...(state.late ? [75785, 99001] : [])]
+          [
+            75714,
+            75790,
+            ...(state.late
+              ? [75785, ...(state.approval === false ? [] : [99001])]
+              : []),
+          ]
             .map((id) => `<a href="getfile.asp?id=${id}">Dokument</a>`)
             .join(""),
       );
@@ -63,7 +70,7 @@ globalThis.fetch = async (input: RequestInfo | URL, init?: RequestInit) => {
           /<a\b[^>]*href="getfile.asp\?id=75785[^"]*"[^>]*>[\s\S]*?<\/a>/g,
           "",
         );
-      if (id === "1032" && state.late)
+      if (id === "1032" && state.late && state.approval !== false)
         content = content.replace(
           "</body>",
           '<a href="getfile.asp?id=99001">Niederschrift öffentlich – SYNTHETISCHER Genehmigungstest</a></body>',
@@ -117,7 +124,7 @@ globalThis.fetch = async (input: RequestInfo | URL, init?: RequestInit) => {
     );
   } else throw Error("external network forbidden");
   await Deno.writeTextFile(
-    "ris-e2e-results/source-transport.jsonl",
+    results + "/source-transport.jsonl",
     JSON.stringify({
       url: url.href,
       fixture: true,
@@ -178,7 +185,7 @@ Deno.serve({ hostname: "127.0.0.1", port: 54321 }, async (req) => {
       ? await handlers[name].fetch(req)
       : Response.json({ error: "no_test_endpoint" }, { status: 404 });
     await Deno.writeTextFile(
-      "ris-e2e-results/http-status.jsonl",
+      results + "/http-status.jsonl",
       JSON.stringify({ endpoint: name, status: response.status }) + "\n",
       { append: true },
     );

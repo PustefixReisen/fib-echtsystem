@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 4.9 | 31.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
+| 5.0 | 31.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
 
 ## Statusmodell
 
@@ -81,7 +81,12 @@ Gesamt-App, tatsächliche Anmeldung/MFA, Deno-Handler und PostgreSQL zusammen.
 Sechs erfolgreiche CI-Prüfungen einschließlich des Gesamtpfads und die Grenzen kontrollierter Quellantworten sind gesondert
 im Abnahmebericht ausgewiesen.
 
-Nächste Schritte in #281: fachliche Nutzerabnahme der integrierten Ansichten,
+Die [persönliche Abnahme](operations/u4-persoenliche-nutzerabnahme.md) wird mit #354 / PR #355
+als lokaler, persistenter Browserzugang vorbereitet.
+[Einrichtung und Freigabegrenze](operations/u4-user-acceptance-setup.md): Original-PDFs privat,
+Testkonten lokal, kein bereitgestellter externer Zugang.
+
+Nächste Schritte in #281: Einrichtung beim Prüfer und fachliche Nutzerabnahme der integrierten Ansichten,
 Bewertung der Belegdialoge aus PR #350, vertrauenswürdige
 KI-Produzenten, weitergehende RIS-Abdeckung und Identitätswechsel. Vorläufige
 Ereignisse (#260) und Langzeitqualität der Gemeinde-Archive bleiben offen.
@@ -257,6 +262,7 @@ Noch bewusst nicht vorgetäuscht werden Funktionen, deren Fachservice-/Datenweg 
 
 | Version | Datum | Änderung |
 |---|---|---|
+| 5.0 | 31.10.2026 | Persönliche Nutzerabnahme #354/#355: lokaler wiederaufnehmbarer Zugang, Original-PDF-/Fixture-Grenzen und Prüfanleitung vorbereitet; Einrichtung und menschliche Bewertung stehen aus. |
 | 4.9 | 31.10.2026 | Integrierten Prüfstand #352/#353 und Belegdialoge #350 verknüpft; produktive/fachliche Freigaben bleiben getrennt. |
 | 4.8 | 31.10.2026 | PR #349: reguläre Quellen-/Sitzungsoberfläche, technische Browser-/Datenbankabnahme; Nutzerabnahme und produktive Bereitstellung bleiben offen. |
 | 4.7 | 31.10.2026 | U2 auf `In Arbeit` gesetzt; vertikale Entwicklung aus Anwendersicht begonnen und ersten Slice `Dashboard → Ereignisdetail → Koordination` aufgenommen. U1.4 auf aktuellen Koordinations-/Teststand nach PR #54–#59 nachgezogen. |

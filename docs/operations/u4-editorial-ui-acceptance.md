@@ -2,7 +2,7 @@
 
 | Version | Stand | Bearbeitung |
 |---|---|---|
-| 1.1 | 31.10.2026 | Entwicklung mit KI-Unterstützung, Auftrag Josef Walter |
+| 1.2 | 31.10.2026 | Entwicklung mit KI-Unterstützung, Auftrag Josef Walter |
 
 ## Geltung und Bereitstellung
 
@@ -75,6 +75,13 @@ Tabellenname `ris_relation_suggestions` begründet keinen RIS-Sondertyp für Ere
 Gremium, beobachtete Revision, letzte 50 Snapshots und 100 unveränderliche Prüfvermerke.
 Es werden keine neuen DB-Rechte, Tabellen, RPCs oder Browserdirektzugriffe eingerichtet.
 
+## Persönliche Nutzerabnahme
+
+Die [Anwenderanleitung](u4-persoenliche-nutzerabnahme.md) beschreibt Zugang, Anmeldung,
+die drei Fälle und Rückmeldungen ohne interne Implementierungskenntnisse.
+[Einrichtung](u4-user-acceptance-setup.md) ist getrennt dokumentiert.
+Der vorbereitete Launcher ersetzt keine bereits bereitgestellte Umgebung.
+
 ## Reproduzierbarer redaktioneller Prüfdurchgang
 
 Nur in einer isolierten, migrierten Prüfumgebung mit erfassten Referenzdaten durchführen.
@@ -140,5 +147,6 @@ ist gesondert zu beachten; dieser Komponententest allein belegt den Gesamtpfad n
 
 | Version | Änderung |
 |---|---|
+| 1.2 | Persönliche Anwenderanleitung und getrennten Einrichtungsweg #354/#355 ergänzt |
 | 1.1 | Dialoge aus PR #350 und getrennten Gesamtprüfstand aus PR #353 verknüpft |
 | 1.0 | Reguläre Quellen-/Sitzungsansichten, Prüfdurchgang, API-/Testgrenzen und manuelle Bereitstellungsgrenze dokumentiert |

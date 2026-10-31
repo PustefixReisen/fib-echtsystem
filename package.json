@@ -13,7 +13,8 @@
     "typecheck:core": "tsc -p tsconfig.core-services.json --noEmit",
     "u4:run": "tsx scripts/u4-run-scope.ts",
     "u4:ris:preflight": "tsx scripts/ris-scheduler-preflight.ts",
-    "u4:ris:cron-plan": "tsx scripts/ris-cron-plan.ts"
+    "u4:ris:cron-plan": "tsx scripts/ris-cron-plan.ts",
+    "acceptance:ris": "node scripts/ris-acceptance/start.mjs"
   },
   "devDependencies": {
     "@types/node": "^24.0.0",

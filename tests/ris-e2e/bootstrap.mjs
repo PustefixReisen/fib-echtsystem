@@ -143,16 +143,19 @@ try {
   writeFileSync(process.env.RUNNER_TEMP + "/ris-scenario.json", "{}", {
     mode: 0o600,
   });
-  mkdirSync("ris-e2e-results", { recursive: true });
+  const results = process.env.FIB_TEST_RESULTS_DIR ?? "ris-e2e-results";
+  mkdirSync(results, { recursive: true });
   writeFileSync(
-    "ris-e2e-results/migrations.json",
+    results + "/migrations.json",
     JSON.stringify(
       {
         database: "fib_u4_test",
         postgres: 16,
         files: files.map((path) => ({
           path: "supabase/" + path,
-          sha256: createHash("sha256").update(readFileSync("supabase/" + path)).digest("hex"),
+          sha256: createHash("sha256")
+            .update(readFileSync("supabase/" + path))
+            .digest("hex"),
         })),
         commit: process.env.GITHUB_SHA ?? null,
         runtimeRole: "fib_app inherits fib_runtime; no superuser/BYPASSRLS",
