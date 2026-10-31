@@ -1,0 +1,59 @@
+name: Integrated RIS acceptance
+on:
+  pull_request:
+    paths:
+      - 'tests/ris-e2e/**'
+      - 'apps/editorial-web/**'
+      - 'supabase/**'
+      - '.github/workflows/ris-integrated-e2e.yml'
+permissions:
+  contents: read
+jobs:
+  integrated:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Ephemeral isolated credentials
+        run: |
+          python3 - <<'PY'
+          import os,secrets
+          with open(os.environ['GITHUB_ENV'],'a') as f:
+            for name in ['TEST_DB_PASSWORD','TEST_JWT_SECRET']:
+              value=secrets.token_hex(32)
+              print('::add-mask::'+value)
+              f.write(name+'='+value+'\n')
+          PY
+      - run: docker compose -f tests/ris-e2e/compose.yml up -d
+      - run: npm install --ignore-scripts --no-package-lock --no-audit --no-fund
+      - run: npm install --no-save --ignore-scripts --no-package-lock playwright@1.56.1
+      - run: npx playwright install --with-deps chromium
+      - run: pip install reportlab==4.4.3
+      - run: node tests/ris-e2e/bootstrap.mjs
+      - run: python3 tests/ris-e2e/pdfs.py
+      - name: Actual Deno handlers with loopback-only runtime network
+        run: |
+          npx --yes deno@2.9.6 run --no-lock --node-modules-dir=auto --allow-env --allow-read --allow-write=ris-e2e-results --allow-net=127.0.0.1:54321,127.0.0.1:54323,127.0.0.1:9999 tests/ris-e2e/gateway.ts > "$RUNNER_TEMP/ris-gateway.log" 2>&1 &
+          for i in $(seq 1 90); do curl --silent --fail http://127.0.0.1:54321/health && exit 0; sleep 1; done
+          cat "$RUNNER_TEMP/ris-gateway.log"
+          exit 1
+      - name: Build entire regular app
+        run: |
+          npm run build --workspace @fib/editorial-web
+          npm exec --workspace @fib/editorial-web -- vite preview --host 127.0.0.1 --port 4173 > "$RUNNER_TEMP/ris-preview.log" 2>&1 &
+          for i in $(seq 1 30); do curl --silent --fail http://127.0.0.1:4173 > /dev/null && exit 0; sleep 1; done
+          exit 1
+      - name: Scanner, real browser MFA, app, handlers and PostgreSQL together
+        run: node tests/ris-e2e/run.mjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: integrated-ris-acceptance
+          path: ris-e2e-results/
+          retention-days: 7
+      - name: Destroy isolated identities and data
+        if: always()
+        run: docker compose -f tests/ris-e2e/compose.yml down --volumes --remove-orphans
