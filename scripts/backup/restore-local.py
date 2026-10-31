@@ -21,7 +21,7 @@ try:
   time.sleep(1)
  else:raise RuntimeError('Isolated PostgreSQL unavailable')
  sql('CREATE SCHEMA auth; CREATE TABLE auth.users(id uuid PRIMARY KEY);'+''.join('CREATE ROLE '+r+' NOLOGIN;' for r in ['fib_runtime','fib_app','anon','authenticated','service_role']))
- base=['docker','exec','-i',name,'pg_restore','--no-owner','--exit-on-error']
+ base=['docker','exec','-i',name,'pg_restore','-U','postgres','--no-owner','--exit-on-error']
  toc=run(base+['--list'],data).decode()
  # Refuse archives containing data/objects from another application schema.
  for line in toc.splitlines():
