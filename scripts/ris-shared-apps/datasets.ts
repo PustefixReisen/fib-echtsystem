@@ -24,8 +24,8 @@ export async function cleanupPlan(tx:any,batch:string){
  const blockers:any[]=[];
  // Check every incoming FK, including CASCADE and cross-schema references, before deleting anything.
  const fks=await tx.unsafe(`select c.conname,ns.nspname child_schema,ch.relname child_table,p.relname parent_table,
- array(select a.attname from unnest(c.conkey) with ordinality k(n,i) join pg_attribute a on a.attrelid=c.conrelid and a.attnum=k.n order by k.i) child_cols,
- array(select a.attname from unnest(c.confkey) with ordinality k(n,i) join pg_attribute a on a.attrelid=c.confrelid and a.attnum=k.n order by k.i) parent_cols
+ array(select a.attname::text from unnest(c.conkey) with ordinality k(n,i) join pg_attribute a on a.attrelid=c.conrelid and a.attnum=k.n order by k.i) child_cols,
+ array(select a.attname::text from unnest(c.confkey) with ordinality k(n,i) join pg_attribute a on a.attrelid=c.confrelid and a.attnum=k.n order by k.i) parent_cols
  from pg_constraint c join pg_class p on p.oid=c.confrelid join pg_namespace pn on pn.oid=p.relnamespace join pg_class ch on ch.oid=c.conrelid join pg_namespace ns on ns.oid=ch.relnamespace where c.contype='f' and pn.nspname='fib'`);
  const parents=new Set(rows.map(r=>r.table_name));
  for(const fk of fks){
@@ -36,6 +36,7 @@ export async function cleanupPlan(tx:any,batch:string){
   const n=await tx.unsafe(`select count(*)::int n from ${ident(fk.child_schema)}.${ident(fk.child_table)} ch join fib.${ident(fk.parent_table)} p on ${join} where exists(select 1 from fib.development_objects d where d.batch_id=$1 and d.ownership='owned' and d.table_name=$2 and d.row_key=${keyExpression(fk.parent_table,'p')}) ${ownedChild}`,params);
   if(n[0].n)blockers.push({constraint:fk.conname,table:fk.child_schema+'.'+fk.child_table,count:n[0].n});
  }
+ blockers.sort((a,b)=>(a.table+a.constraint).localeCompare(b.table+b.constraint));
  const plan={batch,status:b[0].status,rows,missing,blockers};return {...plan,sha256:fingerprint(plan)};
 }
 export async function cleanup(tx:any,batch:string,expectedHash:string){
