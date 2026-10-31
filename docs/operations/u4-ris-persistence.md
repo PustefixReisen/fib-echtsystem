@@ -2,7 +2,7 @@
 
 | Version | Stand | Bearbeitung |
 |---|---|---|
-| 1.1 | 31.10.2026 | Entwicklung mit KI-Unterstützung, Auftrag Josef Walter |
+| 1.2 | 31.10.2026 | Entwicklung mit KI-Unterstützung, Auftrag Josef Walter |
 
 ## Geltung
 
@@ -142,14 +142,22 @@ keine destruktive Down-Migration als automatischer Rollback.
 
 ## Verbleibende Grenzen
 
-Redaktionelle Ansichten und ihre Benutzerabnahme, vertrauenswürdige KI-Produzenten,
-OCR und vollständige Erfassung aller RIS-Seitentypen sind weiterhin offen. Ein
-Produktions-Smoke-Test und tatsächliche Supabase-Edge-Laufzeitprüfung sind vor
-Freigabe erforderlich; die isolierten Tests simulieren HTTP/Auth und führen den
-Handler unter Node aus. Nachrichten-URL-Aliasse und Langzeitarchivabdeckung bleiben
-separate Nacharbeiten aus PR #347. Diese Grenzen sind keine bereits bestandene
-Gesamtabnahme und werden im [Abnahmebericht](u4-reference-sources-acceptance.md)
-gepflegt.
+Redaktionelle Ansichten einschließlich Belegdialogen sind in PR #349/#350 umgesetzt.
+Fachliche Benutzerabnahme, vertrauenswürdige KI-Produzenten, OCR und vollständige
+Erfassung aller RIS-Seitentypen bleiben offen. Die ursprünglichen Komponententests
+simulieren HTTP/Auth und führen Handler unter Node aus. Der zusätzliche
+[integrierte Prüfstand](u4-integrated-acceptance.md) verbindet die vollständige App,
+echtes GoTrue/TOTP und tatsächliche Deno-Handler mit PostgreSQL unter dem Login
+`fib_app`. Sein Ergebnis ist gesondert im Abnahmebericht ausgewiesen. Gehostete
+Supabase-Laufzeit und Produktions-Smoke-Test sind damit nicht nachgewiesen.
+Nachrichten-URL-Aliasse und Langzeitarchivabdeckung bleiben separate Nacharbeiten.
+
+Die integrierte Prüfung deckte eine Treiberdifferenz auf: Bereits serialisierte
+JSON-Werte müssen als SQL-Text gebunden und erst serverseitig nach JSONB gewandelt
+werden (`::text::jsonb`). Andernfalls kodiert postgres.js den String erneut; ein
+Snapshot wird zum JSON-String statt zum Objekt. Derselbe Übergabevertrag gilt für
+Prüfvermerke, Vorschläge und Fundstellenmetadaten und funktioniert auch mit dem
+node-postgres-Adapter. Keine Schema- oder Produktionsmigration ist hierfür nötig.
 
 ## Reguläre Oberflächenanbindung (31.10.2026)
 
@@ -164,5 +172,6 @@ RIS-Struktur hinter `FIB_RIS_STRUCTURE_ENABLED`; keine zusätzliche Migration od
 
 | Version | Änderung |
 |---|---|
+| 1.2 | Gesamtprüfstand, echte Deno-/Runtime-Anbindung und JSON-Parametervertrag dokumentiert |
 | 1.1 | Reguläre Oberflächenanbindung und gemeinsamer Quellen-/Beziehungsweg aus PR #349 verknüpft |
 | 1.0 | Persistente Fachstruktur, Scanner, API und isolierte Prüfung aus PR #348 |

@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 4.8 | 31.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
+| 4.9 | 31.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
 
 ## Statusmodell
 
@@ -71,14 +71,18 @@ Scanner-Verarbeitung von Änderungen/Nachveröffentlichungen und die ausdrückli
 bestätigten Übergänge Fundstelle → Ereignis → bestehender Vorgang/Thema.
 Mehrere Beschlusspunkte/Fassungen, unbekannte Resultate, Herkunft und unveränderliche
 Belege sind Bestandteil des isolierten PostgreSQL-Nachweises mit `fib_runtime`.
-Die [technische Abnahme](operations/u4-reference-sources-acceptance.md) bleibt eine
-**Teilabnahme einschließlich regulärer Quellen-/Sitzungsoberflächen**.
+Die [technische Abnahme](operations/u4-reference-sources-acceptance.md) bestätigt den
+**integrierten Gesamtpfad der definierten Referenzfälle**. U4 bleibt insgesamt teilweise umgesetzt.
 Automatisierte Browserabläufe prüfen Übernahme, Ereignisübergabe und Themenbezug;
 [Prüfdurchgang und Grenzen](operations/u4-editorial-ui-acceptance.md). Umsetzung und vorbereitete Freigabeschritte stehen
 in [U4 RIS-Persistenz](operations/u4-ris-persistence.md).
+Der [integrierte Prüfstand zu #352](operations/u4-integrated-acceptance.md) führt
+Gesamt-App, tatsächliche Anmeldung/MFA, Deno-Handler und PostgreSQL zusammen.
+Sechs erfolgreiche CI-Prüfungen einschließlich des Gesamtpfads und die Grenzen kontrollierter Quellantworten sind gesondert
+im Abnahmebericht ausgewiesen.
 
 Nächste Schritte in #281: fachliche Nutzerabnahme der integrierten Ansichten,
-Eingabedialoge für Verfahrensstand/Niederschriftsgenehmigung, vertrauenswürdige
+Bewertung der Belegdialoge aus PR #350, vertrauenswürdige
 KI-Produzenten, weitergehende RIS-Abdeckung und Identitätswechsel. Vorläufige
 Ereignisse (#260) und Langzeitqualität der Gemeinde-Archive bleiben offen.
 Produktive Migration/Deployment/Feature-Aktivierung brauchen separate Freigabe;
@@ -253,6 +257,7 @@ Noch bewusst nicht vorgetäuscht werden Funktionen, deren Fachservice-/Datenweg 
 
 | Version | Datum | Änderung |
 |---|---|---|
+| 4.9 | 31.10.2026 | Integrierten Prüfstand #352/#353 und Belegdialoge #350 verknüpft; produktive/fachliche Freigaben bleiben getrennt. |
 | 4.8 | 31.10.2026 | PR #349: reguläre Quellen-/Sitzungsoberfläche, technische Browser-/Datenbankabnahme; Nutzerabnahme und produktive Bereitstellung bleiben offen. |
 | 4.7 | 31.10.2026 | U2 auf `In Arbeit` gesetzt; vertikale Entwicklung aus Anwendersicht begonnen und ersten Slice `Dashboard → Ereignisdetail → Koordination` aufgenommen. U1.4 auf aktuellen Koordinations-/Teststand nach PR #54–#59 nachgezogen. |
 | 4.5 | 06.10.2026 | U1.3 begonnen: Runtime-Konfigurationsvertrag, Secret-Regeln, Domain-Contracts und zentrale Fachservice-Autorisierungsbasis angelegt; pustivo-Live-Credentialtest als konkreten manuellen Schritt dokumentiert. |

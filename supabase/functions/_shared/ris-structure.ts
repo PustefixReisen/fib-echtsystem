@@ -278,10 +278,12 @@ export async function persistRisStructure(tx: RisSql, snapshot: RisSnapshot) {
     );
     return { sessionId: s.id, revision: latest.revision, changed: false };
   }
+  // Bind serialized JSON as text: postgres.js otherwise serializes the string again
+  // when PostgreSQL infers a jsonb parameter (node-postgres does not).
   const revision = (latest?.revision ?? 0) + 1;
   const v = (
     await tx.unsafe(
-      "insert into fib.ris_session_versions(session_id,revision,content_hash,observed_at,source_url,snapshot) values($1,$2,$3,$4,$5,$6::jsonb) returning id",
+      "insert into fib.ris_session_versions(session_id,revision,content_hash,observed_at,source_url,snapshot) values($1,$2,$3,$4,$5,$6::text::jsonb) returning id",
       [
         s.id,
         revision,

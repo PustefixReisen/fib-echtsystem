@@ -1,0 +1,138 @@
+{
+  "testedHead": "d6278eeb0f0c1e7c607400186feaaca24829b258",
+  "workflow": "https://github.com/PustefixReisen/fib-echtsystem/actions/runs/41197292644",
+  "artifactId": 13041391502,
+  "scope": "Isolated full app, real GoTrue/TOTP, actual Deno handlers, PostgreSQL16 fib_app/fib_runtime; external RIS/news responses simulated; no production or fachliche acceptance",
+  "results": [
+    {
+      "name": "Real GoTrue AAL1/nonmember/invalid-token rejection and restricted fib_app/RLS",
+      "status": "bestätigt"
+    },
+    {
+      "name": "Actual RIS/news scanners → persisted structure/observations → real unpdf extraction",
+      "status": "bestätigt"
+    },
+    {
+      "name": "Entire application: password login → actual browser TOTP verification → membership gate",
+      "status": "bestätigt"
+    },
+    {
+      "name": "1032 TOP2/3: regular source/event navigation, persisted roles/lock conflict, proposal never becomes decision",
+      "status": "bestätigt"
+    },
+    {
+      "name": "Actual failed SQL transaction rolls back structure/checkpoint; outage and late PDF publication recover",
+      "status": "bestätigt"
+    },
+    {
+      "name": "1031 real excerpts: no vote, rejection 7/13 and two TOP6 decisions 17/2 + 19/0 through browser → Deno → SQL",
+      "status": "bestätigt"
+    },
+    {
+      "name": "Both PR350 dialogs persist audit/evidence; missing quote denies approval; positive approval strictly synthetic",
+      "status": "bestätigt"
+    },
+    {
+      "name": "Parkraumkonzept observation → browser finding/event → confirmed existing process/topic; revisions, concurrent repeat, outage recovery",
+      "status": "bestätigt"
+    },
+    {
+      "name": "No automatic publication/target creation; live membership revocation denies existing AAL2 session",
+      "status": "bestätigt"
+    }
+  ],
+  "databaseSummary": {
+    "sessions": 2,
+    "findings": 3,
+    "events": 4,
+    "decisions": 4,
+    "votes": [
+      {
+        "result": "no_vote",
+        "yes_count": null,
+        "no_count": null,
+        "abstention_count": null
+      },
+      {
+        "result": "rejected",
+        "yes_count": 7,
+        "no_count": 13,
+        "abstention_count": null
+      },
+      {
+        "result": "accepted",
+        "yes_count": 17,
+        "no_count": 2,
+        "abstention_count": null
+      },
+      {
+        "result": "accepted",
+        "yes_count": 19,
+        "no_count": 0,
+        "abstention_count": null
+      }
+    ],
+    "messages": 0,
+    "reviewLog": 20
+  },
+  "migrations": {
+    "database": "fib_u4_test",
+    "postgres": 16,
+    "files": [
+      {
+        "path": "supabase/schema/core.sql",
+        "sha256": "ab65bf0c7b05af204478f6bb8cf09c6f4f9f9dea4ec92367cb65f54f11a0bc1a"
+      },
+      {
+        "path": "supabase/security/runtime-roles.sql",
+        "sha256": "38089ced28af929bf7ac2e51783d0ef02d08adfd3f6ac5020ccdc7f17a872bdb"
+      },
+      {
+        "path": "supabase/security/runtime-policies.sql",
+        "sha256": "31585ebfa043bf684634c09773f7f8e86de6b9bfc2f3de8d62d47822525a0988"
+      },
+      {
+        "path": "supabase/migrations/20261010194500_fib_last_edit_coordination.sql",
+        "sha256": "10573135febc9133f1b810a5f401c189f33162da84e2eefd370f16fedf637942"
+      },
+      {
+        "path": "supabase/migrations/20261014114500_event_finding_change_log.sql",
+        "sha256": "b57d7312084b7417256d17055d9f397b5c599b97400da2b94ecce37fe34f3d05"
+      },
+      {
+        "path": "supabase/migrations/20261015120000_event_finding_metadata_log.sql",
+        "sha256": "c7e6f2f839a031e3637b214b42b4e61db205c497c1d6ddb736443ff1cbc19ff4"
+      },
+      {
+        "path": "supabase/migrations/20261015123000_finding_justification.sql",
+        "sha256": "9bf08e7325a89166378c6306b45bf5fc51e0c201f6138e4448ac7ad668619db8"
+      },
+      {
+        "path": "supabase/migrations/20261029200933_fib_u4_source_monitor_persistence.sql",
+        "sha256": "e3589a46ff838190f0bc64e02525d2930f60137414150666a5f4ba70ed9a4eb7"
+      },
+      {
+        "path": "supabase/migrations/20261030093000_fib_u4_source_observations.sql",
+        "sha256": "f979f58e7b536823655603a0ed50da24201ba04b2a8ed0757cb3355524485bbb"
+      },
+      {
+        "path": "supabase/migrations/20261030132000_u4_ris_scan_cursors.sql",
+        "sha256": "b4f8e3896599eb5a0970582b0890d01ddb347f3d328d9c816934499bc0ff3e81"
+      },
+      {
+        "path": "supabase/migrations/20261030134000_u4_ris_cursor_runtime_rls.sql",
+        "sha256": "737341319c669662ef1eae073665baa0c2bf5f628ea8798272b0ad161019e8f9"
+      },
+      {
+        "path": "supabase/migrations/20261030163000_fib_ris_source_run_cadence.sql",
+        "sha256": "9000fc8ad06bafb7184ee80fc3a51264ea1c32029bca97536a36a6d3b12b5031"
+      },
+      {
+        "path": "supabase/migrations/20261031081340_fib_ris_editorial_structure.sql",
+        "sha256": "4661ba09ff9a1d68e4b9db8cb7ab9ed0d5f2ff88af426fd1e9c99721fcf11561"
+      }
+    ],
+    "commit": "98aa4b141db9ad26aa4a708b0e550ca3a480daee",
+    "runtimeRole": "fib_app inherits fib_runtime; no superuser/BYPASSRLS"
+  }
+}

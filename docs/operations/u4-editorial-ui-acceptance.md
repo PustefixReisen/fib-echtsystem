@@ -2,7 +2,7 @@
 
 | Version | Stand | Bearbeitung |
 |---|---|---|
-| 1.0 | 31.10.2026 | Entwicklung mit KI-Unterstützung, Auftrag Josef Walter |
+| 1.1 | 31.10.2026 | Entwicklung mit KI-Unterstützung, Auftrag Josef Walter |
 
 ## Geltung und Bereitstellung
 
@@ -93,7 +93,9 @@ Zusätzliche ausdrücklich synthetische Darstellungsfälle prüfen mehrere Besch
 unbekannte Stimmen statt Null, geänderte Belege, escaped Quelltext und das Abbrechen
 einer Navigation bei ungespeicherten Eingaben. Sie verändert keine Produktion. Screenshots: `/tmp/fib-source-ui/` bzw. CI-Artefakt.
 Der Test prüft die Übergabe an den Ereigniseditor als Callback; die authentifizierte
-Navigation der gesamten App bleibt Gegenstand der späteren Nutzerabnahme.
+Navigation der gesamten App wird zusätzlich im [integrierten Prüfstand](u4-integrated-acceptance.md)
+mit tatsächlichem GoTrue/TOTP, Deno-Handlern und PostgreSQL geprüft. Der dortige CI-Status
+ist gesondert zu beachten; dieser Komponententest allein belegt den Gesamtpfad nicht.
 
 1. Sitzungen → **GR/440/2026, 29.10.2026**, TOP 2 und TOP 3. Gremium/Datum/Titel mit
    [Original](https://buergerinfo-feldkirchen.digitalfabrix.de/si0057.asp?__ksinr=1032)
@@ -124,13 +126,13 @@ Navigation der gesamten App bleibt Gegenstand der späteren Nutzerabnahme.
 
 ## Grenzen dieser Ausbaustufe
 
-- Produktions-Migration/Deployment, realer Browser-Login mit neuen Funktionen und fachliche
-  Nutzerabnahme bleiben offen. Kein grüner Test ersetzt die inhaltliche Redaktionsentscheidung.
+- Produktions-Migration/Deployment und fachliche Nutzerabnahme bleiben offen. Kein grüner Test ersetzt die inhaltliche Redaktionsentscheidung.
 - KI-Produzent, vorläufige Ereignisse (#260), automatische Relevanzbewertung und vollständige
   redaktionelle Status-/Massenbearbeitung der Recherche sind nicht Bestandteil dieses Wegs.
-- Verfahrensstand und Niederschriftsgenehmigung werden angezeigt, einschließlich vorhandener
-  Genehmigungsbelege. Ihre gesonderten serverseitigen Prüfaktionen haben noch keinen eigenen
-  Eingabedialog; die UI behauptet keine mögliche Genehmigung ohne späteren Quellenbeleg.
+- Verfahrensstand und Niederschriftsgenehmigung haben seit PR #350 eigene Belegdialoge.
+  Die Genehmigung bleibt von der bloßen Dokumentverfügbarkeit getrennt; ohne späteren
+  Quellenbeleg kann sie nicht bestätigt werden. Beide Dialoge sind im integrierten
+  Prüfablauf enthalten; das positive Genehmigungsbeispiel ist ausdrücklich synthetisch.
 - Vollständige Artikeltexte, OCR, historische Quellenabdeckung, Identitätswechsel und
   vollständige ältere Prüfchronik bleiben im Abnahmebericht als Restarbeit erfasst.
 
@@ -138,4 +140,5 @@ Navigation der gesamten App bleibt Gegenstand der späteren Nutzerabnahme.
 
 | Version | Änderung |
 |---|---|
+| 1.1 | Dialoge aus PR #350 und getrennten Gesamtprüfstand aus PR #353 verknüpft |
 | 1.0 | Reguläre Quellen-/Sitzungsansichten, Prüfdurchgang, API-/Testgrenzen und manuelle Bereitstellungsgrenze dokumentiert |
