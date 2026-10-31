@@ -1,0 +1,19 @@
+{
+  "retrievedOn": "2026-10-31",
+  "sourceUrl": "https://buergerinfo-feldkirchen.digitalfabrix.de/si0057.asp?__ksinr=1032",
+  "fullResponseSha256": "325ef8ead2ebf3091cd30e1b6bb8902a07e61adb9e8fad4b492cf7ce02b4850e",
+  "transformation": "UTF-8 decoded response; exact siname/sigrname/sidat cells and exact TOP 2/3 tr elements selected. No decision evidence in this excerpt. Not the complete agenda.",
+  "expected": {
+    "session": "GR/440/2026",
+    "committee": "Gemeinderat",
+    "date": "2026-10-29",
+    "proposals": [
+      "8640",
+      "8642"
+    ],
+    "documents": [
+      "75714",
+      "75790"
+    ]
+  }
+}

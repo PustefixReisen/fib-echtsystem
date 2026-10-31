@@ -9,11 +9,11 @@ export type RisStructureCandidate={
  documentUrls:string[];
  relationEvidence:'same-html-row';
  decision:{status:'not_verified';decisionUrl:null};
- editorial:{fundstelle:'candidate';ereignis:'not_created';vorgang:'not_created';thema:'not_created'};
+ editorial:{fundstelle:'candidate';ereignis:'not_created';meldung:'not_created';vorgang:'not_created';thema:'not_created'};
 };
 export function risStructureCandidates(html:string,sessionUrl:string):RisStructureCandidate[]{
  const path=new URL(sessionUrl);
- if(path.protocol!=='https:'||!/^\/si\d+\.asp$/i.test(path.pathname)||!path.searchParams.has('__ksinr'))
+ if(path.origin!=='https://buergerinfo-feldkirchen.digitalfabrix.de'||path.username!==''||path.password!==''||!/^\/si\d+\.asp$/i.test(path.pathname)||!/^\d+$/.test(path.searchParams.get('__ksinr')??''))
   throw new Error('not_ris_session_url');
  return extractRisAgendaRows(html,sessionUrl).map(row=>({
   sessionUrl,
@@ -22,6 +22,6 @@ export function risStructureCandidates(html:string,sessionUrl:string):RisStructu
   documentUrls:row.documentUrls,
   relationEvidence:row.evidence,
   decision:{status:'not_verified',decisionUrl:null},
-  editorial:{fundstelle:'candidate',ereignis:'not_created',vorgang:'not_created',thema:'not_created'}
+  editorial:{fundstelle:'candidate',ereignis:'not_created',meldung:'not_created',vorgang:'not_created',thema:'not_created'}
  }));
 }
