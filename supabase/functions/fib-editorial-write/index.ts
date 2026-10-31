@@ -259,7 +259,7 @@ export default {
       if(risAction){
         if(body.action==='ris_review_document'&&typeof body.versionId!=='string')return json({error:'invalid_review'},409);
         const known=error instanceof Error?error.message:'';
-        const codes=['stale_review','stale_ris_review','ambiguous_existing_findings','existing_significance_conflict','existing_event_role_conflict','missing_exact_evidence','ris_review_already_final','ris_object_missing','source_missing','invalid_source_input','invalid_review','request_conflict','source_origin_mismatch','scope_source_mismatch'];
+        const codes=['ambiguous_development_dataset','dataset_snapshot_limit','stale_review','stale_ris_review','ambiguous_existing_findings','existing_significance_conflict','existing_event_role_conflict','missing_exact_evidence','ris_review_already_final','ris_object_missing','source_missing','invalid_source_input','invalid_review','request_conflict','source_origin_mismatch','scope_source_mismatch'];
         if(codes.includes(known))return json({error:known},409);
       }
       console.error('fib-editorial-write failed', error);

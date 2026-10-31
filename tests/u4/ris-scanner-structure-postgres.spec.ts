@@ -71,7 +71,7 @@ const fetchMock = async (url: string) => {
   }
   throw Error("unexpected fetch " + url);
 };
-const source =
+const source = edgeDatasetSupport +
   (
     readFileSync("supabase/functions/_shared/ris-structure.ts", "utf8").replace(
       /\bexport /g,

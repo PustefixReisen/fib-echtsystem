@@ -11,6 +11,7 @@ permissions:
 jobs:
   shared-preparation:
     strategy:
+      fail-fast: false
       matrix:
         postgres: ['16', '17']
     runs-on: ubuntu-latest

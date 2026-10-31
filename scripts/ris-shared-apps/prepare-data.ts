@@ -3,6 +3,7 @@ import {readFileSync} from 'node:fs';
 import {options,privateOutput,target} from './io.mjs';
 import {parseRisStructure,persistRisStructure,persistRisDocument} from '../../supabase/functions/_shared/ris-structure.ts';
 import {adapter,datasetKeys,registerCreatedRows,reference,fingerprint} from './datasets.ts';
+async function main(){
 const connection=process.env.FIB_MAINTENANCE_DATABASE_URL??process.env.U4_TEST_DATABASE_URL;
 target(connection);if(typeof options.bundle!=='string'||typeof options.out!=='string')throw Error('--bundle and private --out required');
 const b=JSON.parse(readFileSync(options.bundle,'utf8'));
@@ -43,3 +44,6 @@ try{
   await db.query('commit');console.log('Reference intake committed with dataset ledger; no editorial confirmation or publication created.');
  }
 }catch(e:any){await db.query('rollback');console.error('Reference preparation aborted:',e.code??e.message);process.exitCode=1;}finally{await db.end();}
+
+}
+main().catch(e=>{console.error(e.code??e.message);process.exitCode=1;});

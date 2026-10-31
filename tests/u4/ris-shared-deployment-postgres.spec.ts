@@ -7,6 +7,7 @@ import {withDevelopmentDataset} from '../../supabase/functions/_shared/developme
 import {sourceEditorial} from '../../supabase/functions/_shared/source-editorial.ts';
 import {sourceReadiness} from '../../supabase/functions/_shared/source-readiness.ts';
 import {adapter,datasetKeys,registerCreatedRows,reference,cleanupPlan,cleanup} from '../../scripts/ris-shared-apps/datasets.ts';
+async function main(){
 const connection=process.env.U4_TEST_DATABASE_URL;if(!connection)throw Error('isolated_test_database_required');
 const u=new URL(connection);if(!['localhost','127.0.0.1'].includes(u.hostname)||u.pathname!=='/fib_u4_test')throw Error('isolated_test_database_required');
 const owner=new pg.Client({connectionString:connection}),other=new pg.Client({connectionString:connection});await owner.connect();await other.connect();
@@ -89,3 +90,6 @@ try{
  assert.equal((await first('select status from fib.development_batches where id=$1',[batch])).status,'purged');
  console.log('PASS real PostgreSQL: active-source gate, exact transaction ownership, concurrent unmarked row protection, runtime/RLS restrictions, stale/foreign-reference refusal, cyclic FK cleanup and retained master data/Auth/public sentinel');
 }finally{if(runtime!)await runtime.end();await other.end();await owner.end();}
+
+}
+main().catch(e=>{console.error(e.code??e.message);process.exitCode=1;});
