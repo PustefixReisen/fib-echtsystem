@@ -63,6 +63,12 @@ prüfen und den Zustand erhalten. Die neue Readiness muss `runtimeRole=fib_app` 
 Wenn die bisherige DSN tatsächlich anders gebunden ist, **stoppen**: eine DSN-/Schlüssel-
 änderung ist nicht stillschweigend Bestandteil dieses Pakets.
 
+## Dauerhafte Sicherungsroutine
+
+Für spätere Releases ergänzt die [einheitliche Release-Sicherung](fib-release-backup.md)
+diesen Plan. Neue Workflow-Voraussetzungen bleiben bis zur Prüfung gesperrt;
+eine lokale Schemasicherung allein ist kein vollständiges Release-Bundle.
+
 ## Sicherung vor dem ersten Schreibschritt
 
 Nur nach erteilter Bereitstellungsfreigabe und mit privatem bestehendem Verwaltungszugang:
