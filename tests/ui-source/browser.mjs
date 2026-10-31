@@ -210,6 +210,7 @@ try {
   await page
     .getByText("TOP und Ereignis ausdrücklich zugeordnet.", { exact: true })
     .waitFor();
+  await page.getByLabel("Dokument auswählen", { exact: true }).selectOption("link2");
   await page
     .getByText("Belegten Text als Vorschlag erfassen", { exact: true })
     .click();
