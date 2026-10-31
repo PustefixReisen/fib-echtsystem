@@ -39,6 +39,9 @@ lokale Datenbankdateien bitte nicht in Chat, GitHub, Screenshots oder Cloud-Ordn
    deiner Authenticator-App hinzu: sechs Stellen, 30 Sekunden. Nenne es beispielsweise
    „FIB lokale Abnahme“. Dein vorhandenes produktives FIB-Konto bleibt ein anderes Konto.
 4. Klicke **Anmelden**, gib den aktuellen Zahlencode ein und bestätige MFA.
+   Wird unmittelbar nach dem Erststart ein Code abgewiesen, warte auf den nächsten
+   30-Sekunden-Code. Prüfe bei wiederholten Fehlern die automatische Uhrzeit am Handy
+   und Rechner.
 5. Prüfe den Hinweis nach der Anmeldung. Im Standardmodus sind Original-PDFs privat
    abgerufen. Die HTML-Ausschnitte und die Gemeinde-Nachricht sind ein begrenzter,
    dokumentierter Referenzbestand. Es wird keine Vollständigkeit der Website behauptet.

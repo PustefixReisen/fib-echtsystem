@@ -48,7 +48,13 @@ globalThis.fetch = async (input: RequestInfo | URL, init?: RequestInit) => {
           [1032, 1031]
             .map((id) => `<a href="si0057.asp?__ksinr=${id}">Sitzung</a>`)
             .join("") +
-          [75714, 75790, ...(state.late ? [75785, ...(state.approval === false ? [] : [99001])] : [])]
+          [
+            75714,
+            75790,
+            ...(state.late
+              ? [75785, ...(state.approval === false ? [] : [99001])]
+              : []),
+          ]
             .map((id) => `<a href="getfile.asp?id=${id}">Dokument</a>`)
             .join(""),
       );

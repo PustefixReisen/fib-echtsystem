@@ -56,7 +56,11 @@ npm run acceptance:ris
 Beim ersten Start sind Downloads von Container-Images, Deno und npm-Abhängigkeiten
 sowie der sechs amtlichen PDFs erforderlich. Keine produktiven Zugangsdaten in die
 Shell übernehmen. Der Launcher entfernt relevante geerbte Supabase-Variablen und setzt
-alle Verbindungen auf die feste lokale Prüfumgebung.
+alle Verbindungen auf die feste lokale Prüfumgebung. Auch Docker wird ausdrücklich
+über `unix:///var/run/docker.sock` angesprochen; geerbte entfernte Docker-Hosts und
+Kontexte werden verworfen. Für einen lokalen Rootless-Docker kann der Betreiber
+`FIB_ACCEPTANCE_DOCKER_SOCKET` auf dessen absoluten lokalen Socketpfad setzen;
+TCP-/SSH-Daemons sind nicht zulässig. Der gewählte Socket gehört zur Bestandsidentität.
 
 Der Start:
 
@@ -128,9 +132,24 @@ getrennten technischen Integrationsworkflow erhalten.
 | Lokaler Originalabruf / Extraktion | Sechs öffentliche Original-PDFs privat geladen; Hash 75785 und vier eindeutige Beschlussauszüge mit tatsächlichem unpdf geprüft. Kein behaupteter vollständiger Browser-/Datenbanklauf mit Original-PDFs im Work-Rechner ohne Docker. |
 | Bestehende UI-/Auth-/Build-/DB-Regression | Prüfen die Auswirkungen auf die reguläre Anwendung; ersetzen keine persönliche fachliche Beurteilung. |
 
-Der abschließende CI-Status wird in PR #355 / Issue #354 festgehalten. Ein implementierter,
-aber fehlgeschlagener Start ist keine abgenommene Vorbereitung. Die Einrichtung auf
-dem Nutzerrechner selbst ist noch nicht nachgewiesen.
+Am 31.10.2026 bestand Head `3da9f8da0b40e4394f98e7455fa65b01f337f7d0` **8/8 Checks**.
+[Persönlicher Start-/Wiederaufnahmetest](https://github.com/PustefixReisen/fib-echtsystem/actions/runs/41199994518)
+belegt tatsächlich erhaltene Bearbeitungen nach Stop/Start. Zusätzlich erfolgreich:
+Gesamtintegration, PostgreSQL, reguläre UI, Build, Auth Security, Core Services und
+Source Probe. Der abschließende PR-Head wird vor Merge nochmals geprüft.
+
+| Akzeptanzfall der Vorbereitung | Status | Beleg / verbleibende Grenze |
+|---|---|---|
+| Persönlicher Launcher, echte Browser-Anmeldung/MFA, Referenzbestand | bestätigt | CI mit realen lokalen Diensten; PDF-Transport im CI synthetisch |
+| Eigene Bearbeitung bleibt nach Stop/Start erhalten | bestätigt | dieselbe Fundstelle und dieselben Auth-Konten nach Neustart, keine Neubefüllung |
+| Private Konten/Zustände und expliziter lokaler Reset | bestätigt | Dateirechte im CI, eigener Compose-Bestand; keine persönlichen Artefaktuploads |
+| Original-PDF-Belege | teilweise bestätigt | sechs Originale privat geladen, 75785-Hash und vier eindeutige Text-/Abstimmungsbereiche mit unpdf geprüft; vollständiger Original-Browserlauf hier ohne Docker nicht ausgeführt |
+| Bedienanleitung und Beanstandungsprotokoll | bestätigt | drei Fälle, erwartete Ergebnisse, private Rückmeldung und Abnahmekriterien im Repository |
+| Einrichtung auf Nutzerrechner / Erreichbarkeit beim Nutzer | nicht geprüft | noch durchzuführen; kein externer Testzugang behauptet |
+| Menschliche fachliche Abnahme | nicht geprüft | folgt gemeinsam mit Josef Walter |
+
+Ein implementierter, aber fehlgeschlagener Start ist keine abgenommene Vorbereitung.
+Die acht technischen Checks ersetzen weder Einrichtung beim Prüfer noch seine Bewertung.
 
 ## Externer Zugang – ausschließlich vorbereitetes Freigabepaket
 
