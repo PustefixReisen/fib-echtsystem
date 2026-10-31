@@ -1,0 +1,362 @@
+{
+  "checkedOn": "2026-10-31",
+  "access": "read-only; no deployment or configuration changes",
+  "baselineCommit": "36efc0f0ae991725c637104152abbaae9e815041",
+  "project": {
+    "ref": "apaubomxffcwtzjimori",
+    "name": "Shared-Apps",
+    "region": "eu-west-3",
+    "status": "ACTIVE_HEALTHY",
+    "databaseVersion": "17.6.1.155"
+  },
+  "migrationHistory": [
+    {
+      "version": "20260519083745",
+      "name": "initial_schema"
+    },
+    {
+      "version": "20260519100000",
+      "name": "storage_policies"
+    },
+    {
+      "version": "20260521143000",
+      "name": "extend_events_for_markdown_location"
+    },
+    {
+      "version": "20260521152000",
+      "name": "create_event_media"
+    },
+    {
+      "version": "20260522113000",
+      "name": "create_logbooks"
+    },
+    {
+      "version": "20260622110000",
+      "name": "create_ops_keepalive"
+    },
+    {
+      "version": "20260623100000",
+      "name": "create_logbook_event_media_sync_tables"
+    },
+    {
+      "version": "20260623110000",
+      "name": "align_logbook_insert_rls"
+    },
+    {
+      "version": "20260818120000",
+      "name": "add_metadata_sync_idempotency_indexes"
+    },
+    {
+      "version": "20260821120000",
+      "name": "align_event_delete_rls_with_logbook_owner"
+    },
+    {
+      "version": "20260901095529",
+      "name": "add_event_metadata_revision"
+    },
+    {
+      "version": "20260928061236",
+      "name": "fib_ai_demo_quota"
+    },
+    {
+      "version": "20260928061305",
+      "name": "fib_ai_atomic_quota_function"
+    },
+    {
+      "version": "20261006145234",
+      "name": "fib_core_schema"
+    },
+    {
+      "version": "20261006145248",
+      "name": "fib_runtime_roles"
+    },
+    {
+      "version": "20261006145514",
+      "name": "fib_runtime_policies"
+    },
+    {
+      "version": "20261010074421",
+      "name": "fib_coordination_users_locks"
+    },
+    {
+      "version": "20261010194728",
+      "name": "fib_handover_status_alignment"
+    },
+    {
+      "version": "20261010194735",
+      "name": "fib_last_edit_coordination"
+    },
+    {
+      "version": "20261014094328",
+      "name": "event_finding_change_log"
+    },
+    {
+      "version": "20261015093126",
+      "name": "event_finding_metadata_log"
+    },
+    {
+      "version": "20261015101502",
+      "name": "finding_justification"
+    },
+    {
+      "version": "20261019132005",
+      "name": "process_topic_proposals"
+    },
+    {
+      "version": "20261019141605",
+      "name": "topic_proposal_runtime_rls"
+    },
+    {
+      "version": "20261020151905",
+      "name": "fib_topic_contribution_lifecycle"
+    },
+    {
+      "version": "20261020153929",
+      "name": "fib_topic_safe_delete"
+    },
+    {
+      "version": "20261020154839",
+      "name": "fib_event_finding_logs_runtime_rls"
+    },
+    {
+      "version": "20261021150330",
+      "name": "local_link_status_model"
+    },
+    {
+      "version": "20261029200933",
+      "name": "fib_u4_source_monitor_persistence"
+    },
+    {
+      "version": "20261030103007",
+      "name": "fib_u4_source_observations"
+    },
+    {
+      "version": "20261030132007",
+      "name": "u4_ris_scan_cursors_20261030"
+    },
+    {
+      "version": "20261030133940",
+      "name": "u4_ris_cursor_runtime_rls_20261030"
+    },
+    {
+      "version": "20261030161632",
+      "name": "fib_ris_source_run_cadence"
+    }
+  ],
+  "risStructureInstalled": false,
+  "existingTables": 29,
+  "roleDefinitions": [
+    {
+      "name": "fib_runtime",
+      "login": false,
+      "super": false,
+      "bypassrls": false
+    },
+    {
+      "name": "fib_app",
+      "login": true,
+      "super": false,
+      "bypassrls": false
+    }
+  ],
+  "roleMemberships": [
+    {
+      "role": "fib_runtime",
+      "member": "postgres"
+    },
+    {
+      "role": "fib_app",
+      "member": "postgres"
+    },
+    {
+      "role": "fib_runtime",
+      "member": "fib_app"
+    }
+  ],
+  "counts": {
+    "events": 8,
+    "topics": 1,
+    "sources": 3,
+    "findings": 13,
+    "messages": 7,
+    "processes": 4,
+    "marked_events": 7,
+    "marked_findings": 13,
+    "published_messages": 0
+  },
+  "scopes": [
+    {
+      "key": "gemeinde-archiv",
+      "status": "candidate",
+      "observations": 0
+    },
+    {
+      "key": "gemeinde-nachrichten",
+      "status": "candidate",
+      "observations": 14
+    },
+    {
+      "key": "ris-dokumentliste",
+      "status": "candidate",
+      "observations": 94
+    }
+  ],
+  "isolation": {
+    "anon_fib_usage": false,
+    "runtime_auth_users": false,
+    "runtime_public_tables": 0,
+    "service_role_fib_usage": false,
+    "authenticated_fib_usage": false
+  },
+  "sources": [
+    {
+      "active": false,
+      "homepage": "https://buergerinfo-feldkirchen.digitalfabrix.de"
+    },
+    {
+      "active": false,
+      "homepage": "https://www.feldkirchen.de"
+    },
+    {
+      "active": false,
+      "homepage": "https://www.merkur.de"
+    }
+  ],
+  "pgCronInstalled": false,
+  "cronRelationPresent": false,
+  "parkraumObservationPresent": true,
+  "edgeFunctions": [
+    {
+      "slug": "fib-mehr-wissen",
+      "version": 7,
+      "verifyJwt": false,
+      "artifactSha256": "401aa057708a052a6488248419ebdbab95cbdca6c884ac1b2192654c3c5d0f82"
+    },
+    {
+      "slug": "fib-get-event",
+      "version": 13,
+      "verifyJwt": false,
+      "artifactSha256": "26327192e799b7ea3c647e64f98f0e06af02a599372f782d6bb504b2a22e64e9"
+    },
+    {
+      "slug": "fib-coordination",
+      "version": 2,
+      "verifyJwt": false,
+      "artifactSha256": "44a00b01c7ca310a0445d108286d88f75dd40c7599b75263f23bf6f3895a79ec"
+    },
+    {
+      "slug": "fib-editorial-write",
+      "version": 8,
+      "verifyJwt": false,
+      "artifactSha256": "13ec997a2a4a768b3f82877cea8a94f422a1c6247e8671f48686b8727d51fd1a"
+    },
+    {
+      "slug": "fib-session-context",
+      "version": 3,
+      "verifyJwt": false,
+      "artifactSha256": "433172fb329e5742b7f5027d069a218420bc6e8f836c58a67f7d144fe31c102a"
+    },
+    {
+      "slug": "fib-admin-users",
+      "version": 2,
+      "verifyJwt": false,
+      "artifactSha256": "3ceeddd00e081d3fa60a0775fc399672a087446ebfc351a344a6d8e3ff74efbe"
+    },
+    {
+      "slug": "fib-topic-editor",
+      "version": 7,
+      "verifyJwt": false,
+      "artifactSha256": "b40d16ee71fd8302934aa50de52b593cac343509829d45ef663f4df852fc19a8"
+    },
+    {
+      "slug": "fib-u4-pilot",
+      "version": 2,
+      "verifyJwt": true,
+      "artifactSha256": "3471e720443e9f76c51d9f57643bf20487028397d3c4f966c367d4c1dc266050"
+    },
+    {
+      "slug": "fib-u4-ris-pilot",
+      "version": 12,
+      "verifyJwt": true,
+      "artifactSha256": "ea68597391e1f67900f83330e7cb3fd1f2472926805f96d041a8915116c90d8f"
+    }
+  ],
+  "advisorySummary": [
+    {
+      "name": "rls_enabled_no_policy",
+      "level": "INFO",
+      "count": 2,
+      "remediation": "https://supabase.com/docs/guides/database/database-linter?lint=0008_rls_enabled_no_policy"
+    },
+    {
+      "name": "security_definer_view",
+      "level": "ERROR",
+      "count": 1,
+      "remediation": "https://supabase.com/docs/guides/database/database-linter?lint=0010_security_definer_view"
+    },
+    {
+      "name": "function_search_path_mutable",
+      "level": "WARN",
+      "count": 3,
+      "remediation": "https://supabase.com/docs/guides/database/database-linter?lint=0011_function_search_path_mutable"
+    },
+    {
+      "name": "anon_security_definer_function_executable",
+      "level": "WARN",
+      "count": 6,
+      "remediation": "https://supabase.com/docs/guides/database/database-linter?lint=0028_anon_security_definer_function_executable"
+    },
+    {
+      "name": "authenticated_security_definer_function_executable",
+      "level": "WARN",
+      "count": 6,
+      "remediation": "https://supabase.com/docs/guides/database/database-linter?lint=0029_authenticated_security_definer_function_executable"
+    },
+    {
+      "name": "auth_leaked_password_protection",
+      "level": "WARN",
+      "count": 1,
+      "remediation": "https://supabase.com/docs/guides/auth/password-security#password-strength-and-leaked-password-protection"
+    }
+  ],
+  "frontend": {
+    "asset": "index-B1BmuZ81.js",
+    "sha256": "a6c143aff212459704b51efbef6f61392952cfa1acc757ce9deb5329f5885047",
+    "newRisActionsPresent": false,
+    "projectRefMatches": true
+  },
+  "notVerified": [
+    "Secret values or presence of FIB_RIS_STRUCTURE_ENABLED",
+    "Runtime DSN actually configured for fib_app: verify after approved code deployment via source_readiness",
+    "IONOS secret contents and private backup destination credentials",
+    "Live existing-user MFA interaction: not performed without user credentials",
+    "No claim of a current backup of Shared-Apps"
+  ],
+  "changesRequired": {
+    "migrations": [
+      "20261031081340_fib_ris_editorial_structure.sql",
+      "20261031132655_fib_development_dataset_manifest.sql"
+    ],
+    "functions": [
+      "fib-editorial-write",
+      "fib-u4-pilot",
+      "fib-u4-ris-pilot"
+    ],
+    "unchangedFunctionsByteCompared": [
+      "fib-session-context",
+      "fib-coordination",
+      "fib-get-event"
+    ],
+    "sourceRowsToActivate": 2
+  },
+  "activeFibMembersMfaAggregate": {
+    "admin": {
+      "members": 1,
+      "withVerifiedFactor": 1
+    },
+    "editor": {
+      "members": 1,
+      "withVerifiedFactor": 1
+    }
+  }
+}

@@ -2,61 +2,41 @@
 
 | Version | Stand | Verantwortung |
 |---|---|---|
-| 1.0 | 31.10.2026 | Josef Walter – vorbereitet mit KI-Unterstützung |
+| 1.1 | 31.10.2026 | Josef Walter – vorbereitet mit KI-Unterstützung |
 
-## Ziel und Zugang
+## Ziel, Bereitstellung und Anmeldung
 
-Du prüfst, ob die Darstellung und Bearbeitung fachlich richtig, verständlich und für
-deine redaktionelle Arbeit geeignet ist. Die technische Integration ist seit #352
-geprüft. **Deine persönliche fachliche Abnahme steht noch aus.**
+Du prüfst die RIS-Funktionen in der **bereits vorhandenen FIB-Redaktion**:
 
-Der vorbereitete Zugang läuft auf deinem eigenen Rechner. Nach Einrichtung und Start
-öffnest du **http://127.0.0.1:4173** im Browser. Diese Adresse funktioniert nur auf dem
-Rechner, auf dem die Abnahme gestartet wurde. Es gibt derzeit **keinen bereitgestellten
-externen Testzugang**. Die normale produktive Redaktionsadresse ist hierfür nicht vorgesehen.
+**https://fib.pustivo.de/redaktion/**
 
-Die einmalige technische Einrichtung übernimmt der Entwicklungs-/Betriebsverantwortliche
-nach der [Einrichtungsanleitung](u4-user-acceptance-setup.md). Danach lautet der Start im
-Projektordner:
+Es gilt Shared-Apps mit Schema `fib`, deinem bestehenden FIB-Konto und deiner gewohnten
+MFA. Du brauchst keine lokale Installation, keinen neuen Testserver und kein neues Konto.
+Die lokale Empfehlung aus PR #355 ist als persönlicher Standardweg zurückgenommen.
 
-```bash
-npm run acceptance:ris
-```
+**Die neuen RIS-Funktionen sind noch nicht bereitgestellt.** Die technische Vorbereitung
+und isolierten Prüfungen ersetzen keine Bereitstellung. Erst nach gesonderter Freigabe,
+Einspielen des Pakets und erfolgreichem Smoke-Test beginnt die persönliche Abnahme #356.
+Bis dahin zeigt die bestehende Redaktion noch den bisherigen Funktionsstand.
 
-Das Terminal bleibt während der Prüfung offen. Es meldet „Lokale Abnahme bereit“ und
-zeigt, wo deine private Datei `Zugang.txt` liegt. Standardmäßig ist das
-`~/.local/state/fib-ris-acceptance/Zugang.txt`. In der Dateiverwaltung lassen sich
-versteckte Ordner mit **Strg+H** anzeigen. Zugangsdaten, Einrichtungsschlüssel und
-lokale Datenbankdateien bitte nicht in Chat, GitHub, Screenshots oder Cloud-Ordner kopieren.
+Nach Freigabe:
 
-## Anmeldung und erster Überblick
+1. Öffne die bestehende Adresse und melde dich wie gewohnt mit deinem FIB-Konto an.
+2. Bestätige MFA mit deinem vorhandenen Authenticator. Lege für diese Abnahme keinen
+   neuen Faktor an und ändere keine gemeinsamen Kontodaten.
+3. Prüfe den Hinweis **„FIB-Entwicklungsbestand in Shared-Apps“**. Er kennzeichnet die
+   vorbereitete Entwicklungsphase, keine fachliche Freigabe oder Veröffentlichung.
+4. Wähle **Sitzungen** beziehungsweise **Recherche → Fundstellen**. Die bisher vorhandenen
+   Entwicklungsobjekte bleiben im normalen Arbeitsbereich erhalten.
+5. Vergleiche die Originalbelege über die Quellenlinks. Die zwei Sitzungsansichten
+   enthalten dokumentierte Referenzausschnitte, keine vollständige historische RIS-Erfassung.
 
-1. Öffne die lokale Browseradresse. Vor der Anmeldung muss der Hinweis
-   **„Isolierte persönliche Abnahme“** sichtbar sein.
-2. Trage E-Mail und Passwort aus deiner privaten Zugangsdatei ein. Verwende ausschließlich
-   dieses Testkonto und kein produktives Passwort.
-3. Füge den TOTP-Einrichtungsschlüssel aus der Datei als neues zeitbasiertes Konto in
-   deiner Authenticator-App hinzu: sechs Stellen, 30 Sekunden. Nenne es beispielsweise
-   „FIB lokale Abnahme“. Dein vorhandenes produktives FIB-Konto bleibt ein anderes Konto.
-4. Klicke **Anmelden**, gib den aktuellen Zahlencode ein und bestätige MFA.
-   Wird unmittelbar nach dem Erststart ein Code abgewiesen, warte auf den nächsten
-   30-Sekunden-Code. Prüfe bei wiederholten Fehlern die automatische Uhrzeit am Handy
-   und Rechner.
-5. Prüfe den Hinweis nach der Anmeldung. Im Standardmodus sind Original-PDFs privat
-   abgerufen. Die HTML-Ausschnitte und die Gemeinde-Nachricht sind ein begrenzter,
-   dokumentierter Referenzbestand. Es wird keine Vollständigkeit der Website behauptet.
-
-Steht dort **„Synthetische PDF-Testdaten“**, ist nur eine technische Bedienprobe möglich.
-Der Inhalt von Vorlagen ist damit nicht fachlich abnehmbar. Diesen Modus bitte im
-Abnahmeergebnis ausdrücklich angeben. Er wird nur mit `--fixtures` gestartet.
-
-Die vorbereiteten Arbeitswege sind Sitzungen, Fundstellen und die verknüpften Ereignisse.
-Vorgangs-/Themenbezüge prüfst du innerhalb dieser Ansichten; der vollständige Themeneditor
-ist kein Bestandteil dieser lokalen Abnahmeumgebung.
-
-Die Prüfung veröffentlicht nichts. Du darfst im lokalen Bestand Entscheidungen ausprobieren.
-Der Ausgangsbestand enthält einen technischen Start-Eintrag, einen Prüf-Vorgang und ein
-Prüf-Thema. Diese Objekte sind Arbeitshilfen, keine tatsächlichen redaktionellen Bewertungen.
+Gespeicherte Entscheidungen bleiben im bestehenden System erhalten; speichere Eingaben
+vor dem Schließen des Browsers. Herkunft und Testdatenzuordnung bleiben technisch
+nachvollziehbar, ohne technische Importkennungen in fachliche Titel schreiben zu müssen.
+Memorix wird durch die Abnahme nicht bearbeitet. Der tatsächliche Zugriff erfolgt nach
+den vorhandenen FIB-Rechten; die Quellenübernahme macht dich nicht automatisch zu einem
+Administrator und erzeugt keine öffentliche Meldung.
 
 ## Prüffall A – Gemeinderat 29.10.2026, TOP 2 und 3
 
@@ -102,10 +82,9 @@ Beschlussergebnis belegt. Das bedeutet weder „abgelehnt“ noch „kein Beschl
 **Worum es geht:** Unterschiedliche Ergebnisse, mehrere Beschlusspunkte und unbekannte
 Informationen müssen zusammen verständlich dargestellt sein.
 
-Wähle **Sitzungen → GR/439/2026 → Sitzung öffnen**. Für diesen Fall wurden vier
-Beispielentscheidungen aus den dokumentierten Originalauszügen technisch vorbereitet.
-Sie erscheinen als bestätigter lokaler Beispielbestand; im Prüfverlauf steht, dass
-sie **keine persönliche Nutzerabnahme** sind. Du prüfst sie jetzt selbst am Original:
+Wähle **Sitzungen → GR/439/2026 → Sitzung öffnen**. Die Niederschrift liegt als
+Originalbeleg vor. **Es werden bei der Übernahme keine bestätigten Beschlüsse vorweggenommen.**
+Du erfasst und bestätigst die vier Prüfpunkte selbst anhand der Originale:
 [amtliche Sitzung](https://buergerinfo-feldkirchen.digitalfabrix.de/si0057.asp?__ksinr=1031),
 [Niederschrift 75785](https://buergerinfo-feldkirchen.digitalfabrix.de/getfile.asp?id=75785).
 
@@ -116,14 +95,18 @@ sie **keine persönliche Nutzerabnahme** sind. Du prüfst sie jetzt selbst am Or
 | TOP 6, Beschlusspunkt 1 | Angenommen; Ja 17, Nein 2; eigener Wortlaut und Beleg |
 | TOP 6, Beschlusspunkt 2 | Angenommen; Ja 19, Nein 0; eigener Wortlaut und Beleg; unbekannte Enthaltungen bleiben unbekannt |
 
-1. Wähle nacheinander TOP 2, 3 und 6. Vergleiche Wortlaut, Ergebnis und Stimmen am
-   Original. Öffne **Originalbeleg und Fassung**. Bei TOP 6 müssen zwei Beschlusspunkte
-   getrennt erhalten bleiben; eine TOP-Überschrift ersetzt die einzelnen Ergebnisse nicht.
-2. Prüfe, dass die sitzungsweite Niederschrift zu allen betreffenden TOPs nutzbar bleibt.
-   Die Vorlagen dürfen nicht mit der Niederschrift oder einem Beschluss verwechselt werden.
-3. Öffne aus einem Beschluss das zugehörige Ereignis und kontrolliere den Rückweg.
-4. Prüfe unter **Herkunft und Prüfverlauf**, wer die Beispielentscheidung vorbereitet hat,
-   auf welche Dokumentfassung sie sich bezieht und welche Begründung hinterlegt ist.
+1. Wähle zunächst **Gesamte Sitzung**. Prüfe die Niederschrift 75785, bestätige die
+   Dokumentart **Niederschrift** mit Begründung und übernimm sie ausdrücklich als Fundstelle.
+2. Suche ein passendes bestehendes Beschluss-/Behandlungsereignis oder bestätige ein
+   fachlich passendes neues Ereignis ausdrücklich. Kehre zur Sitzung zurück.
+3. Wähle nacheinander TOP 2, 3 und 6. Ordne jeden TOP mit begründeter passender Rolle dem
+   Ereignis zu. Wähle die bestätigte Niederschrift und **Belegten Text als Vorschlag erfassen →
+   Tatsächlicher Beschluss aus Beschlussbeleg**. Übernimm jeweils vollständigen Wortlaut,
+   einen eigenen Beschlusspunkt, Ergebnis und wortgetreuen Beleg einschließlich Abstimmung.
+   Nicht belegte Stimmenfelder leer lassen. Bei TOP 6 zwei getrennte Punkte erfassen.
+4. Speichere jeden Punkt zunächst als Vorschlag, kontrolliere ihn und bestätige separat.
+   Vergleiche anschließend Wortlaut, Stimmen, **Originalbeleg und Fassung**, Ereignisbezug
+   und Prüfverlauf mit dem Original. Eine TOP-Überschrift ersetzt keine Einzelabstimmung.
 5. Prüfe bei TOP 2 **Verfahrensstand prüfen**: begründe deine Prüfung, wähle
    **Zurückgezogen**, die bestätigte Niederschrift als Beleg und den exakten Satz
    „Der Antrag wurde zurückgezogen und auf eine Abstimmung verzichtet.“.
@@ -133,7 +116,7 @@ sie **keine persönliche Nutzerabnahme** sind. Du prüfst sie jetzt selbst am Or
    Genehmigung. Im persönlichen Referenzbestand wird kein künstliches späteres
    Genehmigungsdokument eingefügt. Ohne geeigneten Beleg bitte keine Genehmigung bestätigen.
 
-Ist ein bestätigter Beispielpunkt falsch, halte zunächst die Beanstandung fest.
+Ist ein bestätigter Punkt falsch, halte zunächst die Beanstandung fest.
 Eine fachliche Korrektur muss als nachvollziehbare neue Entscheidung/Fassung erfolgen;
 das Original und die ursprüngliche Fassung dürfen nicht still verschwinden.
 
@@ -152,11 +135,11 @@ redaktionell verwendet und mit bestehenden Vorgängen und Themen verbunden.
 4. Suche ein passendes bestehendes Ereignis; alternativ bestätige ausdrücklich ein
    neues Ereignis zur Veröffentlichung des Parkraumkonzepts. Begründe die Wahl.
    Prüfe das Öffnen des Ereignisses und den Rückweg zur Fundstelle.
-5. Öffne **Bestehenden Vorgang oder bestehendes Thema vorschlagen**. Wähle den
-   vorbereiteten Prüf-Vorgang und begründe den Bezug. Speichere den Vorschlag.
+5. Öffne **Bestehenden Vorgang oder bestehendes Thema vorschlagen**. Wähle einen
+   bestehenden passenden Entwicklungs-Vorgang und begründe den Bezug. Speichere den Vorschlag.
    Erwartet: Er bleibt offen, bis du ihn separat bestätigst. Prüfe auch Zurückstellen
    oder Ablehnen an einem eigenen zusätzlichen Vorschlag, wenn du diesen Fall testen möchtest.
-6. Wiederhole den Weg für das vorbereitete Prüf-Thema. Wähle eine passende Bedeutung
+6. Wiederhole den Weg für ein bestehendes passendes Entwicklungs-Thema. Wähle eine passende Bedeutung
    und begründe sie. Bestätige separat. Erwartet: Der Bezug steht anschließend beim
    Ereignis; kein neuer Vorgang und kein neues Thema wurde automatisch angelegt.
 7. Prüfe **Redaktioneller Zusammenhang**, Herkunft des Vorschlags, Begründung und
@@ -164,12 +147,12 @@ redaktionell verwendet und mit bestehenden Vorgängen und Themen verbunden.
 
 ## Unterbrechen, fortsetzen und Beanstandungen festhalten
 
-Du kannst den Browser schließen. **Strg+C** im Start-Terminal beendet die lokalen
-Dienste. Deine Bearbeitungen bleiben erhalten. Derselbe Startbefehl und dieselbe
-Anmeldung setzen die Prüfung fort; es wird nicht automatisch neu befüllt.
+Du kannst den Browser schließen und dich später an derselben Redaktionsadresse wieder
+anmelden. **Zuerst speichern:** Nicht gespeicherte Eingaben sind keine dauerhaften
+Entscheidungen. Ein lokales Start-Terminal oder Strg+C ist für diesen Zugang nicht nötig.
 
-Notiere Beanstandungen zunächst in deiner privaten Datei `Rueckmeldungen.md` im
-Zustandsordner oder teile eine bereinigte Beschreibung hier im Chat mit:
+Notiere Beanstandungen zunächst privat in einem Dokument oder teile eine bereinigte
+Beschreibung hier im Chat mit. Als Vorlage kannst du folgende Felder übernehmen:
 
 - Prüffall und betroffener TOP beziehungsweise Fundstelle;
 - konkrete Bedienhandlung;
@@ -177,7 +160,7 @@ Zustandsordner oder teile eine bereinigte Beschreibung hier im Chat mit:
 - Auswirkung: verhindert Abnahme, erschwert Arbeit oder Verbesserung;
 - optional Screenshot ohne Zugangsdaten und ohne vertrauliche Eingaben.
 
-Gib außerdem Datenmodus, Datum und den geprüften Entwicklungsstand an. Die Datei wird
+Gib außerdem Entwicklungsbestand, Datum und den geprüften Bereitstellungsstand an. Deine Notiz wird
 nicht automatisch versandt. Eine Veröffentlichung von Screenshots/Testdaten in GitHub
 erfolgt erst nach bewusster Prüfung; private Zugangsdaten bleiben immer lokal.
 
@@ -201,4 +184,5 @@ ist noch keine Freigabe für produktive Migration, Bereitstellung oder RIS-Autom
 
 | Version | Änderung |
 |---|---|
+| 1.1 | Bestehende Shared-Apps-Redaktion, unveränderte Anmeldung/MFA und eigene Beschlussprüfung als verbindlichen persönlichen Weg korrigiert |
 | 1.0 | Persönlichen Zugang, drei Prüffälle, erwartete Ergebnisse, Rückmeldung und fachliche Abnahmekriterien vorbereitet |

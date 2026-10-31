@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 5.0 | 31.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
+| 5.1 | 31.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
 
 ## Statusmodell
 
@@ -81,12 +81,15 @@ Gesamt-App, tatsächliche Anmeldung/MFA, Deno-Handler und PostgreSQL zusammen.
 Sechs erfolgreiche CI-Prüfungen einschließlich des Gesamtpfads und die Grenzen kontrollierter Quellantworten sind gesondert
 im Abnahmebericht ausgewiesen.
 
-Die [persönliche Abnahme](operations/u4-persoenliche-nutzerabnahme.md) wird mit #354 / PR #355
-als lokaler, persistenter Browserzugang vorbereitet.
-[Einrichtung und Freigabegrenze](operations/u4-user-acceptance-setup.md): Original-PDFs privat,
-Testkonten lokal, kein bereitgestellter externer Zugang.
+Die [persönliche Abnahme](operations/u4-persoenliche-nutzerabnahme.md) erfolgt verbindlich
+in der bestehenden Redaktion mit Shared-Apps/fib und vorhandenen Konten/MFA.
+PR #355 bleibt ein isolierter technischer Prüfstand; seine lokale Standardempfehlung
+ist korrigiert. #357 / PR #358 bereiten die Bereitstellung vor:
+[Istvergleich](operations/u4-shared-apps-inventory-2026-10-31.md) und
+[Freigabe-/Sicherungs-/Rücknahmeplan](operations/u4-shared-apps-release-plan.md).
+Noch keine Migration, Bereitstellung oder Aktivierung in Shared-Apps vorgenommen.
 
-Nächste Schritte in #281: Einrichtung beim Prüfer und fachliche Nutzerabnahme der integrierten Ansichten,
+Nächste Schritte in #281: genehmigte Bereitstellung in Shared-Apps und fachliche Nutzerabnahme der integrierten Ansichten,
 Bewertung der Belegdialoge aus PR #350, vertrauenswürdige
 KI-Produzenten, weitergehende RIS-Abdeckung und Identitätswechsel. Vorläufige
 Ereignisse (#260) und Langzeitqualität der Gemeinde-Archive bleiben offen.
@@ -262,6 +265,7 @@ Noch bewusst nicht vorgetäuscht werden Funktionen, deren Fachservice-/Datenweg 
 
 | Version | Datum | Änderung |
 |---|---|---|
+| 5.1 | 31.10.2026 | Verbindlichen Shared-Apps-Weg korrigiert; lesende Inventur, gezieltes Testdatenmanifest, Sicherungs-/Rücknahmeplan und Bereitstellungsfreigabe #357/#358 vorbereitet. |
 | 5.0 | 31.10.2026 | Persönliche Nutzerabnahme #354/#355: lokaler wiederaufnehmbarer Zugang, Original-PDF-/Fixture-Grenzen und Prüfanleitung vorbereitet; Einrichtung und menschliche Bewertung stehen aus. |
 | 4.9 | 31.10.2026 | Integrierten Prüfstand #352/#353 und Belegdialoge #350 verknüpft; produktive/fachliche Freigaben bleiben getrennt. |
 | 4.8 | 31.10.2026 | PR #349: reguläre Quellen-/Sitzungsoberfläche, technische Browser-/Datenbankabnahme; Nutzerabnahme und produktive Bereitstellung bleiben offen. |

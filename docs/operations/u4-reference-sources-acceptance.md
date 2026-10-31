@@ -2,7 +2,7 @@
 
 | Version | Stand | Bearbeitung |
 |---|---|---|
-| 5.1 | 31.10.2026 | Entwicklung mit KI-Unterstützung, Auftrag Josef Walter |
+| 5.2 | 31.10.2026 | Entwicklung mit KI-Unterstützung, Auftrag Josef Walter |
 
 **Gesamturteil: integrierte technische Abnahme der definierten Referenzabläufe bestanden; U4 insgesamt bleibt teilweise umgesetzt.**
 PRs #346/#347 sind integriert. PR #348 ergänzt persistente RIS-Fachobjekte,
@@ -21,12 +21,16 @@ Die Prüfung hat eine echte JSON-Parameterinkompatibilität zwischen postgres.js
 und node-postgres aufgedeckt und korrigiert: serialisierte Snapshots, Prüfvermerke,
 Vorschläge und Fundstellenmetadaten werden als Text gebunden und serverseitig
 nach JSONB gewandelt. Zugängliche Namen der Textfelder bleiben nach Neuladen stabil.
-Es ist keine neue Datenbankmigration erforderlich.
+Für diese Korrekturen aus PR #353 war keine zusätzliche Datenbankmigration erforderlich;
+das jetzt vorbereitete Manifest aus PR #358 ist davon getrennt.
 
-Für die persönliche fachliche Prüfung sind seit #354 / PR #355 ein
-[lokaler Zugang und eine Anwenderanleitung](u4-persoenliche-nutzerabnahme.md) vorbereitet.
-[Technische Einrichtung und Bereitstellungsgrenze](u4-user-acceptance-setup.md):
-noch keine beim Nutzer gestartete oder extern erreichbare Abnahmeumgebung.
+Die persönliche fachliche Prüfung erfolgt verbindlich über die bestehende Redaktion
+mit Shared-Apps/fib, bestehenden Konten und MFA. Die frühere lokale Standardempfehlung
+ist zurückgenommen. [Anwenderanleitung](u4-persoenliche-nutzerabnahme.md),
+[lesender Istvergleich](u4-shared-apps-inventory-2026-10-31.md) und
+[bereitstellungsreifes Freigabepaket](u4-shared-apps-release-plan.md) sind führend.
+Noch keine neuen RIS-Migrationen/Funktionen auf Shared-Apps angewendet; die isolierten
+Prüfungen einschließlich PG17, sicherer Bereinigung und FIB-Restore sind davon getrennt.
 
 ## Was der Nachweis bedeutet
 
@@ -223,7 +227,7 @@ Das ist vor einem späteren Deployment einzuplanen. Die Erweiterung ist nicht de
 - Vorschlag, bestätigte Analyse und freigegebene öffentliche Meldung unterscheiden.
 
 Die Ansichten sind implementiert und im isolierten Gesamtprüfstand technisch geprüft. Die Redaktion muss
-den dokumentierten Prüfdurchgang nach bereitgestellter isolierter Gesamtumgebung
+den dokumentierten Prüfdurchgang nach genehmigter Bereitstellung in der bestehenden Shared-Apps-Redaktion
 inhaltlich abnehmen; diese fachliche Nutzerabnahme wird nicht durch Browsertests ersetzt.
 
 ## 4. Im späteren Betrieb iterativ zu verbessern
@@ -255,6 +259,7 @@ und der Übergabeservice werden erst nach gesonderter Betriebsfreigabe bereitges
 
 | Version | Änderung |
 |---|---|
+| 5.2 | Shared-Apps-Istvergleich, verbindlichen Abnahmeweg und vorbereitete Bereitstellung mit Datenmarker-/Restore-Nachweisen ergänzt |
 | 5.1 | Persönlichen lokalen Abnahmezugang und Nutzeranleitung #354/#355 verknüpft; keine behauptete Bereitstellung |
 | 5.0 | Integrierten Prüfstand und tatsächlichen JSON-Treiberbefund ergänzt; Belegdialoge #350 berücksichtigt |
 | 4.0 | Reguläre UI-Komponenten, gemeinsame Quellenaktionen, Browser-/Datenbanknachweis und ausstehende Nutzer-/Produktivabnahme |
