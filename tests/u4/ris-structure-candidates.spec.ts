@@ -1,0 +1,15 @@
+import assert from 'node:assert/strict';
+import {risStructureCandidates} from '../../packages/fachservices/src/u4-ris-structure-candidates.js';
+const base='https://buergerinfo-feldkirchen.digitalfabrix.de';
+const session=base+'/si0057.asp?__ksinr=1032';
+const html='<table><tr><td>2</td><td><a href="vo0050.asp?__kvonr=8640">Vorlage</a><a href="getfile.asp?id=75854">PDF</a></td></tr><tr><td>3</td><td><a href="vo0050.asp?__kvonr=8642">Vorlage</a></td></tr></table>';
+const result=risStructureCandidates(html,session);
+assert.equal(result.length,2);
+assert.deepEqual(result.map(x=>x.topNumber),['2','3']);
+assert.deepEqual(result.map(x=>x.decision.status),['not_verified','not_verified']);
+assert.ok(result.every(x=>x.editorial.ereignis==='not_created'&&x.editorial.vorgang==='not_created'&&x.editorial.thema==='not_created'));
+assert.equal(result[0].documentUrls.length,1);
+assert.equal(result[1].documentUrls.length,0);
+assert.equal(risStructureCandidates('<table><tr><td>4</td><td><a href="vo0050.asp?__kvonr=8640">A</a><a href="vo0050.asp?__kvonr=8642">B</a></td></tr></table>',session).length,0);
+assert.throws(()=>risStructureCandidates(html,base+'/do0040.asp'),/not_ris_session_url/);
+console.log('RIS structure candidates remain unverified and editorially uncommitted');
