@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 3.0 | 05.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
+| 3.1 | 31.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
 
 ## 1. Zweck und Geltung
 
@@ -761,7 +761,7 @@ Nicht relevante Fundstellen werden nicht allein wegen ihrer Relevanzentscheidung
 
 | Version | Datum | Änderung |
 |---|---|---|
-| 3.0 | 05.10.2026 | G3-Gesamtkonsolidierung: zentrales Datenmodell zur Integrationsquelle gestrafft; Wissenskern, strukturierter Redaktionsstand, Quellen/Fundstellen, Beobachtungsauftrag/Recherchelauf, Sitzung/Beschluss, Referenzwissen, Referenzmaßstab, „Mehr wissen?“, Bilder, AI Tasks, Persistenz, Plausibilität/Freigabe und gemeinsame Fachfunktionsschicht integriert. Veraltete offene G3-Punkte entfernt; Vorlage als Fundstelle und spätere Behandlung/Beschlussfassung als getrennte Ereignisentwicklung konsolidiert. Verbleibende Fragen ausdrücklich auf technische/physische Modellierung begrenzt. |
+| 3.1 | 31.10.2026 | G3-Gesamtkonsolidierung: zentrales Datenmodell zur Integrationsquelle gestrafft; Wissenskern, strukturierter Redaktionsstand, Quellen/Fundstellen, Beobachtungsauftrag/Recherchelauf, Sitzung/Beschluss, Referenzwissen, Referenzmaßstab, „Mehr wissen?“, Bilder, AI Tasks, Persistenz, Plausibilität/Freigabe und gemeinsame Fachfunktionsschicht integriert. Veraltete offene G3-Punkte entfernt; Vorlage als Fundstelle und spätere Behandlung/Beschlussfassung als getrennte Ereignisentwicklung konsolidiert. Verbleibende Fragen ausdrücklich auf technische/physische Modellierung begrenzt. |
 | 2.1 | 05.10.2026 | Schlankes Referenzwissen in das konzeptionelle G3-Datenmodell integriert. |
 | 2.0 | 04.10.2026 | Sitzung und TOP in den Wissenskern integriert. |
 | 1.9 | 04.10.2026 | Status- und Rücknahmelogik für Ereignis und Meldung festgelegt. |
@@ -783,3 +783,15 @@ Nicht relevante Fundstellen werden nicht allein wegen ihrer Relevanzentscheidung
 | 0.3 | 02.10.2026 | Beziehung Ereignis↔Vorgang festgelegt. |
 | 0.2 | 02.10.2026 | Kardinalität Ereignis↔Meldung festgelegt. |
 | 0.1 | 01.10.2026 | G3-Primärdokument angelegt. |
+## Technische Ableitung der RIS-Struktur – 31.10.2026
+
+Die technische Abbildung und ihre Tests sind in
+[U4 RIS-Persistenz](operations/u4-ris-persistence.md) dokumentiert. Sie hält Sitzung,
+TOP, Vorlage, Vorschlag, tatsächlichen Beschlusspunkt, Fassung/Abstimmung und
+Dokumentbeleg getrennt. Niederschriftverfügbarkeit ist keine Genehmigung; fehlendes
+Ergebnis bleibt unbekannt. Herkunft und frühere Fassungen bleiben nachvollziehbar.
+Der Übergang zum regulären Ereignis und zu bestehenden Vorgängen/Themen folgt
+expliziten redaktionellen Entscheidungen. Diese technische Ableitung ändert keine
+Fachregel. Maßgeblich sind die abgenommenen Fachhandbuchkapitel, insbesondere
+[Kapitel 07](fachhandbuch/07-Sitzungen-und-Beschluesse-Entwurf-2026-10-26.md);
+die früheren Teilmodelle dienen als historische Herleitung.

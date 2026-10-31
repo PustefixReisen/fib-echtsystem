@@ -147,6 +147,14 @@ create table fib.ris_relation_suggestions (
         (status<>'pending' and reviewed_by is not null and reviewed_at is not null))
 );
 create index on fib.ris_relation_suggestions(event_id,status);
+create table fib.ris_minutes_approvals (
+ id uuid primary key default gen_random_uuid(), session_id uuid not null references fib.ris_sessions(id),
+ approving_session_id uuid not null references fib.ris_sessions(id),
+ document_version_id uuid not null references fib.ris_document_versions(id),
+ evidence_quote text not null check(length(btrim(evidence_quote))>0),
+ reviewed_by uuid not null references fib.app_users(user_id), reviewed_at timestamptz not null default now(),
+ check(session_id<>approving_session_id), unique(session_id,approving_session_id,document_version_id)
+);
 create table fib.ris_review_log (
  id uuid primary key default gen_random_uuid(), actor_id uuid not null references fib.app_users(user_id),
  action text not null, object_id uuid not null, detail jsonb not null,
@@ -157,7 +165,7 @@ create index on fib.ris_review_log(object_id,created_at);
 do $$
 declare t text;
 begin
- foreach t in array array['ris_relation_suggestions','ris_review_log','ris_committees','ris_sessions','ris_session_versions','ris_agenda_items','ris_proposals','ris_documents','ris_document_versions','ris_document_links','ris_agenda_events','ris_suggestions','ris_proposal_texts','ris_decision_points','ris_decision_versions','ris_votes'] loop
+ foreach t in array array['ris_minutes_approvals','ris_relation_suggestions','ris_review_log','ris_committees','ris_sessions','ris_session_versions','ris_agenda_items','ris_proposals','ris_documents','ris_document_versions','ris_document_links','ris_agenda_events','ris_suggestions','ris_proposal_texts','ris_decision_points','ris_decision_versions','ris_votes'] loop
   execute format('alter table fib.%I enable row level security',t);
   execute format('revoke all on fib.%I from public,anon,authenticated,service_role,fib_runtime',t);
   execute format('grant select,insert on fib.%I to fib_runtime',t);

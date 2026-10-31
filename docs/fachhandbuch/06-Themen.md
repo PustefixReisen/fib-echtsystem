@@ -671,3 +671,8 @@ Quellenbeobachtung ist ein zusätzlicher expliziter Serviceweg; sie erklärt kei
 allgemeine menschliche Pflichtprüfung aller Fundstellen. Die fachlichen Regeln
 dieses Kapitels werden dadurch nicht eingeschränkt. Eine getestete Fundstellen-
 oder Ereignisanlage bestätigt keine automatische Vorgangs-/Themenzuordnung.
+
+Der ergänzende [RIS-Integrationsnachweis](../operations/u4-ris-persistence.md)
+belegt nun auch die dauerhafte RIS-Struktur und ausdrücklich bestätigte Beziehungen
+zu bestehenden Vorgängen/Themen im Backend. KI-Produzenten, Oberflächenabnahme und
+Produktivfreigabe bleiben davon getrennt. Dies ändert keine Fachregel des Kapitels.
