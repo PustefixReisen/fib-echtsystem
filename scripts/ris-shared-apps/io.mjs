@@ -1,11 +1,35 @@
-import { resolve, dirname } from "node:path";
+import { resolve, dirname, basename } from "node:path";
 import {
   mkdirSync,
   writeFileSync,
   existsSync,
   lstatSync,
   readFileSync,
+  realpathSync,
 } from "node:fs";
+import { fileURLToPath } from "node:url";
+const repositoryRoot = realpathSync(
+  fileURLToPath(new URL("../../", import.meta.url)),
+);
+export function privatePath(path) {
+  const p = resolve(path);
+  let ancestor = p;
+  const suffix = [];
+  while (!existsSync(ancestor)) {
+    suffix.unshift(basename(ancestor));
+    ancestor = dirname(ancestor);
+  }
+  const canonical = resolve(realpathSync(ancestor), ...suffix);
+  if (
+    [p, canonical].some(
+      (candidate) =>
+        candidate === repositoryRoot ||
+        candidate.startsWith(repositoryRoot + "/"),
+    )
+  )
+    throw Error("Private output must be outside Git");
+  return p;
+}
 export const options = Object.fromEntries(
   process.argv
     .slice(2)
@@ -13,10 +37,7 @@ export const options = Object.fromEntries(
     .map(([k, v]) => [k, v ?? true]),
 );
 export function privateOutput(path, body) {
-  const p = resolve(path);
-  const repo = process.cwd();
-  if (p === repo || p.startsWith(repo + "/"))
-    throw Error("Private output must be outside Git");
+  const p = privatePath(path);
   if (existsSync(p) && lstatSync(p).isSymbolicLink())
     throw Error("No symlink output");
   mkdirSync(dirname(p), { recursive: true, mode: 0o700 });

@@ -77,7 +77,8 @@ Snapshot-ID an `pg_dump`. Exportiert werden ausschließlich Schema `fib`, dessen
 Constraints und ACLs, keine globalen Rollen/Passwörter und keine Daten aus `public` oder
 `auth`. `auth-ids.json` enthält ausschließlich die von FIB referenzierten Benutzer-IDs
 für **isolierte FK-Platzhalter**, keine Auth-Konten oder Faktoren. Alle Dateien privat,
-0700/0600, mit SHA-256-Manifest und Tabellenzählungen. `pg_dump`-Hauptversion 17 verwenden.
+0700/0600, mit SHA-256-Manifest und Tabellenzählungen. Zielprojekt, TLS und private
+Ausgabe außerhalb des Repositorys (auch über Symlinks) werden geprüft. `pg_dump`-Hauptversion 17 verwenden.
 
 Die vorhandene Sicherungskette nach ADR-010/011 verwenden: privater FIB-Backupbereich,
 getrennter Backupzugang, Nextcloud-Synchronisation und Back In Time. Den erfolgreichen
@@ -246,7 +247,7 @@ Nachfolgende Bedien-/Sicherheits-/Dokumentationskorrekturen werden vor Merge ern
 | Akzeptanzfall | Status | Grenze |
 |---|---|---|
 | Tatsächlicher Istvergleich / Schema- und Rechteabgrenzung | bestätigt | ausschließlich lesende Inventur vom 31.10.; kein Login mit persönlichem Konto durchgeführt |
-| Ownership, Konkurrenz, FK-/CASCADE-Schutz und sichere Bereinigung | bestätigt | reale isolierte PG16/17; keine Bereinigung in Shared-Apps ausgeführt |
+| Ownership, Konkurrenz, FK-/CASCADE-Schutz und sichere Bereinigung | bestätigt | reale isolierte PG16/17; auch tatsächliche Import-/Quellen-/Bereinigungs-CLIs geprüft; CLI-PDF-Vertragseingaben ausdrücklich simuliert; keine Bereinigung in Shared-Apps ausgeführt |
 | Snapshot-konsistenter FIB-Dump und isolierter Restore einschließlich ACL/RLS | bestätigt | synthetischer Datenbestand; aktuelle Shared-Sicherung erst vor genehmigter Änderung |
 | Echte App-/Auth-/Deno-/DB-Integration und neue Marker | bestätigt | lokale echte Dienste, externe Quellenantworten kontrolliert simuliert |
 | Originalbeleg-Capture | bestätigt | echte sechs PDFs privat geladen/extrahiert; HTML ist dokumentierter Referenzausschnitt |

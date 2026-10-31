@@ -11,23 +11,17 @@ import {
   readFileSync,
   writeFileSync,
 } from "node:fs";
-import { resolve, join } from "node:path";
+import { join } from "node:path";
 import { createHash } from "node:crypto";
-import { options, target, clientOptions } from "./io.mjs";
+import { options, target, clientOptions, privatePath } from "./io.mjs";
 process.umask(0o077);
 const connection =
   process.env.FIB_MAINTENANCE_DATABASE_URL ?? process.env.U4_TEST_DATABASE_URL;
 const { u, local } = target(connection);
 if (typeof options.out !== "string")
   throw Error("Private --out directory required");
-const root = resolve(options.out),
-  repo = process.cwd();
-if (
-  root === repo ||
-  root.startsWith(repo + "/") ||
-  root === "/" ||
-  (existsSync(root) && readdirSync(root).length)
-)
+const root = privatePath(options.out);
+if (root === "/" || (existsSync(root) && readdirSync(root).length))
   throw Error("Use a new private directory outside Git");
 mkdirSync(root, { recursive: true, mode: 0o700 });
 chmodSync(root, 0o700);
