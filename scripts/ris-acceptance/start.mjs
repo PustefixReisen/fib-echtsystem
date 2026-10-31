@@ -1,5 +1,5 @@
 import { spawn, spawnSync } from 'node:child_process';
-import { readFileSync, writeFileSync, mkdirSync, existsSync, chmodSync, rmSync, openSync, closeSync, lstatSync } from 'node:fs';
+import { readFileSync, writeFileSync, mkdirSync, existsSync, chmodSync, rmSync, openSync, closeSync, lstatSync, readdirSync } from 'node:fs';
 import { resolve, dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { homedir } from 'node:os';
@@ -11,7 +11,10 @@ const command=process.argv[2]??'start';
 if(['help','--help','-h'].includes(command)){console.log('npm run acceptance:ris -- start [--fixtures]\nBeenden: Ctrl+C; gleicher Start setzt den privaten Bestand fort.\nLöschen: npm run acceptance:ris -- reset --confirm=RESET_LOCAL_ACCEPTANCE');process.exit(0);}
 const root=resolve(process.env.FIB_ACCEPTANCE_STATE_DIR??join(homedir(),'.local/state/fib-ris-acceptance'));
 if(root===repo||root.startsWith(repo+'/')||root==='/'||root===homedir())throw Error('Privater Zustand muss außerhalb des Repositorys liegen.');
-if(existsSync(root)&&lstatSync(root).isSymbolicLink())throw Error('Zustandsordner darf kein Symlink sein.');
+if(existsSync(root)){
+ if(lstatSync(root).isSymbolicLink())throw Error('Zustandsordner darf kein Symlink sein.');
+ if(!existsSync(join(root,'config.json'))&&readdirSync(root).length)throw Error('Nur einen eigenen leeren Zustandsordner verwenden.');
+}
 mkdirSync(root,{recursive:true,mode:0o700});chmodSync(root,0o700);
 const configFile=join(root,'config.json'), lock=join(root,'running');
 const compose=['compose','--project-name','fib-ris-acceptance','-f',join(repo,'tests/ris-e2e/compose.yml'),'-f',join(repo,'scripts/ris-acceptance/compose.yml')];
@@ -25,7 +28,7 @@ async function stop(){if(stopping)return;stopping=true;for(const p of children)t
 if(!['start','reset'].includes(command))throw Error('Aufruf: npm run acceptance:ris -- start [--fixtures] oder reset --confirm=RESET_LOCAL_ACCEPTANCE');
 if(existsSync(lock))throw Error('Umgebung läuft oder wurde hart beendet. Zuerst Prozesse/Docker prüfen; danach nur den privaten running-Ordner entfernen.');
 let config=existsSync(configFile)?JSON.parse(readFileSync(configFile,'utf8')):null;
-if(config&&config.kind!=='fib-local-acceptance-v1')throw Error('Unbekannter Zustandsordner.');
+if(config&&(config.kind!=='fib-local-acceptance-v1'||config.stateRoot!==root))throw Error('Unbekannter Zustandsordner.');
 if(command==='reset'){
  if(!config||!process.argv.includes('--confirm=RESET_LOCAL_ACCEPTANCE'))throw Error('Löschen erfordert bestehenden lokalen Zustand und --confirm=RESET_LOCAL_ACCEPTANCE.');
  env={...env,TEST_DB_PASSWORD:config.dbPassword,TEST_JWT_SECRET:config.jwtSecret};
@@ -39,7 +42,7 @@ await Promise.all([4173,54321,54323,9999,54324].map(free));
 if(config&&!config.initialized)throw Error('Unvollständiger Erststart. Private Protokolle prüfen; bei Bedarf ausdrücklich lokalen Bestand zurücksetzen.');
 if(config&&process.argv.includes('--fixtures')&&config.mode!=='fixtures')throw Error('Datenmodus einer bestehenden Abnahme darf nicht stillschweigend wechseln.');
 mkdirSync(lock,{mode:0o700});
-if(!config){config={kind:'fib-local-acceptance-v1',mode:process.argv.includes('--fixtures')?'fixtures':'originals',dbPassword:randomBytes(32).toString('hex'),jwtSecret:randomBytes(32).toString('hex'),initialized:false};privateJson(configFile,config);}
+if(!config){config={kind:'fib-local-acceptance-v1',stateRoot:root,mode:process.argv.includes('--fixtures')?'fixtures':'originals',dbPassword:randomBytes(32).toString('hex'),jwtSecret:randomBytes(32).toString('hex'),initialized:false};privateJson(configFile,config);}
 env={...env,TEST_DB_PASSWORD:config.dbPassword,TEST_JWT_SECRET:config.jwtSecret,RUNNER_TEMP:root,FIB_TEST_RESULTS_DIR:join(root,'logs')};
 mkdirSync(env.FIB_TEST_RESULTS_DIR,{recursive:true,mode:0o700});
 process.on('SIGINT',()=>void stop());process.on('SIGTERM',()=>void stop());

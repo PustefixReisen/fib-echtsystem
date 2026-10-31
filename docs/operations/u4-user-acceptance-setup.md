@@ -106,6 +106,9 @@ Originaltextbereiche sind eindeutig auffindbar. HTML-Sitzungsansichten und Nachr
 bleiben die bereits dokumentierten reduzierten Referenzen aus #353. Kein Live-Monitor,
 keine vollständige RIS-/Archivabdeckung und kein aktuelles Beschlussergebnis für 1032
 werden daraus behauptet. Neue Ergebnisse am Live-RIS sind getrennt zu erfassen.
+Der Gateway stellt die für diese drei Arbeitswege geprüften Handler bereit, nicht alle
+Administrations- oder Themeneditorfunktionen der Gesamtanwendung. Vorgangs-/Themenbezüge
+werden innerhalb der Quellen-/Sitzungsansichten geprüft.
 
 Der Fixture-Modus (`npm run acceptance:ris -- start --fixtures`) ist ein expliziter
 zweiter Weg für technische Bedienproben ohne Originalabruf. Er erzeugt synthetische

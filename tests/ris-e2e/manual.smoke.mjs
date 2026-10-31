@@ -11,7 +11,7 @@ const env={...process.env,FIB_ACCEPTANCE_STATE_DIR:root};
 let child,browser;
 const wait=ms=>new Promise(r=>setTimeout(r,ms));
 async function start(){
- const fd=openSync(join(root,'smoke-private.log'),'a',0o600);
+ const fd=openSync(root+'.private.log','a',0o600);
  child=spawn(process.execPath,['scripts/ris-acceptance/start.mjs','start','--fixtures'],{env,stdio:['ignore',fd,fd]});closeSync(fd);
  for(let i=0;i<300;i++){
   if(child.exitCode!==null)throw Error('Manueller Start fehlgeschlagen; privates Protokoll prüfen.');
@@ -21,6 +21,11 @@ async function start(){
  throw Error('Manuelle Umgebung nicht bereit.');
 }
 async function stop(){if(!child||child.exitCode!==null)return;child.kill('SIGINT');await Promise.race([new Promise(r=>child.once('exit',r)),wait(45000).then(()=>{throw Error('Manueller Stop fehlgeschlagen');})]);}
+async function findings(page){
+ const group=page.locator('#nav-recherche');
+ if((await group.getAttribute('open'))===null)await group.locator('summary').click();
+ await group.getByRole('button',{name:'Fundstellen',exact:true}).click();
+}
 async function login(){
  const f=JSON.parse(readFileSync(join(root,'ris-e2e.json'),'utf8'));
  const context=await browser.newContext();await context.route('**/*',r=>new URL(r.request().url()).hostname==='127.0.0.1'?r.continue():r.abort());
@@ -51,7 +56,7 @@ try{
  const top6=await page.getByLabel('Tagesordnungspunkt',{exact:true}).locator('option').filter({hasText:/^TOP 6\b/}).getAttribute('value');
  await page.getByLabel('Tagesordnungspunkt',{exact:true}).selectOption(top6);
  assert.equal(await page.locator('section').filter({has:page.getByRole('heading',{name:'Tatsächliche Beschlüsse',exact:true})}).locator('article').count(),2);
- await page.locator('.side-nav').getByRole('button',{name:'Fundstellen',exact:true}).click();
+ await findings(page);
  await page.locator('.work-item').filter({hasText:'Gemeinde Feldkirchen'}).getByRole('button',{name:'Fundstelle öffnen',exact:true}).click();
  await page.getByLabel('Titel der Fundstelle *',{exact:true}).fill('Persönlicher Abnahmefortschritt – Speicherung prüfen');
  await page.getByRole('button',{name:'Fundstelle ausdrücklich übernehmen'}).click();
@@ -60,7 +65,7 @@ try{
  console.log('PASS manual launcher, private credentials, actual browser login/MFA and prepared reference decisions');
  await start();const next=await login();
  assert.equal(next.f.users.editor.password,f.users.editor.password);
- await next.page.locator('.side-nav').getByRole('button',{name:'Fundstellen',exact:true}).click();
+ await findings(next.page);
  await next.page.getByText('Persönlicher Abnahmefortschritt – Speicherung prüfen',{exact:true}).waitFor();
  const resumed=new pg.Client({connectionString:next.f.runtime});await resumed.connect();
  assert.equal((await resumed.query('select count(*) n from fib.ris_decision_points')).rows[0].n,'4');

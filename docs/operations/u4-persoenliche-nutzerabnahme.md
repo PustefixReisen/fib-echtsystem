@@ -47,6 +47,10 @@ Steht dort **„Synthetische PDF-Testdaten“**, ist nur eine technische Bedienp
 Der Inhalt von Vorlagen ist damit nicht fachlich abnehmbar. Diesen Modus bitte im
 Abnahmeergebnis ausdrücklich angeben. Er wird nur mit `--fixtures` gestartet.
 
+Die vorbereiteten Arbeitswege sind Sitzungen, Fundstellen und die verknüpften Ereignisse.
+Vorgangs-/Themenbezüge prüfst du innerhalb dieser Ansichten; der vollständige Themeneditor
+ist kein Bestandteil dieser lokalen Abnahmeumgebung.
+
 Die Prüfung veröffentlicht nichts. Du darfst im lokalen Bestand Entscheidungen ausprobieren.
 Der Ausgangsbestand enthält einen technischen Start-Eintrag, einen Prüf-Vorgang und ein
 Prüf-Thema. Diese Objekte sind Arbeitshilfen, keine tatsächlichen redaktionellen Bewertungen.

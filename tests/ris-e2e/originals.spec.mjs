@@ -1,13 +1,20 @@
 import assert from 'node:assert/strict';
-import {mkdtempSync,rmSync,existsSync} from 'node:fs';
+import {mkdtempSync,rmSync,existsSync,writeFileSync,readFileSync} from 'node:fs';
 import {tmpdir} from 'node:os';
 import {join} from 'node:path';
+import {spawnSync} from 'node:child_process';
 const original=globalThis.fetch, previous=process.env.RUNNER_TEMP;
 const root=mkdtempSync(join(tmpdir(),'fib-originals-contract-'));
 process.env.RUNNER_TEMP=root;
 let n=0;
 const invoke=()=>import('../../scripts/ris-acceptance/originals.mjs?negative='+n++);
 try{
+ writeFileSync(join(root,'unrelated.txt'),'must survive');
+ const guard=spawnSync(process.execPath,['scripts/ris-acceptance/start.mjs','start'],{env:{...process.env,FIB_ACCEPTANCE_STATE_DIR:root},encoding:'utf8'});
+ assert.notEqual(guard.status,0);
+ assert.match(guard.stderr,/eigenen leeren Zustandsordner/);
+ assert.equal(existsSync(join(root,'config.json')),false);
+ assert.equal(readFileSync(join(root,'unrelated.txt'),'utf8'),'must survive');
  globalThis.fetch=async()=>new Response('<html>temporarily unavailable</html>',{headers:{'content-type':'text/html'}});
  await assert.rejects(invoke,/Original-PDF 75714/);
  assert.equal(existsSync(join(root,'75714.pdf')),false);
