@@ -96,7 +96,12 @@ statischen Backup darf er deshalb nicht ausgelöst werden.
 
 ## Reihenfolge nach Freigabe
 
-### 1. Zwei additive Migrationen einzeln anwenden
+### 1. FIB-Schreibwege sperren und zwei additive Migrationen einzeln anwenden
+
+Nach Sicherung den bisherigen FIB-Schalterzustand privat protokollieren und
+`FIB_RIS_STRUCTURE_ENABLED` ausdrücklich auf `false` setzen. Sein bisheriger Wert
+wurde nicht ausgelesen und darf nicht als bereits ausgeschaltet angenommen werden.
+Das freigegebene FIB-Wartungsfenster verhindert weitere manuelle Quellenläufe.
 
 Nur die oben genannten beiden SQL-Dateien, in genau dieser Reihenfolge, auf dem geprüften
 Projekt anwenden und protokollieren. Migrationen über die Supabase-Migrationsschnittstelle
