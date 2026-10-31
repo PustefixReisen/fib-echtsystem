@@ -151,8 +151,8 @@ try {
         database: "fib_u4_test",
         postgres: 16,
         files: files.map((path) => ({
-          path,
-          sha256: createHash("sha256").update(readFileSync(path)).digest("hex"),
+          path: "supabase/" + path,
+          sha256: createHash("sha256").update(readFileSync("supabase/" + path)).digest("hex"),
         })),
         commit: process.env.GITHUB_SHA ?? null,
         runtimeRole: "fib_app inherits fib_runtime; no superuser/BYPASSRLS",
