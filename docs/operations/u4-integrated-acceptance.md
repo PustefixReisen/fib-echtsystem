@@ -11,9 +11,24 @@ Prüfung muss einen zusammenhängenden Weg durch die authentifizierte Gesamt-App
 HTTP-Handler und Datenbank belegen. Eine Addition bestandener Komponentenprüfungen
 reicht nicht. Fachliche Grundlage bleiben die Kapitel 03, 06 und 07; keine neue Fachregel.
 
-**Prüfstand:** Integrationsablauf implementiert; abschließender erfolgreicher CI-Nachweis
-wird im PR #353 und Issue #352 festgehalten. Eine fehlgeschlagene Phase ist kein bestandener
-Akzeptanzfall. Maßgeblich sind `results.json` und der erfolgreiche Workflow des geprüften Heads.
+**Prüfstand: technischer Gesamtpfad erfolgreich nachgewiesen.** Am 31.10.2026
+bestand Head `d6278eeb0f0c1e7c607400186feaaca24829b258` alle sechs CI-Prüfungen:
+Integrated RIS acceptance, U4 PostgreSQL integration, Reference Source Editorial UI,
+Editorial Build, Core Services und Auth Security.
+[Erfolgreicher Gesamtworkflow](https://github.com/PustefixReisen/fib-echtsystem/actions/runs/41197292644),
+[Artefakt mit Screenshots und Logs](https://github.com/PustefixReisen/fib-echtsystem/actions/runs/41197292644/artifacts/13041391502),
+[dauerhafte Ergebnis-/Migrationszusammenfassung](evidence/ris-integrated-2026-10-31.json).
+Die neun Ergebnisgruppen enthalten sämtliche unten genannten Akzeptanzfälle.
+Ergebnis: 2 Sitzungen, 3 Fundstellen, 4 Ereignisse einschließlich Startbestand,
+4 Beschlusspunkte, 20 Prüfvermerke und **0 Meldungen**. Unbekannte Stimmen bleiben `null`.
+Zusätzlich lokal: 28 Fachservicefälle, U4-Vertragssuite und Core-Typprüfung erfolgreich.
+
+Die Integration deckte zwei korrigierte Befunde auf: doppelte JSON-Kodierung durch
+postgres.js bei bereits serialisierten Parametern und instabile implizite Feldnamen
+befüllter Textareas nach Neuladen. Explizite Text→JSONB-Konvertierung und zugängliche
+Feldnamen sind im erfolgreichen Gesamtpfad geprüft. Keine Schemaänderung erforderlich.
+Eine technische Freigabe dieser abgegrenzten Integration ist keine Produktiv- oder
+fachliche Nutzerfreigabe. Frühere fehlgeschlagene Läufe gelten nicht als Abnahme.
 
 ## Prüfaufbau
 

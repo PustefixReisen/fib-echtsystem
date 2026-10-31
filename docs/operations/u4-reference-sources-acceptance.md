@@ -2,16 +2,26 @@
 
 | Version | Stand | Bearbeitung |
 |---|---|---|
-| 4.0 | 31.10.2026 | Entwicklung mit KI-Unterstützung, Auftrag Josef Walter |
+| 5.0 | 31.10.2026 | Entwicklung mit KI-Unterstützung, Auftrag Josef Walter |
 
-**Gesamturteil: technische Teilabnahme einschließlich regulärer Redaktionskomponenten.**
+**Gesamturteil: integrierte technische Abnahme der definierten Referenzabläufe bestanden; U4 insgesamt bleibt teilweise umgesetzt.**
 PRs #346/#347 sind integriert. PR #348 ergänzt persistente RIS-Fachobjekte,
 Scanner-Anbindung und ausdrückliche redaktionelle Übergänge. Der Nachweis umfasst
-isolierte PostgreSQL-Transaktionen, tatsächlichen Handlercode und automatisierte
-Browserabläufe der regulären Quellen-/Sitzungskomponente. Produktive Aktivierung und
+PostgreSQL-Transaktionen, tatsächlichen Handlercode sowie authentifizierte
+Browserabläufe der vollständigen App einschließlich regulärer Quellen-/Sitzungskomponenten. Produktive Aktivierung und
 fachliche Nutzerabnahme stehen aus. [Bediennachweis und Prüfdurchgang](u4-editorial-ui-acceptance.md).
 Keine Änderung an Shared-Apps/Memorix. Details und API-Vertrag:
 [Persistente RIS-Struktur](u4-ris-persistence.md).
+
+Zusätzlich verbindet der [integrierte Prüfstand #352/#353](u4-integrated-acceptance.md)
+die vollständige App, tatsächliches GoTrue/TOTP, Deno-Handler und PostgreSQL unter
+`fib_app`/`fib_runtime`. Der erfolgreiche CI-Nachweis dieses Gesamtpfads ist im
+Prüfbericht verlinkt; simuliert bleiben die externen Gemeinde-/RIS-Antworten.
+Die Prüfung hat eine echte JSON-Parameterinkompatibilität zwischen postgres.js
+und node-postgres aufgedeckt und korrigiert: serialisierte Snapshots, Prüfvermerke,
+Vorschläge und Fundstellenmetadaten werden als Text gebunden und serverseitig
+nach JSONB gewandelt. Zugängliche Namen der Textfelder bleiben nach Neuladen stabil.
+Es ist keine neue Datenbankmigration erforderlich.
 
 ## Was der Nachweis bedeutet
 
@@ -131,7 +141,9 @@ in Issue #260.
   **keine Meldung**. Der Test umfasst die gemeinsame Transaktion.
 - Die anschließende Navigation über `event_processes` und `process_topics` wird
   auf Schemaebene mit ausdrücklich vorbereiteten Testobjekten geprüft. Das ist
-  kein Nachweis der vollständigen Fachservices/UI zur Beziehungsbestätigung.
+  für sich kein Nachweis der vollständigen Fachservices/UI zur Beziehungsbestätigung.
+  Der ergänzende Gesamtpfad prüft die tatsächliche Vorschlags-/Bestätigungsaktion
+  für bestehende Vorgänge und Themen durch Browser, Deno und Datenbank.
 
 ### Reguläre Fundstellen- und Sitzungsoberfläche
 
@@ -144,8 +156,9 @@ in Issue #260.
 - Ausdrückliche Übernahme, bestehendes/neues Ereignis und geprüfte Bezüge zu
   bestehenden Vorgängen/Themen sind bedienbar. Kein Automatismus erzeugt Meldungen.
 - Browserprüfungen verwenden reale Referenzbezeichnungen und klar synthetische
-  Bearbeitungsdaten. API/Auth werden dort simuliert; der ergänzende PostgreSQL-Test
-  führt dieselben serverseitigen Quellenaktionen mit `fib_runtime` aus.
+  Bearbeitungsdaten. API/Auth werden in der ursprünglichen Komponentenprüfung simuliert; der ergänzende PostgreSQL-Test
+  führt dieselben serverseitigen Quellenaktionen mit `fib_runtime` aus. Der neue
+  Gesamtpfad verwendet tatsächliches GoTrue/TOTP und unveränderte Deno-Handler.
 - Veraltete Eingaben, konkurrierende Übernahme, Wiederholungen, AAL1-Abweisung,
   falsche KI-Herkunft, ausgeschaltetes Feature und Bearbeitungssperren werden geprüft.
 - Ein Merge löst kein Web-Deployment mehr aus. Bereitstellung bleibt manuell nach
@@ -166,6 +179,7 @@ in Issue #260.
 | PDF-Texterschließung | `ris-persistent-contract.spec.ts`: reale HTML-Fixtures plus echte unpdf-Extraktion eines gültigen synthetischen PDFs |
 | Reguläre Quellenaktionen | `source-editorial-postgres.spec.ts`: gemeinsame Beobachtungsübernahme, explizites idempotentes Ereignis, bestehendes Thema, Revisionen, Sperren/MFA und keine automatische Meldung |
 | Browserbedienung | `tests/ui-source/browser.mjs`: echte UI-Komponente, simulierte API, RIS/Gemeinde, Übernahme/Ereignis/Themenprüfung, veraltete Eingaben, Sperrfehler, mobile Ansicht und manuelle Deploymentgrenze |
+| Integrierter Gesamtpfad | `tests/ris-e2e/run.mjs`, Workflow `ris-integrated-e2e.yml`: vollständige App, reale Auth/TOTP, Deno und Runtime-Login; externe Quellantworten kontrolliert. Ergebnis und Reproduktion im integrierten Prüfbericht |
 | Übergreifende Regression | GitHub Core Services, Editorial Build, Auth Security und U4 Source Probe |
 
 Die neuen Datenbanktests verweigern andere Ziele als `localhost`/`127.0.0.1`
@@ -182,7 +196,7 @@ Die normalen npm-/tsx-Aufrufe werden zusätzlich unverändert in GitHub CI gepr�
 | Lücke | Zuständiger nächster Schritt |
 |---|---|
 | Produktive Migration, Edge-Laufzeit und reale Runtime-Rechte | Vollständig vorbereiteter Code-/Teststand; Umsetzung und Smoke-Test erst nach separater Freigabe, keine Änderung von Memorix |
-| Vollständige Oberflächenabnahme | Reguläre Quellen-/Sitzungsansichten und Übergaben implementiert; fachliche Nutzerabnahme mit vollständiger authentifizierter App sowie Eingabedialoge für Verfahrensstand/Niederschriftsgenehmigung offen |
+| Vollständige Oberflächenabnahme | Reguläre Quellen-/Sitzungsansichten und Übergaben implementiert; Belegdialoge aus PR #350 vorhanden; fachliche Nutzerabnahme bleibt offen; vollständige authentifizierte App im integrierten Prüfstand erfolgreich geprüft |
 | Vertrauenswürdige KI-Auftragsanbindung / vorläufige Ereignisse | Vorschlagsmodell und menschliche Bestätigung geprüft; tatsächlicher KI-Produzent und #260 weiter offen |
 | Vollständige RIS-Abdeckung und Identitätswechsel | Weitere Seitentypen, Sitzungskalender-/historischer Einstieg, TOP-Umnummerierungen, Gremienumbenennungen und unbekannte Strukturfälle prüfen |
 | OCR / gescannte PDFs | Text-Extraktion vorhanden, keine OCR; fehlender Text darf keinen erfundenen Beschluss erzeugen |
@@ -203,7 +217,7 @@ Das ist vor einem späteren Deployment einzuplanen. Die Erweiterung ist nicht de
 - Bezüge zu Vorgang/Thema mit Bedeutung und Begründung prüfen;
 - Vorschlag, bestätigte Analyse und freigegebene öffentliche Meldung unterscheiden.
 
-Die Ansichten sind implementiert und isoliert technisch geprüft. Die Redaktion muss
+Die Ansichten sind implementiert und im isolierten Gesamtprüfstand technisch geprüft. Die Redaktion muss
 den dokumentierten Prüfdurchgang nach bereitgestellter isolierter Gesamtumgebung
 inhaltlich abnehmen; diese fachliche Nutzerabnahme wird nicht durch Browsertests ersetzt.
 
@@ -220,8 +234,8 @@ gemessen. Ein einzelner grüner Testlauf kann diese Qualität nicht garantieren.
 |---|---|---|
 | Kapitel 03, 03.1a Quellenbestände und Änderungen | gemeinsamer News-Scanner, Monitor-/Recovery-Tests | Sichtbare verlinkte Bereiche, begrenzte Seitenzahl |
 | Kapitel 03, 03.3.2 Fundstelle/Ereignis | geprüfte Übernahme, Versionen, `confirmEvent` | manueller Serviceweg; vorläufige KI-Ereignisse #260 offen |
-| Kapitel 07, 07.2–07.4 Sitzung/Vorschlag/Beschluss | realer RIS-Ausschnitt, Snapshot und Negativverträge | persistente bestätigte Backend-Objekte; reguläre UI-Komponente geprüft; Nutzer-/Produktionsabnahme offen |
-| Kapitel 06, FIB-THEMA-BEZUG-001 bis -008 | keine automatische Themenanlage; Schema-Navigation | bestätigte Ereignisbezüge zu bestehenden Objekten geprüft; Themenentdeckung/KI-Produzent/Nutzerabnahme offen |
+| Kapitel 07, 07.2–07.4 Sitzung/Vorschlag/Beschluss | realer RIS-Ausschnitt, Snapshot und Negativverträge | persistente bestätigte Backend-Objekte; Gesamt-App mit realer Auth/Deno/Runtime geprüft; Nutzer-/Produktionsabnahme offen |
+| Kapitel 06, FIB-THEMA-BEZUG-001 bis -008 | keine automatische Themenanlage; ausdrückliche Browser-/Service-Bestätigung | bestätigte Ereignisbezüge zu bestehenden Objekten geprüft; Themenentdeckung/KI-Produzent/Nutzerabnahme offen |
 | Rechte und Herkunft | MFA/Mitgliedschaft, Herkunftsprüfung, Transaktion, Versionsmetadaten, isolierte Runtime-Rolle | keine produktive Runtime-/Browserfreigabe |
 
 Die bisherigen fachlichen Regeln bleiben erhalten. Offene Umsetzung wird in #281,
@@ -236,6 +250,7 @@ und der Übergabeservice werden erst nach gesonderter Betriebsfreigabe bereitges
 
 | Version | Änderung |
 |---|---|
+| 5.0 | Integrierten Prüfstand und tatsächlichen JSON-Treiberbefund ergänzt; Belegdialoge #350 berücksichtigt |
 | 4.0 | Reguläre UI-Komponenten, gemeinsame Quellenaktionen, Browser-/Datenbanknachweis und ausstehende Nutzer-/Produktivabnahme |
 | 3.0 | Reale Referenzfixtures, isolierte Integration, explizite vier Abnahmekategorien und verbleibende Implementierungslücken |
 | 1.0 | Erste Teilabnahmematrix zu RIS und Gemeinde-Nachrichten |
