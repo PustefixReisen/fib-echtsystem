@@ -94,7 +94,7 @@ export async function acceptObservation(
     // A new review receipt preserves history; existing editorial text is never overwritten.
     await db.queryOne(
       `insert into fib.finding_versions(finding_id,revision,fingerprint,original_url,observed_at,metadata)
-   values($1,(select coalesce(max(revision),0)+1 from fib.finding_versions where finding_id=$1),$2,$3,$4,$5::jsonb) returning id`,
+   values($1,(select coalesce(max(revision),0)+1 from fib.finding_versions where finding_id=$1),$2,$3,$4,$5::text::jsonb) returning id`,
       [
         finding.id,
         input.fingerprint,

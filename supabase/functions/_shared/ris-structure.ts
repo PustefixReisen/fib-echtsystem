@@ -278,6 +278,8 @@ export async function persistRisStructure(tx: RisSql, snapshot: RisSnapshot) {
     );
     return { sessionId: s.id, revision: latest.revision, changed: false };
   }
+  // Bind serialized JSON as text: postgres.js otherwise serializes the string again
+  // when PostgreSQL infers a jsonb parameter (node-postgres does not).
   const revision = (latest?.revision ?? 0) + 1;
   const v = (
     await tx.unsafe(

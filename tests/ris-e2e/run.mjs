@@ -567,7 +567,19 @@ try {
       "select result,yes_count,no_count,abstention_count from fib.ris_votes order by yes_count nulls first",
     )
   ).rows;
-  assert.equal(votes.length, 4);
+  assert.deepEqual(
+    votes.map(({ result, yes_count, no_count }) => [
+      result,
+      yes_count,
+      no_count,
+    ]),
+    [
+      ["no_vote", null, null],
+      ["rejected", 7, 13],
+      ["accepted", 17, 2],
+      ["accepted", 19, 0],
+    ],
+  );
   assert.deepEqual(votes[0], {
     result: "no_vote",
     yes_count: null,

@@ -23,7 +23,10 @@ const newsRoot =
   "https://www.feldkirchen.de/aktuelles/aktuelle-news/aktuelle-meldungen";
 const article = newsRoot + "/parkraumkonzept-der-gemeinde-feldkirchen";
 const html = (s: string) =>
-  new Response(s, { headers: { "content-type": "text/html; charset=utf-8" } });
+  new Response(
+    s.includes("<html") ? s : "<html><body>" + s + "</body></html>",
+    { headers: { "content-type": "text/html; charset=utf-8" } },
+  );
 const read = (p: string) => Deno.readTextFileSync("tests/u4/fixtures/" + p);
 const scenario = () =>
   JSON.parse(Deno.readTextFileSync(root + "/ris-scenario.json"));
