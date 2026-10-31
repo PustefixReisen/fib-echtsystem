@@ -27,6 +27,8 @@ let findings: any[] = [],
   relations: any[] = [],
   links: any[] = [],
   topicLinks: any[] = [];
+let treatmentStatus = "unknown";
+let minutesApproval = "unknown";
 const observation = {
   scope_id: "news",
   external_id: article,
@@ -62,6 +64,7 @@ const api = async (b: any) => {
           committee_name: "Gemeinderat",
           session_date: "2026-10-29",
         },
+        { id: "later", reference: "GR/441/2026 (synthetisch)", session_date: "2026-11-12" },
       ],
     };
   if (b.action === "source_list")
@@ -132,6 +135,17 @@ const api = async (b: any) => {
       };
     return { observation };
   }
+  if (b.action === "ris_read" && b.sessionId === "later")
+    return {
+      session: { id: "later", session_date: "2026-11-12", source_url: origin + "/si0057.asp?__ksinr=fictional" },
+      agenda: [], proposals: [], decisions: [], events: [], suggestions: [],
+      relationSuggestions: [], approvals: [],
+      documents: [{
+        id: "later-minutes-link", kind: "minutes", status: "confirmed",
+        agenda_id: null, latest_version_id: "later-version",
+        source_url: origin + "/getfile.asp?id=fictional",
+      }],
+    };
   if (b.action === "ris_read")
     return {
       session: {
@@ -141,14 +155,14 @@ const api = async (b: any) => {
         session_date: "2026-10-29",
         source_url: origin + "/si0057.asp?__ksinr=1032",
         current_revision: 1,
-        minutes_approval: "unknown",
+        minutes_approval: minutesApproval,
       },
       agenda: [
         {
           id: "t2",
           number: "2",
           title: "Wegfall des Elternbeitragszuschusses in Höhe von 100 €",
-          treatment_status: "unknown",
+          treatment_status: treatmentStatus,
           observed_revision: 1,
         },
         {
@@ -205,6 +219,22 @@ const api = async (b: any) => {
       relationSuggestions: relations,
       approvals: [],
     };
+  if (b.action === "ris_review_agenda_status") {
+    if (b.versionId !== "v1" || !doc.status || doc.status !== "confirmed")
+      throw Error("Fehlender bestätigter Beleg.");
+    if (b.evidenceQuote !== doc.extracted_text)
+      throw Error("missing_exact_evidence");
+    treatmentStatus = b.status;
+    return { status: b.status };
+  }
+  if (b.action === "ris_confirm_minutes_approval") {
+    if (b.approvingSessionId !== "later" ||
+      b.versionId !== "later-version" ||
+      b.evidenceQuote !== "Synthetischer UI-Beleg: Niederschrift genehmigt.")
+      throw Error("missing_exact_evidence");
+    minutesApproval = "approved";
+    return { status: "approved" };
+  }
   if (b.action === "ris_review_document") {
     doc.status = b.status;
     doc.kind = b.kind;
