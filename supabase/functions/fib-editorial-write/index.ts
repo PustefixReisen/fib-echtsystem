@@ -1,3 +1,4 @@
+import {sourceEditorial} from '../_shared/source-editorial.ts';
 import {risEditorial} from '../_shared/ris-editorial.ts';
 import postgres from 'npm:postgres@3.4.7';
 
@@ -70,7 +71,7 @@ export default {
     }
 
     if(!body||typeof body!=='object'||Array.isArray(body))return json({error:'invalid_json_object'},400);
-    const risAction=typeof body.action==='string'&&body.action.startsWith('ris_');
+    const risAction=typeof body.action==='string'&&(body.action.startsWith('ris_')||body.action.startsWith('source_'));
     if(risAction&&Deno.env.get('FIB_RIS_STRUCTURE_ENABLED')!=='true')return json({error:'ris_structure_disabled'},503);
     if (!risAction && body.action !== 'edit_event' && body.action !== 'link_finding' && body.action !== 'unlink_finding' && body.action !== 'update_finding_link' && body.action !== 'update_finding_justification') return json({ error: 'unknown_action' }, 400);
     if (!risAction && (!body.eventId || (body.action === 'edit_event' && (typeof body.title !== 'string' || body.title.trim().length === 0)))) {
@@ -95,8 +96,9 @@ export default {
       if (membership.length === 0) return json({ error: 'fib_membership_missing_or_inactive' }, 403);
 
       if(risAction){
-        if(['ris_suggest','ris_propose_relation'].includes(body.action!)&&body.origin!=='editor')return json({error:'trusted_ai_ingestion_required'},403);
-        const result=await sql.begin(tx=>risEditorial(tx,{userId,kind:'human',aal:'aal2'},body));
+        if(['ris_suggest','ris_propose_relation','source_propose_relation'].includes(body.action!)&&body.origin!=='editor')return json({error:'trusted_ai_ingestion_required'},403);
+        const service=body.action==='ris_sessions'||body.action?.startsWith('source_')?sourceEditorial:risEditorial;
+        const result=await sql.begin(tx=>service(tx,{userId,kind:'human',aal:'aal2'},body));
         return json({ok:true,...result});
       }
 
@@ -247,6 +249,11 @@ export default {
         },
       });
     } catch (error) {
+      if(risAction){
+        const known=error instanceof Error?error.message:'';
+        const codes=['stale_review','stale_ris_review','ambiguous_existing_findings','existing_significance_conflict','existing_event_role_conflict','missing_exact_evidence','ris_review_already_final','ris_object_missing','source_missing','invalid_source_input','invalid_review','request_conflict','source_origin_mismatch','scope_source_mismatch'];
+        if(codes.includes(known))return json({error:known},409);
+      }
       console.error('fib-editorial-write failed', error);
       return json({ error: 'internal_error' }, 500);
     } finally {

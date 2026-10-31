@@ -795,3 +795,9 @@ expliziten redaktionellen Entscheidungen. Diese technische Ableitung ändert kei
 Fachregel. Maßgeblich sind die abgenommenen Fachhandbuchkapitel, insbesondere
 [Kapitel 07](fachhandbuch/07-Sitzungen-und-Beschluesse-Entwurf-2026-10-26.md);
 die früheren Teilmodelle dienen als historische Herleitung.
+
+Die [reguläre Redaktionsoberfläche](operations/u4-editorial-ui-acceptance.md) verwendet
+dieselben Fundstellen/Ereignisse und Beziehungsobjekte. Der vorbereitete gemeinsame
+Prüfweg `ris_relation_suggestions` wird auch für Gemeinde-Ereignisse verwendet; es
+entstehen keine parallelen Ereignis- oder Fundstellentabellen. Keine neue Migration
+ist für diese UI-Anbindung erforderlich; die Migration aus PR #348 bleibt freigabepflichtig.

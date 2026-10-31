@@ -1,3 +1,4 @@
+import {SourceWorkspace} from './SourceWorkspace.js';
 import { FormEvent, useEffect, useState, useRef, type ReactNode } from 'react';
 import { PasswordField } from './PasswordField.js';
 import { supabase, invitationMode, authLinkError, invitationPasswordDone, rememberInvitationPassword } from './supabase.js';
@@ -13,7 +14,7 @@ import assistantIcon from '../../../assets/brand/icons/fib-assistent.svg';
 import './app.css';
 
 type AuthState = 'checking' | 'auth_error' | 'signed_out' | 'aal1_no_factor' | 'aal1_factor_available' | 'aal2';
-type EditorialView = 'dashboard' | 'event' | 'events' | 'topics' | 'profile' | 'users' | 'u4pilot';
+type EditorialView = 'dashboard' | 'event' | 'events' | 'topics' | 'profile' | 'users' | 'u4pilot' | 'findings' | 'sessions';
 type TopicData = { id:string; title:string; guiding_question:string | null; description:string | null; status:string };
 type TopicProposal = { id:string; topic_id:string; process_id:string; suggested_significance:string; suggested_rationale:string; status:string; origin:string; process_title:string; topic_title:string };
 type TopicContributionVersion = {id:string;version_no:number;body:string;editorial_assessment:string|null;approved_at:string;revoked_at:string|null;published_at:string|null;ended_at:string|null};
@@ -133,6 +134,8 @@ export function App() {
   const [totpSecret, setTotpSecret] = useState<string | null>(null);
   const [state, setState] = useState<AuthState>('checking');
   const [message, setMessage] = useState(authLinkError ? 'Dieser Link ist ungültig oder abgelaufen. Bitte fordere einen neuen Link an.' : '');
+  const sourceLeaveRef=useRef<()=>boolean>(()=>true);
+  const [sourceFindingId,setSourceFindingId]=useState<string|null>(null);
   const [view, setView] = useState<EditorialView>('dashboard');
   const [topicData,setTopicData] = useState<TopicListData | null>(null);
   const [topicListOpen,setTopicListOpen] = useState(true);
@@ -249,7 +252,7 @@ export function App() {
   currentViewRef.current = view;
 
   function confirmLeave(): boolean {
-    if (editSaving) return false;
+    if (editSaving || !sourceLeaveRef.current()) return false;
     return !eventDirty || window.confirm('Ungespeicherte Änderungen\\n\\nÄnderungen verwerfen und den Bereich verlassen?');
   }
 
@@ -270,7 +273,7 @@ export function App() {
   };
 
   useEffect(() => {
-    if (view === 'events' || view === 'event') {
+    if (view === 'events' || view === 'event' || view === 'findings') {
       const group = document.getElementById('nav-recherche') as HTMLDetailsElement | null;
       if (group) group.open = true;
     }
@@ -461,7 +464,7 @@ export function App() {
     if (authLinkError) return;
     window.history.replaceState({ ...(window.history.state ?? {}), fibView: 'dashboard' }, '', window.location.href);
     const onPopState = (event: PopStateEvent) => {
-      const nextView = event.state?.fibView === 'event' ? 'event' : event.state?.fibView === 'events' ? 'events' : event.state?.fibView === 'profile' ? 'profile' : event.state?.fibView === 'users' ? 'users' : 'dashboard';
+      const nextView = event.state?.fibView === 'findings' ? 'findings' : event.state?.fibView === 'sessions' ? 'sessions' : event.state?.fibView === 'event' ? 'event' : event.state?.fibView === 'events' ? 'events' : event.state?.fibView === 'profile' ? 'profile' : event.state?.fibView === 'users' ? 'users' : 'dashboard';
       if (!historyLeaveRef.current()) {
         window.history.pushState({ fibView: currentViewRef.current }, '', window.location.href);
         return;
@@ -1352,7 +1355,7 @@ export function App() {
             <button className="nav-item" disabled><NavIcon src={reportIcon} />Meldungen <span>folgt</span></button>
             <button className="nav-item" disabled><NavIcon src={processIcon} />Vorgänge <span>folgt</span></button>
             <button className={view === "topics" ? "nav-item active" : "nav-item"} aria-current={view === "topics" ? "page" : undefined} onClick={() => navigateTo("topics")}><NavIcon src={topicIcon} />Themen</button>
-            <button className="nav-item" disabled><NavIcon src={sessionIcon} />Sitzungen <span>folgt</span></button>
+            <button className={view==='sessions'?'nav-item active':'nav-item'} onClick={()=>navigateTo('sessions')}><NavIcon src={sessionIcon} />Sitzungen</button>
           </div>
 
           <div className="nav-section">
@@ -1360,7 +1363,7 @@ export function App() {
             <details id="nav-recherche">
               <summary>Recherche</summary>
               <button className="nav-subitem" disabled>Rechercheaufträge</button>
-              <button className="nav-subitem" disabled>Funde</button>
+              <button className={view==='findings'?'nav-subitem active':'nav-subitem'} onClick={()=>{setSourceFindingId(null);navigateTo('findings');}}>Fundstellen</button>
               <button className={view === 'events' || view === 'event' ? 'nav-subitem active' : 'nav-subitem'} aria-current={view === 'events' || view === 'event' ? 'page' : undefined} onClick={() => navigateTo('events')}>Ereignisse</button>
               <button className="nav-subitem" disabled>Quellen</button>
             </details>
@@ -1410,6 +1413,7 @@ export function App() {
         {navigationOpen && <button className="nav-backdrop" aria-label="Navigation schließen" onClick={() => setNavigationOpen(false)} />}
 
         <main className="content-shell">
+        {(view==='findings'||view==='sessions')&&<SourceWorkspace mode={view} initialFindingId={sourceFindingId} onHome={()=>navigateTo('dashboard')} onOpenEvent={id=>void openListedEvent(id)} registerLeaveGuard={guard=>{sourceLeaveRef.current=guard;}}/>}
         {view === 'topics' && (
           <section className="panel card-headed fib-topic-screen">
             {topicError && <p className="error" role="alert">{topicError}</p>}
@@ -1954,6 +1958,7 @@ export function App() {
                       <li key={source.findingId}>
                         <strong>{readableSourceName(source.sourceName)}</strong>
                         <span>{source.originalUrl && /^https?:\/\//i.test(source.originalUrl) ? <a href={source.originalUrl} target="_blank" rel="noopener noreferrer">{source.findingTitle}</a> : source.findingTitle}</span>
+                        <button type="button" disabled={editingEvent||sourcePickerOpen} onClick={()=>{setSourceFindingId(source.findingId);navigateTo('findings');}}>Fundstelle öffnen</button>
                         {editingSourceId !== source.findingId && source.justification && <p className="finding-justification">{source.justification}</p>}
                         {sourcePickerOpen && (editingSourceId === source.findingId ? (
                           <div className="stack finding-justification-editor">

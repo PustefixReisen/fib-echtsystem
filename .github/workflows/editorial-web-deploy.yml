@@ -1,12 +1,12 @@
 name: Deploy Editorial Web
 
 on:
-  push:
-    branches: [main]
-    paths:
-      - 'apps/editorial-web/**'
-      - '.github/workflows/editorial-web-deploy.yml'
   workflow_dispatch:
+    inputs:
+      confirmation:
+        description: 'Nach gesonderter Produktivfreigabe DEPLOY eingeben'
+        required: true
+        type: string
 
 permissions:
   contents: read
@@ -17,6 +17,7 @@ concurrency:
 
 jobs:
   deploy:
+    if: ${{ inputs.confirmation == 'DEPLOY' }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4

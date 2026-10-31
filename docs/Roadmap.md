@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 4.7 | 31.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
+| 4.8 | 31.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
 
 ## Statusmodell
 
@@ -72,10 +72,13 @@ bestätigten Übergänge Fundstelle → Ereignis → bestehender Vorgang/Thema.
 Mehrere Beschlusspunkte/Fassungen, unbekannte Resultate, Herkunft und unveränderliche
 Belege sind Bestandteil des isolierten PostgreSQL-Nachweises mit `fib_runtime`.
 Die [technische Abnahme](operations/u4-reference-sources-acceptance.md) bleibt eine
-**Teilabnahme bis zum Backend**. Umsetzung und vorbereitete Freigabeschritte stehen
+**Teilabnahme einschließlich regulärer Quellen-/Sitzungsoberflächen**.
+Automatisierte Browserabläufe prüfen Übernahme, Ereignisübergabe und Themenbezug;
+[Prüfdurchgang und Grenzen](operations/u4-editorial-ui-acceptance.md). Umsetzung und vorbereitete Freigabeschritte stehen
 in [U4 RIS-Persistenz](operations/u4-ris-persistence.md).
 
-Nächste Schritte in #281: redaktionelle Ansichten und Nutzerabnahme, vertrauenswürdige
+Nächste Schritte in #281: fachliche Nutzerabnahme der integrierten Ansichten,
+Eingabedialoge für Verfahrensstand/Niederschriftsgenehmigung, vertrauenswürdige
 KI-Produzenten, weitergehende RIS-Abdeckung und Identitätswechsel. Vorläufige
 Ereignisse (#260) und Langzeitqualität der Gemeinde-Archive bleiben offen.
 Produktive Migration/Deployment/Feature-Aktivierung brauchen separate Freigabe;

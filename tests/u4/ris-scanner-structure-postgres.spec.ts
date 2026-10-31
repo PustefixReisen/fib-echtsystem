@@ -255,7 +255,10 @@ async function main() {
       .replace(/^import[\s\S]*?from ["']\.\/ris-structure\.ts["'];?\s*/, "")
       .replace(/\bexport /g, "") +
     "\n" +
+    readFileSync("supabase/functions/_shared/reviewed-observation.ts", "utf8").replace(/\bexport /g, "") + "\n" +
+    readFileSync("supabase/functions/_shared/source-editorial.ts", "utf8").replace(/^import[^\n]+$/gm, "").replace(/\bexport /g, "") + "\n" +
     readFileSync("supabase/functions/fib-editorial-write/index.ts", "utf8")
+      .replace(/^import .*source-editorial.*;\s*/m, "")
       .replace(/^import .*ris-editorial.*;\s*/m, "")
       .replace(
         /^import postgres .*;\s*/m,
@@ -303,7 +306,11 @@ async function main() {
     (await call({ action: "ris_read", sessionId: session }, aal1)).status,
     403,
   );
+  assert.equal((await call({action:"source_list"})).status,200);
+  assert.equal((await call({action:"source_list"},aal1)).status,403);
+  assert.equal((await call({action:"source_propose_relation",origin:"ai"})).status,403);
   enabled = false;
+  assert.equal((await call({action:"source_list"})).status,503);
   assert.equal(
     (await call({ action: "ris_read", sessionId: session })).status,
     503,
