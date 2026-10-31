@@ -5,6 +5,11 @@ on:
       - 'tests/ris-e2e/**'
       - 'apps/editorial-web/**'
       - 'supabase/**'
+      - 'schema/**'
+      - 'security/**'
+      - 'packages/fachservices/**'
+      - 'package.json'
+      - 'tsconfig*.json'
       - '.github/workflows/ris-integrated-e2e.yml'
 permissions:
   contents: read

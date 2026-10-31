@@ -1,5 +1,5 @@
 import pg from "pg";
-import { randomBytes } from "node:crypto";
+import { randomBytes, createHash } from "node:crypto";
 import {
   readFileSync,
   writeFileSync,
@@ -150,7 +150,11 @@ try {
       {
         database: "fib_u4_test",
         postgres: 16,
-        files,
+        files: files.map((path) => ({
+          path,
+          sha256: createHash("sha256").update(readFileSync(path)).digest("hex"),
+        })),
+        commit: process.env.GITHUB_SHA ?? null,
         runtimeRole: "fib_app inherits fib_runtime; no superuser/BYPASSRLS",
       },
       null,

@@ -53,6 +53,8 @@ globalThis.fetch = async (input: RequestInfo | URL, init?: RequestInit) => {
       );
     else if (url.pathname === "/si0057.asp") {
       const id = url.searchParams.get("__ksinr");
+      if (id !== "1031" && id !== "1032")
+        throw Error("unlisted fixture session");
       let content = read(
         id === "1032" ? "ris-1032-top-2-3.html" : "ris-1031-top-2-3-6.html",
       );

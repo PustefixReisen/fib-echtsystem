@@ -148,3 +148,8 @@ Der [redaktionelle Bediennachweis](../operations/u4-editorial-ui-acceptance.md) 
 die regulären Fundstellen-/Sitzungsansichten und ausdrückliche Zuordnung zu bestehenden
 Ereignissen, Vorgängen und Themen. Technische Browserprüfung, fachliche Nutzerabnahme
 und Produktivfreigabe bleiben getrennt; der Fachregelstand wird nicht geändert.
+
+Der [integrierte Prüfstand zu #352](../operations/u4-integrated-acceptance.md) verbindet
+die Gesamt-App mit echtem Login/MFA, Deno-Handlern und isoliertem PostgreSQL. Er benennt
+kontrollierte externe Testantworten und synthetische Genehmigungsfälle ausdrücklich;
+sein CI-Ergebnis ist kein Nachweis der Vollständigkeit der realen RIS-Veröffentlichungen.

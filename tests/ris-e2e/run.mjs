@@ -335,6 +335,43 @@ try {
     ).user_id,
     f.users.editor.id,
   );
+  // Confirm a proposal as a proposal through the same actual UI/API path.
+  await rationale();
+  await page
+    .getByText("Belegten Text als Vorschlag erfassen", { exact: true })
+    .click();
+  await page
+    .getByLabel("Vorschlagsart", { exact: true })
+    .selectOption("proposal_text");
+  const proposal = await first(
+    "select id from fib.ris_proposals where agenda_id=$1",
+    [top(s1032, "2")],
+  );
+  await page.getByLabel("Vorlage", { exact: true }).selectOption(proposal.id);
+  await page
+    .getByLabel("Wortlaut *", { exact: true })
+    .fill("Synthetischer Vorschlagstext zu TOP 2.");
+  await page
+    .getByLabel("Wortgetreuer Beleg einschließlich Abstimmung *", {
+      exact: true,
+    })
+    .fill((await doc(75714)).extracted_text);
+  await page
+    .getByRole("button", { name: "Vorschlag speichern", exact: true })
+    .click();
+  await page
+    .getByText("Vorschlag gespeichert – noch nicht bestätigt.", { exact: true })
+    .waitFor();
+  assert.equal(await count("ris_proposal_texts"), 0);
+  await rationale();
+  await section("Offene und entschiedene Vorschläge")
+    .getByRole("button", { name: "Bestätigen", exact: true })
+    .click();
+  await page
+    .getByText("Redaktionelle Entscheidung gespeichert.", { exact: true })
+    .waitFor();
+  assert.equal(await count("ris_proposal_texts"), 1);
+  assert.equal(await count("ris_decision_points"), 0);
   const initialVersion = (await doc(75714)).latest_version_id;
   const before = await count("ris_decision_points");
   const invalid = await editorial({
@@ -394,7 +431,7 @@ try {
     rationale: "Vorlage belegt keinen tatsächlichen Beschluss",
   });
   await openSession("GR/440/2026", top(s1032, "3"));
-  await page.getByText("5397/2026", { exact: true }).waitFor();
+  await page.locator("strong").filter({hasText:"5397/2026"}).waitFor();
   await page
     .getByText("Kein tatsächlicher Beschluss im geprüften Bestand belegt.", {
       exact: false,
@@ -481,6 +518,12 @@ try {
     "Beschlüsse aus der Niederschrift 15.10.2026",
   );
   const text = minutes.extracted_text;
+  const excerpt = (start, end) => {
+    const a = text.indexOf(start),
+      b = text.indexOf(end, a);
+    assert.ok(a >= 0 && b > a, "Reference excerpt boundaries");
+    return text.slice(a, b + end.length);
+  };
   const cases = [
     [
       "2",
@@ -496,7 +539,10 @@ try {
       "rejected",
       7,
       13,
-      "Der Gemeinderat beschließt einen Entwurf",
+      excerpt(
+        "Der Gemeinderat beschließt einen Entwurf",
+        "im Haushalt 2027 vorzusehen.",
+      ),
     ],
     [
       "6",
@@ -504,9 +550,19 @@ try {
       "accepted",
       17,
       2,
-      "Der Gemeinderat beurteilt die vorliegende Voranfrage",
+      excerpt(
+        "Der Gemeinderat beurteilt die vorliegende Voranfrage",
+        "Bereich des Plangebietes sowie die Anpassung der baulichen Parameter.",
+      ),
     ],
-    ["6", "2", "accepted", 19, 0, "Die Verwaltung wird beauftragt"],
+    [
+      "6",
+      "2",
+      "accepted",
+      19,
+      0,
+      excerpt("Die Verwaltung wird beauftragt", "zu erarbeiten."),
+    ],
   ];
   for (const [number, key, result, yes, no, wording] of cases) {
     await openSession("GR/439/2026", top(s1031, number));
@@ -780,6 +836,22 @@ try {
     "0",
   );
   assert.ok((await count("ris_review_log")) > 10);
+  assert.equal(
+    (
+      await first(
+        "select count(*) n from fib.ris_review_log where jsonb_typeof(detail) <> 'object'",
+      )
+    ).n,
+    "0",
+  );
+  assert.equal(
+    (
+      await first(
+        "select count(*) n from fib.finding_versions where jsonb_typeof(metadata) <> 'object'",
+      )
+    ).n,
+    "0",
+  );
   assert.deepEqual(browserErrors, []);
   await db.query("update fib.app_users set active=false where user_id=$1", [
     f.users.editor.id,
@@ -814,6 +886,11 @@ try {
 } catch (error) {
   results.push({ name: phase, status: "abweichend" });
   console.error("FAIL phase: " + phase);
+  if (ready)
+    console.error(
+      "UI alerts:",
+      await page.getByRole("alert").allTextContents(),
+    );
   if (ready)
     await page
       .screenshot({ path: "ris-e2e-results/failure.png", fullPage: true })
