@@ -30,7 +30,7 @@ async function audit(
   detail: unknown,
 ) {
   await tx.unsafe(
-    "insert into fib.ris_review_log(actor_id,action,object_id,detail) values($1,$2,$3,$4::jsonb)",
+    "insert into fib.ris_review_log(actor_id,action,object_id,detail) values($1,$2,$3,$4::text::jsonb)",
     [actor.userId, action, id, JSON.stringify(detail)],
   );
 }
@@ -245,7 +245,7 @@ export async function risEditorial(
     );
     if (!exists.length)
       await tx.unsafe(
-        `insert into fib.finding_versions(finding_id,revision,fingerprint,original_url,observed_at,metadata) values($1,(select coalesce(max(revision),0)+1 from fib.finding_versions where finding_id=$1),$2,$3,$4,$5::jsonb)`,
+        `insert into fib.finding_versions(finding_id,revision,fingerprint,original_url,observed_at,metadata) values($1,(select coalesce(max(revision),0)+1 from fib.finding_versions where finding_id=$1),$2,$3,$4,$5::text::jsonb)`,
         [
           finding.id,
           v.content_hash,
@@ -412,7 +412,7 @@ export async function risEditorial(
     );
     const r = await one(
       tx,
-      "insert into fib.ris_suggestions(agenda_id,document_version_id,kind,origin,payload,created_by) values($1,$2,$3,$4,$5::jsonb,$6) returning id",
+      "insert into fib.ris_suggestions(agenda_id,document_version_id,kind,origin,payload,created_by) values($1,$2,$3,$4,$5::text::jsonb,$6) returning id",
       [
         input.agendaId,
         v.id,
