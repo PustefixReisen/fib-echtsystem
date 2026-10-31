@@ -991,7 +991,7 @@ export function SourceWorkspace({
                   </label>
                   <label>
                     Begründung *
-                    <textarea
+                    <textarea aria-label="Begründung *"
                       value={rationale}
                       maxLength={2000}
                       onChange={(e) => {
@@ -1455,7 +1455,7 @@ export function SourceWorkspace({
               <div className="stack">
                 <label>
                   Begründung für die nächste Entscheidung *
-                  <textarea
+                  <textarea aria-label="Begründung für die nächste Entscheidung *"
                     value={rationale}
                     maxLength={2000}
                     onChange={(e) => {
@@ -1715,7 +1715,7 @@ export function SourceWorkspace({
                     )}
                     <label>
                       Wortlaut *
-                      <textarea
+                      <textarea aria-label="Wortlaut *"
                         value={wording}
                         onChange={(e) => {
                           setWording(e.target.value);
@@ -1725,7 +1725,7 @@ export function SourceWorkspace({
                     </label>
                     <label>
                       Wortgetreuer Beleg einschließlich Abstimmung *
-                      <textarea
+                      <textarea aria-label="Wortgetreuer Beleg einschließlich Abstimmung *"
                         value={quote}
                         onChange={(e) => {
                           setQuote(e.target.value);
