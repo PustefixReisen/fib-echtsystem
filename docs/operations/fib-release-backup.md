@@ -161,3 +161,94 @@ Dump aus. Das ist ausdrücklich kein Restore der beim Auftraggeber liegenden Dat
 PR #359 bleibt bis zu tatsächlichem lokalem Restore, vollständigen Exporten und Prüfung
 der Actions-Environment-/Secretberechtigungen **nicht betrieblich einsatzbereit**.
 Die neue Routine wird nicht aktiviert; externe Ablagezugänge werden nicht verändert.
+
+## Manueller Workflow: veröffentlichte Redaktion sichern
+
+`Backup published editorial frontend` (`frontend-backup.yml`) ist ausschließlich
+workflow_dispatch, ohne Zeitplan, Deployment, Supabase-Zugriff oder Artifact-Upload.
+Er verwendet denselben Concurrency-Schlüssel wie der IONOS-Deploy. Neues Skript
+`frontend-run.py` verwendet den vorhandenen `frontend.py`-Capture; der Release-Bundle-
+Validator bleibt für vollständige Releases maßgeblich. Ein Frontend-Nachweis allein
+entsperrt keinen Release mit fehlender Datenbank-/Edge-/Konfigurationssicherung.
+
+**Betriebsstand laut Auftraggeber:** Die konkrete Shared-Apps-Datei wurde inzwischen
+mit PostgreSQL17 im isolierten netzlosen Container erfolgreich wiederhergestellt:
+29 Tabellen, 29 RLS-Tabellen, restore=passed. Das ist ein vom Auftraggeber bestätigter
+konkreter Restore, kein in Work ausgeführter Restore. Frühere Hinweise „Restore offen“
+in dieser Datei sind dadurch für genau diese Sicherung überholt.
+
+### Fehlende Secrets geschützt einrichten
+
+Die vorhandenen drei IONOS-Secrets sind vom Auftraggeber bestätigt. Ihre Werte werden
+weiterverwendet. Unter Repository Settings → Secrets and variables → Actions beziehungsweise
+im geschützten Environment `fib-release` ergänzen:
+
+1. `FIB_SFTP_KNOWN_HOSTS`: vollständige known_hosts-Zeile des IONOS-SFTP-Hosts.
+   Fingerprint über IONOS-Verwaltung/Support oder einen anderen unabhängigen Kanal
+   bestätigen. Ein ungeprüftes ssh-keyscan-Ergebnis ist kein Identitätsnachweis.
+2. `FIB_BACKUP_RCLONE_CONFIG`: ausschließlich die beiden Abschnitte `fib-nextcloud`
+   und `fib-backup-crypt`. Nicht die gesamte private rclone.conf hochladen.
+   Im privaten Editor eine separate Konfiguration erstellen; niemals hier einfügen.
+   Der WebDAV-URL muss direkt auf das bestehende Verzeichnis `FIB-Backups` enden,
+   HTTPS verwenden und darf keine Zugangsdaten/Query enthalten. `fib-nextcloud`:
+   type=webdav, url, bestehender user, rclone-obscured pass, optional vendor.
+   `fib-backup-crypt`: type=crypt, remote=fib-nextcloud:, bestehende password/password2,
+   filename_encryption=standard, directory_name_encryption=true. Keine Schlüssel ändern!
+   **Wenn das vorhandene crypt-Remote auf einen anderen Unterordner zeigt**, nicht
+   einfach remote umstellen: zuerst dessen identischen Zielpfad privat abgleichen und
+   die Konfiguration fachgerecht für die bereits verwendete verschlüsselte Ablage
+   prüfen. Das Skript akzeptiert absichtlich nur den hier dokumentierten Vertrag.
+3. Environment `fib-release`, dessen Freigaberegeln und Secretzugriffe prüfen. Variable
+   `FIB_BACKUP_READY` erst nach dieser Prüfung bewusst auf true setzen. Dieser Auftrag
+   richtet weder Secrets noch Environment/Variable ein und startet keinen Lauf.
+
+Die aktuelle lokale Konfiguration ist Work nicht zugänglich; ihre Eignung wird daher
+nicht behauptet. Die Routine lehnt zusätzliche Remotes und unbekannte Optionen ab.
+Eine URL-Beschränkung im Client verhindert versehentliche Zugriffe auf andere Ordner,
+ist aber **keine serverseitige Rechtebeschränkung**: Ein normales Nextcloud-App-Passwort
+kann weitere private Dateien freigeben. Vor Hinterlegung deshalb tatsächliche Kontorechte
+prüfen und vorzugsweise den bestehenden getrennten Backupzugang verwenden. Falls der
+Zugang das gesamte private Konto öffnet, nicht ungeprüft in GitHub übernehmen; die
+fehlende Beschränkung als offene Zugangsvoraussetzung behandeln. Keine neue Infrastruktur
+oder fremde private Dateien sind Bestandteil dieses Auftrags.
+
+### Erster echter Lauf nach Zugangsprüfung
+
+Nach Prüfung/gesonderter Aktivierung den geprüften PR-/Merge-Stand in Actions auswählen,
+`Backup published editorial frontend` öffnen und einmal Run workflow auslösen.
+Die Routine verwendet eine zufällige eindeutige Backup-ID unter
+`fib-backup-crypt:Frontend/`. Dateien und frontend-manifest.json werden hochgeladen,
+in ein neues privates Verzeichnis zurückgeladen und vollständig byteweise per SHA-256
+verglichen. Erst danach entsteht receipt.json; auch diese wird übertragen/zurückgeprüft.
+Das Manifest enthält Dateiliste, Hashs, Zeitpunkt und Git-Commit des Sicherungswerkzeugs
+(kein behaupteter Build-Commit des vorhandenen Frontends). Logs zeigen nur Erfolg und
+Backup-ID oder eine allgemeine Fehlermeldung. Bei Fehlern nicht blind wiederholen:
+Zugang/Hostschlüssel/Teilübertragung privat prüfen. Pakete ohne erfolgreichen Nachweis
+nicht zur Rücknahme verwenden. Fehlgeschlagene Teiluploads werden nicht automatisch
+remote gelöscht.
+
+Temporäre Klartextdateien liegen unter Runner-Temp mit 0700/0600; Python räumt im
+Fehler-/Erfolgsfall auf, zusätzlich existiert ein always()-Cleanup. Ein harter Runner-
+Abbruch kann den Cleanup verhindern; deshalb ausschließlich kurzlebige gehostete Runner,
+keine dauerhafte Klartextablage oder öffentliches Artefakt. FIB-Wartungsfenster einhalten,
+da SFTP keinen atomaren Snapshot gleichzeitig extern veränderter Dateien garantiert.
+
+### Kontrollierte Frontend-Rücknahme
+
+Nur nach gesonderter ausdrücklicher Freigabe: ausgewählte Backup-ID aus dem crypt-Remote
+in ein privates Verzeichnis zurückladen. receipt/Manifesthash gegen den ursprünglichen
+privaten Nachweis vergleichen, jede Datei und vollständige Dateiliste erneut prüfen.
+Dann ausschließlich den Inhalt von frontend/ auf das geprüfte SFTP-Ziel redaktion/
+zurückspielen, zunächst Unterschiede prüfen; Löschungen nur im freigegebenen Zielumfang.
+Keine Rückübertragung anderer Bundle-Komponenten, kein Supabase-/Memorix-Restore.
+Originalnachweise behalten. Für einen späteren vollständigen Release kann frontend/
+in das gemeinsame Bundle übernommen werden; Erfassungszeit/Wartungsfenster und
+Operatorprüfung müssen zum Release passen, anschließend gemeinsames Bundle neu versiegeln.
+
+### Automatisierte Belege
+
+Tests simulieren Transportantworten ausdrücklich: SFTP-Ausfall/unvollständiger Capture,
+Uploadfehler, geänderte Rücklesedateien und geänderter Nachweis führen zum Abbruch;
+private Tempverzeichnisse sind anschließend leer. Fehlende/falsche Remote-Konfiguration
+und ein tatsächlich von ssh-keygen abgewiesener Hostschlüssel werden geprüft. Keine
+Aussage über funktionierende echte GitHub-/IONOS-/Nextcloud-Zugänge ohne ersten echten Lauf.

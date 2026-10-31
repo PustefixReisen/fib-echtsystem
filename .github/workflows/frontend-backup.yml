@@ -1,0 +1,37 @@
+name: Backup published editorial frontend
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: editorial-web-pilot
+  cancel-in-progress: false
+jobs:
+  backup:
+    environment: fib-release
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - name: Require reviewed backup access
+        env:
+          READY: ${{ vars.FIB_BACKUP_READY }}
+        run: test "$READY" = true
+      - name: Install existing-protocol clients
+        run: sudo apt-get update && sudo apt-get install -y lftp rclone
+      - name: Capture, encrypt and verify readback
+        env:
+          IONOS_SFTP_HOST: ${{ secrets.IONOS_SFTP_HOST }}
+          IONOS_SFTP_USER: ${{ secrets.IONOS_SFTP_USER }}
+          IONOS_SFTP_PASSWORD: ${{ secrets.IONOS_SFTP_PASSWORD }}
+          FIB_SFTP_KNOWN_HOSTS_TEXT: ${{ secrets.FIB_SFTP_KNOWN_HOSTS }}
+          FIB_BACKUP_RCLONE_CONFIG: ${{ secrets.FIB_BACKUP_RCLONE_CONFIG }}
+          FIB_BACKUP_TEMP_PARENT: ${{ runner.temp }}/fib-frontend-private
+        run: |
+          set -euo pipefail
+          umask 077
+          mkdir -p "$FIB_BACKUP_TEMP_PARENT"
+          python3 scripts/backup/frontend-run.py
+      - name: Remove private temporary files
+        if: always()
+        run: rm -rf "$RUNNER_TEMP/fib-frontend-private"

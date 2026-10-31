@@ -9,6 +9,8 @@ try:
  def q(s):
   if '\n' in s or '\r' in s or '\x00' in s:raise ValueError()
   return '"'+s.replace('\\','\\\\').replace('"','\\"').replace('$','\\$').replace('`','\\`')+'"'
+ keycheck=subprocess.run(['ssh-keygen','-F',host,'-f',known],stdout=subprocess.PIPE,stderr=subprocess.PIPE)
+ if keycheck.returncode:raise ValueError()
  target.mkdir(parents=True,mode=0o700)
  commands='\n'.join(['set cmd:fail-exit yes','set net:max-retries 1','set net:timeout 30','set sftp:connect-program '+q('ssh -a -x -o StrictHostKeyChecking=yes -o UserKnownHostsFile='+known),'open -u '+q(user)+','+q(password)+' '+q('sftp://'+host),'mirror --no-perms redaktion '+q(str(target)),'bye'])
  r=subprocess.run(['lftp'],input=commands.encode(),stdout=subprocess.PIPE,stderr=subprocess.PIPE,timeout=300)
