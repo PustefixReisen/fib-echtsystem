@@ -1,3 +1,4 @@
+import {withDevelopmentDataset} from '../_shared/development-datasets.ts';
 import postgres from 'npm:postgres@3.4.7';
 import {extractText} from 'npm:unpdf@2.1.0';
 import {risSessionLinks,risUrl,parseRisStructure,persistRisStructure,persistRisDocument} from '../_shared/ris-structure.ts';
@@ -204,6 +205,7 @@ export async function handleRis(req:Request,mode:'interactive'|'scheduler'='inte
   const changedCount=pdfs.filter(x=>{const old=byUrl.get(x.url);return Boolean(old && !old.startsWith('ris:') && old!==x.hash)}).length;
   const stamp=new Date().toISOString();
   await sql.begin(async tx=>{
+   return withDevelopmentDataset(tx,{action:'source_scan',scopeId},async()=>{
    const locked=await tx.unsafe("select id from fib.source_scopes where id=$1::uuid and status='candidate' for update",[scopeId]);
    if(locked.length!==1)throw new Error('scope_changed');
    const latest=await tx.unsafe('select cursor_state from fib.ris_scan_cursors where scope_id=$1::uuid',[scopeId]);
@@ -226,6 +228,7 @@ export async function handleRis(req:Request,mode:'interactive'|'scheduler'='inte
    const reason=failures.length?'RIS window fetch failed':null;
    await tx.unsafe('insert into fib.source_runs(scope_id,started_at,completed_at,status,items_seen,items_new,items_changed,error_detail,cadence) values ($1::uuid,$2,$2,$3,$4,$5,$7,$6,$8)',[scopeId,stamp,runStatus,current.documents.length,newly.length,reason,changedCount,cadence]);
    await tx.unsafe('update fib.source_scopes set last_attempt_at=$2,last_success_at=case when $3 then $2 else last_success_at end,gap_since=case when $4::text is null then null else coalesce(gap_since,$2) end,last_error=$4,updated_at=now() where id=$1::uuid',[scopeId,stamp,complete,sourceError]);
+   });
   });
   return reply({mode:'candidate_test',structureEnabled,structurePending:structureQueue.length,structureSessions:snapshots.length,processed,documents:current.documents.length,newCount:newly.length,pending:pending.length,complete,failures:failures.length,cycleRestart,pdfChecked:pdfs.length,pdfChanged:changedCount,releaseViews:current.releaseViews,...coverageResult,cadenceStates,dueChecks:dueStatus(cadenceStates),activeErrors,backfill,backfillRemaining:backfill?Math.max(0,target-current.pdfOffset):null});
  }catch(e){await recordStructureFailure(e);return reply({error:'ris_pilot_failed',detail:String(e).slice(0,180)},502)}

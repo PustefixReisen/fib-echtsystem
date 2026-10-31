@@ -1,3 +1,4 @@
+import {withDevelopmentDataset} from '../_shared/development-datasets.ts';
 import postgres from 'npm:postgres@3.4.7';
 import {scanNews} from '../_shared/u4-news.ts';
 
@@ -54,6 +55,7 @@ export default {
      const scopes=await tx.unsafe("select id from fib.source_scopes where scope_key=$1 and status='candidate' for update",[scopeKey]);
      if(scopes.length!==1)throw new Error('scope_must_be_candidate');
      const scopeId=scopes[0].id as string;
+     return withDevelopmentDataset(tx,{action:'source_scan',scopeId},async()=>{
      let newCount=0,changedCount=0;
      for(const x of observed){
        const externalId='gemeinde:'+x.url;
@@ -66,6 +68,7 @@ export default {
      await tx.unsafe("insert into fib.source_runs(scope_id,started_at,completed_at,status,items_seen,items_new,items_changed) values($1::uuid,$2,$2,'succeeded',$3,$4,$5)",[scopeId,now,observed.length,newCount,changedCount]);
      await tx.unsafe("update fib.source_scopes set last_success_at=$2,last_attempt_at=$2,gap_since=null,last_error=null,updated_at=now() where id=$1::uuid",[scopeId,now]);
      return {scopeKey,seen:observed.length,newCount,changedCount,pages:scan.pages,coverage:scan.coverage};
+     });
    });
    return json({mode:'candidate_test',...result});
   }catch(error){

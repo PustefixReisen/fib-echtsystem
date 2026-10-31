@@ -1,3 +1,5 @@
+import {sourceReadiness} from '../_shared/source-readiness.ts';
+import {withDevelopmentDataset} from '../_shared/development-datasets.ts';
 import {sourceEditorial} from '../_shared/source-editorial.ts';
 import {risEditorial} from '../_shared/ris-editorial.ts';
 import postgres from 'npm:postgres@3.4.7';
@@ -72,7 +74,7 @@ export default {
 
     if(!body||typeof body!=='object'||Array.isArray(body))return json({error:'invalid_json_object'},400);
     const risAction=typeof body.action==='string'&&(body.action.startsWith('ris_')||body.action.startsWith('source_'));
-    if(risAction&&Deno.env.get('FIB_RIS_STRUCTURE_ENABLED')!=='true')return json({error:'ris_structure_disabled'},503);
+    if(risAction&&body.action!=='source_readiness'&&Deno.env.get('FIB_RIS_STRUCTURE_ENABLED')!=='true')return json({error:'ris_structure_disabled'},503);
     if (!risAction && body.action !== 'edit_event' && body.action !== 'link_finding' && body.action !== 'unlink_finding' && body.action !== 'update_finding_link' && body.action !== 'update_finding_justification') return json({ error: 'unknown_action' }, 400);
     if (!risAction && (!body.eventId || (body.action === 'edit_event' && (typeof body.title !== 'string' || body.title.trim().length === 0)))) {
       return json({ error: 'invalid_event_input' }, 400);
@@ -95,11 +97,15 @@ export default {
       );
       if (membership.length === 0) return json({ error: 'fib_membership_missing_or_inactive' }, 403);
 
+      if(body.action==='source_readiness'){
+        if(membership[0].role!=='admin')return json({error:'admin_required'},403);
+        return json({ok:true,...await sourceReadiness(sql,Deno.env.get('FIB_RIS_STRUCTURE_ENABLED')==='true')});
+      }
       if(risAction){
         if(body.action==='ris_review_document'&&typeof body.versionId!=='string')return json({error:'invalid_review'},409);
         if(['ris_suggest','ris_propose_relation','source_propose_relation'].includes(body.action!)&&body.origin!=='editor')return json({error:'trusted_ai_ingestion_required'},403);
         const service=body.action==='ris_sessions'||body.action?.startsWith('source_')?sourceEditorial:risEditorial;
-        const result=await sql.begin(tx=>service(tx,{userId,kind:'human',aal:'aal2'},body));
+        const result=await sql.begin(tx=>withDevelopmentDataset(tx,body,()=>service(tx,{userId,kind:'human',aal:'aal2'},body)));
         return json({ok:true,...result});
       }
 
@@ -190,7 +196,7 @@ export default {
           return json({ error: 'invalid_finding_id' }, 400);
         if (typeof justification !== 'string' || !justification.trim() || justification.length > 2000)
           return json({error:'justification_required'},400);
-        const restored = await sql.begin(async tx => {
+        const restored = await sql.begin(tx => withDevelopmentDataset(tx,body,async () => {
           const inserted = await tx.unsafe(
             `insert into fib.event_findings (event_id, finding_id, evidence_role, justification)
              select $1::uuid, f.id, 'editorial_reference', $3::text
@@ -213,7 +219,7 @@ export default {
             [eventId, userId],
           );
           return inserted[0];
-        });
+        }));
         if (!restored) return json({ error: 'finding_missing_or_already_linked' }, 409);
         return json({ ok: true, justificationSaved: true });
       }

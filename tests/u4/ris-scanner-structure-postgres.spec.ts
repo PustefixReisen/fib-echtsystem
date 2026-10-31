@@ -1,3 +1,4 @@
+import {edgeDatasetSupport} from "./edge-dataset-support.ts";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import vm from "node:vm";
@@ -79,6 +80,7 @@ const source =
     "\n" +
     readFileSync("supabase/functions/fib-u4-ris-pilot/index.ts", "utf8")
   )
+    .replace(/^import .*development-datasets.*;\s*/m, "")
     .replace(
       /^import postgres from .*;\s*/m,
       "const postgres=globalThis.__postgres;\n",
@@ -245,7 +247,7 @@ async function main() {
   );
   assert.equal((await first("select count(*) from fib.messages")).count, "0");
   // Actual editorial HTTP adapter uses verified MFA, feature gate and server-owned identity.
-  const editorialSource =
+  const editorialSource = edgeDatasetSupport +
     readFileSync("supabase/functions/_shared/ris-structure.ts", "utf8").replace(
       /\bexport /g,
       "",
@@ -264,6 +266,7 @@ async function main() {
         /^import postgres .*;\s*/m,
         "const postgres=globalThis.__postgres;\n",
       )
+      .replace(/^import .*development-datasets.*;\s*/m, "").replace(/^import .*source-readiness.*;\s*/m, "")
       .replace("export default {", "globalThis.editorial = {");
   const editorialContext: any = { ...context };
   vm.runInNewContext(
