@@ -40,7 +40,8 @@ try:
  tables=sql("SELECT tablename FROM pg_tables WHERE schemaname='fib' ORDER BY tablename;").splitlines()
  counts={t:int(sql('SELECT count(*) FROM fib."'+t.replace('"','""')+'";')) for t in tables}
  rls=int(sql("SELECT count(*) FROM pg_class c JOIN pg_namespace n ON n.oid=c.relnamespace WHERE n.nspname='fib' AND c.relkind='r' AND c.relrowsecurity;"))
- if not tables or rls!=len(tables):raise RuntimeError('Missing tables or RLS')
+ expected_rls=sum(1 for line in toc.splitlines() if ' ROW SECURITY fib ' in line)
+ if not tables or not expected_rls or rls!=expected_rls:raise RuntimeError('Archive RLS mismatch')
  if sql("SELECT has_table_privilege('fib_runtime','fib.events','SELECT');").strip()!='t':raise RuntimeError('Runtime ACL missing')
  report.parent.mkdir(parents=True,exist_ok=True)
  with report.open('x') as f:json.dump({'dumpSha256':a.sha256,'postgresMajor':17,'restore':'passed','tableCounts':counts,'rlsTables':rls,'runtimeSelectEvents':True,'auth':'isolated FK placeholders only','target':'ephemeral networkless container'},f,indent=2)
