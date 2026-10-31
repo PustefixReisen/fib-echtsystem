@@ -1,6 +1,6 @@
-# 07 – Sitzungen und Beschlüsse (fachlicher Lese- und Migrationsentwurf)
+# 07 – Sitzungen und Beschlüsse
 
-**Stand:** 26.10.2026 · **Status:** Entwurf für die Durchsicht; die bestehende Primärquelle `docs/Sitzungs-und-Beschlussmodell.md` bleibt bis zur Regelmigration verbindlich.
+**Stand:** fachlich abgenommen am 29.10.2026; technischer Nachweis ergänzt am 31.10.2026. Der historische Dateiname ändert die Geltung nicht; siehe [verbindlichen Handbuchstand](README.md).
 
 ## 07.1 Aufgabe und Abgrenzung
 
@@ -133,3 +133,13 @@ Diese Regeln stammen aus dem [Sitzungs- und Beschlussmodell](../Sitzungs-und-Bes
 - **Kapitel 09:** Öffentliche Sitzungsnavigation und Darstellungsregeln.
 
 **Stand des fachlichen Quellabgleichs:** Die wesentlichen Regeln aus `docs/Sitzungs-und-Beschlussmodell.md` §§3–11 sind in diesem Prozesskapitel erklärt: Ereignisidentität, TOP-Zustände und -Beziehungen, Beschlusspunkte/Fassungen/Abstimmungen, Unsicherheitsprüfung, Niederschriftgenehmigung sowie öffentliche Navigation und Vergleich mit dem Ursprungsvorschlag. **Noch nicht abgeschlossen** ist der nachweisbare Einzelabgleich jeder Detailaussage, ihrer Quellenverweise und möglicher Sonderfälle; bis zur normativen Migration bleibt die Ursprungsquelle erhalten. Die technische RIS-Anbindung (Abfragefrequenz, Änderungsabgleich, Fehlerbehandlung und Aktualitätsnachweis) folgt in einer späteren Implementierungsphase.
+
+## Technischer Integrationsnachweis – 31.10.2026
+
+[U4 RIS-Persistenz](../operations/u4-ris-persistence.md) dokumentiert die technische
+Abbildung der bestehenden Regeln auf Versionen, Belege und redaktionelle Aktionen.
+Der [Abnahmebericht](../operations/u4-reference-sources-acceptance.md) trennt
+isoliert geprüfte Funktionen, offene Technik, UI-Abnahme und spätere Betriebsqualität.
+Die Umsetzung begründet keine automatische Gleichsetzung von Vorlage und Beschluss
+und keine allgemeine Pflichtprüfung jeder Fundstelle. Die fachlichen Regeln bleiben
+unverändert; produktive Bereitstellung ist nicht Bestandteil dieses Nachweises.

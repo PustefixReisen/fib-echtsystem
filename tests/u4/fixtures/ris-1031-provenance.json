@@ -1,0 +1,8 @@
+{
+  "retrievedAt": "2026-10-31",
+  "sessionUrl": "https://buergerinfo-feldkirchen.digitalfabrix.de/si0057.asp?__ksinr=1031",
+  "minutesUrl": "https://buergerinfo-feldkirchen.digitalfabrix.de/getfile.asp?id=75785",
+  "pdfSha256": "b1b16ef8eec7e6fe2ad3d8004ac2eb50f11b23fc9f4f10148964aff3d875d21a",
+  "reduction": "Original HTML rows TOP 2,3,6 and metadata, original PDF text excerpts from pdftotext -layout. Line breaks retained. Not a full minutes mirror. Runtime extraction uses unpdf; fixture extraction is separately labelled.",
+  "meaning": "15.10.2026: TOP2 no vote; TOP3 rejected 7/13; TOP6 two points with 17/2 and 19/0. Fixtures do not assert exhaustive coverage."
+}

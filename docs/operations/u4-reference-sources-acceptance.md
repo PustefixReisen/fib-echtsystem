@@ -2,12 +2,15 @@
 
 | Version | Stand | Bearbeitung |
 |---|---|---|
-| 2.0 | 31.10.2026 | Entwicklung mit KI-Unterstützung, Auftrag Josef Walter |
+| 3.0 | 31.10.2026 | Entwicklung mit KI-Unterstützung, Auftrag Josef Walter |
 
-**Gesamturteil: Teilabnahme.** PR #346 ist nach fünf erfolgreichen CI-Prüfungen
-zusammengeführt. PR #347 erweitert die Nachweise. Die vollständige RIS-Fachstruktur
-mit persistenten Sitzungen, TOPs und tatsächlichen Beschlüssen ist weiterhin
-**nicht abgenommen**. Keine Produktivfreigabe, keine Änderung an Shared-Apps/Memorix.
+**Gesamturteil: technische Teilabnahme bis zum redaktionellen Backend.**
+PRs #346/#347 sind integriert. PR #348 ergänzt persistente RIS-Fachobjekte,
+Scanner-Anbindung und ausdrückliche redaktionelle Übergänge. Der Nachweis umfasst
+isolierte PostgreSQL-Transaktionen und den tatsächlichen Handlercode, jedoch keine
+produktive Aktivierung oder vollständige Nutzerabnahme der Redaktionsoberfläche.
+Keine Änderung an Shared-Apps/Memorix. Details und API-Vertrag:
+[Persistente RIS-Struktur](u4-ris-persistence.md).
 
 ## Was der Nachweis bedeutet
 
@@ -44,6 +47,36 @@ die vorgesehenen Redaktionsansichten voraus.
 
 Die früheren Tests mit Dokument `75854` sind synthetische Vertragsfälle. Sie
 belegen **nicht** die tatsächliche Dokumentzuordnung der Sitzung vom 29.10.2026.
+
+### RIS: dauerhafte Fachstruktur und redaktioneller Backend-Ablauf
+
+Die vorbereitete Migration und die gemeinsamen Module `ris-structure.ts` und
+`ris-editorial.ts` ergänzen den bisherigen Kandidatennachweis:
+
+- Gremium, Sitzung mit Snapshots, TOP, Vorlage, Vorschlagstext, Dokumentversionen,
+  Niederschrift/Anlagen sowie mehrere Beschlusspunkte und Fassungen sind relational
+  gespeichert. Fehlende Ergebnisse/Stimmen bleiben unbekannt; ursprüngliche
+  Fassungen und exakte Textbelege bleiben erhalten.
+- Reale Niederschrift `75785` zur Sitzung `1031` vom 15.10.2026: TOP 2 ohne
+  Abstimmung, TOP 3 abgelehnt, TOP 6 mit zwei unterschiedlich abgestimmten Punkten.
+  Reduzierte Originalausschnitte samt PDF-Hash liegen in `fixtures/ris-1031-*`.
+  Synthetische Änderungen, unbekannte Resultate und Genehmigungsfälle sind im Test
+  ausdrücklich als solche gekennzeichnet.
+- Der Scanner verarbeitet bekannte Sitzungen erneut, versioniert Änderungen und
+  speichert Struktur und Checkpoint atomar. Ausfälle oder Transaktionsabbrüche
+  überspringen keine Strukturarbeit. Ein nachgereichtes PDF erzeugt keinen Beschluss.
+- Bestätigte Dokumentversion → Fundstelle → reguläres `confirmEvent` → ausdrücklich
+  geprüfter TOP/Ereignisbezug → Vorschlags-/Bestätigungsweg zu bestehendem Vorgang
+  und Thema. Der vorherige reine Schema-Navigationsnachweis wird damit um echte
+  Fachservice-Transaktionen ergänzt. Es entsteht keine automatische Meldung.
+- Niederschriftsverfügbarkeit, Verfahrensstand und spätere Genehmigung werden
+  getrennt geführt. Genehmigung benötigt den Beleg einer späteren Sitzung.
+- `fib_runtime` führt die neuen Transaktionen aus; anonyme, authentifizierte
+  Browser- und `service_role`-Direktzugriffe bleiben gesperrt. Historische Fassungen
+  und Prüfvermerke sind für die Runtime nicht überschreibbar/löschbar.
+- Der vorbereitete redaktionelle HTTP-Adapter prüft MFA/Mitgliedschaft und lehnt
+  vorgetäuschte KI-Herkunft ab. Vorschläge aus KI sind interne Testkandidaten;
+  eine angebundene KI-Auswertung ist damit noch nicht nachgewiesen.
 
 ### Gemeinde-Nachrichten: derselbe Code im Pilot und im Test
 
@@ -103,12 +136,15 @@ in Issue #260.
 
 | Prüfung | Ausführung / Aussage |
 |---|---|
-| Typverträge | `npm run typecheck:core` |
+| Typverträge | `npm run typecheck:core`; zusätzlicher Deno-Check beider vorbereiteten Edge Functions im PostgreSQL-Workflow |
 | Bestehende Fachservices | `npm run test:fachservices`, 28 Fälle |
 | U4-Verträge und reale HTML-Referenzen | `npm run test:u4`, einschließlich `reference-sources.spec.ts` |
 | Monitor, RIS-Handler und Parallelität | vorhandene Tests im Workflow `u4-postgres-integration.yml` |
 | Tatsächlicher Gemeinde-Edge-Handler | `news-postgres-integration.spec.ts`: HTTP/Auth simuliert, echte PostgreSQL-Transaktionen |
 | Fundstellenübergabe und Ereignis | `reviewed-finding-postgres.spec.ts`: vorhandenes `core.sql` plus zwei U4-Migrationen; echte FK-/Unique-/Check-Constraints, Konkurrenz, Rollback, veraltete Bestätigung und anonyme Zugriffsverweigerung |
+| Persistentes RIS-Modell und regulärer redaktioneller Workflow | `ris-persistence-postgres.spec.ts`: tatsächliche Migration und `fib_runtime`, mehrfache Beschlüsse/Fassungen, exakte Belege, Konflikt-/Fehlerfälle, Vorschlagsbestätigung und RLS |
+| Scanner → Fachstruktur und redaktioneller HTTP-Adapter | `ris-scanner-structure-postgres.spec.ts`: echte Handler, PostgreSQL; externe HTTP/Auth/PDF-Resultate simuliert; nachträgliche Veröffentlichung und Checkpoint-Rollback |
+| PDF-Texterschließung | `ris-persistent-contract.spec.ts`: reale HTML-Fixtures plus echte unpdf-Extraktion eines gültigen synthetischen PDFs |
 | Übergreifende Regression | GitHub Core Services, Editorial Build, Auth Security und U4 Source Probe |
 
 Die neuen Datenbanktests verweigern andere Ziele als `localhost`/`127.0.0.1`
@@ -124,14 +160,14 @@ Die normalen npm-/tsx-Aufrufe werden zusätzlich unverändert in GitHub CI gepr�
 
 | Lücke | Zuständiger nächster Schritt |
 |---|---|
-| Persistente Sitzung/TOP/Gremium-Identitäten und fachliche Beziehungen | U4.4 in #281: eigenständiger Schema-/Fachservice-Slice mit Migration **nur nach separater Produktionsfreigabe** |
-| Vorschlagstext, tatsächliche Beschlusspunkte/Fassungen/Abstimmungen | RIS-Niederschriften erschließen, originale Textbelege, abweichende und mehrere Beschlüsse je TOP testen; keine Ableitung aus PDF-Existenz |
-| Laufzeitverbindung RIS-Scanner → Strukturkandidaten | Snapshot-Funktion ist getestet, aber noch nicht im RIS-Edge-Lauf angeschlossen oder dauerhaft gespeichert |
-| Runtime/UI-Verbindung der neuen Fundstellenübergabe | Service ist isoliert integriert getestet, noch ohne neuen öffentlich erreichbaren Endpunkt und ohne UI-Aufruf |
-| Quelle → RIS-Kontext → Ereignis → Vorgang/Thema als vollständiger Fachworkflow | Fundstelle/Ereignis ist geprüft; persistenter RIS-Kontext und vollständige Zuordnungs-/Vorschlags-/Freigabeservices fehlen |
-| Aktuelles Gesamtschema und Runtime-Rollen | Neue Übergabe gegen Basis plus U4-Migrationen getestet, kein Neuaufbau aller historischen Migrationen und kein produktiver `fib_runtime`-Rechtenachweis |
+| Produktive Migration, Edge-Laufzeit und reale Runtime-Rechte | Vollständig vorbereiteter Code-/Teststand; Umsetzung und Smoke-Test erst nach separater Freigabe, keine Änderung von Memorix |
+| Redaktionelle Oberflächen | API-Projektion/Aktionen vorbereitet, noch keine durchgängige Darstellung und Bedienung in der regulären UI |
+| Vertrauenswürdige KI-Auftragsanbindung / vorläufige Ereignisse | Vorschlagsmodell und menschliche Bestätigung geprüft; tatsächlicher KI-Produzent und #260 weiter offen |
+| Vollständige RIS-Abdeckung und Identitätswechsel | Weitere Seitentypen, Sitzungskalender-/historischer Einstieg, TOP-Umnummerierungen, Gremienumbenennungen und unbekannte Strukturfälle prüfen |
+| OCR / gescannte PDFs | Text-Extraktion vorhanden, keine OCR; fehlender Text darf keinen erfundenen Beschluss erzeugen |
+| Gesamter historischer Migrationspfad | Basis plus relevante Bestandsmigrationen, Runtime-Policies und neue Migration getestet; kein vollständiger Neuaufbau aller jemals angewendeten Produktivmigrationen |
 | Artikelidentität bei geänderter URL ohne kanonischen Rückverweis | URL-Alias-/Dublettenprüfung; gleiche Überschrift allein ist kein Identitätsbeweis |
-| Dauerhafte Artikelmetadaten und Texterschließung | Pilot speichert weiterhin technische Beobachtungen/Hashes; komplette Artikeltexte und RIS-Textbelege benötigen den vorgesehenen Speicher-/Rechtepfad |
+| Dauerhafte Artikelmetadaten und Texterschließung | Pilot speichert weiterhin technische Beobachtungen/Hashes; komplette Artikeltexte benötigen den vorgesehenen Speicher-/Rechtepfad; RIS-Belege sind im neuen internen Versionsspeicher vorbereitet |
 | Archivabdeckung jenseits sichtbarer Links; Kosten | Referenzbestand und Begrenzungen weiter prüfen; der begrenzte Scan lädt aktuell alle entdeckten Details und ist noch keine kostenoptimierte Langzeitstrategie |
 
 Beim Wechsel vom bisherigen Vollseitenhash auf den Artikelinhalt kann die erste
@@ -162,9 +198,9 @@ gemessen. Ein einzelner grüner Testlauf kann diese Qualität nicht garantieren.
 |---|---|---|
 | Kapitel 03, 03.1a Quellenbestände und Änderungen | gemeinsamer News-Scanner, Monitor-/Recovery-Tests | Sichtbare verlinkte Bereiche, begrenzte Seitenzahl |
 | Kapitel 03, 03.3.2 Fundstelle/Ereignis | geprüfte Übernahme, Versionen, `confirmEvent` | manueller Serviceweg; vorläufige KI-Ereignisse #260 offen |
-| Kapitel 07, 07.2–07.4 Sitzung/Vorschlag/Beschluss | realer RIS-Ausschnitt, Snapshot und Negativverträge | Strukturkandidaten statt persistenter Beschlussobjekte |
-| Kapitel 06, FIB-THEMA-BEZUG-001 bis -008 | keine automatische Themenanlage; Schema-Navigation | fachliche Vorschläge/Freigaben nicht durch diese Tests vollständig abgenommen |
-| Rechte und Herkunft | MFA/Mitgliedschaft, Herkunftsprüfung, Transaktion, Versionsmetadaten | keine neue Runtime-/Browserfreigabe |
+| Kapitel 07, 07.2–07.4 Sitzung/Vorschlag/Beschluss | realer RIS-Ausschnitt, Snapshot und Negativverträge | persistente bestätigte Backend-Objekte; UI-/Produktionsabnahme offen |
+| Kapitel 06, FIB-THEMA-BEZUG-001 bis -008 | keine automatische Themenanlage; Schema-Navigation | bestätigte Ereignisbezüge zu bestehenden Objekten geprüft; Themenentdeckung/KI-Produzent/UI offen |
+| Rechte und Herkunft | MFA/Mitgliedschaft, Herkunftsprüfung, Transaktion, Versionsmetadaten, isolierte Runtime-Rolle | keine produktive Runtime-/Browserfreigabe |
 
 Die bisherigen fachlichen Regeln bleiben erhalten. Offene Umsetzung wird in #281,
 #260, #93 und #264 verfolgt; Betriebsintegration bleibt #336. Fehlende Funktionen
@@ -178,5 +214,5 @@ und der Übergabeservice werden erst nach gesonderter Betriebsfreigabe bereitges
 
 | Version | Änderung |
 |---|---|
-| 2.0 | Reale Referenzfixtures, isolierte Integration, explizite vier Abnahmekategorien und verbleibende Implementierungslücken |
+| 3.0 | Reale Referenzfixtures, isolierte Integration, explizite vier Abnahmekategorien und verbleibende Implementierungslücken |
 | 1.0 | Erste Teilabnahmematrix zu RIS und Gemeinde-Nachrichten |

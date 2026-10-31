@@ -44,5 +44,5 @@ assert.match(edge,/pending\.push\(u\);break;/);
 assert.match(edge,/if\(\(latest\.length\?JSON\.stringify\(latest\[0\]\.cursor_state\):null\)!==previousSerialized\)throw new Error\('cursor_changed_retry'\)/);
 assert.match(edge,/await sql\.begin\(async tx=>/);
 assert.match(edge,/if\(payload\.commit!==true\)return reply\(\{mode:'dry_run'/);
-assert.match(edge,/catch\(e\)\{return reply\(\{error:'ris_pdf_check_failed'/);
+assert.match(edge,/catch\(e\)\{await recordStructureFailure\(e\);return reply\(\{error:'ris_pdf_check_failed'/);
 console.log('RIS runtime recovery/due/coverage policy regression checks passed; live fault-injection remains pending');

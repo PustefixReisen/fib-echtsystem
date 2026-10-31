@@ -11,6 +11,12 @@ on:
       - 'scripts/ris-cron-plan.ts'
       - '.github/workflows/u4-postgres-integration.yml'
       - 'package.json'
+      - 'supabase/functions/_shared/ris-*.ts'
+      - 'supabase/functions/fib-u4-ris-pilot/**'
+      - 'supabase/functions/fib-editorial-write/**'
+      - 'supabase/migrations/*fib_ris_editorial_structure.sql'
+      - 'tests/u4/ris-persistence-postgres.spec.ts'
+      - 'tests/u4/ris-scanner-structure-postgres.spec.ts'
       - 'supabase/functions/fib-u4-pilot/**'
       - 'supabase/functions/_shared/u4-news.ts'
       - 'tests/u4/news-postgres-integration.spec.ts'
@@ -19,7 +25,7 @@ on:
 jobs:
   database:
     runs-on: ubuntu-latest
-    timeout-minutes: 5
+    timeout-minutes: 8
     permissions:
       contents: read
     services:
@@ -72,3 +78,16 @@ jobs:
         env:
           U4_TEST_DATABASE_URL: postgres://postgres:integration_only@localhost:5432/fib_u4_test
         run: npx tsx tests/u4/reviewed-finding-postgres.spec.ts
+
+      - name: Persistent RIS structure and editorial workflow using real FIB migrations
+        env:
+          U4_TEST_DATABASE_URL: postgres://postgres:integration_only@localhost:5432/fib_u4_test
+        run: npx tsx tests/u4/ris-persistence-postgres.spec.ts
+
+      - name: Actual RIS scanner with structure enabled and isolated runtime role
+        env:
+          U4_TEST_DATABASE_URL: postgres://postgres:integration_only@localhost:5432/fib_u4_test
+        run: npx tsx tests/u4/ris-scanner-structure-postgres.spec.ts
+
+      - name: Type-check prepared RIS and editorial Edge Functions with Deno
+        run: npx --yes deno@2.9.6 check --node-modules-dir=auto --no-lock supabase/functions/fib-u4-ris-pilot/index.ts supabase/functions/fib-editorial-write/index.ts

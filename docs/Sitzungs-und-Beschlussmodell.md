@@ -6,9 +6,15 @@
 |---|---|---|
 | 1.2 | 05.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
 
+**Geltungshinweis 31.10.2026:** Seit der Fachabnahme vom 29.10.2026 ist
+[Kapitel 07 des Fachhandbuchs](fachhandbuch/07-Sitzungen-und-Beschluesse-Entwurf-2026-10-26.md)
+maßgeblich; siehe [verbindlichen Handbuchstand](fachhandbuch/README.md).
+Dieser Hinweis bereinigt die historische Primärquellenbezeichnung, ohne Fachregeln
+zu ändern. Die technische Ableitung steht in [U4 RIS-Persistenz](operations/u4-ris-persistence.md).
+
 ## 1. Zweck und Geltung
 
-Dieses Dokument ist die verbindliche Primärquelle für das fachliche Teilmodell **Sitzung / TOP / Beschlussvorlage / Beschluss / Beschlusspunkt / Abstimmung / Niederschrift** im FIB-Echtsystem.
+Dieses Dokument dokumentiert die historische Herleitung des fachlichen Teilmodells **Sitzung / TOP / Beschlussvorlage / Beschluss / Beschlusspunkt / Abstimmung / Niederschrift** im FIB-Echtsystem.
 
 Es konkretisiert den in `docs/Datenmodell.md`, insbesondere Abschnitt 3.10, beschriebenen Sitzungsbereich. Bei Widersprüchen innerhalb dieses Teilbereichs ist eine Konsolidierung mit dem Gesamtdatenmodell erforderlich; parallele fachliche Wahrheiten sollen nicht bestehen bleiben.
 

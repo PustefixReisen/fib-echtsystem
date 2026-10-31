@@ -100,3 +100,16 @@ technischen Negativ-/Paralleltests und eine gesonderte Betriebsfreigabe Pflicht.
 
 Quellen: https://supabase.com/docs/guides/cron
 https://supabase.com/docs/guides/cron/quickstart
+
+## Zusatzvoraussetzung: persistente Fachstruktur (PR #348)
+
+`FIB_RIS_STRUCTURE_ENABLED` bleibt bis zu einer gesonderten Freigabe ausgeschaltet.
+Die vorbereitete Migration `20261031081340_fib_ris_editorial_structure.sql` und die
+zugehörigen Edge Functions dürfen nicht durch eine Cron-Freigabe implizit mit
+aktiviert werden. Reihenfolge, Teststand, Rücknahme und verbleibende Grenzen:
+[U4 RIS-Persistenz](u4-ris-persistence.md).
+
+Keine pauschale erneute Ausführung der historischen Runtime-Grants: Die neuen
+Versions-/Prüftabellen haben absichtlich engere Rechte. Produktive Rollenprüfung,
+Sicherung und Migrations-/Deploymentfreigabe bleiben ausstehend. Dieses Arbeitspaket
+hat weder produktive Datenbankobjekte noch Zugangsschlüssel oder Memorix geändert.

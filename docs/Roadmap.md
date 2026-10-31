@@ -66,14 +66,21 @@ Ein Issue darf mehrere Umsetzungsschritte auslösen. Bei umfangreichen Vorhaben 
 
 ### Referenzquellen – Stand 31.10.2026
 
-PR #346 ist integriert; PR #347 liefert reale RIS-/Gemeinde-Referenzen, Archivtests
-und die isoliert geprüfte Übergabe Beobachtung → versionierte Fundstelle →
-explizites Ereignis. Die [technische Abnahme](operations/u4-reference-sources-acceptance.md)
-ist eine **Teilabnahme**. Nächster fachlich notwendiger Slice in #281 ist die
-persistente RIS-Struktur mit Sitzungen, TOPs, Vorschlägen und belegten Beschlüssen
-samt redaktioneller Darstellung. UI-/Runtime-Anbindung der Übergabe, vorläufige
-Ereignisse (#260) und vollständige Fachzuordnung bleiben offen. #336 betrifft
-weiterhin ausschließlich gesondert freizugebende Betriebsintegration.
+PRs #346/#347 sind integriert. PR #348 ergänzt die persistente RIS-Fachstruktur,
+Scanner-Verarbeitung von Änderungen/Nachveröffentlichungen und die ausdrücklich
+bestätigten Übergänge Fundstelle → Ereignis → bestehender Vorgang/Thema.
+Mehrere Beschlusspunkte/Fassungen, unbekannte Resultate, Herkunft und unveränderliche
+Belege sind Bestandteil des isolierten PostgreSQL-Nachweises mit `fib_runtime`.
+Die [technische Abnahme](operations/u4-reference-sources-acceptance.md) bleibt eine
+**Teilabnahme bis zum Backend**. Umsetzung und vorbereitete Freigabeschritte stehen
+in [U4 RIS-Persistenz](operations/u4-ris-persistence.md).
+
+Nächste Schritte in #281: redaktionelle Ansichten und Nutzerabnahme, vertrauenswürdige
+KI-Produzenten, weitergehende RIS-Abdeckung und Identitätswechsel. Vorläufige
+Ereignisse (#260) und Langzeitqualität der Gemeinde-Archive bleiben offen.
+Produktive Migration/Deployment/Feature-Aktivierung brauchen separate Freigabe;
+#336 betrifft weiterhin die davon getrennte RIS-Automatisierung. Keine Änderungen
+an produktivem Shared-Apps oder Memorix durch dieses Arbeitspaket.
 
 ## 3. U1 – aktueller Stand
 
