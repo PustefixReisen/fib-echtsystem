@@ -48,6 +48,7 @@ try {
     .click();
   await page
     .getByRole("button", { name: "Sitzung öffnen", exact: true })
+    .first()
     .click();
   await page
     .getByLabel("Tagesordnungspunkt", { exact: true })
@@ -304,6 +305,7 @@ try {
     .click();
   await page
     .getByRole("button", { name: "Sitzung öffnen", exact: true })
+    .first()
     .click();
   await page
     .getByLabel("Tagesordnungspunkt", { exact: true })
