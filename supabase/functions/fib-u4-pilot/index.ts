@@ -1,7 +1,6 @@
 import postgres from 'npm:postgres@3.4.7';
+import {scanNews} from '../_shared/u4-news.ts';
 
-const endpoint='https://www.feldkirchen.de/aktuelles/aktuelle-news/aktuelle-meldungen';
-const base='https://www.feldkirchen.de';
 const scopeKey='gemeinde-nachrichten';
 const cors = {
   'access-control-allow-origin':'https://fib.pustivo.de',
@@ -13,21 +12,8 @@ async function sha(s:string) {
   const d=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(s));
   return [...new Uint8Array(d)].map(b=>b.toString(16).padStart(2,'0')).join('');
 }
-function extractLinks(html:string) {
-  const items=new Map<string,string>();
-  const re=/<a\b[^>]*href\s*=\s*["']([^"']+)["'][^>]*>([\s\S]*?)<\/a>/gi;
-  for(const match of html.matchAll(re)) {
-    try {
-      const url=new URL((match[1]??'').replace(/&amp;/g,'&'),endpoint);
-      if(url.protocol!=='https:' || url.origin!==base || !url.pathname.startsWith('/aktuelles/aktuelle-news/aktuelle-meldungen/') || url.pathname.endsWith('/nachrichten-archiv')) continue;
-      const title=(match[2]??'').replace(/<[^>]*>/g,' ').trim();
-      if(title)items.set(url.href,title);
-    }catch{}
-  }
-  return [...items.keys()];
-}
 async function fetchHtml(url:string){
-  const response=await fetch(url,{signal:AbortSignal.timeout(15000),headers:{accept:'text/html','user-agent':'FIB-U4-Integration/0.1'}});
+  const response=await fetch(url,{redirect:'error',signal:AbortSignal.timeout(15000),headers:{accept:'text/html','user-agent':'FIB-U4-Integration/0.1'}});
   if(!response.ok)throw new Error('HTTP '+response.status);
   const type=response.headers.get('content-type')??'';
   if(!type.toLowerCase().includes('html'))throw new Error('not_HTML');
@@ -51,19 +37,18 @@ export default {
   try{const part=token.split('.')[1];claims=JSON.parse(atob((part??'').replace(/-/g,'+').replace(/_/g,'/')))}catch{return json({error:'invalid_claims'},403)}
   if(claims.sub!==user.id || claims.aal!=='aal2')return json({error:'mfa_required'},403);
   const sql=postgres(dbUrl,{max:1,prepare:false,connect_timeout:5,idle_timeout:5});
+  let recordFailure=false;
   try{
    const allowed=await sql.unsafe("select 1 from fib.app_users where user_id=$1::uuid and role='admin' and active=true and setup_status='active' limit 1",[user.id]);
    if(!allowed.length)return json({error:'admin_required'},403);
    const payload=await req.json().catch(()=>({})) as {commit?:boolean};
-   const html=await fetchHtml(endpoint);
-   const links=extractLinks(html);
-   if(links.length<1 || links.length>50)throw new Error('unexpected_listing_count');
-   const observed: {url:string;fingerprint:string}[]=[];
-   for(const url of links){
-     const detail=await fetchHtml(url);
-     observed.push({url,fingerprint:await sha(detail.replace(/\s+/g,' '))});
+   recordFailure=payload.commit===true;
+   const scan=await scanNews(fetchHtml);
+   const observed=[];
+   for(const article of scan.articles){
+     observed.push({...article,fingerprint:await sha(article.body)});
    }
-   if(payload.commit!==true)return json({mode:'dry_run',scopeKey,detected:observed.length,urls:observed.map(x=>x.url)});
+   if(payload.commit!==true)return json({mode:'dry_run',scopeKey,detected:observed.length,pages:scan.pages,coverage:scan.coverage,articles:observed.map(({body,fingerprint,...metadata})=>metadata)});
    const now=new Date().toISOString();
    const result=await sql.begin(async tx=>{
      const scopes=await tx.unsafe("select id from fib.source_scopes where scope_key=$1 and status='candidate' for update",[scopeKey]);
@@ -80,10 +65,21 @@ export default {
      }
      await tx.unsafe("insert into fib.source_runs(scope_id,started_at,completed_at,status,items_seen,items_new,items_changed) values($1::uuid,$2,$2,'succeeded',$3,$4,$5)",[scopeId,now,observed.length,newCount,changedCount]);
      await tx.unsafe("update fib.source_scopes set last_success_at=$2,last_attempt_at=$2,gap_since=null,last_error=null,updated_at=now() where id=$1::uuid",[scopeId,now]);
-     return {scopeKey,seen:observed.length,newCount,changedCount};
+     return {scopeKey,seen:observed.length,newCount,changedCount,pages:scan.pages,coverage:scan.coverage};
    });
    return json({mode:'candidate_test',...result});
-  }catch(error){return json({error:'source_probe_failed',detail:String(error).slice(0,180)},502)}
+  }catch(error){
+   if(recordFailure){
+    try{await sql.begin(async tx=>{
+     const scopes=await tx.unsafe("select id from fib.source_scopes where scope_key=$1 and status='candidate' for update",[scopeKey]);
+     if(scopes.length!==1)return;
+     const id=scopes[0].id as string,now=new Date().toISOString();
+     await tx.unsafe("insert into fib.source_runs(scope_id,started_at,completed_at,status,items_seen,items_new,items_changed) values($1::uuid,$2,$2,'failed',0,0,0)",[id,now]);
+     await tx.unsafe("update fib.source_scopes set last_attempt_at=$2,gap_since=coalesce(gap_since,last_success_at,$2),last_error='news_scan_failed',updated_at=now() where id=$1::uuid",[id,now]);
+    });}catch{/* If the database itself is unavailable, no durable failure log can be claimed. */}
+   }
+   return json({error:'source_probe_failed'},502);
+  }
   finally{await sql.end()}
  }
 };

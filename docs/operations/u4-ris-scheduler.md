@@ -51,8 +51,8 @@ erfolgen.
    Der interaktive manuelle Weg nutzt diese Scheduler-Sperre nicht; seine bestehende
    transaktionale `cursor_changed_retry`-Konflikterkennung schützt gegen
    gleichzeitige Cursor-Schreibvorgänge. Der manuelle Zugriff ist daher bei
-   aktiviertem Scheduler betrieblich zu koordinieren. Noch zu prüfen:
-   Real-PostgreSQL-Kollisionstest mit parallelen Scheduler-Aufrufen.
+   aktiviertem Scheduler betrieblich zu koordinieren. Der Real-PostgreSQL-Test `ris-postgres-advisory-lock.spec.ts` prüft
+   konkurrierende Sessions; er ersetzt keine spätere Betriebsprüfung des Cron.
 6. Laufgrenzen, Laufprotokolle, Warnungen und eine Pause-Funktion mit
    isolierten Tests nachweisen; Kosten/Limits des Free-Plans prüfen.
 7. Nach Ende des manuellen Tests einmalige technische Betriebsabnahme;

@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 4.6 | 11.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
+| 4.7 | 31.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
 
 ## Statusmodell
 
@@ -59,10 +59,21 @@ Ein Issue darf mehrere Umsetzungsschritte auslösen. Bei umfangreichen Vorhaben 
 | U1 Technischer FIB-Kern | **In Arbeit** | Datenbankschema, Migrationen, gemeinsame Fachservice-Schicht, Auth-/RLS-Grundlage, Datei-/Bildspeicher-Anbindung, KI-Router-Grundlage, gemeinsame Konfiguration und Testbasis |
 | U2 Redaktions-App | **In Arbeit** | vertikale Umsetzung begonnen: erster echter UI-Slice `Dashboard → Ereignisdetail → Koordination`; weitere Fachfunktionen werden jeweils zusammen mit ihrem UI-Arbeitsablauf angebunden |
 | U3 Öffentliche FIB-Seite / PWA | **Geplant** | Besucheroberfläche mit `Neues | Im Blick | Sitzungen | Suche`, Detailseiten, PWA, Teilen, Transparenz und Neuigkeitsstatus |
-| U4 Recherche / AI Tasks / KI-Funktionen | **Geplant** | Quellenbeobachtung, Quellenentdeckung, Rechercheläufe, Ereigniserkennung, Entwurfserstellung, Routing und Qualitätskontrollen |
-| U4 Informationsgewinnung – Untersuchungs-/Machbarkeitsschwerpunkt (#265) | **Geplant** | Pflichtquellen-Abdeckung technisch nachweisen, offene Suche mit systematischen Suchstrategien entwickeln, verblindeten Trefferquotentest durchführen und Kosten/Mehrtreffer vergleichen; Auswahl vor produktiver Implementierung |
+| U4 Recherche / AI Tasks / KI-Funktionen | **Teilweise umgesetzt** | Quellenbeobachtung, Quellenentdeckung, Rechercheläufe, Ereigniserkennung, Entwurfserstellung, Routing und Qualitätskontrollen |
+| U4 Informationsgewinnung – Untersuchungs-/Machbarkeitsschwerpunkt (#265) | **In Arbeit** | Pflichtquellen-Abdeckung technisch nachweisen, offene Suche mit systematischen Suchstrategien entwickeln, verblindeten Trefferquotentest durchführen und Kosten/Mehrtreffer vergleichen; Auswahl vor produktiver Implementierung |
 | U5 Veröffentlichung / Deployment / Betrieb | **Geplant** | S3-Publish-Prozess, statischer Build, Deployment, Monitoring, Backup/Restore und betriebliche Automatisierung |
 | U6 Integration / Pilot / Go-live-Vorbereitung | **Geplant** | End-to-End-Tests, Demonstrator-Regressionen, Usability-Feinschliff, Datenmigration, Pilotbetrieb und Vorbereitung der realen Go-live-Abnahme |
+
+### Referenzquellen – Stand 31.10.2026
+
+PR #346 ist integriert; PR #347 liefert reale RIS-/Gemeinde-Referenzen, Archivtests
+und die isoliert geprüfte Übergabe Beobachtung → versionierte Fundstelle →
+explizites Ereignis. Die [technische Abnahme](operations/u4-reference-sources-acceptance.md)
+ist eine **Teilabnahme**. Nächster fachlich notwendiger Slice in #281 ist die
+persistente RIS-Struktur mit Sitzungen, TOPs, Vorschlägen und belegten Beschlüssen
+samt redaktioneller Darstellung. UI-/Runtime-Anbindung der Übergabe, vorläufige
+Ereignisse (#260) und vollständige Fachzuordnung bleiben offen. #336 betrifft
+weiterhin ausschließlich gesondert freizugebende Betriebsintegration.
 
 ## 3. U1 – aktueller Stand
 
@@ -232,7 +243,7 @@ Noch bewusst nicht vorgetäuscht werden Funktionen, deren Fachservice-/Datenweg 
 
 | Version | Datum | Änderung |
 |---|---|---|
-| 4.6 | 11.10.2026 | U2 auf `In Arbeit` gesetzt; vertikale Entwicklung aus Anwendersicht begonnen und ersten Slice `Dashboard → Ereignisdetail → Koordination` aufgenommen. U1.4 auf aktuellen Koordinations-/Teststand nach PR #54–#59 nachgezogen. |
+| 4.7 | 31.10.2026 | U2 auf `In Arbeit` gesetzt; vertikale Entwicklung aus Anwendersicht begonnen und ersten Slice `Dashboard → Ereignisdetail → Koordination` aufgenommen. U1.4 auf aktuellen Koordinations-/Teststand nach PR #54–#59 nachgezogen. |
 | 4.5 | 06.10.2026 | U1.3 begonnen: Runtime-Konfigurationsvertrag, Secret-Regeln, Domain-Contracts und zentrale Fachservice-Autorisierungsbasis angelegt; pustivo-Live-Credentialtest als konkreten manuellen Schritt dokumentiert. |
 | 4.4 | 06.10.2026 | `fib` in Shared-Apps angelegt; Runtime-Rollen, RLS-Policies, Default Privileges und Isolation praktisch geprüft; Advisor-Nacharbeiten durchgeführt; Legacy-Tabelle des Demonstrators über Issue #5 abgegrenzt. |
 | 4.3 | 06.10.2026 | ADR-011 übernommen: Shared-Apps mit eigenem Schema `fib`, gemeinsames Supabase Auth bei FIB-eigener Autorisierung, getrennte Nextcloud-/Backup-Zugänge, pustivo als möglicher Dauerbetrieb; `core.sql` auf `fib` umgestellt. |

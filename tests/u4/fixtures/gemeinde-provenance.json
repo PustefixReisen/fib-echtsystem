@@ -1,0 +1,11 @@
+{
+  "retrievedOn": "2026-10-31",
+  "base": "https://www.feldkirchen.de/aktuelles/aktuelle-news/aktuelle-meldungen",
+  "detail": "parkraumkonzept-der-gemeinde-feldkirchen",
+  "transformation": "Reduced real HTML: news-path anchor hrefs and labels; article main with nav/svg/scripts/styles/images and attributes removed. Article text, h1 and date spans retained. Not full-page snapshots.",
+  "responseSha256": {
+    "current": "3b931ceb2ac509c78e89f2c57f66c40172f55feabc9c8f3ddcd939d2866cfb24",
+    "archive": "52b901eb7a6aff774caa594b1092de4879401f9c301af997a740528df3ab6aa6",
+    "detail": "b7cb13bcf06ac86ccb0c6c61338990924fd826c4a129b4637a32bb7ee22c43e7"
+  }
+}

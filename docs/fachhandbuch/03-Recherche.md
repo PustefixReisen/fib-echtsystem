@@ -909,3 +909,13 @@ Diese beiden **fachlichen Grundsatzentscheidungen sind abgestimmt**. Die technis
 
 **FIB-RECH-ABLAUF-001 – Drei getrennte fachliche Entscheidungen.** Neue Fundstelle, neues Ereignis und neue Meldung sind drei verschiedene Entscheidungen. Mehrere Fundstellen dürfen ein vorhandenes Ereignis ergänzen; eine neue Quelle begründet keine neue Meldung. Bei wesentlicher neuer Sachinformation wird zuerst die Fortschreibung eines vorhandenen Ereignisses und Vorgangs geprüft.
 
+
+## Technischer Nachweis der Referenzquellen (31.10.2026)
+
+Der aktuelle [Abnahmebericht](../operations/u4-reference-sources-acceptance.md)
+unterscheidet getestete Teilfunktionen, technische Lücken, noch ausstehende
+UI-Abnahme und spätere iterative Qualitätsprüfung. Die manuelle Übernahme einer
+Quellenbeobachtung ist ein zusätzlicher expliziter Serviceweg; sie erklärt keine
+allgemeine menschliche Pflichtprüfung aller Fundstellen. Die fachlichen Regeln
+dieses Kapitels werden dadurch nicht eingeschränkt. Eine getestete Fundstellen-
+oder Ereignisanlage bestätigt keine automatische Vorgangs-/Themenzuordnung.
