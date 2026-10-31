@@ -2,13 +2,14 @@
 
 | Version | Stand | Bearbeitung |
 |---|---|---|
-| 3.0 | 31.10.2026 | Entwicklung mit KI-Unterstützung, Auftrag Josef Walter |
+| 4.0 | 31.10.2026 | Entwicklung mit KI-Unterstützung, Auftrag Josef Walter |
 
-**Gesamturteil: technische Teilabnahme bis zum redaktionellen Backend.**
+**Gesamturteil: technische Teilabnahme einschließlich regulärer Redaktionskomponenten.**
 PRs #346/#347 sind integriert. PR #348 ergänzt persistente RIS-Fachobjekte,
 Scanner-Anbindung und ausdrückliche redaktionelle Übergänge. Der Nachweis umfasst
-isolierte PostgreSQL-Transaktionen und den tatsächlichen Handlercode, jedoch keine
-produktive Aktivierung oder vollständige Nutzerabnahme der Redaktionsoberfläche.
+isolierte PostgreSQL-Transaktionen, tatsächlichen Handlercode und automatisierte
+Browserabläufe der regulären Quellen-/Sitzungskomponente. Produktive Aktivierung und
+fachliche Nutzerabnahme stehen aus. [Bediennachweis und Prüfdurchgang](u4-editorial-ui-acceptance.md).
 Keine Änderung an Shared-Apps/Memorix. Details und API-Vertrag:
 [Persistente RIS-Struktur](u4-ris-persistence.md).
 
@@ -132,6 +133,24 @@ in Issue #260.
   auf Schemaebene mit ausdrücklich vorbereiteten Testobjekten geprüft. Das ist
   kein Nachweis der vollständigen Fachservices/UI zur Beziehungsbestätigung.
 
+### Reguläre Fundstellen- und Sitzungsoberfläche
+
+- Recherche → Fundstellen und Sitzungen verwenden vorhandene Navigation, Karten,
+  zwei Spalten, Breadcrumbs und Statusanzeigen. RIS und Gemeinde teilen dieselbe
+  Fundstellenverwaltung; Ereignisse öffnen den vorhandenen Ereigniseditor.
+- Versionen, Herkunft, unsichere Dokumentbeziehungen, geänderte Quellenbelege,
+  unbekannte Ergebnisse und mehrere Beschlussfassungen sind getrennt dargestellt.
+  Begrenzte Listen/Historien weisen auf die Begrenzung hin.
+- Ausdrückliche Übernahme, bestehendes/neues Ereignis und geprüfte Bezüge zu
+  bestehenden Vorgängen/Themen sind bedienbar. Kein Automatismus erzeugt Meldungen.
+- Browserprüfungen verwenden reale Referenzbezeichnungen und klar synthetische
+  Bearbeitungsdaten. API/Auth werden dort simuliert; der ergänzende PostgreSQL-Test
+  führt dieselben serverseitigen Quellenaktionen mit `fib_runtime` aus.
+- Veraltete Eingaben, konkurrierende Übernahme, Wiederholungen, AAL1-Abweisung,
+  falsche KI-Herkunft, ausgeschaltetes Feature und Bearbeitungssperren werden geprüft.
+- Ein Merge löst kein Web-Deployment mehr aus. Bereitstellung bleibt manuell nach
+  gesonderter Freigabe; sichtbar gekennzeichnete Funktionen sind noch nicht produktiv nutzbar.
+
 ## Reproduzierbare Prüfungen und Reichweite
 
 | Prüfung | Ausführung / Aussage |
@@ -145,6 +164,8 @@ in Issue #260.
 | Persistentes RIS-Modell und regulärer redaktioneller Workflow | `ris-persistence-postgres.spec.ts`: tatsächliche Migration und `fib_runtime`, mehrfache Beschlüsse/Fassungen, exakte Belege, Konflikt-/Fehlerfälle, Vorschlagsbestätigung und RLS |
 | Scanner → Fachstruktur und redaktioneller HTTP-Adapter | `ris-scanner-structure-postgres.spec.ts`: echte Handler, PostgreSQL; externe HTTP/Auth/PDF-Resultate simuliert; nachträgliche Veröffentlichung und Checkpoint-Rollback |
 | PDF-Texterschließung | `ris-persistent-contract.spec.ts`: reale HTML-Fixtures plus echte unpdf-Extraktion eines gültigen synthetischen PDFs |
+| Reguläre Quellenaktionen | `source-editorial-postgres.spec.ts`: gemeinsame Beobachtungsübernahme, explizites idempotentes Ereignis, bestehendes Thema, Revisionen, Sperren/MFA und keine automatische Meldung |
+| Browserbedienung | `tests/ui-source/browser.mjs`: echte UI-Komponente, simulierte API, RIS/Gemeinde, Übernahme/Ereignis/Themenprüfung, veraltete Eingaben, Sperrfehler, mobile Ansicht und manuelle Deploymentgrenze |
 | Übergreifende Regression | GitHub Core Services, Editorial Build, Auth Security und U4 Source Probe |
 
 Die neuen Datenbanktests verweigern andere Ziele als `localhost`/`127.0.0.1`
@@ -161,7 +182,7 @@ Die normalen npm-/tsx-Aufrufe werden zusätzlich unverändert in GitHub CI gepr�
 | Lücke | Zuständiger nächster Schritt |
 |---|---|
 | Produktive Migration, Edge-Laufzeit und reale Runtime-Rechte | Vollständig vorbereiteter Code-/Teststand; Umsetzung und Smoke-Test erst nach separater Freigabe, keine Änderung von Memorix |
-| Redaktionelle Oberflächen | API-Projektion/Aktionen vorbereitet, noch keine durchgängige Darstellung und Bedienung in der regulären UI |
+| Vollständige Oberflächenabnahme | Reguläre Quellen-/Sitzungsansichten und Übergaben implementiert; fachliche Nutzerabnahme mit vollständiger authentifizierter App sowie Eingabedialoge für Verfahrensstand/Niederschriftsgenehmigung offen |
 | Vertrauenswürdige KI-Auftragsanbindung / vorläufige Ereignisse | Vorschlagsmodell und menschliche Bestätigung geprüft; tatsächlicher KI-Produzent und #260 weiter offen |
 | Vollständige RIS-Abdeckung und Identitätswechsel | Weitere Seitentypen, Sitzungskalender-/historischer Einstieg, TOP-Umnummerierungen, Gremienumbenennungen und unbekannte Strukturfälle prüfen |
 | OCR / gescannte PDFs | Text-Extraktion vorhanden, keine OCR; fehlender Text darf keinen erfundenen Beschluss erzeugen |
@@ -182,8 +203,9 @@ Das ist vor einem späteren Deployment einzuplanen. Die Erweiterung ist nicht de
 - Bezüge zu Vorgang/Thema mit Bedeutung und Begründung prüfen;
 - Vorschlag, bestätigte Analyse und freigegebene öffentliche Meldung unterscheiden.
 
-Diese Ansichten sind keine Voraussetzung dafür, Tests auszuführen. Ihr Fehlen
-verhindert aber eine vollständige fachliche Nutzerabnahme.
+Die Ansichten sind implementiert und isoliert technisch geprüft. Die Redaktion muss
+den dokumentierten Prüfdurchgang nach bereitgestellter isolierter Gesamtumgebung
+inhaltlich abnehmen; diese fachliche Nutzerabnahme wird nicht durch Browsertests ersetzt.
 
 ## 4. Im späteren Betrieb iterativ zu verbessern
 
@@ -198,8 +220,8 @@ gemessen. Ein einzelner grüner Testlauf kann diese Qualität nicht garantieren.
 |---|---|---|
 | Kapitel 03, 03.1a Quellenbestände und Änderungen | gemeinsamer News-Scanner, Monitor-/Recovery-Tests | Sichtbare verlinkte Bereiche, begrenzte Seitenzahl |
 | Kapitel 03, 03.3.2 Fundstelle/Ereignis | geprüfte Übernahme, Versionen, `confirmEvent` | manueller Serviceweg; vorläufige KI-Ereignisse #260 offen |
-| Kapitel 07, 07.2–07.4 Sitzung/Vorschlag/Beschluss | realer RIS-Ausschnitt, Snapshot und Negativverträge | persistente bestätigte Backend-Objekte; UI-/Produktionsabnahme offen |
-| Kapitel 06, FIB-THEMA-BEZUG-001 bis -008 | keine automatische Themenanlage; Schema-Navigation | bestätigte Ereignisbezüge zu bestehenden Objekten geprüft; Themenentdeckung/KI-Produzent/UI offen |
+| Kapitel 07, 07.2–07.4 Sitzung/Vorschlag/Beschluss | realer RIS-Ausschnitt, Snapshot und Negativverträge | persistente bestätigte Backend-Objekte; reguläre UI-Komponente geprüft; Nutzer-/Produktionsabnahme offen |
+| Kapitel 06, FIB-THEMA-BEZUG-001 bis -008 | keine automatische Themenanlage; Schema-Navigation | bestätigte Ereignisbezüge zu bestehenden Objekten geprüft; Themenentdeckung/KI-Produzent/Nutzerabnahme offen |
 | Rechte und Herkunft | MFA/Mitgliedschaft, Herkunftsprüfung, Transaktion, Versionsmetadaten, isolierte Runtime-Rolle | keine produktive Runtime-/Browserfreigabe |
 
 Die bisherigen fachlichen Regeln bleiben erhalten. Offene Umsetzung wird in #281,
@@ -214,5 +236,6 @@ und der Übergabeservice werden erst nach gesonderter Betriebsfreigabe bereitges
 
 | Version | Änderung |
 |---|---|
+| 4.0 | Reguläre UI-Komponenten, gemeinsame Quellenaktionen, Browser-/Datenbanknachweis und ausstehende Nutzer-/Produktivabnahme |
 | 3.0 | Reale Referenzfixtures, isolierte Integration, explizite vier Abnahmekategorien und verbleibende Implementierungslücken |
 | 1.0 | Erste Teilabnahmematrix zu RIS und Gemeinde-Nachrichten |

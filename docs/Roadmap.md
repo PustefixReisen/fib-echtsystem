@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 4.7 | 31.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
+| 4.8 | 31.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
 
 ## Statusmodell
 
@@ -72,10 +72,13 @@ bestätigten Übergänge Fundstelle → Ereignis → bestehender Vorgang/Thema.
 Mehrere Beschlusspunkte/Fassungen, unbekannte Resultate, Herkunft und unveränderliche
 Belege sind Bestandteil des isolierten PostgreSQL-Nachweises mit `fib_runtime`.
 Die [technische Abnahme](operations/u4-reference-sources-acceptance.md) bleibt eine
-**Teilabnahme bis zum Backend**. Umsetzung und vorbereitete Freigabeschritte stehen
+**Teilabnahme einschließlich regulärer Quellen-/Sitzungsoberflächen**.
+Automatisierte Browserabläufe prüfen Übernahme, Ereignisübergabe und Themenbezug;
+[Prüfdurchgang und Grenzen](operations/u4-editorial-ui-acceptance.md). Umsetzung und vorbereitete Freigabeschritte stehen
 in [U4 RIS-Persistenz](operations/u4-ris-persistence.md).
 
-Nächste Schritte in #281: redaktionelle Ansichten und Nutzerabnahme, vertrauenswürdige
+Nächste Schritte in #281: fachliche Nutzerabnahme der integrierten Ansichten,
+Eingabedialoge für Verfahrensstand/Niederschriftsgenehmigung, vertrauenswürdige
 KI-Produzenten, weitergehende RIS-Abdeckung und Identitätswechsel. Vorläufige
 Ereignisse (#260) und Langzeitqualität der Gemeinde-Archive bleiben offen.
 Produktive Migration/Deployment/Feature-Aktivierung brauchen separate Freigabe;
@@ -250,6 +253,7 @@ Noch bewusst nicht vorgetäuscht werden Funktionen, deren Fachservice-/Datenweg 
 
 | Version | Datum | Änderung |
 |---|---|---|
+| 4.8 | 31.10.2026 | PR #349: reguläre Quellen-/Sitzungsoberfläche, technische Browser-/Datenbankabnahme; Nutzerabnahme und produktive Bereitstellung bleiben offen. |
 | 4.7 | 31.10.2026 | U2 auf `In Arbeit` gesetzt; vertikale Entwicklung aus Anwendersicht begonnen und ersten Slice `Dashboard → Ereignisdetail → Koordination` aufgenommen. U1.4 auf aktuellen Koordinations-/Teststand nach PR #54–#59 nachgezogen. |
 | 4.5 | 06.10.2026 | U1.3 begonnen: Runtime-Konfigurationsvertrag, Secret-Regeln, Domain-Contracts und zentrale Fachservice-Autorisierungsbasis angelegt; pustivo-Live-Credentialtest als konkreten manuellen Schritt dokumentiert. |
 | 4.4 | 06.10.2026 | `fib` in Shared-Apps angelegt; Runtime-Rollen, RLS-Policies, Default Privileges und Isolation praktisch geprüft; Advisor-Nacharbeiten durchgeführt; Legacy-Tabelle des Demonstrators über Issue #5 abgegrenzt. |

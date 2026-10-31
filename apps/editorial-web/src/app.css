@@ -679,3 +679,22 @@ button:has(> .action-icon) { display: inline-flex; align-items: center; justify-
 @media (max-width:600px) {
   .topic-action-menu-items {left:auto; right:0; max-width:calc(100vw - 3rem);}
 }
+
+/* Sources use the existing card headers and two-column editorial layout. */
+.source-workspace { min-width:0; }
+.source-workspace .detail-side-column { display:flex; flex-direction:column; gap:1rem; min-width:0; }
+.source-workspace .source-release-note { padding:.75rem 1rem; border-left:4px solid #ad7b18; background:#fff8e7; }
+.source-workspace .source-block { padding:1rem 0; border-bottom:1px solid var(--border,#d8e1dc); }
+.source-workspace .source-actions { display:flex; gap:.5rem; flex-wrap:wrap; margin:.75rem 0; }
+.source-workspace .source-evidence { white-space:pre-wrap; overflow-wrap:anywhere; font-family:inherit; max-height:32rem; overflow:auto; }
+.source-workspace code,.source-workspace a,.source-workspace .work-item strong { overflow-wrap:anywhere; }
+.source-workspace .work-item>div { min-width:0; }
+.source-workspace .source-status { display:inline-block; padding:.2rem .5rem; border:1px solid #87928c; border-radius:.3rem; }
+.source-workspace .source-status-candidate,.source-workspace .source-status-pending,.source-workspace .source-status-unknown { background:#fff8e7; }
+.source-workspace .source-status-confirmed { background:#e7f3e8; }
+.source-workspace label { display:flex; flex-direction:column; gap:.35rem; }
+.source-workspace select,.source-workspace input,.source-workspace textarea { max-width:100%; min-width:0; }
+.source-workspace details { margin:.6rem 0; }
+.source-workspace summary { cursor:pointer; font-weight:600; }
+@media(max-width:760px){ .source-workspace .source-actions button { flex:1 1 12rem; } }
+.source-workspace select { width: 100%; min-width: 0; font: inherit; font-weight: 400; padding: .55rem; border: 1px solid var(--line, #cbd6d0); border-radius: 8px; background: #fff; color: inherit; }

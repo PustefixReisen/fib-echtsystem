@@ -2,7 +2,7 @@
 
 | Version | Stand | Bearbeitung |
 |---|---|---|
-| 1.0 | 31.10.2026 | Entwicklung mit KI-Unterstützung, Auftrag Josef Walter |
+| 1.1 | 31.10.2026 | Entwicklung mit KI-Unterstützung, Auftrag Josef Walter |
 
 ## Geltung
 
@@ -150,3 +150,19 @@ Handler unter Node aus. Nachrichten-URL-Aliasse und Langzeitarchivabdeckung blei
 separate Nacharbeiten aus PR #347. Diese Grenzen sind keine bereits bestandene
 Gesamtabnahme und werden im [Abnahmebericht](u4-reference-sources-acceptance.md)
 gepflegt.
+
+## Reguläre Oberflächenanbindung (31.10.2026)
+
+Die API wird jetzt durch Fundstellen und Sitzungen innerhalb der bestehenden App bedient.
+`_shared/source-editorial.ts` ergänzt Liste, Detail, Auswahl und explizite Übernahme/
+Ereignisanlage. Beziehungsprüfung verwendet denselben Prüfservice für RIS- und
+Gemeinde-Ereignisse. API-Vertrag, Freigabegrenze und Tests stehen im
+[Bediennachweis](u4-editorial-ui-acceptance.md). Neue UI-Aktionen bleiben wie die
+RIS-Struktur hinter `FIB_RIS_STRUCTURE_ENABLED`; keine zusätzliche Migration oder Rechteausweitung.
+
+## Änderungshistorie
+
+| Version | Änderung |
+|---|---|
+| 1.1 | Reguläre Oberflächenanbindung und gemeinsamer Quellen-/Beziehungsweg aus PR #349 verknüpft |
+| 1.0 | Persistente Fachstruktur, Scanner, API und isolierte Prüfung aus PR #348 |

@@ -1,0 +1,29 @@
+name: Reference source editorial UI
+on:
+  pull_request:
+    paths:
+      - 'apps/editorial-web/**'
+      - 'tests/ui-source/**'
+      - '.github/workflows/source-editorial-ui.yml'
+      - '.github/workflows/editorial-web-deploy.yml'
+permissions:
+  contents: read
+jobs:
+  browser:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: npm install --ignore-scripts --no-audit --no-fund --no-package-lock
+      - run: npm install --no-save --no-package-lock --ignore-scripts playwright@1.56.1
+      - run: npx playwright install --with-deps chromium
+      - name: Isolated real UI components with synthetic editorial data
+        run: node tests/ui-source/browser.mjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: reference-source-ui
+          path: /tmp/fib-source-ui/

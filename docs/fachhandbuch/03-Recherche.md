@@ -924,3 +924,8 @@ Der ergänzende [RIS-Integrationsnachweis](../operations/u4-ris-persistence.md)
 belegt nun auch die dauerhafte RIS-Struktur und ausdrücklich bestätigte Beziehungen
 zu bestehenden Vorgängen/Themen im Backend. KI-Produzenten, Oberflächenabnahme und
 Produktivfreigabe bleiben davon getrennt. Dies ändert keine Fachregel des Kapitels.
+
+Der [redaktionelle Bediennachweis](../operations/u4-editorial-ui-acceptance.md) ergänzt
+die regulären Fundstellen-/Sitzungsansichten und ausdrückliche Zuordnung zu bestehenden
+Ereignissen, Vorgängen und Themen. Technische Browserprüfung, fachliche Nutzerabnahme
+und Produktivfreigabe bleiben getrennt; der Fachregelstand wird nicht geändert.

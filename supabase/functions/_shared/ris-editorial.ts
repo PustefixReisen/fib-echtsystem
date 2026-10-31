@@ -50,11 +50,11 @@ export async function risEditorial(
   if (action === "ris_read") {
     const session = await one(
       tx,
-      "select * from fib.ris_sessions where id=$1",
+      "select s.*,c.name committee_name from fib.ris_sessions s left join fib.ris_committees c on c.id=s.committee_id where s.id=$1",
       [input.sessionId],
     );
     const agenda = await tx.unsafe(
-      "select * from fib.ris_agenda_items where session_id=$1 order by number",
+      "select a.*,v.revision observed_revision from fib.ris_agenda_items a join fib.ris_session_versions v on v.id=a.latest_snapshot_id where a.session_id=$1 order by a.number",
       [session.id],
     );
     const documents = await tx.unsafe(
@@ -85,7 +85,10 @@ export async function risEditorial(
       "select distinct r.* from fib.ris_relation_suggestions r join fib.ris_agenda_events ae on ae.event_id=r.event_id join fib.ris_agenda_items a on a.id=ae.agenda_id where a.session_id=$1",
       [session.id],
     );
+    const snapshots = await tx.unsafe("select id,revision,observed_at,content_hash,source_url,snapshot from fib.ris_session_versions where session_id=$1 order by revision desc limit 50", [session.id]);
+    const reviewLog = await tx.unsafe(`select r.* from fib.ris_review_log r where r.object_id=$1 or r.object_id in(select id from fib.ris_agenda_items where session_id=$1 union select id from fib.ris_document_links where session_id=$1 union select s.id from fib.ris_suggestions s join fib.ris_agenda_items a on a.id=s.agenda_id where a.session_id=$1 union select s.id from fib.ris_relation_suggestions s join fib.ris_agenda_events ae on ae.event_id=s.event_id join fib.ris_agenda_items a on a.id=ae.agenda_id where a.session_id=$1) order by r.created_at desc limit 100`,[session.id]);
     return {
+      snapshots, reviewLog,
       session,
       agenda,
       documents,
@@ -178,6 +181,12 @@ export async function risEditorial(
       "select * from fib.ris_document_links where id=$1 for update",
       [input.linkId],
     );
+    // The browser supplies the exact version it displayed. Older internal callers
+    // may classify a link without a version; this does not confirm any decision.
+    if (input.versionId !== undefined) {
+      const document = await one(tx, "select latest_version_id from fib.ris_documents where id=$1 for update", [old.document_id]);
+      if (!input.versionId || document.latest_version_id !== input.versionId) throw Error("stale_ris_review");
+    }
     if (kind === "minutes" && old.agenda_id)
       throw Error("minutes_are_session_wide");
     if (status === "confirmed" && kind === "unknown")
@@ -187,7 +196,7 @@ export async function risEditorial(
       "update fib.ris_document_links set kind=$2,status=$3,reviewed_by=$4,reviewed_at=now() where id=$1",
       [old.id, kind, status, actor.userId],
     );
-    await audit(tx, actor, action, old.id, { old, kind, status, rationale });
+    await audit(tx, actor, action, old.id, { old, kind, status, rationale, versionId: input.versionId ?? null });
     return { id: old.id };
   }
   if (action === "ris_accept_finding") {
@@ -308,7 +317,7 @@ export async function risEditorial(
       throw Error("invalid_significance");
     await one(
       tx,
-      "select event_id from fib.ris_agenda_events where event_id=$1",
+      "select id from fib.events where id=$1 and status='confirmed'",
       [input.eventId],
     );
     const r = await one(

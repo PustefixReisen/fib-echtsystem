@@ -143,3 +143,8 @@ isoliert geprüfte Funktionen, offene Technik, UI-Abnahme und spätere Betriebsq
 Die Umsetzung begründet keine automatische Gleichsetzung von Vorlage und Beschluss
 und keine allgemeine Pflichtprüfung jeder Fundstelle. Die fachlichen Regeln bleiben
 unverändert; produktive Bereitstellung ist nicht Bestandteil dieses Nachweises.
+
+Der [redaktionelle Bediennachweis](../operations/u4-editorial-ui-acceptance.md) ergänzt
+die regulären Fundstellen-/Sitzungsansichten und ausdrückliche Zuordnung zu bestehenden
+Ereignissen, Vorgängen und Themen. Technische Browserprüfung, fachliche Nutzerabnahme
+und Produktivfreigabe bleiben getrennt; der Fachregelstand wird nicht geändert.
