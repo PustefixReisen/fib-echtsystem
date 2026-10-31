@@ -7,6 +7,14 @@ on:
         description: 'Nach gesonderter Produktivfreigabe DEPLOY eingeben'
         required: true
         type: string
+      backup_id:
+        description: 'Reviewed private backup ID (max age one hour)'
+        required: true
+        type: string
+      backup_manifest_sha256:
+        description: 'Reviewed SHA-256 of private release.json'
+        required: true
+        type: string
       shared_development:
         description: 'FIB-Entwicklungsbestand in Shared-Apps anzeigen'
         required: true
@@ -23,6 +31,7 @@ concurrency:
 jobs:
   deploy:
     if: ${{ inputs.confirmation == 'DEPLOY' }}
+    environment: fib-release
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -46,6 +55,30 @@ jobs:
       - name: Install SFTP client
         run: sudo apt-get update && sudo apt-get install -y lftp
 
+      - name: Require reviewed backup configuration
+        env:
+          ENABLED: ${{ vars.FIB_BACKUP_READY }}
+          BACKUP_ID: ${{ inputs.backup_id }}
+          MANIFEST_SHA: ${{ inputs.backup_manifest_sha256 }}
+        run: |
+          test "$ENABLED" = true
+          [[ "$BACKUP_ID" =~ ^[a-zA-Z0-9_-]{1,80}$ ]]
+          [[ "$MANIFEST_SHA" =~ ^[a-f0-9]{64}$ ]]
+      - name: Retrieve and verify private encrypted backup
+        env:
+          RCLONE_CONFIG_TEXT: ${{ secrets.FIB_BACKUP_RCLONE_CONFIG }}
+          BACKUP_ID: ${{ inputs.backup_id }}
+          FIB_BACKUP_MANIFEST_SHA256: ${{ inputs.backup_manifest_sha256 }}
+        run: |
+          set -euo pipefail
+          umask 077
+          test -n "$RCLONE_CONFIG_TEXT"
+          sudo apt-get install -y rclone
+          printf '%s' "$RCLONE_CONFIG_TEXT" > "$RUNNER_TEMP/fib-rclone.conf"
+          python -c 'import configparser,os; p=configparser.ConfigParser(interpolation=None); p.read(os.environ["RUNNER_TEMP"]+"/fib-rclone.conf"); assert p.get("fibbackup","type",fallback="")=="crypt", "Encrypted backup remote required"' 
+          # An independently reviewed crypt remote named fibbackup is required.
+          rclone --config "$RUNNER_TEMP/fib-rclone.conf" copy "fibbackup:$BACKUP_ID" "$RUNNER_TEMP/fib-backup" > "$RUNNER_TEMP/fib-backup-transfer.log" 2>&1
+          node scripts/backup/bundle.mjs verify "$RUNNER_TEMP/fib-backup" "$GITHUB_SHA"
       - name: Deploy to IONOS
         env:
           IONOS_SFTP_HOST: ${{ secrets.IONOS_SFTP_HOST }}
@@ -64,3 +97,9 @@ jobs:
               mirror --reverse --delete --verbose apps/editorial-web/dist/ ./;
               bye;
             '
+
+      - name: Remove private backup material
+        if: always()
+        run: |
+          rm -rf "$RUNNER_TEMP/fib-backup"
+          rm -f "$RUNNER_TEMP/fib-rclone.conf" "$RUNNER_TEMP/fib-rclone-redacted" "$RUNNER_TEMP/fib-backup-transfer.log"
