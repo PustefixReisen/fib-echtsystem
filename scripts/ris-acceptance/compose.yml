@@ -1,0 +1,7 @@
+# Only the manual acceptance project uses this named, persistent local volume.
+services:
+  db:
+    volumes:
+      - acceptance-data:/var/lib/postgresql/data
+volumes:
+  acceptance-data:

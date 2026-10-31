@@ -143,9 +143,10 @@ try {
   writeFileSync(process.env.RUNNER_TEMP + "/ris-scenario.json", "{}", {
     mode: 0o600,
   });
-  mkdirSync("ris-e2e-results", { recursive: true });
+  const results = process.env.FIB_TEST_RESULTS_DIR ?? "ris-e2e-results";
+  mkdirSync(results, { recursive: true });
   writeFileSync(
-    "ris-e2e-results/migrations.json",
+    results + "/migrations.json",
     JSON.stringify(
       {
         database: "fib_u4_test",

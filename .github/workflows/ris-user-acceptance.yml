@@ -1,0 +1,31 @@
+name: Personal RIS acceptance preparation
+on:
+  pull_request:
+    paths:
+      - 'scripts/ris-acceptance/**'
+      - 'tests/ris-e2e/**'
+      - 'apps/editorial-web/**'
+      - 'supabase/**'
+      - 'package.json'
+      - '.github/workflows/ris-user-acceptance.yml'
+permissions:
+  contents: read
+jobs:
+  manual-start-resume:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: npm install --ignore-scripts --no-package-lock --no-audit --no-fund
+      - run: npm install --no-save --ignore-scripts --no-package-lock playwright@1.56.1
+      - run: npx playwright install --with-deps chromium
+      - name: Real personal launcher, login and persistent restart (synthetic PDF transport)
+        run: node tests/ris-e2e/manual.smoke.mjs
+      # Deliberately no artifact upload: no account, private state, PDF or database export.
+      - name: Destroy isolated manual test data even after failure
+        if: always()
+        run: |
+          TEST_DB_PASSWORD=cleanup TEST_JWT_SECRET=cleanup docker compose --project-name fib-ris-acceptance -f tests/ris-e2e/compose.yml -f scripts/ris-acceptance/compose.yml down --volumes --remove-orphans

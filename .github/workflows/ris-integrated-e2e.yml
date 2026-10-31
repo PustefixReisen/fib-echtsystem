@@ -3,6 +3,7 @@ on:
   pull_request:
     paths:
       - 'tests/ris-e2e/**'
+      - 'scripts/ris-acceptance/**'
       - 'apps/editorial-web/**'
       - 'supabase/**'
       - 'packages/fachservices/**'

@@ -1279,6 +1279,7 @@ export function App() {
         <section className="auth-card">
           <p className="eyebrow">Feldkirchen im Blick</p>
           <h1>Redaktionssystem</h1>
+          {import.meta.env.VITE_FIB_ACCEPTANCE_MODE && <p className="warning" role="note">Isolierte persönliche Abnahme · Bearbeitungen bleiben lokal gespeichert. {import.meta.env.VITE_FIB_ACCEPTANCE_MODE === 'fixtures' ? 'Synthetische PDF-Testdaten: Inhalte der Vorlagen sind damit nicht fachlich abnehmbar.' : 'Privat abgerufene Original-PDFs; HTML und Gemeinde-Nachricht sind dokumentierte Ausschnitte.'}</p>}
 
           {(state === 'aal1_no_factor' || state === 'aal1_factor_available') && <p>Angemeldet als <strong>{accountEmail}</strong>.</p>}
           {state === 'checking' && <p>Kontozugang wird geprüft …</p>}
@@ -1423,6 +1424,7 @@ export function App() {
         {navigationOpen && <button className="nav-backdrop" aria-label="Navigation schließen" onClick={() => setNavigationOpen(false)} />}
 
         <main className="content-shell">
+        {import.meta.env.VITE_FIB_ACCEPTANCE_MODE && <p className="warning" role="note">Isolierte persönliche Abnahme · Bearbeitungen bleiben lokal gespeichert. {import.meta.env.VITE_FIB_ACCEPTANCE_MODE === 'fixtures' ? 'Synthetische PDF-Testdaten: Inhalte der Vorlagen sind damit nicht fachlich abnehmbar.' : 'Privat abgerufene Original-PDFs; HTML und Gemeinde-Nachricht sind dokumentierte Ausschnitte.'}</p>}
         {(view==='findings'||view==='sessions')&&eventListError&&<p className="error" role="alert">{eventListError}</p>}
         {(view==='findings'||view==='sessions')&&<SourceWorkspace key={sourceNavigationKey} mode={view} initialFindingId={sourceFindingId} onHome={()=>navigateTo('dashboard')} onOpenEvent={id=>void openListedEvent(id)} registerLeaveGuard={guard=>{sourceLeaveRef.current=guard;}}/>}
         {view === 'topics' && (
