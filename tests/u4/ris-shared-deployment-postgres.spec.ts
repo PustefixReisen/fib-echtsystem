@@ -1,5 +1,8 @@
 import assert from 'node:assert/strict';
-import {readFileSync} from 'node:fs';
+import {readFileSync,mkdtempSync,rmSync} from 'node:fs';
+import {spawnSync} from 'node:child_process';
+import {tmpdir} from 'node:os';
+import {join} from 'node:path';
 import {randomUUID} from 'node:crypto';
 import pg from 'pg';
 import {parseRisStructure,persistRisStructure,persistRisDocument} from '../../supabase/functions/_shared/ris-structure.ts';
@@ -89,6 +92,24 @@ try{
  assert.equal((await first('select count(*) n from fib.app_users')).n,'1');
  assert.equal((await first('select payload from public.memorix_sentinel')).payload,'unchanged');
  assert.equal((await first('select status from fib.development_batches where id=$1',[batch])).status,'purged');
+ // Exercise the actual operator source CLI: read-only plan, approved apply, exact rollback and stale refusal.
+ const privateDir=mkdtempSync(join(tmpdir(),'fib-source-cli-'));
+ try{
+  await owner.query('update fib.sources set active=false where id=$1',[source]);
+  await owner.query("insert into fib.sources(name,homepage_url,active) values('Synthetic Gemeinde','https://www.feldkirchen.de',false)");
+  const command=(name:string,args:string[]=[])=>spawnSync(process.execPath,['--import','tsx','scripts/ris-shared-apps/sources.ts','--out='+join(privateDir,name),...args],{env:{...process.env,U4_TEST_DATABASE_URL:connection},encoding:'utf8'});
+  assert.equal(command('plan.json').status,0);
+  assert.equal((await first('select count(*) n from fib.sources where active')).n,'0');
+  assert.equal(command('apply.json',['--apply','--approval=isolated-test-only']).status,0);
+  assert.equal((await first('select count(*) n from fib.sources where active')).n,'2');
+  assert.equal(command('revert.json',['--apply','--rollback','--approval=isolated-test-only','--receipt='+join(privateDir,'apply.json')]).status,0);
+  assert.equal((await first('select count(*) n from fib.sources where active')).n,'0');
+  assert.equal(command('second.json',['--apply','--approval=isolated-test-only']).status,0);
+  await owner.query("update fib.sources set name=name||' edited' where id=$1",[source]);
+  assert.notEqual(command('stale.json',['--apply','--rollback','--approval=isolated-test-only','--receipt='+join(privateDir,'second.json')]).status,0);
+  assert.equal((await first('select count(*) n from fib.sources where active')).n,'2');
+ }finally{rmSync(privateDir,{recursive:true,force:true});}
+ console.log('PASS actual source operator CLI: read-only plan, exactly two approved active flags, reversible receipt and stale rollback refusal');
  console.log('PASS real PostgreSQL: active-source gate, exact transaction ownership, concurrent unmarked row protection, runtime/RLS restrictions, stale/foreign-reference refusal, cyclic FK cleanup and retained master data/Auth/public sentinel');
 }finally{if(runtime!)await runtime.end();await other.end();await owner.end();}
 

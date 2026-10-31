@@ -1,12 +1,12 @@
 import pg from 'pg';
-import {options,privateOutput,target} from './io.mjs';
+import {options,privateOutput,target,clientOptions} from './io.mjs';
 import {adapter,cleanupPlan,cleanup} from './datasets.ts';
 async function main(){
 const connection=process.env.FIB_MAINTENANCE_DATABASE_URL??process.env.U4_TEST_DATABASE_URL;target(connection);
 if(typeof options.batch!=='string'||typeof options.out!=='string')throw Error('--batch and private --out required');
 const apply=options.apply===true;
 if(apply&&(typeof options.approval!=='string'||!options.approval.trim()||!options.close&&typeof options['plan-sha']!=='string'))throw Error('Separate cleanup approval and reviewed --plan-sha required');
-const db=new pg.Client({connectionString:connection});await db.connect();const tx=adapter(db);
+const db=new pg.Client(clientOptions(connection));await db.connect();const tx=adapter(db);
 try{
  await db.query(apply?'begin':'begin read only');await db.query("set local time zone 'UTC'");
  const plan=await cleanupPlan(tx,options.batch);

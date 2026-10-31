@@ -1,6 +1,6 @@
 import pg from 'pg';
 import {readFileSync} from 'node:fs';
-import {options,privateOutput,target} from './io.mjs';
+import {options,privateOutput,target,clientOptions} from './io.mjs';
 import {parseRisStructure,persistRisStructure,persistRisDocument} from '../../supabase/functions/_shared/ris-structure.ts';
 import {adapter,datasetKeys,registerCreatedRows,reference,fingerprint} from './datasets.ts';
 async function main(){
@@ -13,7 +13,7 @@ const provenance=JSON.parse(readFileSync('tests/u4/fixtures/ris-1031-provenance.
 if(minutes?.hash!==provenance.pdfSha256||b.documents.some((d:any)=>!d.originalBytes||!d.text?.trim()))throw Error('Original provenance mismatch');
 const bundleHash=fingerprint(b),apply=options.apply===true;
 if(apply&&(options['bundle-sha']!==bundleHash||typeof options.approval!=='string'||!options.approval.trim()))throw Error('Apply needs reviewed --bundle-sha and --approval reference');
-const db=new pg.Client({connectionString:connection});await db.connect();const tx=adapter(db);
+const db=new pg.Client(clientOptions(connection));await db.connect();const tx=adapter(db);
 try{
  await db.query(apply?'begin':'begin read only');
  const required=['ris_sessions','development_batches','development_objects'];
