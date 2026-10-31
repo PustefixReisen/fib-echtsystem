@@ -1,3 +1,4 @@
+import {edgeDatasetSupport} from "./edge-dataset-support.ts";
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
 import vm from 'node:vm';
@@ -19,7 +20,7 @@ function client(db:pg.Pool|pg.PoolClient):any{return {
  end:async()=>{},
  begin:async(fn:any)=>{const c=await pool.connect();try{await c.query('begin');const r=await fn(client(c));if(rollback)throw Error('injected_commit_failure');await c.query('commit');return r;}catch(e){await c.query('rollback');throw e;}finally{c.release();}},
 };}
-const shared=readFileSync('supabase/functions/_shared/u4-news.ts','utf8').replace(/\bexport /g,'');
+const shared=edgeDatasetSupport+readFileSync('supabase/functions/_shared/u4-news.ts','utf8').replace(/\bexport /g,'');
 const handler=readFileSync('supabase/functions/fib-u4-pilot/index.ts','utf8')
  .replace(/^import .*;$/gm,'').replace('export default {','globalThis.handler = {');
 const context:any=vm.createContext({URL,URLSearchParams,Request,Response,AbortSignal,TextEncoder,crypto:webcrypto,atob,

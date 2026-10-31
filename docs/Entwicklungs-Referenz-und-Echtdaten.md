@@ -2,6 +2,21 @@
 
 **Status:** Fachlich vereinbart am 15.10.2026. **Umsetzung:** nach redaktioneller Betriebsfähigkeit, soweit unten nicht bereits vorhanden.
 
+## Verbindliche Umgebung
+
+Der am 13.10.2026 vereinbarte Weg bleibt verbindlich: reguläre persönliche Erprobung auf
+Shared-Apps im Schema `fib`, bestehende Benutzer/MFA, vorhandene Redaktion. Primärstelle:
+[ADR-011](decisions/ADR-011-Shared-Apps-Schema-Isolation-und-pustivo-Betrieb.md).
+Isolierte technische Tests ersetzen diesen persönlichen Zugang nicht.
+
+Der bisherige Batch `demo-20261013` behält seine exakten UUID-/Beziehungsmanifeste und
+Herkunftskennzeichnung. Neue RIS-Abnahmeobjekte erhalten ergänzend ein transaktionales
+Objektmanifest (`development_batches` / `development_objects`) mit `owned` oder `reference`.
+Dies ist eine vorbereitete Implementierung aus PR #358, noch nicht in Shared-Apps angewendet.
+Nur zugeordnete eigene Objekte sind bereinigbar; vorhandene oder später fremd referenzierte
+Datensätze werden nicht pauschal mitgelöscht. Alte Batches werden nicht anhand einer
+Titelähnlichkeit automatisch adoptiert. Details: [Bereitstellungsplan](operations/u4-shared-apps-release-plan.md).
+
 ## Begriffe und Trennung
 
 | Bestand | Zweck | Sichtbarkeit | Bearbeitbarkeit |

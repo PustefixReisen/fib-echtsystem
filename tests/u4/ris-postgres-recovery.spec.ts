@@ -1,3 +1,4 @@
+import {edgeDatasetSupport} from "./edge-dataset-support.ts";
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
 import vm from 'node:vm';
@@ -60,8 +61,9 @@ const fetchMock=async(url:string)=>{
  throw Error('unexpected URL '+url);
 };
 function makeHandler(){
- const source=(readFileSync('supabase/functions/_shared/ris-structure.ts','utf8').replace(/\bexport /g,'')+'\n'+readFileSync('supabase/functions/fib-u4-ris-pilot/index.ts','utf8'))
-  .replace(/^import postgres from .*;\s*/m,'const postgres = globalThis.__postgres;\n')
+ const source=edgeDatasetSupport+(readFileSync('supabase/functions/_shared/ris-structure.ts','utf8').replace(/\bexport /g,'')+'\n'+readFileSync('supabase/functions/fib-u4-ris-pilot/index.ts','utf8'))
+  .replace(/^import .*development-datasets.*;\s*/m,'')
+ .replace(/^import postgres from .*;\s*/m,'const postgres = globalThis.__postgres;\n')
   .replace(/^import .*from ['"](?:npm:unpdf|\.\.\/_shared\/ris-structure)[^\n]+$/gm,'')
  .replace("export async function verifyRisScheduler(","async function verifyRisScheduler(")
  .replace("export async function handleRis(req:Request,mode:'interactive'|'scheduler'='interactive'){", "globalThis.__handler = {async fetch(req:Request,mode:'interactive'|'scheduler'='interactive'){")

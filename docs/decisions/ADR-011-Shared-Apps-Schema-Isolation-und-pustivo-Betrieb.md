@@ -2,7 +2,7 @@
 
 ## Status
 
-**Entschieden** – 06.10.2026
+**Entschieden** – 06.10.2026; Entwicklungs-/Abnahmeweg vom 13.10.2026 am 31.10.2026 ausdrücklich bekräftigt.
 
 ## Kontext
 
@@ -27,6 +27,23 @@ FIB verwendet das bestehende Supabase-Projekt `Shared-Apps`.
 Es wird **kein separates FIB-Supabase-Projekt** vorausgesetzt.
 
 Die Anwendungstrennung erfolgt innerhalb PostgreSQL über eigene Anwendungsschemata und Least-Privilege-Rechte.
+
+### 1a. Reguläre Entwicklungs- und persönliche Nutzerabnahme
+
+Shared-Apps und `https://fib.pustivo.de/redaktion/` bleiben die reguläre FIB-Entwicklungs-
+und Testumgebung. Solange keine echten beziehungsweise veröffentlichten FIB-Daten vorliegen,
+setzt die persönliche Nutzerabnahme bestehende Benutzer, MFA und das Schema `fib` voraus.
+Entwicklungsdaten sind veränderbar, eindeutig zu kennzeichnen und gezielt bereinigbar;
+wiederverwendete Stammdaten und andere Anwendungen bleiben geschützt.
+
+Isolierte Umgebungen dienen automatisierten technischen Tests. Ein zusätzliches persönliches
+Testsystem wird nur bei belegtem Bedarf und entsprechender Abstimmung eingerichtet. Die lokale
+Empfehlung aus PR #355 ist als Standardweg zurückgenommen; der Code bleibt als technischer
+Prüfstand nutzbar. Diese Klarstellung ändert keine fachlichen Redaktionsregeln.
+
+Auch im Entwicklungsbetrieb sind Migrationen, Deployments, Feature-Aktivierungen und Änderungen
+an gemeinsamen Ressourcen gesondert freizugeben. Shared-Apps-Testdaten sind kein pauschaler
+Freibrief für Änderungen an Auth, Rollen, Secrets, Cron oder Memorix.
 
 ### 2. Schema-Regel für pustivo-Anwendungen
 

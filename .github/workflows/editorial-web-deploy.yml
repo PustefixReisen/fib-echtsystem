@@ -7,6 +7,11 @@ on:
         description: 'Nach gesonderter Produktivfreigabe DEPLOY eingeben'
         required: true
         type: string
+      shared_development:
+        description: 'FIB-Entwicklungsbestand in Shared-Apps anzeigen'
+        required: true
+        default: true
+        type: boolean
 
 permissions:
   contents: read
@@ -33,6 +38,7 @@ jobs:
 
       - name: Build editorial web
         env:
+          VITE_FIB_ACCEPTANCE_MODE: ${{ inputs.shared_development && 'shared-apps' || '' }}
           VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
           VITE_SUPABASE_PUBLISHABLE_KEY: ${{ secrets.VITE_SUPABASE_PUBLISHABLE_KEY }}
         run: npm run build --workspace @fib/editorial-web

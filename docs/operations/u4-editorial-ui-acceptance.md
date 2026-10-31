@@ -2,7 +2,7 @@
 
 | Version | Stand | Bearbeitung |
 |---|---|---|
-| 1.2 | 31.10.2026 | Entwicklung mit KI-Unterstützung, Auftrag Josef Walter |
+| 1.3 | 31.10.2026 | Entwicklung mit KI-Unterstützung, Auftrag Josef Walter |
 
 ## Geltung und Bereitstellung
 
@@ -80,11 +80,14 @@ Es werden keine neuen DB-Rechte, Tabellen, RPCs oder Browserdirektzugriffe einge
 Die [Anwenderanleitung](u4-persoenliche-nutzerabnahme.md) beschreibt Zugang, Anmeldung,
 die drei Fälle und Rückmeldungen ohne interne Implementierungskenntnisse.
 [Einrichtung](u4-user-acceptance-setup.md) ist getrennt dokumentiert.
-Der vorbereitete Launcher ersetzt keine bereits bereitgestellte Umgebung.
+Die persönliche Abnahme verwendet die bestehende Shared-Apps-Redaktion; die lokale
+Standardempfehlung aus #355 ist zurückgenommen. Noch keine neuen RIS-Funktionen
+bereitgestellt: [Ist-/Freigabeplan](u4-shared-apps-release-plan.md).
 
 ## Reproduzierbarer redaktioneller Prüfdurchgang
 
-Nur in einer isolierten, migrierten Prüfumgebung mit erfassten Referenzdaten durchführen.
+Die folgende automatisierte Komponentenprobe läuft nur isoliert. Die persönliche
+Abnahme erfolgt nach Freigabe in der bestehenden Shared-Apps-Redaktion.
 Die technische Browserfixture ist eine zweite, datenbankfreie Bedienprobe:
 
 ```bash
@@ -147,6 +150,7 @@ ist gesondert zu beachten; dieser Komponententest allein belegt den Gesamtpfad n
 
 | Version | Änderung |
 |---|---|
+| 1.3 | Verbindlichen Shared-Apps-Weg und noch ausstehende Bereitstellung korrigiert |
 | 1.2 | Persönliche Anwenderanleitung und getrennten Einrichtungsweg #354/#355 ergänzt |
 | 1.1 | Dialoge aus PR #350 und getrennten Gesamtprüfstand aus PR #353 verknüpft |
 | 1.0 | Reguläre Quellen-/Sitzungsansichten, Prüfdurchgang, API-/Testgrenzen und manuelle Bereitstellungsgrenze dokumentiert |

@@ -2,7 +2,7 @@
 
 | Version | Stand | Bearbeitung |
 |---|---|---|
-| 1.2 | 31.10.2026 | Entwicklung mit KI-Unterstützung, Auftrag Josef Walter |
+| 1.3 | 31.10.2026 | Entwicklung mit KI-Unterstützung, Auftrag Josef Walter |
 
 ## Geltung
 
@@ -11,6 +11,17 @@ keine neue Fachregel. Zugehörig: #281, PR #348,
 [Abnahmebericht](u4-reference-sources-acceptance.md).
 Die Migration `20261031081340_fib_ris_editorial_structure.sql` ist **nur vorbereitet**.
 Code-Merge ist keine Freigabe für Shared-Apps, Deployment oder Automatisierung.
+
+## Shared-Apps-Bereitstellung und Datenkennzeichnung
+
+Für die persönliche Abnahme gilt die bestehende Shared-Apps-Redaktion, kein zusätzliches
+persönliches Testsystem. [Istvergleich](u4-shared-apps-inventory-2026-10-31.md) und
+[Freigabepaket](u4-shared-apps-release-plan.md) halten tatsächlichen und vorbereiteten
+Stand auseinander. Die zusätzliche Manifestmigration ist nur vorbereitet; sie erweitert
+ausschließlich `fib`. Neue eigene Objekte werden transaktionsgenau zugeordnet,
+wiederverwendete Stammdaten sind Referenzen. Die Runtime kann Marker ergänzen, aber
+keine Batches umschalten oder Daten/Marker löschen. Aktive Entwicklungsbatches sind
+vor einem späteren Echtdatenbetrieb ausdrücklich zu schließen.
 
 ## Physisches Modell
 
@@ -172,6 +183,7 @@ RIS-Struktur hinter `FIB_RIS_STRUCTURE_ENABLED`; keine zusätzliche Migration od
 
 | Version | Änderung |
 |---|---|
+| 1.3 | Verbindlichen Shared-Apps-Weg und enges transaktionales Entwicklungsdatenmanifest aus PR #358 verknüpft |
 | 1.2 | Gesamtprüfstand, echte Deno-/Runtime-Anbindung und JSON-Parametervertrag dokumentiert |
 | 1.1 | Reguläre Oberflächenanbindung und gemeinsamer Quellen-/Beziehungsweg aus PR #349 verknüpft |
 | 1.0 | Persistente Fachstruktur, Scanner, API und isolierte Prüfung aus PR #348 |

@@ -48,6 +48,7 @@ try {
     "migrations/20261030134000_u4_ris_cursor_runtime_rls.sql",
     "migrations/20261030163000_fib_ris_source_run_cadence.sql",
     "migrations/20261031081340_fib_ris_editorial_structure.sql",
+    "migrations/20261031132655_fib_development_dataset_manifest.sql",
   ];
   for (const file of files)
     await db.query(readFileSync("supabase/" + file, "utf8"));

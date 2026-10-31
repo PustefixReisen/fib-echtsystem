@@ -1,3 +1,4 @@
+import {edgeDatasetSupport} from "./edge-dataset-support.ts";
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
 import vm from 'node:vm';
@@ -19,6 +20,7 @@ let broken=false,brokenPdf=false,conflict=false;
 function clone(s:State):State{return {cursor:s.cursor?structuredClone(s.cursor):null,observations:new Map(s.observations),runs:structuredClone(s.runs),scopeError:s.scopeError};}
 function connection(state:State){
  const query=async(q:string,params:any[]=[])=>{
+  if(q.includes('to_regclass'))return [{r:null}];
   if(q.includes('from fib.app_users'))return [{id:'user-1'}];
   if(q.includes('from fib.source_scopes')&&q.includes('scope_key'))return [{id:'scope-1'}];
   if(q.startsWith('select cursor_state'))return state.cursor?[{cursor_state:structuredClone(state.cursor)}]:[];
@@ -59,7 +61,8 @@ const fakeFetch=async(url:string)=>{
  }
  throw new Error('Unexpected fetch '+url);
 };
-const source=(readFileSync('supabase/functions/_shared/ris-structure.ts','utf8').replace(/\bexport /g,'')+'\n'+readFileSync('supabase/functions/fib-u4-ris-pilot/index.ts','utf8'))
+const source=edgeDatasetSupport+(readFileSync('supabase/functions/_shared/ris-structure.ts','utf8').replace(/\bexport /g,'')+'\n'+readFileSync('supabase/functions/fib-u4-ris-pilot/index.ts','utf8'))
+ .replace(/^import .*development-datasets.*;\s*/m,'')
  .replace(/^import postgres from .*;\s*/m,'const postgres = globalThis.__postgres;\n')
  .replace(/^import .*from ['"](?:npm:unpdf|\.\.\/_shared\/ris-structure)[^\n]+$/gm,'')
  .replace("export async function verifyRisScheduler(","async function verifyRisScheduler(")

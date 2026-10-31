@@ -223,6 +223,31 @@ try {
     (await doc(75714)).extracted_text,
     /Synthetischer Vorschlagstext/,
   );
+  await db.query(
+    "insert into fib.development_batches(id,purpose,approval_reference) values('ris-e2e','Isolated actual handler ownership test','CI')",
+  );
+  const { DATASET_KEYS, keyExpression } =
+    await import("../../supabase/functions/_shared/development-datasets.ts");
+  for (const t of Object.keys(DATASET_KEYS)) {
+    const ownership = [
+      "source_scopes",
+      "source_observations",
+      "ris_committees",
+    ].includes(t)
+      ? "reference"
+      : "owned";
+    await db.query(
+      `insert into fib.development_objects(batch_id,table_name,row_key,ownership,initial_fingerprint) select 'ris-e2e',$1,${keyExpression(t)},$2,repeat('a',64) from fib."${t}" t where $1 not in ('events','findings','finding_versions')`,
+      [t, ownership],
+    );
+  }
+  const readiness = await ok(
+    "fib-editorial-write",
+    { action: "source_readiness" },
+    f.users.admin.token,
+  );
+  assert.equal(readiness.ready, true);
+  assert.equal(readiness.runtimeRole, "fib_app");
   pass(
     "Actual RIS/news scanners → persisted structure/observations → real unpdf extraction",
   );
@@ -431,7 +456,7 @@ try {
     rationale: "Vorlage belegt keinen tatsächlichen Beschluss",
   });
   await openSession("GR/440/2026", top(s1032, "3"));
-  await page.locator("strong").filter({hasText:"5397/2026"}).waitFor();
+  await page.locator("strong").filter({ hasText: "5397/2026" }).waitFor();
   await page
     .getByText("Kein tatsächlicher Beschluss im geprüften Bestand belegt.", {
       exact: false,
@@ -823,6 +848,22 @@ try {
   );
   phase = "final integrity";
   assert.equal(await count("messages"), 0);
+  for (const t of ["events", "findings"]) {
+    const expected = 3;
+    assert.equal(
+      Number(
+        (
+          await first(
+            "select count(*) n from fib.development_objects where batch_id='ris-e2e' and table_name=$1 and ownership='owned'",
+            [t],
+          )
+        ).n,
+      ),
+      expected,
+      "Actual authenticated actions must persist dataset ownership",
+    );
+  }
+
   assert.equal(await count("processes"), 1);
   assert.equal(await count("topics"), 1);
   assert.equal(await count("ris_decision_points"), 4);
