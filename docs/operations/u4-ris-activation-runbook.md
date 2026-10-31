@@ -46,6 +46,14 @@ Betriebsfreigabe oder erfolgreich nachgewiesene Cron-/Secret-Konfiguration.
    Testdatenbank durchführen, bevor zeitgesteuerte produktive Aufrufe erfolgen.
 5. Free-Plan-Budgets, mögliche Timeouts und Datum-/Zeitzonen-Grenzen prüfen.
 
+## Prüffähiger Zeitplanentwurf
+
+`npm run u4:ris:cron-plan` erzeugt einen unveränderlichen, maschinenlesbaren
+Plan für die zwei namentlich begrenzten RIS-Jobs in UTC, mit festen Cadences
+und dem festgelegten Commit-Body. Dieser Befehl **stellt keine Verbindung zu
+Supabase her**, enthält kein Secret und erzeugt keinen Cron-Job. Die Zeiten
+sind Entwurfswerte und vor Aktivierung mit vorhandenen Jobs abzugleichen.
+
 ## Geplanter Aktivierungspfad (erst nach Betriebsfreigabe)
 
 1. `pg_cron` und `pg_net` gezielt installieren; dafür vorab
