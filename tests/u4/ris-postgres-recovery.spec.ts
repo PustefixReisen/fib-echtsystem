@@ -60,9 +60,10 @@ const fetchMock=async(url:string)=>{
  throw Error('unexpected URL '+url);
 };
 function makeHandler(){
- const source=readFileSync('supabase/functions/fib-u4-ris-pilot/index.ts','utf8')
-  .replace(/^import postgres from .*;\s*/,'const postgres = globalThis.__postgres;\n')
-  .replace("export async function verifyRisScheduler(","async function verifyRisScheduler(")
+ const source=(readFileSync('supabase/functions/_shared/ris-structure.ts','utf8').replace(/\bexport /g,'')+'\n'+readFileSync('supabase/functions/fib-u4-ris-pilot/index.ts','utf8'))
+  .replace(/^import postgres from .*;\s*/m,'const postgres = globalThis.__postgres;\n')
+  .replace(/^import .*from ['"](?:npm:unpdf|\.\.\/_shared\/ris-structure)[^\n]+$/gm,'')
+ .replace("export async function verifyRisScheduler(","async function verifyRisScheduler(")
  .replace("export async function handleRis(req:Request,mode:'interactive'|'scheduler'='interactive'){", "globalThis.__handler = {async fetch(req:Request,mode:'interactive'|'scheduler'='interactive'){")
  .replace("export default {fetch(req:Request){return handleRis(req,'interactive')}};", "};");
  const js=ts.transpileModule(source,{compilerOptions:{target:ts.ScriptTarget.ES2022,module:ts.ModuleKind.None}}).outputText;

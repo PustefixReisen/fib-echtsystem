@@ -16,10 +16,11 @@
     "u4:ris:cron-plan": "tsx scripts/ris-cron-plan.ts"
   },
   "devDependencies": {
-    "typescript": "^5.9.0",
-    "tsx": "^4.20.0",
     "@types/node": "^24.0.0",
-    "@types/pg": "8.15.5"
+    "@types/pg": "8.15.5",
+    "tsx": "^4.20.0",
+    "typescript": "^5.9.0",
+    "unpdf": "2.1.0"
   },
   "dependencies": {
     "pg": "8.16.3"

@@ -1,3 +1,4 @@
+import {risEditorial} from '../_shared/ris-editorial.ts';
 import postgres from 'npm:postgres@3.4.7';
 
 const corsHeaders = {
@@ -51,6 +52,7 @@ export default {
 
     let body: {
       action?: string;
+      [key:string]: any;
       eventId?: string;
       title?: string;
       summary?: string | null;
@@ -67,8 +69,10 @@ export default {
       return json({ error: 'invalid_json' }, 400);
     }
 
-    if (body.action !== 'edit_event' && body.action !== 'link_finding' && body.action !== 'unlink_finding' && body.action !== 'update_finding_link' && body.action !== 'update_finding_justification') return json({ error: 'unknown_action' }, 400);
-    if (!body.eventId || (body.action === 'edit_event' && (typeof body.title !== 'string' || body.title.trim().length === 0))) {
+    const risAction=typeof body.action==='string'&&body.action.startsWith('ris_');
+    if(risAction&&Deno.env.get('FIB_RIS_STRUCTURE_ENABLED')!=='true')return json({error:'ris_structure_disabled'},503);
+    if (!risAction && body.action !== 'edit_event' && body.action !== 'link_finding' && body.action !== 'unlink_finding' && body.action !== 'update_finding_link' && body.action !== 'update_finding_justification') return json({ error: 'unknown_action' }, 400);
+    if (!risAction && (!body.eventId || (body.action === 'edit_event' && (typeof body.title !== 'string' || body.title.trim().length === 0)))) {
       return json({ error: 'invalid_event_input' }, 400);
     }
 
@@ -88,6 +92,11 @@ export default {
         [userId],
       );
       if (membership.length === 0) return json({ error: 'fib_membership_missing_or_inactive' }, 403);
+
+      if(risAction){
+        const result=await sql.begin(tx=>risEditorial(tx,{userId,kind:'human',aal:'aal2'},body));
+        return json({ok:true,...result});
+      }
 
       const lock = await sql.unsafe(
         "select user_id from fib.edit_locks where object_type='event' and object_id=$1::uuid and user_id=$2 and expires_at>now()",
