@@ -161,7 +161,37 @@ const api = async (b: any) => {
         },
       ],
       documents: [doc],
-      decisions: [],
+      decisions: (window as any).showDecisionCases
+        ? [
+            {
+              agenda_id: "t2",
+              version_id: "case-1",
+              point_key: "A",
+              result: "unknown",
+              yes_count: null,
+              no_count: null,
+              abstention_count: null,
+              wording: "<img src=x onerror=alert(1)>",
+              evidence_quote: "Synthetischer Prüffall unbekanntes Ergebnis",
+              document_version_id: "v1",
+              source_changed: true,
+              event_id: events[0]?.id,
+            },
+            {
+              agenda_id: "t2",
+              version_id: "case-2",
+              point_key: "B",
+              result: "rejected",
+              yes_count: 2,
+              no_count: 12,
+              abstention_count: null,
+              wording: "Synthetischer zweiter Beschlusspunkt",
+              evidence_quote: "Synthetischer Abstimmungsbeleg",
+              document_version_id: "v1",
+              event_id: events[0]?.id,
+            },
+          ]
+        : [],
       proposals: [
         {
           id: "pr2",

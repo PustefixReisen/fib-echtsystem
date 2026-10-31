@@ -24,7 +24,8 @@ await page.route("**/*", (r) =>
     ? r.continue()
     : r.abort(),
 );
-page.on("dialog", (d) => d.accept());
+let acceptNavigation = true;
+page.on("dialog", (d) => (acceptNavigation ? d.accept() : d.dismiss()));
 const panel = (title) =>
   page
     .locator("section")
@@ -80,6 +81,17 @@ try {
   await page
     .getByLabel("Titel der Fundstelle *", { exact: true })
     .fill("Vorlage zum Elternbeitragszuschuss");
+  acceptNavigation = false;
+  await page
+    .getByRole("button", { name: "Zurück zur Liste", exact: true })
+    .click();
+  assert.equal(
+    await page
+      .getByLabel("Titel der Fundstelle *", { exact: true })
+      .inputValue(),
+    "Vorlage zum Elternbeitragszuschuss",
+  );
+  acceptNavigation = true;
   await page.evaluate(() => (window.failNext = true));
   await page
     .getByRole("button", { name: "Fundstelle ausdrücklich übernehmen" })
@@ -253,6 +265,38 @@ try {
         exact: true,
       })
       .count(),
+  );
+  // Synthetic rendering cases, not assertions about the real 29 October decisions.
+  await page.evaluate(() => (window.showDecisionCases = true));
+  await page
+    .getByRole("button", { name: "Sitzungsbereich", exact: true })
+    .click();
+  await page
+    .getByRole("button", { name: "Sitzung öffnen", exact: true })
+    .click();
+  await page
+    .getByLabel("Tagesordnungspunkt", { exact: true })
+    .selectOption("t2");
+  await panel("Tatsächliche Beschlüsse")
+    .getByRole("heading", { name: "Beschlusspunkt A", exact: true })
+    .waitFor();
+  const first = panel("Tatsächliche Beschlüsse").locator("article").first();
+  await first.getByText("Unbekannt", { exact: true }).waitFor();
+  assert.match(await first.innerText(), /Ja: unbekannt.*Nein: unbekannt/);
+  assert.equal(
+    await first.locator("img").count(),
+    0,
+    "Source text is escaped, never executed",
+  );
+  await first
+    .getByText("Die Quelle hat sich geändert.", { exact: false })
+    .waitFor();
+  await panel("Tatsächliche Beschlüsse")
+    .getByText("Abgelehnt", { exact: true })
+    .waitFor();
+  assert.equal(
+    await panel("Tatsächliche Beschlüsse").locator("article").count(),
+    2,
   );
   assert.deepEqual(errors, []);
   console.log(

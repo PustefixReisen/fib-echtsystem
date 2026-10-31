@@ -135,6 +135,38 @@ async function main() {
     () => run({ ...request, title: "Anderer Inhalt" }),
     /request_conflict/,
   );
+  await assert.rejects(
+    () => run({ ...request, rationale: "Abweichender Auftrag" }),
+    /request_conflict/,
+  );
+  assert.equal(
+    (
+      await first(
+        "select user_id from fib.lead_responsibilities where object_type='event' and object_id=$1",
+        [event.eventId],
+      )
+    ).user_id,
+    actor.userId,
+  );
+  assert.equal(
+    (
+      await first(
+        "select user_id from fib.object_last_edits where object_type='event' and object_id=$1",
+        [event.eventId],
+      )
+    ).user_id,
+    actor.userId,
+  );
+  await assert.rejects(
+    () =>
+      run({
+        action: "source_propose_relation",
+        findingId: crypto.randomUUID(),
+        eventId: event.eventId,
+        origin: "editor",
+      }),
+    /source_missing/,
+  );
   const detail = await run({ action: "source_read", findingId: a.findingId });
   assert.equal(detail.events[0].id, event.eventId);
   assert.equal(detail.events[0].justification, request.rationale);

@@ -86,7 +86,7 @@ export async function sourceEditorial(
       return {
         finding: f,
         relationSuggestions: await tx.unsafe(
-          "select r.*,p.title process_title,t.title topic_title,e.title event_title from fib.ris_relation_suggestions r join fib.event_findings ef on ef.event_id=r.event_id join fib.events e on e.id=r.event_id left join fib.processes p on p.id=r.process_id left join fib.topics t on t.id=r.topic_id where ef.finding_id=$1",
+          "select r.*,(select l.detail->>'rationale' from fib.ris_review_log l where l.object_id=r.id and l.action='ris_review_relation' order by l.created_at desc limit 1) review_rationale,p.title process_title,t.title topic_title,e.title event_title from fib.ris_relation_suggestions r join fib.event_findings ef on ef.event_id=r.event_id join fib.events e on e.id=r.event_id left join fib.processes p on p.id=r.process_id left join fib.topics t on t.id=r.topic_id where ef.finding_id=$1",
           [f.id],
         ),
         relationships: await tx.unsafe(
@@ -180,12 +180,16 @@ export async function sourceEditorial(
     if (!finding) throw Error("source_missing");
     const old = (
       await tx.unsafe(
-        "select e.title,ef.finding_id from fib.events e left join fib.event_findings ef on ef.event_id=e.id where e.id=$1",
-        [input.requestId],
+        "select e.title,ef.finding_id,ef.justification from fib.events e left join fib.event_findings ef on ef.event_id=e.id and ef.finding_id=$2 where e.id=$1",
+        [input.requestId, finding.id],
       )
     )[0];
     if (old) {
-      if (old.title !== title || old.finding_id !== finding.id)
+      if (
+        old.title !== title ||
+        old.finding_id !== finding.id ||
+        old.justification !== rationale
+      )
         throw Error("request_conflict");
       return { eventId: input.requestId, reused: true };
     }

@@ -89,7 +89,9 @@ node tests/ui-source/browser.mjs
 Sie startet Vite und Chromium selbst, verwendet die echte `SourceWorkspace`-Komponente,
 simuliert API/Koordination und blockiert externe Browseranfragen. Reale Bezeichnungen
 stammen aus den dokumentierten Referenzen; Bearbeitungstexte sind ausdrücklich synthetisch.
-Sie verändert keine Produktion. Screenshots: `/tmp/fib-source-ui/` bzw. CI-Artefakt.
+Zusätzliche ausdrücklich synthetische Darstellungsfälle prüfen mehrere Beschlusspunkte,
+unbekannte Stimmen statt Null, geänderte Belege, escaped Quelltext und das Abbrechen
+einer Navigation bei ungespeicherten Eingaben. Sie verändert keine Produktion. Screenshots: `/tmp/fib-source-ui/` bzw. CI-Artefakt.
 Der Test prüft die Übergabe an den Ereigniseditor als Callback; die authentifizierte
 Navigation der gesamten App bleibt Gegenstand der späteren Nutzerabnahme.
 

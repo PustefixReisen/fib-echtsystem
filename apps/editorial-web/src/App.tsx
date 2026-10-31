@@ -136,6 +136,7 @@ export function App() {
   const [message, setMessage] = useState(authLinkError ? 'Dieser Link ist ungültig oder abgelaufen. Bitte fordere einen neuen Link an.' : '');
   const sourceLeaveRef=useRef<()=>boolean>(()=>true);
   const [sourceFindingId,setSourceFindingId]=useState<string|null>(null);
+  const [sourceNavigationKey,setSourceNavigationKey]=useState(0);
   const [view, setView] = useState<EditorialView>('dashboard');
   const [topicData,setTopicData] = useState<TopicListData | null>(null);
   const [topicListOpen,setTopicListOpen] = useState(true);
@@ -250,6 +251,13 @@ export function App() {
   );
   leaveGuardRef.current = eventDirty || editSaving;
   currentViewRef.current = view;
+
+  function openSourceSection(mode: 'findings' | 'sessions', findingId: string | null = null) {
+    if (!confirmLeave()) return;
+    setSourceFindingId(findingId);
+    setSourceNavigationKey(key => key + 1);
+    navigateTo(mode);
+  }
 
   function confirmLeave(): boolean {
     if (editSaving || !sourceLeaveRef.current()) return false;
@@ -1355,7 +1363,7 @@ export function App() {
             <button className="nav-item" disabled><NavIcon src={reportIcon} />Meldungen <span>folgt</span></button>
             <button className="nav-item" disabled><NavIcon src={processIcon} />Vorgänge <span>folgt</span></button>
             <button className={view === "topics" ? "nav-item active" : "nav-item"} aria-current={view === "topics" ? "page" : undefined} onClick={() => navigateTo("topics")}><NavIcon src={topicIcon} />Themen</button>
-            <button className={view==='sessions'?'nav-item active':'nav-item'} onClick={()=>navigateTo('sessions')}><NavIcon src={sessionIcon} />Sitzungen</button>
+            <button className={view==='sessions'?'nav-item active':'nav-item'} aria-current={view==='sessions'?'page':undefined} onClick={()=>openSourceSection('sessions')}><NavIcon src={sessionIcon} />Sitzungen</button>
           </div>
 
           <div className="nav-section">
@@ -1363,7 +1371,7 @@ export function App() {
             <details id="nav-recherche">
               <summary>Recherche</summary>
               <button className="nav-subitem" disabled>Rechercheaufträge</button>
-              <button className={view==='findings'?'nav-subitem active':'nav-subitem'} onClick={()=>{setSourceFindingId(null);navigateTo('findings');}}>Fundstellen</button>
+              <button className={view==='findings'?'nav-subitem active':'nav-subitem'} aria-current={view==='findings'?'page':undefined} onClick={()=>openSourceSection('findings')}>Fundstellen</button>
               <button className={view === 'events' || view === 'event' ? 'nav-subitem active' : 'nav-subitem'} aria-current={view === 'events' || view === 'event' ? 'page' : undefined} onClick={() => navigateTo('events')}>Ereignisse</button>
               <button className="nav-subitem" disabled>Quellen</button>
             </details>
@@ -1413,7 +1421,7 @@ export function App() {
         {navigationOpen && <button className="nav-backdrop" aria-label="Navigation schließen" onClick={() => setNavigationOpen(false)} />}
 
         <main className="content-shell">
-        {(view==='findings'||view==='sessions')&&<SourceWorkspace mode={view} initialFindingId={sourceFindingId} onHome={()=>navigateTo('dashboard')} onOpenEvent={id=>void openListedEvent(id)} registerLeaveGuard={guard=>{sourceLeaveRef.current=guard;}}/>}
+        {(view==='findings'||view==='sessions')&&<SourceWorkspace key={sourceNavigationKey} mode={view} initialFindingId={sourceFindingId} onHome={()=>navigateTo('dashboard')} onOpenEvent={id=>void openListedEvent(id)} registerLeaveGuard={guard=>{sourceLeaveRef.current=guard;}}/>}
         {view === 'topics' && (
           <section className="panel card-headed fib-topic-screen">
             {topicError && <p className="error" role="alert">{topicError}</p>}
@@ -1958,7 +1966,7 @@ export function App() {
                       <li key={source.findingId}>
                         <strong>{readableSourceName(source.sourceName)}</strong>
                         <span>{source.originalUrl && /^https?:\/\//i.test(source.originalUrl) ? <a href={source.originalUrl} target="_blank" rel="noopener noreferrer">{source.findingTitle}</a> : source.findingTitle}</span>
-                        <button type="button" disabled={editingEvent||sourcePickerOpen} onClick={()=>{setSourceFindingId(source.findingId);navigateTo('findings');}}>Fundstelle öffnen</button>
+                        <button type="button" disabled={editingEvent||sourcePickerOpen} onClick={()=>openSourceSection('findings',source.findingId)}>Fundstelle öffnen</button>
                         {editingSourceId !== source.findingId && source.justification && <p className="finding-justification">{source.justification}</p>}
                         {sourcePickerOpen && (editingSourceId === source.findingId ? (
                           <div className="stack finding-justification-editor">

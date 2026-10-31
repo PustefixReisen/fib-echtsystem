@@ -668,6 +668,13 @@ export function SourceWorkspace({
         <div className="detail-grid">
           <div className="detail-content-column">
             <Card title="Inhalt und Herkunft">
+              {document &&
+                document.version_id !== document.latest_version_id && (
+                  <p role="alert">
+                    Historische Dokumentfassung. Für eine neue Übernahme die
+                    aktuelle Fassung öffnen.
+                  </p>
+                )}
               <p>
                 {finding ? (
                   "Übernommene Fundstelle – fachliche Beziehungen separat prüfen"
@@ -728,6 +735,14 @@ export function SourceWorkspace({
                     <p>
                       Prüfer: {v.metadata?.approvedBy ?? "Siehe Prüfverlauf"}
                     </p>
+                    {document && (
+                      <button
+                        disabled={busy || v.id === document.version_id}
+                        onClick={() => void openFinding({ versionId: v.id })}
+                      >
+                        Dokumentfassung öffnen
+                      </button>
+                    )}
                     {v.metadata?.risDocumentVersionId && (
                       <button
                         disabled={busy}
@@ -771,6 +786,12 @@ export function SourceWorkspace({
                     {r.significance ? `(${label(r.significance)})` : ""}
                   </p>
                   <p>{r.rationale}</p>
+                  {r.reviewed_at && (
+                    <p>
+                      Geprüft: {date(r.reviewed_at)} · {r.reviewed_by} ·{" "}
+                      {r.review_rationale ?? "Begründung im Prüfverlauf"}
+                    </p>
+                  )}
                   {reviewButtons(r, true)}
                 </div>
               ))}
@@ -851,7 +872,13 @@ export function SourceWorkspace({
                   <button
                     className="primary"
                     disabled={
-                      busy || !title.trim() || Boolean(document && !sourceId)
+                      busy ||
+                      !title.trim() ||
+                      Boolean(
+                        document &&
+                          (!sourceId ||
+                            document.version_id !== document.latest_version_id),
+                      )
                     }
                     onClick={() => void accept()}
                   >
@@ -1015,6 +1042,16 @@ export function SourceWorkspace({
                       {p.wording ??
                         "Beschlussvorschlag noch nicht als geprüfter Text erschlossen."}
                     </p>
+                    {p.document_version_id && (
+                      <button
+                        disabled={busy}
+                        onClick={() =>
+                          void openFinding({ versionId: p.document_version_id })
+                        }
+                      >
+                        Beleg des Vorschlagstexts öffnen
+                      </button>
+                    )}
                   </div>
                 ))}
               {!top && <p>Bitte einen TOP auswählen.</p>}
