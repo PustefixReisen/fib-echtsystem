@@ -170,6 +170,8 @@ try {
   const approvalPanel = panel("Niederschriftsgenehmigung prüfen");
   await approvalPanel.getByLabel("Genehmigende Sitzung").selectOption("later");
   await approvalPanel.getByLabel("Genehmigungsdokument").selectOption("later-minutes-link");
+  await page.getByLabel("Begründung für die nächste Entscheidung *", { exact: true })
+    .fill("Genehmigung nur mit Niederschrift der späteren Sitzung bestätigen.");
   await approvalPanel.getByLabel("Wortgetreuer Genehmigungsbeleg").fill("Unbelegt");
   await approvalPanel.getByRole("button", {
     name: "Niederschriftsgenehmigung ausdrücklich bestätigen",
