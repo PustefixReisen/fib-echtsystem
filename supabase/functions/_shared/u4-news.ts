@@ -17,7 +17,8 @@ function listing(u:URL):boolean{return [NEWS_ROOT,NEWS_ARCHIVE].includes(u.origi
 export function newsLinks(html:string,page:string){
  const articles=new Set<string>(),pages=new Set<string>();
  for(const m of html.matchAll(/<a\b([^>]*?)href\s*=\s*["']([^"']+)["']([^>]*)>([\s\S]*?)<\/a>/gi)){
-  const u=safeUrl(m[2],page);if(!u)continue;
+  const next=/\brel\s*=\s*["']next["']/i.test(m[1]+m[3]);
+  const u=safeUrl(m[2],page);if(!u){if(next)throw Error('unsafe_news_next_link');continue;}
   if(listing(u)){
    // Only known listing paths. Unknown query mechanisms fail closed instead of disappearing.
    if([...u.searchParams.keys()].some(k=>!['page','seite'].includes(k)))throw Error('unsupported_news_pagination');

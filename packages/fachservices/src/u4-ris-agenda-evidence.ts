@@ -31,7 +31,11 @@ export function extractRisAgendaRows(html:string, pageUrl:string):RisAgendaEvide
     const firstCell=body.match(/<td\b[^>]*>([\s\S]*?)<\/td>/i)?.[1]?.replace(/<[^>]*>/g,' ').trim()??'';
     const topNumber=/^(?:TOP\s*)?(\d{1,2}(?:\.\d{1,2})?)\.?$/i.exec(firstCell)?.[1] ?? /^(?:&Ouml;|Ö)\s+(\d{1,2}(?:\.\d{1,2})?)\b/i.exec(text)?.[1];
     const relationKey=JSON.stringify([topNumber??null,proposals[0]]);
-    if(seen.has(relationKey))continue;
+    if(seen.has(relationKey)){
+      const previous=result.find(x=>x.proposalUrl===proposals[0]&&x.topNumber===topNumber)!;
+      previous.documentUrls=[...new Set([...previous.documentUrls,...docs])];
+      continue;
+    }
     result.push({proposalUrl:proposals[0],documentUrls:docs,rowText:text.slice(0,300),evidence:'same-html-row',...(topNumber?{topNumber}:{})});
     seen.add(relationKey);
   }

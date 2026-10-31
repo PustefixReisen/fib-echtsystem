@@ -57,10 +57,12 @@ async function main(){
  r=await call();assert.equal(r.body.newCount,0);assert.equal(r.body.changedCount,0);
  changed=true;r=await call();assert.equal(r.body.changedCount,1);
  assert.equal((await pool.query('select revision from fib.source_observations where canonical_url=$1',[article])).rows[0].revision,2);
- const before=await count('source_runs');outage=true;assert.equal((await call()).status,502);assert.equal(await count('source_runs'),before);
- outage=false;changed=false;rollback=true;assert.equal((await call()).status,502);assert.equal(await count('source_runs'),before);
+ const before=await count('source_runs');outage=true;assert.equal((await call()).status,502);assert.equal(await count('source_runs'),before+1);
+ assert.equal((await pool.query('select last_error from fib.source_scopes')).rows[0].last_error,'news_scan_failed');
+ outage=false;changed=false;rollback=true;assert.equal((await call()).status,502);assert.equal(await count('source_runs'),before+1);
  assert.equal((await pool.query('select revision from fib.source_observations where canonical_url=$1',[article])).rows[0].revision,2);
  rollback=false;assert.equal((await call()).body.changedCount,1);
+ assert.equal((await pool.query('select last_error,gap_since from fib.source_scopes')).rows[0].gap_since,null);
  // No implicit editorial object writes: the handler succeeds without any editorial table.
  console.log('Actual Gemeinde Edge handler + PostgreSQL: authorization, dry run, archive, dedupe, revision, outage, rollback and recovery passed');
 }

@@ -37,6 +37,7 @@ async function main(){
  await assert.rejects(()=>scanNews(fetcher,20,1),/article_limit/);
  pages.set(p,'<html>not available</html>');await assert.rejects(()=>scanNews(fetcher),/empty_news_listing/);
  pages.delete(p);await assert.rejects(()=>scanNews(fetcher),/HTTP 503/);
+ assert.throws(()=>newsLinks('<a rel="next" href="https://evil.test/page">Next</a>',NEWS_ROOT),/unsafe_news_next/);
  assert.throws(()=>newsDetail('<html><main><h1>A</h1><h1>B</h1></main></html>',a),/ambiguous_news_title/);
  assert.throws(()=>newsDetail(detail('A').replace('<html>','<html><link rel="canonical" href="https://evil.test/x">'),a),/invalid_news_canonical/);
  console.log('Real RIS excerpt and news archive/pagination/error contracts passed');

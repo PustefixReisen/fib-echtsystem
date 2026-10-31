@@ -43,6 +43,14 @@ async function main(){
  assert.equal((await pool.query('select title from fib.findings')).rows[0].title,input.title);
  const result=await db.transaction(async tx=>{const r=await confirmEvent(actor,{findingId:one.findingId,title:'Veröffentlichung eines Beschlussvorschlags'},tx);if(!r.ok)throw Error(r.reason);return r;});
  assert.equal(result.ok,true);assert.equal(await count('events'),1);assert.equal(await count('event_findings'),1);assert.equal(await count('messages'),0);
+ // Schema-only downstream navigation: fixtures represent already approved process/topic objects.
+ const processId=(await pool.query("insert into fib.processes(title) values('Existing process') returning id")).rows[0].id;
+ const topicId=(await pool.query("insert into fib.topics(title) values('Existing topic') returning id")).rows[0].id;
+ await pool.query('insert into fib.event_processes(event_id,process_id) values($1,$2)',[result.eventId,processId]);
+ await pool.query("insert into fib.process_topics(process_id,topic_id,significance) values($1,$2,'relevant')",[processId,topicId]);
+ assert.equal((await pool.query('select pt.topic_id from fib.event_findings ef join fib.event_processes ep using(event_id) join fib.process_topics pt using(process_id) where ef.finding_id=$1',[one.findingId])).rows[0].topic_id,topicId);
+ await assert.rejects(()=>pool.query('insert into fib.event_processes(event_id,process_id) values($1,$2)',[result.eventId,processId]),/duplicate key/);
+ await assert.rejects(()=>pool.query("insert into fib.event_topics(event_id,topic_id,significance) values($1,$2,'invented')",[result.eventId,topicId]),/check constraint/);
  // Native n:m relationships and FK integrity, without bypassing editorial service to claim UI integration.
  await assert.rejects(()=>pool.query('insert into fib.event_findings values(gen_random_uuid(),$1,null,null,now())',[one.findingId]),/foreign key/);
  const c=await pool.connect();try{await c.query('begin');await c.query('set local role anon');await assert.rejects(()=>c.query('select * from fib.findings'),/permission denied/);await c.query('rollback');}finally{c.release();}
