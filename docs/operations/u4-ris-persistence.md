@@ -159,3 +159,10 @@ Ereignisanlage. Beziehungsprüfung verwendet denselben Prüfservice für RIS- un
 Gemeinde-Ereignisse. API-Vertrag, Freigabegrenze und Tests stehen im
 [Bediennachweis](u4-editorial-ui-acceptance.md). Neue UI-Aktionen bleiben wie die
 RIS-Struktur hinter `FIB_RIS_STRUCTURE_ENABLED`; keine zusätzliche Migration oder Rechteausweitung.
+
+## Änderungshistorie
+
+| Version | Änderung |
+|---|---|
+| 1.1 | Reguläre Oberflächenanbindung und gemeinsamer Quellen-/Beziehungsweg aus PR #349 verknüpft |
+| 1.0 | Persistente Fachstruktur, Scanner, API und isolierte Prüfung aus PR #348 |

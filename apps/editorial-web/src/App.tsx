@@ -254,6 +254,7 @@ export function App() {
 
   function openSourceSection(mode: 'findings' | 'sessions', findingId: string | null = null) {
     if (!confirmLeave()) return;
+    setEventListError(null);
     setSourceFindingId(findingId);
     setSourceNavigationKey(key => key + 1);
     navigateTo(mode);
@@ -659,6 +660,7 @@ export function App() {
   }
 
   async function openListedEvent(eventId: string) {
+    setEventListError(null);
     setServiceRunning(true);
     setServiceError(null);
     const { data, error } = await supabase.functions.invoke<EventResult>('fib-get-event', {
@@ -1421,6 +1423,7 @@ export function App() {
         {navigationOpen && <button className="nav-backdrop" aria-label="Navigation schließen" onClick={() => setNavigationOpen(false)} />}
 
         <main className="content-shell">
+        {(view==='findings'||view==='sessions')&&eventListError&&<p className="error" role="alert">{eventListError}</p>}
         {(view==='findings'||view==='sessions')&&<SourceWorkspace key={sourceNavigationKey} mode={view} initialFindingId={sourceFindingId} onHome={()=>navigateTo('dashboard')} onOpenEvent={id=>void openListedEvent(id)} registerLeaveGuard={guard=>{sourceLeaveRef.current=guard;}}/>}
         {view === 'topics' && (
           <section className="panel card-headed fib-topic-screen">

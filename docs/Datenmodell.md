@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 3.1 | 31.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
+| 3.2 | 31.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
 
 ## 1. Zweck und Geltung
 
@@ -761,6 +761,7 @@ Nicht relevante Fundstellen werden nicht allein wegen ihrer Relevanzentscheidung
 
 | Version | Datum | Änderung |
 |---|---|---|
+| 3.2 | 31.10.2026 | Technischen UI-Nachweis und gemeinsame Quellen-/Beziehungsobjekte verknüpft; keine Änderung der fachlichen Kardinalitäten. |
 | 3.1 | 31.10.2026 | G3-Gesamtkonsolidierung: zentrales Datenmodell zur Integrationsquelle gestrafft; Wissenskern, strukturierter Redaktionsstand, Quellen/Fundstellen, Beobachtungsauftrag/Recherchelauf, Sitzung/Beschluss, Referenzwissen, Referenzmaßstab, „Mehr wissen?“, Bilder, AI Tasks, Persistenz, Plausibilität/Freigabe und gemeinsame Fachfunktionsschicht integriert. Veraltete offene G3-Punkte entfernt; Vorlage als Fundstelle und spätere Behandlung/Beschlussfassung als getrennte Ereignisentwicklung konsolidiert. Verbleibende Fragen ausdrücklich auf technische/physische Modellierung begrenzt. |
 | 2.1 | 05.10.2026 | Schlankes Referenzwissen in das konzeptionelle G3-Datenmodell integriert. |
 | 2.0 | 04.10.2026 | Sitzung und TOP in den Wissenskern integriert. |
