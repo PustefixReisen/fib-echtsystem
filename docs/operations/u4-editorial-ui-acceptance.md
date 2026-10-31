@@ -75,6 +75,13 @@ Tabellenname `ris_relation_suggestions` begründet keinen RIS-Sondertyp für Ere
 Gremium, beobachtete Revision, letzte 50 Snapshots und 100 unveränderliche Prüfvermerke.
 Es werden keine neuen DB-Rechte, Tabellen, RPCs oder Browserdirektzugriffe eingerichtet.
 
+## Persönliche Nutzerabnahme
+
+Die [Anwenderanleitung](u4-persoenliche-nutzerabnahme.md) beschreibt Zugang, Anmeldung,
+die drei Fälle und Rückmeldungen ohne interne Implementierungskenntnisse.
+[Einrichtung](u4-user-acceptance-setup.md) ist getrennt dokumentiert.
+Der vorbereitete Launcher ersetzt keine bereits bereitgestellte Umgebung.
+
 ## Reproduzierbarer redaktioneller Prüfdurchgang
 
 Nur in einer isolierten, migrierten Prüfumgebung mit erfassten Referenzdaten durchführen.

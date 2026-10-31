@@ -34,7 +34,7 @@ try{
  const full=d.extracted_text;
  const find=(prefix,suffix)=>{
    const a=full.indexOf(prefix),b=full.indexOf(suffix,a);
-   if(a<0||b<a)throw Error('Originaltext weicht von Referenz ab; keine Beschlusspunkte erfunden.');
+   if(a<0||b<a||full.indexOf(prefix,a+prefix.length)>=0)throw Error('Originaltext weicht von Referenz ab; keine Beschlusspunkte erfunden.');
    return full.slice(a,b+suffix.length);
  };
  const cases=[

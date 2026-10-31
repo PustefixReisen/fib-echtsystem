@@ -8,6 +8,7 @@ import { createServer } from 'node:net';
 const repo=resolve(dirname(fileURLToPath(import.meta.url)),'../..');
 process.chdir(repo);process.umask(0o077);
 const command=process.argv[2]??'start';
+if(['help','--help','-h'].includes(command)){console.log('npm run acceptance:ris -- start [--fixtures]\nBeenden: Ctrl+C; gleicher Start setzt den privaten Bestand fort.\nLöschen: npm run acceptance:ris -- reset --confirm=RESET_LOCAL_ACCEPTANCE');process.exit(0);}
 const root=resolve(process.env.FIB_ACCEPTANCE_STATE_DIR??join(homedir(),'.local/state/fib-ris-acceptance'));
 if(root===repo||root.startsWith(repo+'/')||root==='/'||root===homedir())throw Error('Privater Zustand muss außerhalb des Repositorys liegen.');
 if(existsSync(root)&&lstatSync(root).isSymbolicLink())throw Error('Zustandsordner darf kein Symlink sein.');
@@ -71,6 +72,7 @@ try{
  await ready('http://127.0.0.1:4173',web);
  const u=f.users.editor;
  writeFileSync(join(root,'Zugang.txt'),'FIB – ausschließlich lokales Testkonto\nAdresse: http://127.0.0.1:4173\nE-Mail: '+u.email+'\nPasswort: '+u.password+'\nTOTP-Einrichtungsschlüssel: '+u.secret+'\nIn einer Authenticator-App als zeitbasiertes Konto (6 Stellen, 30 Sekunden) eintragen.\nDiese Datei niemals hochladen/versenden. Kein produktives Passwort verwenden.\n',{mode:0o600});
+ if(!existsSync(join(root,'Rueckmeldungen.md')))writeFileSync(join(root,'Rueckmeldungen.md'),'# Persönliche FIB-Abnahme\n\nDatenmodus: '+config.mode+'\nDatum / Entwicklungsstand: \n\n## Prüffall / Objekt\n\nBedienhandlung: \nErwartet: \nTatsächlich: \nAuswirkung: \nBewertung (bestätigt / teilweise bestätigt / abweichend / nicht geprüft): \n\nKeine Zugangsdaten oder TOTP-Schlüssel eintragen. Diese Datei bleibt privat.\n',{mode:0o600});
  console.log('\nLokale Abnahme bereit: http://127.0.0.1:4173\nDatenmodus: '+config.mode+'\nPrivater Zugang: '+join(root,'Zugang.txt')+'\nCtrl+C beendet die Dienste und erhält deine Bearbeitungen. Gleicher Start setzt sie fort.\nKein öffentlich erreichbarer Zugang.');
  await new Promise((done,reject)=>{const t=setInterval(()=>{if(stopping){clearInterval(t);done();}else if(children.some(p=>p.exitCode!==null)){clearInterval(t);reject(Error('Ein lokaler Dienst ist ausgefallen. Daten bleiben erhalten; private Protokolle prüfen.'));}},500);});
 }catch(e){console.error(e.message);process.exitCode=1;}finally{await stop();}

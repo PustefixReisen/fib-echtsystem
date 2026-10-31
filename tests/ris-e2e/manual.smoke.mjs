@@ -48,7 +48,7 @@ try{
  await db.end();
  await page.locator('.side-nav').getByRole('button',{name:'Sitzungen',exact:true}).click();
  await page.locator('.work-item').filter({hasText:'GR/439/2026'}).getByRole('button',{name:'Sitzung öffnen'}).click();
- const top6=await page.getByLabel('Tagesordnungspunkt',{exact:true}).locator('option').filter({hasText:'TOP 6 -'}).getAttribute('value');
+ const top6=await page.getByLabel('Tagesordnungspunkt',{exact:true}).locator('option').filter({hasText:/^TOP 6\b/}).getAttribute('value');
  await page.getByLabel('Tagesordnungspunkt',{exact:true}).selectOption(top6);
  assert.equal(await page.locator('section').filter({has:page.getByRole('heading',{name:'Tatsächliche Beschlüsse',exact:true})}).locator('article').count(),2);
  await page.locator('.side-nav').getByRole('button',{name:'Fundstellen',exact:true}).click();
