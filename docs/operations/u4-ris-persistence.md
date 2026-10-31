@@ -55,7 +55,9 @@ Die Migration ändert weder `public` noch Default-Grants, Zugangsdaten oder Cron
 4. PDFs erhalten Byte-Hashes und Text über fest gepinntes `unpdf@2.1.0`.
    Unbekannte PDFs ohne Sitzungs-/TOP-Kontext bleiben Quellenbeobachtungen.
    Kein OCR, keine automatische Beurteilung des Textinhalts.
-5. Gleiche Inhalte werden wiederverwendet. Änderungen erhalten unveränderliche
+5. Download-Queryvarianten derselben Dokument-ID werden kanonisiert; eine bereits
+   vorhandene Fundstelle mit alter Download-URL wird wiederverwendet. Mehrdeutige
+   bestehende Fundstellen werden zur Prüfung zurückgewiesen. Gleiche Inhalte werden wiederverwendet. Änderungen erhalten unveränderliche
    Versionen. Veraltete Beobachtungen werden zurückgewiesen. Ein Rückwechsel zu
    früheren Bytes setzt den aktuellen Zeiger auf die bereits vorhandene Fassung.
 6. Weggefallene Zeilen löschen keine redaktionellen Objekte. Die zuletzt tatsächlich
@@ -69,6 +71,8 @@ unbekannte RIS-Seitenformen benötigen Prüfung. Doppelte TOP-Identitäten oder
 unvollständige Sitzungsseiten brechen die Verarbeitung ab. Eine mehrdeutige
 Vorlagenzeile bleibt im Snapshot belegt und wird nicht beliebig zugeordnet.
 PDF-Rotation kann spätere Inhaltsprüfungen über mehrere Aufrufe verteilen.
+Das Ausschalten des Features bewahrt den Struktur-Cursor für die spätere Wiederaufnahme;
+bestehende Quellenbeobachtungen mit alten URL-Varianten werden nicht gelöscht.
 
 ## API und Fachservice
 

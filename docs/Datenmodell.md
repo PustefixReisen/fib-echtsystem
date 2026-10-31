@@ -41,7 +41,7 @@ Deshalb wiederholt dieses Dokument spezialisierte Detailregeln nicht vollständi
 Detailquellen insbesondere:
 
 - Persistenz/Lebenszyklus: `docs/Persistenz-und-Lebenszyklusmodell.md`
-- Sitzung/Beschluss: `docs/Sitzungs-und-Beschlussmodell.md`
+- Sitzung/Beschluss: [Fachhandbuch Kapitel 07](fachhandbuch/07-Sitzungen-und-Beschluesse-Entwurf-2026-10-26.md); historische Herleitung in `docs/Sitzungs-und-Beschlussmodell.md`
 - Wirkung: `docs/Wirkungsmodell.md`
 - Beobachtung/Recherchelauf: `docs/Beobachtungs-und-Recherchemodell.md`
 - „Mehr wissen?“: `docs/Mehr-wissen-Modell.md`
@@ -365,7 +365,7 @@ Geklärte oder gegenstandslos gewordene Fragen werden nicht gelöscht; Statusän
 
 ## 8. Sitzung, TOP und Beschluss
 
-Das Detailmodell steht in `docs/Sitzungs-und-Beschlussmodell.md`.
+Das verbindliche Detailmodell steht in [Fachhandbuch Kapitel 07](fachhandbuch/07-Sitzungen-und-Beschluesse-Entwurf-2026-10-26.md); `docs/Sitzungs-und-Beschlussmodell.md` dokumentiert die historische Herleitung.
 
 ### 8.1 Sitzung und TOP
 

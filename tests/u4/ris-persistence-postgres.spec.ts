@@ -200,6 +200,10 @@ async function main() {
       }),
     /missing/,
   );
+  await pool.query(
+    "insert into fib.findings(source_id,title,original_url) values($1,$2,$3)",
+    [sourceId, "Vorhandener Redaktionstitel", url + "&type=do"],
+  );
   const finding = await run({
     action: "ris_accept_finding",
     versionId,
@@ -213,6 +217,10 @@ async function main() {
     title: "Niederschrift 15.10.2026",
   });
   assert.equal(await count("findings"), 1);
+  assert.equal(
+    (await first("select title from fib.findings")).title,
+    "Vorhandener Redaktionstitel",
+  );
   assert.equal(await count("finding_versions"), 1);
   for (const t of ["events", "messages", "processes", "topics"])
     assert.equal(await count(t), 0);
@@ -595,6 +603,138 @@ async function main() {
       ),
     /check constraint/,
   );
+  // Actual published no-vote and rejected results, explicitly reviewed as separate events.
+  await run({
+    action: "ris_review_document",
+    linkId: link.id,
+    status: "confirmed",
+    kind: "minutes",
+    rationale: "Beleg für weitere Referenzfälle wieder ausdrücklich bestätigt",
+  });
+  const currentMinutes = (
+    await first(
+      "select latest_version_id from fib.ris_documents where source_url=$1",
+      [url],
+    )
+  ).latest_version_id;
+  await run({
+    action: "ris_accept_finding",
+    versionId: currentMinutes,
+    sourceId,
+    title: "Vorhandener Titel bleibt",
+  });
+  for (const example of [
+    {
+      number: "2",
+      title: "Rücknahme des Hundewiesenantrags",
+      quote: text.slice(0, text.indexOf("[… Ausschnitt …]")).trim(),
+      result: "no_vote",
+      yes: null,
+      no: null,
+    },
+    {
+      number: "3",
+      title: "Abstimmung zum Parkanlagenantrag",
+      quote: text.split("[… Ausschnitt …]")[1].trim(),
+      result: "rejected",
+      yes: 7,
+      no: 13,
+    },
+  ]) {
+    const agendaId = (
+      await first(
+        "select id from fib.ris_agenda_items where session_id=$1 and number=$2",
+        [a.sessionId, example.number],
+      )
+    ).id;
+    const ev = await tx(async (db) => {
+      const r = await confirmEvent(
+        {
+          actorKind: "human",
+          userId: uid,
+          role: "editor",
+          active: true,
+          mfaLevel: "aal2",
+        },
+        { findingId: finding.findingId!, title: example.title },
+        {
+          queryOne: async <T>(q: string, p: readonly unknown[]) =>
+            ((await db.unsafe(q, [...p]))[0] ?? null) as T | null,
+        },
+      );
+      if (!r.ok) throw Error(r.reason);
+      return r;
+    });
+    await pool.query(
+      "insert into fib.edit_locks(object_type,object_id,user_id,expires_at) values('event',$1,$2,now()+interval '1 hour')",
+      [ev.eventId, uid],
+    );
+    await run({
+      action: "ris_link_event",
+      agendaId,
+      eventId: ev.eventId,
+      role: "decision",
+      rationale: "Tatsächliche Behandlung laut Niederschrift",
+    });
+    const candidate = await run({
+      action: "ris_suggest",
+      agendaId,
+      versionId: currentMinutes,
+      kind: "decision",
+      origin: "editor",
+      payload: {
+        wording: example.quote.split("Abstimmung:")[0].trim(),
+        evidenceQuote: example.quote,
+        eventId: ev.eventId,
+        pointKey: "1",
+        result: example.result,
+        yes: example.yes,
+        no: example.no,
+      },
+    });
+    await run({
+      action: "ris_review_suggestion",
+      suggestionId: candidate.suggestionId,
+      status: "confirmed",
+      rationale: "Originalwortlaut und Ergebnis geprüft",
+    });
+  }
+  assert.equal(await count("ris_decision_points"), 4);
+  assert.equal(
+    (await first("select count(*) from fib.ris_votes where result='no_vote'"))
+      .count,
+    "1",
+  );
+  assert.equal(
+    (await first("select no_count from fib.ris_votes where result='rejected'"))
+      .no_count,
+    13,
+  );
+  const duplicate = await first(
+    "insert into fib.findings(source_id,title,original_url) values($1,$2,$3) returning id",
+    [sourceId, "synthetic duplicate", url],
+  );
+  await assert.rejects(
+    () =>
+      run({
+        action: "ris_accept_finding",
+        versionId: currentMinutes,
+        sourceId,
+        title: "nicht willkürlich auswählen",
+      }),
+    /ambiguous/,
+  );
+  await pool.query("delete from fib.findings where id=$1", [duplicate.id]);
+  await pool.query("update fib.app_users set active=false where user_id=$1", [
+    uid,
+  ]);
+  await assert.rejects(
+    () => run({ action: "ris_read", sessionId: a.sessionId }),
+    /missing/,
+  );
+  await pool.query("update fib.app_users set active=true where user_id=$1", [
+    uid,
+  ]);
   // Positive approval lifecycle is synthetic and explicitly separate from the real excerpts.
   const approvalText =
     "Synthetischer Prüffall: Die Niederschrift vom 15.10.2026 wird genehmigt.";
@@ -648,6 +788,19 @@ async function main() {
     "approved",
   );
   assert.equal(await count("ris_minutes_approvals"), 1);
+  const otherAgenda = await first(
+    "select id from fib.ris_agenda_items where session_id=$1 limit 1",
+    [later.sessionId],
+  );
+  await assert.rejects(
+    () =>
+      pool.query(
+        "insert into fib.ris_document_links(session_id,agenda_id,document_id,snapshot_id) values($1,$2,$3,$4)",
+        [a.sessionId, otherAgenda.id, link.document_id, link.snapshot_id],
+      ),
+    /foreign key/,
+  );
+
   assert.equal(await count("messages"), 0);
   console.log(
     "RIS relational persistence + explicit finding/event/process/topic workflow, real excerpts, votes, unknowns, versions, races, rollback, RLS: passed",

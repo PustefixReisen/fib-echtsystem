@@ -129,7 +129,7 @@ export async function handleRis(req:Request,mode:'interactive'|'scheduler'='inte
   const previousSerialized=previous?JSON.stringify(previous):null;
   if(mode==='scheduler'){
    const checks=dueStatus(previous?.cadenceStates??{});
-   if(!structureState?.queue.length&&!checks.find(x=>x.cadence===cadence)?.due)return reply({mode:'scheduler',skipped:'not_due',dueChecks:checks});
+   if(!(structureEnabled&&structureState?.queue.length)&&!checks.find(x=>x.cadence===cadence)?.due)return reply({mode:'scheduler',skipped:'not_due',dueChecks:checks});
   }
   if(backfill && (!previous || previous.pending.length!==0 || previous.failures.length!==0))return reply({error:'backfill_requires_completed_ris_scan'},409);
   const priorState=previous?.cadenceStates?.[cadence];
@@ -140,7 +140,9 @@ export async function handleRis(req:Request,mode:'interactive'|'scheduler'='inte
   const sessionUrls=new Set<string>(structureState?.sessions??[]);
   const snapshots:Awaited<ReturnType<typeof parseRisStructure>>[]=[];
   const visited=new Set(cycleRestart?[]:(activeState?.visited??[]));
-  const knownDocs=new Set(previous?.documents??[]);
+  const canonicalDocument=(u:string)=>{if(!structureEnabled)return u;const canonical=risUrl(u);if(!canonical||new URL(canonical).pathname!=='/getfile.asp')throw Error('invalid_document_cursor');return canonical;};
+  const previousDocuments=(previous?.documents??[]).map(canonicalDocument);
+  const knownDocs=new Set(previousDocuments);
   const pending=[...(backfill?[]:cycleRestart?[entry]:(activeState?.pending?.length?activeState.pending:[entry]))];
   const known=new Set([...visited,...pending]);
   const failures=[...(activeState?.failures??[])];
@@ -154,7 +156,7 @@ export async function handleRis(req:Request,mode:'interactive'|'scheduler'='inte
     const result=await page(u);
     if(!result.docs.length&&!result.navigation.length)throw new Error('empty_release_page');
     if(structureEnabled)for(const linked of result.structureLinks)if(!structureVisited.has(linked)&&!structureQueue.includes(linked))structureQueue.push(linked);
-    result.docs.forEach(x=>knownDocs.add(x));visited.add(u);
+    result.docs.forEach(x=>knownDocs.add(canonicalDocument(x)));visited.add(u);
     releaseViews.set(u,{url:u,releaseSince:result.releaseSince,checkedAt:new Date().toISOString()});
     for(let i=failures.length-1;i>=0;i--)if(failures[i].url===u)failures.splice(i,1);
     for(const linked of result.navigation)if(!known.has(linked)){known.add(linked);pending.push(linked);}
@@ -184,8 +186,8 @@ export async function handleRis(req:Request,mode:'interactive'|'scheduler'='inte
   const cadenceStates={...(previous?.cadenceStates??{}),[cadence]:{pending:current.pending,visited:current.visited,failures:current.failures,releaseViews:current.releaseViews,lastCompleteAt:complete?new Date().toISOString():(activeState?.lastCompleteAt??null),lastFailedAt:failures.length?new Date().toISOString():(activeState?.lastFailedAt??null),lastStatus:runStatus,lastError:failures.length?failures[0]?.error??'RIS-Abruffehler':null}};
   const activeErrors=Object.entries(cadenceStates).filter(([,v])=>v.failures.length>0).map(([key])=>key);
   const sourceError=activeErrors.length?'RIS-Prüflücke: '+activeErrors.join(', '):null;
-  const stored={...current,cadenceStates,...(structureEnabled?{structureState:{queue:structureQueue,visited:[...structureVisited],sessions:[...sessionUrls]}}:{})};
-  const newly=current.documents.filter(x=>!previous?.documents?.includes(x));
+  const stored={...current,cadenceStates,...(structureEnabled?{structureState:{queue:structureQueue,visited:[...structureVisited],sessions:[...sessionUrls]}}:structureState?{structureState}:{})};
+  const newly=current.documents.filter(x=>!previousDocuments.includes(x));
   if(payload.commit!==true)return reply({mode:'dry_run',processed,documents:current.documents.length,newCount:newly.length,pending:pending.length,complete,failures:failures.length,cycleRestart,firstFailure:failures[0]?.error??null,releaseViews:current.releaseViews,...coverageResult,cadenceStates,dueChecks:dueStatus(cadenceStates)});
   const pdfs:{url:string;hash:string;text:string|null}[]=[];
   const target=current.documents.length;

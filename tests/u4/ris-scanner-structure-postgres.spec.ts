@@ -309,10 +309,15 @@ async function main() {
     503,
   );
   // Feature off retains the old scanner behavior without touching structure.
+  const structureBeforeDisable = JSON.parse(await cursor()).structureState;
   enabled = false;
   const count = await revisions();
   await invoke();
   assert.equal(await revisions(), count);
+  assert.deepEqual(
+    JSON.parse(await cursor()).structureState,
+    structureBeforeDisable,
+  );
   console.log(
     "Actual RIS handler + actual migration: active feature, atomic snapshots/checkpoints, PDF failure, rollback, repeat, late publication, runtime role and disabled feature passed",
   );

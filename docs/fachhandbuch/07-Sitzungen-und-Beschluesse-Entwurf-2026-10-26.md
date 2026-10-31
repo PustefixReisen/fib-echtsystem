@@ -1,4 +1,4 @@
-# 07 – Sitzungen und Beschlüsse (fachlicher Lese- und Migrationsentwurf)
+# 07 – Sitzungen und Beschlüsse
 
 **Stand:** fachlich abgenommen am 29.10.2026; technischer Nachweis ergänzt am 31.10.2026. Der historische Dateiname ändert die Geltung nicht; siehe [verbindlichen Handbuchstand](README.md).
 

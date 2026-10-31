@@ -1,4 +1,4 @@
-import { RIS_ORIGIN, type RisSql } from "./ris-structure.ts";
+import { RIS_ORIGIN, risUrl, type RisSql } from "./ris-structure.ts";
 /** Run inside one transaction. Actor is supplied by verified server auth, never request JSON. */
 export type RisActor = {
   userId: string;
@@ -208,9 +208,17 @@ export async function risEditorial(
     await tx.unsafe("select pg_advisory_xact_lock(hashtextextended($1,0))", [
       input.sourceId + "|" + v.source_url,
     ]);
-    const matches = await tx.unsafe(
-      "select id from fib.findings where source_id=$1 and original_url=$2",
-      [input.sourceId, v.source_url],
+    // Reuse legacy download-query variants, but refuse ambiguous existing findings.
+    const aliases = await tx.unsafe(
+      "select id,original_url from fib.findings where source_id=$1 and original_url like $2 and original_url ~ $3",
+      [
+        input.sourceId,
+        RIS_ORIGIN + "/getfile.asp?%",
+        "[?&]id=" + new URL(v.source_url).searchParams.get("id") + "(&|$)",
+      ],
+    );
+    const matches = aliases.filter(
+      (row) => risUrl(row.original_url) === v.source_url,
     );
     if (matches.length > 1) throw Error("ambiguous_existing_findings");
     if (v.finding_id && matches[0]?.id !== v.finding_id)
