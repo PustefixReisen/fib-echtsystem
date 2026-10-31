@@ -8,6 +8,7 @@ on:
       - 'tests/u4/fib-schema-restore.mjs'
       - 'tests/u4/ris-shared-operator-guards.mjs'
       - '.github/workflows/ris-shared-readiness.yml'
+      - 'scripts/backup/**'
 permissions:
   contents: read
 jobs:
@@ -54,3 +55,4 @@ jobs:
           export FIB_BACKUP_DIR="$RUNNER_TEMP/fib-private-backup"
           node scripts/ris-shared-apps/backup.mjs --out="$FIB_BACKUP_DIR"
           node tests/u4/fib-schema-restore.mjs
+          python scripts/backup/restore-local.py "$FIB_BACKUP_DIR/fib.dump" --sha256="$(sha256sum "$FIB_BACKUP_DIR/fib.dump" | cut -d ' ' -f1)" --report="$RUNNER_TEMP/fib-local-restore-report.json"

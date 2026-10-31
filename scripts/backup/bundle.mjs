@@ -13,9 +13,9 @@ function files(root,prefix=''){
  }
  return result;
 }
-export function verify(root,commit,now=Date.now()){
+export function verify(root,commit,now=Date.now(),allowHistorical=false){
  const m=JSON.parse(readFileSync(join(root,'release.json')));
- if(m.format!==1||m.project!=='apaubomxffcwtzjimori'||m.commit!==commit||!Number.isFinite(Date.parse(m.createdAt))||now-Date.parse(m.createdAt)>3600000||Date.parse(m.createdAt)>now+60000)throw Error('Wrong target, commit or expired backup');
+ if(m.format!==1||m.project!=='apaubomxffcwtzjimori'||m.commit!==commit||!Number.isFinite(Date.parse(m.createdAt))||(!allowHistorical&&now-Date.parse(m.createdAt)>3600000)||Date.parse(m.createdAt)>now+60000)throw Error('Wrong target, commit or expired backup');
  const actual=files(root).filter(p=>p!=='release.json');
  if(JSON.stringify(actual)!==JSON.stringify(Object.keys(m.files).sort()))throw Error('Incomplete or extra backup files');
  for(const p of actual)if(hash(readFileSync(join(root,p)))!==m.files[p])throw Error('Backup checksum mismatch');
@@ -25,6 +25,7 @@ export function verify(root,commit,now=Date.now()){
  for(const [p,digest] of Object.entries(db.files))if(!['fib.dump','auth-ids.json'].includes(p)||hash(readFileSync(join(root,'database',p)))!==digest)throw Error('Invalid database manifest');
  if(Object.keys(db.files).length!==2||readFileSync(join(root,'database/fib.dump')).subarray(0,5).toString()!=='PGDMP')throw Error('Invalid custom dump');
  const inventory=JSON.parse(readFileSync(join(root,'edge/inventory.json')));
+ if(!['fib-editorial-write','fib-u4-ris-pilot','fib-u4-pilot'].every(slug=>inventory.some(f=>f.slug===slug)))throw Error('Required FIB functions missing');
  if(!Array.isArray(inventory)||!inventory.length||inventory.some(f=>!/^fib-[a-z0-9-]+$/.test(f.slug)||!Number.isInteger(f.version)||typeof f.verify_jwt!=='boolean'||!actual.includes('edge/'+f.slug+'/index.ts')))throw Error('Incomplete edge inventory');
  const evidence=JSON.parse(readFileSync(join(root,'configuration/evidence.json')));
  if(evidence.commit!==commit||!['databaseRestore','edgeExport','frontendExport','configurationCapture'].every(k=>evidence[k]===true))throw Error('Missing operator verification');
@@ -42,7 +43,7 @@ if(process.argv[1]&&resolve(process.argv[1])===fileURLToPath(import.meta.url)){
  try{
  const [action,root,commit]=process.argv.slice(2);privatePath(root);
  if(action==='seal')console.log(seal(root,commit));
- else if(action==='verify'){const expected=process.env.FIB_BACKUP_MANIFEST_SHA256;if(!expected||hash(readFileSync(join(root,'release.json')))!==expected)throw Error('Reviewed manifest checksum required');verify(root,commit);console.log('Private release backup verified');}
+ else if(['verify','restore-verify'].includes(action)){const expected=process.env.FIB_BACKUP_MANIFEST_SHA256;if(!expected||hash(readFileSync(join(root,'release.json')))!==expected)throw Error('Reviewed manifest checksum required');verify(root,commit,Date.now(),action==='restore-verify');console.log('Private release backup verified');}
  else throw Error('Use seal|verify PRIVATE_DIRECTORY FULL_RELEASE_COMMIT');
  }catch{console.error('Backup validation failed; no deployment permitted. Inspect private inputs.');process.exitCode=1;}
 }

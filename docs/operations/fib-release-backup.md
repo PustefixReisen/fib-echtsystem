@@ -1,6 +1,6 @@
 # FIB – wiederverwendbare Release-Sicherung
 
-Version 1.0 · 31.10.2026 · Josef Walter, mit KI-Unterstützung
+Version 1.1 · 31.10.2026 · Josef Walter, mit KI-Unterstützung
 
 Diese Routine erweitert PR #358 für alle FIB-Releases. Sie ist vorbereitet,
 aber weder auf Shared-Apps noch IONOS ausgeführt. Der Deployment-Workflow bleibt
@@ -51,7 +51,7 @@ und neue Exporte verwenden. Ein Hash ist kein tatsächlicher Restore-Nachweis.
 ## Externe Ablage und Actions
 
 Vorhandene private Nextcloud-/Back-In-Time-Kette nach ADR-010/011 weiterverwenden.
-Für Actions einen **geprüften rclone-crypt-Remote** namens `fibbackup` auf dieser
+Für Actions einen **geprüften rclone-crypt-Remote** namens `fib-backup-crypt` auf dieser
 Ablage konfigurieren; keine neue Cloud nötig. Schreibzugang beim Operator,
 Actions möglichst nur lesend. Schlüssel/Remote-Konfiguration im Secret
 `FIB_BACKUP_RCLONE_CONFIG`, nie im Repository. Upload mit rclone copy, anschließend
@@ -108,3 +108,56 @@ Die vorhandene Datei `~/FIB-Backups/fib-vor-ris-20261031.dump` liegt nur beim Au
 Sie ist kein vollständiges Release-Bundle und hier nicht zugänglich. Nicht erneut
 als bereits wiederhergestellt ausgeben. Für die aktuelle RIS-Bereitstellung fehlen
 weiterhin vollständige private Exporte, tatsächlicher Restore und externe Ablageprüfung.
+
+
+## Ergänzung: konkrete Sicherung und wiederverwendbare Erfassung
+
+Der Auftraggeber hat die konkrete 29-Tabellen-Datei inzwischen verschlüsselt über
+`fib-backup-crypt` (Basis `fib-nextcloud`) übertragen und zurückgeladen. Identische
+SHA-256-Werte belegen den bitgenauen Dateitransport, noch keinen Datenbank-Restore.
+Die bisherige Aussage über den offenen Restore bleibt bestehen.
+
+Einmalig Docker auf dem Ubuntu-Rechner bereitstellen und anschließend im ausgecheckten
+PR-Zweig folgenden Befehl ausführen (die bekannte Prüfsumme stammt aus dem bestätigten
+Rückübertragungstest):
+
+```bash
+python3 scripts/backup/restore-local.py \
+  "$HOME/FIB-Backups/fib-vor-ris-20261031.dump" \
+  --sha256=091dbbd8322b538c6a570e51583d34604583df61ef7bdc869c62ab44026789f4 \
+  --report="$HOME/FIB-Backups/restore-pruefung-20261031.json"
+```
+
+Der Bericht muss 29 Tabellen, aktivierte RLS und vorhandene Runtime-Leserechte zeigen.
+Er enthält Tabellenzählungen für den Vergleich mit der Quelle. Der Container hat kein
+Netzwerk, keine Host-Ports und wird samt Volumes auch bei Fehlern entfernt. Das Skript
+akzeptiert ausschließlich eine vertrauenswürdige eigene Sicherung; PostgreSQL-Dumps
+können ausführbaren SQL-Code enthalten. Es stellt zunächst Struktur/Daten wieder her,
+legt ausschließlich lokale Auth-FK-Platzhalter aus diesen Daten an und validiert danach
+Constraints und ACLs. Keine Verbindung zu Shared-Apps wird aufgebaut. Ohne Docker oder
+bei fehlenden Rollen/Abhängigkeiten: Abbruch, keine Ersatz-Wiederherstellung in Shared-Apps.
+
+`frontend.py PRIVATE_BUNDLE/frontend` lädt die tatsächlich veröffentlichte Redaktion
+lesend mit den bestehenden IONOS-SFTP-Variablen. Zusätzlich ist
+`FIB_SFTP_KNOWN_HOSTS` mit unabhängig geprüftem Hostschlüssel erforderlich; unbekannte
+Schlüssel werden nicht automatisch akzeptiert. Keine vollständigen lftp-Ausgaben in
+öffentliche Logs. Fehlerhafte Teilverzeichnisse nicht versiegeln oder wiederverwenden.
+
+Für Edge-Funktionen weiterhin vollständige bereitgestellte Dateien über den bestehenden
+Supabase-Verwaltungszugang exportieren: mindestens fib-editorial-write,
+fib-u4-ris-pilot und fib-u4-pilot samt relativen Modulen/Import-Maps. Der Bundle-Validator
+prüft diese drei Einträge und ihre Einstiegspunkte; Vollständigkeit transitiver Module
+bleibt eine explizite Operatorprüfung. Kein ungeprüfter CLI-/API-Downloader wird als
+fertiger automatischer Export ausgegeben. Featurezustände ebenfalls nur mit bestehendem
+berechtigtem Zugang erfassen, keine unbekannten Werte als false erfinden.
+
+Für ältere Rücknahmen `restore-verify` statt `verify` verwenden, weiterhin mit extern
+bekanntem `FIB_BACKUP_MANIFEST_SHA256`; nur die Ein-Stunden-Grenze entfällt. Zielcommit,
+Komponenten und Hashs werden weiterhin geprüft. Dieser Schritt führt noch keine
+Wiederherstellung aus.
+
+Die neue PG16/17-Matrix führt das lokale Restore-Skript zusätzlich am synthetischen
+Dump aus. Das ist ausdrücklich kein Restore der beim Auftraggeber liegenden Datei.
+PR #359 bleibt bis zu tatsächlichem lokalem Restore, vollständigen Exporten und Prüfung
+der Actions-Environment-/Secretberechtigungen **nicht betrieblich einsatzbereit**.
+Die neue Routine wird nicht aktiviert; externe Ablagezugänge werden nicht verändert.
