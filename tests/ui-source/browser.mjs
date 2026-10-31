@@ -152,6 +152,37 @@ try {
     .getByRole("button", { name: "Dokument bestätigen", exact: true })
     .click();
   await page.getByText("Dokumentzuordnung geprüft.", { exact: true }).waitFor();
+  // Evidence-bound status verification: missing exact quote is rejected.
+  const statusPanel = panel("Verfahrensstand prüfen");
+  await statusPanel.getByLabel("Verfahrensstand", { exact: true }).selectOption("treated");
+  await statusPanel.getByLabel("Beleg für Verfahrensstand", { exact: true }).selectOption("link2");
+  await statusPanel.getByLabel("Wortgetreuer Beleg für Verfahrensstand").fill("Nicht belegter Text");
+  await statusPanel.getByRole("button", { name: "Verfahrensstand ausdrücklich bestätigen" }).click();
+  await page.getByRole("alert").filter({ hasText: "missing_exact_evidence" }).waitFor();
+  await statusPanel.getByLabel("Wortgetreuer Beleg für Verfahrensstand")
+    .fill("Synthetischer UI-Prüftext: Vorschlag zur Förderung.");
+  await statusPanel.getByRole("button", { name: "Verfahrensstand ausdrücklich bestätigen" }).click();
+  await page.getByText("Verfahrensstand mit Quellenbeleg geprüft.", { exact: true }).waitFor();
+  assert.equal(await page.evaluate(() =>
+    window.calls.filter(c => c.action === "ris_review_agenda_status").at(-1).versionId), "v1");
+  await page.getByLabel("Tagesordnungspunkt", { exact: true }).selectOption("");
+  const approvalPanel = panel("Niederschriftsgenehmigung prüfen");
+  await approvalPanel.getByLabel("Genehmigende Sitzung").selectOption("later");
+  await approvalPanel.getByLabel("Genehmigungsdokument").selectOption("later-minutes-link");
+  await approvalPanel.getByLabel("Wortgetreuer Genehmigungsbeleg").fill("Unbelegt");
+  await approvalPanel.getByRole("button", {
+    name: "Niederschriftsgenehmigung ausdrücklich bestätigen",
+  }).click();
+  await page.getByRole("alert").filter({ hasText: "missing_exact_evidence" }).waitFor();
+  await approvalPanel.getByLabel("Wortgetreuer Genehmigungsbeleg")
+    .fill("Synthetischer UI-Beleg: Niederschrift genehmigt.");
+  await approvalPanel.getByRole("button", {
+    name: "Niederschriftsgenehmigung ausdrücklich bestätigen",
+  }).click();
+  await page.getByText("Niederschriftsgenehmigung mit späterem Sitzungsbeleg bestätigt.").waitFor();
+  await page.getByText("Niederschriftsgenehmigung:", { exact: false }).waitFor();
+  await page.getByLabel("Tagesordnungspunkt", { exact: true }).selectOption("t2");
+
   const event = await page.evaluate(
     () =>
       window.calls.find((c) => c.action === "source_create_event").requestId,
