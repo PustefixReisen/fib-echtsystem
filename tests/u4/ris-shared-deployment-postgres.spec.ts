@@ -4,6 +4,7 @@ import {randomUUID} from 'node:crypto';
 import pg from 'pg';
 import {parseRisStructure,persistRisStructure,persistRisDocument} from '../../supabase/functions/_shared/ris-structure.ts';
 import {withDevelopmentDataset} from '../../supabase/functions/_shared/development-datasets.ts';
+import {risEditorial} from '../../supabase/functions/_shared/ris-editorial.ts';
 import {sourceEditorial} from '../../supabase/functions/_shared/source-editorial.ts';
 import {sourceReadiness} from '../../supabase/functions/_shared/source-readiness.ts';
 import {adapter,datasetKeys,registerCreatedRows,reference,cleanupPlan,cleanup} from '../../scripts/ris-shared-apps/datasets.ts';
@@ -42,11 +43,11 @@ try{
  assert.equal((await sourceReadiness(adapter(runtime),false)).ready,false);
  const doc=await first("select d.*,v.id version_id from fib.ris_documents d join fib.ris_document_versions v on v.id=d.latest_version_id where source_url like '%id=75714'");
  const human={userId:actor,kind:'human' as const,aal:'aal2' as const};
- const accept={action:'source_accept',versionId:doc.version_id,sourceId:source,title:'[ENTWICKLUNG ris-test] Vorlage'};
- await assert.rejects(()=>transact(runtime,tx=>withDevelopmentDataset(tx,accept,()=>sourceEditorial(tx,human,accept))));
+ const accept={action:'ris_accept_finding',versionId:doc.version_id,sourceId:source,title:'[ENTWICKLUNG ris-test] Vorlage'};
+ await assert.rejects(()=>transact(runtime,tx=>withDevelopmentDataset(tx,accept,()=>risEditorial(tx,human,accept))));
  assert.equal((await first('select count(*) n from fib.findings')).n,'0');
  await owner.query('update fib.sources set active=true where id=$1',[source]);
- const finding=await transact(runtime,tx=>withDevelopmentDataset(tx,accept,()=>sourceEditorial(tx,human,accept)));
+ const finding=await transact(runtime,tx=>withDevelopmentDataset(tx,accept,()=>risEditorial(tx,human,accept)));
  const create={action:'source_create_event',findingId:finding.findingId,title:'[ENTWICKLUNG ris-test] Veröffentlichung',rationale:'Explicit synthetic CI decision',approval:true,requestId:randomUUID()};
  const event=await transact(runtime,async tx=>withDevelopmentDataset(tx,create,async()=>{
   await other.query("insert into fib.events(id,title) values($1,'Unmarked concurrent sentinel')",[outside]);
@@ -92,4 +93,4 @@ try{
 }finally{if(runtime!)await runtime.end();await other.end();await owner.end();}
 
 }
-main().catch(e=>{console.error(e.code??e.message);process.exitCode=1;});
+main().catch(e=>{console.error(e.stack??e.message);process.exitCode=1;});

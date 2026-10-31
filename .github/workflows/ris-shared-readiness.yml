@@ -5,6 +5,7 @@ on:
       - 'supabase/**'
       - 'scripts/ris-shared-apps/**'
       - 'tests/u4/ris-shared-deployment-postgres.spec.ts'
+      - 'tests/u4/fib-schema-restore.mjs'
       - '.github/workflows/ris-shared-readiness.yml'
 permissions:
   contents: read
@@ -34,3 +35,19 @@ jobs:
         env:
           U4_TEST_DATABASE_URL: postgres://postgres:integration_only@127.0.0.1:5432/fib_u4_test
         run: node --import tsx tests/u4/ris-shared-deployment-postgres.spec.ts
+      - name: Isolated schema-specific backup and restore with matching client major
+        env:
+          PG_CONTAINER: ${{ job.services.postgres.id }}
+          U4_TEST_DATABASE_URL: postgres://postgres:integration_only@127.0.0.1:5432/fib_u4_test
+        run: |
+          umask 077
+          mkdir -p "$RUNNER_TEMP/fib-pg-client"
+          cat > "$RUNNER_TEMP/fib-pg-client/pg_dump" <<'SH'
+          #!/bin/sh
+          exec docker exec -e PGHOST -e PGPORT -e PGUSER -e PGPASSWORD -e PGDATABASE -e PGSSLMODE "$PG_CONTAINER" pg_dump "$@"
+          SH
+          chmod 700 "$RUNNER_TEMP/fib-pg-client/pg_dump"
+          export PATH="$RUNNER_TEMP/fib-pg-client:$PATH"
+          export FIB_BACKUP_DIR="$RUNNER_TEMP/fib-private-backup"
+          node scripts/ris-shared-apps/backup.mjs --out="$FIB_BACKUP_DIR"
+          node tests/u4/fib-schema-restore.mjs

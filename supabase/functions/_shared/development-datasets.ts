@@ -49,7 +49,7 @@ export async function withDevelopmentDataset<T>(tx:RisSql,input:Record<string,an
  // Ignore unused/injected fields: only context actually consumed by the given action.
  const fields:Record<string,string[]>={source_scan:['source_scopes'],
   ris_review_document:['ris_document_links','ris_document_versions'],ris_accept_finding:['ris_document_versions'],
-  source_accept:['ris_document_versions','source_observations'],source_create_event:['findings'],
+  source_accept:['source_observations'],source_create_event:['findings'],
   ris_link_event:['ris_agenda_items','events'],ris_suggest:['ris_agenda_items','ris_document_versions'],
   ris_review_suggestion:['ris_suggestions'],source_propose_relation:['events','findings'],
   source_review_relation:['ris_relation_suggestions'],ris_propose_relation:['events'],ris_review_relation:['ris_relation_suggestions'],
