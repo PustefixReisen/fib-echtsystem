@@ -122,6 +122,9 @@ in keinem dieser Wege automatisch angelegt.
   Ausfall/Wiederanlauf, neue Niederschrift unter bekannter Sitzung, Feature aus,
   AAL1-Abweisung und Schutz gegen vorgetäuschte KI-Herkunft.
 
+Die CI prüft zusätzlich beide vorbereiteten Edge Functions mit `deno@2.9.6 check`;
+das ersetzt keinen Supabase-Deployment-/Smoke-Test.
+
 Die beiden PostgreSQL-Tests laufen in dieser Reihenfolge im vorhandenen
 `U4 PostgreSQL integration`-Workflow; sie akzeptieren nur localhost/127.0.0.1 und
 `fib_u4_test`. Die Testinstallation enthält die bestehenden Runtime-Policies und

@@ -100,37 +100,42 @@ export default {
         return json({ok:true,...result});
       }
 
+      const eventId=body.eventId;
+      if(typeof eventId!=='string'||!eventId)return json({error:'invalid_event_input'},400);
+
       const lock = await sql.unsafe(
         "select user_id from fib.edit_locks where object_type='event' and object_id=$1::uuid and user_id=$2 and expires_at>now()",
-        [body.eventId, userId],
+        [eventId, userId],
       );
       if (lock.length === 0) return json({ error: 'active_edit_lock_required' }, 409);
 
       if (body.action === 'update_finding_justification') {
-        if (typeof body.findingId !== 'string' || !/^[0-9a-f-]{36}$/i.test(body.findingId) ||
+        const findingId=body.findingId;
+        if (typeof findingId !== 'string' || !/^[0-9a-f-]{36}$/i.test(findingId) ||
             (typeof body.justification !== 'string' || !body.justification.trim() || body.justification.length > 2000)) return json({ error: 'invalid_justification' }, 400);
         const result = await sql.begin(async tx => {
-          const rows = await tx.unsafe('select justification from fib.event_findings where event_id=$1::uuid and finding_id=$2::uuid for update', [body.eventId,body.findingId]);
+          const rows = await tx.unsafe('select justification from fib.event_findings where event_id=$1::uuid and finding_id=$2::uuid for update', [eventId,findingId]);
           if (!rows.length) return 'missing';
           const newValue = body.justification?.trim() || null;
           if ((rows[0].justification ?? null) === newValue) return 'unchanged';
-          await tx.unsafe('update fib.event_findings set justification=$3 where event_id=$1::uuid and finding_id=$2::uuid',[body.eventId,body.findingId,newValue]);
-          await tx.unsafe('insert into fib.event_finding_justification_log (event_id,finding_id,actor_id,old_justification,new_justification) values ($1::uuid,$2::uuid,$3::uuid,$4,$5)',[body.eventId,body.findingId,userId,rows[0].justification,newValue]);
-          await tx.unsafe("insert into fib.object_last_edits (object_type,object_id,user_id,edited_at) values ('event',$1::uuid,$2,now()) on conflict (object_type,object_id) do update set user_id=excluded.user_id,edited_at=excluded.edited_at",[body.eventId,userId]);
+          await tx.unsafe('update fib.event_findings set justification=$3 where event_id=$1::uuid and finding_id=$2::uuid',[eventId,findingId,newValue]);
+          await tx.unsafe('insert into fib.event_finding_justification_log (event_id,finding_id,actor_id,old_justification,new_justification) values ($1::uuid,$2::uuid,$3::uuid,$4,$5)',[eventId,findingId,userId,rows[0].justification,newValue]);
+          await tx.unsafe("insert into fib.object_last_edits (object_type,object_id,user_id,edited_at) values ('event',$1::uuid,$2,now()) on conflict (object_type,object_id) do update set user_id=excluded.user_id,edited_at=excluded.edited_at",[eventId,userId]);
           return 'updated';
         });
         return result === 'missing' ? json({error:'association_not_found'},404) : json({ok:true});
       }
 
       if (body.action === 'update_finding_link') {
-        if (typeof body.findingId !== 'string' || !/^[0-9a-f-]{36}$/i.test(body.findingId)) return json({ error: 'invalid_finding_id' }, 400);
+        const findingId=body.findingId;
+        if (typeof findingId !== 'string' || !/^[0-9a-f-]{36}$/i.test(findingId)) return json({ error: 'invalid_finding_id' }, 400);
         if (typeof body.evidenceRole !== 'string' || !body.evidenceRole.trim() || body.evidenceRole.length > 120 ||
             (body.note !== null && body.note !== undefined && typeof body.note !== 'string') ||
             (typeof body.note === 'string' && body.note.length > 2000)) return json({ error: 'invalid_link_metadata' }, 400);
         const changed = await sql.begin(async tx => {
           const old = await tx.unsafe(
             'select evidence_role,note from fib.event_findings where event_id=$1::uuid and finding_id=$2::uuid for update',
-            [body.eventId, body.findingId],
+            [eventId, findingId],
           );
           if (!old.length) return false;
           const nextRole = body.evidenceRole!.trim();
@@ -138,15 +143,15 @@ export default {
           if (old[0].evidence_role === nextRole && (old[0].note ?? null) === nextNote) return true;
           await tx.unsafe(
             'update fib.event_findings set evidence_role=$3,note=$4 where event_id=$1::uuid and finding_id=$2::uuid',
-            [body.eventId, body.findingId, nextRole, nextNote],
+            [eventId, findingId, nextRole, nextNote],
           );
           await tx.unsafe(
             'insert into fib.event_finding_metadata_log (event_id,finding_id,actor_id,old_evidence_role,old_note,new_evidence_role,new_note) values ($1::uuid,$2::uuid,$3::uuid,$4,$5,$6,$7)',
-            [body.eventId, body.findingId, userId, old[0].evidence_role, old[0].note, nextRole, nextNote],
+            [eventId, findingId, userId, old[0].evidence_role, old[0].note, nextRole, nextNote],
           );
           await tx.unsafe(
             "insert into fib.object_last_edits (object_type,object_id,user_id,edited_at) values ('event',$1::uuid,$2,now()) on conflict (object_type,object_id) do update set user_id=excluded.user_id,edited_at=excluded.edited_at",
-            [body.eventId, userId],
+            [eventId, userId],
           );
           return true;
         });
@@ -154,20 +159,21 @@ export default {
       }
 
       if (body.action === 'unlink_finding') {
-        if (typeof body.findingId !== 'string' || !/^[0-9a-f-]{36}$/i.test(body.findingId)) return json({ error: 'invalid_finding_id' }, 400);
+        const findingId=body.findingId;
+        if (typeof findingId !== 'string' || !/^[0-9a-f-]{36}$/i.test(findingId)) return json({ error: 'invalid_finding_id' }, 400);
         const removed = await sql.begin(async tx => {
           const rows = await tx.unsafe(
             "delete from fib.event_findings where event_id=$1::uuid and finding_id=$2::uuid returning evidence_role,note",
-            [body.eventId, body.findingId],
+            [eventId, findingId],
           );
           if (rows.length === 0) return false;
           await tx.unsafe(
             "insert into fib.event_finding_change_log (event_id,finding_id,action,actor_id,previous_evidence_role,previous_note) values ($1::uuid,$2::uuid,'unlinked',$3::uuid,$4,$5)",
-            [body.eventId, body.findingId, userId, rows[0].evidence_role, rows[0].note],
+            [eventId, findingId, userId, rows[0].evidence_role, rows[0].note],
           );
           await tx.unsafe(
             "insert into fib.object_last_edits (object_type,object_id,user_id,edited_at) values ('event',$1::uuid,$2,now()) on conflict (object_type,object_id) do update set user_id=excluded.user_id,edited_at=excluded.edited_at",
-            [body.eventId, userId],
+            [eventId, userId],
           );
           return true;
         });
@@ -175,10 +181,11 @@ export default {
       }
 
       if (body.action === 'link_finding') {
-        if (typeof body.findingId !== 'string' || !/^[0-9a-f-]{36}$/i.test(body.findingId) ||
+        const findingId=body.findingId, justification=body.justification;
+        if (typeof findingId !== 'string' || !/^[0-9a-f-]{36}$/i.test(findingId) ||
             (body.restorePrevious !== undefined && typeof body.restorePrevious !== 'boolean'))
           return json({ error: 'invalid_finding_id' }, 400);
-        if (typeof body.justification !== 'string' || !body.justification.trim() || body.justification.length > 2000)
+        if (typeof justification !== 'string' || !justification.trim() || justification.length > 2000)
           return json({error:'justification_required'},400);
         const restored = await sql.begin(async tx => {
           const inserted = await tx.unsafe(
@@ -189,18 +196,18 @@ export default {
                 (select 1 from fib.events e where e.id=$1::uuid and e.status='confirmed')
              on conflict (event_id, finding_id) do nothing
              returning finding_id, justification`,
-            [body.eventId, body.findingId, body.justification.trim()],
+            [eventId, findingId, justification.trim()],
           );
           if (!inserted.length) return null;
           if (inserted[0].justification) {
             await tx.unsafe(
               'insert into fib.event_finding_justification_log (event_id,finding_id,actor_id,old_justification,new_justification) values ($1::uuid,$2::uuid,$3::uuid,null,$4)',
-              [body.eventId, body.findingId, userId, inserted[0].justification],
+              [eventId, findingId, userId, inserted[0].justification],
             );
           }
           await tx.unsafe(
             "insert into fib.object_last_edits (object_type,object_id,user_id,edited_at) values ('event',$1::uuid,$2,now()) on conflict (object_type,object_id) do update set user_id=excluded.user_id,edited_at=excluded.edited_at",
-            [body.eventId, userId],
+            [eventId, userId],
           );
           return inserted[0];
         });
@@ -208,6 +215,8 @@ export default {
         return json({ ok: true, justificationSaved: true });
       }
 
+      const title=body.title;
+      if(typeof title!=='string'||!title.trim())return json({error:'invalid_event_input'},400);
       const updated = await sql.unsafe(
         `update fib.events set title=$2,
          summary = case
@@ -217,14 +226,14 @@ export default {
          occurred_at=$4, updated_at=now()
          where id=$1::uuid and status='confirmed'
          returning id,title,summary,status,occurred_at`,
-        [body.eventId, body.title.trim(), body.summary ?? null, body.occurredAt ?? null],
+        [eventId, title.trim(), body.summary ?? null, body.occurredAt ?? null],
       );
       const row = updated[0] as any;
       if (!row) return json({ error: 'event_not_editable' }, 409);
 
       await sql.unsafe(
         "insert into fib.object_last_edits(object_type,object_id,user_id,edited_at) values ('event',$1::uuid,$2,now()) on conflict (object_type,object_id) do update set user_id=excluded.user_id,edited_at=excluded.edited_at",
-        [body.eventId, userId],
+        [eventId, userId],
       );
 
       return json({

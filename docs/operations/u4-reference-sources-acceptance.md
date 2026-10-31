@@ -136,7 +136,7 @@ in Issue #260.
 
 | Prüfung | Ausführung / Aussage |
 |---|---|
-| Typverträge | `npm run typecheck:core` |
+| Typverträge | `npm run typecheck:core`; zusätzlicher Deno-Check beider vorbereiteten Edge Functions im PostgreSQL-Workflow |
 | Bestehende Fachservices | `npm run test:fachservices`, 28 Fälle |
 | U4-Verträge und reale HTML-Referenzen | `npm run test:u4`, einschließlich `reference-sources.spec.ts` |
 | Monitor, RIS-Handler und Parallelität | vorhandene Tests im Workflow `u4-postgres-integration.yml` |
