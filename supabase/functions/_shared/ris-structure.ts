@@ -16,7 +16,7 @@ export async function risHash(data:string|Uint8Array):Promise<string>{
 function links(html:string,base:string){return [...html.matchAll(/<a\b[^>]*href\s*=\s*["']([^"']+)["'][^>]*>([\s\S]*?)<\/a>/gi)].map(m=>({url:risUrl(m[1],base),label:risText(m[2])})).filter(x=>x.url) as {url:string;label:string}[];}
 export function risSessionLinks(html:string,base:string){return [...new Set(links(html,base).map(x=>x.url).filter(x=>new URL(x).searchParams.has('__ksinr')))];}
 export type RisDocumentHint={url:string;kind:'unknown'|'proposal'|'minutes'|'attachment'};
-export type RisSnapshot={url:string;hash:string;observedAt:string;committee:string|null;reference:string|null;date:string|null;agenda:{key:string;number:string|null;title:string;proposals:string[];documents:RisDocumentHint[];issues:string[];publishedTopUrls:string[]}[];documents:RisDocumentHint[]};
+export type RisSnapshot={url:string;hash:string;observedAt:string;committee:string|null;reference:string|null;date:string|null;agenda:{key:string;number:string|null;title:string;proposals:string[];documents:RisDocumentHint[];issues:string[];publishedTopUrls:string[];proposalReferences:Record<string,string>}[];documents:RisDocumentHint[]};
 export async function parseRisStructure(html:string,url:string,observedAt:string):Promise<RisSnapshot>{
  const canonical=risUrl(url);if(!canonical||!new URL(canonical).searchParams.has('__ksinr'))throw Error('invalid_ris_session');
  if(!Number.isFinite(Date.parse(observedAt)))throw Error('invalid_observed_at');
@@ -36,7 +36,7 @@ export async function parseRisStructure(html:string,url:string,observedAt:string
   documents.forEach(x=>usedDocs.add(x.url));
   const key=number?'number:'+number:top.length===1?top[0]:'unresolved:'+await risHash(row);
   const title=risText(row.match(/class="[^"]*\btolink\b[^"]*"[^>]*>([\s\S]*?)<\/td>/i)?.[1]??plain);
-  agenda.push({key,number,title,proposals,documents,publishedTopUrls:top,issues:[...(!number?['missing_top_number']:[]),...(proposals.length>1?['ambiguous_proposals']:[]),...(top.length!==1?['identity_from_number_or_row']:[])]});
+  agenda.push({key,number,title,proposals,documents,publishedTopUrls:top,proposalReferences:Object.fromEntries(a.filter(x=>proposals.includes(x.url)).map(x=>[x.url,x.label])),issues:[...(!number?['missing_top_number']:[]),...(proposals.length>1?['ambiguous_proposals']:[]),...(top.length!==1?['identity_from_number_or_row']:[])]});
  }
  if(!field('siname')||!agenda.length)throw Error('incomplete_ris_structure');
  const counts=new Map<string,number>();for(const a of agenda)counts.set(a.key,(counts.get(a.key)??0)+1);
@@ -67,7 +67,7 @@ export async function persistRisStructure(tx:RisSql,snapshot:RisSnapshot){
  }
  for(const a of snapshot.agenda){
   const top=(await tx.unsafe(`insert into fib.ris_agenda_items(session_id,source_key,number,title,latest_snapshot_id) values($1,$2,$3,$4,$5) on conflict(session_id,source_key) do update set number=excluded.number,title=excluded.title,latest_snapshot_id=excluded.latest_snapshot_id returning id`,[s.id,a.key,a.number,a.title,v.id]))[0];
-  if(a.proposals.length===1)await tx.unsafe('insert into fib.ris_proposals(agenda_id,source_url) values($1,$2) on conflict do nothing',[top.id,a.proposals[0]]);
+  if(a.proposals.length===1)await tx.unsafe('insert into fib.ris_proposals(agenda_id,source_url,reference) values($1,$2,$3) on conflict do nothing',[top.id,a.proposals[0],a.proposalReferences[a.proposals[0]]??null]);
   for(const d of a.documents)await document(d,top.id);
  }
  for(const d of snapshot.documents)await document(d,null);

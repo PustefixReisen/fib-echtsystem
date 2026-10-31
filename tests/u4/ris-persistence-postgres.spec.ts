@@ -10,7 +10,7 @@ const pool=new pg.Pool({connectionString:connection});
 const uid='22222222-2222-4222-8222-222222222222';
 const actor:RisActor={userId:uid,kind:'human',aal:'aal2'};
 const adapter=(c:pg.PoolClient)=>({unsafe:async(q:string,p:any[]=[]) => (await c.query(q,p)).rows});
-async function tx<T>(work:(db:ReturnType<typeof adapter>)=>Promise<T>){const c=await pool.connect();try{await c.query('begin');const r=await work(adapter(c));await c.query('commit');return r;}catch(e){await c.query('rollback');throw e;}finally{c.release();}}
+async function tx<T>(work:(db:ReturnType<typeof adapter>)=>Promise<T>){const c=await pool.connect();try{await c.query('begin');await c.query('set local role fib_runtime');const r=await work(adapter(c));await c.query('commit');return r;}catch(e){await c.query('rollback');throw e;}finally{c.release();}}
 const run=(input:Record<string,any>,a=actor)=>tx(db=>risEditorial(db,a,input));
 const count=async(t:string)=>Number((await pool.query('select count(*) from fib.'+t)).rows[0].count);
 const first=async(q:string,p:any[]=[]) => (await pool.query(q,p)).rows[0];
@@ -18,7 +18,7 @@ async function main(){
  await pool.query('drop schema if exists fib cascade; create schema if not exists auth; create table if not exists auth.users(id uuid primary key)');
  for(const r of ['anon','authenticated','service_role','fib_runtime'])await pool.query(`do $$ begin if not exists(select 1 from pg_roles where rolname='${r}') then create role ${r}; end if; end $$`);
  await pool.query('insert into auth.users values($1) on conflict do nothing',[uid]);
- for(const path of ['schema/core.sql','migrations/20261029200933_fib_u4_source_monitor_persistence.sql','migrations/20261030093000_fib_u4_source_observations.sql','migrations/20261031081340_fib_ris_editorial_structure.sql'])await pool.query(readFileSync('supabase/'+path,'utf8'));
+ for(const path of ['schema/core.sql','security/runtime-roles.sql','security/runtime-policies.sql','migrations/20261029200933_fib_u4_source_monitor_persistence.sql','migrations/20261030093000_fib_u4_source_observations.sql','migrations/20261031081340_fib_ris_editorial_structure.sql'])await pool.query(readFileSync('supabase/'+path,'utf8'));
  await pool.query("insert into fib.app_users(user_id,role,setup_status) values($1,'editor','active')",[uid]);
  const sourceId=(await first('insert into fib.sources(name,homepage_url) values($1,$2) returning id',['RIS',RIS_ORIGIN])).id;
  const html=readFileSync('tests/u4/fixtures/ris-1031-top-2-3-6.html','utf8');
@@ -76,6 +76,20 @@ async function main(){
  await assert.rejects(()=>run({action:'ris_review_suggestion',suggestionId:pending.suggestionId,status:'confirmed',rationale:'stale'}),/stale/);
  await assert.rejects(()=>tx(db=>persistRisDocument(db,url,hash,text,'old','2026-10-31T09:00:00Z')),/stale/);
  assert.ok((await run({action:'ris_read',sessionId:a.sessionId})).decisions!.every((d:any)=>d.source_changed));
+ // A proposal containing a decision-shaped quote is still not an actual decision.
+ const proposalDoc=await first("select d.* from fib.ris_documents d join fib.ris_document_links l on l.document_id=d.id where l.agenda_id=$1 and l.kind='proposal'",[top]);
+ const proposalLink=await first('select id from fib.ris_document_links where document_id=$1 and agenda_id=$2',[proposalDoc.id,top]);
+ const pv=await tx(db=>persistRisDocument(db,proposalDoc.source_url,'d'.repeat(64),quote1,'synthetic-negative-evidence','2026-10-31T12:00:00Z'));
+ await run({action:'ris_review_document',linkId:proposalLink.id,status:'confirmed',kind:'proposal',rationale:'Vorlage, kein Beschluss'});
+ const invalid=await run({action:'ris_suggest',agendaId:top,versionId:pv,kind:'decision',origin:'ai',payload:{wording:quote1,evidenceQuote:quote1,eventId:event.eventId,pointKey:'not-a-decision',result:'accepted'}});
+ await assert.rejects(()=>run({action:'ris_review_suggestion',suggestionId:invalid.suggestionId,status:'confirmed',rationale:'darf nicht genügen'}),/missing/);
+ const prop=(await first('select id from fib.ris_proposals where agenda_id=$1',[top])).id;
+ const suggestion=await run({action:'ris_suggest',agendaId:top,versionId:pv,kind:'proposal_text',origin:'editor',payload:{wording:quote1,evidenceQuote:quote1,proposalId:prop}});
+ await run({action:'ris_review_suggestion',suggestionId:suggestion.suggestionId,status:'confirmed',rationale:'Synthetischer Test für den getrennten Vorschlagspfad'});
+ assert.equal(await count('ris_proposal_texts'),1);assert.equal(await count('ris_decision_points'),2);
+ const deferred=await run({action:'ris_propose_relation',eventId:event.eventId,topicId,significance:'supplementary',origin:'ai',rationale:'Alternative'});
+ await run({action:'ris_review_relation',suggestionId:deferred.suggestionId,status:'deferred',rationale:'Zurückgestellt'});
+ await assert.rejects(()=>run({action:'ris_review_relation',suggestionId:deferred.suggestionId,status:'confirmed',rationale:'kein stilles Wiederöffnen'}),/already_final/);
  const before=await count('ris_session_versions');
  await assert.rejects(()=>tx(async db=>{await persistRisStructure(db,{...snapshot,hash:'c'.repeat(64),observedAt:'2026-10-31T12:00:00Z'});throw Error('rollback');}),/rollback/);
  assert.equal(await count('ris_session_versions'),before);

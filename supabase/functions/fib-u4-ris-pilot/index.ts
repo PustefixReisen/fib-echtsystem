@@ -100,6 +100,15 @@ export async function handleRis(req:Request,mode:'interactive'|'scheduler'='inte
   interactiveUserId=user.id;
  }
  const sql=postgres(dbUrl,{max:1,prepare:false,connect_timeout:5,idle_timeout:5});
+ let failureScope:string|null=null, failureCadence:'daily'|'weekly'='daily';
+ async function recordStructureFailure(error:unknown){
+  if(!failureScope)return;
+  try{await sql.begin(async tx=>{
+   const stamp=new Date().toISOString(),detail=String(error).slice(0,180);
+   await tx.unsafe("insert into fib.source_runs(scope_id,started_at,completed_at,status,error_detail,cadence) values($1,$2,$2,'failed',$3,$4)",[failureScope,stamp,detail,failureCadence]);
+   await tx.unsafe('update fib.source_scopes set last_attempt_at=$2,gap_since=coalesce(gap_since,$2),last_error=$3,updated_at=now() where id=$1',[failureScope,stamp,detail]);
+  });}catch{/* Original failure remains visible in HTTP response; never advance checkpoint. */}
+ }
  try{
   if(mode==='interactive'){
    const allowed=await sql.unsafe("select 1 from fib.app_users where user_id=$1::uuid and role='admin' and active=true and setup_status='active' limit 1",[interactiveUserId]);
@@ -113,6 +122,7 @@ export async function handleRis(req:Request,mode:'interactive'|'scheduler'='inte
   const scopes=await sql.unsafe("select id from fib.source_scopes where scope_key='ris-dokumentliste' and status='candidate'");
   if(scopes.length!==1)throw new Error('ris_scope_unavailable');
   const scopeId=scopes[0].id as string;
+  if(structureEnabled&&payload.commit===true){failureScope=scopeId;failureCadence=cadence;}
   const rows=await sql.unsafe('select cursor_state from fib.ris_scan_cursors where scope_id=$1::uuid',[scopeId]);
   const previous=rows[0]?.cursor_state as {pending:string[];visited:string[];documents:string[];pdfOffset?:number;releaseViews?:{url:string;releaseSince:string|null;checkedAt:string}[];failures:{url:string;error:string}[]; cadenceStates?:Record<string,{pending:string[];visited:string[];failures:{url:string;error:string}[];releaseViews:{url:string;releaseSince:string|null;checkedAt:string}[];lastCompleteAt:string|null;lastFailedAt?:string|null;lastStatus?:'succeeded'|'partial'|'failed';lastError?:string|null}>} | undefined;
   const structureState=(previous as any)?.structureState as {queue:string[];visited:string[];sessions:string[]}|undefined;
@@ -183,7 +193,7 @@ export async function handleRis(req:Request,mode:'interactive'|'scheduler'='inte
   for(let i=0;i<budget;i++){
    const idx=(current.pdfOffset+i)%target;
    const url=current.documents[idx];
-   try{pdfs.push({url,...await pdfHash(url,structureEnabled)});}catch(e){return reply({error:'ris_pdf_check_failed',detail:String(e).slice(0,180),url},422);}
+   try{pdfs.push({url,...await pdfHash(url,structureEnabled)});}catch(e){await recordStructureFailure(e);return reply({error:'ris_pdf_check_failed',detail:String(e).slice(0,180),url},422);}
   }
   current.pdfOffset=backfill?current.pdfOffset+budget:(target?(current.pdfOffset+budget)%target:0);
   stored.pdfOffset=current.pdfOffset;
@@ -216,7 +226,7 @@ export async function handleRis(req:Request,mode:'interactive'|'scheduler'='inte
    await tx.unsafe('update fib.source_scopes set last_attempt_at=$2,last_success_at=case when $3 then $2 else last_success_at end,gap_since=case when $4::text is null then null else coalesce(gap_since,$2) end,last_error=$4,updated_at=now() where id=$1::uuid',[scopeId,stamp,complete,sourceError]);
   });
   return reply({mode:'candidate_test',structureEnabled,structurePending:structureQueue.length,structureSessions:snapshots.length,processed,documents:current.documents.length,newCount:newly.length,pending:pending.length,complete,failures:failures.length,cycleRestart,pdfChecked:pdfs.length,pdfChanged:changedCount,releaseViews:current.releaseViews,...coverageResult,cadenceStates,dueChecks:dueStatus(cadenceStates),activeErrors,backfill,backfillRemaining:backfill?Math.max(0,target-current.pdfOffset):null});
- }catch(e){return reply({error:'ris_pilot_failed',detail:String(e).slice(0,180)},502)}
+ }catch(e){await recordStructureFailure(e);return reply({error:'ris_pilot_failed',detail:String(e).slice(0,180)},502)}
  finally{await sql.end()}
 }
 export default {fetch(req:Request){return handleRis(req,'interactive')}};

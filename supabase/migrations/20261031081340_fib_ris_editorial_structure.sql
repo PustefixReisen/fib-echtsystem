@@ -39,7 +39,7 @@ create table fib.ris_agenda_items (
 create table fib.ris_proposals (
  id uuid primary key default gen_random_uuid(),
  agenda_id uuid not null references fib.ris_agenda_items(id) on delete restrict,
- source_url text not null,
+ source_url text not null, reference text,
  unique(agenda_id,source_url)
 );
 create table fib.ris_documents (
@@ -62,7 +62,7 @@ create table fib.ris_document_links (
  session_id uuid not null references fib.ris_sessions(id) on delete restrict,
  agenda_id uuid,
  document_id uuid not null references fib.ris_documents(id) on delete restrict,
- kind text not null default 'unknown' check(kind in ('unknown','proposal','minutes','attachment')),
+ kind text not null default 'unknown' check(kind in ('unknown','proposal','minutes','decision','attachment')),
  status text not null default 'candidate' check(status in ('candidate','confirmed','rejected')),
  snapshot_id uuid not null,
  reviewed_by uuid references fib.app_users(user_id), reviewed_at timestamptz,

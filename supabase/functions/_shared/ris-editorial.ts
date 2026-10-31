@@ -12,14 +12,14 @@ export async function risEditorial(tx:RisSql,actor:RisActor,input:Record<string,
  if(action==='ris_read'){
   const session=await one(tx,'select * from fib.ris_sessions where id=$1',[input.sessionId]);
   const agenda=await tx.unsafe('select * from fib.ris_agenda_items where session_id=$1 order by number',[session.id]);
-  const documents=await tx.unsafe('select l.*,d.source_url,d.finding_id,d.latest_version_id from fib.ris_document_links l join fib.ris_documents d on d.id=l.document_id where l.session_id=$1',[session.id]);
+  const documents=await tx.unsafe('select l.*,d.source_url,d.finding_id,d.latest_version_id,v.extracted_text,v.extraction_method,v.content_hash,v.observed_at from fib.ris_document_links l join fib.ris_documents d on d.id=l.document_id left join fib.ris_document_versions v on v.id=d.latest_version_id where l.session_id=$1',[session.id]);
   const decisions=await tx.unsafe(`select p.*,v.id version_id,v.wording,v.document_version_id,v.created_at,w.result,w.yes_count,w.no_count,w.abstention_count,w.evidence_quote,(d.latest_version_id<>v.document_version_id) source_changed from fib.ris_decision_points p join fib.ris_agenda_items a on a.id=p.agenda_id join fib.ris_decision_versions v on v.point_id=p.id join fib.ris_document_versions dv on dv.id=v.document_version_id join fib.ris_documents d on d.id=dv.document_id left join fib.ris_votes w on w.decision_version_id=v.id where a.session_id=$1`,[session.id]);
   const events=await tx.unsafe('select ae.*,ep.process_id,et.topic_id from fib.ris_agenda_events ae join fib.ris_agenda_items a on a.id=ae.agenda_id left join fib.event_processes ep on ep.event_id=ae.event_id left join fib.event_topics et on et.event_id=ae.event_id where a.session_id=$1',[session.id]);
   const suggestions=await tx.unsafe('select s.* from fib.ris_suggestions s join fib.ris_agenda_items a on a.id=s.agenda_id where a.session_id=$1',[session.id]);
   return {session,agenda,documents,decisions,events,suggestions};
  }
  if(action==='ris_review_document'){
-  const status=input.status,kind=input.kind;if(!['confirmed','rejected'].includes(status)||!['unknown','proposal','minutes','attachment'].includes(kind))throw Error('invalid_ris_review');
+  const status=input.status,kind=input.kind;if(!['confirmed','rejected'].includes(status)||!['unknown','proposal','minutes','decision','attachment'].includes(kind))throw Error('invalid_ris_review');
   const old=await one(tx,'select * from fib.ris_document_links where id=$1 for update',[input.linkId]);
   if(kind==='minutes'&&old.agenda_id)throw Error('minutes_are_session_wide');
   if(status==='confirmed'&&kind==='unknown')throw Error('document_kind_required');
@@ -108,7 +108,7 @@ export async function risEditorial(tx:RisSql,actor:RisActor,input:Record<string,
    }else{
     await lockEvent(tx,p.eventId,actor.userId);
     // A proposal PDF is never admissible as an actual decision. A reviewed minutes document is.
-    await one(tx,`select a.id from fib.ris_agenda_items a join fib.ris_document_links l on l.session_id=a.session_id join fib.ris_documents d on d.id=l.document_id join fib.event_findings ef on ef.finding_id=d.finding_id where a.id=$1 and l.document_id=$2 and l.agenda_id is null and l.kind='minutes' and l.status='confirmed' and ef.event_id=$3`,[s.agenda_id,v.document_id,p.eventId]);
+    await one(tx,`select a.id from fib.ris_agenda_items a join fib.ris_document_links l on l.session_id=a.session_id join fib.ris_documents d on d.id=l.document_id join fib.event_findings ef on ef.finding_id=d.finding_id where a.id=$1 and l.document_id=$2 and ((l.agenda_id is null and l.kind='minutes') or (l.agenda_id=a.id and l.kind='decision')) and l.status='confirmed' and ef.event_id=$3`,[s.agenda_id,v.document_id,p.eventId]);
     if(!['unknown','accepted','rejected','no_vote'].includes(p.result))throw Error('unknown_vote_result_required');
     for(const c of ['yes','no','abstention'])if(p[c]!=null&&(!Number.isInteger(p[c])||p[c]<0))throw Error('invalid_vote_counts');
     const pointKey=required(p.pointKey,200);
