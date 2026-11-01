@@ -31,19 +31,28 @@ jobs:
         env:
           READY: ${{ vars.FIB_COMPLETE_BACKUP_READY }}
         run: test "$READY" = true
-      - run: npm ci
+      - run: npm install --ignore-scripts --no-package-lock --no-audit --no-fund
       - name: Install clients
         run: |
           sudo apt-get update
           sudo apt-get install -y lftp rclone postgresql-client-17
           docker pull postgres:17
+      - name: Prepare trusted PostgreSQL CA
+        env:
+          FIB_BACKUP_DATABASE_CA: ${{ secrets.FIB_BACKUP_DATABASE_CA }}
+        run: |
+          set -euo pipefail
+          umask 077
+          mkdir -m 700 "$RUNNER_TEMP/fib-complete-private"
+          node scripts/backup/prepare-ca.mjs "$RUNNER_TEMP/fib-complete-private/postgres-ca.pem"
+          echo "PGSSLROOTCERT=$RUNNER_TEMP/fib-complete-private/postgres-ca.pem" >> "$GITHUB_ENV"
       - name: Capture and verify complete private bundle
         env:
           FIB_BACKUP_MODE: ${{ inputs.mode }}
           FIB_BACKUP_INPUT_ID: ${{ inputs.input_id }}
           FIB_BACKUP_TEMP_PARENT: ${{ runner.temp }}/fib-complete-private
           FIB_MAINTENANCE_DATABASE_URL: ${{ secrets.FIB_MAINTENANCE_DATABASE_URL }}
-          FIB_BACKUP_MANAGEMENT_TOKEN: ${{ secrets.FIB_BACKUP_MANAGEMENT_TOKEN }}
+          FIB_BACKUP_MANAGEMENT_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
           FIB_BACKUP_RCLONE_CONFIG: ${{ secrets.FIB_BACKUP_RCLONE_CONFIG }}
           FIB_SFTP_KNOWN_HOSTS_TEXT: ${{ secrets.FIB_SFTP_KNOWN_HOSTS }}
           IONOS_SFTP_HOST: ${{ secrets.IONOS_SFTP_HOST }}
@@ -52,7 +61,7 @@ jobs:
         run: |
           set -euo pipefail
           umask 077
-          mkdir -m 700 "$FIB_BACKUP_TEMP_PARENT"
+          test -d "$FIB_BACKUP_TEMP_PARENT"
           python3 scripts/backup/run.py
       - name: Remove private captures
         if: always()

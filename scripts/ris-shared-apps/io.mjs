@@ -1,3 +1,4 @@
+import { X509Certificate } from "node:crypto";
 import { resolve, dirname, basename } from "node:path";
 import {
   mkdirSync,
@@ -55,6 +56,14 @@ export function target(connection) {
   } catch {
     throw Error("Invalid maintenance connection; credential not printed");
   }
+  if (!["postgres:", "postgresql:"].includes(u.protocol) || u.hash)
+    throw Error("Invalid database URL protocol or fragment; encode credentials");
+  try { decodeURIComponent(u.username); decodeURIComponent(u.password); }
+  catch { throw Error("Invalid percent encoding in database credentials"); }
+  for (const key of u.searchParams.keys()) {
+    if (!["sslmode", "sslcert", "sslkey", "sslrootcert", "application_name"].includes(key) || u.searchParams.getAll(key).length !== 1)
+      throw Error("Unsupported database URL parameter");
+  }
   const local =
     ["localhost", "127.0.0.1"].includes(u.hostname) &&
     u.pathname === "/fib_u4_test" &&
@@ -69,7 +78,19 @@ export function target(connection) {
     throw Error(
       "Only approved FIB Shared-Apps target or isolated fib_u4_test accepted",
     );
+  if (!local && (!u.password || (u.port && u.port !== "5432")))
+    throw Error("Password and session/direct PostgreSQL port 5432 required");
   return { u, local };
+}
+
+export function trustedCA(path) {
+  if (!path) return undefined;
+  try {
+    const pem = readFileSync(path, "utf8");
+    const cert = new X509Certificate(pem);
+    if (!cert.ca || Date.parse(cert.validTo) <= Date.now()) throw Error();
+    return pem;
+  } catch { throw Error("Trusted PostgreSQL CA missing, invalid or expired"); }
 }
 
 export function clientOptions(connection) {
@@ -87,8 +108,21 @@ export function clientOptions(connection) {
       : {
           rejectUnauthorized: true,
           ...(process.env.PGSSLROOTCERT
-            ? { ca: readFileSync(process.env.PGSSLROOTCERT, "utf8") }
+            ? { ca: trustedCA(process.env.PGSSLROOTCERT) }
             : {}),
         },
   };
+}
+
+// libpq and pg use exactly the same parsed credentials and trust file.
+export function dumpEnvironment(connection, environment = process.env) {
+  const { u, local } = target(connection);
+  clientOptions(connection); // validate TLS switches and CA before spawning libpq
+  const env = { ...environment };
+  // Never inherit libpq connection overrides, client identities or service files.
+  for (const key of Object.keys(env)) if (key.startsWith("PG") && key !== "PG_CONTAINER") delete env[key];
+  return { ...env, PGHOST: u.hostname, PGPORT: u.port || "5432",
+    PGDATABASE: decodeURIComponent(u.pathname.slice(1)), PGUSER: decodeURIComponent(u.username),
+    PGPASSWORD: decodeURIComponent(u.password), PGSSLMODE: local ? "disable" : "verify-full",
+    ...(process.env.PGSSLROOTCERT ? { PGSSLROOTCERT: process.env.PGSSLROOTCERT } : {}) };
 }
