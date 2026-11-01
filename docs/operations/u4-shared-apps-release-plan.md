@@ -12,7 +12,7 @@ Keine lokale Installation, neue Supabase-Instanz oder neuer Hostingdienst erford
 Die lokale Empfehlung aus #355 ist als Standard für die persönliche Abnahme zurückgenommen;
 isolierte technische Tests bleiben notwendig.
 
-**Status: nur vorbereitet und isoliert geprüft. Keine Bereitstellungsfreigabe erteilt.**
+**Aktueller Betriebsstand 01.11.2026:** Das begrenzte Paket am Commit `7a73db6178f17103c6802bd78ee6392e690b88da` ist vom Betreiber freigegeben. Sicherung/Restore sind laut Betreiber abgeschlossen; beide Migrationen und die drei Edge-Versionen sind inzwischen lesend bestätigt. Quellen, Datenimport, Featureaktivierung und Frontend stehen noch aus. Die Fortsetzung ist vor der Quellenaktivierung an fehlendem AAL2-/Maintenance-Zugang und Workflow-Zugriff gestoppt; siehe [technischer Fortsetzungsbericht](u4-shared-apps-continuation-2026-11-01.md). Die nachfolgenden historischen Vorbereitungsnachweise sind keine Behauptung einer abgeschlossenen Bereitstellung.
 Der [Istbericht](u4-shared-apps-inventory-2026-10-31.md) unterscheidet die bereits laufenden
 Komponenten vom implementierten Stand. Diese Datei ist die führende technische Ablaufquelle;
 die [Anwenderanleitung](u4-persoenliche-nutzerabnahme.md) ist die führende persönliche Anleitung.
