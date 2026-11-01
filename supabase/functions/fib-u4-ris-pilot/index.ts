@@ -175,7 +175,7 @@ export async function handleRis(req:Request,mode:'interactive'|'scheduler'='inte
      const response=await fetch(calendar,{redirect:'error',signal:AbortSignal.timeout(15000)});
      if(!response.ok)throw Error('calendar_http_'+response.status);
      const html=await response.text();
-     if(!/<(?:html|body|a)\\b/i.test(html))throw Error('invalid_calendar_html');
+     if(!/<(?:html|body|a)\b/i.test(html))throw Error('invalid_calendar_html');
      for(const linked of calendarSessions(html)){
       if(!structureVisited.has(linked)&&!structureQueue.includes(linked))structureQueue.push(linked);
      }
