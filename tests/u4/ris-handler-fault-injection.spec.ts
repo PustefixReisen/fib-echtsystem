@@ -62,13 +62,15 @@ const fakeFetch=async(url:string)=>{
    const html=proposalHasSession?'<html><a href="'+linkedSession+'">Sitzung</a></html>':'<html><body>Vorlage ohne Sitzung</body></html>';
    return new Response(html,{status:200});
  }
+ if(url.startsWith(origin+'/si0040.asp?'))return new Response('<html><body>Kalender ohne Sitzungen in Mock</body></html>',{status:200});
  if(url===pdf){
    if(brokenPdf)throw new Error('simulated PDF outage');
    return new Response(pdfBytes,{status:200,headers:{'content-type':'application/pdf'}});
  }
  throw new Error('Unexpected fetch '+url);
 };
-const source=edgeDatasetSupport+(readFileSync('supabase/functions/_shared/ris-structure.ts','utf8').replace(/\bexport /g,'')+'\n'+readFileSync('supabase/functions/fib-u4-ris-pilot/index.ts','utf8'))
+const source=edgeDatasetSupport+(readFileSync('supabase/functions/_shared/ris-calendar.ts','utf8').replace(/\bexport /g,'')+'\n'+readFileSync('supabase/functions/_shared/ris-structure.ts','utf8').replace(/\bexport /g,'')+'\n'+readFileSync('supabase/functions/fib-u4-ris-pilot/index.ts','utf8'))
+ .replace(/^import .*ris-calendar.*;\s*/m,'')
  .replace(/^import .*development-datasets.*;\s*/m,'')
  .replace(/^import postgres from .*;\s*/m,'const postgres = globalThis.__postgres;\n')
  .replace(/^import .*from ['"](?:npm:unpdf|\.\.\/_shared\/ris-structure)[^\n]+$/gm,'')
