@@ -68,7 +68,7 @@ const fakeFetch=async(url:string)=>{
  }
  if(url===linkedSession){
    if(brokenSession)throw new Error('simulated session outage');
-   return new Response('<html><div class="sidat">29.10.2026</div><table><tr><td>2.</td><td><a href="vo0050.asp?__kvonr=8644">Vorlage</a></td></tr></table></html>',{status:200});
+   return new Response('<html><div class="siname">Gemeinderat 29.10.2026</div><div class="sidat">29.10.2026</div><table><tr><td>2.</td><td><a href="vo0050.asp?__kvonr=8644">Vorlage</a></td></tr></table></html>',{status:200});
  }
  if(url===pdf){
    if(brokenPdf)throw new Error('simulated PDF outage');
