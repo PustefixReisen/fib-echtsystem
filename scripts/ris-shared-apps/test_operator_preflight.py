@@ -23,11 +23,9 @@ def fake_command(*args):
         return app.APPROVED_SHA
     if args[1:3] == ("functions", "list"):
         out = [
-            {"slug": slug, "version": version, "verify_jwt": jwt}
-            for slug, (version, jwt) in app.FUNCTIONS.items()
+            {"slug": slug, "version": version, "verify_jwt": jwt, "ezbr_sha256": digest}
+            for slug, (version, jwt, digest) in app.FUNCTIONS.items()
         ]
-        out.extend({"slug": "fib-other-" + str(i), "version": 1, "verify_jwt": False}
-                   for i in range(6))
         return json.dumps(out)
     if args[1:3] == ("migration", "list"):
         return "20261030161632 | old"
@@ -72,6 +70,28 @@ class PreflightTests(unittest.TestCase):
                 return "FIB_RIS_STRUCTURE_ENABLED | hash-not-a-secret"
             return fake_command(*args)
         with self.assertRaisesRegex(RuntimeError, "already exists"):
+            self.invoke(command=drift)
+
+    def test_reject_function_digest_drift(self):
+        def drift(*args):
+            value = fake_command(*args)
+            if args[1:3] == ("functions", "list"):
+                functions = json.loads(value)
+                functions[0]["ezbr_sha256"] = "0" * 64
+                return json.dumps(functions)
+            return value
+        with self.assertRaisesRegex(RuntimeError, "deployment drift"):
+            self.invoke(command=drift)
+
+    def test_reject_unexpected_function(self):
+        def drift(*args):
+            value = fake_command(*args)
+            if args[1:3] == ("functions", "list"):
+                functions = json.loads(value)
+                functions.append({"slug": "fib-unexpected", "version": 1})
+                return json.dumps(functions)
+            return value
+        with self.assertRaisesRegex(RuntimeError, "Unexpected FIB function set"):
             self.invoke(command=drift)
 
     def test_reject_function_version_drift(self):
