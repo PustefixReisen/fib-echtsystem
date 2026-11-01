@@ -1,0 +1,59 @@
+name: Complete FIB backup
+on:
+  workflow_dispatch:
+    inputs:
+      mode:
+        type: choice
+        options: [release, manual, regular]
+        default: manual
+        required: true
+      input_id:
+        description: Fresh reviewed private edge/config export ID under Inputs/
+        required: true
+        type: string
+# No schedule: regular mode is manually testable; unattended exports need a protected adapter.
+permissions:
+  contents: read
+concurrency:
+  group: editorial-web-pilot
+  cancel-in-progress: false
+jobs:
+  backup:
+    environment: fib-release
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Require reviewed complete backup access
+        env:
+          READY: ${{ vars.FIB_COMPLETE_BACKUP_READY }}
+        run: test "$READY" = true
+      - run: npm ci
+      - name: Install clients
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y lftp rclone postgresql-client-17
+          docker pull postgres:17
+      - name: Capture and verify complete private bundle
+        env:
+          FIB_BACKUP_MODE: ${{ inputs.mode }}
+          FIB_BACKUP_INPUT_ID: ${{ inputs.input_id }}
+          FIB_BACKUP_TEMP_PARENT: ${{ runner.temp }}/fib-complete-private
+          FIB_MAINTENANCE_DATABASE_URL: ${{ secrets.FIB_MAINTENANCE_DATABASE_URL }}
+          FIB_BACKUP_MANAGEMENT_TOKEN: ${{ secrets.FIB_BACKUP_MANAGEMENT_TOKEN }}
+          FIB_BACKUP_RCLONE_CONFIG: ${{ secrets.FIB_BACKUP_RCLONE_CONFIG }}
+          FIB_SFTP_KNOWN_HOSTS_TEXT: ${{ secrets.FIB_SFTP_KNOWN_HOSTS }}
+          IONOS_SFTP_HOST: ${{ secrets.IONOS_SFTP_HOST }}
+          IONOS_SFTP_USER: ${{ secrets.IONOS_SFTP_USER }}
+          IONOS_SFTP_PASSWORD: ${{ secrets.IONOS_SFTP_PASSWORD }}
+        run: |
+          set -euo pipefail
+          umask 077
+          mkdir -m 700 "$FIB_BACKUP_TEMP_PARENT"
+          python3 scripts/backup/run.py
+      - name: Remove private captures
+        if: always()
+        run: rm -rf "$RUNNER_TEMP/fib-complete-private"
