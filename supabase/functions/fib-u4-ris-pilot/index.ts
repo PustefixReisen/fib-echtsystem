@@ -116,7 +116,7 @@ export async function handleRis(req:Request,mode:'interactive'|'scheduler'='inte
    const allowed=await sql.unsafe("select 1 from fib.app_users where user_id=$1::uuid and role='admin' and active=true and setup_status='active' limit 1",[interactiveUserId]);
    if(!allowed.length)return reply({error:'admin_required'},403);
   }
-  const payload=await req.json().catch(()=>({})) as {commit?:boolean;pdfBackfill?:boolean;cadence?:'daily'|'weekly'};
+  const payload=await req.json().catch(()=>({})) as {commit?:boolean;pdfBackfill?:boolean;cadence?:'daily'|'weekly';integrationSession?:string};
   const structureEnabled=Deno.env.get('FIB_RIS_STRUCTURE_ENABLED')==='true';
   const backfill=payload.pdfBackfill===true && payload.commit===true;
   if(payload.cadence && payload.cadence!=='daily'&&payload.cadence!=='weekly')return reply({error:'invalid_cadence'},400);
@@ -124,6 +124,27 @@ export async function handleRis(req:Request,mode:'interactive'|'scheduler'='inte
   const scopes=await sql.unsafe("select id from fib.source_scopes where scope_key='ris-dokumentliste' and status='candidate'");
   if(scopes.length!==1)throw new Error('ris_scope_unavailable');
   const scopeId=scopes[0].id as string;
+  // Separate, strictly single-session integration path. No release-list crawl,
+  // calendar backfill, PDF downloads, scanner checkpoints or source observations.
+  // Only an explicitly approved AAL2 admin request may use this write path.
+  if(payload.integrationSession!==undefined){
+   if(payload.integrationSession!=='1032')return reply({error:'integration_session_not_allowed'},400);
+   if(mode!=='interactive'||payload.commit!==true)return reply({error:'integration_requires_interactive_commit'},403);
+   if(Deno.env.get('FIB_RIS_INTEGRATION_TEST_ENABLED')!=='true')return reply({error:'integration_test_disabled'},403);
+   const singleUrl=origin+'/si0057.asp?__ksinr=1032';
+   const response=await fetch(singleUrl,{redirect:'error',signal:AbortSignal.timeout(15000)});
+   if(!response.ok)return reply({error:'integration_session_http',status:response.status},502);
+   const snapshot=await parseRisStructure(await response.text(),singleUrl,new Date().toISOString());
+   const result=await sql.begin(async tx=>{
+    return withDevelopmentDataset(tx,{action:'source_scan',scopeId},async()=>{
+     const locked=await tx.unsafe("select id from fib.source_scopes where id=$1::uuid and status='candidate' for update",[scopeId]);
+     if(locked.length!==1)throw Error('scope_changed');
+     return persistRisStructure(tx,snapshot);
+    });
+   });
+   return reply({mode:'single_session_integration',session:'1032',...result});
+  }
+
   if(structureEnabled&&payload.commit===true){failureScope=scopeId;failureCadence=cadence;}
   const rows=await sql.unsafe('select cursor_state from fib.ris_scan_cursors where scope_id=$1::uuid',[scopeId]);
   const previous=rows[0]?.cursor_state as {pending:string[];visited:string[];documents:string[];pdfOffset?:number;releaseViews?:{url:string;releaseSince:string|null;checkedAt:string}[];failures:{url:string;error:string}[]; cadenceStates?:Record<string,{pending:string[];visited:string[];failures:{url:string;error:string}[];releaseViews:{url:string;releaseSince:string|null;checkedAt:string}[];lastCompleteAt:string|null;lastFailedAt?:string|null;lastStatus?:'succeeded'|'partial'|'failed';lastError?:string|null}>} | undefined;
