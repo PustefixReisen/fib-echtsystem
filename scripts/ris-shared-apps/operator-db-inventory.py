@@ -5,7 +5,7 @@ import os
 import pathlib
 import subprocess
 import sys
-from urllib.parse import urlsplit, unquote
+from urllib.parse import urlsplit, unquote, parse_qs
 
 PROJECT = "apaubomxffcwtzjimori"
 SOURCES = {
@@ -37,7 +37,9 @@ def validate_url(raw):
     expected_user = ("postgres" if u.hostname.startswith("db.") else "postgres." + PROJECT)
     if unquote(u.username or "") != expected_user or u.path != "/postgres" or u.port != 5432:
         raise ValueError("Unexpected database target or account")
-    if not u.password or "sslmode=verify-full" not in u.query.split("&"):
+    params = parse_qs(u.query, keep_blank_values=True)
+    if (not u.password or set(params) != {"sslmode"}
+            or params["sslmode"] != ["verify-full"]):
         raise ValueError("Verified TLS and existing database password required")
 
 def validate_inventory(result):
