@@ -142,26 +142,19 @@ async function main(){
  assert.equal(JSON.stringify(db.cursor),before);
  assert.equal(db.runs.length,count);
  assert.deepEqual(db.runs.map(x=>x.status),['succeeded','succeeded','failed','succeeded']);
- // Real handler regression: unresolved proposal must be reported, not turn read-only probe into 502.
+ // Legacy proposal cursor must not reverse-resolve sessions or abort a dry run.
  settings.FIB_RIS_STRUCTURE_ENABLED='true';
  db.cursor={pending:[entry],visited:[],documents:[],failures:[],pdfOffset:0,releaseViews:[],structureState:{queue:[unresolvedProposal],visited:[],sessions:[]}};
  const probe=()=>context.__handler.fetch(new Request('https://function.test',{method:'POST',headers:{authorization:auth,'content-type':'application/json'},body:JSON.stringify({commit:false})}));
  const snapshotBefore=JSON.stringify(db.cursor), runsBefore=db.runs.length;
- let dry=await probe(), body=await dry.json();
+ const dry=await probe(), body=await dry.json();
  assert.equal(dry.status,200);
  assert.equal(body.mode,'dry_run');
- assert.equal(body.complete,false);
- assert.equal(body.failures,1);
- assert.equal(body.firstFailure,'proposal_session_unresolved');
+ assert.equal(body.failures,0);
+ assert.equal(body.firstFailure,null);
+ assert.equal(body.complete,false); // bounded release-page navigation still pending
  assert.equal(JSON.stringify(db.cursor),snapshotBefore);
  assert.equal(db.runs.length,runsBefore);
- // When RIS later supplies the session link, the very same proposal is no longer a gap.
- proposalHasSession=true;
- dry=await probe();body=await dry.json();
- assert.equal(dry.status,200);
- assert.equal(body.failures,0);
- assert.equal(body.complete,false); // newly discovered session remains queued
- assert.equal(JSON.stringify(db.cursor),snapshotBefore);
  settings.FIB_RIS_STRUCTURE_ENABLED='false';
  console.log('RIS Edge HTTP/SQL fault-injection and recovery: OK');
 }
