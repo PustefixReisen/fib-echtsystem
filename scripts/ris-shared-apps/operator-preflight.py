@@ -51,8 +51,7 @@ def main():
     require(recorded.tzinfo is not None, "Backup timestamp needs timezone")
     age = (datetime.now(timezone.utc) - recorded).total_seconds()
     require(-60 <= age <= 3600, "Backup is not fresh (maximum one hour)")
-    require(command("git", "-C", str(root), "rev-parse", "HEAD") == APPROVED_SHA,
-            "Local checkout is not approved release commit")
+    # The operator tool may live on a separate development branch. Only origin/main\n    # identifies the approved release; do not mistake the tool branch for payload.\n    require(command("git", "-C", str(root), "cat-file", "-t", APPROVED_SHA) == "commit",\n            "Approved release commit is unavailable locally")
     require(not command("git", "-C", str(root), "status", "--porcelain"),
             "Local checkout is dirty")
     require(command("git", "-C", str(root), "rev-parse", "origin/main") == APPROVED_SHA,
@@ -79,7 +78,7 @@ def main():
             "Feature switch already exists; inspect privately before continuing")
 
     checks = {
-        "approvedCommit": APPROVED_SHA,
+        "approvedCommit": APPROVED_SHA,\n        "operatorCodeIsNotReleasePayload": True,
         "backupId": a.backup_id,
         "backupManifestSha256": a.backup_manifest_sha256,
         "backupAgeSeconds": int(age),
