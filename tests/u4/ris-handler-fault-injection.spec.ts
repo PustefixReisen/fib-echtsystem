@@ -99,6 +99,18 @@ async function run(cadence:'daily'|'weekly'){
  return {status:resp.status,body:await resp.json()};
 }
 async function main(){
+ // Single-session write path is deny-by-default and cannot target other IDs.
+ const integration=(id:string,commit=true)=>context.__handler.fetch(new Request('https://function.test',{method:'POST',headers:{authorization:auth,'content-type':'application/json'},body:JSON.stringify({integrationSession:id,commit})}));
+ let isolated=await integration('1030');
+ assert.equal(isolated.status,400);
+ assert.equal((await isolated.json()).error,'integration_session_not_allowed');
+ isolated=await integration('1032',false);
+ assert.equal(isolated.status,403);
+ assert.equal((await isolated.json()).error,'integration_requires_interactive_commit');
+ isolated=await integration('1032');
+ assert.equal(isolated.status,403);
+ assert.equal((await isolated.json()).error,'integration_test_disabled');
+ assert.equal(db.runs.length,0);
  // Scheduler cannot run without explicit opt-in and secret, even with no JWT.
  const schedulerReq=(token:string)=>new Request('https://function.test',{method:'POST',headers:{'x-fib-ris-scheduler':token,'content-type':'application/json'},body:JSON.stringify({commit:true,cadence:'daily'})});
  let response=await context.__handler.fetch(schedulerReq('x'.repeat(36)),'scheduler');
