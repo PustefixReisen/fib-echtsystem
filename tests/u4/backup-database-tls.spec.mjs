@@ -4,6 +4,7 @@ import {tmpdir} from 'node:os';
 import {join} from 'node:path';
 import {spawnSync} from 'node:child_process';
 import tls from 'node:tls';
+import pg from 'pg';
 import {readFileSync} from 'node:fs';
 import {target,clientOptions,dumpEnvironment,trustedCA} from '../../scripts/ris-shared-apps/io.mjs';
 const host='db.apaubomxffcwtzjimori.supabase.co';
@@ -14,6 +15,7 @@ try {
   const url=`postgresql://postgres:${encodeURIComponent(password)}@${host}:5432/postgres?sslmode=verify-full`;
   const options=clientOptions(url),env=dumpEnvironment(url,{PGHOSTADDR:'evil',PGSERVICE:'evil',PGSSLMODE:'disable',PG_CONTAINER:'test'});
   assert.equal(decodeURIComponent(new URL(options.connectionString).password),password);
+  const client=new pg.Client(options);assert.equal(client.password,password);assert.equal(client.ssl.rejectUnauthorized,true);
   assert.equal(env.PGPASSWORD,password);assert.equal(env.PGSSLMODE,'verify-full');
   assert.equal(env.PGHOSTADDR,undefined);assert.equal(env.PGSERVICE,undefined);assert.equal(env.PG_CONTAINER,'test');
   assert.equal(options.ssl.rejectUnauthorized,true);
