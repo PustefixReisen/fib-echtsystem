@@ -252,3 +252,10 @@ Uploadfehler, geänderte Rücklesedateien und geänderter Nachweis führen zum A
 private Tempverzeichnisse sind anschließend leer. Fehlende/falsche Remote-Konfiguration
 und ein tatsächlich von ssh-keygen abgewiesener Hostschlüssel werden geprüft. Keine
 Aussage über funktionierende echte GitHub-/IONOS-/Nextcloud-Zugänge ohne ersten echten Lauf.
+
+## Allgemeiner Sicherungsablauf ab 01.11.2026
+
+Der ergänzende [Betriebsvertrag für sämtliche FIB-Komponenten](fib-general-backup.md)
+beschreibt den gemeinsamen Runner, alle Live-FIB-Functions, drei Betriebsarten und die
+noch erforderlichen geschützten Export-/Zugangsprüfungen. Bestehende Restore- und
+Verschlüsselungsverfahren dieser Anleitung gelten weiter.
