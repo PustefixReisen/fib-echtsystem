@@ -1,0 +1,25 @@
+name: RIS operator preflight unit tests
+
+on:
+  pull_request:
+    paths:
+      - 'scripts/ris-shared-apps/operator-preflight.py'
+      - 'scripts/ris-shared-apps/test_operator_preflight.py'
+      - '.github/workflows/ris-operator-preflight-tests.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  offline-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Compile without importing any production credentials
+        run: python -m py_compile scripts/ris-shared-apps/operator-preflight.py scripts/ris-shared-apps/test_operator_preflight.py
+      - name: Run offline rejection tests
+        run: python -m unittest discover -s scripts/ris-shared-apps -p 'test_operator_preflight.py' -v
