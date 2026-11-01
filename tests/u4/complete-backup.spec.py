@@ -28,4 +28,12 @@ class Contracts(unittest.TestCase):
  def test_missing_access_is_fail_closed(self):
   spec=importlib.util.spec_from_file_location('runner',pathlib.Path(__file__).resolve().parents[2]/'scripts/backup/run.py');m=importlib.util.module_from_spec(spec);spec.loader.exec_module(m)
   with self.assertRaises(ValueError):m.backup({'GITHUB_SHA':'a'*40},lambda *a,**k:self.fail('No transfer without prerequisites'))
+ def test_failed_input_download_cleans_private_files(self):
+  spec=importlib.util.spec_from_file_location('runner',pathlib.Path(__file__).resolve().parents[2]/'scripts/backup/run.py');m=importlib.util.module_from_spec(spec);spec.loader.exec_module(m)
+  config='[fib-nextcloud]\ntype=webdav\nurl=https://example.invalid/FIB-Backups\nuser=test\npass=synthetic\n[fib-backup-crypt]\ntype=crypt\nremote=fib-nextcloud:\npassword=synthetic\n'
+  with tempfile.TemporaryDirectory() as tmp:
+   env=dict(GITHUB_SHA='a'*40,FIB_MAINTENANCE_DATABASE_URL='synthetic',FIB_BACKUP_MANAGEMENT_TOKEN='synthetic',FIB_SFTP_KNOWN_HOSTS_TEXT='synthetic',FIB_BACKUP_INPUT_ID='test',FIB_BACKUP_RCLONE_CONFIG=config,FIB_BACKUP_TEMP_PARENT=tmp)
+   def fail(*args,**kw):raise RuntimeError('simulated denied/aborted transfer')
+   with self.assertRaises(RuntimeError):m.backup(env,fail)
+   self.assertEqual(list(pathlib.Path(tmp).iterdir()),[])
 unittest.main()
