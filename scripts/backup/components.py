@@ -23,7 +23,7 @@ def exports(root, live, now):
   # Every relative code dependency must be present within the exported edge tree.
   for file in folder.rglob('*'):
    if file.is_file() and file.suffix in ['.ts','.js','.mjs','.json']:
-    for dep in re.findall(r'''(?:from\s*|import\s*\()?["'](\.[^"']+)["']''',file.read_text()):
+    for dep in re.findall(r'''(?:from\s*|import\s*\()?["'](\.{1,2}/[^"'\r\n]+)["']''',file.read_text()):
      target=(file.parent/dep).resolve()
      if not target.is_relative_to((root/'edge').resolve()) or not target.is_file():raise ValueError('Missing relative dependency')
  evidence=json.loads((root/'configuration/capture.json').read_text())
