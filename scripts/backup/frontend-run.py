@@ -22,7 +22,15 @@ def inventory(root):
 
 def command(args,**kwargs):
  r=subprocess.run(args,stdout=subprocess.PIPE,stderr=subprocess.PIPE,timeout=600,**kwargs)
- if r.returncode:raise RuntimeError('Private transfer failed')
+ if r.returncode:
+  # Forward only fixed diagnostic codes, never untrusted command output.
+  allowed={'AUTH_FAILED','DATABASE_NOT_FOUND','DNS_FAILED','NETWORK_FAILED','TLS_FAILED','CONNECTION_FAILED','PG_DUMP_FAILED'}
+  for line in r.stderr.decode('utf-8','replace').splitlines():
+   if line.startswith('FIB_DB_DIAG: '):
+    code=line.removeprefix('FIB_DB_DIAG: ')
+    if code in allowed:
+     print('FIB_DB_DIAG: '+code,file=sys.stderr,flush=True)
+  raise RuntimeError('Private transfer failed')
  return r
 
 def backup(env,run=command):
