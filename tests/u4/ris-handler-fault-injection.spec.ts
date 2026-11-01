@@ -19,7 +19,7 @@ const jwt=['e30',Buffer.from(JSON.stringify({sub:'user-1',aal:'aal2'})).toString
 const auth='Bearer '+jwt;
 type State={cursor:Record<string,any>|null;observations:Map<string,string>;runs:any[];scopeError:string|null};
 let db:State={cursor:null,observations:new Map(),runs:[],scopeError:null};
-let broken=false,brokenPdf=false,conflict=false,brokenCalendar=false,brokenSession=false;
+let broken=false,brokenPdf=false,conflict=false,brokenCalendar=false,brokenSession=false,calendarIncludesSession=false;
 function clone(s:State):State{return {cursor:s.cursor?structuredClone(s.cursor):null,observations:new Map(s.observations),runs:structuredClone(s.runs),scopeError:s.scopeError};}
 function connection(state:State){
  const query=async(q:string,params:any[]=[])=>{
@@ -64,7 +64,7 @@ const fakeFetch=async(url:string)=>{
  }
  if(url.startsWith(origin+'/si0040.asp?')){
    if(brokenCalendar)throw new Error('simulated calendar outage');
-   return new Response('<html><body>Kalender ohne Sitzungen in Mock</body></html>',{status:200});
+   return new Response(calendarIncludesSession?'<html><body><a href="si0057.asp?__ksinr=1032">Gemeinderat</a></body></html>':'<html><body>Kalender ohne Sitzungen in Mock</body></html>',{status:200});
  }
  if(url===linkedSession){
    if(brokenSession)throw new Error('simulated session outage');
@@ -184,6 +184,15 @@ async function main(){
  assert.equal(outage.status,200);
  assert.equal(result.failures,0);
  assert.equal(result.complete,true);
+ // End-to-end handler discovery: actual calendar link triggers session parsing.
+ db.cursor={pending:[entry],visited:[],documents:[],failures:[],pdfOffset:0,releaseViews:[],structureState:{queue:[],visited:[],sessions:[]}};
+ calendarIncludesSession=true;
+ outage=await probe();result=await outage.json();
+ assert.equal(outage.status,200);
+ assert.equal(result.failures,0);
+ assert.equal(result.complete,true);
+ assert.equal(JSON.stringify(db.cursor.structureState.sessions),JSON.stringify([])); // dry-run is read-only
+ calendarIncludesSession=false;
  settings.FIB_RIS_STRUCTURE_ENABLED='false';
  console.log('RIS Edge HTTP/SQL fault-injection and recovery: OK');
 }
