@@ -186,13 +186,17 @@ async function main() {
     );
   const initial = await revisions();
   failPage = true;
-  assert.equal((await invoke()).status, 502);
-  assert.equal(await cursor(), "null");
+  const gap = await invoke();
+  assert.equal(gap.status, 200, JSON.stringify(gap));
+  assert.equal(gap.body.complete, false);
+  assert.equal(gap.body.failures, 1);
+  const interrupted = await cursor();
+  assert.notEqual(interrupted, "null"); // recoverable failure checkpoint
   assert.equal(await revisions(), initial);
   failPage = false;
   abort = true;
   assert.equal((await invoke()).status, 502);
-  assert.equal(await cursor(), "null");
+  assert.equal(await cursor(), interrupted); // atomic rollback
   assert.equal(await revisions(), initial);
   abort = false;
   const ok = await invoke();
