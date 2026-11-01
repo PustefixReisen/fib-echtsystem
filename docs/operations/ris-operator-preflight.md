@@ -40,3 +40,16 @@ python3 scripts/ris-shared-apps/operator-backup-verify.py \
 ```
 
 **Wichtig:** Die Quittung selbst wird aus dem Backupbereich gelesen. Der Manifest-SHA-256-Wert muss aus einer unabhängigen vertrauenswürdigen Prüfinstanz stammen und darf nicht ungeprüft derselben Quittung entnommen werden. Danach zusätzlich den Alterscheck direkt vor dem ersten Schreibschritt ausführen. Der Verifier setzt nichts in Supabase oder GitHub.
+
+## Gemeinsamer, strikt lesender Startbefehl
+
+Der Einstiegspunkt `operator-readiness.py` führt **in einem Lauf** die unabhängige entschlüsselte Nextcloud-Rücklesung und Bundle-Verifikation, den PostgreSQL-Istvergleich und den GitHub/Supabase-Preflight aus. Er verwendet bestehende private Umgebungsvariablen `FIB_BACKUP_RCLONE_CONFIG`, `FIB_MAINTENANCE_DATABASE_URL` und `PGSSLROOTCERT`; der geprüfte Backup-Manifest-Digest muss unabhängig aus dem erfolgreichen GitHub-Sicherungslauf stammen. Es gibt keine automatische RIS-Aktivierung und keinen Secret-Upload. Der private Bericht enthält keine Zugangsdaten.
+
+```bash
+python3 scripts/ris-shared-apps/operator-readiness.py \\
+  --backup-id 'release-<id>' \\
+  --manifest-sha256 '<unabhängig-geprüfte-sha256>' \\
+  --output "$HOME/FIB-Backups/ris-readiness-$(date -u +%Y%m%dT%H%M%SZ).json"
+```
+
+Dieser Bericht ist **kein Freigabetoken für produktive Schreibschritte**. Besonders der Gültigkeitszeitraum der Sicherung muss *unmittelbar* vor einem künftigen Deployment erneut geprüft werden, und die persönliche gültige FIB-AAL2-Sitzung bleibt eine noch nicht automatisierte Voraussetzung. Das Release-Paket bleibt an den zuvor ausdrücklich freigegebenen Commit gebunden; weder ein neuer PR noch ein Check-Artefakt ändern den freigegebenen Payload.
