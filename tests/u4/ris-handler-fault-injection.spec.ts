@@ -193,8 +193,11 @@ async function main(){
  assert.equal(result.complete,true);
  assert.equal(JSON.stringify(db.cursor.structureState.sessions),JSON.stringify([])); // dry-run is read-only
  calendarIncludesSession=false;
- // Transactional multi-run checkpoint: release-list outage stays visible,
- // calendar may still be read, and a subsequent committed run recovers.
+ // Transactional release-list checkpoint independent of structure PDF extraction.
+ // The fake PDF is not a parseable real PDF; structure-enabled writes require
+ // a dedicated actual-Postgres test with a pinned valid PDF fixture.
+ settings.FIB_RIS_STRUCTURE_ENABLED='false';
+ // Release-list outage stays visible and a subsequent committed run recovers.
  db.cursor={pending:[entry],visited:[],documents:[],failures:[],pdfOffset:0,releaseViews:[],structureState:{queue:[],visited:[],sessions:[]}};
  const persistedBefore=db.runs.length;
  broken=true;
