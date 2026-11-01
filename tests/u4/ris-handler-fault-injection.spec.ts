@@ -19,7 +19,7 @@ const jwt=['e30',Buffer.from(JSON.stringify({sub:'user-1',aal:'aal2'})).toString
 const auth='Bearer '+jwt;
 type State={cursor:Record<string,any>|null;observations:Map<string,string>;runs:any[];scopeError:string|null};
 let db:State={cursor:null,observations:new Map(),runs:[],scopeError:null};
-let broken=false,brokenPdf=false,conflict=false;
+let broken=false,brokenPdf=false,conflict=false,brokenCalendar=false,brokenSession=false;
 function clone(s:State):State{return {cursor:s.cursor?structuredClone(s.cursor):null,observations:new Map(s.observations),runs:structuredClone(s.runs),scopeError:s.scopeError};}
 function connection(state:State){
  const query=async(q:string,params:any[]=[])=>{
@@ -62,7 +62,14 @@ const fakeFetch=async(url:string)=>{
    const html=proposalHasSession?'<html><a href="'+linkedSession+'">Sitzung</a></html>':'<html><body>Vorlage ohne Sitzung</body></html>';
    return new Response(html,{status:200});
  }
- if(url.startsWith(origin+'/si0040.asp?'))return new Response('<html><body>Kalender ohne Sitzungen in Mock</body></html>',{status:200});
+ if(url.startsWith(origin+'/si0040.asp?')){
+   if(brokenCalendar)throw new Error('simulated calendar outage');
+   return new Response('<html><body>Kalender ohne Sitzungen in Mock</body></html>',{status:200});
+ }
+ if(url===linkedSession){
+   if(brokenSession)throw new Error('simulated session outage');
+   return new Response('<html><div class="sidat">29.10.2026</div><table><tr><td>2.</td><td><a href="vo0050.asp?__kvonr=8644">Vorlage</a></td></tr></table></html>',{status:200});
+ }
  if(url===pdf){
    if(brokenPdf)throw new Error('simulated PDF outage');
    return new Response(pdfBytes,{status:200,headers:{'content-type':'application/pdf'}});
@@ -157,6 +164,26 @@ async function main(){
  assert.equal(body.complete,true); // both mocked release pages processed; legacy proposal ignored
  assert.equal(JSON.stringify(db.cursor),snapshotBefore);
  assert.equal(db.runs.length,runsBefore);
+ // Calendar outages must be visible as gaps, not a successful completion.
+ brokenCalendar=true;
+ let outage=await probe(), result=await outage.json();
+ assert.equal(outage.status,200);
+ assert.equal(result.failures,2);
+ assert.equal(result.complete,false);
+ brokenCalendar=false;
+ // A failed session stays queued and is retried without an HTTP 502.
+ db.cursor={pending:[entry],visited:[],documents:[],failures:[],pdfOffset:0,releaseViews:[],structureState:{queue:[linkedSession],visited:[],sessions:[]}};
+ brokenSession=true;
+ outage=await probe();result=await outage.json();
+ assert.equal(outage.status,200);
+ assert.equal(result.failures,1);
+ assert.equal(result.complete,false);
+ assert.match(result.firstFailure,/simulated session outage/);
+ brokenSession=false;
+ outage=await probe();result=await outage.json();
+ assert.equal(outage.status,200);
+ assert.equal(result.failures,0);
+ assert.equal(result.complete,true);
  settings.FIB_RIS_STRUCTURE_ENABLED='false';
  console.log('RIS Edge HTTP/SQL fault-injection and recovery: OK');
 }
