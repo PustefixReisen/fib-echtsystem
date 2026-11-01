@@ -193,6 +193,31 @@ async function main(){
  assert.equal(result.complete,true);
  assert.equal(JSON.stringify(db.cursor.structureState.sessions),JSON.stringify([])); // dry-run is read-only
  calendarIncludesSession=false;
+ // Transactional multi-run checkpoint: release-list outage stays visible,
+ // calendar may still be read, and a subsequent committed run recovers.
+ db.cursor={pending:[entry],visited:[],documents:[],failures:[],pdfOffset:0,releaseViews:[],structureState:{queue:[],visited:[],sessions:[]}};
+ const persistedBefore=db.runs.length;
+ broken=true;
+ const partialCommit=await run('daily');
+ assert.equal(partialCommit.status,200);
+ assert.equal(partialCommit.body.complete,false);
+ assert.equal(db.cursor!.cadenceStates.daily.pending[0],entry);
+ assert.equal(db.cursor!.cadenceStates.daily.failures.length,1);
+ assert.equal(db.runs.length,persistedBefore+1);
+ const interruptedCursor=JSON.stringify(db.cursor);
+ broken=false;
+ const resumedCommit=await run('daily');
+ assert.equal(resumedCommit.status,200);
+ assert.equal(resumedCommit.body.complete,true);
+ assert.equal(db.cursor!.cadenceStates.daily.pending.length,0);
+ assert.equal(db.cursor!.cadenceStates.daily.failures.length,0);
+ assert.equal(db.cursor!.cadenceStates.daily.lastStatus,'succeeded');
+ assert.notEqual(JSON.stringify(db.cursor),interruptedCursor);
+ assert.equal(db.runs.length,persistedBefore+2);
+ const stableCount=db.observations.size;
+ const repeatedCommit=await run('daily');
+ assert.equal(repeatedCommit.status,200);
+ assert.equal(db.observations.size,stableCount); // identical documents: no duplicate observation
  settings.FIB_RIS_STRUCTURE_ENABLED='false';
  console.log('RIS Edge HTTP/SQL fault-injection and recovery: OK');
 }
