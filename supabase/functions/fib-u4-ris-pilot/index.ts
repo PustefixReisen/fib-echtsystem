@@ -127,7 +127,7 @@ export async function handleRis(req:Request,mode:'interactive'|'scheduler'='inte
   if(structureEnabled&&payload.commit===true){failureScope=scopeId;failureCadence=cadence;}
   const rows=await sql.unsafe('select cursor_state from fib.ris_scan_cursors where scope_id=$1::uuid',[scopeId]);
   const previous=rows[0]?.cursor_state as {pending:string[];visited:string[];documents:string[];pdfOffset?:number;releaseViews?:{url:string;releaseSince:string|null;checkedAt:string}[];failures:{url:string;error:string}[]; cadenceStates?:Record<string,{pending:string[];visited:string[];failures:{url:string;error:string}[];releaseViews:{url:string;releaseSince:string|null;checkedAt:string}[];lastCompleteAt:string|null;lastFailedAt?:string|null;lastStatus?:'succeeded'|'partial'|'failed';lastError?:string|null}>} | undefined;
-  const structureState=(previous as any)?.structureState as {queue:string[];visited:string[];sessions:string[]}|undefined;
+  const structureState=(previous as any)?.structureState as {queue:string[];visited:string[];sessions:string[];historyNext?:string;historyDone?:boolean}|undefined;
   const previousSerialized=previous?JSON.stringify(previous):null;
   if(mode==='scheduler'){
    const checks=dueStatus(previous?.cadenceStates??{});
@@ -164,12 +164,25 @@ export async function handleRis(req:Request,mode:'interactive'|'scheduler'='inte
     for(const linked of result.navigation)if(!known.has(linked)){known.add(linked);pending.push(linked);}
    }catch(err){failures.push({url:u,error:String(err).slice(0,140)});pending.push(u);break;}
   }
+  let structureHistoryNext=structureState?.historyNext;
+  let structureHistoryDone=structureState?.historyDone??false;
   if(structureEnabled && !backfill){
    // The RIS calendar, not proposal pages, establishes the session set.
    // Bound each invocation to the current and previous calendar month.
    const today=new Date();
-   for(let delta=0;delta<2;delta++){
-    const date=new Date(Date.UTC(today.getUTCFullYear(),today.getUTCMonth()-delta,1));
+   // In addition, inspect one older month per committed cycle; preserve the
+   // cursor and never advance it on an unavailable calendar page.
+   const historicalStart=new Date(Date.UTC(today.getUTCFullYear(),today.getUTCMonth()-2,1));
+   const historyNext=structureState?.historyNext
+     ? new Date(structureState.historyNext+'T00:00:00Z') : historicalStart;
+   const historyDone=structureState?.historyDone===true;
+   const historyEligible=!historyDone && Number.isFinite(historyNext.getTime())
+     && historyNext.getTime()>=Date.UTC(2024,0,1)
+     && historyNext.getTime()<=historicalStart.getTime();
+   let historyAdvance=false;
+   const months=[0,1,...(historyEligible?[null]:[])];
+   for(const delta of months){
+    const date=delta===null?historyNext:new Date(Date.UTC(today.getUTCFullYear(),today.getUTCMonth()-delta,1));
     const calendar=calendarMonth(date.getUTCFullYear(),date.getUTCMonth()+1);
     try{
      const response=await fetch(calendar,{redirect:'error',signal:AbortSignal.timeout(15000)});
@@ -180,9 +193,15 @@ export async function handleRis(req:Request,mode:'interactive'|'scheduler'='inte
       if(!structureVisited.has(linked)&&!structureQueue.includes(linked))structureQueue.push(linked);
      }
      for(let i=failures.length-1;i>=0;i--)if(failures[i].url===calendar)failures.splice(i,1);
+     if(delta===null)historyAdvance=true;
     }catch(err){
      if(!failures.some(f=>f.url===calendar))failures.push({url:calendar,error:String(err).slice(0,140)});
     }
+   }
+   if(historyAdvance){
+    const following=new Date(Date.UTC(historyNext.getUTCFullYear(),historyNext.getUTCMonth()-1,1));
+    structureHistoryNext=following.toISOString().slice(0,10);
+    structureHistoryDone=following.getTime()<Date.UTC(2024,0,1);
    }
   }
   if(structureEnabled){
@@ -219,7 +238,7 @@ export async function handleRis(req:Request,mode:'interactive'|'scheduler'='inte
   const cadenceStates={...(previous?.cadenceStates??{}),[cadence]:{pending:current.pending,visited:current.visited,failures:current.failures,releaseViews:current.releaseViews,lastCompleteAt:complete?new Date().toISOString():(activeState?.lastCompleteAt??null),lastFailedAt:failures.length?new Date().toISOString():(activeState?.lastFailedAt??null),lastStatus:runStatus,lastError:failures.length?failures[0]?.error??'RIS-Abruffehler':null}};
   const activeErrors=Object.entries(cadenceStates).filter(([,v])=>v.failures.length>0).map(([key])=>key);
   const sourceError=activeErrors.length?'RIS-Prüflücke: '+activeErrors.join(', '):null;
-  const stored={...current,cadenceStates,...(structureEnabled?{structureState:{queue:structureQueue,visited:[...structureVisited],sessions:[...sessionUrls]}}:structureState?{structureState}:{})};
+  const stored={...current,cadenceStates,...(structureEnabled?{structureState:{queue:structureQueue,visited:[...structureVisited],sessions:[...sessionUrls],historyNext:structureHistoryNext,historyDone:structureHistoryDone}}:structureState?{structureState}:{})};
   const newly=current.documents.filter(x=>!previousDocuments.includes(x));
   if(payload.commit!==true)return reply({mode:'dry_run',processed,documents:current.documents.length,newCount:newly.length,pending:pending.length,complete,failures:failures.length,cycleRestart,firstFailure:failures[0]?.error??null,releaseViews:current.releaseViews,...coverageResult,cadenceStates,dueChecks:dueStatus(cadenceStates)});
   const pdfs:{url:string;hash:string;text:string|null}[]=[];
