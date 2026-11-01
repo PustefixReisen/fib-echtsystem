@@ -26,6 +26,9 @@ def backup(env,run=f.command):
   run(['node','scripts/ris-shared-apps/backup.mjs','--out='+str(bundle/'database')],env=env)
   dump=bundle/'database/fib.dump';digest=hashlib.sha256(dump.read_bytes()).hexdigest()
   run([sys.executable,'scripts/backup/restore-local.py',str(dump),'--sha256',digest,'--report',str(bundle/'database/restore.json')],env=env)
+  restored=json.loads((bundle/'database/restore.json').read_text())
+  captured=json.loads((bundle/'database/manifest.json').read_text())
+  if restored.get('restore')!='passed' or restored.get('tableCounts')!=captured.get('tableCounts') or restored.get('dumpSha256')!=digest:raise ValueError('Restore evidence mismatch')
   known=root/'known_hosts';known.write_text(env['FIB_SFTP_KNOWN_HOSTS_TEXT']);known.chmod(0o600)
   run([sys.executable,'scripts/backup/frontend.py',str(bundle/'frontend')],env={**env,'FIB_SFTP_KNOWN_HOSTS':str(known)})
   evidence={'commit':commit,'databaseRestore':True,'edgeExport':True,'frontendExport':True,'configurationCapture':True}
