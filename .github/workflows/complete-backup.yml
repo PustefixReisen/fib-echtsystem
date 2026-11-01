@@ -49,7 +49,13 @@ jobs:
             | sudo tee /etc/apt/sources.list.d/postgresql-pgdg.list > /dev/null
           sudo apt-get update
           sudo apt-get install -y postgresql-client-17
-          pg_dump --version | grep -q '^pg_dump (PostgreSQL) 17\.'
+          test -x /usr/lib/postgresql/17/bin/pg_dump
+          version="$(/usr/lib/postgresql/17/bin/pg_dump --version)"
+          case "$version" in
+            "pg_dump (PostgreSQL) 17."*) echo "$version" ;;
+            *) echo "Unexpected PostgreSQL client version" >&2; exit 1 ;;
+          esac
+          echo "/usr/lib/postgresql/17/bin" >> "$GITHUB_PATH"
           docker pull postgres:17
       - name: Prepare trusted PostgreSQL CA
         env:
