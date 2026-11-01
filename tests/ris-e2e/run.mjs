@@ -467,6 +467,13 @@ try {
   );
   phase = "late publication and rollback";
   const revisions = await count("ris_session_versions");
+  // Force a late check of the known 1032 session: calendar-first scanning
+  // no longer guarantees a structure write in an arbitrary subsequent run.
+  // Reset only the isolated E2E cursor; do not touch any shared environment.
+  await db.query(
+    "update fib.ris_scan_cursors set cursor_state=jsonb_set(jsonb_set(cursor_state,'{structureState,queue}',$1::jsonb,true),'{structureState,visited}','[]'::jsonb,true)",
+    [JSON.stringify(["https://buergerinfo-feldkirchen.digitalfabrix.de/si0057.asp?__ksinr=1032"])],
+  );
   const cursors = JSON.stringify(
     (
       await db.query(

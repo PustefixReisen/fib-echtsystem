@@ -1,4 +1,5 @@
 import {withDevelopmentDataset} from '../_shared/development-datasets.ts';
+import {calendarMonth,calendarSessions} from '../_shared/ris-calendar.ts';
 import postgres from 'npm:postgres@3.4.7';
 import {extractText} from 'npm:unpdf@2.1.0';
 import {risSessionLinks,risUrl,parseRisStructure,persistRisStructure,persistRisDocument} from '../_shared/ris-structure.ts';
@@ -23,7 +24,7 @@ function extract(html:string,url:string){
  for(const m of html.matchAll(/<a\b[^>]*href\s*=\s*["']([^"']+)["']/gi)){
   const u=valid(m[1]??'',url);if(!u)continue;
   const parsed=new URL(u);
-  const canonical=risUrl(u);if(canonical&&(/\/(?:si|vo)\d+\.asp/.test(parsed.pathname)))structureLinks.add(canonical);
+  const canonical=risUrl(u);if(canonical&&(/\/si\d+\.asp/.test(parsed.pathname)))structureLinks.add(canonical);
   if(parsed.pathname.toLowerCase()==='/getfile.asp'&&parsed.searchParams.has('id'))docs.add(u);
   if(parsed.pathname.toLowerCase()==='/do0040.asp'&&/^\d{7}$/.test(parsed.searchParams.get('smcadat')??''))navigation.add(u);
  }
@@ -115,7 +116,7 @@ export async function handleRis(req:Request,mode:'interactive'|'scheduler'='inte
    const allowed=await sql.unsafe("select 1 from fib.app_users where user_id=$1::uuid and role='admin' and active=true and setup_status='active' limit 1",[interactiveUserId]);
    if(!allowed.length)return reply({error:'admin_required'},403);
   }
-  const payload=await req.json().catch(()=>({})) as {commit?:boolean;pdfBackfill?:boolean;cadence?:'daily'|'weekly'};
+  const payload=await req.json().catch(()=>({})) as {commit?:boolean;pdfBackfill?:boolean;cadence?:'daily'|'weekly';integrationSession?:string};
   const structureEnabled=Deno.env.get('FIB_RIS_STRUCTURE_ENABLED')==='true';
   const backfill=payload.pdfBackfill===true && payload.commit===true;
   if(payload.cadence && payload.cadence!=='daily'&&payload.cadence!=='weekly')return reply({error:'invalid_cadence'},400);
@@ -123,10 +124,31 @@ export async function handleRis(req:Request,mode:'interactive'|'scheduler'='inte
   const scopes=await sql.unsafe("select id from fib.source_scopes where scope_key='ris-dokumentliste' and status='candidate'");
   if(scopes.length!==1)throw new Error('ris_scope_unavailable');
   const scopeId=scopes[0].id as string;
+  // Separate, strictly single-session integration path. No release-list crawl,
+  // calendar backfill, PDF downloads, scanner checkpoints or source observations.
+  // Only an explicitly approved AAL2 admin request may use this write path.
+  if(payload.integrationSession!==undefined){
+   if(payload.integrationSession!=='1032')return reply({error:'integration_session_not_allowed'},400);
+   if(mode!=='interactive'||payload.commit!==true)return reply({error:'integration_requires_interactive_commit'},403);
+   if(Deno.env.get('FIB_RIS_INTEGRATION_TEST_ENABLED')!=='true')return reply({error:'integration_test_disabled'},403);
+   const singleUrl=origin+'/si0057.asp?__ksinr=1032';
+   const response=await fetch(singleUrl,{redirect:'error',signal:AbortSignal.timeout(15000)});
+   if(!response.ok)return reply({error:'integration_session_http',status:response.status},502);
+   const snapshot=await parseRisStructure(await response.text(),singleUrl,new Date().toISOString());
+   const result=await sql.begin(async tx=>{
+    return withDevelopmentDataset(tx,{action:'source_scan',scopeId},async()=>{
+     const locked=await tx.unsafe("select id from fib.source_scopes where id=$1::uuid and status='candidate' for update",[scopeId]);
+     if(locked.length!==1)throw Error('scope_changed');
+     return persistRisStructure(tx,snapshot);
+    });
+   });
+   return reply({mode:'single_session_integration',session:'1032',...result});
+  }
+
   if(structureEnabled&&payload.commit===true){failureScope=scopeId;failureCadence=cadence;}
   const rows=await sql.unsafe('select cursor_state from fib.ris_scan_cursors where scope_id=$1::uuid',[scopeId]);
   const previous=rows[0]?.cursor_state as {pending:string[];visited:string[];documents:string[];pdfOffset?:number;releaseViews?:{url:string;releaseSince:string|null;checkedAt:string}[];failures:{url:string;error:string}[]; cadenceStates?:Record<string,{pending:string[];visited:string[];failures:{url:string;error:string}[];releaseViews:{url:string;releaseSince:string|null;checkedAt:string}[];lastCompleteAt:string|null;lastFailedAt?:string|null;lastStatus?:'succeeded'|'partial'|'failed';lastError?:string|null}>} | undefined;
-  const structureState=(previous as any)?.structureState as {queue:string[];visited:string[];sessions:string[]}|undefined;
+  const structureState=(previous as any)?.structureState as {queue:string[];visited:string[];sessions:string[];historyNext?:string;historyDone?:boolean}|undefined;
   const previousSerialized=previous?JSON.stringify(previous):null;
   if(mode==='scheduler'){
    const checks=dueStatus(previous?.cadenceStates??{});
@@ -163,10 +185,53 @@ export async function handleRis(req:Request,mode:'interactive'|'scheduler'='inte
     for(const linked of result.navigation)if(!known.has(linked)){known.add(linked);pending.push(linked);}
    }catch(err){failures.push({url:u,error:String(err).slice(0,140)});pending.push(u);break;}
   }
+  let structureHistoryNext=structureState?.historyNext;
+  let structureHistoryDone=structureState?.historyDone??false;
+  if(structureEnabled && !backfill){
+   // The RIS calendar, not proposal pages, establishes the session set.
+   // Bound each invocation to the current and previous calendar month.
+   const today=new Date();
+   // In addition, inspect one older month per committed cycle; preserve the
+   // cursor and never advance it on an unavailable calendar page.
+   const historicalStart=new Date(Date.UTC(today.getUTCFullYear(),today.getUTCMonth()-2,1));
+   const historyNext=structureState?.historyNext
+     ? new Date(structureState.historyNext+'T00:00:00Z') : historicalStart;
+   const historyDone=structureState?.historyDone===true;
+   const historyEligible=!historyDone && Number.isFinite(historyNext.getTime())
+     && historyNext.getTime()>=Date.UTC(2024,0,1)
+     && historyNext.getTime()<=historicalStart.getTime();
+   let historyAdvance=false;
+   const months=[0,1,...(historyEligible?[null]:[])];
+   for(const delta of months){
+    const date=delta===null?historyNext:new Date(Date.UTC(today.getUTCFullYear(),today.getUTCMonth()-delta,1));
+    const calendar=calendarMonth(date.getUTCFullYear(),date.getUTCMonth()+1);
+    try{
+     const response=await fetch(calendar,{redirect:'error',signal:AbortSignal.timeout(15000)});
+     if(!response.ok)throw Error('calendar_http_'+response.status);
+     const html=await response.text();
+     if(!/<(?:html|body|a)\b/i.test(html))throw Error('invalid_calendar_html');
+     for(const linked of calendarSessions(html)){
+      if(!structureVisited.has(linked)&&!structureQueue.includes(linked))structureQueue.push(linked);
+     }
+     for(let i=failures.length-1;i>=0;i--)if(failures[i].url===calendar)failures.splice(i,1);
+     if(delta===null)historyAdvance=true;
+    }catch(err){
+     if(!failures.some(f=>f.url===calendar))failures.push({url:calendar,error:String(err).slice(0,140)});
+    }
+   }
+   if(historyAdvance){
+    const following=new Date(Date.UTC(historyNext.getUTCFullYear(),historyNext.getUTCMonth()-1,1));
+    structureHistoryNext=following.toISOString().slice(0,10);
+    structureHistoryDone=following.getTime()<Date.UTC(2024,0,1);
+   }
+  }
   if(structureEnabled){
-   for(let i=0;i<2&&structureQueue.length;i++){
+   // Process at most the original queue length; retried gaps wait for the next run.
+   const structureBudget=Math.min(2,structureQueue.length);
+   for(let i=0;i<structureBudget;i++){
     const url=structureQueue.shift()!;
     const safe=risUrl(url);if(!safe||!/^\/(?:si|vo)\d+\.asp$/.test(new URL(safe).pathname))throw Error('invalid_structure_cursor');
+    try{
     const response=await fetch(safe,{redirect:'error',signal:AbortSignal.timeout(15000)});
     if(!response.ok)throw Error('ris_structure_http_'+response.status);
     const html=await response.text();
@@ -174,8 +239,15 @@ export async function handleRis(req:Request,mode:'interactive'|'scheduler'='inte
      const snapshot=await parseRisStructure(html,safe,new Date().toISOString());snapshots.push(snapshot);sessionUrls.add(safe);
      for(const d of [...snapshot.documents,...snapshot.agenda.flatMap(a=>a.documents)])knownDocs.add(d.url);
     }else{
-     const sessions=risSessionLinks(html,safe);if(!sessions.length)throw Error('proposal_session_unresolved');
-     for(const u of sessions)if(!structureVisited.has(u)&&!structureQueue.includes(u))structureQueue.push(u);
+     // Legacy proposal cursor: skip. A proposal is eligible only when discovered
+     // through a session agenda, never by guessing its reverse session link.
+     for(let i=failures.length-1;i>=0;i--)if(failures[i].url===safe)failures.splice(i,1);
+    }
+     for(let j=failures.length-1;j>=0;j--)if(failures[j].url===safe)failures.splice(j,1);
+    }catch(err){
+     if(!failures.some(f=>f.url===safe))failures.push({url:safe,error:String(err).slice(0,140)});
+     if(!structureQueue.includes(safe))structureQueue.push(safe);
+     continue;
     }
     structureVisited.add(safe);
    }
@@ -187,7 +259,7 @@ export async function handleRis(req:Request,mode:'interactive'|'scheduler'='inte
   const cadenceStates={...(previous?.cadenceStates??{}),[cadence]:{pending:current.pending,visited:current.visited,failures:current.failures,releaseViews:current.releaseViews,lastCompleteAt:complete?new Date().toISOString():(activeState?.lastCompleteAt??null),lastFailedAt:failures.length?new Date().toISOString():(activeState?.lastFailedAt??null),lastStatus:runStatus,lastError:failures.length?failures[0]?.error??'RIS-Abruffehler':null}};
   const activeErrors=Object.entries(cadenceStates).filter(([,v])=>v.failures.length>0).map(([key])=>key);
   const sourceError=activeErrors.length?'RIS-Prüflücke: '+activeErrors.join(', '):null;
-  const stored={...current,cadenceStates,...(structureEnabled?{structureState:{queue:structureQueue,visited:[...structureVisited],sessions:[...sessionUrls]}}:structureState?{structureState}:{})};
+  const stored={...current,cadenceStates,...(structureEnabled?{structureState:{queue:structureQueue,visited:[...structureVisited],sessions:[...sessionUrls],historyNext:structureHistoryNext,historyDone:structureHistoryDone}}:structureState?{structureState}:{})};
   const newly=current.documents.filter(x=>!previousDocuments.includes(x));
   if(payload.commit!==true)return reply({mode:'dry_run',processed,documents:current.documents.length,newCount:newly.length,pending:pending.length,complete,failures:failures.length,cycleRestart,firstFailure:failures[0]?.error??null,releaseViews:current.releaseViews,...coverageResult,cadenceStates,dueChecks:dueStatus(cadenceStates)});
   const pdfs:{url:string;hash:string;text:string|null}[]=[];

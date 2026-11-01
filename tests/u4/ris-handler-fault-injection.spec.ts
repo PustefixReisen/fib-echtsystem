@@ -11,16 +11,20 @@ const origin='https://buergerinfo-feldkirchen.digitalfabrix.de';
 const entry=origin+'/do0040.asp?smcmode=32832';
 const page2=origin+'/do0040.asp?smcadat=1234567';
 const pdf=origin+'/getfile.asp?id=100';
+const unresolvedProposal=origin+'/vo0050.asp?__kvonr=8640';
+const linkedSession=origin+'/si0057.asp?__ksinr=1032';
+let proposalHasSession=false;
 const pdfBytes=new TextEncoder().encode('%PDF-1.4\nmock content');
 const jwt=['e30',Buffer.from(JSON.stringify({sub:'user-1',aal:'aal2'})).toString('base64url'),'sig'].join('.');
 const auth='Bearer '+jwt;
 type State={cursor:Record<string,any>|null;observations:Map<string,string>;runs:any[];scopeError:string|null};
 let db:State={cursor:null,observations:new Map(),runs:[],scopeError:null};
-let broken=false,brokenPdf=false,conflict=false;
+let broken=false,brokenPdf=false,conflict=false,brokenCalendar=false,brokenSession=false,calendarIncludesSession=false;
 function clone(s:State):State{return {cursor:s.cursor?structuredClone(s.cursor):null,observations:new Map(s.observations),runs:structuredClone(s.runs),scopeError:s.scopeError};}
 function connection(state:State){
  const query=async(q:string,params:any[]=[])=>{
   if(q.includes('to_regclass'))return [{r:null}];
+  if(q.startsWith('select id,last_observed_at from fib.ris_documents'))return [];
   if(q.includes('from fib.app_users'))return [{id:'user-1'}];
   if(q.includes('from fib.source_scopes')&&q.includes('scope_key'))return [{id:'scope-1'}];
   if(q.startsWith('select cursor_state'))return state.cursor?[{cursor_state:structuredClone(state.cursor)}]:[];
@@ -55,13 +59,26 @@ const fakeFetch=async(url:string)=>{
      : '<html><body>Dokumente mit Freigabe seit 02.07.2026 <a href="'+pdf+'">PDF</a></body></html>';
    return new Response(html,{status:200,headers:{'content-type':'text/html'}});
  }
+ if(url===unresolvedProposal){
+   const html=proposalHasSession?'<html><a href="'+linkedSession+'">Sitzung</a></html>':'<html><body>Vorlage ohne Sitzung</body></html>';
+   return new Response(html,{status:200});
+ }
+ if(url.startsWith(origin+'/si0040.asp?')){
+   if(brokenCalendar)throw new Error('simulated calendar outage');
+   return new Response(calendarIncludesSession?'<html><body><a href="si0057.asp?__ksinr=1032">Gemeinderat</a></body></html>':'<html><body>Kalender ohne Sitzungen in Mock</body></html>',{status:200});
+ }
+ if(url===linkedSession){
+   if(brokenSession)throw new Error('simulated session outage');
+   return new Response('<html><div class="siname">Gemeinderat 29.10.2026</div><div class="sidat">29.10.2026</div><table><tr><td>2.</td><td><a href="vo0050.asp?__kvonr=8644">Vorlage</a></td></tr></table></html>',{status:200});
+ }
  if(url===pdf){
    if(brokenPdf)throw new Error('simulated PDF outage');
    return new Response(pdfBytes,{status:200,headers:{'content-type':'application/pdf'}});
  }
  throw new Error('Unexpected fetch '+url);
 };
-const source=edgeDatasetSupport+(readFileSync('supabase/functions/_shared/ris-structure.ts','utf8').replace(/\bexport /g,'')+'\n'+readFileSync('supabase/functions/fib-u4-ris-pilot/index.ts','utf8'))
+const source=edgeDatasetSupport+(readFileSync('supabase/functions/_shared/ris-calendar.ts','utf8').replace(/\bexport /g,'')+'\n'+readFileSync('supabase/functions/_shared/ris-structure.ts','utf8').replace(/\bexport /g,'')+'\n'+readFileSync('supabase/functions/fib-u4-ris-pilot/index.ts','utf8'))
+ .replace(/^import .*ris-calendar.*;\s*/m,'')
  .replace(/^import .*development-datasets.*;\s*/m,'')
  .replace(/^import postgres from .*;\s*/m,'const postgres = globalThis.__postgres;\n')
  .replace(/^import .*from ['"](?:npm:unpdf|\.\.\/_shared\/ris-structure)[^\n]+$/gm,'')
@@ -71,7 +88,7 @@ const source=edgeDatasetSupport+(readFileSync('supabase/functions/_shared/ris-st
 const js=ts.transpileModule(source,{compilerOptions:{target:ts.ScriptTarget.ES2022,module:ts.ModuleKind.None}}).outputText;
 const settings:Record<string,string>={SUPABASE_URL:'https://auth.test',SUPABASE_ANON_KEY:'test',FIB_DATABASE_URL:'test'};
 const context:any=vm.createContext({
- __postgres:fakePostgres,fetch:fakeFetch,Request,Response,URL,URLSearchParams,
+ __postgres:fakePostgres,fetch:fakeFetch,extractText:async()=>({text:'fixture PDF text'}),Request,Response,URL,URLSearchParams,
  TextDecoder,TextEncoder,Uint8Array,Date,Set,Map,AbortSignal,crypto:webcrypto,atob,
  Deno:{env:{get:(key:string)=>settings[key]}},
 });
@@ -82,6 +99,18 @@ async function run(cadence:'daily'|'weekly'){
  return {status:resp.status,body:await resp.json()};
 }
 async function main(){
+ // Single-session write path is deny-by-default and cannot target other IDs.
+ const integration=(id:string,commit=true)=>context.__handler.fetch(new Request('https://function.test',{method:'POST',headers:{authorization:auth,'content-type':'application/json'},body:JSON.stringify({integrationSession:id,commit})}));
+ let isolated=await integration('1030');
+ assert.equal(isolated.status,400);
+ assert.equal((await isolated.json()).error,'integration_session_not_allowed');
+ isolated=await integration('1032',false);
+ assert.equal(isolated.status,403);
+ assert.equal((await isolated.json()).error,'integration_requires_interactive_commit');
+ isolated=await integration('1032');
+ assert.equal(isolated.status,403);
+ assert.equal((await isolated.json()).error,'integration_test_disabled');
+ assert.equal(db.runs.length,0);
  // Scheduler cannot run without explicit opt-in and secret, even with no JWT.
  const schedulerReq=(token:string)=>new Request('https://function.test',{method:'POST',headers:{'x-fib-ris-scheduler':token,'content-type':'application/json'},body:JSON.stringify({commit:true,cadence:'daily'})});
  let response=await context.__handler.fetch(schedulerReq('x'.repeat(36)),'scheduler');
@@ -135,6 +164,96 @@ async function main(){
  assert.equal(JSON.stringify(db.cursor),before);
  assert.equal(db.runs.length,count);
  assert.deepEqual(db.runs.map(x=>x.status),['succeeded','succeeded','failed','succeeded']);
+ // Legacy proposal cursor must not reverse-resolve sessions or abort a dry run.
+ settings.FIB_RIS_STRUCTURE_ENABLED='true';
+ db.cursor={pending:[entry],visited:[],documents:[],failures:[],pdfOffset:0,releaseViews:[],structureState:{queue:[unresolvedProposal],visited:[],sessions:[]}};
+ const probe=()=>context.__handler.fetch(new Request('https://function.test',{method:'POST',headers:{authorization:auth,'content-type':'application/json'},body:JSON.stringify({commit:false})}));
+ const snapshotBefore=JSON.stringify(db.cursor), runsBefore=db.runs.length;
+ const dry=await probe(), body=await dry.json();
+ assert.equal(dry.status,200);
+ assert.equal(body.mode,'dry_run');
+ assert.equal(body.failures,0);
+ assert.equal(body.firstFailure,null);
+ assert.equal(body.complete,true); // both mocked release pages processed; legacy proposal ignored
+ assert.equal(JSON.stringify(db.cursor),snapshotBefore);
+ assert.equal(db.runs.length,runsBefore);
+ // Calendar outages must be visible as gaps, not a successful completion.
+ brokenCalendar=true;
+ let outage=await probe(), result=await outage.json();
+ assert.equal(outage.status,200);
+ assert.equal(result.failures,3); // current, previous and bounded historical month
+ assert.equal(result.complete,false);
+ brokenCalendar=false;
+ // A failed session stays queued and is retried without an HTTP 502.
+ db.cursor={pending:[entry],visited:[],documents:[],failures:[],pdfOffset:0,releaseViews:[],structureState:{queue:[linkedSession],visited:[],sessions:[]}};
+ brokenSession=true;
+ outage=await probe();result=await outage.json();
+ assert.equal(outage.status,200);
+ assert.equal(result.failures,1);
+ assert.equal(result.complete,false);
+ assert.match(result.firstFailure,/simulated session outage/);
+ brokenSession=false;
+ outage=await probe();result=await outage.json();
+ assert.equal(outage.status,200);
+ assert.equal(result.failures,0);
+ assert.equal(result.complete,true);
+ // End-to-end handler discovery: actual calendar link triggers session parsing.
+ db.cursor={pending:[entry],visited:[],documents:[],failures:[],pdfOffset:0,releaseViews:[],structureState:{queue:[],visited:[],sessions:[]}};
+ calendarIncludesSession=true;
+ outage=await probe();result=await outage.json();
+ assert.equal(outage.status,200);
+ assert.equal(result.failures,0);
+ assert.equal(result.complete,true);
+ assert.equal(JSON.stringify(db.cursor.structureState.sessions),JSON.stringify([])); // dry-run is read-only
+ calendarIncludesSession=false;
+ // Transactional release-list checkpoint independent of structure PDF extraction.
+ // The fake PDF is not a parseable real PDF; structure-enabled writes require
+ // a dedicated actual-Postgres test with a pinned valid PDF fixture.
+ settings.FIB_RIS_STRUCTURE_ENABLED='false';
+ // Release-list outage stays visible and a subsequent committed run recovers.
+ db.cursor={pending:[entry],visited:[],documents:[],failures:[],pdfOffset:0,releaseViews:[],structureState:{queue:[],visited:[],sessions:[]}};
+ const persistedBefore=db.runs.length;
+ broken=true;
+ const partialCommit=await run('daily');
+ assert.equal(partialCommit.status,200);
+ assert.equal(partialCommit.body.complete,false);
+ assert.equal(db.cursor!.cadenceStates.daily.pending[0],entry);
+ assert.equal(db.cursor!.cadenceStates.daily.failures.length,1);
+ assert.equal(db.runs.length,persistedBefore+1);
+ const interruptedCursor=JSON.stringify(db.cursor);
+ broken=false;
+ const resumedCommit=await run('daily');
+ assert.equal(resumedCommit.status,200);
+ assert.equal(resumedCommit.body.complete,true);
+ assert.equal(db.cursor!.cadenceStates.daily.pending.length,0);
+ assert.equal(db.cursor!.cadenceStates.daily.failures.length,0);
+ assert.equal(db.cursor!.cadenceStates.daily.lastStatus,'succeeded');
+ assert.notEqual(JSON.stringify(db.cursor),interruptedCursor);
+ assert.equal(db.runs.length,persistedBefore+2);
+ const stableCount=db.observations.size;
+ const repeatedCommit=await run('daily');
+ assert.equal(repeatedCommit.status,200);
+ assert.equal(db.observations.size,stableCount); // identical documents: no duplicate observation
+ // Historical month progression is transactional and failure-safe.
+ settings.FIB_RIS_STRUCTURE_ENABLED='true';
+ db.cursor={pending:[entry],visited:[],documents:[],failures:[],pdfOffset:0,releaseViews:[],structureState:{queue:[],visited:[],sessions:[]}};
+ const initialHistorical=await run('daily');
+ assert.equal(initialHistorical.status,200,JSON.stringify(initialHistorical.body));
+ const firstMonth=db.cursor!.structureState.historyNext;
+ assert.match(firstMonth,/^\d{4}-\d{2}-01$/);
+ const firstRuns=db.runs.length;
+ brokenCalendar=true;
+ const blockedHistorical=await run('daily');
+ assert.equal(blockedHistorical.status,200,JSON.stringify(blockedHistorical.body));
+ assert.equal(blockedHistorical.body.complete,false);
+ assert.equal(db.cursor!.structureState.historyNext,firstMonth);
+ assert.equal(db.runs.length,firstRuns+1);
+ brokenCalendar=false;
+ const resumedHistorical=await run('daily');
+ assert.equal(resumedHistorical.status,200,JSON.stringify(resumedHistorical.body));
+ assert.notEqual(db.cursor!.structureState.historyNext,firstMonth);
+ assert.equal(resumedHistorical.body.failures,0);
+ settings.FIB_RIS_STRUCTURE_ENABLED='false';
  console.log('RIS Edge HTTP/SQL fault-injection and recovery: OK');
 }
 void main().catch(e=>{console.error(e);process.exitCode=1});
