@@ -26,7 +26,19 @@ if (root === "/" || (existsSync(root) && readdirSync(root).length))
 mkdirSync(root, { recursive: true, mode: 0o700 });
 chmodSync(root, 0o700);
 const db = new pg.Client(clientOptions(connection));
-await db.connect();
+try {
+  await db.connect();
+} catch (error) {
+  const code = error?.code;
+  const kind = code === "28P01" ? "AUTH_FAILED"
+    : code === "3D000" ? "DATABASE_NOT_FOUND"
+    : code === "ENOTFOUND" || code === "EAI_AGAIN" ? "DNS_FAILED"
+    : code === "ETIMEDOUT" || code === "ECONNREFUSED" ? "NETWORK_FAILED"
+    : ["UNABLE_TO_VERIFY_LEAF_SIGNATURE", "SELF_SIGNED_CERT_IN_CHAIN", "DEPTH_ZERO_SELF_SIGNED_CERT", "CERT_HAS_EXPIRED", "ERR_TLS_CERT_ALTNAME_INVALID"].includes(code) ? "TLS_FAILED"
+    : "CONNECTION_FAILED";
+  console.error("FIB_DB_DIAG: " + kind);
+  process.exit(1);
+}
 try {
   await db.query("begin isolation level repeatable read read only");
   const snapshot = (await db.query("select pg_export_snapshot() s")).rows[0].s;
@@ -58,6 +70,7 @@ try {
     { env, stdio: ["ignore", fd, "pipe"], timeout: 120000 },
   );
   closeSync(fd);
+  if (r.status !== 0) console.error("FIB_DB_DIAG: PG_DUMP_FAILED");
   if (r.status !== 0)
     throw Error(
       "Schema dump failed; verify local PostgreSQL client major and TLS configuration. No secret printed.",
