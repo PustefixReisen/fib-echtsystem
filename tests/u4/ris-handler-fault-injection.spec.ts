@@ -152,7 +152,7 @@ async function main(){
  assert.equal(body.mode,'dry_run');
  assert.equal(body.failures,0);
  assert.equal(body.firstFailure,null);
- assert.equal(body.complete,false); // bounded release-page navigation still pending
+ assert.equal(body.complete,true); // both mocked release pages processed; legacy proposal ignored
  assert.equal(JSON.stringify(db.cursor),snapshotBefore);
  assert.equal(db.runs.length,runsBefore);
  settings.FIB_RIS_STRUCTURE_ENABLED='false';
