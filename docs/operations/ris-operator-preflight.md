@@ -21,3 +21,8 @@ Die Prüfung kontrolliert den exakten freigegebenen Commit in `origin/main` (auc
 
 Bis die weiteren Schritte aus Issue #368 implementiert und separat getestet sind, gilt für die eigentliche RIS-Bereitstellung ausschließlich `docs/operations/u4-shared-apps-release-plan.md`. Der bisherige freigegebene Commit bleibt `7a73db6`; durch Merge dieses PR ändert sich `main` und die Commit-Bindung eines weiteren Release-Backups muss neu bewertet werden.
 \n## Negativtests (ohne Netzwerk)\n\n`python3 -m unittest discover -s scripts/ris-shared-apps -p 'test_operator_preflight.py'`\n\nDie Tests decken fehlerhaften Sicherungs-Commit, veraltete Sicherung, Migrations- und Feature-Drift sowie geänderte Edge-Versionen ab. Der Gate prüft nur Metadaten; er darf nicht allein zum Deployment verwendet werden.\n
+## Zusätzlicher lesender Datenbank-Istvergleich
+
+Der separate Befehl `python3 scripts/ris-shared-apps/operator-db-inventory.py` verwendet ausschließlich `FIB_MAINTENANCE_DATABASE_URL`, `PGSSLROOTCERT` und den vorhandenen `psql`-Client. Der PostgreSQL-Zugriff läuft innerhalb einer `READ ONLY`-Transaktion mit TLS `verify-full`; der Zugang wird über die Umgebung und nicht über Kommandozeilenparameter weitergereicht. Er verlangt genau 29 FIB-Tabellen, fehlende RIS-/Manifesttabellen und die beiden amtlichen Quellen mit erwarteter URL und `active=false`.
+
+Dieser Baustein erzeugt **keine produktiven Änderungen**. Er prüft nicht die externe Sicherungsquittung oder Benutzer-MFA und ist allein keine Ermächtigung zur Bereitstellung. Tests: `python3 -m unittest discover -s scripts/ris-shared-apps -p 'test_operator*.py'`.
