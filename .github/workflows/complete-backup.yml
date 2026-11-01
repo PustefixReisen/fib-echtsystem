@@ -34,8 +34,22 @@ jobs:
       - run: npm install --ignore-scripts --no-package-lock --no-audit --no-fund
       - name: Install clients
         run: |
+          set -euo pipefail
           sudo apt-get update
-          sudo apt-get install -y lftp rclone postgresql-client-17
+          sudo apt-get install -y ca-certificates curl gnupg lftp rclone
+          curl --fail --silent --show-error --location \
+            https://www.postgresql.org/media/keys/ACCC4CF8.asc \
+            -o "$RUNNER_TEMP/pgdg.asc"
+          gpg --show-keys --with-colons "$RUNNER_TEMP/pgdg.asc" \
+            | grep -q '^fpr:::::::::B97B0AFCAA1A47F044F244A07FCC7D46ACCC4CF8:'
+          gpg --dearmor -o "$RUNNER_TEMP/pgdg.gpg" "$RUNNER_TEMP/pgdg.asc"
+          sudo install -m 0644 "$RUNNER_TEMP/pgdg.gpg" /usr/share/keyrings/postgresql-pgdg.gpg
+          source /etc/os-release
+          echo "deb [signed-by=/usr/share/keyrings/postgresql-pgdg.gpg] https://apt.postgresql.org/pub/repos/apt ${VERSION_CODENAME}-pgdg main" \
+            | sudo tee /etc/apt/sources.list.d/postgresql-pgdg.list > /dev/null
+          sudo apt-get update
+          sudo apt-get install -y postgresql-client-17
+          pg_dump --version | grep -q '^pg_dump (PostgreSQL) 17\.'
           docker pull postgres:17
       - name: Prepare trusted PostgreSQL CA
         env:
