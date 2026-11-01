@@ -18,10 +18,18 @@ MIGRATIONS = (
     "20261031081340_fib_ris_editorial_structure",
     "20261031132655_fib_development_dataset_manifest",
 )
+# Pinned deployed inventory from the reviewed pre-release capture.
+# Tuple: deployed version, gateway JWT setting, immutable bundle hash.
 FUNCTIONS = {
-    "fib-editorial-write": (8, False),
-    "fib-u4-pilot": (2, True),
-    "fib-u4-ris-pilot": (12, True),
+    "fib-mehr-wissen": (7, False, "401aa057708a052a6488248419ebdbab95cbdca6c884ac1b2192654c3c5d0f82"),
+    "fib-get-event": (13, False, "26327192e799b7ea3c647e64f98f0e06af02a599372f782d6bb504b2a22e64e9"),
+    "fib-coordination": (2, False, "44a00b01c7ca310a0445d108286d88f75dd40c7599b75263f23bf6f3895a79ec"),
+    "fib-editorial-write": (8, False, "13ec997a2a4a768b3f82877cea8a94f422a1c6247e8671f48686b8727d51fd1a"),
+    "fib-session-context": (3, False, "433172fb329e5742b7f5027d069a218420bc6e8f836c58a67f7d144fe31c102a"),
+    "fib-admin-users": (2, False, "3ceeddd00e081d3fa60a0775fc399672a087446ebfc351a344a6d8e3ff74efbe"),
+    "fib-topic-editor": (7, False, "b40d16ee71fd8302934aa50de52b593cac343509829d45ef663f4df852fc19a8"),
+    "fib-u4-pilot": (2, True, "3471e720443e9f76c51d9f57643bf20487028397d3c4f966c367d4c1dc266050"),
+    "fib-u4-ris-pilot": (12, True, "ea68597391e1f67900f83330e7cb3fd1f2472926805f96d041a8915116c90d8f"),
 }
 
 def command(*args):
@@ -64,11 +72,15 @@ def main():
     live = json.loads(command("supabase", "functions", "list",
                               "--project-ref", PROJECT, "--output", "json"))
     deployed = {f["slug"]: f for f in live if f.get("slug", "").startswith("fib-")}
-    require(len(deployed) == 9, "Unexpected total number of FIB functions")
-    for slug, (version, jwt) in FUNCTIONS.items():
-        f = deployed.get(slug)
-        require(f is not None and f.get("version") == version and f.get("verify_jwt") is jwt,
-                "FIB function deployment drift: " + slug)
+    require(set(deployed) == set(FUNCTIONS), "Unexpected FIB function set")
+    for slug, (version, jwt, digest) in FUNCTIONS.items():
+        f = deployed[slug]
+        require(
+            f.get("version") == version
+            and f.get("verify_jwt") is jwt
+            and f.get("ezbr_sha256") == digest,
+            "FIB function deployment drift: " + slug,
+        )
 
     migrations = command("supabase", "migration", "list", "--linked")
     for migration in MIGRATIONS:
