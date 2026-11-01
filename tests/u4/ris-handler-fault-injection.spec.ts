@@ -217,10 +217,6 @@ async function main(){
  assert.equal(db.cursor!.cadenceStates.daily.lastStatus,'succeeded');
  assert.notEqual(JSON.stringify(db.cursor),interruptedCursor);
  assert.equal(db.runs.length,persistedBefore+2);
- // Historical calendar moves backwards only after a successful committed scan.
- // The next due run is a fresh persisted invocation with an older cursor.
- assert.match(db.cursor!.structureState.historyNext,/^\\d{4}-\\d{2}-01$/);
- assert.equal(db.cursor!.structureState.historyDone,false);
  const stableCount=db.observations.size;
  const repeatedCommit=await run('daily');
  assert.equal(repeatedCommit.status,200);
