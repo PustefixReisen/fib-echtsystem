@@ -164,7 +164,9 @@ export async function handleRis(req:Request,mode:'interactive'|'scheduler'='inte
    }catch(err){failures.push({url:u,error:String(err).slice(0,140)});pending.push(u);break;}
   }
   if(structureEnabled){
-   for(let i=0;i<2&&structureQueue.length;i++){
+   // Process at most the original queue length; retried gaps wait for the next run.
+   const structureBudget=Math.min(2,structureQueue.length);
+   for(let i=0;i<structureBudget;i++){
     const url=structureQueue.shift()!;
     const safe=risUrl(url);if(!safe||!/^\/(?:si|vo)\d+\.asp$/.test(new URL(safe).pathname))throw Error('invalid_structure_cursor');
     const response=await fetch(safe,{redirect:'error',signal:AbortSignal.timeout(15000)});
@@ -174,7 +176,13 @@ export async function handleRis(req:Request,mode:'interactive'|'scheduler'='inte
      const snapshot=await parseRisStructure(html,safe,new Date().toISOString());snapshots.push(snapshot);sessionUrls.add(safe);
      for(const d of [...snapshot.documents,...snapshot.agenda.flatMap(a=>a.documents)])knownDocs.add(d.url);
     }else{
-     const sessions=risSessionLinks(html,safe);if(!sessions.length)throw Error('proposal_session_unresolved');
+     const sessions=risSessionLinks(html,safe);
+     if(!sessions.length){
+      if(!failures.some(f=>f.url===safe))failures.push({url:safe,error:'proposal_session_unresolved'});
+      if(!structureQueue.includes(safe))structureQueue.push(safe);
+      continue;
+     }
+     for(let i=failures.length-1;i>=0;i--)if(failures[i].url===safe)failures.splice(i,1);
      for(const u of sessions)if(!structureVisited.has(u)&&!structureQueue.includes(u))structureQueue.push(u);
     }
     structureVisited.add(safe);
