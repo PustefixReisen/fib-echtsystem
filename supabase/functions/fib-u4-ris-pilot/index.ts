@@ -191,6 +191,7 @@ export async function handleRis(req:Request,mode:'interactive'|'scheduler'='inte
    for(let i=0;i<structureBudget;i++){
     const url=structureQueue.shift()!;
     const safe=risUrl(url);if(!safe||!/^\/(?:si|vo)\d+\.asp$/.test(new URL(safe).pathname))throw Error('invalid_structure_cursor');
+    try{
     const response=await fetch(safe,{redirect:'error',signal:AbortSignal.timeout(15000)});
     if(!response.ok)throw Error('ris_structure_http_'+response.status);
     const html=await response.text();
@@ -201,6 +202,12 @@ export async function handleRis(req:Request,mode:'interactive'|'scheduler'='inte
      // Legacy proposal cursor: skip. A proposal is eligible only when discovered
      // through a session agenda, never by guessing its reverse session link.
      for(let i=failures.length-1;i>=0;i--)if(failures[i].url===safe)failures.splice(i,1);
+    }
+     for(let j=failures.length-1;j>=0;j--)if(failures[j].url===safe)failures.splice(j,1);
+    }catch(err){
+     if(!failures.some(f=>f.url===safe))failures.push({url:safe,error:String(err).slice(0,140)});
+     if(!structureQueue.includes(safe))structureQueue.push(safe);
+     continue;
     }
     structureVisited.add(safe);
    }
