@@ -1,4 +1,5 @@
 import {withDevelopmentDataset} from '../_shared/development-datasets.ts';
+import {calendarMonth,calendarSessions} from '../_shared/ris-calendar.ts';
 import postgres from 'npm:postgres@3.4.7';
 import {extractText} from 'npm:unpdf@2.1.0';
 import {risSessionLinks,risUrl,parseRisStructure,persistRisStructure,persistRisDocument} from '../_shared/ris-structure.ts';
@@ -162,6 +163,27 @@ export async function handleRis(req:Request,mode:'interactive'|'scheduler'='inte
     for(let i=failures.length-1;i>=0;i--)if(failures[i].url===u)failures.splice(i,1);
     for(const linked of result.navigation)if(!known.has(linked)){known.add(linked);pending.push(linked);}
    }catch(err){failures.push({url:u,error:String(err).slice(0,140)});pending.push(u);break;}
+  }
+  if(structureEnabled && !backfill){
+   // The RIS calendar, not proposal pages, establishes the session set.
+   // Bound each invocation to the current and previous calendar month.
+   const today=new Date();
+   for(let delta=0;delta<2;delta++){
+    const date=new Date(Date.UTC(today.getUTCFullYear(),today.getUTCMonth()-delta,1));
+    const calendar=calendarMonth(date.getUTCFullYear(),date.getUTCMonth()+1);
+    try{
+     const response=await fetch(calendar,{redirect:'error',signal:AbortSignal.timeout(15000)});
+     if(!response.ok)throw Error('calendar_http_'+response.status);
+     const html=await response.text();
+     if(!/<(?:html|body|a)\\b/i.test(html))throw Error('invalid_calendar_html');
+     for(const linked of calendarSessions(html)){
+      if(!structureVisited.has(linked)&&!structureQueue.includes(linked))structureQueue.push(linked);
+     }
+     for(let i=failures.length-1;i>=0;i--)if(failures[i].url===calendar)failures.splice(i,1);
+    }catch(err){
+     if(!failures.some(f=>f.url===calendar))failures.push({url:calendar,error:String(err).slice(0,140)});
+    }
+   }
   }
   if(structureEnabled){
    // Process at most the original queue length; retried gaps wait for the next run.
