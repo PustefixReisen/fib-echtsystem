@@ -55,6 +55,7 @@ const sqlClient = (client: pg.Pool | pg.PoolClient): any => ({
 });
 const fetchMock = async (url: string) => {
   if (url.endsWith("/auth/v1/user")) return Response.json({ id: uid });
+  if (url.startsWith(origin + "/si0040.asp?")) return new Response('<html><a href="si0057.asp?__ksinr=1032">Sitzung</a></html>');
   if (url === entry)
     return new Response(
       '<html>Dokumente mit Freigabe seit 01.01.2026 <a href="si0057.asp?__ksinr=1032">Sitzung</a><a href="getfile.asp?id=75714">Vorlage</a></html>',
@@ -73,6 +74,7 @@ const fetchMock = async (url: string) => {
 };
 const source = edgeDatasetSupport +
   (
+    readFileSync("supabase/functions/_shared/ris-calendar.ts", "utf8").replace(/\bexport /g, "") + "\n" +
     readFileSync("supabase/functions/_shared/ris-structure.ts", "utf8").replace(
       /\bexport /g,
       "",
@@ -80,6 +82,7 @@ const source = edgeDatasetSupport +
     "\n" +
     readFileSync("supabase/functions/fib-u4-ris-pilot/index.ts", "utf8")
   )
+    .replace(/^import .*ris-calendar.*;\s*/m, "")
     .replace(/^import .*development-datasets.*;\s*/m, "")
     .replace(
       /^import postgres from .*;\s*/m,
