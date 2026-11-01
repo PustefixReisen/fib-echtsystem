@@ -23,7 +23,7 @@ function extract(html:string,url:string){
  for(const m of html.matchAll(/<a\b[^>]*href\s*=\s*["']([^"']+)["']/gi)){
   const u=valid(m[1]??'',url);if(!u)continue;
   const parsed=new URL(u);
-  const canonical=risUrl(u);if(canonical&&(/\/(?:si|vo)\d+\.asp/.test(parsed.pathname)))structureLinks.add(canonical);
+  const canonical=risUrl(u);if(canonical&&(/\/si\d+\.asp/.test(parsed.pathname)))structureLinks.add(canonical);
   if(parsed.pathname.toLowerCase()==='/getfile.asp'&&parsed.searchParams.has('id'))docs.add(u);
   if(parsed.pathname.toLowerCase()==='/do0040.asp'&&/^\d{7}$/.test(parsed.searchParams.get('smcadat')??''))navigation.add(u);
  }
@@ -176,14 +176,9 @@ export async function handleRis(req:Request,mode:'interactive'|'scheduler'='inte
      const snapshot=await parseRisStructure(html,safe,new Date().toISOString());snapshots.push(snapshot);sessionUrls.add(safe);
      for(const d of [...snapshot.documents,...snapshot.agenda.flatMap(a=>a.documents)])knownDocs.add(d.url);
     }else{
-     const sessions=risSessionLinks(html,safe);
-     if(!sessions.length){
-      if(!failures.some(f=>f.url===safe))failures.push({url:safe,error:'proposal_session_unresolved'});
-      if(!structureQueue.includes(safe))structureQueue.push(safe);
-      continue;
-     }
+     // Legacy proposal cursor: skip. A proposal is eligible only when discovered
+     // through a session agenda, never by guessing its reverse session link.
      for(let i=failures.length-1;i>=0;i--)if(failures[i].url===safe)failures.splice(i,1);
-     for(const u of sessions)if(!structureVisited.has(u)&&!structureQueue.includes(u))structureQueue.push(u);
     }
     structureVisited.add(safe);
    }
