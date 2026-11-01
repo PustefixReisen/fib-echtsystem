@@ -12,7 +12,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
-      - run: npm ci --ignore-scripts --no-audit --no-fund
+      - run: npm install --ignore-scripts --no-package-lock --no-audit --no-fund
       - run: node tests/u4/release-backup.spec.mjs
       - run: bash -n scripts/backup/create.sh
       - run: python3 tests/u4/frontend-backup.spec.py

@@ -31,7 +31,7 @@ jobs:
         env:
           READY: ${{ vars.FIB_COMPLETE_BACKUP_READY }}
         run: test "$READY" = true
-      - run: npm ci
+      - run: npm install --ignore-scripts --no-package-lock --no-audit --no-fund
       - name: Install clients
         run: |
           sudo apt-get update
