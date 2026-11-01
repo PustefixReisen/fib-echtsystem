@@ -24,6 +24,7 @@ function clone(s:State):State{return {cursor:s.cursor?structuredClone(s.cursor):
 function connection(state:State){
  const query=async(q:string,params:any[]=[])=>{
   if(q.includes('to_regclass'))return [{r:null}];
+  if(q.startsWith('select id,last_observed_at from fib.ris_documents'))return [];
   if(q.includes('from fib.app_users'))return [{id:'user-1'}];
   if(q.includes('from fib.source_scopes')&&q.includes('scope_key'))return [{id:'scope-1'}];
   if(q.startsWith('select cursor_state'))return state.cursor?[{cursor_state:structuredClone(state.cursor)}]:[];
@@ -87,7 +88,7 @@ const source=edgeDatasetSupport+(readFileSync('supabase/functions/_shared/ris-ca
 const js=ts.transpileModule(source,{compilerOptions:{target:ts.ScriptTarget.ES2022,module:ts.ModuleKind.None}}).outputText;
 const settings:Record<string,string>={SUPABASE_URL:'https://auth.test',SUPABASE_ANON_KEY:'test',FIB_DATABASE_URL:'test'};
 const context:any=vm.createContext({
- __postgres:fakePostgres,fetch:fakeFetch,Request,Response,URL,URLSearchParams,
+ __postgres:fakePostgres,fetch:fakeFetch,extractText:async()=>({text:'fixture PDF text'}),Request,Response,URL,URLSearchParams,
  TextDecoder,TextEncoder,Uint8Array,Date,Set,Map,AbortSignal,crypto:webcrypto,atob,
  Deno:{env:{get:(key:string)=>settings[key]}},
 });
@@ -221,6 +222,25 @@ async function main(){
  const repeatedCommit=await run('daily');
  assert.equal(repeatedCommit.status,200);
  assert.equal(db.observations.size,stableCount); // identical documents: no duplicate observation
+ // Historical month progression is transactional and failure-safe.
+ settings.FIB_RIS_STRUCTURE_ENABLED='true';
+ db.cursor={pending:[entry],visited:[],documents:[],failures:[],pdfOffset:0,releaseViews:[],structureState:{queue:[],visited:[],sessions:[]}};
+ const initialHistorical=await run('daily');
+ assert.equal(initialHistorical.status,200,JSON.stringify(initialHistorical.body));
+ const firstMonth=db.cursor!.structureState.historyNext;
+ assert.match(firstMonth,/^\d{4}-\d{2}-01$/);
+ const firstRuns=db.runs.length;
+ brokenCalendar=true;
+ const blockedHistorical=await run('daily');
+ assert.equal(blockedHistorical.status,200,JSON.stringify(blockedHistorical.body));
+ assert.equal(blockedHistorical.body.complete,false);
+ assert.equal(db.cursor!.structureState.historyNext,firstMonth);
+ assert.equal(db.runs.length,firstRuns+1);
+ brokenCalendar=false;
+ const resumedHistorical=await run('daily');
+ assert.equal(resumedHistorical.status,200,JSON.stringify(resumedHistorical.body));
+ assert.notEqual(db.cursor!.structureState.historyNext,firstMonth);
+ assert.equal(resumedHistorical.body.failures,0);
  settings.FIB_RIS_STRUCTURE_ENABLED='false';
  console.log('RIS Edge HTTP/SQL fault-injection and recovery: OK');
 }
