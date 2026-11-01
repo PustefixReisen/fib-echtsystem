@@ -26,3 +26,17 @@ Bis die weiteren Schritte aus Issue #368 implementiert und separat getestet sind
 Der separate Befehl `python3 scripts/ris-shared-apps/operator-db-inventory.py` verwendet ausschließlich `FIB_MAINTENANCE_DATABASE_URL`, `PGSSLROOTCERT` und den vorhandenen `psql`-Client. Der PostgreSQL-Zugriff läuft innerhalb einer `READ ONLY`-Transaktion mit TLS `verify-full`; der Zugang wird über die Umgebung und nicht über Kommandozeilenparameter weitergereicht. Er verlangt genau 29 FIB-Tabellen, fehlende RIS-/Manifesttabellen und die beiden amtlichen Quellen mit erwarteter URL und `active=false`.
 
 Dieser Baustein erzeugt **keine produktiven Änderungen**. Er prüft nicht die externe Sicherungsquittung oder Benutzer-MFA und ist allein keine Ermächtigung zur Bereitstellung. Tests: `python3 -m unittest discover -s scripts/ris-shared-apps -p 'test_operator*.py'`.
+
+## Unabhängige verschlüsselte Sicherungsprüfung
+
+`operator-backup-verify.py` lädt nach privater Bereitstellung von `FIB_BACKUP_RCLONE_CONFIG` die Quittung und das verschlüsselte Sicherungspaket aus dem separaten Nextcloud-Backupbereich zurück. Er verifiziert Release-Modus, exakte Backup-ID, den freigegebenen Commit und den extern vorgegebenen Manifest-SHA-256-Wert und prüft das vollständige Bundle über `scripts/backup/bundle.mjs verify`. Er verwendet temporäre Dateien außerhalb des Repositories, zeigt keine Secrets an und führt keine Produktionsschreibvorgänge aus.
+
+Beispiel (nur mit unabhängig geprüftem aktuellem Release):
+
+```bash
+python3 scripts/ris-shared-apps/operator-backup-verify.py \
+  --backup-id 'release-<id>' \
+  --manifest-sha256 '<aus-geprüftem-release-receipt>'
+```
+
+**Wichtig:** Die Quittung selbst wird aus dem Backupbereich gelesen. Der Manifest-SHA-256-Wert muss aus einer unabhängigen vertrauenswürdigen Prüfinstanz stammen und darf nicht ungeprüft derselben Quittung entnommen werden. Danach zusätzlich den Alterscheck direkt vor dem ersten Schreibschritt ausführen. Der Verifier setzt nichts in Supabase oder GitHub.
