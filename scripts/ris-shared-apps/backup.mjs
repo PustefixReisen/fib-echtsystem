@@ -13,7 +13,7 @@ import {
 } from "node:fs";
 import { join } from "node:path";
 import { createHash } from "node:crypto";
-import { options, target, clientOptions, privatePath } from "./io.mjs";
+import { options, target, clientOptions, privatePath, dumpEnvironment } from "./io.mjs";
 process.umask(0o077);
 const connection =
   process.env.FIB_MAINTENANCE_DATABASE_URL ?? process.env.U4_TEST_DATABASE_URL;
@@ -49,15 +49,7 @@ try {
         )
       ).rows[0].n,
     );
-  const env = {
-    ...process.env,
-    PGHOST: u.hostname,
-    PGPORT: u.port || "5432",
-    PGDATABASE: u.pathname.slice(1),
-    PGUSER: decodeURIComponent(u.username),
-    PGPASSWORD: decodeURIComponent(u.password),
-    PGSSLMODE: local ? "disable" : "verify-full",
-  };
+  const env = dumpEnvironment(connection);
   const dump = join(root, "fib.dump"),
     fd = openSync(dump, "wx", 0o600);
   const r = spawnSync(

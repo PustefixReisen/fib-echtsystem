@@ -1,7 +1,7 @@
 name: Release backup contracts
 on:
   pull_request:
-    paths: ['scripts/backup/**', 'tests/u4/release-backup.spec.mjs', 'tests/u4/frontend-backup.spec.py', 'tests/u4/complete-backup.spec.py', '.github/workflows/complete-backup.yml', '.github/workflows/frontend-backup.yml', '.github/workflows/editorial-web-deploy.yml', '.github/workflows/release-backup-tests.yml']
+    paths: ['scripts/backup/**', 'tests/u4/release-backup.spec.mjs', 'tests/u4/frontend-backup.spec.py', 'tests/u4/complete-backup.spec.py', 'tests/u4/backup-database-tls.spec.mjs', 'scripts/ris-shared-apps/io.mjs', '.github/workflows/complete-backup.yml', '.github/workflows/frontend-backup.yml', '.github/workflows/editorial-web-deploy.yml', '.github/workflows/release-backup-tests.yml']
 permissions:
   contents: read
 jobs:
@@ -16,3 +16,4 @@ jobs:
       - run: bash -n scripts/backup/create.sh
       - run: python3 tests/u4/frontend-backup.spec.py
       - run: python3 tests/u4/complete-backup.spec.py
+      - run: node tests/u4/backup-database-tls.spec.mjs

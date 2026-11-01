@@ -50,10 +50,12 @@ passende Dependencies. Ein gepackter Runtime-Export ist deshalb nicht ohne Prüf
 
 Bestehende IONOS-Secrets, FIB_SFTP_KNOWN_HOSTS und FIB_BACKUP_RCLONE_CONFIG weiterverwenden.
 Zusätzlich erforderlich: FIB_MAINTENANCE_DATABASE_URL mit verifizierter TLS-Verbindung und
-FIB_BACKUP_MANAGEMENT_TOKEN für **lesenden** Zugriff auf das Function-Inventar des bekannten
-Projekts. Keine Secrets über Management-API lesen. Existenz dieser zwei Zugänge ist hier nicht
-nachgewiesen. Einen zu weit berechtigten Zugang nicht ungeprüft in Actions übernehmen.
-Optional benötigte private Projekt-CA gemäß bestehendem DB-Sicherungsvertrag bereitstellen.
+den bestehenden SUPABASE_ACCESS_TOKEN für **lesenden** Zugriff auf das Function-Inventar des bekannten
+Projekts. Keine Secrets über Management-API lesen. Der Auftraggeber hat die Existenz von SUPABASE_ACCESS_TOKEN bestätigt; seine tatsächlichen
+Berechtigungen und die DB-Secret-Konfiguration wurden nicht ausgelesen. Einen zu weit berechtigten Zugang nicht ungeprüft in Actions übernehmen.
+FIB_BACKUP_DATABASE_CA mit dem unabhängig verifizierten PEM-CA-Zertifikat bereitstellen;
+der Workflow schreibt es privat und übergibt denselben PGSSLROOTCERT-Pfad an pg und pg_dump.
+Einrichtungsanleitung: [Datenbank/TLS](fib-backup-database-tls.md).
 
 Environment fib-release bleibt auf main und persönliche Freigabe beschränkt. Neue Variable
 FIB_COMPLETE_BACKUP_READY standardmäßig nicht setzen. Erst nach Zugangsprüfung darf sie true
