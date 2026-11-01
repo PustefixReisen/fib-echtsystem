@@ -18,6 +18,11 @@ class Contracts(unittest.TestCase):
    self.assertEqual(exports(root,live,now),['fib-example'])
    with self.assertRaises(ValueError):exports(root,live+[dict(slug='fib-other')],now)
    with self.assertRaises(ValueError):exports(root,[dict(live[0],version=2)],now)
+   (root/'edge/fib-example/index.ts').write_text('const padded = "=".repeat(4); const header = req.headers.get("Authorization");')
+   self.assertEqual(exports(root,live,now),['fib-example'])
+   (root/'edge/fib-example/index.ts').write_text("import './present.ts';")
+   (root/'edge/fib-example/present.ts').write_text('export const present=true;')
+   self.assertEqual(exports(root,live,now),['fib-example'])
    (root/'edge/fib-example/index.ts').write_text("import '../_shared/missing.ts';")
    with self.assertRaises(ValueError):exports(root,live,now)
  def test_retention_never_deletes(self):
