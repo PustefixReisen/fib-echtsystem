@@ -11,6 +11,9 @@ const origin='https://buergerinfo-feldkirchen.digitalfabrix.de';
 const entry=origin+'/do0040.asp?smcmode=32832';
 const page2=origin+'/do0040.asp?smcadat=1234567';
 const pdf=origin+'/getfile.asp?id=100';
+const unresolvedProposal=origin+'/vo0050.asp?__kvonr=8640';
+const linkedSession=origin+'/si0057.asp?__ksinr=1032';
+let proposalHasSession=false;
 const pdfBytes=new TextEncoder().encode('%PDF-1.4\nmock content');
 const jwt=['e30',Buffer.from(JSON.stringify({sub:'user-1',aal:'aal2'})).toString('base64url'),'sig'].join('.');
 const auth='Bearer '+jwt;
@@ -54,6 +57,10 @@ const fakeFetch=async(url:string)=>{
      ? '<html><body>Dokumente mit Freigabe seit 02.07.2026 <a href="'+pdf+'">PDF</a><a href="'+page2+'">Next</a></body></html>'
      : '<html><body>Dokumente mit Freigabe seit 02.07.2026 <a href="'+pdf+'">PDF</a></body></html>';
    return new Response(html,{status:200,headers:{'content-type':'text/html'}});
+ }
+ if(url===unresolvedProposal){
+   const html=proposalHasSession?'<html><a href="'+linkedSession+'">Sitzung</a></html>':'<html><body>Vorlage ohne Sitzung</body></html>';
+   return new Response(html,{status:200});
  }
  if(url===pdf){
    if(brokenPdf)throw new Error('simulated PDF outage');
@@ -135,6 +142,27 @@ async function main(){
  assert.equal(JSON.stringify(db.cursor),before);
  assert.equal(db.runs.length,count);
  assert.deepEqual(db.runs.map(x=>x.status),['succeeded','succeeded','failed','succeeded']);
+ // Real handler regression: unresolved proposal must be reported, not turn read-only probe into 502.
+ settings.FIB_RIS_STRUCTURE_ENABLED='true';
+ db.cursor={pending:[entry],visited:[],documents:[],failures:[],pdfOffset:0,releaseViews:[],structureState:{queue:[unresolvedProposal],visited:[],sessions:[]}};
+ const probe=()=>context.__handler.fetch(new Request('https://function.test',{method:'POST',headers:{authorization:auth,'content-type':'application/json'},body:JSON.stringify({commit:false})}));
+ const snapshotBefore=JSON.stringify(db.cursor), runsBefore=db.runs.length;
+ let dry=await probe(), body=await dry.json();
+ assert.equal(dry.status,200);
+ assert.equal(body.mode,'dry_run');
+ assert.equal(body.complete,false);
+ assert.equal(body.failures,1);
+ assert.equal(body.firstFailure,'proposal_session_unresolved');
+ assert.equal(JSON.stringify(db.cursor),snapshotBefore);
+ assert.equal(db.runs.length,runsBefore);
+ // When RIS later supplies the session link, the very same proposal is no longer a gap.
+ proposalHasSession=true;
+ dry=await probe();body=await dry.json();
+ assert.equal(dry.status,200);
+ assert.equal(body.failures,0);
+ assert.equal(body.complete,false); // newly discovered session remains queued
+ assert.equal(JSON.stringify(db.cursor),snapshotBefore);
+ settings.FIB_RIS_STRUCTURE_ENABLED='false';
  console.log('RIS Edge HTTP/SQL fault-injection and recovery: OK');
 }
 void main().catch(e=>{console.error(e);process.exitCode=1});
