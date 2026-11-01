@@ -94,6 +94,33 @@ class PreflightTests(unittest.TestCase):
         with self.assertRaisesRegex(RuntimeError, "Unexpected FIB function set"):
             self.invoke(command=drift)
 
+    def test_reject_jwt_drift(self):
+        def drift(*args):
+            value = fake_command(*args)
+            if args[1:3] == ("functions", "list"):
+                functions = json.loads(value)
+                functions[0]["verify_jwt"] = not functions[0]["verify_jwt"]
+                return json.dumps(functions)
+            return value
+        with self.assertRaisesRegex(RuntimeError, "deployment drift"):
+            self.invoke(command=drift)
+
+    def test_reject_unapproved_main(self):
+        def drift(*args):
+            if args[0] == "git" and "rev-parse" in args and "origin/main" in args:
+                return "f" * 40
+            return fake_command(*args)
+        with self.assertRaisesRegex(RuntimeError, "origin/main differs"):
+            self.invoke(command=drift)
+
+    def test_reject_dirty_tree(self):
+        def drift(*args):
+            if args[0] == "git" and "status" in args:
+                return " M file"
+            return fake_command(*args)
+        with self.assertRaisesRegex(RuntimeError, "dirty"):
+            self.invoke(command=drift)
+
     def test_reject_function_version_drift(self):
         def drift(*args):
             value = fake_command(*args)
