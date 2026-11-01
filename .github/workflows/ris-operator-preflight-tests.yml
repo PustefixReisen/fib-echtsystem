@@ -5,6 +5,8 @@ on:
     paths:
       - 'scripts/ris-shared-apps/operator-preflight.py'
       - 'scripts/ris-shared-apps/test_operator_preflight.py'
+      - 'scripts/ris-shared-apps/operator-db-inventory.py'
+      - 'scripts/ris-shared-apps/test_operator_db_inventory.py'
       - '.github/workflows/ris-operator-preflight-tests.yml'
   workflow_dispatch:
 
@@ -20,6 +22,6 @@ jobs:
         with:
           python-version: '3.11'
       - name: Compile without importing any production credentials
-        run: python -m py_compile scripts/ris-shared-apps/operator-preflight.py scripts/ris-shared-apps/test_operator_preflight.py
+        run: python -m py_compile scripts/ris-shared-apps/operator-preflight.py scripts/ris-shared-apps/test_operator_preflight.py scripts/ris-shared-apps/operator-db-inventory.py scripts/ris-shared-apps/test_operator_db_inventory.py
       - name: Run offline rejection tests
-        run: python -m unittest discover -s scripts/ris-shared-apps -p 'test_operator_preflight.py' -v
+        run: python -m unittest discover -s scripts/ris-shared-apps -p 'test_operator*.py' -v
