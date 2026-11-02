@@ -50,7 +50,7 @@ try {
     .getByRole("button", { name: "Sitzung öffnen", exact: true })
     .first()
     .click();
-  await page.getByRole("button", { name: /^TOP 2 ·/ }).click();
+  await page.getByRole("button", { name: "TOP 2 öffnen" }).click();
   await panel("Beschlussvorschlag").waitFor();
   assert.equal(await panel("Beschlussfassung").count(), 0);
   await page.getByRole("button", { name: "Dokumentfassung öffnen" }).first().click();
@@ -121,11 +121,11 @@ try {
     .getByText("Regulärer Ereigniseditor geöffnet:", { exact: false })
     .waitFor();
   await page.getByRole("button", { name: "RIS-Kontext öffnen" }).click();
-  await page.getByRole("button", { name: /^TOP 2 ·/ }).click();
-  await page.getByRole("button", { name: "Ereignis zuordnen" }).click();
-  await page.getByRole("dialog", { name: "Ereignis zuordnen" }).waitFor();
-  await page.getByRole("dialog", { name: "Ereignis zuordnen" }).getByRole("button", { name: "Abbrechen" }).click();
-  assert.equal(await page.getByRole("dialog", { name: "Ereignis zuordnen" }).count(), 0);
+  await page.getByRole("button", { name: "TOP 2 öffnen" }).click();
+  await page.getByRole("button", { name: "Neu: Lokaler Bezug" }).click();
+  await page.getByRole("heading", { name: "Lokalen Bezug hinzufügen" }).waitFor();
+  await page.getByRole("button", { name: "Abbrechen" }).click();
+  assert.equal(await page.getByRole("heading", { name: "Lokalen Bezug hinzufügen" }).count(), 0);
   mkdirSync("/tmp/fib-source-ui", { recursive: true });
   await page.screenshot({
     path: "/tmp/fib-source-ui/ris-desktop.png",
@@ -176,7 +176,7 @@ try {
     .getByRole("button", { name: "Sitzung öffnen", exact: true })
     .first()
     .click();
-  await page.getByRole("button", { name: /^TOP 2 ·/ }).click();
+  await page.getByRole("button", { name: "TOP 2 öffnen" }).click();
   await panel("Beschlussfassung").getByRole("heading", { name: "Beschlusspunkt A", exact: true }).waitFor();
   const first = panel("Beschlussfassung").locator("article").first();
   assert.match(await first.innerText(), /Ja: –.*Nein: –/);
