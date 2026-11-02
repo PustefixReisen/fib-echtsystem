@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { sourceApi, withEventLock } from "./source-api.js";
 
 type Row = Record<string, any>;
 type Props = {
@@ -6,6 +7,7 @@ type Props = {
   busy: boolean;
   onOpenEvent: (id: string) => void;
   onOpenDocument: (versionId: string) => void;
+  onReload: () => Promise<void>;
 };
 const displayDate = (value: unknown) =>
   value ? new Date(String(value)).toLocaleDateString("de-DE") : "";
@@ -19,7 +21,34 @@ function ExternalLink({ url, children }: { url?: string | null; children: string
 }
 
 /** RIS is an official read-only source. Only editorial event associations belong to FIB. */
-export function RisSessionView({ data, busy, onOpenEvent, onOpenDocument }: Props) {
+export function RisSessionView({ data, busy, onOpenEvent, onOpenDocument, onReload }: Props) {
+  const [showEventDialog, setShowEventDialog] = useState(false);
+  const [eventSearch, setEventSearch] = useState("");
+  const [eventOptions, setEventOptions] = useState<Row[]>([]);
+  const [chosenEvent, setChosenEvent] = useState("");
+  const [eventRole, setEventRole] = useState("treatment");
+  const [reason, setReason] = useState("");
+  const [eventError, setEventError] = useState("");
+  const [eventBusy, setEventBusy] = useState(false);
+  async function searchEvents() {
+    setEventError("");
+    setEventBusy(true);
+    try { const result = await sourceApi({ action: "source_choices", search: eventSearch }); setEventOptions(result.events ?? []); }
+    catch (error) { setEventError(error instanceof Error ? error.message : "Suche fehlgeschlagen."); }
+    finally { setEventBusy(false); }
+  }
+  async function linkEvent() {
+    if (!selectedTopId || !chosenEvent || !reason.trim()) return;
+    setEventError("");
+    setEventBusy(true);
+    try {
+      await withEventLock(chosenEvent, () => sourceApi({action: "ris_link_event", agendaId: selectedTopId, eventId: chosenEvent, role: eventRole, rationale: reason.trim()}));
+      await onReload();
+      setShowEventDialog(false);
+      setReason("");
+    } catch (error) { setEventError(error instanceof Error ? error.message : "Zuordnung fehlgeschlagen."); }
+    finally { setEventBusy(false); }
+  }
   const [selectedTopId, setSelectedTopId] = useState<string | null>(null);
   const session: Row = data.session;
   const agenda: Row[] = [...(data.agenda ?? [])].sort(sortAgenda);
@@ -123,6 +152,19 @@ export function RisSessionView({ data, busy, onOpenEvent, onOpenDocument }: Prop
           {events.length === 0 && <p>Noch kein Ereignis zugeordnet.</p>}
           {suggestions.length > 0 && <p>{suggestions.length} redaktionelle Vorschläge vorhanden; deren Bearbeitung erfolgt in der Redaktion.</p>}
           <p>Verknüpfte Meldungen, Vorgänge und Themen werden über das Ereignis geöffnet.</p>
+          <button type="button" disabled={busy} onClick={() => { setShowEventDialog(true); void searchEvents(); }}>Ereignis zuordnen</button>
+          {showEventDialog && <div role="dialog" aria-modal="true" aria-label="Ereignis zuordnen" className="panel">
+            <h3>Ereignis zuordnen</h3>
+            <label>Ereignis suchen <input type="search" value={eventSearch} onChange={(e) => setEventSearch(e.target.value)} /></label>
+            <button type="button" disabled={eventBusy} onClick={() => void searchEvents()}>Suchen</button>
+            <label>Ereignis <select value={chosenEvent} onChange={(e) => setChosenEvent(e.target.value)}><option value="">Bitte auswählen</option>{eventOptions.map((item) => <option key={item.id} value={item.id}>{item.title}</option>)}</select></label>
+            <label>Zusammenhang <select value={eventRole} onChange={(e) => setEventRole(e.target.value)}><option value="proposal_publication">Veröffentlichung der Vorlage</option><option value="treatment">Behandlung des TOP</option><option value="decision">Beschlussfassung</option><option value="minutes_publication">Veröffentlichung der Niederschrift</option></select></label>
+            <label>Begründung <textarea value={reason} onChange={(e) => setReason(e.target.value)} /></label>
+            <p>Die Fundstelle muss bereits mit dem Ereignis verbunden sein und der Dokumentbezug bestätigt sein.</p>
+            {eventError && <p role="alert">{eventError}</p>}
+            <button type="button" disabled={eventBusy || !chosenEvent || !reason.trim()} onClick={() => void linkEvent()}>Zuordnung speichern</button>
+            <button type="button" onClick={() => setShowEventDialog(false)}>Abbrechen</button>
+          </div>}
         </section>
       </>
     )}
