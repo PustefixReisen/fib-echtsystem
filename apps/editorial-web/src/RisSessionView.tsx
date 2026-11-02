@@ -37,7 +37,7 @@ export function RisSessionView({ data, busy, onOpenEvent, onOpenDocument }: Prop
     <li key={d.id ?? d.source_url}>
       <span>{d.title || (d.kind === "minutes" ? "Niederschrift" : d.kind === "attachment" ? "Anlage" : "Dokument")}</span>
       {" · "}
-      {d.extracted_text ? (
+      {d.content_author === "municipality" && d.extracted_text ? (
         <details>
           <summary>Gespeicherten Text anzeigen</summary>
           <pre className="source-evidence">{d.extracted_text}</pre>
