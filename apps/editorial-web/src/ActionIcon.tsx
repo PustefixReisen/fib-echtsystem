@@ -1,4 +1,14 @@
 import type { ReactNode } from "react";
+function IconGlyph({name}:{name:string}) {
+  const paths:Record<string,string>={
+    "→":"M4 12h16m-6-6 6 6-6 6",
+    "↗":"M5 19 19 5M6 5h13v13",
+    "🗑":"M3 6h18M9 6V3h6v3M5 6l1 15h12l1-15M10 10v7m4-7v7",
+    "▤":"M14 2H5v20h14V7l-5-5Zm0 0v5h5M8 11h8m-8 4h8m-8 4h6",
+    "✎":"m4 16-1 5 5-1L21 7l-4-4L4 16Zm11-11 4 4",
+  };
+  return <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d={paths[name]}/></svg>;
+}
 export function ActionIcon(
   { label, children, onClick, disabled = false }: {
     label: string;
@@ -16,7 +26,7 @@ export function ActionIcon(
       disabled={disabled}
       onClick={onClick}
     >
-      {children}
+      {typeof children === "string" && ["→","🗑","▤","✎"].includes(children) ? <IconGlyph name={children}/> : children}
     </button>
   );
 }
@@ -36,7 +46,7 @@ export function OriginalLink(
         title={label}
         aria-label={label}
       >
-        ↗
+        <IconGlyph name="↗"/>
       </a>
     )
     : null;

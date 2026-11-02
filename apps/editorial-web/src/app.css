@@ -715,3 +715,6 @@ button:has(> .action-icon) { display: inline-flex; align-items: center; justify-
 .fib-pdf-dialog iframe { width: 100%; flex: 1; min-height: 0; border: 0; }
 .fib-pdf-dialog p { margin: 0; }
 @media (max-width: 600px) { .ris-document-item { align-items: start; flex-direction: column; gap: .25rem; } .ris-simplified .section-heading h3 { min-width: 0; overflow-wrap: anywhere; } }
+
+.ris-simplified ul { list-style: none; margin: 0; padding: 0; }
+.ris-document-item .source-actions, .ris-simplified .work-item .source-actions { flex-direction: row; flex-wrap: wrap; align-items: center; gap: .25rem; }
