@@ -718,3 +718,4 @@ button:has(> .action-icon) { display: inline-flex; align-items: center; justify-
 
 .ris-simplified ul { list-style: none; margin: 0; padding: 0; }
 .ris-document-item .source-actions, .ris-simplified .work-item .source-actions { flex-direction: row; flex-wrap: wrap; align-items: center; gap: .25rem; }
+.source-workspace .source-actions .fib-action-icon { flex: 0 0 44px; }
