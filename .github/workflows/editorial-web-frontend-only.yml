@@ -1,0 +1,74 @@
+name: Deploy Editorial Web (frontend only)
+
+on:
+  workflow_dispatch:
+    inputs:
+      confirmation:
+        description: 'Nur statische Redaktion veröffentlichen: FRONTEND eingeben'
+        type: string
+        required: true
+
+permissions:
+  contents: read
+
+concurrency:
+  group: editorial-web-pilot
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    if: ${{ github.ref == 'refs/heads/main' && inputs.confirmation == 'FRONTEND' }}
+    runs-on: ubuntu-latest
+    environment: fib-release
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: package-lock.json
+      - name: Build static editorial frontend
+        env:
+          VITE_FIB_ACCEPTANCE_MODE: shared-apps
+          VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
+          VITE_SUPABASE_PUBLISHABLE_KEY: ${{ secrets.VITE_SUPABASE_PUBLISHABLE_KEY }}
+        run: |
+          set -euo pipefail
+          test -n "$VITE_SUPABASE_URL"
+          test -n "$VITE_SUPABASE_PUBLISHABLE_KEY"
+          npm ci
+          npm run build --workspace @fib/editorial-web
+          test -f apps/editorial-web/dist/index.html
+      - name: Install SFTP client and validate trusted IONOS host key
+        env:
+          IONOS_SFTP_HOST: ${{ secrets.IONOS_SFTP_HOST }}
+        run: |
+          set -euo pipefail
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq lftp
+          umask 077
+          test -n "$IONOS_SFTP_HOST"
+          ssh-keyscan -T 15 -p 22 -t ed25519 "$IONOS_SFTP_HOST" 2>/dev/null > "$RUNNER_TEMP/ionos_known_hosts"
+          test "$(ssh-keygen -lf "$RUNNER_TEMP/ionos_known_hosts" -E sha256 | awk '{print $2}')" = "SHA256:1gx2w8Rtv3wCgi7Jh8myf/KVd72cRQbow03UP8P095Q"
+      - name: Deploy static files only (no DB, Edge Functions, or remote deletion)
+        env:
+          IONOS_SFTP_HOST: ${{ secrets.IONOS_SFTP_HOST }}
+          IONOS_SFTP_USER: ${{ secrets.IONOS_SFTP_USER }}
+          IONOS_SFTP_PASSWORD: ${{ secrets.IONOS_SFTP_PASSWORD }}
+        run: |
+          set -euo pipefail
+          test -n "$IONOS_SFTP_USER"
+          test -n "$IONOS_SFTP_PASSWORD"
+          umask 077
+          lftp -u "$IONOS_SFTP_USER","$IONOS_SFTP_PASSWORD" "sftp://$IONOS_SFTP_HOST" <<EOF
+          set cmd:fail-exit yes
+          set net:max-retries 1
+          set net:timeout 30
+          set sftp:connect-program "ssh -a -x -o StrictHostKeyChecking=yes -o UserKnownHostsFile=$RUNNER_TEMP/ionos_known_hosts"
+          cd redaktion
+          mirror --reverse --no-perms apps/editorial-web/dist/ ./
+          bye
+          EOF
+      - name: Remove temporary host key
+        if: always()
+        run: rm -f "$RUNNER_TEMP/ionos_known_hosts"
