@@ -73,10 +73,8 @@ async function openSession(reference, top) {
     .getByRole("button", { name: "Sitzung öffnen", exact: true })
     .click();
   if (top) {
-    const agendaNumber = String(top).match(/\\d+(?:\\.\\d+)?$/)?.[0] ?? String(top);
-    await page.getByRole("button", { name: new RegExp("^TOP " + agendaNumber.replace(/[.*+?^$\{\}()|[\]\\]/g, "\\  await page
-    .getByLabel("Tagesordnungspunkt", { exact: true })
-    .selectOption(top ?? "");") + " ·") }).click();
+    const agendaNumber = String(top).match(/\d+(?:\.\d+)?$/)?.[0] ?? String(top);
+    await page.getByRole("button", { name: new RegExp("^TOP " + agendaNumber + " ·") }).click();
   }
 }
 async function rationale(
