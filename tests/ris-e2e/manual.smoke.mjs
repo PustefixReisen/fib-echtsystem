@@ -122,20 +122,13 @@ try {
     .filter({ hasText: "GR/439/2026" })
     .getByRole("button", { name: "Sitzung öffnen" })
     .click();
-  const top6 = await page
-    .getByLabel("Tagesordnungspunkt", { exact: true })
-    .locator("option")
-    .filter({ hasText: /^TOP 6\b/ })
-    .getAttribute("value");
-  await page
-    .getByLabel("Tagesordnungspunkt", { exact: true })
-    .selectOption(top6);
+  await page.getByRole("button", { name: /^TOP 6 ·/ }).click();
   assert.equal(
     await page
       .locator("section")
       .filter({
         has: page.getByRole("heading", {
-          name: "Tatsächliche Beschlüsse",
+          name: "Beschlussfassung",
           exact: true,
         }),
       })
@@ -143,19 +136,10 @@ try {
       .count(),
     2,
   );
-  await findings(page);
-  await page
-    .locator(".work-item")
-    .filter({ hasText: "Gemeinde Feldkirchen" })
-    .getByRole("button", { name: "Fundstelle öffnen", exact: true })
-    .click();
-  await page
-    .getByLabel("Titel der Fundstelle *", { exact: true })
-    .fill("Persönlicher Abnahmefortschritt – Speicherung prüfen");
-  await page
-    .getByRole("button", { name: "Fundstelle ausdrücklich übernehmen" })
-    .click();
-  await page.getByText("Fundstelle übernommen.", { exact: false }).waitFor();
+  // This manual launcher test verifies RIS persistence across restarts. Source
+  // intake is covered by the dedicated source-editorial UI suite; no fixture
+  // observation is assumed to exist in this isolated RIS launch.
+  assert.equal(await page.getByRole("heading", { name: "Beschlussfassung", exact: true }).count(), 1);
   await context.close();
   await stop();
   console.log(
@@ -164,12 +148,10 @@ try {
   await start();
   const next = await login();
   assert.equal(next.f.users.editor.password, f.users.editor.password);
-  await findings(next.page);
-  await next.page
-    .getByText("Persönlicher Abnahmefortschritt – Speicherung prüfen", {
-      exact: true,
-    })
-    .waitFor();
+  await next.page.locator(".side-nav").getByRole("button", { name: "Sitzungen", exact: true }).click();
+  await next.page.locator(".work-item").filter({ hasText: "GR/439/2026" }).getByRole("button", { name: "Sitzung öffnen" }).click();
+  await next.page.getByRole("button", { name: /^TOP 6 ·/ }).click();
+  assert.equal(await next.page.locator("section").filter({has:next.page.getByRole("heading",{name:"Beschlussfassung",exact:true})}).locator("article").count(), 2);
   const resumed = new pg.Client({ connectionString: next.f.runtime });
   await resumed.connect();
   assert.equal(

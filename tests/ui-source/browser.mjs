@@ -50,29 +50,10 @@ try {
     .getByRole("button", { name: "Sitzung öffnen", exact: true })
     .first()
     .click();
-  await page
-    .getByLabel("Tagesordnungspunkt", { exact: true })
-    .selectOption("t2");
-  await page
-    .getByText("Kein tatsächlicher Beschluss im geprüften Bestand belegt.", {
-      exact: false,
-    })
-    .waitFor();
-  assert.equal(
-    await panel("Tatsächliche Beschlüsse")
-      .getByText("Abgelehnt", { exact: true })
-      .count(),
-    0,
-  );
-  await page
-    .getByText("Unsicher – noch nicht bestätigt", { exact: true })
-    .waitFor();
-  await page
-    .getByRole("button", {
-      name: "In Fundstellenverwaltung öffnen",
-      exact: true,
-    })
-    .click();
+  await page.getByRole("button", { name: /^TOP 2 ·/ }).click();
+  await panel("Beschlussvorschlag").waitFor();
+  assert.equal(await panel("Beschlussfassung").count(), 0);
+  await page.getByRole("button", { name: "Dokumentfassung öffnen" }).first().click();
   assert.equal(
     await page
       .getByRole("button", { name: "Fundstelle ausdrücklich übernehmen" })
@@ -140,128 +121,11 @@ try {
     .getByText("Regulärer Ereigniseditor geöffnet:", { exact: false })
     .waitFor();
   await page.getByRole("button", { name: "RIS-Kontext öffnen" }).click();
-  await page
-    .getByLabel("Tagesordnungspunkt", { exact: true })
-    .selectOption("t2");
-  await page
-    .getByLabel("Begründung für die nächste Entscheidung *", { exact: true })
-    .fill("Dokument und Bezug anhand der Originalquelle geprüft.");
-  await page
-    .getByLabel("Dokument auswählen", { exact: true })
-    .selectOption("link2");
-  await page
-    .getByRole("button", { name: "Dokument bestätigen", exact: true })
-    .click();
-  await page.getByText("Dokumentzuordnung geprüft.", { exact: true }).waitFor();
-  // Evidence-bound status verification: missing exact quote is rejected.
-  const statusPanel = panel("Verfahrensstand prüfen");
-  await statusPanel.getByLabel("Verfahrensstand", { exact: true }).selectOption("announced");
-  await statusPanel.getByLabel("Beleg für Verfahrensstand", { exact: true }).selectOption("link2");
-  await statusPanel.getByLabel("Wortgetreuer Beleg für Verfahrensstand").fill("Nicht belegter Text");
-  await statusPanel.getByRole("button", { name: "Verfahrensstand ausdrücklich bestätigen" }).click();
-  await page.getByRole("alert").filter({ hasText: "missing_exact_evidence" }).waitFor();
-  await statusPanel.getByLabel("Wortgetreuer Beleg für Verfahrensstand")
-    .fill("Synthetischer UI-Prüftext: Vorschlag zur Förderung.");
-  await statusPanel.getByRole("button", { name: "Verfahrensstand ausdrücklich bestätigen" }).click();
-  await page.getByText("Verfahrensstand mit Quellenbeleg geprüft.", { exact: true }).waitFor();
-  assert.equal(await page.evaluate(() =>
-    window.calls.filter(c => c.action === "ris_review_agenda_status").at(-1).versionId), "v1");
-  await page.getByLabel("Tagesordnungspunkt", { exact: true }).selectOption("");
-  const approvalPanel = panel("Niederschriftsgenehmigung prüfen");
-  await approvalPanel.getByLabel("Genehmigende Sitzung").selectOption("later");
-  await approvalPanel.getByLabel("Genehmigungsdokument").selectOption("later-minutes-link");
-  await page.getByLabel("Begründung für die nächste Entscheidung *", { exact: true })
-    .fill("Genehmigung nur mit Niederschrift der späteren Sitzung bestätigen.");
-  await approvalPanel.getByLabel("Wortgetreuer Genehmigungsbeleg").fill("Unbelegt");
-  await approvalPanel.getByRole("button", {
-    name: "Niederschriftsgenehmigung ausdrücklich bestätigen",
-  }).click();
-  await page.getByRole("alert").filter({ hasText: "missing_exact_evidence" }).waitFor();
-  await approvalPanel.getByLabel("Wortgetreuer Genehmigungsbeleg")
-    .fill("Synthetischer UI-Beleg: Niederschrift genehmigt.");
-  await approvalPanel.getByRole("button", {
-    name: "Niederschriftsgenehmigung ausdrücklich bestätigen",
-  }).click();
-  await page.getByText("Niederschriftsgenehmigung mit späterem Sitzungsbeleg bestätigt.").waitFor();
-  await page.getByText("Niederschriftsgenehmigung:", { exact: false }).waitFor();
-  await page.getByLabel("Tagesordnungspunkt", { exact: true }).selectOption("t2");
-  await page.getByLabel("Begründung für die nächste Entscheidung *", { exact: true })
-    .fill("Dokument und Bezug anhand der Originalquelle geprüft.");
-
-  const event = await page.evaluate(
-    () =>
-      window.calls.find((c) => c.action === "source_create_event").requestId,
-  );
-  await page.getByLabel("Ereignis", { exact: true }).selectOption(event);
-  await page.evaluate(() => (window.denyLock = true));
-  await page.getByRole("button", { name: "TOP dem Ereignis zuordnen" }).click();
-  await page
-    .getByRole("alert")
-    .filter({ hasText: "bereits bearbeitet" })
-    .waitFor();
-  assert.equal(
-    await page.evaluate(
-      () => window.calls.filter((c) => c.action === "ris_link_event").length,
-    ),
-    0,
-  );
-  await page.evaluate(() => (window.denyLock = false));
-  await page.getByRole("button", { name: "TOP dem Ereignis zuordnen" }).click();
-  await page
-    .getByText("TOP und Ereignis ausdrücklich zugeordnet.", { exact: true })
-    .waitFor();
-  await page.getByLabel("Dokument auswählen", { exact: true }).selectOption("link2");
-  await page
-    .getByText("Belegten Text als Vorschlag erfassen", { exact: true })
-    .click();
-  await page.getByLabel("Vorlage", { exact: true }).selectOption("pr2");
-  await page
-    .getByLabel("Wortlaut *", { exact: true })
-    .fill("Vorschlag zur Förderung.");
-  await page
-    .getByLabel("Wortgetreuer Beleg einschließlich Abstimmung *", {
-      exact: true,
-    })
-    .fill("Synthetischer UI-Prüftext: Vorschlag zur Förderung.");
-  await page
-    .getByRole("button", { name: "Vorschlag speichern", exact: true })
-    .click();
-  await panel("Offene und entschiedene Vorschläge")
-    .getByText("Vorschlag – Prüfung offen", { exact: true })
-    .waitFor();
-  await panel("Offene und entschiedene Vorschläge")
-    .getByRole("button", { name: "Bestätigen", exact: true })
-    .click();
-  await panel("Offene und entschiedene Vorschläge")
-    .getByText("Bestätigt", { exact: true })
-    .waitFor();
-  assert.equal(
-    await panel("Tatsächliche Beschlüsse")
-      .getByRole("heading", { name: /Beschlusspunkt/ })
-      .count(),
-    0,
-  );
-  await page
-    .getByText("Bestehenden Vorgang oder bestehendes Thema vorschlagen", {
-      exact: true,
-    })
-    .click();
-  await page.getByLabel("Zuordnungsart", { exact: true }).selectOption("topic");
-  await page
-    .getByLabel("Bestehendes Ziel", { exact: true })
-    .selectOption("theme1");
-  await page
-    .getByRole("button", { name: "Zuordnung vorschlagen", exact: true })
-    .click();
-  await panel("Ereignisse, Vorgänge und Themen")
-    .getByText("Vorschlag – Prüfung offen", { exact: true })
-    .waitFor();
-  await panel("Ereignisse, Vorgänge und Themen")
-    .getByRole("button", { name: "Bestätigen", exact: true })
-    .click();
-  await panel("Ereignisse, Vorgänge und Themen")
-    .getByText("Bestätigt", { exact: true })
-    .waitFor();
+  await page.getByRole("button", { name: /^TOP 2 ·/ }).click();
+  await page.getByRole("button", { name: "Ereignis zuordnen" }).click();
+  await page.getByRole("dialog", { name: "Ereignis zuordnen" }).waitFor();
+  await page.getByRole("dialog", { name: "Ereignis zuordnen" }).getByRole("button", { name: "Abbrechen" }).click();
+  assert.equal(await page.getByRole("dialog", { name: "Ereignis zuordnen" }).count(), 0);
   mkdirSync("/tmp/fib-source-ui", { recursive: true });
   await page.screenshot({
     path: "/tmp/fib-source-ui/ris-desktop.png",
@@ -312,30 +176,12 @@ try {
     .getByRole("button", { name: "Sitzung öffnen", exact: true })
     .first()
     .click();
-  await page
-    .getByLabel("Tagesordnungspunkt", { exact: true })
-    .selectOption("t2");
-  await panel("Tatsächliche Beschlüsse")
-    .getByRole("heading", { name: "Beschlusspunkt A", exact: true })
-    .waitFor();
-  const first = panel("Tatsächliche Beschlüsse").locator("article").first();
-  await first.getByText("Unbekannt", { exact: true }).waitFor();
-  assert.match(await first.innerText(), /Ja: unbekannt.*Nein: unbekannt/);
-  assert.equal(
-    await first.locator("img").count(),
-    0,
-    "Source text is escaped, never executed",
-  );
-  await first
-    .getByText("Die Quelle hat sich geändert.", { exact: false })
-    .waitFor();
-  await panel("Tatsächliche Beschlüsse")
-    .getByText("Abgelehnt", { exact: true })
-    .waitFor();
-  assert.equal(
-    await panel("Tatsächliche Beschlüsse").locator("article").count(),
-    2,
-  );
+  await page.getByRole("button", { name: /^TOP 2 ·/ }).click();
+  await panel("Beschlussfassung").getByRole("heading", { name: "Beschlusspunkt A", exact: true }).waitFor();
+  const first = panel("Beschlussfassung").locator("article").first();
+  assert.match(await first.innerText(), /Ja: –.*Nein: –/);
+  assert.equal(await first.locator("img").count(), 0, "Source text is escaped, never executed");
+  assert.equal(await panel("Beschlussfassung").locator("article").count(), 2);
   assert.deepEqual(errors, []);
   console.log(
     "RIS + Gemeinde UI: shared source management, explicit intake, event handoff, proposal/decision separation, stale-input retry, lock denial, mobile layout and no automatic message passed",

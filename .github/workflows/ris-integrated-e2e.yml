@@ -50,8 +50,8 @@ jobs:
           npm exec --workspace @fib/editorial-web -- vite preview --host 127.0.0.1 --port 4173 > "$RUNNER_TEMP/ris-preview.log" 2>&1 &
           for i in $(seq 1 30); do curl --silent --fail http://127.0.0.1:4173 > /dev/null && exit 0; sleep 1; done
           exit 1
-      - name: Scanner, real browser MFA, app, handlers and PostgreSQL together
-        run: node --import tsx tests/ris-e2e/run.mjs
+      - name: RIS scanner, MFA, authorization and current editorial UI
+        run: node --import tsx tests/ris-e2e/current-ui.mjs
       - uses: actions/upload-artifact@v4
         if: always()
         with:
