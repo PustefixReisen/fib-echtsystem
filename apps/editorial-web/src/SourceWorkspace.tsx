@@ -1038,7 +1038,7 @@ export function SourceWorkspace({
           </aside>
         </div>
       )}
-      {session && <RisSessionView key={session.session.id} data={session} busy={busy} onOpenEvent={onOpenEvent} onOpenDocument={(versionId) => void openFinding({ versionId })} />}
+      {session && <RisSessionView key={session.session.id} data={session} busy={busy} onOpenEvent={onOpenEvent} onOpenDocument={(versionId) => void openFinding({ versionId })} onReload={refreshSession} />}
       {session && legacyRisView && (
         <div className="detail-grid">
           <div className="detail-content-column">
