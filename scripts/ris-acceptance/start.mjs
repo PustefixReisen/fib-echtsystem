@@ -271,6 +271,7 @@ try {
     FIB_DATABASE_URL: f.runtime,
     SUPABASE_URL: "http://127.0.0.1:54321",
     SUPABASE_ANON_KEY: f.anon,
+    SUPABASE_SERVICE_ROLE_KEY: jwt("service_role"),
     FIB_RIS_STRUCTURE_ENABLED: "true",
     VITE_SUPABASE_URL: "http://127.0.0.1:54321",
     VITE_SUPABASE_PUBLISHABLE_KEY: f.anon,

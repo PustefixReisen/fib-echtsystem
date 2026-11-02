@@ -32,7 +32,11 @@ const read = (p: string) => Deno.readTextFileSync("tests/u4/fixtures/" + p);
 const scenario = () =>
   JSON.parse(Deno.readTextFileSync(root + "/ris-scenario.json"));
 // Simulated Storage transport only; real handlers/Auth/PostgreSQL remain unchanged.
-const originalObjects = new Map<string,Uint8Array>();
+const originalRoot=results+"/originals";
+const originalPath=(key:string)=>{
+ if(!/^([a-f0-9-]{36}\/){2}[a-f0-9]{64}\.pdf$/.test(key))throw Error("invalid synthetic storage path");
+ return originalRoot+"/"+key;
+};
 globalThis.fetch = async (input: RequestInfo | URL, init?: RequestInit) => {
   const url = new URL(input instanceof Request ? input.url : String(input));
   if (
@@ -44,16 +48,18 @@ globalThis.fetch = async (input: RequestInfo | URL, init?: RequestInit) => {
     const headers=new Headers(init?.headers);
     if(headers.get("authorization")!==`Bearer ${Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")}`)return Response.json({error:"forbidden"},{status:403});
     if(init?.method==="DELETE") {
-      for(const key of JSON.parse(String(init.body)).prefixes)originalObjects.delete(key);
+      for(const key of JSON.parse(String(init.body)).prefixes)await Deno.remove(originalPath(key)).catch(e=>{if(!(e instanceof Deno.errors.NotFound))throw e;});
       return Response.json({ok:true});
     }
     const key=url.pathname.slice("/storage/v1/object/fib-ris-originals/".length);
     if(init?.method==="POST") {
       if(headers.get("x-upsert")!=="false")throw Error("Test refuses mutable original upload");
-      if(originalObjects.has(key))return Response.json({statusCode:"409"},{status:409});
-      originalObjects.set(key,new Uint8Array(init.body as Uint8Array).slice());return Response.json({ok:true});
+      const path=originalPath(key);
+      if(await Deno.stat(path).then(()=>true).catch(()=>false))return Response.json({statusCode:"409"},{status:409});
+      await Deno.mkdir(path.slice(0,path.lastIndexOf('/')),{recursive:true,mode:0o700});
+      await Deno.writeFile(path,new Uint8Array(init.body as Uint8Array).slice(),{mode:0o600,createNew:true});return Response.json({ok:true});
     }
-    const bytes=originalObjects.get(key);
+    const bytes=await Deno.readFile(originalPath(key)).catch(e=>{if(e instanceof Deno.errors.NotFound)return null;throw e;});
     return bytes?new Response(bytes.slice(),{headers:{"content-type":"application/pdf"}}):Response.json({error:"missing"},{status:404});
   }
   const state = scenario();

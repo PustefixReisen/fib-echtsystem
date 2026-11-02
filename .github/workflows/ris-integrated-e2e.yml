@@ -56,7 +56,9 @@ jobs:
         if: always()
         with:
           name: integrated-ris-acceptance
-          path: ris-e2e-results/
+          path: |
+            ris-e2e-results/
+            !ris-e2e-results/originals/**
           retention-days: 7
       - name: Destroy isolated identities and data
         if: always()

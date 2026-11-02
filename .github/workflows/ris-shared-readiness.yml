@@ -5,6 +5,7 @@ on:
       - 'supabase/**'
       - 'scripts/ris-shared-apps/**'
       - 'tests/u4/ris-shared-deployment-postgres.spec.ts'
+      - 'tests/u4/ris-originals-postgres.spec.ts'
       - 'tests/u4/fib-schema-restore.mjs'
       - 'tests/u4/ris-shared-operator-guards.mjs'
       - '.github/workflows/ris-shared-readiness.yml'

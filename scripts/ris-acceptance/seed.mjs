@@ -50,8 +50,17 @@ try {
     "select id from fib.ris_sessions where source_url like '%=1031'",
   );
   const d = await first(
-    "select d.*,v.extracted_text from fib.ris_documents d join fib.ris_document_versions v on v.id=d.latest_version_id where d.source_url like '%id=75785'",
+    "select d.*,v.extracted_text,v.content_hash from fib.ris_documents d join fib.ris_document_versions v on v.id=d.latest_version_id where d.source_url like '%id=75785'",
   );
+  let permission={contentAuthor:"municipality",evidence:"Synthetic transport permission for isolated acceptance; not a real PDF rights decision"};
+  if(process.env.VITE_FIB_ACCEPTANCE_MODE==='originals'){
+    const permissions=JSON.parse(readFileSync(process.env.FIB_RIS_RIGHTS_MANIFEST,'utf8'));
+    permission=permissions.find(p=>p.url===d.source_url&&p.sha256===d.content_hash);
+    if(!permission)throw Error('Dokumentbezogene Speicherberechtigung für Referenzfassung fehlt.');
+  }
+  await api({action:'ris_confirm_storage_rights',versionId:d.latest_version_id,...{contentAuthor:permission.contentAuthor,evidence:permission.evidence}});
+  await api({action:'source_capture_pdf',versionId:d.latest_version_id});
+  d.extracted_text=(await first('select extracted_text from fib.ris_document_versions where id=$1',[d.latest_version_id])).extracted_text;
   const link = await first(
     "select id from fib.ris_document_links where document_id=$1 and agenda_id is null",
     [d.id],
