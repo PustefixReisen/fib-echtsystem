@@ -69,12 +69,13 @@ export function RisSessionView({ data, busy, onOpenEvent, onOpenDocument }: Prop
           {agenda.map((a) => {
             const docs = distinct(documents.filter((d) => d.agenda_id === a.id));
             const prop = (data.proposals ?? []).find((p: Row) => p.agenda_id === a.id);
+            const additionalDocs = docs.filter((d) => !prop || d.source_url !== prop.source_url);
             const hasDecision = (data.decisions ?? []).some((d: Row) => d.agenda_id === a.id);
             return <article className="source-block" key={a.id}>
               <h3><button type="button" className="ris-text-link" onClick={() => selectTop(a.id)}>TOP {a.number} · {a.title}</button></h3>
               <div className="ris-inline-links">
                 {prop && <button type="button" onClick={() => selectTop(a.id)}>Vorlage {prop.reference || ""}</button>}
-                {docs.length > 1 && <><span> · </span><button type="button" onClick={() => selectTop(a.id)}>Weitere Dokumente ({docs.length - (prop ? 1 : 0)})</button></>}
+                {additionalDocs.length > 0 && <><span> · </span><button type="button" onClick={() => selectTop(a.id)}>Weitere Dokumente ({additionalDocs.length})</button></>}
                 {hasDecision && <><span> · </span><button type="button" onClick={() => selectTop(a.id)}>Beschlussfassung</button></>}
               </div>
             </article>;
@@ -96,7 +97,7 @@ export function RisSessionView({ data, busy, onOpenEvent, onOpenDocument }: Prop
           {proposals.map((p, i) => <div className="source-block" key={p.text_id ?? p.id ?? i}>
             {p.reference && <p>Vorlage {p.reference}</p>}
             {p.wording ? <pre className="source-evidence">{p.wording}</pre> : <p>Beschlussvorschlag im Bestand noch nicht als Text verfügbar.</p>}
-            <ExternalLink url={p.source_url}>Originalvorlage im RIS öffnen</ExternalLink>
+            {!topDocuments.some((d) => d.source_url === p.source_url) && <ExternalLink url={p.source_url}>Originalvorlage im RIS öffnen</ExternalLink>}
           </div>)}
         </section>}
         {decisions.length > 0 && <section className="panel">
