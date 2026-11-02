@@ -138,9 +138,8 @@ try {
   );
   await findings(page);
   await page
-    .locator(".work-item")
-    .filter({ hasText: "Gemeinde Feldkirchen" })
     .getByRole("button", { name: "Fundstelle öffnen", exact: true })
+    .first()
     .click();
   await page
     .getByLabel("Titel der Fundstelle *", { exact: true })
