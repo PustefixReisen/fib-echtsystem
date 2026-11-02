@@ -1,3 +1,4 @@
+import { RisSessionView } from "./RisSessionView.js";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { sourceApi, withEventLock, type SourceApi } from "./source-api.js";
 
@@ -92,6 +93,7 @@ export function SourceWorkspace({
   eventLock = withEventLock,
   registerLeaveGuard,
 }: Props) {
+  const legacyRisView = false;
   const [route, setRoute] = useState<"findings" | "sessions">(mode),
     [search, setSearch] = useState(""),
     [filter, setFilter] = useState("all");
@@ -586,7 +588,7 @@ export function SourceWorkspace({
           <>
             <span>›</span>
             <span aria-current="page">
-              {session?.session.reference ?? currentTitle}
+              {(session ? `${session.session.committee_name ?? "Sitzung"} · ${date(session.session.session_date)}` : currentTitle)}
             </span>
           </>
         )}
@@ -596,7 +598,7 @@ export function SourceWorkspace({
           <p className="eyebrow">Recherche · Redaktion</p>
           <h1>
             {session
-              ? (session.session.reference ?? "Sitzung")
+              ? `${session.session.committee_name ?? "Sitzung"} · ${date(session.session.session_date)}`
               : detail
                 ? currentTitle
                 : route === "sessions"
@@ -618,10 +620,7 @@ export function SourceWorkspace({
           Zurück zur Liste
         </button>
       </div>
-      <p className="source-release-note" role="note">
-        Vorbereitet für die fachliche Prüfung. Produktive Bereitstellung und
-        Datenbankfreigabe stehen aus. KI-Auswertung ist noch nicht angebunden.
-      </p>
+      {route === "findings" && <p className="source-release-note" role="note">Recherche und redaktionelle Prüfung im Entwicklungsstand.</p>}
       {busy && <p role="status">Daten werden verarbeitet …</p>}
       {error && (
         <p role="alert" className="status-message error">
@@ -1039,7 +1038,8 @@ export function SourceWorkspace({
           </aside>
         </div>
       )}
-      {session && (
+      {session && <RisSessionView key={session.session.id} data={session} busy={busy} onOpenEvent={onOpenEvent} onOpenDocument={(versionId) => void openFinding({ versionId })} />}
+      {session && legacyRisView && (
         <div className="detail-grid">
           <div className="detail-content-column">
             <Card title="Sitzung und Tagesordnung">
