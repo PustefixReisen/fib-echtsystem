@@ -259,3 +259,24 @@ Der ergänzende [Betriebsvertrag für sämtliche FIB-Komponenten](fib-general-ba
 beschreibt den gemeinsamen Runner, alle Live-FIB-Functions, drei Betriebsarten und die
 noch erforderlichen geschützten Export-/Zugangsprüfungen. Bestehende Restore- und
 Verschlüsselungsverfahren dieser Anleitung gelten weiter.
+
+
+## Original-PDFs ab #377 / PR #378
+
+Neue Datenbanksicherungen im Format 2 enthalten `risOriginals` aus derselben
+exportierten SQL-Sicht wie das Dump. Die Versiegelung prüft jede dort referenzierte
+Datei unter `originals/Dokument-ID/Versions-ID/Hash.pdf` auf Vorhandensein, Bytezahl
+und SHA-256. Ein reines SQL-Dump genügt für diese Releases nicht mehr. Unreferenzierte
+Originaldateien werden nicht als stiller Zusatzcache akzeptiert.
+
+`node scripts/backup/ris-originals.mjs --bundle=/privat/release-bundle` exportiert
+diese Fassungen über die vorhandene menschliche AAL2-Schnittstelle mit privatem
+`FIB_ACCEPTANCE_USER_TOKEN` und bestehendem Publishable-Key. Der Gesamtbackup-Workflow
+akzeptiert die Originale zusätzlich als geprüften privaten Input; er erfindet dafür
+keine Service-Zugangsdaten. Fehlende Berechtigung oder abweichende Fassung sperrt
+das Backup. FIB-Schreibruhe während der Aufnahme bleibt verbindlich.
+
+Vor einer Wiederherstellung Originalhashes und aktuelle Speicherberechtigungen prüfen.
+Widerrufene Fassungen nicht aus alten Sicherungen erneut aktivieren; Lösch-/Aufbewahrungs-
+folgen eines Widerrufs auch für private Sicherungen nach dem geltenden Betriebskonzept
+behandeln. Diese Ergänzung behauptet keinen tatsächlichen Shared-Apps-Storage-Restore.

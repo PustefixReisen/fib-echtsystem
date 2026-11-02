@@ -31,6 +31,8 @@ const html = (s: string) =>
 const read = (p: string) => Deno.readTextFileSync("tests/u4/fixtures/" + p);
 const scenario = () =>
   JSON.parse(Deno.readTextFileSync(root + "/ris-scenario.json"));
+// Simulated Storage transport only; real handlers/Auth/PostgreSQL remain unchanged.
+const originalObjects = new Map<string,Uint8Array>();
 globalThis.fetch = async (input: RequestInfo | URL, init?: RequestInit) => {
   const url = new URL(input instanceof Request ? input.url : String(input));
   if (
@@ -38,6 +40,22 @@ globalThis.fetch = async (input: RequestInfo | URL, init?: RequestInit) => {
     url.pathname.startsWith("/auth/v1/")
   )
     return nativeFetch(input, init);
+  if(url.origin==="http://127.0.0.1:54321" && url.pathname.startsWith("/storage/v1/object/fib-ris-originals")) {
+    const headers=new Headers(init?.headers);
+    if(headers.get("authorization")!==`Bearer ${Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")}`)return Response.json({error:"forbidden"},{status:403});
+    if(init?.method==="DELETE") {
+      for(const key of JSON.parse(String(init.body)).prefixes)originalObjects.delete(key);
+      return Response.json({ok:true});
+    }
+    const key=url.pathname.slice("/storage/v1/object/fib-ris-originals/".length);
+    if(init?.method==="POST") {
+      if(headers.get("x-upsert")!=="false")throw Error("Test refuses mutable original upload");
+      if(originalObjects.has(key))return Response.json({statusCode:"409"},{status:409});
+      originalObjects.set(key,new Uint8Array(init.body as Uint8Array).slice());return Response.json({ok:true});
+    }
+    const bytes=originalObjects.get(key);
+    return bytes?new Response(bytes.slice(),{headers:{"content-type":"application/pdf"}}):Response.json({error:"missing"},{status:404});
+  }
   const state = scenario();
   let response: Response;
   if (url.origin === origin) {

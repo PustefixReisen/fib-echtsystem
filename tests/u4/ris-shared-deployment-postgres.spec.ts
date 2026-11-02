@@ -56,6 +56,7 @@ async function main() {
     await owner.query(
       "do $$ begin if not exists(select 1 from pg_roles where rolname='anon') then create role anon;end if;if not exists(select 1 from pg_roles where rolname='authenticated') then create role authenticated;end if;if not exists(select 1 from pg_roles where rolname='service_role') then create role service_role;end if;end $$;",
     );
+    await owner.query("drop schema if exists storage cascade;create schema storage;create table storage.buckets(id text primary key,name text,public boolean,file_size_limit bigint,allowed_mime_types text[]);");
     const files = [
       ...readFileSync("tests/ris-e2e/bootstrap.mjs", "utf8").matchAll(
         /"((?:schema|security|migrations)\/[^"\n]+\.sql)"/g,
@@ -63,7 +64,7 @@ async function main() {
     ].map((m) => "supabase/" + m[1]);
     for (const f of files) await owner.query(readFileSync(f, "utf8"));
     await owner.query(
-      "create table public.memorix_sentinel(id int primary key,payload text);insert into public.memorix_sentinel values(1,'unchanged')",
+      "create table if not exists public.memorix_sentinel(id int primary key,payload text);insert into public.memorix_sentinel values(1,'unchanged') on conflict do nothing",
     );
     const actor = randomUUID(),
       source = randomUUID(),
@@ -137,7 +138,7 @@ async function main() {
         ),
       ),
     );
-    assert.equal((await first("select count(*) n from fib.findings")).n, "0");
+    assert.equal((await first("select count(*) n from fib.findings")).n, "2", "Automatic metadata findings survive a denied manual intake");
     await owner.query("update fib.sources set active=true where id=$1", [
       source,
     ]);

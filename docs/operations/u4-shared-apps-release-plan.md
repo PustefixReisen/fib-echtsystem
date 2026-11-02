@@ -4,6 +4,15 @@
 |---|---|---|
 | 1.0 | 31.10.2026 | Josef Walter – mit KI-Unterstützung |
 
+## Ergänzung #377 / PR #378 – 02.11.2026
+
+Das neue Paket ergänzt Original-PDF-Speicherung, automatische Fundstellen und getrennte
+Ereignisbeziehungen. Die frühere Freigabe zu `7a73db6` deckt seine neue Migration/Bucket-
+Ressource nicht ab. Konkreter Umfang, Reihenfolge, Rechteprüfung und persönliche
+UI-Anleitung: [RIS-Redaktion #377](ris-ui-377-release.md). Für dieses Paket ist kein
+Deployment bestätigt. Insbesondere keine ungeklärten historischen Volltexte ohne
+Sicherung entfernen und keinen Viewer aus erneut geladenen RIS-Links ableiten.
+
 ## Entscheidung und Grenze
 
 Auftrag #357, PR #358, persönliche Abnahme #356. Verbindlicher Zielweg nach ADR-011:

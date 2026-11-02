@@ -4,7 +4,7 @@ import pg from "pg";
 import {
   parseRisStructure,
   persistRisStructure,
-  persistRisDocument,
+  persistRisDocument as persistDocument,
   risHash,
   RIS_ORIGIN,
 } from "../../supabase/functions/_shared/ris-structure.ts";
@@ -48,6 +48,15 @@ const count = async (t: string) =>
   Number((await pool.query("select count(*) from fib." + t)).rows[0].count);
 const first = async (q: string, p: any[] = []) =>
   (await pool.query(q, p)).rows[0];
+async function persistRisDocument(db: any,url: string,hash: string,text: string|null,method: string,stamp: string) {
+  // Synthetic binary fixture; rights are explicitly confirmed for this exact hash.
+  const bytes = new TextEncoder().encode("%PDF-1.4\n" + hash + "\n" + (text ?? ""));
+  const actualHash = await risHash(bytes);
+  const id = await persistDocument(db,url,actualHash,null,method,stamp);
+  if (!id) return id;
+  await risEditorial(db,actor,{action:"ris_confirm_storage_rights",versionId:id,contentAuthor:"municipality",evidence:"Synthetic test permission, not a real-world rights decision"});
+  return persistDocument(db,url,actualHash,text,method,stamp,{bytes,store:{put:async()=>{}}});
+}
 async function main() {
   await pool.query(
     "drop schema if exists fib cascade; create schema if not exists auth; create table if not exists auth.users(id uuid primary key)",
@@ -69,6 +78,8 @@ async function main() {
     "migrations/20261031081340_fib_ris_editorial_structure.sql",
   ])
     await pool.query(readFileSync("supabase/" + path, "utf8"));
+  await pool.query("create schema if not exists storage;create table if not exists storage.buckets(id text primary key,name text,public boolean,file_size_limit bigint,allowed_mime_types text[]);delete from storage.buckets where id='fib-ris-originals';");
+  await pool.query(readFileSync("supabase/migrations/20261102221038_fib_ris_originals_and_editorial_links.sql","utf8"));
   await pool.query(
     "insert into fib.app_users(user_id,role,setup_status) values($1,'editor','active')",
     [uid],
@@ -90,6 +101,10 @@ async function main() {
   );
   assert.equal(snapshot.agenda.length, 3);
   assert.equal(snapshot.documents[0].kind, "minutes");
+  await pool.query(
+    "insert into fib.findings(source_id,title,original_url) values($1,$2,$3)",
+    [sourceId, "Vorhandener Redaktionstitel", snapshot.documents[0].url + "&type=do"],
+  );
   const [a, b] = await Promise.all([
     tx((db) => persistRisStructure(db, snapshot)),
     tx((db) => persistRisStructure(db, snapshot)),
@@ -200,10 +215,7 @@ async function main() {
       }),
     /missing/,
   );
-  await pool.query(
-    "insert into fib.findings(source_id,title,original_url) values($1,$2,$3)",
-    [sourceId, "Vorhandener Redaktionstitel", url + "&type=do"],
-  );
+
   const finding = await run({
     action: "ris_accept_finding",
     versionId,
@@ -216,9 +228,9 @@ async function main() {
     sourceId,
     title: "Niederschrift 15.10.2026",
   });
-  assert.equal(await count("findings"), 1);
+  assert.equal(Number((await first("select count(*) n from fib.findings where original_url like $1",[url+"%"])).n),1);
   assert.equal(
-    (await first("select title from fib.findings")).title,
+    (await first("select title from fib.findings where original_url like $1",[url+"%"])).title,
     "Vorhandener Redaktionstitel",
   );
   assert.equal(await count("finding_versions"), 1);
@@ -386,7 +398,8 @@ async function main() {
   }
   const projection = await run({ action: "ris_read", sessionId: a.sessionId });
   assert.equal(projection.decisions!.length, 3);
-  assert.equal(projection.events![0].topic_id, topicId);
+  assert.equal(projection.events!.length, 0, "Decision events are separate from local references");
+  assert.equal((await first("select topic_id from fib.event_topics where event_id=$1",[event.eventId])).topic_id,topicId);
   const pending = await run({
     action: "ris_suggest",
     agendaId: top,
@@ -593,7 +606,7 @@ async function main() {
           await db.unsafe("set local role fib_runtime");
           await db.unsafe(op);
         }),
-      /permission denied/,
+      /permission denied|immutable_ris_original|violates check constraint/,
     );
   await assert.rejects(
     () =>

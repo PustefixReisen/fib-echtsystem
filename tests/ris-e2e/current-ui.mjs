@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import { chromium } from "playwright";
 import pg from "pg";
-import { readFileSync, writeFileSync } from "node:fs";
+import { readFileSync, writeFileSync, mkdirSync } from "node:fs";
 import { auth, totp } from "./common.mjs";
 
 const root = process.env.RUNNER_TEMP;
@@ -35,7 +35,7 @@ try {
     email: fixture.users.editor.email, password: fixture.users.editor.password,
   });
   for (const token of [aal1.access_token, fixture.users.outsider.token, "invalid-token"]) {
-    assert.equal((await invoke("fib-editorial-write", { action: "ris_sessions" }, token)).status, 403);
+    for(const action of ['ris_sessions','source_pdf','source_capture_pdf','ris_confirm_storage_rights'])assert.equal((await invoke("fib-editorial-write", { action,versionId:crypto.randomUUID() }, token)).status,403);
   }
   record("Restricted runtime database role, AAL1 and outsider access rejected");
 
@@ -53,7 +53,7 @@ try {
   assert.ok(session);
   record("Actual scanner and isolated PostgreSQL preserve RIS structure without invented decisions");
 
-  browser = await chromium.launch();
+  browser = await chromium.launch(process.env.FIB_CHROMIUM_PATH?{executablePath:process.env.FIB_CHROMIUM_PATH,args:["--no-sandbox"]}:{});
   const page = await browser.newPage({ viewport: { width: 1440, height: 1050 } });
   page.setDefaultTimeout(15000);
   const errors = [];
@@ -81,14 +81,59 @@ try {
   await page.getByRole("heading", { name: "Lokalen Bezug hinzufügen" }).waitFor();
   await page.getByRole("button", { name: "Abbrechen" }).click();
   assert.equal(await page.getByRole("heading", { name: "Lokalen Bezug hinzufügen" }).count(), 0);
+  // Real authenticated document workflow; Storage and source responses are explicit fixtures.
+  const beforeFindings=(await db.query("select count(*)::int n from fib.findings")).rows[0].n;
+  assert.ok(beforeFindings>=2);
+  await page.getByRole("button",{name:"Neu: Lokaler Bezug",exact:true}).click();
+  await page.getByRole("button",{name:"Neu: Ereignis",exact:true}).click();
+  await page.getByLabel("Ereignistitel *",{exact:true}).fill("Isolierter lokaler Bezug außerhalb der Sitzung");
+  await page.getByRole("button",{name:"Speichern",exact:true}).click();
+  await page.getByRole("heading",{name:"Lokale Bezüge",exact:true}).waitFor();
+  assert.equal((await db.query("select count(*)::int n from fib.event_findings")).rows[0].n,0);
+  await page.getByRole("button",{name:"Dokumentfassung öffnen",exact:true}).first().click();
+  await page.getByRole("button",{name:"Speicherberechtigung bearbeiten",exact:true}).click();
+  await page.getByLabel("Nachweis der Speicherberechtigung").fill("Synthetic PDF permission for this isolated test; not a real document rights decision");
+  await page.getByRole("button",{name:"Speichern",exact:true}).click();
+  await page.getByRole("button",{name:"Bestätigtes Original speichern",exact:true}).click();
+  await page.getByRole("button",{name:"PDF-Vorschau öffnen",exact:true}).waitFor();
+  // Break RIS access after capture. FIB can still serve the stored PDF bytes.
+  writeFileSync(root+"/ris-scenario.json",JSON.stringify({outage:true}));
+  await page.getByRole("button",{name:"PDF-Vorschau öffnen",exact:true}).click();
+  await page.locator('iframe[title="Gespeichertes Original-PDF"]').waitFor();
+  assert.ok((await page.locator('iframe').getAttribute('src')).startsWith('blob:'));
+  await page.getByRole("button",{name:"Schließen",exact:true}).click();
+  await page.getByRole("button",{name:"Neu: Ereignisbezug",exact:true}).click();
+  await page.getByRole("radio",{name:/Isolierter lokaler Bezug außerhalb der Sitzung/}).check();await page.getByRole("button",{name:"Zuordnen",exact:true}).click();
+  await page.getByRole("button",{name:"Neu: Ereignisbezug",exact:true}).waitFor();
+  assert.equal((await db.query("select count(*)::int n from fib.event_findings")).rows[0].n,1);
+  await page.getByRole("button",{name:"Neu: Ereignisbezug",exact:true}).click();
+  await page.getByRole("button",{name:"Neu: Ereignis",exact:true}).click();
+  await page.getByLabel("Ereignistitel *",{exact:true}).fill("Zweites Ereignis aus derselben Fundstelle");
+  await page.getByRole("button",{name:"Speichern",exact:true}).click();
+  await page.getByRole("button",{name:"Neu: Ereignisbezug",exact:true}).waitFor();
+  assert.equal((await db.query("select count(*)::int n from fib.event_findings")).rows[0].n,2);
+  await page.getByRole("button",{name:"Zurück zu TOP 2",exact:true}).click();
+  await page.getByRole("heading",{name:"Beschlussvorschlag",exact:true}).waitFor();
+  record("Real MFA app → optional local reference → exact document rights → immutable stored PDF despite RIS outage → direct finding/event relationship → original TOP; source/Storage transports simulated");
   await page.getByRole("button", { name: "‹ Zurück zur Tagesordnung" }).click();
   await page.getByRole("button", { name: "TOP 3 öffnen" }).click();
   await page.getByRole("heading", { name: "Beschlussvorschlag", exact: true }).waitFor();
+  await page.getByRole("button",{name:"Dokumentfassung öffnen",exact:true}).first().click();
+  await page.getByRole("button",{name:"Neu: Ereignisbezug",exact:true}).click();
+  await page.getByRole("radio",{name:/Isolierter lokaler Bezug außerhalb der Sitzung/}).check();
+  await page.getByRole("button",{name:"Zuordnen",exact:true}).click();
+  await page.getByRole("button",{name:"Neu: Ereignisbezug",exact:true}).waitFor();
+  assert.equal((await db.query("select count(*)::int n from fib.event_findings")).rows[0].n,3);
+  assert.equal((await db.query("select count(*)::int n from (select finding_id from fib.event_findings group by finding_id having count(*)=2)x")).rows[0].n,1);
+  assert.equal((await db.query("select count(*)::int n from (select event_id from fib.event_findings group by event_id having count(*)=2)x")).rows[0].n,1);
+  record("Real database n:m: two findings support one event and one finding supports two events; local TOP references stay independent");
   assert.deepEqual(errors, []);
   record("Real login and TOTP → RIS agenda → TOP2/TOP3 → separate event search view, without retired review masks");
   assert.equal((await db.query("select count(*)::int as n from fib.messages")).rows[0].n, 0);
 } finally {
-  writeFileSync("ris-e2e-results/results.json", JSON.stringify(results, null, 2));
+  const resultsDirectory=process.env.FIB_TEST_RESULTS_DIR ?? "ris-e2e-results";
+  mkdirSync(resultsDirectory,{recursive:true});
+  writeFileSync(resultsDirectory+"/results.json", JSON.stringify(results, null, 2));
   if (browser) await browser.close();
   await db.end().catch(() => {});
 }

@@ -18,6 +18,8 @@ on:
       - 'supabase/functions/fib-u4-ris-pilot/**'
       - 'supabase/functions/fib-editorial-write/**'
       - 'supabase/migrations/*fib_ris_editorial_structure.sql'
+      - 'supabase/migrations/*fib_ris_originals_and_editorial_links.sql'
+      - 'tests/u4/ris-originals-postgres.spec.ts'
       - 'tests/u4/ris-persistence-postgres.spec.ts'
       - 'tests/u4/ris-scanner-structure-postgres.spec.ts'
       - 'supabase/functions/fib-u4-pilot/**'
@@ -96,6 +98,11 @@ jobs:
         env:
           U4_TEST_DATABASE_URL: postgres://postgres:integration_only@localhost:5432/fib_u4_test
         run: npx tsx tests/u4/source-editorial-postgres.spec.ts
+
+      - name: Versioned original PDFs, rights, storage failure recovery and local references
+        env:
+          U4_TEST_DATABASE_URL: postgres://postgres:integration_only@localhost:5432/fib_u4_test
+        run: npx tsx tests/u4/ris-originals-postgres.spec.ts
 
       - name: Type-check prepared RIS and editorial Edge Functions with Deno
         run: npx --yes deno@2.9.6 check --node-modules-dir=auto --no-lock supabase/functions/fib-u4-ris-pilot/index.ts supabase/functions/fib-editorial-write/index.ts

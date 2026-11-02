@@ -72,7 +72,7 @@ async function main() {
       sourceCount: sources.length,
       sourcesActive: sources.length === 2 && sources.every((s) => s.active),
       scope:
-        "reduced HTML reference excerpts; six privately captured original PDFs; no decisions/events/messages created",
+        "reduced HTML reference excerpts; six rights-cleared private references; database import stores metadata only until exact-version storage permission and original capture; no decisions/events/messages created",
     };
     if (!apply) {
       privateOutput(options.out, JSON.stringify(report, null, 2) + "\n");

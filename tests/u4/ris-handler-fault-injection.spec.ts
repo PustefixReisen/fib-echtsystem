@@ -78,7 +78,8 @@ const fakeFetch=async(url:string)=>{
  throw new Error('Unexpected fetch '+url);
 };
 const source=edgeDatasetSupport+(readFileSync('supabase/functions/_shared/ris-calendar.ts','utf8').replace(/\bexport /g,'')+'\n'+readFileSync('supabase/functions/_shared/ris-structure.ts','utf8').replace(/\bexport /g,'')+'\n'+readFileSync('supabase/functions/fib-u4-ris-pilot/index.ts','utf8'))
- .replace(/^import .*ris-calendar.*;\s*/m,'')
+ .replace(/^import .*ris-originals.*;\s*/m, "")
+    .replace(/^import .*ris-calendar.*;\s*/m,'')
  .replace(/^import .*development-datasets.*;\s*/m,'')
  .replace(/^import postgres from .*;\s*/m,'const postgres = globalThis.__postgres;\n')
  .replace(/^import .*from ['"](?:npm:unpdf|\.\.\/_shared\/ris-structure)[^\n]+$/gm,'')

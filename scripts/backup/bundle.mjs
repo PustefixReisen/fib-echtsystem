@@ -24,6 +24,17 @@ export function verify(root,commit,now=Date.now(),allowHistorical=false){
  if(db.schema!=='fib'||db.project!=='apaubomxffcwtzjimori'||!db.aclIncluded||db.containsAuthSecrets!==false||!Object.keys(db.tableCounts??{}).length)throw Error('Invalid schema backup');
  for(const [p,digest] of Object.entries(db.files))if(!['fib.dump','auth-ids.json'].includes(p)||hash(readFileSync(join(root,'database',p)))!==digest)throw Error('Invalid database manifest');
  if(Object.keys(db.files).length!==2||readFileSync(join(root,'database/fib.dump')).subarray(0,5).toString()!=='PGDMP')throw Error('Invalid custom dump');
+ if(db.format===2&&!Array.isArray(db.risOriginals))throw Error('Missing original inventory');
+ const expectedOriginals=[];
+ for(const v of db.risOriginals??[]){
+  const expected=v.document_id+'/'+v.id+'/'+v.content_hash+'.pdf';
+  if(v.storage_key!==expected||!/^([a-f0-9-]{36}\/){2}[a-f0-9]{64}\.pdf$/.test(expected)||!['municipality','licensed'].includes(v.content_author))throw Error('Invalid original inventory');
+  const p='originals/'+expected;expectedOriginals.push(p);
+  if(!actual.includes(p))throw Error('Missing original PDF backup');
+  const bytes=readFileSync(join(root,p));
+  if(bytes.length!==Number(v.size)||hash(bytes)!==v.content_hash)throw Error('Original PDF backup mismatch');
+ }
+ if(actual.some(p=>p.startsWith('originals/')&&!expectedOriginals.includes(p)))throw Error('Unreferenced original backup');
  const inventory=JSON.parse(readFileSync(join(root,'edge/inventory.json')));
  if(!['fib-editorial-write','fib-u4-ris-pilot','fib-u4-pilot'].every(slug=>inventory.some(f=>f.slug===slug)))throw Error('Required FIB functions missing');
  if(!Array.isArray(inventory)||!inventory.length||inventory.some(f=>!/^fib-[a-z0-9-]+$/.test(f.slug)||!Number.isInteger(f.version)||typeof f.verify_jwt!=='boolean'||!actual.includes('edge/'+f.slug+'/index.ts')))throw Error('Incomplete edge inventory');

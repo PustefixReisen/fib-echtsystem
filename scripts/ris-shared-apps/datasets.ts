@@ -73,6 +73,13 @@ export async function cleanupPlan(tx: any, batch: string) {
     rows.push({ ...m, hash: fingerprint(r[0].r) });
   }
   const blockers: any[] = [];
+  // Original binaries live outside SQL. Refuse a metadata-only purge while a
+  // version may own an original (including an upload followed by SQL rollback).
+  const stored = await tx.unsafe(`select count(*)::int n from fib.ris_document_versions v
+    where to_jsonb(v)->>'content_author' in ('municipality','licensed')
+    and exists(select 1 from fib.development_objects d where d.batch_id=$1
+      and d.ownership='owned' and d.table_name='ris_document_versions' and d.row_key=jsonb_build_object('id',v.id))`,[batch]);
+  if(stored[0].n)blockers.push({constraint:'revoke_original_storage_first',table:'fib.ris_document_versions',count:stored[0].n});
   // Check every incoming FK, including CASCADE and cross-schema references, before deleting anything.
   const fks =
     await tx.unsafe(`select c.conname,ns.nspname child_schema,ch.relname child_table,p.relname parent_table,

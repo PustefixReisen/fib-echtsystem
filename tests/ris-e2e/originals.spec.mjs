@@ -1,4 +1,5 @@
 import assert from "node:assert/strict";
+import {createHash} from "node:crypto";
 import {
   mkdtempSync,
   rmSync,
@@ -33,6 +34,8 @@ try {
     readFileSync(join(root, "unrelated.txt"), "utf8"),
     "must survive",
   );
+  process.env.FIB_RIS_RIGHTS_MANIFEST=join(root,"rights.json");
+  writeFileSync(process.env.FIB_RIS_RIGHTS_MANIFEST,'[]');
   globalThis.fetch = async () =>
     new Response("<html>temporarily unavailable</html>", {
       headers: { "content-type": "text/html" },
@@ -44,6 +47,8 @@ try {
       headers: { "content-type": "application/pdf" },
     });
   await assert.rejects(invoke, /Ungültiges Original-PDF/);
+  process.env.FIB_RIS_RIGHTS_MANIFEST=join(root,"rights.json");
+  writeFileSync(process.env.FIB_RIS_RIGHTS_MANIFEST,JSON.stringify(["75714","75790","75785","74647","75243","75379"].map(id=>({url:"https://buergerinfo-feldkirchen.digitalfabrix.de/getfile.asp?id="+id,sha256:createHash('sha256').update('%PDF-synthetic wrong bytes').digest('hex'),contentAuthor:"municipality",evidence:"Synthetic negative transport test only"}))));
   const requested = [];
   globalThis.fetch = async (input) => {
     requested.push(String(input));
@@ -66,6 +71,7 @@ try {
   );
 } finally {
   globalThis.fetch = original;
+  delete process.env.FIB_RIS_RIGHTS_MANIFEST;
   if (previous === undefined) delete process.env.RUNNER_TEMP;
   else process.env.RUNNER_TEMP = previous;
   rmSync(root, { recursive: true, force: true });

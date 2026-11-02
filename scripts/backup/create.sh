@@ -6,5 +6,6 @@ umask 077
 : "${FIB_RELEASE_COMMIT:?Full approved release commit required}"
 : "${FIB_MAINTENANCE_DATABASE_URL:?Existing maintenance connection required}"
 node scripts/ris-shared-apps/backup.mjs --out="$FIB_BACKUP_ROOT/database"
+node scripts/backup/ris-originals.mjs --bundle="$FIB_BACKUP_ROOT"
 # seal refuses incomplete edge/frontend/configuration inputs and unverified restore evidence.
 node scripts/backup/bundle.mjs seal "$FIB_BACKUP_ROOT" "$FIB_RELEASE_COMMIT"

@@ -1,9 +1,10 @@
-import { type RisSql, RIS_ORIGIN } from "./ris-structure.ts";
-import { risEditorial, type RisActor } from "./ris-editorial.ts";
+import { RIS_ORIGIN, type RisSql } from "./ris-structure.ts";
+import { type RisActor, risEditorial } from "./ris-editorial.ts";
 import { acceptObservation } from "./reviewed-observation.ts";
 function text(v: unknown, max = 2000) {
-  if (typeof v !== "string" || !v.trim() || v.length > max)
+  if (typeof v !== "string" || !v.trim() || v.length > max) {
     throw Error("invalid_source_input");
+  }
   return v.trim();
 }
 export async function sourceEditorial(
@@ -11,25 +12,27 @@ export async function sourceEditorial(
   actor: RisActor,
   input: Record<string, any>,
 ) {
-  if (actor.kind !== "human" || actor.aal !== "aal2")
+  if (actor.kind !== "human" || actor.aal !== "aal2") {
     throw Error("source_forbidden");
+  }
   const member = await tx.unsafe(
     "select user_id from fib.app_users where user_id=$1 and active and setup_status='active' and role in ('admin','editor') for share",
     [actor.userId],
   );
   if (!member.length) throw Error("source_forbidden");
   const query = "%" + String(input.search ?? "").slice(0, 200) + "%";
-  if (input.action === "ris_sessions")
+  if (input.action === "ris_sessions") {
     return {
       sessions: await tx.unsafe(
         "select s.*,c.name committee_name from fib.ris_sessions s left join fib.ris_committees c on c.id=s.committee_id where coalesce(s.reference,'') ilike $1 or coalesce(c.name,'') ilike $1 order by s.session_date desc nulls last limit 101",
         [query],
       ),
     };
-  if (input.action === "source_choices")
+  }
+  if (input.action === "source_choices") {
     return {
       events: await tx.unsafe(
-        "select id,title from fib.events where status='confirmed' and title ilike $1 order by title limit 101",
+        "select id,title,occurred_at event_date,summary from fib.events where status='confirmed' and title ilike $1 order by title limit 101",
         [query],
       ),
       processes: await tx.unsafe(
@@ -41,6 +44,7 @@ export async function sourceEditorial(
         [query],
       ),
     };
+  }
   if (input.action === "source_propose_relation") {
     const link = await tx.unsafe(
       "select event_id from fib.event_findings where event_id=$1 and finding_id=$2",
@@ -52,8 +56,9 @@ export async function sourceEditorial(
       action: "ris_propose_relation",
     });
   }
-  if (input.action === "source_review_relation")
+  if (input.action === "source_review_relation") {
     return risEditorial(tx, actor, { ...input, action: "ris_review_relation" });
+  }
   if (input.action === "source_list") {
     const findings = await tx.unsafe(
       `select f.*,s.name source_name from fib.findings f join fib.sources s on s.id=f.source_id where coalesce(f.title,'') ilike $1 or coalesce(f.original_url,'') ilike $1 or s.name ilike $1 order by f.discovered_at desc limit 101`,
@@ -85,6 +90,12 @@ export async function sourceEditorial(
       if (!f) throw Error("source_missing");
       return {
         finding: f,
+        originVerified: Boolean(
+          (await tx.unsafe(
+            "select id from fib.ris_documents where finding_id=$1",
+            [f.id],
+          )).length,
+        ),
         relationSuggestions: await tx.unsafe(
           "select r.*,(select l.detail->>'rationale' from fib.ris_review_log l where l.object_id=r.id and l.action='ris_review_relation' order by l.created_at desc limit 1) review_rationale,p.title process_title,t.title topic_title,e.title event_title from fib.ris_relation_suggestions r join fib.event_findings ef on ef.event_id=r.event_id join fib.events e on e.id=r.event_id left join fib.processes p on p.id=r.process_id left join fib.topics t on t.id=r.topic_id where ef.finding_id=$1",
           [f.id],
@@ -98,7 +109,7 @@ export async function sourceEditorial(
           [f.id],
         ),
         events: await tx.unsafe(
-          "select e.id,e.title,ef.justification from fib.event_findings ef join fib.events e on e.id=ef.event_id where ef.finding_id=$1",
+          "select e.id,e.title,e.occurred_at event_date,ef.justification from fib.event_findings ef join fib.events e on e.id=ef.event_id where ef.finding_id=$1",
           [f.id],
         ),
         contexts: await tx.unsafe(
@@ -110,7 +121,7 @@ export async function sourceEditorial(
     if (input.versionId) {
       const document = (
         await tx.unsafe(
-          "select d.*,v.id version_id,v.content_hash,v.extracted_text,v.observed_at,v.extraction_method from fib.ris_documents d join fib.ris_document_versions v on v.document_id=d.id where v.id=$1",
+          "select d.*,v.id version_id,v.content_hash,v.extracted_text,v.observed_at,v.extraction_method,v.content_author,v.rights_evidence,v.pdf_storage_key is not null as has_pdf from fib.ris_documents d join fib.ris_document_versions v on v.document_id=d.id where v.id=$1",
           [input.versionId],
         )
       )[0];
@@ -121,9 +132,21 @@ export async function sourceEditorial(
       );
       return {
         document,
+        originVerified: true,
+        finding: document.finding_id
+          ? (await tx.unsafe("select * from fib.findings where id=$1", [
+            document.finding_id,
+          ]))[0]
+          : null,
+        events: document.finding_id
+          ? await tx.unsafe(
+            "select e.id,e.title,e.occurred_at event_date,ef.justification from fib.event_findings ef join fib.events e on e.id=ef.event_id where ef.finding_id=$1",
+            [document.finding_id],
+          )
+          : [],
         sources,
         versions: await tx.unsafe(
-          "select id,content_hash,observed_at,extraction_method from fib.ris_document_versions where document_id=$1 order by observed_at desc",
+          "select id,content_hash,observed_at,extraction_method,content_author,pdf_storage_key is not null as has_pdf from fib.ris_document_versions where document_id=$1 order by observed_at desc",
           [document.id],
         ),
         contexts: await tx.unsafe(
@@ -146,8 +169,9 @@ export async function sourceEditorial(
       input.approval !== true ||
       !Number.isInteger(input.revision) ||
       input.revision < 1
-    )
+    ) {
       throw Error("invalid_review");
+    }
     const title = text(input.title);
     return acceptObservation(
       actor.userId,
@@ -165,42 +189,84 @@ export async function sourceEditorial(
     if (
       input.approval !== true ||
       !/^[a-f0-9-]{36}$/i.test(input.requestId ?? "")
-    )
+    ) {
       throw Error("invalid_review");
-    const title = text(input.title),
-      rationale = text(input.rationale);
+    }
+    const title = text(input.title);
+    const rationale =
+      typeof input.rationale === "string" && input.rationale.trim()
+        ? text(input.rationale)
+        : null;
+    const summary = input.summary == null ? null : text(input.summary, 10000);
+    if (
+      input.occurredAt != null && typeof input.occurredAt !== "string" ||
+      input.rationale != null && typeof input.rationale !== "string"
+    ) throw Error("invalid_source_input");
+    const occurredAt = input.occurredAt || null;
+    if (occurredAt && !Number.isFinite(Date.parse(occurredAt))) {
+      throw Error("invalid_source_input");
+    }
+    if (Boolean(input.findingId) === Boolean(input.agendaId)) {
+      throw Error("invalid_source_input");
+    }
     await tx.unsafe("select pg_advisory_xact_lock(hashtextextended($1,0))", [
       "source-event:" + input.requestId,
     ]);
-    const finding = (
-      await tx.unsafe("select id from fib.findings where id=$1", [
+    const finding = input.findingId
+      ? (await tx.unsafe("select id from fib.findings where id=$1", [
         input.findingId,
-      ])
-    )[0];
-    if (!finding) throw Error("source_missing");
+      ]))[0]
+      : null;
+    if (input.findingId && !finding) throw Error("source_missing");
+    if (
+      input.agendaId &&
+      !(await tx.unsafe(
+        "select id from fib.ris_agenda_items where id=$1 for update",
+        [input.agendaId],
+      )).length
+    ) throw Error("source_missing");
     const old = (
       await tx.unsafe(
-        "select e.title,ef.finding_id,ef.justification from fib.events e left join fib.event_findings ef on ef.event_id=e.id and ef.finding_id=$2 where e.id=$1",
-        [input.requestId, finding.id],
+        "select e.title,e.summary,e.occurred_at,ef.finding_id,ef.justification from fib.events e left join fib.event_findings ef on ef.event_id=e.id and ef.finding_id=$2 where e.id=$1",
+        [input.requestId, finding?.id ?? null],
       )
     )[0];
     if (old) {
       if (
         old.title !== title ||
-        old.finding_id !== finding.id ||
+        old.summary !== summary ||
+        (old.occurred_at ? new Date(old.occurred_at).toISOString() : null) !==
+          (occurredAt ? new Date(occurredAt).toISOString() : null) ||
+        old.finding_id !== (finding?.id ?? null) ||
         old.justification !== rationale
-      )
+      ) {
         throw Error("request_conflict");
+      }
+      if (
+        input.agendaId &&
+        !(await tx.unsafe(
+          "select event_id from fib.ris_agenda_events where agenda_id=$1 and event_id=$2 and role='local_reference'",
+          [input.agendaId, input.requestId],
+        )).length
+      ) throw Error("request_conflict");
       return { eventId: input.requestId, reused: true };
     }
     await tx.unsafe(
-      "insert into fib.events(id,title,status,confirmed_at) values($1,$2,'confirmed',now())",
-      [input.requestId, title],
+      "insert into fib.events(id,title,status,summary,occurred_at,confirmed_at) values($1,$2,'confirmed',$3,$4,now())",
+      [input.requestId, title, summary, occurredAt],
     );
-    await tx.unsafe(
-      "insert into fib.event_findings(event_id,finding_id,evidence_role,justification) values($1,$2,'source',$3)",
-      [input.requestId, finding.id, rationale],
-    );
+    if (finding) {
+      await tx.unsafe(
+        "insert into fib.event_findings(event_id,finding_id,evidence_role,justification) values($1,$2,'source',$3)",
+        [input.requestId, finding.id, rationale],
+      );
+    }
+    if (input.agendaId) {
+      await tx.unsafe(
+        "insert into fib.ris_agenda_events(agenda_id,event_id,role,reviewed_by) values($1,$2,'local_reference',$3)",
+        [input.agendaId, input.requestId, actor.userId],
+      );
+    }
     await tx.unsafe(
       "insert into fib.lead_responsibilities(object_type,object_id,user_id) values('event',$1,$2)",
       [input.requestId, actor.userId],

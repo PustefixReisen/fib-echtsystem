@@ -82,6 +82,7 @@ const source = edgeDatasetSupport +
     "\n" +
     readFileSync("supabase/functions/fib-u4-ris-pilot/index.ts", "utf8")
   )
+    .replace(/^import .*ris-originals.*;\s*/m, "")
     .replace(/^import .*ris-calendar.*;\s*/m, "")
     .replace(/^import .*development-datasets.*;\s*/m, "")
     .replace(
@@ -267,6 +268,9 @@ async function main() {
     readFileSync("supabase/functions/_shared/reviewed-observation.ts", "utf8").replace(/\bexport /g, "") + "\n" +
     readFileSync("supabase/functions/_shared/source-editorial.ts", "utf8").replace(/^import[^\n]+$/gm, "").replace(/\bexport /g, "") + "\n" +
     readFileSync("supabase/functions/fib-editorial-write/index.ts", "utf8")
+      .replace(/^import .*ris-originals.*;\s*/m, "")
+      .replace(/^import .*ris-structure.*;\s*/m, "")
+      .replace(/^import .*npm:unpdf.*;\s*/m, "")
       .replace(/^import .*source-editorial.*;\s*/m, "")
       .replace(/^import .*ris-editorial.*;\s*/m, "")
       .replace(

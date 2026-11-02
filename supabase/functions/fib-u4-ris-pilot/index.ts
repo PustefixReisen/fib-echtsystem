@@ -1,3 +1,4 @@
+import {originalStore,fetchRisOriginal} from '../_shared/ris-originals.ts';
 import {withDevelopmentDataset} from '../_shared/development-datasets.ts';
 import {calendarMonth,calendarSessions} from '../_shared/ris-calendar.ts';
 import postgres from 'npm:postgres@3.4.7';
@@ -31,16 +32,9 @@ function extract(html:string,url:string){
  return {docs:[...docs],navigation:[...navigation],structureLinks:[...structureLinks],releaseSince:releaseSince(html)};
 }
 async function pdfHash(url:string,withText=false){
- const u=valid(url);if(!u||new URL(u).pathname.toLowerCase()!=='/getfile.asp')throw new Error('invalid_pdf_url');
- const resp=await fetch(u,{redirect:'error',signal:AbortSignal.timeout(20000),headers:{accept:'application/pdf','user-agent':'FIB-U4-RIS-Pilot/0.2'}});
- if(!resp.ok)throw new Error('PDF HTTP '+resp.status);
- const length=Number(resp.headers.get('content-length')??'0');if(length>25000000)throw new Error('pdf_too_large');
- const data=new Uint8Array(await resp.arrayBuffer());if(data.length>25000000)throw new Error('pdf_too_large');
- if(data.length<5||new TextDecoder().decode(data.subarray(0,5))!=='%PDF-')throw new Error('invalid_pdf_response');
- const hash=await crypto.subtle.digest('SHA-256',data);
- const fingerprint=[...new Uint8Array(hash)].map(x=>x.toString(16).padStart(2,'0')).join('');
- const text=withText?(await extractText(data,{mergePages:true})).text:null;
- return {hash:fingerprint,text};
+ const {bytes,hash}=await fetchRisOriginal(url);
+ const text=withText?(await extractText(bytes.slice(),{mergePages:true})).text:null;
+ return {hash,text,bytes};
 }
 async function page(url:string){
  const resp=await fetch(url,{redirect:'error',signal:AbortSignal.timeout(15000),headers:{accept:'text/html','user-agent':'FIB-U4-RIS-Pilot/0.1'}});
@@ -262,7 +256,7 @@ export async function handleRis(req:Request,mode:'interactive'|'scheduler'='inte
   const stored={...current,cadenceStates,...(structureEnabled?{structureState:{queue:structureQueue,visited:[...structureVisited],sessions:[...sessionUrls],historyNext:structureHistoryNext,historyDone:structureHistoryDone}}:structureState?{structureState}:{})};
   const newly=current.documents.filter(x=>!previousDocuments.includes(x));
   if(payload.commit!==true)return reply({mode:'dry_run',processed,documents:current.documents.length,newCount:newly.length,pending:pending.length,complete,failures:failures.length,cycleRestart,firstFailure:failures[0]?.error??null,releaseViews:current.releaseViews,...coverageResult,cadenceStates,dueChecks:dueStatus(cadenceStates)});
-  const pdfs:{url:string;hash:string;text:string|null}[]=[];
+  const pdfs:{url:string;hash:string;text:string|null;bytes:Uint8Array}[]=[];
   const target=current.documents.length;
   const budget=backfill?Math.min(6,Math.max(0,target-current.pdfOffset)):Math.min(6,target);
   for(let i=0;i<budget;i++){
@@ -283,7 +277,7 @@ export async function handleRis(req:Request,mode:'interactive'|'scheduler'='inte
    const latest=await tx.unsafe('select cursor_state from fib.ris_scan_cursors where scope_id=$1::uuid',[scopeId]);
    if((latest.length?JSON.stringify(latest[0].cursor_state):null)!==previousSerialized)throw new Error('cursor_changed_retry');
    for(const snapshot of snapshots)await persistRisStructure(tx,snapshot);
-   for(const pdf of pdfs)if(structureEnabled)await persistRisDocument(tx,pdf.url,pdf.hash,pdf.text,'unpdf-2.1.0',stamp);
+   for(const pdf of pdfs)if(structureEnabled)await persistRisDocument(tx,pdf.url,pdf.hash,pdf.text,'unpdf-2.1.0',stamp,{bytes:pdf.bytes,store:{put:async(key,bytes)=>originalStore(Deno.env.get('SUPABASE_URL') ?? '',Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? '').put(key,bytes)}});
    for(const u of newly){
     const id='ris:'+u;
     await tx.unsafe('insert into fib.source_observations(scope_id,external_id,canonical_url,content_fingerprint,first_seen_at,last_seen_at,revision) values ($1::uuid,$2,$3,$4,$5,$5,1) on conflict(scope_id,external_id) do update set last_seen_at=excluded.last_seen_at',[scopeId,id,u,id,stamp]);

@@ -1,3 +1,6 @@
+import {persistRisDocument} from '../_shared/ris-structure.ts';
+import {extractText} from 'npm:unpdf@2.1.0';
+import {originalStore,readOriginal,fetchRisOriginal} from '../_shared/ris-originals.ts';
 import {sourceReadiness} from '../_shared/source-readiness.ts';
 import {withDevelopmentDataset} from '../_shared/development-datasets.ts';
 import {sourceEditorial} from '../_shared/source-editorial.ts';
@@ -97,6 +100,25 @@ export default {
       );
       if (membership.length === 0) return json({ error: 'fib_membership_missing_or_inactive' }, 403);
 
+      if (!['admin','editor'].includes(membership[0].role) && body.action !== 'source_readiness') return json({error:'editor_required'},403);
+      if (body.action === 'source_capture_pdf') {
+        const store = originalStore(Deno.env.get('SUPABASE_URL') ?? '',Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? '');
+        await sql.begin(tx=>withDevelopmentDataset(tx,body,async()=>{
+          const [v]=await tx.unsafe('select v.*,d.source_url from fib.ris_document_versions v join fib.ris_documents d on d.id=v.document_id where v.id=$1 for update of d,v',[body.versionId]);
+          if(!v || !['municipality','licensed'].includes(v.content_author) || !v.rights_evidence)throw Error('ris_pdf_not_permitted_or_missing');
+          if(v.pdf_storage_key)return;
+          const original=await fetchRisOriginal(v.source_url);
+          if(original.hash!==v.content_hash)throw Error('stale_ris_review');
+          const text=(await extractText(original.bytes.slice(),{mergePages:true})).text;
+          await persistRisDocument(tx,v.source_url,original.hash,text,'unpdf-2.1.0',new Date().toISOString(),{bytes:original.bytes,store});
+        }));
+        return json({ok:true});
+      }
+      if (body.action === 'source_pdf') {
+        const store = originalStore(Deno.env.get('SUPABASE_URL') ?? '',Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? '');
+        const bytes = await sql.begin(tx => readOriginal(tx,body.versionId,store));
+        return new Response(bytes as BodyInit,{headers:{...corsHeaders,'content-type':'application/pdf','content-disposition':'inline; filename="fib-original.pdf"','cache-control':'private, no-store','x-content-type-options':'nosniff'}});
+      }
       if(body.action==='source_readiness'){
         if(membership[0].role!=='admin')return json({error:'admin_required'},403);
         return json({ok:true,...await sourceReadiness(sql,Deno.env.get('FIB_RIS_STRUCTURE_ENABLED')==='true')});
@@ -105,7 +127,7 @@ export default {
         if(body.action==='ris_review_document'&&typeof body.versionId!=='string')return json({error:'invalid_review'},409);
         if(['ris_suggest','ris_propose_relation','source_propose_relation'].includes(body.action!)&&body.origin!=='editor')return json({error:'trusted_ai_ingestion_required'},403);
         const service=body.action==='ris_sessions'||body.action?.startsWith('source_')?sourceEditorial:risEditorial;
-        const result=await sql.begin(tx=>withDevelopmentDataset(tx,body,()=>service(tx,{userId,kind:'human',aal:'aal2'},body)));
+        const result=await sql.begin(tx=>withDevelopmentDataset(tx,body,()=>body.action==='ris_revoke_storage_rights' ? risEditorial(tx,{userId,kind:'human',aal:'aal2'},body,originalStore(Deno.env.get('SUPABASE_URL') ?? '',Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? '')) : service(tx,{userId,kind:'human',aal:'aal2'},body)));
         return json({ok:true,...result});
       }
 
@@ -194,7 +216,7 @@ export default {
         if (typeof findingId !== 'string' || !/^[0-9a-f-]{36}$/i.test(findingId) ||
             (body.restorePrevious !== undefined && typeof body.restorePrevious !== 'boolean'))
           return json({ error: 'invalid_finding_id' }, 400);
-        if (typeof justification !== 'string' || !justification.trim() || justification.length > 2000)
+        if (justification != null && (typeof justification !== 'string' || justification.length > 2000))
           return json({error:'justification_required'},400);
         const restored = await sql.begin(tx => withDevelopmentDataset(tx,body,async () => {
           const inserted = await tx.unsafe(
@@ -205,7 +227,7 @@ export default {
                 (select 1 from fib.events e where e.id=$1::uuid and e.status='confirmed')
              on conflict (event_id, finding_id) do nothing
              returning finding_id, justification`,
-            [eventId, findingId, justification.trim()],
+            [eventId, findingId, justification?.trim() || null],
           );
           if (!inserted.length) return null;
           if (inserted[0].justification) {
@@ -220,7 +242,10 @@ export default {
           );
           return inserted[0];
         }));
-        if (!restored) return json({ error: 'finding_missing_or_already_linked' }, 409);
+        if (!restored) {
+          const existing=await sql.unsafe('select event_id from fib.event_findings where event_id=$1 and finding_id=$2',[eventId,findingId]);
+          return existing.length ? json({ok:true,reused:true}) : json({ error: 'finding_missing_or_already_linked' }, 409);
+        }
         return json({ ok: true, justificationSaved: true });
       }
 
@@ -259,7 +284,7 @@ export default {
       if(risAction){
         if(body.action==='ris_review_document'&&typeof body.versionId!=='string')return json({error:'invalid_review'},409);
         const known=error instanceof Error?error.message:'';
-        const codes=['ambiguous_development_dataset','dataset_snapshot_limit','stale_review','stale_ris_review','ambiguous_existing_findings','existing_significance_conflict','existing_event_role_conflict','missing_exact_evidence','ris_review_already_final','ris_object_missing','source_missing','invalid_source_input','invalid_review','request_conflict','source_origin_mismatch','scope_source_mismatch'];
+        const codes=['ris_pdf_not_permitted_or_missing','ris_stored_pdf_unavailable','ris_pdf_integrity_failed','ris_storage_not_configured','invalid_ris_input','editor_required','ambiguous_ris_source','ambiguous_development_dataset','dataset_snapshot_limit','stale_review','stale_ris_review','ambiguous_existing_findings','existing_significance_conflict','existing_event_role_conflict','missing_exact_evidence','ris_review_already_final','ris_object_missing','source_missing','invalid_source_input','invalid_review','request_conflict','source_origin_mismatch','scope_source_mismatch'];
         if(codes.includes(known))return json({error:known},409);
       }
       console.error('fib-editorial-write failed', error);

@@ -61,6 +61,8 @@ try {
         )
       ).rows[0].n,
     );
+  const risOriginals = tables.some(t=>t.tablename==='ris_document_versions') ? (await db.query(`select id,document_id,content_hash,to_jsonb(v)->>'pdf_storage_key' storage_key,(to_jsonb(v)->>'pdf_size')::bigint size,to_jsonb(v)->>'content_author' content_author from fib.ris_document_versions v where to_jsonb(v)->>'pdf_storage_key' is not null order by id`)).rows : [];
+  if(risOriginals.some(v=>!['municipality','licensed'].includes(v.content_author)))throw Error('Unlicensed original in snapshot; resolve storage rights before backup');
   const env = dumpEnvironment(connection);
   const dump = join(root, "fib.dump"),
     fd = openSync(dump, "wx", 0o600);
@@ -80,6 +82,8 @@ try {
   });
   const sha = (p) => createHash("sha256").update(readFileSync(p)).digest("hex");
   const manifest = {
+    format: 2,
+    risOriginals,
     schema: "fib",
     project: local ? "isolated-test" : "apaubomxffcwtzjimori",
     createdAt: new Date().toISOString(),

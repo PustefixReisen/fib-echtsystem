@@ -7,6 +7,10 @@ if (!root) throw Error("Privater Zustandsordner fehlt.");
 const minutes = JSON.parse(
   readFileSync("tests/u4/fixtures/ris-1031-provenance.json", "utf8"),
 );
+const permissionPath = process.env.FIB_RIS_RIGHTS_MANIFEST;
+if (!permissionPath) throw Error("Privater dokumentbezogener Nachweis FIB_RIS_RIGHTS_MANIFEST erforderlich; RIS-Veröffentlichung ist keine Speicherberechtigung.");
+const permissions = JSON.parse(readFileSync(permissionPath,"utf8"));
+if (!Array.isArray(permissions) || permissions.some(p=>!['municipality','licensed'].includes(p.contentAuthor)||typeof p.evidence!=='string'||!p.evidence.trim()||!/^[a-f0-9]{64}$/.test(p.sha256))) throw Error("Ungültiger Speicherberechtigungsnachweis");
 const manifest = [];
 for (const id of ["75714", "75790", "75785", "74647", "75243", "75379"]) {
   const url =
@@ -27,6 +31,7 @@ for (const id of ["75714", "75790", "75785", "74647", "75243", "75379"]) {
     throw Error(
       "Niederschrift 75785 hat sich seit der Referenz geändert. Quellenstand vor fachlicher Abnahme klären; kein stiller Ersatz.",
     );
+  if (!permissions.some(p=>p.url===url && p.sha256===sha256)) throw Error("Keine Speicherberechtigung für konkrete Original-PDF-Fassung " + id);
   writeFileSync(join(root, id + ".pdf"), bytes, { mode: 0o600 });
   manifest.push({
     id,
