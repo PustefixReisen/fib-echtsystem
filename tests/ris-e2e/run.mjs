@@ -72,9 +72,12 @@ async function openSession(reference, top) {
     .filter({ hasText: reference })
     .getByRole("button", { name: "Sitzung öffnen", exact: true })
     .click();
-  await page
+  if (top) {
+    const agendaNumber = String(top).match(/\\d+(?:\\.\\d+)?$/)?.[0] ?? String(top);
+    await page.getByRole("button", { name: new RegExp("^TOP " + agendaNumber.replace(/[.*+?^$\{\}()|[\]\\]/g, "\\  await page
     .getByLabel("Tagesordnungspunkt", { exact: true })
-    .selectOption(top ?? "");
+    .selectOption(top ?? "");") + " ·") }).click();
+  }
 }
 async function rationale(
   text = "Originalbeleg geprüft; ausdrückliche redaktionelle Testentscheidung.",
