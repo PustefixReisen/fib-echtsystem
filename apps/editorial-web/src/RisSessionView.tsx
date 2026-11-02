@@ -22,7 +22,7 @@ function ExternalLink({ url, children }: { url?: string | null; children: string
 
 /** RIS is an official read-only source. Only editorial event associations belong to FIB. */
 export function RisSessionView({ data, busy, onOpenEvent, onOpenDocument, onReload }: Props) {
-  const [showEventDialog, setShowEventDialog] = useState(false);
+  const [showEventSearch, setShowEventSearch] = useState(false);
   const [eventSearch, setEventSearch] = useState("");
   const [eventOptions, setEventOptions] = useState<Row[]>([]);
   const [chosenEvent, setChosenEvent] = useState("");
@@ -44,7 +44,7 @@ export function RisSessionView({ data, busy, onOpenEvent, onOpenDocument, onRelo
     try {
       await withEventLock(chosenEvent, () => sourceApi({action: "ris_link_event", agendaId: selectedTopId, eventId: chosenEvent, role: eventRole, rationale: reason.trim()}));
       await onReload();
-      setShowEventDialog(false);
+      setShowEventSearch(false);
       setReason("");
     } catch (error) { setEventError(error instanceof Error ? error.message : "Zuordnung fehlgeschlagen."); }
     finally { setEventBusy(false); }
@@ -87,6 +87,36 @@ export function RisSessionView({ data, busy, onOpenEvent, onOpenDocument, onRelo
   );
   const selectTop = (id: string) => setSelectedTopId(id);
 
+  if (showEventSearch && selected) return <div className="ris-simplified">
+    <nav aria-label="Pfadnavigation">Sitzung · {displayDate(session.session_date)} / TOP {selected.number} / Lokalen Bezug hinzufügen</nav>
+    <section className="panel">
+      <h1>Lokalen Bezug hinzufügen</h1>
+      <p>TOP {selected.number} · {selected.title}</p>
+      <form onSubmit={(event) => { event.preventDefault(); void searchEvents(); }}>
+        <label htmlFor="ris-event-search">Vorhandenes Ereignis suchen</label>
+        <div style={{ display: "flex", gap: "0.75rem" }}>
+          <input id="ris-event-search" type="search" value={eventSearch} onChange={(event) => setEventSearch(event.target.value)} />
+          <button type="submit" disabled={eventBusy}>Suchen</button>
+        </div>
+      </form>
+      <h2>Suchergebnisse</h2>
+      <div role="radiogroup" aria-label="Ereignis auswählen">
+        {eventOptions.map((item) => <label key={item.id} className="source-block" style={{ display: "block" }}>
+          <input type="radio" name="ris-event-selection" checked={chosenEvent === item.id} onChange={() => setChosenEvent(item.id)} />
+          {" "}{item.title || "Ereignis"}{item.event_date ? ` · ${displayDate(item.event_date)}` : ""}
+        </label>)}
+      </div>
+      {eventOptions.length === 0 && <p>Keine Ereignisse in der Ergebnisliste.</p>}
+      <p>Die technische Zuordnung verlangt derzeit eine Begründung. Diese Pflicht wird mit der Backend-Anpassung aus Issue #377 entfernt.</p>
+      <label htmlFor="ris-event-rationale">Begründung (vorübergehend erforderlich)</label>
+      <textarea id="ris-event-rationale" value={reason} onChange={(event) => setReason(event.target.value)} />
+      {eventError && <p role="alert">{eventError}</p>}
+      <div className="source-actions">
+        <button type="button" disabled={eventBusy || !chosenEvent || !reason.trim()} onClick={() => void linkEvent()}>Zuordnen</button>
+        <button type="button" onClick={() => setShowEventSearch(false)}>Abbrechen</button>
+      </div>
+    </section>
+  </div>;
   return <div className="ris-simplified">
     {!selected ? (
       <>
@@ -158,19 +188,7 @@ export function RisSessionView({ data, busy, onOpenEvent, onOpenDocument, onRelo
           {events.length === 0 && <p>Noch kein Ereignis zugeordnet.</p>}
           {suggestions.length > 0 && <p>{suggestions.length} redaktionelle Vorschläge vorhanden; deren Bearbeitung erfolgt in der Redaktion.</p>}
           <p>Verknüpfte Meldungen, Vorgänge und Themen werden über das Ereignis geöffnet.</p>
-          <button type="button" disabled={busy} onClick={() => { setShowEventDialog(true); void searchEvents(); }}>Ereignis zuordnen</button>
-          {showEventDialog && <div role="dialog" aria-modal="true" aria-label="Ereignis zuordnen" className="panel">
-            <h3>Ereignis zuordnen</h3>
-            <label>Ereignis suchen <input type="search" value={eventSearch} onChange={(e) => setEventSearch(e.target.value)} /></label>
-            <button type="button" disabled={eventBusy} onClick={() => void searchEvents()}>Suchen</button>
-            <label>Ereignis <select value={chosenEvent} onChange={(e) => setChosenEvent(e.target.value)}><option value="">Bitte auswählen</option>{eventOptions.map((item) => <option key={item.id} value={item.id}>{item.title}</option>)}</select></label>
-            <label>Zusammenhang <select value={eventRole} onChange={(e) => setEventRole(e.target.value)}><option value="proposal_publication">Veröffentlichung der Vorlage</option><option value="treatment">Behandlung des TOP</option><option value="decision">Beschlussfassung</option><option value="minutes_publication">Veröffentlichung der Niederschrift</option></select></label>
-            <label>Begründung <textarea value={reason} onChange={(e) => setReason(e.target.value)} /></label>
-            <p>Die Fundstelle muss bereits mit dem Ereignis verbunden sein und der Dokumentbezug bestätigt sein.</p>
-            {eventError && <p role="alert">{eventError}</p>}
-            <button type="button" disabled={eventBusy || !chosenEvent || !reason.trim()} onClick={() => void linkEvent()}>Zuordnung speichern</button>
-            <button type="button" onClick={() => setShowEventDialog(false)}>Abbrechen</button>
-          </div>}
+          <button type="button" disabled={busy} onClick={() => { setShowEventSearch(true); void searchEvents(); }}>Neu: Lokaler Bezug</button>
         </section>
       </>
     )}
