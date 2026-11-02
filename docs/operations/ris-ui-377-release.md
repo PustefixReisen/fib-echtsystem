@@ -1,6 +1,6 @@
 # RIS-Redaktion #377 – technischer Abschluss und Bereitstellung
 
-Stand: 02.11.2026. Führender Betriebsablauf bleibt
+Stand: 03.11.2026 (Europe/Berlin), Auftrag vom 02.11.2026. Führender Betriebsablauf bleibt
 [u4-shared-apps-release-plan.md](u4-shared-apps-release-plan.md).
 Diese Ergänzung beschreibt ausschließlich das Paket aus PR #378.
 
@@ -98,8 +98,10 @@ Bucket-Löschung oder Übernahme fremder Stammdaten.
 
 ## Technische Nachweise und Grenzen
 
-Die tatsächlichen Ergebnisse und CI-Referenzen werden im Abschlussbericht zu PR #378
-festgehalten. Die Prüfarten bleiben getrennt:
+Implementierungsstand `011bfc86d783e39e6e3acb70c5de352da5071471`: **10/10 CI-Workflows erfolgreich**.
+Der nachfolgende Dokumentationsstand ändert keine Laufzeitfunktionen.
+Merge-Commit und Betriebsfreigabe werden am [bestehenden PR #378](https://github.com/PustefixReisen/fib-echtsystem/pull/378)
+nachgeführt; das Issue bleibt bis zur persönlichen Abnahme offen. Die Prüfarten bleiben getrennt:
 
 | Prüfumfang | Beleg / Grenze |
 |---|---|
@@ -108,7 +110,23 @@ festgehalten. Die Prüfarten bleiben getrennt:
 | Komponentenbrowser | Echte React-Komponenten in Chromium, simulierte API-/Sperrdienste; getrennte Beziehungen, neue Ereignisse, Rücknavigation, Blob-Vorschau, mobile Darstellung |
 | Gesamt-App | Isolierter echter Auth-/TOTP-Login, reale Deno-Handler und PostgreSQL; RIS- und Storage-Transport kontrolliert simuliert |
 | Shared-Apps / Hosting | Neue Migration, Bucket, Funktionen und Frontend noch nicht bereitgestellt; keine reale Storage-Prüfung behauptet |
-| Firefox / Druck / Kopieren | Nicht bestätigt. Browserdownload hier durch Netzwerkpolicy „Domain forbidden“ gesperrt; persönliche Prüfung am Zielsystem erforderlich |
+| Firefox, native PDF-Vorschau | Bestätigt im vorhandenen CI: echtes Firefox, native PDF.js-Anzeige der FIB-Bytes bei simuliertem RIS-Ausfall, Textauswahl, Zoom sowie Seiten-/Druckbedienelemente. PDF-Anzeige im Browserprofil ausdrücklich aktiviert; keine zusätzliche Viewer-Bibliothek |
+| Zwischenablage / tatsächlicher Druck / fachliche Abnahme | Betriebssystem-Zwischenablage und tatsächlicher Druckauftrag nicht bestätigt; persönliche Prüfung am Zielsystem erforderlich |
+
+Konkrete CI-Belege dieses Implementierungsstands:
+
+- [Gesamt-App in Chromium und Firefox, einschließlich n:m-Beziehungen und Originalvorschau](https://github.com/PustefixReisen/fib-echtsystem/actions/runs/41541919995)
+- [PostgreSQL 16/17, Ownership, Originalrechte, Sicherung und Restore](https://github.com/PustefixReisen/fib-echtsystem/actions/runs/41541919804)
+- [RIS-Datenbank-/Handlerintegration](https://github.com/PustefixReisen/fib-echtsystem/actions/runs/41541919932)
+- [UI-Komponenten, Navigation und mobile Aktionsleiste](https://github.com/PustefixReisen/fib-echtsystem/actions/runs/41541920091)
+- [Tatsächliche Auth-/MFA-Sicherheit](https://github.com/PustefixReisen/fib-echtsystem/actions/runs/41541920027)
+- [Lokaler Abnahmestarter mit Wiederaufnahme](https://github.com/PustefixReisen/fib-echtsystem/actions/runs/41541919783)
+- [Release-Bundle und Originalexport-Verträge](https://github.com/PustefixReisen/fib-echtsystem/actions/runs/41541919794)
+
+Zusätzlich lokal bestanden: 24 bestehende U4-Testskripte, Core-Typecheck/Fachservices,
+17 mobile UI-/Admin-Sicherheitsverträge, Frontend-Build/Assetprüfung und Deno-Typechecks.
+Die Sichtprüfung nutzte Desktop und 390 px Breite. Der Browser-Build enthält keine
+privilegierte Service-Role-Konfiguration oder vollständigen Secret-Key-Literale.
 
 Die lesend abgerufenen Sicherheitsadvisories enthalten bereits vorhandene Hinweise in
 `public` sowie zwei FIB-Funktionen mit veränderlichem Suchpfad. Keine fremden Objekte
