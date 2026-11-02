@@ -101,11 +101,11 @@ export function RisSessionView({ data, busy, onOpenEvent, onOpenDocument, onRelo
             const additionalDocs = docs.filter((d) => !prop || d.source_url !== prop.source_url);
             const hasDecision = (data.decisions ?? []).some((d: Row) => d.agenda_id === a.id);
             return <article className="source-block" key={a.id}>
-              <h3><button type="button" className="ris-text-link" onClick={() => selectTop(a.id)}>TOP {a.number} · {a.title}</button></h3>
+              <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: "0.75rem" }}><h3>TOP {a.number} · {a.title}</h3><button type="button" className="ris-navigation-icon" style={{ minWidth: 44, minHeight: 44, fontSize: "1.5rem", border: "none", background: "transparent", cursor: "pointer" }} onClick={() => selectTop(a.id)} aria-label={`TOP ${a.number} öffnen`} title={`TOP ${a.number} öffnen`}>→</button></div>
               <div className="ris-inline-links">
-                {prop && <button type="button" onClick={() => selectTop(a.id)}>Vorlage {prop.reference || ""}</button>}
-                {additionalDocs.length > 0 && <><span> · </span><button type="button" onClick={() => selectTop(a.id)}>Weitere Dokumente ({additionalDocs.length})</button></>}
-                {hasDecision && <><span> · </span><button type="button" onClick={() => selectTop(a.id)}>Beschlussfassung</button></>}
+                {prop && <span>Vorlage {prop.reference || ""}</span>}
+                {additionalDocs.length > 0 && <><span> · </span><span>Weitere Dokumente ({additionalDocs.length})</span></>}
+                {hasDecision && <><span> · </span><span>Beschlussfassung</span></>}
               </div>
             </article>;
           })}
@@ -143,7 +143,7 @@ export function RisSessionView({ data, busy, onOpenEvent, onOpenDocument, onRelo
           <ul>{distinct(topDocuments).map(documentItem)}</ul>
         </section>}
         <section className="panel">
-          <h2>Redaktionelle Zusammenhänge</h2>
+          <h2>Lokale Bezüge</h2>
           {events.map((e, i) => <p key={e.event_id ?? i}>
             <button type="button" onClick={() => onOpenEvent(e.event_id)}>Ereignis öffnen</button>
             {e.process_id && <span> · Vorgang verbunden</span>}
