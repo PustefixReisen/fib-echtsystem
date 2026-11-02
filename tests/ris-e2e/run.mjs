@@ -73,7 +73,7 @@ async function openSession(reference, top) {
     .getByRole("button", { name: "Sitzung öffnen", exact: true })
     .click();
   if (top) {
-    const agendaNumber = String(top).match(/\d+(?:\.\d+)?$/)?.[0] ?? String(top);
+    const agendaNumber = String(top);
     await page.getByRole("button", { name: new RegExp("^TOP " + agendaNumber + " ·") }).click();
   }
 }
@@ -295,7 +295,7 @@ try {
     "Entire application: password login → actual browser TOTP verification → membership gate",
   );
   phase = "1032 regular editorial workflow";
-  await openSession("GR/440/2026", top(s1032, "2"));
+  await openSession("GR/440/2026", "2");
   await page
     .getByText("Kein tatsächlicher Beschluss im geprüften Bestand belegt.", {
       exact: false,
@@ -456,7 +456,7 @@ try {
     status: "rejected",
     rationale: "Vorlage belegt keinen tatsächlichen Beschluss",
   });
-  await openSession("GR/440/2026", top(s1032, "3"));
+  await openSession("GR/440/2026", "3");
   await page.locator("strong").filter({ hasText: "5397/2026" }).waitFor();
   await page
     .getByText("Kein tatsächlicher Beschluss im geprüften Bestand belegt.", {
