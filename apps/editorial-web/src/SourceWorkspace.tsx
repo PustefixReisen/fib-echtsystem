@@ -602,9 +602,10 @@ export function SourceWorkspace({
               <p>
                 {observation
                   ? "Zuletzt geprüft"
-                  : "Stand der gespeicherten Fassung"}: {date(
+                  : document?.observed_at || versions[0]?.observed_at ? "Stand der gespeicherten Fassung" : "Erstmals erfasst"}: {date(
                     document?.observed_at ??
                       observation?.last_seen_at ??
+                      versions[0]?.observed_at ??
                       finding?.discovered_at,
                   )}
               </p>
