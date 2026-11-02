@@ -72,20 +72,20 @@ try {
   await page.locator(".work-item").filter({ hasText: "GR/440/2026" })
     .getByRole("button", { name: "Sitzung öffnen" }).click();
   await page.getByRole("heading", { name: "Tagesordnung", exact: true }).waitFor();
-  await page.getByRole("button", { name: /^TOP 2 ·/ }).click();
+  await page.getByRole("button", { name: "TOP 2 öffnen" }).click();
   await page.getByRole("heading", { name: "Beschlussvorschlag", exact: true }).waitFor();
   assert.equal(await page.getByRole("heading", { name: "Beschlussfassung", exact: true }).count(), 0);
   assert.equal(await page.getByLabel("Tagesordnungspunkt", { exact: true }).count(), 0);
   assert.equal(await page.getByRole("heading", { name: "Redaktionelle Prüfung", exact: true }).count(), 0);
-  await page.getByRole("button", { name: "Ereignis zuordnen", exact: true }).click();
-  await page.getByRole("dialog", { name: "Ereignis zuordnen" }).waitFor();
-  await page.getByRole("dialog", { name: "Ereignis zuordnen" }).getByRole("button", { name: "Abbrechen" }).click();
-  assert.equal(await page.getByRole("dialog", { name: "Ereignis zuordnen" }).count(), 0);
+  await page.getByRole("button", { name: "Neu: Lokaler Bezug", exact: true }).click();
+  await page.getByRole("heading", { name: "Lokalen Bezug hinzufügen" }).waitFor();
+  await page.getByRole("button", { name: "Abbrechen" }).click();
+  assert.equal(await page.getByRole("heading", { name: "Lokalen Bezug hinzufügen" }).count(), 0);
   await page.getByRole("button", { name: "‹ Zurück zur Tagesordnung" }).click();
-  await page.getByRole("button", { name: /^TOP 3 ·/ }).click();
+  await page.getByRole("button", { name: "TOP 3 öffnen" }).click();
   await page.getByRole("heading", { name: "Beschlussvorschlag", exact: true }).waitFor();
   assert.deepEqual(errors, []);
-  record("Real login and TOTP → RIS agenda → TOP2/TOP3 → contextual event dialog, without retired review masks");
+  record("Real login and TOTP → RIS agenda → TOP2/TOP3 → separate event search view, without retired review masks");
   assert.equal((await db.query("select count(*)::int as n from fib.messages")).rows[0].n, 0);
 } finally {
   writeFileSync("ris-e2e-results/results.json", JSON.stringify(results, null, 2));
