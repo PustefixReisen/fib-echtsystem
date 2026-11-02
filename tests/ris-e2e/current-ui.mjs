@@ -53,7 +53,7 @@ try {
   assert.ok(session);
   record("Actual scanner and isolated PostgreSQL preserve RIS structure without invented decisions");
 
-  browser = await (process.env.FIB_TEST_BROWSER === "firefox" ? firefox : chromium).launch(process.env.FIB_CHROMIUM_PATH?{executablePath:process.env.FIB_CHROMIUM_PATH,args:["--no-sandbox"]}:{});
+  browser = process.env.FIB_TEST_BROWSER === "firefox" ? await firefox.launch({firefoxUserPrefs:{"pdfjs.disabled":false,"browser.download.open_pdf_attachments_inline":true}}) : await chromium.launch(process.env.FIB_CHROMIUM_PATH?{executablePath:process.env.FIB_CHROMIUM_PATH,args:["--no-sandbox"]}:{});
   const page = await browser.newPage({ viewport: { width: 1440, height: 1050 } });
   page.setDefaultTimeout(15000);
   const errors = [];
@@ -103,14 +103,19 @@ try {
   assert.ok((await page.locator('iframe').getAttribute('src')).startsWith('blob:'));
   if(process.env.FIB_TEST_BROWSER==='firefox'){
     const pdf=page.frameLocator('iframe[title="Gespeichertes Original-PDF"]');
-    await pdf.locator('.textLayer span').first().waitFor({timeout:20000});
+    try { await pdf.locator('.textLayer span').first().waitFor({timeout:20000}); }
+    catch(error){
+      console.error('Firefox PDF frames',JSON.stringify(page.frames().map(f=>({url:f.url(),name:f.name()}))));
+      console.error('Firefox PDF body',await pdf.locator('body').evaluate(body=>body.outerHTML.slice(0,2000)).catch(()=>'(unavailable)'));
+      throw error;
+    }
     const selection=await pdf.locator('.textLayer').first().evaluate(layer=>{
       const range=layer.ownerDocument.createRange();range.selectNodeContents(layer);
       const selected=layer.ownerDocument.getSelection();selected.removeAllRanges();selected.addRange(range);return selected.toString();
     });
     assert.match(selection,/Synthetisch/);
-    for(const id of ['zoomIn','zoomOut','print','next','previous'])assert.equal(await pdf.locator('#'+id).count(),1);
-    await pdf.locator('#zoomIn').click();
+    for(const id of ['zoomIn','zoomOut','print','next','previous'])assert.equal(await pdf.locator('#'+id+',#'+id+'Button').count(),1,'Firefox viewer control: '+id);
+    await pdf.locator('#zoomIn,#zoomInButton').click();
     record('Firefox native PDF.js renders stored FIB bytes with RIS offline, selectable text, zoom and page/print controls; OS clipboard/print and personal acceptance remain separate');
   }
 
