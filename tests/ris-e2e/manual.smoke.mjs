@@ -122,20 +122,13 @@ try {
     .filter({ hasText: "GR/439/2026" })
     .getByRole("button", { name: "Sitzung öffnen" })
     .click();
-  const top6 = await page
-    .getByLabel("Tagesordnungspunkt", { exact: true })
-    .locator("option")
-    .filter({ hasText: /^TOP 6\b/ })
-    .getAttribute("value");
-  await page
-    .getByLabel("Tagesordnungspunkt", { exact: true })
-    .selectOption(top6);
+  await page.getByRole("button", { name: /^TOP 6 ·/ }).click();
   assert.equal(
     await page
       .locator("section")
       .filter({
         has: page.getByRole("heading", {
-          name: "Tatsächliche Beschlüsse",
+          name: "Beschlussfassung",
           exact: true,
         }),
       })
