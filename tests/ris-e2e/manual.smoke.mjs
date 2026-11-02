@@ -138,6 +138,8 @@ try {
   );
   await findings(page);
   await page
+    .locator(".work-item")
+    .filter({ hasText: "Übernahme offen / neue Fassung" })
     .getByRole("button", { name: "Fundstelle öffnen", exact: true })
     .first()
     .click();
