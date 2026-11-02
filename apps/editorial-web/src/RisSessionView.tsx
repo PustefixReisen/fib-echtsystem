@@ -62,9 +62,16 @@ export function RisSessionView({ data, busy, onOpenEvent, onOpenDocument, onRelo
   const suggestions: Row[] = selected ? (data.suggestions ?? []).filter((s: Row) => s.agenda_id === selected.id) : [];
   const minutes = topDocuments.filter((d) => d.kind === "minutes");
   const distinct = (rows: Row[]) => [...new Map(rows.map((d) => [d.id ?? d.source_url, d])).values()];
+  const documentTitle = (d: Row) => {
+    const kind = d.kind === "minutes" ? "Niederschrift" : d.kind === "attachment" ? "Anlage" : d.kind === "proposal" ? "Beschlussvorlage" : "RIS-Dokument";
+    const original = String(d.title ?? "").trim();
+    const date = displayDate(session.session_date);
+    const reference = String(d.reference ?? "").trim();
+    return [kind, date, reference, original].filter(Boolean).join(" · ");
+  };
   const documentItem = (d: Row) => (
     <li key={d.id ?? d.source_url}>
-      <span>{d.title || (d.kind === "minutes" ? "Niederschrift" : d.kind === "attachment" ? "Anlage" : "Dokument")}</span>
+      <span>{documentTitle(d)}</span>
       {" · "}
       {d.content_author === "municipality" && d.extracted_text ? (
         <details>
