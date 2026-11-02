@@ -1,5 +1,5 @@
 import assert from "node:assert/strict";
-import { chromium } from "playwright";
+import { chromium, firefox } from "playwright";
 import pg from "pg";
 import { readFileSync, writeFileSync, mkdirSync } from "node:fs";
 import { auth, totp } from "./common.mjs";
@@ -53,7 +53,7 @@ try {
   assert.ok(session);
   record("Actual scanner and isolated PostgreSQL preserve RIS structure without invented decisions");
 
-  browser = await chromium.launch(process.env.FIB_CHROMIUM_PATH?{executablePath:process.env.FIB_CHROMIUM_PATH,args:["--no-sandbox"]}:{});
+  browser = await (process.env.FIB_TEST_BROWSER === "firefox" ? firefox : chromium).launch(process.env.FIB_CHROMIUM_PATH?{executablePath:process.env.FIB_CHROMIUM_PATH,args:["--no-sandbox"]}:{});
   const page = await browser.newPage({ viewport: { width: 1440, height: 1050 } });
   page.setDefaultTimeout(15000);
   const errors = [];
@@ -101,6 +101,19 @@ try {
   await page.getByRole("button",{name:"PDF-Vorschau öffnen",exact:true}).click();
   await page.locator('iframe[title="Gespeichertes Original-PDF"]').waitFor();
   assert.ok((await page.locator('iframe').getAttribute('src')).startsWith('blob:'));
+  if(process.env.FIB_TEST_BROWSER==='firefox'){
+    const pdf=page.frameLocator('iframe[title="Gespeichertes Original-PDF"]');
+    await pdf.locator('.textLayer span').first().waitFor({timeout:20000});
+    const selection=await pdf.locator('.textLayer').first().evaluate(layer=>{
+      const range=layer.ownerDocument.createRange();range.selectNodeContents(layer);
+      const selected=layer.ownerDocument.getSelection();selected.removeAllRanges();selected.addRange(range);return selected.toString();
+    });
+    assert.match(selection,/Synthetisch/);
+    for(const id of ['zoomIn','zoomOut','print','next','previous'])assert.equal(await pdf.locator('#'+id).count(),1);
+    await pdf.locator('#zoomIn').click();
+    record('Firefox native PDF.js renders stored FIB bytes with RIS offline, selectable text, zoom and page/print controls; OS clipboard/print and personal acceptance remain separate');
+  }
+
   await page.getByRole("button",{name:"Schließen",exact:true}).click();
   await page.getByRole("button",{name:"Neu: Ereignisbezug",exact:true}).click();
   await page.getByRole("radio",{name:/Isolierter lokaler Bezug außerhalb der Sitzung/}).check();await page.getByRole("button",{name:"Zuordnen",exact:true}).click();
