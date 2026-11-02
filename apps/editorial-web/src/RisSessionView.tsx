@@ -146,16 +146,15 @@ export function RisSessionView({ data, busy, onOpenEvent, onOpenDocument, onRelo
           </article>)}
         </section>}
         {topDocuments.length > 0 && <section className="panel">
-          <h2>Dokumente und Niederschrift</h2>
+          <h2>{topDocuments.some((d) => d.kind === "minutes") ? "Dokumente und Niederschrift" : "Dokumente"}</h2>
           <ul>{distinct(topDocuments).map(documentItem)}</ul>
         </section>}
         <section className="panel">
           <h2>Lokale Bezüge</h2>
-          {events.map((e, i) => <p key={e.event_id ?? i}>
-            <button type="button" onClick={() => onOpenEvent(e.event_id)}>Ereignis öffnen</button>
-            {e.process_id && <span> · Vorgang verbunden</span>}
-            {e.topic_id && <span> · Thema verbunden</span>}
-          </p>)}
+          {events.map((e, i) => <div className="source-block" key={e.event_id ?? i} style={{ display: "flex", alignItems: "center", gap: "0.75rem", justifyContent: "space-between" }}>
+            <span>{e.event_title || e.title || `Ereignis ${i + 1}`}{e.event_date ? ` · ${displayDate(e.event_date)}` : ""}</span>
+            <button type="button" onClick={() => onOpenEvent(e.event_id)} aria-label="Ereignis öffnen" title="Ereignis öffnen" style={{ minWidth: 44, minHeight: 44, border: "none", background: "transparent", fontSize: "1.5rem", cursor: "pointer" }}>→</button>
+          </div>)}
           {events.length === 0 && <p>Noch kein Ereignis zugeordnet.</p>}
           {suggestions.length > 0 && <p>{suggestions.length} redaktionelle Vorschläge vorhanden; deren Bearbeitung erfolgt in der Redaktion.</p>}
           <p>Verknüpfte Meldungen, Vorgänge und Themen werden über das Ereignis geöffnet.</p>
