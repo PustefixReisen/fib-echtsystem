@@ -543,13 +543,7 @@ export function SourceWorkspace({
                     {date(s.session_date)}
                   </p>
                 </div>
-                <button
-                  disabled={busy}
-                  onClick={() =>
-                    void openSession(s.id)}
-                >
-                  Sitzung öffnen
-                </button>
+                <ActionIcon label="Sitzung öffnen" disabled={busy} onClick={()=>void openSession(s.id)}>→</ActionIcon>
               </div>
             ))
             : items.map((x: Row) => (
@@ -562,12 +556,7 @@ export function SourceWorkspace({
                       : "Übernahme offen / neue Fassung"}
                   </p>
                 </div>
-                <button
-                  disabled={busy}
-                  onClick={() => void openFinding(x.input)}
-                >
-                  Fundstelle öffnen
-                </button>
+                <ActionIcon label="Fundstelle öffnen" disabled={busy} onClick={()=>void openFinding(x.input)}>→</ActionIcon>
               </div>
             ))}
           {!busy &&
@@ -651,15 +640,7 @@ export function SourceWorkspace({
                         ▤
                       </ActionIcon>
                     )}
-                    <button
-                      disabled={busy}
-                      onClick={() => {
-                        setRightsEvidence(document.rights_evidence ?? "");
-                        setRightsEditing(true);
-                      }}
-                    >
-                      Speicherberechtigung bearbeiten
-                    </button>
+                    <ActionIcon label="Speicherberechtigung bearbeiten" disabled={busy} onClick={()=>{setRightsEvidence(document.rights_evidence ?? "");setRightsAuthor(document.content_author === "licensed" ? "licensed" : "municipality");setRightsEditing(true);}}>✎</ActionIcon>
                     {["municipality", "licensed"].includes(
                       document.content_author,
                     ) && !document.has_pdf && (
@@ -829,13 +810,7 @@ export function SourceWorkspace({
                       : label(c.status)}
                   </span>
                   <span>· {label(c.kind)}</span>
-                  <button
-                    disabled={busy}
-                    onClick={() =>
-                      void openSession(c.session_id, c.agenda_id ?? "")}
-                  >
-                    RIS-Kontext öffnen
-                  </button>
+                  <ActionIcon label="RIS-Kontext öffnen" disabled={busy} onClick={()=>void openSession(c.session_id,c.agenda_id ?? "")}>→</ActionIcon>
                 </div>
               ))}
             </Card>
