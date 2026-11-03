@@ -48,7 +48,7 @@ export async function sourceEditorial(
            select 1 from fib.event_findings ef
              join fib.ris_documents d on d.finding_id=ef.finding_id
              join fib.ris_document_links l on l.document_id=d.id
-           where ef.event_id=e.id and l.session_id=$2 and l.status='confirmed'
+           where ef.event_id=e.id and l.session_id=$2 and l.kind in ('proposal','attachment')
          ) order by e.title limit 101`,
         [query,agenda.session_id],
       )
