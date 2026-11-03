@@ -92,7 +92,7 @@ export default {
       return json({ error: 'runtime_not_configured' }, 503);
     }
 
-    let payload: { action?: unknown; eventId?: unknown; search?: unknown };
+    let payload: { action?: unknown; eventId?: unknown; search?: unknown; risSessionId?: unknown };
     try {
       payload = await req.json();
     } catch {
@@ -135,18 +135,32 @@ export default {
 
       if (findingsListing) {
         const search = typeof payload.search === 'string' ? payload.search.trim() : '';
+        const scoped = payload.risSessionId !== undefined;
+        if (scoped && (typeof payload.risSessionId !== 'string' ||
+            !/^[0-9a-f]{8}-[0-9a-f-]{27,}$/i.test(payload.risSessionId))) {
+          return json({error:'invalid_ris_session'},400);
+        }
+        // A session-context picker must never display unrelated FIB findings.
+        // The association of a document with a Sitzung is authoritative.
         const rows = await sql.unsafe(
           `select f.id, f.title, f.original_url, s.name as source_name,
                     (select j.new_justification from fib.event_finding_justification_log j
                      where j.finding_id=f.id and j.event_id=$2::uuid
                      order by j.changed_at desc, j.id desc limit 1) as previous_justification
              from fib.findings f join fib.sources s on s.id = f.source_id
-             where $1::text = '' or f.title ilike '%' || $1 || '%' or s.name ilike '%' || $1 || '%'
+             where ($1::text = '' or f.title ilike '%' || $1 || '%' or s.name ilike '%' || $1 || '%')
+               and ($3::uuid is null or exists (
+                 select 1 from fib.ris_documents d
+                 join fib.ris_document_links l on l.document_id=d.id
+                 where d.finding_id=f.id and l.session_id=$3::uuid
+               ))
              order by f.discovered_at desc nulls last, f.id desc limit 101`,
-          [search, typeof payload.eventId === 'string' && /^[0-9a-f-]{36}$/i.test(payload.eventId) ? payload.eventId : null],
+          [search, typeof payload.eventId === 'string' && /^[0-9a-f-]{36}$/i.test(payload.eventId) ? payload.eventId : null,
+           scoped ? payload.risSessionId : null],
         );
         return json({
           ok: true,
+          ...(scoped ? { scopedToRisSessionId: payload.risSessionId } : {}),
           findings: rows.slice(0, 100).map(row => ({
             findingId: row.id, findingTitle: row.title, originalUrl: row.original_url, sourceName: row.source_name, previousJustification: row.previous_justification,
           })),
