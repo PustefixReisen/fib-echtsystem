@@ -708,6 +708,11 @@ button:has(> .action-icon) { display: inline-flex; align-items: center; justify-
 .ris-document-item small, .event-search-result small { display: block; margin-top: .4rem; }
 .event-search-result { display: flex; align-items: start; gap: .75rem; }
 .event-search-result input { width: auto; flex: 0 0 auto; margin-top: .25rem; }
+.event-choice-details { display: flex; flex-direction: column; min-width: 0; gap: .18rem; line-height: 1.4; overflow-wrap: anywhere; }
+.event-choice-details strong { font-weight: 700; }
+.event-choice-details .event-choice-date { color: #53645c; font-weight: 400; font-size: .95rem; }
+.event-choice-details .event-choice-summary { color: #35453b; font-weight: 400; font-size: .95rem; margin-top: .12rem; white-space: normal; }
+
 .fib-pdf-dialog { width: min(96vw, 1400px); height: 94vh; max-width: 96vw; max-height: 96vh; padding: 1rem; border: 0; border-radius: .5rem; }
 .fib-pdf-dialog::backdrop { background: #122219b3; }
 .fib-pdf-dialog[open] { display: flex; flex-direction: column; gap: .6rem; }

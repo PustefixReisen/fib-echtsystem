@@ -93,6 +93,45 @@ async function hasCurrentSessionRisFinding(tx: RisSql, agendaId: string, eventId
   );
   return rows.length>0;
 }
+/** The TOP-related list is for independent, existing events only.
+ * Never infer that a same-day, unsubstantiated meeting/test entry is a
+ * separate local event. Date alone is not sufficient if external findings exist.
+ */
+async function isIndependentTopEvent(tx: RisSql, agendaId: string, eventId: string) {
+  const candidates = await tx.unsafe(
+    `select 1 from fib.events e
+      join fib.ris_agenda_items a on a.id=$1
+      join fib.ris_sessions s on s.id=a.session_id
+      where e.id=$2 and e.status='confirmed'
+        and e.title not ilike '[ENTWICKLUNG %'
+        and e.title not ilike 'FIB Live-Testereignis'
+        and not exists (
+          select 1 from fib.ris_session_events se where se.event_id=e.id
+        )
+        and not exists (
+          select 1 from fib.ris_agenda_events ae
+          where ae.event_id=e.id and ae.role='main_event'
+        )
+        and not exists (
+          select 1 from fib.event_findings ef
+          join fib.ris_documents d on d.finding_id=ef.finding_id
+          join fib.ris_document_links l on l.document_id=d.id
+          where ef.event_id=e.id and l.session_id=s.id
+        )
+        and (e.occurred_at::date is distinct from s.session_date
+             or exists (
+               select 1 from fib.event_findings ef
+                 join fib.findings f on f.id=ef.finding_id
+               where ef.event_id=e.id and not exists (
+                 select 1 from fib.ris_documents d where d.finding_id=f.id
+               )
+             ))
+      limit 1`,
+    [agendaId,eventId],
+  );
+  return candidates.length>0;
+}
+
 export async function risEditorial(
   tx: RisSql,
   actor: RisActor,
@@ -528,8 +567,8 @@ export async function risEditorial(
       [input.agendaId],
     );
     if (action === "ris_link_event") {
-      if (await hasCurrentSessionRisFinding(tx,input.agendaId,input.eventId))
-        throw Error("ris_related_must_be_outside_current_session");
+      if (!await isIndependentTopEvent(tx,input.agendaId,input.eventId))
+        throw Error("ris_related_must_be_independent_event");
       const previous = await tx.unsafe(
         "select role from fib.ris_agenda_events where agenda_id=$1 and event_id=$2",
         [input.agendaId, input.eventId],

@@ -75,3 +75,12 @@ test('RIS session event editor rejects out-of-session finding writes', () => {
   assert.match(findingWrite, /ris_finding_outside_current_session/);
   assert.match(findingWrite, /d\.finding_id=\$1::uuid and l\.session_id=\$2::uuid/);
 });
+
+// Event screens keep the current TOP/Sitzung context. The redundant finding
+// navigation used to jump into the global Recherche -> Fundstellen workspace.
+test('event detail does not navigate from its finding row into global source workspace', () => {
+  assert.doesNotMatch(app, /openSourceSection\('findings',source\.findingId\)/);
+  assert.match(app, /Fundstellen bearbeiten/);
+  assert.match(app, /Zuordnung bearbeiten/);
+  assert.match(app, /Zuordnung aufheben/);
+});
