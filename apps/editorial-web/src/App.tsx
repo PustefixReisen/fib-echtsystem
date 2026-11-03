@@ -1991,7 +1991,6 @@ export function App() {
                       <li key={source.findingId}>
                         <strong>{readableSourceName(source.sourceName)}</strong>
                         <span>{source.originalUrl && /^https?:\/\//i.test(source.originalUrl) ? <a href={source.originalUrl} target="_blank" rel="noopener noreferrer">{source.findingTitle}</a> : source.findingTitle}</span>
-                        <button type="button" disabled={editingEvent||sourcePickerOpen} onClick={()=>openSourceSection('findings',source.findingId)}>Fundstelle öffnen</button>
                         {editingSourceId !== source.findingId && source.justification && <p className="finding-justification">{source.justification}</p>}
                         {sourcePickerOpen && (editingSourceId === source.findingId ? (
                           <div className="stack finding-justification-editor">
