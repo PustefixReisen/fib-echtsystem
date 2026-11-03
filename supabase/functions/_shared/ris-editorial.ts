@@ -45,9 +45,6 @@ export async function linkTopRisDocuments(
   const agenda = await one(tx,
     "select id,session_id from fib.ris_agenda_items where id=$1 for update",
     [agendaId]);
-  const source = await one(tx,
-    "select id from fib.sources where active and rtrim(homepage_url,'/')=$1 order by id limit 1",
-    [RIS_ORIGIN]);
   const documents = await tx.unsafe(
     `select l.id,d.id document_id,d.latest_version_id,
         d.original_title
@@ -58,6 +55,10 @@ export async function linkTopRisDocuments(
        order by l.id for update of l,d`,
     [agenda.id,agenda.session_id],
   );
+  if (!documents.length) return {linked:0,findingIds:[]};
+  const source = await one(tx,
+    "select id from fib.sources where active and rtrim(homepage_url,'/')=$1 order by id limit 1",
+    [RIS_ORIGIN]);
   const linked: string[] = [];
   for (const document of documents) {
     const result=await risEditorial(tx,actor,{
