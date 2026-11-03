@@ -146,6 +146,29 @@ try {
   assert.equal(await page.evaluate(() => window.calls.filter(c=>c.action==="ris_link_main_event").length),0,
     "Main event creation commits the explicit role without another linking action");
   await main().getByRole("heading",{name:"Unterlagen als Fundstellen bestätigen"}).waitFor();
+  assert.equal(await page.getByText("Beschlussvorschlag als Text derzeit nicht in FIB verfügbar.").count(),0,
+    "Redundant proposal placeholder is no longer shown");
+  const documentLabel=page.locator(".ris-document-item .ris-external-reference > span").first();
+  assert.equal(await documentLabel.evaluate(el=>getComputedStyle(el).fontWeight),"700",
+    "RIS finding title is bold");
+  const boxGeometry=await main().locator(".ris-document-check").first().evaluate(label=>{
+    const check=label.querySelector('input[type="checkbox"]');
+    const caption=label.querySelector('span');
+    const bounds=label.getBoundingClientRect(),input=check.getBoundingClientRect(),text=caption.getBoundingClientRect();
+    return {labelWidth:bounds.width,checkWidth:input.width,
+      captionWidth:text.width,iconBeforeCaption:input.right<text.left,
+      textWithinLabel:text.right<=bounds.right+1,captionHeight:text.height};
+  });
+  assert.ok(boxGeometry.checkWidth<=24 && boxGeometry.captionWidth>100 &&
+    boxGeometry.iconBeforeCaption && boxGeometry.textWithinLabel &&
+    boxGeometry.captionHeight<120,
+    "Document checkbox and title remain on a readable row within the card");
+  const tabStyle=await page.getByRole("navigation",{name:"Sitzung und Tagesordnungspunkte"})
+    .getByRole("button",{name:"TOP 2"}).evaluate(el=>{
+      const st=getComputedStyle(el);return {width:parseFloat(st.borderBottomWidth),color:st.borderBottomColor};
+    });
+  assert.ok(tabStyle.width>=3,"Selected TOP uses an underline indicator");
+
   assert.equal(await main().getByRole("checkbox").count(),1);
   assert.equal(await main().getByRole("checkbox").first().isChecked(),true);
   await main().getByRole("button",{name:"Ausgewählte Fundstellen bestätigen"}).click();
