@@ -19,7 +19,7 @@ def backup(env,run=f.command):
   rc=['rclone','--config',str(conf)]
   print('Backup phase: download-private-input',flush=True)
   run(rc+['copy','fib-backup-crypt:Inputs/'+env['FIB_BACKUP_INPUT_ID'],str(bundle)],env=env)
-  if set(p.name for p in bundle.iterdir())!={'edge','configuration'}:raise ValueError('Unexpected private input components')
+  if not {'edge','configuration'} <= set(p.name for p in bundle.iterdir()) or set(p.name for p in bundle.iterdir())-{'edge','configuration','originals'}:raise ValueError('Unexpected private input components')
   print('Backup phase: validate-input-layout',flush=True)
   f.inventory(bundle) # reject symlinks before reading exports
   print('Backup phase: fetch-live-function-inventory',flush=True)

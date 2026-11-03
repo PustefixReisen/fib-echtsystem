@@ -87,7 +87,12 @@ PR #355 bleibt ein isolierter technischer Prüfstand; seine lokale Standardempfe
 ist korrigiert. #357 / PR #358 bereiten die Bereitstellung vor:
 [Istvergleich](operations/u4-shared-apps-inventory-2026-10-31.md) und
 [Freigabe-/Sicherungs-/Rücknahmeplan](operations/u4-shared-apps-release-plan.md).
-Noch keine Migration, Bereitstellung oder Aktivierung in Shared-Apps vorgenommen.
+Die Bestandsaufnahme vom 02.11.2026 bestätigt die ursprünglichen Struktur-/Manifest-
+Migrationen und sechs RIS-Fassungen in Shared-Apps; die obige historische Vorbereitung
+ist kein aktueller vollständiger Deploymentstatus. #377 / PR #378 ergänzt Original-PDFs,
+automatische Fundstellen und unabhängige Ereignisbeziehungen. Neues Paket und
+Betriebsgrenzen: [technischer Release-/Abnahmebericht](operations/ris-ui-377-release.md).
+Neue Migration, privater RIS-Bucket und überarbeitete Oberfläche sind noch nicht bereitgestellt.
 
 Nächste Schritte in #281: genehmigte Bereitstellung in Shared-Apps und fachliche Nutzerabnahme der integrierten Ansichten,
 Bewertung der Belegdialoge aus PR #350, vertrauenswürdige

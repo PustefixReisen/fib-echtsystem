@@ -5,6 +5,7 @@ on:
       - 'supabase/**'
       - 'scripts/ris-shared-apps/**'
       - 'tests/u4/ris-shared-deployment-postgres.spec.ts'
+      - 'tests/u4/ris-originals-postgres.spec.ts'
       - 'tests/u4/fib-schema-restore.mjs'
       - 'tests/u4/ris-shared-operator-guards.mjs'
       - '.github/workflows/ris-shared-readiness.yml'
@@ -39,6 +40,10 @@ jobs:
         env:
           U4_TEST_DATABASE_URL: postgres://postgres:integration_only@127.0.0.1:5432/fib_u4_test
         run: node --import tsx tests/u4/ris-shared-deployment-postgres.spec.ts
+      - name: Original version rights and independent event references on both PostgreSQL majors
+        env:
+          U4_TEST_DATABASE_URL: postgres://postgres:integration_only@127.0.0.1:5432/fib_u4_test
+        run: node --import tsx tests/u4/ris-originals-postgres.spec.ts
       - name: Isolated schema-specific backup and restore with matching client major
         env:
           PG_CONTAINER: ${{ job.services.postgres.id }}

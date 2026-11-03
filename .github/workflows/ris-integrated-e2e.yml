@@ -14,6 +14,10 @@ permissions:
   contents: read
 jobs:
   integrated:
+    strategy:
+      fail-fast: false
+      matrix:
+        browser: [chromium, firefox]
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
@@ -34,7 +38,7 @@ jobs:
       - run: docker compose -f tests/ris-e2e/compose.yml up -d
       - run: npm install --ignore-scripts --no-package-lock --no-audit --no-fund
       - run: npm install --no-save --ignore-scripts --no-package-lock playwright@1.56.1
-      - run: npx playwright install --with-deps chromium
+      - run: npx playwright install --with-deps ${{ matrix.browser }}
       - run: pip install reportlab==4.4.3
       - run: node tests/ris-e2e/bootstrap.mjs
       - run: python3 tests/ris-e2e/pdfs.py
@@ -51,12 +55,16 @@ jobs:
           for i in $(seq 1 30); do curl --silent --fail http://127.0.0.1:4173 > /dev/null && exit 0; sleep 1; done
           exit 1
       - name: RIS scanner, MFA, authorization and current editorial UI
+        env:
+          FIB_TEST_BROWSER: ${{ matrix.browser }}
         run: node --import tsx tests/ris-e2e/current-ui.mjs
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: integrated-ris-acceptance
-          path: ris-e2e-results/
+          name: integrated-ris-acceptance-${{ matrix.browser }}
+          path: |
+            ris-e2e-results/
+            !ris-e2e-results/originals/**
           retention-days: 7
       - name: Destroy isolated identities and data
         if: always()

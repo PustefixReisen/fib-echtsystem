@@ -34,6 +34,7 @@ try {
     await db.query(
       `do $$ begin if not exists(select 1 from pg_roles where rolname='${role}') then create role ${role}; end if; end $$`,
     );
+  await db.query("create schema if not exists storage;create table if not exists storage.buckets(id text primary key,name text,public boolean,file_size_limit bigint,allowed_mime_types text[]);");
   const files = [
     "schema/core.sql",
     "security/runtime-roles.sql",
@@ -49,6 +50,7 @@ try {
     "migrations/20261030163000_fib_ris_source_run_cadence.sql",
     "migrations/20261031081340_fib_ris_editorial_structure.sql",
     "migrations/20261031132655_fib_development_dataset_manifest.sql",
+    "migrations/20261102221038_fib_ris_originals_and_editorial_links.sql",
   ];
   for (const file of files)
     await db.query(readFileSync("supabase/" + file, "utf8"));
@@ -174,7 +176,7 @@ try {
   if (process.env.GITHUB_ENV)
     appendFileSync(
       process.env.GITHUB_ENV,
-      `VITE_SUPABASE_URL=http://127.0.0.1:54321\nVITE_SUPABASE_PUBLISHABLE_KEY=${anon}\nFIB_DATABASE_URL=${runtime}\nSUPABASE_URL=http://127.0.0.1:54321\nSUPABASE_ANON_KEY=${anon}\nFIB_RIS_STRUCTURE_ENABLED=true\n`,
+      `VITE_SUPABASE_URL=http://127.0.0.1:54321\nVITE_SUPABASE_PUBLISHABLE_KEY=${anon}\nFIB_DATABASE_URL=${runtime}\nSUPABASE_URL=http://127.0.0.1:54321\nSUPABASE_ANON_KEY=${anon}\nFIB_RIS_STRUCTURE_ENABLED=true\nSUPABASE_SERVICE_ROLE_KEY=${jwt("service_role")}\n`,
     );
   console.log(
     "Isolated schema, actual Auth accounts/TOTP and restricted runtime login prepared",

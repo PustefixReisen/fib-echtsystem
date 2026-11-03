@@ -698,3 +698,24 @@ button:has(> .action-icon) { display: inline-flex; align-items: center; justify-
 .source-workspace summary { cursor:pointer; font-weight:600; }
 @media(max-width:760px){ .source-workspace .source-actions button { flex:1 1 12rem; } }
 .source-workspace select { width: 100%; min-width: 0; font: inherit; font-weight: 400; padding: .55rem; border: 1px solid var(--line, #cbd6d0); border-radius: 8px; background: #fff; color: inherit; }
+
+/* Object labels remain selectable; navigation has its own accessible hit area. */
+.fib-action-icon { display: inline-flex; align-items: center; justify-content: center; flex: 0 0 auto; min-width: 44px; min-height: 44px; padding: .4rem; border: 0; background: transparent; color: var(--color-primary, #18533e); font-size: 1.6rem; text-decoration: none; cursor: pointer; }
+.fib-action-icon:hover { background: #e7eee9; }
+.fib-action-icon:focus-visible { outline: 3px solid #1b6650; outline-offset: 2px; }
+.fib-action-icon:disabled { opacity: .5; cursor: default; }
+.ris-document-item { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding-block: .75rem; overflow-wrap: anywhere; }
+.ris-document-item small, .event-search-result small { display: block; margin-top: .4rem; }
+.event-search-result { display: flex; align-items: start; gap: .75rem; }
+.event-search-result input { width: auto; flex: 0 0 auto; margin-top: .25rem; }
+.fib-pdf-dialog { width: min(96vw, 1400px); height: 94vh; max-width: 96vw; max-height: 96vh; padding: 1rem; border: 0; border-radius: .5rem; }
+.fib-pdf-dialog::backdrop { background: #122219b3; }
+.fib-pdf-dialog[open] { display: flex; flex-direction: column; gap: .6rem; }
+.fib-pdf-dialog h2 { font-size: 1.1rem; overflow-wrap: anywhere; }
+.fib-pdf-dialog iframe { width: 100%; flex: 1; min-height: 0; border: 0; }
+.fib-pdf-dialog p { margin: 0; }
+@media (max-width: 600px) { .ris-document-item { align-items: start; flex-direction: column; gap: .25rem; } .ris-simplified .section-heading h3 { min-width: 0; overflow-wrap: anywhere; } }
+
+.ris-simplified ul { list-style: none; margin: 0; padding: 0; }
+.ris-document-item .source-actions, .ris-simplified .work-item .source-actions { flex-direction: row; flex-wrap: wrap; align-items: center; gap: .25rem; }
+.source-workspace .source-actions .fib-action-icon { flex: 0 0 44px; }

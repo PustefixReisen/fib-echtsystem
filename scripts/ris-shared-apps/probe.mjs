@@ -31,8 +31,9 @@ const readiness = await call("fib-editorial-write", {
 });
 const staged = options.expect === "staged";
 if (
-  readiness.contract !== "fib-ris-shared-20261031-v1" ||
+  readiness.contract !== "fib-ris-shared-20261102-v2" ||
   readiness.checks?.length !== 19 ||
+  !readiness.originalsReady ||
   readiness.runtimeRole !== "fib_app" ||
   !readiness.checks?.every((c) => c.installed && c.can_read && c.can_insert) ||
   (!staged && !readiness.ready) ||

@@ -3,340 +3,239 @@ import { createRoot } from "react-dom/client";
 import { SourceWorkspace } from "../../apps/editorial-web/src/SourceWorkspace";
 import "../../apps/editorial-web/src/app.css";
 const origin = "https://buergerinfo-feldkirchen.digitalfabrix.de";
-const article =
-  "https://www.feldkirchen.de/aktuelles/aktuelle-news/aktuelle-meldungen/parkraumkonzept-der-gemeinde-feldkirchen";
-const doc = {
-  id: "link2",
-  document_id: "doc2",
-  session_id: "s1032",
+const title = "Wegfall des Elternbeitragszuschusses in Höhe von 100 €";
+const display = "Beschlussvorlage · 29.10.2026 · 5395/2026 · " + title;
+const finding = {
+  id: "f1",
+  title: display,
+  original_url: origin + "/getfile.asp?id=75714",
+  source_name: "RIS Feldkirchen",
+  published_at: "2026-10-29",
+};
+const doc: any = {
+  id: "l1",
+  document_id: "d1",
+  finding_id: "f1",
+  latest_version_id: "v1",
+  version_id: "v1",
+  session_id: "s1",
   agenda_id: "t2",
   kind: "proposal",
   status: "candidate",
-  source_url: origin + "/getfile.asp?id=75714",
-  latest_version_id: "v1",
-  version_id: "v1",
-  content_hash: "a".repeat(64),
-  observed_at: "2026-10-31",
-  extracted_text: "Synthetischer UI-Prüftext: Vorschlag zur Förderung.",
-  extraction_method: "synthetic-ui-fixture",
-  finding_id: null,
+  title,
+  original_title: "Vorlage",
+  reference: "5395/2026",
+  observed_at: "2026-11-01",
+  source_url: finding.original_url,
+  content_author: "municipality",
+  rights_evidence: "Synthetic permission only",
+  has_pdf: true,
 };
-let findings: any[] = [],
-  events: any[] = [],
-  suggestions: any[] = [],
-  relations: any[] = [],
-  links: any[] = [],
-  topicLinks: any[] = [];
-let treatmentStatus = "unknown";
-let minutesApproval = "unknown";
+const events: any[] = [{
+  id: "e1",
+  title: "Pressebericht zur Kita-Finanzierung",
+  event_date: "2026-10-20",
+  summary: "Ein Geschehen außerhalb dieser Sitzung",
+}];
+let local: any[] = [], direct: any[] = [], findings: any[] = [finding];
 const observation = {
   scope_id: "news",
-  external_id: article,
-  canonical_url: article,
-  content_fingerprint: "news-hash",
-  revision: 1,
-  source_id: "gemeinde",
+  external_id: "article",
+  canonical_url: "https://www.feldkirchen.de/aktuelles/artikel",
   source_name: "Gemeinde Feldkirchen",
-  last_seen_at: "2026-10-31",
+  source_id: "news",
+  last_seen_at: "2026-11-01",
+  revision: 1,
 };
 (window as any).calls = [];
-(window as any).failNext = false;
 (window as any).denyLock = false;
+(window as any).failNext = false;
 const api = async (b: any) => {
   (window as any).calls.push(b);
-  await new Promise((r) => setTimeout(r, 25));
+  await new Promise((r) => setTimeout(r, 20));
   if ((window as any).failNext) {
     (window as any).failNext = false;
-    throw Error("Die Dokumentfassung ist veraltet. Bitte neu laden.");
+    throw Error("Vorübergehender Verbindungsfehler");
   }
-  if (b.action === "source_choices")
+  if (b.action === "source_choices") {
     return {
-      events,
-      processes: [{ id: "p1", title: "Kita-Finanzierung" }],
-      topics: [{ id: "theme1", title: "Kinder und Familien" }],
+      events: events.filter((e) =>
+        e.title.toLowerCase().includes((b.search ?? "").toLowerCase())
+      ),
+      processes: [],
+      topics: [],
     };
-  if (b.action === "ris_sessions")
-    return {
-      sessions: [
-        {
-          id: "s1032",
-          reference: "GR/440/2026",
-          committee_name: "Gemeinderat",
-          session_date: "2026-10-29",
-        },
-        { id: "later", reference: "GR/441/2026 (synthetisch)", session_date: "2026-11-12" },
-      ],
-    };
-  if (b.action === "source_list")
-    return {
-      findings,
-      documents: doc.finding_id
-        ? []
-        : [
-            {
-              ...doc,
-              title: "Wegfall des Elternbeitragszuschusses in Höhe von 100 €",
-            },
-          ],
-      observations: findings.some((f) => f.original_url === article)
-        ? []
-        : [observation],
-      hasMore: false,
-    };
-  if (b.action === "source_read") {
-    if (b.findingId) {
-      const f = findings.find((f) => f.id === b.findingId);
-      return {
-        finding: f,
-        versions: [
-          {
-            id: "fv1",
-            revision: 1,
-            fingerprint: "verified-hash",
-            observed_at: "2026-10-31",
-            metadata: { approvedBy: "Testredaktion" },
-          },
-        ],
-        events: events.filter((e) => e.findingId === f.id),
-        contexts:
-          f.original_url === article
-            ? []
-            : [
-                {
-                  session_id: "s1032",
-                  agenda_id: "t2",
-                  kind: "proposal",
-                  status: doc.status,
-                },
-              ],
-        relationSuggestions: relations,
-        relationships: topicLinks,
-      };
-    }
-    if (b.versionId)
-      return {
-        document: doc,
-        sources: [{ id: "ris", name: "RIS Feldkirchen" }],
-        versions: [
-          {
-            id: "v1",
-            content_hash: doc.content_hash,
-            observed_at: doc.observed_at,
-          },
-        ],
-        contexts: [
-          {
-            session_id: "s1032",
-            agenda_id: "t2",
-            kind: "proposal",
-            status: doc.status,
-          },
-        ],
-      };
-    return { observation };
   }
-  if (b.action === "ris_read" && b.sessionId === "later")
+  if (b.action === "ris_sessions") {
     return {
-      session: { id: "later", session_date: "2026-11-12", source_url: origin + "/si0057.asp?__ksinr=fictional" },
-      agenda: [], proposals: [], decisions: [], events: [], suggestions: [],
-      relationSuggestions: [], approvals: [],
-      documents: [{
-        id: "later-minutes-link", kind: "minutes", status: "confirmed",
-        agenda_id: null, latest_version_id: "later-version",
-        source_url: origin + "/getfile.asp?id=fictional",
-      }],
-    };
-  if (b.action === "ris_read")
-    return {
-      session: {
-        id: "s1032",
+      sessions: [{
+        id: "s1",
         reference: "GR/440/2026",
         committee_name: "Gemeinderat",
         session_date: "2026-10-29",
-        source_url: origin + "/si0057.asp?__ksinr=1032",
-        current_revision: 1,
-        minutes_approval: minutesApproval,
-      },
-      agenda: [
-        {
-          id: "t2",
-          number: "2",
-          title: "Wegfall des Elternbeitragszuschusses in Höhe von 100 €",
-          treatment_status: treatmentStatus,
-          observed_revision: 1,
-        },
-        {
-          id: "t3",
-          number: "3",
-          title:
-            "Beitragsanpassung der Kindertageseinrichtungen zum 01.01.2027",
-          treatment_status: "unknown",
-          observed_revision: 1,
-        },
-      ],
-      documents: [doc],
-      decisions: (window as any).showDecisionCases
-        ? [
-            {
-              agenda_id: "t2",
-              version_id: "case-1",
-              point_key: "A",
-              result: "unknown",
-              yes_count: null,
-              no_count: null,
-              abstention_count: null,
-              wording: "<img src=x onerror=alert(1)>",
-              evidence_quote: "Synthetischer Prüffall unbekanntes Ergebnis",
-              document_version_id: "v1",
-              source_changed: true,
-              event_id: events[0]?.id,
-            },
-            {
-              agenda_id: "t2",
-              version_id: "case-2",
-              point_key: "B",
-              result: "rejected",
-              yes_count: 2,
-              no_count: 12,
-              abstention_count: null,
-              wording: "Synthetischer zweiter Beschlusspunkt",
-              evidence_quote: "Synthetischer Abstimmungsbeleg",
-              document_version_id: "v1",
-              event_id: events[0]?.id,
-            },
-          ]
-        : [],
-      proposals: [
-        {
-          id: "pr2",
-          agenda_id: "t2",
-          reference: "5395/2026",
-          source_url: origin + "/vo0050.asp?__kvonr=8640",
-        },
-      ],
-      suggestions,
-      events: links,
-      relationSuggestions: relations,
-      approvals: [],
+      }],
     };
-  if (b.action === "ris_review_agenda_status") {
-    if (b.versionId !== "v1" || !doc.status || doc.status !== "confirmed")
-      throw Error("Fehlender bestätigter Beleg.");
-    if (b.evidenceQuote !== doc.extracted_text)
-      throw Error("missing_exact_evidence");
-    treatmentStatus = b.status;
-    return { status: b.status };
   }
-  if (b.action === "ris_confirm_minutes_approval") {
-    if (b.approvingSessionId !== "later" ||
-      b.versionId !== "later-version" ||
-      b.evidenceQuote !== "Synthetischer UI-Beleg: Niederschrift genehmigt.")
-      throw Error("missing_exact_evidence");
-    minutesApproval = "approved";
-    return { status: "approved" };
+  if (b.action === "source_list") {
+    return {
+      findings,
+      documents: [],
+      observations: findings.length === 1 ? [observation] : [],
+    };
   }
-  if (b.action === "ris_review_document") {
-    doc.status = b.status;
-    doc.kind = b.kind;
-    return { id: doc.id };
+  if (b.action === "ris_read") {
+    return {
+      session: {
+        id: "s1",
+        committee_name: "Gemeinderat",
+        session_date: "2026-10-29",
+        source_url: origin + "/si0057.asp?__ksinr=1032",
+      },
+      agenda: [{ id: "t2", number: "2", title }, {
+        id: "t3",
+        number: "3",
+        title: "Beitragsanpassung der Kindertageseinrichtungen zum 01.01.2027",
+      }],
+      documents: [doc],
+      proposals: [{
+        id: "p1",
+        agenda_id: "t2",
+        reference: "5395/2026",
+        wording: "Must not render raw",
+        source_url: origin + "/vo0050.asp?__kvonr=8640",
+      }],
+      decisions: (window as any).showDecisionCases
+        ? [{
+          agenda_id: "t2",
+          point_key: "A",
+          wording: "<img src=x onerror=alert(1)>",
+          result: "unknown",
+        }]
+        : [],
+      events: local,
+    };
   }
-  if (b.action === "ris_accept_finding" || b.action === "source_accept") {
-    const id = "f" + (findings.length + 1);
-    findings.push({
-      id,
-      title: b.title,
-      original_url: b.action === "source_accept" ? article : doc.source_url,
-      source_name:
-        b.action === "source_accept"
-          ? "Gemeinde Feldkirchen"
-          : "RIS Feldkirchen",
-      discovered_at: "2026-10-31",
-      source_id: b.sourceId,
+  if (b.action === "source_read") {
+    if (b.scopeId) return { observation };
+    const f = b.findingId
+      ? findings.find((f) => f.id === b.findingId)
+      : finding;
+    return {
+      finding: f,
+      document: b.versionId ? doc : undefined,
+      originVerified: f.id === "f1",
+      events: events.filter((e) => direct.includes(e.id)),
+      versions: [{
+        id: b.versionId ? "v1" : "fv1",
+        revision: b.versionId ? undefined : 1,
+        observed_at: doc.observed_at,
+        metadata: { risDocumentVersionId: "v1" },
+      }],
+      contexts: f.id === "f1"
+        ? [{
+          session_id: "s1",
+          agenda_id: "t2",
+          kind: "proposal",
+          status: "candidate",
+        }]
+        : [],
+    };
+  }
+  if (b.action === "source_pdf") {
+    return {
+      pdf: new Blob(["%PDF-1.4\n% synthetic viewer bytes"], {
+        type: "application/pdf",
+      }),
+    };
+  }
+  if (b.action === "ris_link_event") {
+    local.push({
+      agenda_id: b.agendaId,
+      event_id: b.eventId,
+      event_title: events.find((e) => e.id === b.eventId).title,
+      event_date: events.find((e) => e.id === b.eventId).event_date,
     });
-    if (b.action === "ris_accept_finding") doc.finding_id = id as any;
-    return { findingId: id };
+    return {};
+  }
+  if (b.action === "ris_unlink_event") {
+    local = local.filter((e) => e.event_id !== b.eventId);
+    return {};
+  }
+  if (b.action === "link_finding") {
+    direct.push(b.eventId);
+    return {};
+  }
+  if (b.action === "unlink_finding") {
+    direct = direct.filter((id) => id !== b.eventId);
+    return {};
   }
   if (b.action === "source_create_event") {
     events.push({
       id: b.requestId,
       title: b.title,
-      findingId: b.findingId,
-      justification: b.rationale,
+      event_date: b.occurredAt,
+      summary: b.summary,
     });
+    if (b.agendaId) {
+      local.push({
+        agenda_id: b.agendaId,
+        event_id: b.requestId,
+        event_title: b.title,
+        event_date: b.occurredAt,
+      });
+    } else direct.push(b.requestId);
     return { eventId: b.requestId };
   }
-  if (b.action === "link_finding") {
-    const e = events.find((e) => e.id === b.eventId);
-    e.findingId = b.findingId;
-    e.justification = b.justification;
-    return {};
-  }
-  if (b.action === "ris_link_event") {
-    links.push({ agenda_id: b.agendaId, event_id: b.eventId, role: b.role });
-    return {};
-  }
-  if (b.action === "ris_suggest") {
-    suggestions.push({
-      id: "sug1",
-      agenda_id: b.agendaId,
-      document_version_id: b.versionId,
-      kind: b.kind,
-      origin: "editor",
-      payload: b.payload,
-      status: "pending",
+  if (b.action === "source_accept") {
+    const id = "news-finding";
+    findings.push({
+      id,
+      title: b.title,
+      original_url: observation.canonical_url,
+      source_name: "Gemeinde Feldkirchen",
     });
+    return { findingId: id };
+  }
+  if (b.action === "ris_confirm_storage_rights") {
+    doc.content_author = b.contentAuthor;
+    doc.rights_evidence = b.evidence;
     return {};
   }
-  if (b.action === "ris_review_suggestion") {
-    suggestions.find((s) => s.id === b.suggestionId).status = b.status;
+  if (b.action === "ris_revoke_storage_rights") {
+    doc.content_author = "unknown";
+    doc.has_pdf = false;
     return {};
   }
-  if (b.action.endsWith("propose_relation")) {
-    relations.push({
-      id: "r1",
-      event_id: b.eventId,
-      topic_id: b.topicId,
-      process_id: b.processId,
-      rationale: b.rationale,
-      origin: "editor",
-      status: "pending",
-    });
+  if (b.action === "source_capture_pdf") {
+    doc.has_pdf = true;
     return {};
   }
-  if (b.action.endsWith("review_relation")) {
-    relations[0].status = b.status;
-    if (b.status === "confirmed")
-      topicLinks.push({ topic_title: "Kinder und Familien" });
-    return {};
-  }
-  throw Error("Unerwartete Testaktion " + b.action);
+  throw Error("Unexpected test action " + b.action);
 };
 function Harness() {
-  const [mode, setMode] = useState<"findings" | "sessions">("findings"),
-    [opened, setOpened] = useState("");
+  const [mode, setMode] = useState<"sessions" | "findings">("findings");
   return (
     <main style={{ padding: "1rem", maxWidth: 1440, margin: "auto" }}>
-      <p>
-        Isolierter Prüfdatenbestand: reale Referenzbezeichnungen, synthetische
-        Bearbeitungsdaten. Keine Produktionsverbindung.
-      </p>
+      <p>Isolierte UI-Prüfung mit simulierten Diensten.</p>
       <nav>
         <button onClick={() => setMode("findings")}>Fundstellenbereich</button>
         <button onClick={() => setMode("sessions")}>Sitzungsbereich</button>
       </nav>
-      {opened && (
-        <p role="status">Regulärer Ereigniseditor geöffnet: {opened}</p>
-      )}
       <SourceWorkspace
         mode={mode}
         api={api}
         eventLock={async (_id, work) => {
-          if ((window as any).denyLock)
-            throw Error("Das Ereignis wird bereits bearbeitet.");
+          if ((window as any).denyLock) {
+            throw Error(
+              "Ereignis wird bereits bearbeitet",
+            );
+          }
           return work();
         }}
         onHome={() => setMode("findings")}
-        onOpenEvent={setOpened}
+        onOpenEvent={(id) => {
+          (window as any).openedEvent = id;
+        }}
       />
     </main>
   );

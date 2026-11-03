@@ -26,6 +26,7 @@ export const sourceApi: SourceApi = async (body) => {
     "fib-editorial-write",
     { body },
   );
+  if (!error && body.action === "source_pdf" && data instanceof Blob) return { ok:true, pdf:data };
   if (error || !data?.ok) {
     let code = data?.error;
     try {

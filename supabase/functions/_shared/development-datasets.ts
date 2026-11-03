@@ -117,11 +117,16 @@ export async function withDevelopmentDataset<T>(
     });
   // Ignore unused/injected fields: only context actually consumed by the given action.
   const fields: Record<string, string[]> = {
+    source_capture_pdf: ["ris_document_versions"],
+    ris_revoke_storage_rights: ["ris_document_versions"],
+    ris_backfill_finding: ["ris_document_versions"],
     source_scan: ["source_scopes"],
     ris_review_document: ["ris_document_links", "ris_document_versions"],
     ris_accept_finding: ["ris_document_versions"],
     source_accept: ["source_observations"],
-    source_create_event: ["findings"],
+    source_create_event: ["findings", "ris_agenda_items"],
+    ris_unlink_event: ["ris_agenda_items", "events"],
+    ris_confirm_storage_rights: ["ris_document_versions"],
     ris_link_event: ["ris_agenda_items", "events"],
     ris_suggest: ["ris_agenda_items", "ris_document_versions"],
     ris_review_suggestion: ["ris_suggestions"],

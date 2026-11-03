@@ -95,7 +95,7 @@ async function login() {
 }
 try {
   await start();
-  browser = await chromium.launch();
+  browser = await chromium.launch(process.env.FIB_CHROMIUM_PATH?{executablePath:process.env.FIB_CHROMIUM_PATH,args:["--no-sandbox"]}:{});
   const { page, context, f } = await login();
   for (const file of ["config.json", "ris-e2e.json", "Zugang.txt"])
     assert.equal(statSync(join(root, file)).mode & 0o777, 0o600);
@@ -122,7 +122,7 @@ try {
     .filter({ hasText: "GR/439/2026" })
     .getByRole("button", { name: "Sitzung öffnen" })
     .click();
-  await page.getByRole("button", { name: /^TOP 6 ·/ }).click();
+  await page.getByRole("button", { name: "TOP 6 öffnen" }).click();
   assert.equal(
     await page
       .locator("section")
@@ -150,7 +150,7 @@ try {
   assert.equal(next.f.users.editor.password, f.users.editor.password);
   await next.page.locator(".side-nav").getByRole("button", { name: "Sitzungen", exact: true }).click();
   await next.page.locator(".work-item").filter({ hasText: "GR/439/2026" }).getByRole("button", { name: "Sitzung öffnen" }).click();
-  await next.page.getByRole("button", { name: /^TOP 6 ·/ }).click();
+  await next.page.getByRole("button", { name: "TOP 6 öffnen" }).click();
   assert.equal(await next.page.locator("section").filter({has:next.page.getByRole("heading",{name:"Beschlussfassung",exact:true})}).locator("article").count(), 2);
   const resumed = new pg.Client({ connectionString: next.f.runtime });
   await resumed.connect();

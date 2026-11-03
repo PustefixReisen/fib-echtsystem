@@ -1,4 +1,4 @@
-import { RIS_ORIGIN, risUrl, type RisSql } from "./ris-structure.ts";
+import { RIS_ORIGIN, type RisSql, risUrl } from "./ris-structure.ts";
 /** Run inside one transaction. Actor is supplied by verified server auth, never request JSON. */
 export type RisActor = {
   userId: string;
@@ -6,8 +6,9 @@ export type RisActor = {
   aal: "aal1" | "aal2";
 };
 function required(v: unknown, max = 2000): string {
-  if (typeof v !== "string" || !v.trim() || v.length > max)
+  if (typeof v !== "string" || !v.trim() || v.length > max) {
     throw Error("invalid_ris_input");
+  }
   return v.trim();
 }
 async function one(tx: RisSql, q: string, p: any[] = []) {
@@ -38,9 +39,11 @@ export async function risEditorial(
   tx: RisSql,
   actor: RisActor,
   input: Record<string, any>,
+  storage?: { remove(key: string): Promise<void> },
 ) {
-  if (actor.kind !== "human" || actor.aal !== "aal2")
+  if (actor.kind !== "human" || actor.aal !== "aal2") {
     throw Error("ris_human_mfa_required");
+  }
   await one(
     tx,
     "select user_id from fib.app_users where user_id=$1 and active and setup_status='active' and role in ('admin','editor') for share",
@@ -58,7 +61,7 @@ export async function risEditorial(
       [session.id],
     );
     const documents = await tx.unsafe(
-      "select l.*,d.source_url,d.finding_id,d.latest_version_id,v.extracted_text,v.extraction_method,v.content_hash,v.observed_at from fib.ris_document_links l join fib.ris_documents d on d.id=l.document_id left join fib.ris_document_versions v on v.id=d.latest_version_id where l.session_id=$1",
+      "select l.*,d.source_url,d.finding_id,d.latest_version_id,v.extracted_text,v.extraction_method,v.content_hash,v.observed_at,v.content_author,v.rights_evidence,v.pdf_storage_key is not null as has_pdf,d.original_title,a.title as title,s.session_date,p.reference from fib.ris_document_links l join fib.ris_documents d on d.id=l.document_id left join fib.ris_document_versions v on v.id=d.latest_version_id left join fib.ris_agenda_items a on a.id=l.agenda_id join fib.ris_sessions s on s.id=l.session_id left join fib.ris_proposals p on p.agenda_id=a.id where l.session_id=$1",
       [session.id],
     );
     const decisions = await tx.unsafe(
@@ -66,7 +69,7 @@ export async function risEditorial(
       [session.id],
     );
     const events = await tx.unsafe(
-      "select ae.*,ep.process_id,et.topic_id from fib.ris_agenda_events ae join fib.ris_agenda_items a on a.id=ae.agenda_id left join fib.event_processes ep on ep.event_id=ae.event_id left join fib.event_topics et on et.event_id=ae.event_id where a.session_id=$1",
+      "select ae.*,e.title event_title,e.occurred_at event_date from fib.ris_agenda_events ae join fib.ris_agenda_items a on a.id=ae.agenda_id join fib.events e on e.id=ae.event_id where a.session_id=$1 and ae.role='local_reference'",
       [session.id],
     );
     const suggestions = await tx.unsafe(
@@ -85,10 +88,17 @@ export async function risEditorial(
       "select distinct r.* from fib.ris_relation_suggestions r join fib.ris_agenda_events ae on ae.event_id=r.event_id join fib.ris_agenda_items a on a.id=ae.agenda_id where a.session_id=$1",
       [session.id],
     );
-    const snapshots = await tx.unsafe("select id,revision,observed_at,content_hash,source_url,snapshot from fib.ris_session_versions where session_id=$1 order by revision desc limit 50", [session.id]);
-    const reviewLog = await tx.unsafe(`select r.* from fib.ris_review_log r where r.object_id=$1 or r.object_id in(select id from fib.ris_agenda_items where session_id=$1 union select id from fib.ris_document_links where session_id=$1 union select s.id from fib.ris_suggestions s join fib.ris_agenda_items a on a.id=s.agenda_id where a.session_id=$1 union select s.id from fib.ris_relation_suggestions s join fib.ris_agenda_events ae on ae.event_id=s.event_id join fib.ris_agenda_items a on a.id=ae.agenda_id where a.session_id=$1) order by r.created_at desc limit 100`,[session.id]);
+    const snapshots = await tx.unsafe(
+      "select id,revision,observed_at,content_hash,source_url,snapshot from fib.ris_session_versions where session_id=$1 order by revision desc limit 50",
+      [session.id],
+    );
+    const reviewLog = await tx.unsafe(
+      `select r.* from fib.ris_review_log r where r.object_id=$1 or r.object_id in(select id from fib.ris_agenda_items where session_id=$1 union select id from fib.ris_document_links where session_id=$1 union select s.id from fib.ris_suggestions s join fib.ris_agenda_items a on a.id=s.agenda_id where a.session_id=$1 union select s.id from fib.ris_relation_suggestions s join fib.ris_agenda_events ae on ae.event_id=s.event_id join fib.ris_agenda_items a on a.id=ae.agenda_id where a.session_id=$1) order by r.created_at desc limit 100`,
+      [session.id],
+    );
     return {
-      snapshots, reviewLog,
+      snapshots,
+      reviewLog,
       session,
       agenda,
       documents,
@@ -105,8 +115,9 @@ export async function risEditorial(
       !["unknown", "announced", "deferred", "treated", "withdrawn"].includes(
         input.status,
       )
-    )
+    ) {
       throw Error("invalid_agenda_status");
+    }
     const rationale = required(input.rationale),
       quote = required(input.evidenceQuote, 30000);
     const evidence = await one(
@@ -114,8 +125,9 @@ export async function risEditorial(
       `select v.extracted_text from fib.ris_document_versions v join fib.ris_documents d on d.id=v.document_id join fib.ris_document_links l on l.document_id=d.id join fib.ris_agenda_items a on a.session_id=l.session_id where a.id=$1 and (l.agenda_id=a.id or l.agenda_id is null) and l.status='confirmed' and v.id=$2 and d.latest_version_id=v.id and (l.kind in ('minutes','decision') or $3 in ('unknown','announced')) for update of a,d`,
       [input.agendaId, input.versionId, input.status],
     );
-    if (!evidence.extracted_text?.includes(quote))
+    if (!evidence.extracted_text?.includes(quote)) {
       throw Error("missing_exact_evidence");
+    }
     const old = await one(
       tx,
       "select treatment_status from fib.ris_agenda_items where id=$1",
@@ -142,8 +154,9 @@ export async function risEditorial(
       `select v.extracted_text from fib.ris_document_versions v join fib.ris_documents d on d.id=v.document_id join fib.ris_document_links l on l.document_id=d.id join fib.ris_sessions later on later.id=l.session_id join fib.ris_sessions earlier on earlier.id=$1 where later.id=$2 and later.session_date>earlier.session_date and l.kind='minutes' and l.status='confirmed' and l.agenda_id is null and v.id=$3 and d.latest_version_id=v.id for update of earlier,d`,
       [input.sessionId, input.approvingSessionId, input.versionId],
     );
-    if (!evidence.extracted_text?.includes(quote))
+    if (!evidence.extracted_text?.includes(quote)) {
       throw Error("missing_exact_evidence");
+    }
     await tx.unsafe(
       "insert into fib.ris_minutes_approvals(session_id,approving_session_id,document_version_id,evidence_quote,reviewed_by) values($1,$2,$3,$4,$5) on conflict do nothing",
       [
@@ -174,8 +187,9 @@ export async function risEditorial(
       !["unknown", "proposal", "minutes", "decision", "attachment"].includes(
         kind,
       )
-    )
+    ) {
       throw Error("invalid_ris_review");
+    }
     const old = await one(
       tx,
       "select * from fib.ris_document_links where id=$1 for update",
@@ -184,19 +198,33 @@ export async function risEditorial(
     // The browser supplies the exact version it displayed. Older internal callers
     // may classify a link without a version; this does not confirm any decision.
     if (input.versionId !== undefined) {
-      const document = await one(tx, "select latest_version_id from fib.ris_documents where id=$1 for update", [old.document_id]);
-      if (!input.versionId || document.latest_version_id !== input.versionId) throw Error("stale_ris_review");
+      const document = await one(
+        tx,
+        "select latest_version_id from fib.ris_documents where id=$1 for update",
+        [old.document_id],
+      );
+      if (!input.versionId || document.latest_version_id !== input.versionId) {
+        throw Error("stale_ris_review");
+      }
     }
-    if (kind === "minutes" && old.agenda_id)
+    if (kind === "minutes" && old.agenda_id) {
       throw Error("minutes_are_session_wide");
-    if (status === "confirmed" && kind === "unknown")
+    }
+    if (status === "confirmed" && kind === "unknown") {
       throw Error("document_kind_required");
+    }
     const rationale = required(input.rationale);
     await tx.unsafe(
       "update fib.ris_document_links set kind=$2,status=$3,reviewed_by=$4,reviewed_at=now() where id=$1",
       [old.id, kind, status, actor.userId],
     );
-    await audit(tx, actor, action, old.id, { old, kind, status, rationale, versionId: input.versionId ?? null });
+    await audit(tx, actor, action, old.id, {
+      old,
+      kind,
+      status,
+      rationale,
+      versionId: input.versionId ?? null,
+    });
     return { id: old.id };
   }
   if (action === "ris_accept_finding") {
@@ -211,8 +239,9 @@ export async function risEditorial(
       "select homepage_url from fib.sources where id=$1 and active",
       [input.sourceId],
     );
-    if (new URL(source.homepage_url).origin !== RIS_ORIGIN)
+    if (new URL(source.homepage_url).origin !== RIS_ORIGIN) {
       throw Error("source_origin_mismatch");
+    }
     const title = required(input.title);
     await tx.unsafe("select pg_advisory_xact_lock(hashtextextended($1,0))", [
       input.sourceId + "|" + v.source_url,
@@ -230,10 +259,10 @@ export async function risEditorial(
       (row) => risUrl(row.original_url) === v.source_url,
     );
     if (matches.length > 1) throw Error("ambiguous_existing_findings");
-    if (v.finding_id && matches[0]?.id !== v.finding_id)
+    if (v.finding_id && matches[0]?.id !== v.finding_id) {
       throw Error("finding_source_mismatch");
-    const finding =
-      matches[0] ??
+    }
+    const finding = matches[0] ??
       (await one(
         tx,
         "insert into fib.findings(source_id,title,original_url,content_fingerprint) values($1,$2,$3,$4) returning id",
@@ -243,7 +272,7 @@ export async function risEditorial(
       "select id from fib.finding_versions where finding_id=$1 and metadata->>'risDocumentVersionId'=$2",
       [finding.id, v.id],
     );
-    if (!exists.length)
+    if (!exists.length) {
       await tx.unsafe(
         `insert into fib.finding_versions(finding_id,revision,fingerprint,original_url,observed_at,metadata) values($1,(select coalesce(max(revision),0)+1 from fib.finding_versions where finding_id=$1),$2,$3,$4,$5::text::jsonb)`,
         [
@@ -258,6 +287,7 @@ export async function risEditorial(
           }),
         ],
       );
+    }
     await tx.unsafe("update fib.ris_documents set finding_id=$2 where id=$1", [
       v.document_id,
       finding.id,
@@ -265,7 +295,48 @@ export async function risEditorial(
     await audit(tx, actor, action, v.id, { findingId: finding.id });
     return { findingId: finding.id };
   }
-  if (action === "ris_link_event") {
+  if (action === "ris_revoke_storage_rights") {
+    const v = await one(
+      tx,
+      "select * from fib.ris_document_versions where id=$1 for update",
+      [input.versionId],
+    );
+    if (!storage) throw Error("ris_storage_not_configured");
+    // Also remove a successful upload whose metadata transaction rolled back.
+    await storage.remove(
+      v.pdf_storage_key ?? `${v.document_id}/${v.id}/${v.content_hash}.pdf`,
+    );
+    await tx.unsafe(
+      "update fib.ris_document_versions set content_author='unknown',rights_evidence=null,rights_reviewed_by=null,rights_reviewed_at=null,pdf_storage_key=null,pdf_size=null,extracted_text=null where id=$1",
+      [v.id],
+    );
+    await audit(tx, actor, action, v.id, { previousAuthor: v.content_author });
+    return { revoked: true };
+  }
+  if (action === "ris_confirm_storage_rights") {
+    if (!["municipality", "licensed"].includes(input.contentAuthor)) {
+      throw Error("invalid_ris_input");
+    }
+    const evidence = required(input.evidence, 4000);
+    await one(
+      tx,
+      "select id from fib.ris_document_versions where id=$1 for update",
+      [input.versionId],
+    );
+    await tx.unsafe(
+      "update fib.ris_document_versions set content_author=$2,rights_evidence=$3,rights_reviewed_by=$4,rights_reviewed_at=now() where id=$1",
+      [input.versionId, input.contentAuthor, evidence, actor.userId],
+    );
+    await audit(tx, actor, action, input.versionId, {
+      contentAuthor: input.contentAuthor,
+      evidence,
+    });
+    return { confirmed: true };
+  }
+  if (
+    action === "ris_link_event" && input.role &&
+    input.role !== "local_reference"
+  ) {
     if (
       ![
         "proposal_publication",
@@ -273,8 +344,9 @@ export async function risEditorial(
         "decision",
         "minutes_publication",
       ].includes(input.role)
-    )
+    ) {
       throw Error("invalid_ris_event_role");
+    }
     await lockEvent(tx, input.eventId, actor.userId);
     // The ordinary editorial workflow must already have accepted the finding/event relation.
     await one(
@@ -304,17 +376,47 @@ export async function risEditorial(
     });
     return { linked: true };
   }
+  if (action === "ris_link_event" || action === "ris_unlink_event") {
+    await lockEvent(tx, input.eventId, actor.userId);
+    await one(
+      tx,
+      "select id from fib.ris_agenda_items where id=$1 for update",
+      [input.agendaId],
+    );
+    if (action === "ris_link_event") {
+      const previous = await tx.unsafe(
+        "select role from fib.ris_agenda_events where agenda_id=$1 and event_id=$2",
+        [input.agendaId, input.eventId],
+      );
+      if (previous.length && previous[0].role !== "local_reference") {
+        throw Error("existing_event_role_conflict");
+      }
+      await tx.unsafe(
+        "insert into fib.ris_agenda_events(agenda_id,event_id,role,reviewed_by) values($1,$2,'local_reference',$3) on conflict do nothing",
+        [input.agendaId, input.eventId, actor.userId],
+      );
+    } else {
+      await tx.unsafe(
+        "delete from fib.ris_agenda_events where agenda_id=$1 and event_id=$2 and role='local_reference'",
+        [input.agendaId, input.eventId],
+      );
+    }
+    await audit(tx, actor, action, input.agendaId, { eventId: input.eventId });
+    return { linked: action === "ris_link_event" };
+  }
   if (action === "ris_propose_relation") {
     if (
       !["ai", "editor"].includes(input.origin) ||
       Boolean(input.processId) === Boolean(input.topicId)
-    )
+    ) {
       throw Error("invalid_ris_relation");
+    }
     if (
       input.topicId &&
       !["defining", "relevant", "supplementary"].includes(input.significance)
-    )
+    ) {
       throw Error("invalid_significance");
+    }
     await one(
       tx,
       "select id from fib.events where id=$1 and status='confirmed'",
@@ -336,8 +438,9 @@ export async function risEditorial(
     return { suggestionId: r.id, status: "pending" };
   }
   if (action === "ris_review_relation") {
-    if (!["confirmed", "rejected", "deferred"].includes(input.status))
+    if (!["confirmed", "rejected", "deferred"].includes(input.status)) {
       throw Error("invalid_ris_review");
+    }
     const rationale = required(input.rationale);
     const s = await one(
       tx,
@@ -371,8 +474,9 @@ export async function risEditorial(
           "select significance from fib.event_topics where event_id=$1 and topic_id=$2",
           [s.event_id, s.topic_id],
         );
-        if (previous.length && previous[0].significance !== s.significance)
+        if (previous.length && previous[0].significance !== s.significance) {
           throw Error("existing_significance_conflict");
+        }
         await tx.unsafe(
           "insert into fib.event_topics(event_id,topic_id,significance,significance_rationale) values($1,$2,$3,$4) on conflict do nothing",
           [s.event_id, s.topic_id, s.significance, rationale],
@@ -390,11 +494,13 @@ export async function risEditorial(
     if (
       !["decision", "proposal_text"].includes(input.kind) ||
       !["ai", "editor"].includes(input.origin)
-    )
+    ) {
       throw Error("invalid_ris_suggestion");
+    }
     const payload = input.payload;
-    if (!payload || typeof payload !== "object")
+    if (!payload || typeof payload !== "object") {
       throw Error("invalid_ris_input");
+    }
     const wording = required(payload.wording, 30000),
       quote = required(payload.evidenceQuote, 30000);
     const v = await one(
@@ -403,8 +509,9 @@ export async function risEditorial(
       [input.versionId],
     );
     if (v.id !== v.latest_version_id) throw Error("stale_ris_review");
-    if (!v.extracted_text?.includes(quote) || !quote.includes(wording))
+    if (!v.extracted_text?.includes(quote) || !quote.includes(wording)) {
       throw Error("missing_exact_evidence");
+    }
     await one(
       tx,
       "select a.id from fib.ris_agenda_items a join fib.ris_document_links l on l.session_id=a.session_id and (l.agenda_id=a.id or l.agenda_id is null) where a.id=$1 and l.document_id=$2",
@@ -425,8 +532,9 @@ export async function risEditorial(
     return { suggestionId: r.id, status: "pending" };
   }
   if (action === "ris_review_suggestion") {
-    if (!["confirmed", "rejected", "deferred"].includes(input.status))
+    if (!["confirmed", "rejected", "deferred"].includes(input.status)) {
       throw Error("invalid_ris_review");
+    }
     const rationale = required(input.rationale);
     const s = await one(
       tx,
@@ -448,8 +556,9 @@ export async function risEditorial(
       if (
         !v.extracted_text?.includes(p.evidenceQuote) ||
         !p.evidenceQuote?.includes(p.wording)
-      )
+      ) {
         throw Error("missing_exact_evidence");
+      }
       if (s.kind === "proposal_text") {
         await one(
           tx,
@@ -468,11 +577,16 @@ export async function risEditorial(
           `select a.id from fib.ris_agenda_items a join fib.ris_document_links l on l.session_id=a.session_id join fib.ris_documents d on d.id=l.document_id join fib.event_findings ef on ef.finding_id=d.finding_id where a.id=$1 and l.document_id=$2 and ((l.agenda_id is null and l.kind='minutes') or (l.agenda_id=a.id and l.kind='decision')) and l.status='confirmed' and ef.event_id=$3`,
           [s.agenda_id, v.document_id, p.eventId],
         );
-        if (!["unknown", "accepted", "rejected", "no_vote"].includes(p.result))
+        if (
+          !["unknown", "accepted", "rejected", "no_vote"].includes(p.result)
+        ) {
           throw Error("unknown_vote_result_required");
-        for (const c of ["yes", "no", "abstention"])
-          if (p[c] != null && (!Number.isInteger(p[c]) || p[c] < 0))
+        }
+        for (const c of ["yes", "no", "abstention"]) {
+          if (p[c] != null && (!Number.isInteger(p[c]) || p[c] < 0)) {
             throw Error("invalid_vote_counts");
+          }
+        }
         const pointKey = required(p.pointKey, 200);
         await tx.unsafe(
           "insert into fib.ris_decision_points(agenda_id,event_id,point_key) values($1,$2,$3) on conflict do nothing",

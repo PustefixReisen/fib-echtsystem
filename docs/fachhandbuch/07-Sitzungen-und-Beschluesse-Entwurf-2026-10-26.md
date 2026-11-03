@@ -153,3 +153,19 @@ Der [integrierte Prüfstand zu #352](../operations/u4-integrated-acceptance.md) 
 die Gesamt-App mit echtem Login/MFA, Deno-Handlern und isoliertem PostgreSQL. Er benennt
 kontrollierte externe Testantworten und synthetische Genehmigungsfälle ausdrücklich;
 sein CI-Ergebnis ist kein Nachweis der Vollständigkeit der realen RIS-Veröffentlichungen.
+
+
+## Präzisierung aus Auftrag #377 – 02.11.2026
+
+Original-PDF und extrahierter Text gehören zur selben Dokumentfassung. Beide werden
+nur bei bestätigter kommunaler Urheberschaft oder anderweitigem dokumentiertem
+Speicherrecht dauerhaft gespeichert; das gilt auch für ältere Fassungen. RIS-Herkunft
+allein genügt nicht. Ungeklärte oder fremde Anlagen behalten Metadaten und Originallink.
+Der technische Vertrag steht in ADR-012; die Speicherung ist keine öffentliche
+Veröffentlichungsfreigabe. Jedes importierte Dokument erhält automatisch eine
+Fundstelle, kein automatisches Ereignis und keine Meldung.
+
+„Lokale Bezüge“ verbindet TOP und externe Ereignisse ohne Pflichtbegründung oder
+Pflichttyp. „Ereignisbezug“ verbindet unmittelbar Dokument-Fundstelle und Ereignis
+als n:m-Beziehung. Neue Ereignisse entstehen ausschließlich nach bewusster
+redaktioneller Erfassung. Das Entfernen einer Zuordnung löscht kein Ereignis.

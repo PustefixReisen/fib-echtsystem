@@ -45,7 +45,7 @@ export default {
    const payload=await req.json().catch(()=>({})) as {commit?:boolean};
    recordFailure=payload.commit===true;
    const scan=await scanNews(fetchHtml);
-   const observed=[];
+   const observed:((typeof scan.articles)[number] & {fingerprint:string})[]=[];
    for(const article of scan.articles){
      observed.push({...article,fingerprint:await sha(article.body)});
    }
