@@ -108,17 +108,12 @@ try {
     .click();
   await page.getByText("Keine weiteren Ereignisse zugeordnet.").waitFor();
   await linkRelated().click();
-  await button("Neu: Ereignis").click();
-  await page.getByLabel("Ereignistitel *", { exact: true }).fill(
-    "Lokales Ereignis außerhalb der Sitzung",
-  );
-  await button("Speichern").click();
+  assert.equal(await button("Neu: Ereignis").count(),0,
+    "Additional TOP events must be selected from existing events");
+  await page.getByRole("radio").first().check();
+  await button("Zuordnen").click();
   await heading("Weitere Ereignisse zum TOP").waitFor();
-  assert.ok(
-    (await local().innerText()).includes(
-      "Lokales Ereignis außerhalb der Sitzung",
-    ),
-  );
+  assert.ok((await local().innerText()).includes("Pressebericht zur Kita-Finanzierung"));
   assert.equal(await page.locator(".ris-document-item .fib-external-icon").count(),1,
     "RIS original is linked exactly once next to its document title");
   assert.equal(await page.locator(".ris-document-item").getByText("RIS-Original",{exact:true}).count(),0);
@@ -130,13 +125,14 @@ try {
     1,
   );
   await linkRelated().click();
-  await button("Neu: Ereignis").click();
-  await button("Abbrechen").click();
-  await heading("Weiteres Ereignis zuordnen").waitFor();
+  assert.equal(await button("Neu: Ereignis").count(),0);
   await button("Abbrechen").click();
   await heading("Weitere Ereignisse zum TOP").waitFor();
   // One explicitly chosen main TOP event; press material is never auto-linked.
   await main().getByRole("button", { name: "Auswählen oder erstellen" }).click();
+  assert.equal(await page.getByRole("radio").count(),0,
+    "No existing event qualifies as a main event of this Sitzung yet");
+  await page.getByText("Noch kein Ereignis mit einer RIS-Fundstelle aus dieser Sitzung vorhanden.",{exact:false}).waitFor();
   await button("Neu: Ereignis").click();
   await page.getByLabel("Ereignistitel *", { exact: true }).fill("TOP 2: Beratung zum Elternbeitragszuschuss");
   await button("Speichern").click();
@@ -167,7 +163,13 @@ try {
     .getByRole("button",{name:"TOP 2"}).evaluate(el=>{
       const st=getComputedStyle(el);return {width:parseFloat(st.borderBottomWidth),color:st.borderBottomColor};
     });
-  assert.ok(tabStyle.width>=3,"Selected TOP uses an underline indicator");
+  assert.ok(tabStyle.width<=2,"Selected TOP border stays thin");
+  const underline=await tabs.getByRole("button",{name:"TOP 2"}).evaluate(el=>{
+    const pseudo=getComputedStyle(el,"::after");
+    return {content:pseudo.content,width:parseFloat(pseudo.width),height:parseFloat(pseudo.height),position:pseudo.position};
+  });
+  assert.ok(underline.content!=="none" && underline.width>10 && underline.height>=2 && underline.position==="absolute",
+    "Selected TOP has a separate underline below its text");
 
   assert.equal(await main().getByRole("checkbox").count(),1);
   assert.equal(await main().getByRole("checkbox").first().isChecked(),true);
