@@ -351,11 +351,6 @@ export function SourceWorkspace({
           </h1>
         </div>
         <div className="source-actions ris-page-navigation">
-          {session && topId && (
-            <button type="button" disabled={busy} onClick={() => setTopId("")}>
-              ‹ Zurück zur Tagesordnung
-            </button>
-          )}
           {returnContext && detail && (
             <button type="button" disabled={busy}
               onClick={() => void openSession(returnContext.sessionId, returnContext.agendaId)}>
