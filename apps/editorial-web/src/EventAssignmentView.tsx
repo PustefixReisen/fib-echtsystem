@@ -91,11 +91,13 @@ export function EventAssignmentView(
     };
   }, [creating, dirty, registerLeaveGuard]);
   const cancel = () => {
-    if (
-      !busy &&
-      (!creating || !dirty ||
-        window.confirm("Ungespeicherte Eingaben verwerfen?"))
-    ) onCancel();
+    if (busy) return;
+    if (creating) {
+      if (dirty && !window.confirm("Ungespeicherte Eingaben verwerfen?")) return;
+      setCreating(false);
+      return;
+    }
+    onCancel();
   };
   const heading = creating
     ? "Neu: Ereignis"
@@ -103,16 +105,24 @@ export function EventAssignmentView(
     ? "Lokalen Bezug hinzufügen"
     : "Ereignisbezug hinzufügen";
   return (
-    <div className="source-workspace">
+    <div className="fib-assignment-overlay">
+      <section className="fib-assignment-dialog" role="dialog" aria-modal="true"
+        aria-label={heading} onKeyDown={(e) => {
+          if (e.key === "Escape") {
+            e.stopPropagation();
+            cancel();
+          }
+        }}>
       <nav className="breadcrumbs" aria-label="Pfadnavigation">
         {context} / {heading}
       </nav>
-      <section className="panel stack">
+      <div className="fib-assignment-content">
         <h1>{heading}</h1>
         {error && <p role="alert">{error}</p>}
         {creating
           ? (
             <form
+              id="fib-event-create-form"
               className="stack"
               onSubmit={(e) => {
                 e.preventDefault();
@@ -167,12 +177,6 @@ export function EventAssignmentView(
                 {"agendaId" in target ? "dem TOP" : "dieser Fundstelle"}{" "}
                 verbunden.
               </p>
-              <div className="source-actions">
-                <button disabled={busy || !title.trim()}>Speichern</button>
-                <button type="button" disabled={busy} onClick={cancel}>
-                  Abbrechen
-                </button>
-              </div>
             </form>
           )
           : (
@@ -226,37 +230,32 @@ export function EventAssignmentView(
               {!busy && !items.length && (
                 <p>Keine passenden Ereignisse gefunden.</p>
               )}
-              <div className="source-actions">
-                <button
-                  disabled={busy || !chosen}
-                  onClick={() =>
-                    void perform(async () => {
-                      await eventLock(chosen, () =>
-                        api(
-                          "agendaId" in target
-                            ? {
-                              action: "ris_link_event",
-                              ...target,
-                              eventId: chosen,
-                            }
-                            : {
-                              action: "link_finding",
-                              ...target,
-                              eventId: chosen,
-                            },
-                        ));
-                      await onDone();
-                    })}
-                >
-                  Zuordnen
-                </button>
-                <button disabled={busy} onClick={() => setCreating(true)}>
-                  Neu: Ereignis
-                </button>
-                <button disabled={busy} onClick={cancel}>Abbrechen</button>
-              </div>
+
             </>
           )}
+      </div>
+      <footer className="fib-assignment-footer">
+        {creating ? (
+          <>
+            <button type="submit" form="fib-event-create-form" disabled={busy || !title.trim()}>Speichern</button>
+            <button type="button" disabled={busy} onClick={cancel}>Abbrechen</button>
+          </>
+        ) : (
+          <>
+            <button type="button" disabled={busy || !chosen} onClick={() =>
+              void perform(async () => {
+                await eventLock(chosen, () => api(
+                  "agendaId" in target
+                    ? {action: "ris_link_event", ...target, eventId: chosen}
+                    : {action: "link_finding", ...target, eventId: chosen},
+                ));
+                await onDone();
+              })}>Zuordnen</button>
+            <button type="button" disabled={busy} onClick={() => setCreating(true)}>Neu: Ereignis</button>
+            <button type="button" disabled={busy} onClick={cancel}>Abbrechen</button>
+          </>
+        )}
+      </footer>
       </section>
     </div>
   );
