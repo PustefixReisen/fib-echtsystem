@@ -56,7 +56,7 @@ test('event form uses fixed save/cancel dock without duplicate controls', () => 
   assert.match(app, /aria-label="Aktionen für Ereignisbearbeitung"/);
   assert.match(app, /className=\{\x60panel card-headed\$\{editingEvent \? " workflow-dock-host"/);
   assert.match(app, /disabled=\{sourcePickerOpen \|\| coordinationRunning/);
-  assert.match(app, /disabled=\{editingEvent\} onClick=\{\(\) => \{ setSourcePickerOpen\(true\)/);
+  assert.match(app, /disabled=\{editingEvent\} onClick=\{\(\) => \{ setSourceMatches\(\[\]\); setSourcePickerOpen\(true\)/);
 });
 
 const findingRead = readFileSync('supabase/functions/fib-get-event/index.ts', 'utf8');
