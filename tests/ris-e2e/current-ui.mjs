@@ -112,6 +112,18 @@ try {
   assert.equal((await db.query("select count(*)::int n from fib.ris_agenda_events where role='main_event'")).rows[0].n,1);
   assert.equal((await db.query("select count(*)::int n from fib.ris_agenda_events where role='local_reference'")).rows[0].n,1);
   record("Manual TOP main event and related events remain independent");
+  // Opening an event inside the Sitzung must reuse the existing event editor
+  // without changing the active sidebar item, and return to this exact TOP.
+  await page.locator("section").filter({has:page.getByRole("heading",{name:"TOP als Ereignis festlegen",exact:true})})
+    .getByRole("button",{name:"Ereignis öffnen"}).click();
+  await page.getByRole("heading",{name:"Ereignisdaten",exact:true}).waitFor();
+  assert.equal(await page.locator(".side-nav").getByRole("button",{name:"Sitzungen",exact:true}).getAttribute("aria-current"),"page");
+  await page.getByRole("button",{name:"Zurück zu TOP 2",exact:true}).click();
+  await page.getByRole("heading",{name:"TOP als Ereignis festlegen",exact:true}).waitFor();
+  assert.equal(await page.getByRole("navigation",{name:"Sitzung und Tagesordnungspunkte"})
+    .getByRole("button",{name:"TOP 2"}).getAttribute("aria-current"),"page");
+  record("Event editor reuses existing form with active Sitzung navigation and exact TOP return");
+
   await page.getByRole("navigation",{name:"Sitzung und Tagesordnungspunkte"}).getByRole("button",{name:"Sitzungsübersicht"}).click();
   await page.getByRole("heading",{name:"Ereignisse zur Sitzung",exact:true}).waitFor();
   await page.locator("section").filter({has:page.getByRole("heading",{name:"Ereignisse zur Sitzung",exact:true})})
