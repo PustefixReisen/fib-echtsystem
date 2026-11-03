@@ -145,6 +145,18 @@ try {
   assert.equal(await main().getByRole("button", {name:"Auswählen oder erstellen"}).count(),0);
   assert.equal(await page.evaluate(() => window.calls.filter(c=>c.action==="ris_link_main_event").length),0,
     "Main event creation commits the explicit role without another linking action");
+  await main().getByRole("heading",{name:"Unterlagen als Fundstellen bestätigen"}).waitFor();
+  assert.equal(await main().getByRole("checkbox").count(),1);
+  assert.equal(await main().getByRole("checkbox").first().isChecked(),true);
+  await main().getByRole("button",{name:"Ausgewählte Fundstellen bestätigen"}).click();
+  await page.getByRole("heading",{name:"Unterlagen als Fundstellen bestätigen"}).waitFor({state:"detached"});
+  const confirmationCalls=await page.evaluate(() => window.calls.filter(c=>c.action==="ris_confirm_main_findings"));
+  assert.equal(confirmationCalls.length,1);
+  assert.deepEqual(confirmationCalls[0].linkIds,["l1"]);
+  assert.equal(confirmationCalls[0].approval,true);
+  const mainQueries=await page.evaluate(() => window.calls.filter(c=>c.action==="source_choices" && c.eventRole==="main_event"));
+  assert.ok(mainQueries.every(c=>c.agendaId==="t2"),"Main event choices are scoped to the current TOP");
+
   await page.getByRole("navigation", {name:"Sitzung und Tagesordnungspunkte"}).getByRole("button",{name:"Sitzungsübersicht"}).click();
   await heading("Ereignisse zur Sitzung").waitFor();
   await sessionEvents().getByRole("button",{name:"Ereignis zuordnen"}).click();
