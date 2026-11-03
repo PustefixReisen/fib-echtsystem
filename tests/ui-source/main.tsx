@@ -68,6 +68,7 @@ const api = async (b: any) => {
       ),
       processes: [],
       topics: [],
+      ...(b.agendaId ? {scopedToAgendaId:b.agendaId,scopedRole:b.eventRole} : {}),
     };
   }
   if (b.action === "ris_sessions") {
