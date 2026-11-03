@@ -128,6 +128,15 @@ try {
   assert.equal(await button("Neu: Ereignis").count(),0);
   await button("Abbrechen").click();
   await heading("Weitere Ereignisse zum TOP").waitFor();
+  // Old Preview backends ignore agenda filters. The UI must never show
+  // unrelated events without a server-side scope confirmation.
+  await page.evaluate(() => window.legacyChoices = true);
+  await main().getByRole("button", { name: "Auswählen oder erstellen" }).click();
+  await page.getByText("Die Vorschau verwendet noch einen älteren Ereignisdienst.",{exact:false}).waitFor();
+  assert.equal(await page.getByRole("radio").count(),0,
+    "Legacy server event lists are not accepted as current-session candidates");
+  await button("Abbrechen").click();
+  await page.evaluate(() => window.legacyChoices = false);
   // One explicitly chosen main TOP event; press material is never auto-linked.
   await main().getByRole("button", { name: "Auswählen oder erstellen" }).click();
   assert.equal(await page.getByRole("radio").count(),0,
