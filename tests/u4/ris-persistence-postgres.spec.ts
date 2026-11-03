@@ -74,6 +74,7 @@ async function main() {
     "security/runtime-roles.sql",
     "security/runtime-policies.sql",
     "migrations/20261010194500_fib_last_edit_coordination.sql",
+    "migrations/20261015123000_finding_justification.sql",
     "migrations/20261029200933_fib_u4_source_monitor_persistence.sql",
     "migrations/20261030093000_fib_u4_source_observations.sql",
     "migrations/20261031081340_fib_ris_editorial_structure.sql",
