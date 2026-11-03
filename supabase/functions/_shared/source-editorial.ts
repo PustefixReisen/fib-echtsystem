@@ -230,10 +230,16 @@ export async function sourceEditorial(
       "select id from fib.ris_sessions where id=$1 for update",
       [input.sessionId],
     )).length) throw Error("source_missing");
-    if (input.agendaId && input.mainEvent && (await tx.unsafe(
-      "select event_id from fib.ris_agenda_events where agenda_id=$1 and role='main_event'",
-      [input.agendaId],
-    )).length) throw Error("ris_top_main_event_already_assigned");
+    if (input.agendaId && input.mainEvent) {
+      const primary = await tx.unsafe(
+        "select event_id from fib.ris_agenda_events where agenda_id=$1 and role='main_event'",
+        [input.agendaId],
+      );
+      // A retry with the same request ID must remain idempotent.
+      if (primary.length && primary[0].event_id !== input.requestId) {
+        throw Error("ris_top_main_event_already_assigned");
+      }
+    }
     const old = (
       await tx.unsafe(
         "select e.title,e.summary,e.occurred_at,ef.finding_id,ef.justification from fib.events e left join fib.event_findings ef on ef.event_id=e.id and ef.finding_id=$2 where e.id=$1",
