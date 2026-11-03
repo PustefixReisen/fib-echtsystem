@@ -856,3 +856,14 @@ button:has(> .action-icon) { display: inline-flex; align-items: center; justify-
 @media (max-width: 600px) {
   .fib-development-pill { font-size: .65rem; }
 }
+
+/* Compact page top for Sitzungen and Fundstellen without changing card spacing. */
+.content-shell:has(> .source-workspace) { padding-top: .85rem; }
+.source-workspace > .breadcrumbs { margin-bottom: .45rem; }
+.source-workspace > .page-heading { margin-bottom: .8rem; }
+.source-workspace > .page-heading h1 { margin-bottom: 0; }
+@media (max-width: 760px) {
+  .content-shell:has(> .source-workspace) { padding-top: .6rem; }
+  .source-workspace > .breadcrumbs { margin-bottom: .35rem; }
+  .source-workspace > .page-heading { gap: .45rem; margin-bottom: .7rem; }
+}

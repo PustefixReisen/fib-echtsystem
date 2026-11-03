@@ -44,6 +44,19 @@ try {
   await tabs.getByRole("button",{name:"TOP 2"}).click();
   assert.equal(await tabs.getByRole("button",{name:"TOP 2"}).getAttribute("aria-current"),"page");
   await heading("Beschlussvorschlag / Dokumente").waitFor();
+  const desktopTopSpacing=await page.evaluate(() => {
+    const shell=document.querySelector(".content-shell");
+    const crumbs=document.querySelector(".source-workspace > .breadcrumbs");
+    const header=document.querySelector(".source-workspace > .page-heading");
+    return {
+      shellPadding:shell ? parseFloat(getComputedStyle(shell).paddingTop) : 0,
+      breadcrumbMargin:parseFloat(getComputedStyle(crumbs).marginBottom),
+      headingMargin:parseFloat(getComputedStyle(header).marginBottom),
+    };
+  });
+  assert.ok(desktopTopSpacing.shellPadding<=15 && desktopTopSpacing.breadcrumbMargin<=9 && desktopTopSpacing.headingMargin<=14,
+    "Sitzungsseite hat einen kompakten Abstand über dem Titel");
+
   assert.equal(await heading("Beschlussfassung").count(), 0);
   assert.equal(
     await page.getByText("Must not render raw", { exact: true }).count(),
@@ -150,6 +163,10 @@ try {
     fullPage: true,
   });
   await page.setViewportSize({ width: 390, height: 844 });
+  assert.ok(await page.evaluate(() =>
+    !document.querySelector(".content-shell") || parseFloat(getComputedStyle(document.querySelector(".content-shell")).paddingTop) <= 11
+  ),"Mobiler Seitenkopf bleibt kompakt");
+
   assert.equal(await tabs.getByRole("button",{name:"TOP 2"}).count(),1);
   assert.equal(await page.getByRole("button",{name:"‹ Zurück zur Tagesordnung"}).count(),0);
   assert.equal(
