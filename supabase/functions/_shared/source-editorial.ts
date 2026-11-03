@@ -30,11 +30,34 @@ export async function sourceEditorial(
     };
   }
   if (input.action === "source_choices") {
-    return {
-      events: await tx.unsafe(
+    const agendaFilter = input.agendaId && input.eventRole;
+    if (agendaFilter && !["main_event","local_reference"].includes(input.eventRole))
+      throw Error("invalid_event_role");
+    const agenda = agendaFilter ? (await tx.unsafe(
+      "select a.session_id from fib.ris_agenda_items a where a.id=$1",
+      [input.agendaId],
+    ))[0] : null;
+    if (agendaFilter && !agenda) throw Error("source_missing");
+    // Only authoritative RIS document→accepted finding→event relationships count.
+    // Press mentions and loose textual similarity are never used to infer TOP links.
+    const events = agendaFilter
+      ? await tx.unsafe(
+        `select e.id,e.title,e.occurred_at event_date,e.summary
+         from fib.events e where e.status='confirmed' and e.title ilike $1
+         and ${input.eventRole === "main_event" ? "exists" : "not exists"} (
+           select 1 from fib.event_findings ef
+             join fib.ris_documents d on d.finding_id=ef.finding_id
+             join fib.ris_document_links l on l.document_id=d.id
+           where ef.event_id=e.id and l.session_id=$2 and l.status='confirmed'
+         ) order by e.title limit 101`,
+        [query,agenda.session_id],
+      )
+      : await tx.unsafe(
         "select id,title,occurred_at event_date,summary from fib.events where status='confirmed' and title ilike $1 order by title limit 101",
         [query],
-      ),
+      );
+    return {
+      events,
       processes: await tx.unsafe(
         "select id,title from fib.processes where status<>'archived' and title ilike $1 order by title limit 101",
         [query],
