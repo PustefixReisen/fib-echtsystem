@@ -867,3 +867,10 @@ button:has(> .action-icon) { display: inline-flex; align-items: center; justify-
   .source-workspace > .breadcrumbs { margin-bottom: .35rem; }
   .source-workspace > .page-heading { gap: .45rem; margin-bottom: .7rem; }
 }
+
+/* A deliberate review step for multiple official RIS documents attached to a TOP event. */
+.ris-finding-confirm { margin-top: 1rem; border-top: 1px solid #dbe6dd; padding-top: .9rem; }
+.ris-finding-confirm h3 { margin-top: 0; }
+.ris-finding-confirm fieldset { border: 1px solid #dbe6dd; border-radius: .5rem; padding: .65rem; margin: .75rem 0; }
+.ris-finding-confirm .ris-document-check { display: flex; flex-direction: row; align-items: start; gap: .6rem; padding: .4rem 0; overflow-wrap: anywhere; }
+.ris-finding-confirm .ris-document-check input { margin-top: .25rem; flex: 0 0 auto; }
