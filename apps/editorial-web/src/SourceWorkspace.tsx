@@ -356,6 +356,12 @@ export function SourceWorkspace({
               : "Fundstellen"}
           </h1>
         </div>
+        <div className="source-actions ris-page-navigation">
+          {session && topId && (
+            <button type="button" disabled={busy} onClick={() => setTopId("")}>
+              ‹ Zurück zur Tagesordnung
+            </button>
+          )}
         <button
           className="action-button"
           disabled={busy}
@@ -369,6 +375,7 @@ export function SourceWorkspace({
         >
           Zurück zur Liste
         </button>
+        </div>
       </div>
       {returnContext && detail && (
         <button
