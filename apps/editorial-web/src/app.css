@@ -809,3 +809,38 @@ button:has(> .action-icon) { display: inline-flex; align-items: center; justify-
 .ris-simplified .ris-document-item .source-actions { flex-wrap: nowrap; }
 .ris-simplified .ris-document-item .source-actions > button,
 .ris-simplified .ris-document-item .source-actions > a { flex: 0 0 auto; }
+
+/* Session-wide event cards: derived objects are read-only, never separately assigned. */
+.ris-session-event { border-bottom: 1px solid var(--border, #d8e1dc); padding: .45rem 0 .7rem; }
+.ris-session-event:last-of-type { border-bottom: none; }
+.ris-derived-relations { display:flex; gap:.35rem; flex-wrap:wrap; margin:.2rem 0 .2rem .6rem; }
+.ris-derived-relations span { font-size:.9rem; border-radius:.35rem; padding:.2rem .45rem; background:#edf5ee; }
+
+/* Accepted RIS navigation and action hierarchy (#383). */
+.ris-session-tabs {
+  display: flex; flex-wrap: nowrap; align-items: center; gap: .35rem;
+  overflow-x: auto; overscroll-behavior-inline: contain;
+  scrollbar-width: thin; background: #fff;
+  border: 1px solid #d8e3db; border-radius: 11px;
+  padding: .55rem; margin-bottom: .9rem; max-width: 100%;
+}
+.ris-session-tabs > button {
+  flex: 0 0 auto; white-space: nowrap; border: 1px solid transparent;
+  background: transparent; color: #18533e; font-weight: 650;
+}
+.ris-session-tabs > button.active,
+.ris-session-tabs > button[aria-current="page"] {
+  background: #e5f3e9; border-color: #b7d6c1; color: #104c37;
+}
+.ris-session-tabs > button:focus-visible { outline: 3px solid #126846; outline-offset: -2px; }
+.ris-external-reference { display: inline-flex; align-items: center; flex-wrap: wrap; gap: .4rem; min-width: 0; }
+.ris-external-reference > span { color: inherit; text-decoration: none; }
+.fib-external-icon {
+  display: inline-flex; min-width: 36px; width: 36px; min-height: 36px; height: 36px;
+  border: 1px solid #c1d9c9; border-radius: 7px; background: #fff;
+  padding: .4rem; color: #18533e; align-items: center; justify-content: center;
+}
+.ris-simplified .card-headed > .section-heading:first-child > button {
+  background: #fff; color: #18533e; border: 1px solid #b8d1c2; font-weight: 600;
+}
+.ris-simplified .card-headed > .section-heading:first-child > button:hover { background: #f1f7f3; }

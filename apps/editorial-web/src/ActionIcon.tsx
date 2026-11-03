@@ -37,19 +37,15 @@ export function OriginalLink(
     text?: string;
   },
 ) {
-  return url && /^https:\/\//i.test(url)
-    ? (
-      <a
-        className={text ? "ris-external-link" : "fib-action-icon"}
-        href={url}
-        target="_blank"
-        rel="noopener noreferrer"
-        title={label}
-        aria-label={label}
-      >
-        <IconGlyph name="↗"/>
-        {text && <span>{text}</span>}
-      </a>
-    )
-    : null;
+  if (!url || !/^https:\/\//i.test(url)) return null;
+  const icon = (
+    <a className="fib-action-icon fib-external-icon"
+      href={url} target="_blank" rel="noopener noreferrer"
+      title={label} aria-label={label}>
+      <IconGlyph name="↗"/>
+    </a>
+  );
+  return text
+    ? <span className="ris-external-reference">{icon}<span>{text}</span></span>
+    : icon;
 }

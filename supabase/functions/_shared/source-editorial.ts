@@ -206,7 +206,8 @@ export async function sourceEditorial(
     if (occurredAt && !Number.isFinite(Date.parse(occurredAt))) {
       throw Error("invalid_source_input");
     }
-    if (Boolean(input.findingId) === Boolean(input.agendaId)) {
+    if ([input.findingId,input.agendaId,input.sessionId].filter(Boolean).length !== 1 ||
+        input.mainEvent && !input.agendaId) {
       throw Error("invalid_source_input");
     }
     await tx.unsafe("select pg_advisory_xact_lock(hashtextextended($1,0))", [
@@ -225,6 +226,20 @@ export async function sourceEditorial(
         [input.agendaId],
       )).length
     ) throw Error("source_missing");
+    if (input.sessionId && !(await tx.unsafe(
+      "select id from fib.ris_sessions where id=$1 for update",
+      [input.sessionId],
+    )).length) throw Error("source_missing");
+    if (input.agendaId && input.mainEvent) {
+      const primary = await tx.unsafe(
+        "select event_id from fib.ris_agenda_events where agenda_id=$1 and role='main_event'",
+        [input.agendaId],
+      );
+      // A retry with the same request ID must remain idempotent.
+      if (primary.length && primary[0].event_id !== input.requestId) {
+        throw Error("ris_top_main_event_already_assigned");
+      }
+    }
     const old = (
       await tx.unsafe(
         "select e.title,e.summary,e.occurred_at,ef.finding_id,ef.justification from fib.events e left join fib.event_findings ef on ef.event_id=e.id and ef.finding_id=$2 where e.id=$1",
@@ -245,10 +260,14 @@ export async function sourceEditorial(
       if (
         input.agendaId &&
         !(await tx.unsafe(
-          "select event_id from fib.ris_agenda_events where agenda_id=$1 and event_id=$2 and role='local_reference'",
-          [input.agendaId, input.requestId],
+          "select event_id from fib.ris_agenda_events where agenda_id=$1 and event_id=$2 and role=$3",
+          [input.agendaId, input.requestId, input.mainEvent ? "main_event" : "local_reference"],
         )).length
       ) throw Error("request_conflict");
+      if (input.sessionId && !(await tx.unsafe(
+        "select event_id from fib.ris_session_events where session_id=$1 and event_id=$2",
+        [input.sessionId,input.requestId],
+      )).length) throw Error("request_conflict");
       return { eventId: input.requestId, reused: true };
     }
     await tx.unsafe(
@@ -263,8 +282,14 @@ export async function sourceEditorial(
     }
     if (input.agendaId) {
       await tx.unsafe(
-        "insert into fib.ris_agenda_events(agenda_id,event_id,role,reviewed_by) values($1,$2,'local_reference',$3)",
-        [input.agendaId, input.requestId, actor.userId],
+        "insert into fib.ris_agenda_events(agenda_id,event_id,role,reviewed_by) values($1,$2,$3,$4)",
+        [input.agendaId, input.requestId, input.mainEvent ? "main_event" : "local_reference", actor.userId],
+      );
+    }
+    if (input.sessionId) {
+      await tx.unsafe(
+        "insert into fib.ris_session_events(session_id,event_id,origin,reviewed_by) values($1,$2,'manual',$3)",
+        [input.sessionId,input.requestId,actor.userId],
       );
     }
     await tx.unsafe(

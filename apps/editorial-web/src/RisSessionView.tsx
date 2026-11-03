@@ -32,7 +32,7 @@ export function RisSessionView(
   }: Props,
 ) {
   const [localTop, setLocalTop] = useState(""),
-    [showSearch, setShowSearch] = useState(false);
+    [assignment, setAssignment] = useState<"session" | "main" | "related" | null>(null);
   const [error, setError] = useState(""),
     [saving, setSaving] = useState(false);
   const select = (id: string) => {
@@ -58,6 +58,11 @@ export function RisSessionView(
   const events: Row[] = selected
     ? (data.events ?? []).filter((e: Row) => e.agenda_id === selected.id)
     : [];
+  const mainEvents: Row[] = selected
+    ? (data.mainEvents ?? []).filter((e: Row) => e.agenda_id === selected.id)
+    : [];
+  const sessionEvents: Row[] = data.sessionEvents ?? [];
+  const sessionRelated: Row = data.sessionRelated ?? {messages: [],processes: [],topics: []};
   const title = (d: Row) =>
     [
       ({
@@ -92,28 +97,79 @@ export function RisSessionView(
       </div>
     </li>
   );
-  if (showSearch && selected) {
+  if (assignment && (assignment === "session" || selected)) {
+    const isSession = assignment === "session";
+    const chosen = isSession ? sessionEvents : assignment === "main" ? mainEvents : events;
+    const target = isSession
+      ? {sessionId: session.id}
+      : {agendaId: selected!.id, ...(assignment === "main" ? {mainEvent: true} : {})};
     return (
       <EventAssignmentView
-        context={`Sitzung ${
-          displayDate(session.session_date)
-        } / TOP ${selected.number}`}
-        target={{ agendaId: selected.id }}
+        context={isSession
+          ? `Sitzung ${displayDate(session.session_date)}`
+          : `Sitzung ${displayDate(session.session_date)} / TOP ${selected!.number}`}
+        target={target}
         registerLeaveGuard={registerLeaveGuard}
-        linkedIds={events.map((e) => e.event_id)}
-        suggestion={{ title: selected.title, date: session.session_date }}
+        linkedIds={chosen.map((e: Row) => e.event_id)}
+        suggestion={{
+          title: isSession
+            ? `${session.committee_name || "Gemeinderat"} · Sitzung am ${displayDate(session.session_date)}`
+            : selected!.title,
+          date: session.session_date,
+        }}
         api={api}
         eventLock={eventLock}
-        onCancel={() => setShowSearch(false)}
+        onCancel={() => setAssignment(null)}
         onDone={async () => {
           await onReload();
-          setShowSearch(false);
+          setAssignment(null);
         }}
       />
     );
   }
+  const unlink = (event: Row, action: string, agendaId?: string) => {
+    if (!window.confirm(`Zuordnung zu „${event.event_title}“ entfernen? Das Ereignis bleibt erhalten.`)) return;
+    setSaving(true);
+    setError("");
+    void eventLock(event.event_id, () => api({
+      action,
+      ...(agendaId ? {agendaId} : {sessionId: session.id}),
+      eventId: event.event_id,
+    })).then(onReload).catch((err) =>
+      setError(err instanceof Error ? err.message : "Entfernen fehlgeschlagen.")
+    ).finally(() => setSaving(false));
+  };
+  const eventRow = (event: Row, action: string, agendaId?: string) => (
+    <div className="work-item" key={event.event_id}>
+      <span>{event.event_title}{event.event_date && ` · ${displayDate(event.event_date)}`}</span>
+      <div className="source-actions">
+        <ActionIcon label="Ereignis öffnen" onClick={() => onOpenEvent(event.event_id)}>→</ActionIcon>
+        <ActionIcon
+          label={`Zuordnung zu ${event.event_title} entfernen`}
+          disabled={busy || saving}
+          onClick={() => unlink(event, action, agendaId)}
+        >🗑</ActionIcon>
+      </div>
+    </div>
+  );
   return (
     <div className="ris-simplified">
+      <nav className="ris-session-tabs" aria-label="Sitzung und Tagesordnungspunkte">
+        <button type="button" className={!selected ? "active" : ""}
+          aria-current={!selected ? "page" : undefined}
+          onClick={() => select("")}>
+          Sitzungsübersicht
+        </button>
+        {agenda.map((item) => (
+          <button type="button" key={item.id}
+            className={selected?.id === item.id ? "active" : ""}
+            aria-current={selected?.id === item.id ? "page" : undefined}
+            title={`TOP ${item.number}: ${item.title}`}
+            onClick={() => select(item.id)}>
+            TOP {item.number}
+          </button>
+        ))}
+      </nav>
       {error && <p role="alert">{error}</p>}
       {!selected
         ? (
@@ -177,6 +233,29 @@ export function RisSessionView(
                 );
               })}
               {!agenda.length && <p>Keine Tagesordnungspunkte erfasst.</p>}
+            </section>
+            <section className="panel card-headed">
+              <div className="section-heading">
+                <h2>Ereignisse zur Sitzung</h2>
+                <button type="button" disabled={busy || saving} onClick={() => setAssignment("session")}>
+                  Ereignis zuordnen
+                </button>
+              </div>
+              {sessionEvents.map((e) => (
+                <div className="ris-session-event" key={e.event_id}>
+                  {eventRow(e, "ris_unlink_session_event")}
+                  <div className="ris-derived-relations" aria-label="Abgeleitete Beziehungen">
+                    {(sessionRelated.messages ?? []).filter((m: Row) => m.event_id === e.event_id)
+                      .map((m: Row) => <span key={m.id}>Meldung: {m.title}</span>)}
+                    {(sessionRelated.processes ?? []).filter((p: Row) => p.event_id === e.event_id)
+                      .map((p: Row) => <span key={p.id}>Vorgang: {p.title}</span>)}
+                    {(sessionRelated.topics ?? []).filter((t: Row) => t.event_id === e.event_id)
+                      .map((t: Row) => <span key={t.id}>Thema: {t.title}</span>)}
+                  </div>
+                </div>
+              ))}
+              {!sessionEvents.length && <p>Noch kein Ereignis mit der Sitzung verbunden.</p>}
+              <p className="meta">Allgemeine Presseberichte beziehen sich auf die Sitzung insgesamt, nicht auf einzelne TOPs.</p>
             </section>
           </>
         )
@@ -249,55 +328,25 @@ export function RisSessionView(
             )}
             <section className="panel card-headed">
               <div className="section-heading">
-                <h2>Lokale Bezüge</h2>
-                <button type="button" disabled={busy || saving} onClick={() => setShowSearch(true)}>
-                  Neu: Lokaler Bezug
+                <h2>TOP als Ereignis festlegen</h2>
+                {!mainEvents.length && (
+                  <button type="button" disabled={busy || saving} onClick={() => setAssignment("main")}>
+                    Auswählen oder erstellen
+                  </button>
+                )}
+              </div>
+              {mainEvents.map((e) => eventRow(e, "ris_unlink_main_event", selected.id))}
+              {!mainEvents.length && <p>Noch kein Hauptereignis zugeordnet. Die Zuordnung erfolgt nur durch die Redaktion.</p>}
+            </section>
+            <section className="panel card-headed">
+              <div className="section-heading">
+                <h2>Weitere Ereignisse zum TOP</h2>
+                <button type="button" disabled={busy || saving} onClick={() => setAssignment("related")}>
+                  Ereignis zuordnen
                 </button>
               </div>
-              {events.map((e) => (
-                <div className="work-item" key={e.event_id}>
-                  <span>
-                    {e.event_title}
-                    {e.event_date && ` · ${displayDate(e.event_date)}`}
-                  </span>
-                  <div className="source-actions">
-                    <ActionIcon
-                      label="Ereignis öffnen"
-                      onClick={() => onOpenEvent(e.event_id)}
-                    >
-                      →
-                    </ActionIcon>
-                    <ActionIcon
-                      label={`Lokalen Bezug zu ${e.event_title} entfernen`}
-                      disabled={busy || saving}
-                      onClick={() => {
-                        if (
-                          !window.confirm(
-                            `Zuordnung zu „${e.event_title}“ entfernen? Das Ereignis bleibt erhalten.`,
-                          )
-                        ) return;
-                        setSaving(true);
-                        setError("");
-                        void eventLock(e.event_id, () =>
-                          api({
-                            action: "ris_unlink_event",
-                            agendaId: selected.id,
-                            eventId: e.event_id,
-                          })).then(onReload).catch((err) =>
-                            setError(
-                              err instanceof Error
-                                ? err.message
-                                : "Entfernen fehlgeschlagen.",
-                            )
-                          ).finally(() => setSaving(false));
-                      }}
-                    >
-                      🗑
-                    </ActionIcon>
-                  </div>
-                </div>
-              ))}
-              {!events.length && <p>Noch kein Ereignis zugeordnet.</p>}
+              {events.map((e) => eventRow(e, "ris_unlink_event", selected.id))}
+              {!events.length && <p>Keine weiteren Ereignisse zugeordnet.</p>}
             </section>
           </>
         )}

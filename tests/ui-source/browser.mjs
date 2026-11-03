@@ -32,12 +32,17 @@ await page.route(
 const button = (name) => page.getByRole("button", { name, exact: true });
 const heading = (name) => page.getByRole("heading", { name, exact: true });
 const local = () =>
-  page.locator("section").filter({ has: heading("Lokale Bezüge") });
+  page.locator("section").filter({ has: heading("Weitere Ereignisse zum TOP") });
+const main = () => page.locator("section").filter({has: heading("TOP als Ereignis festlegen")});
+const sessionEvents = () => page.locator("section").filter({has: heading("Ereignisse zur Sitzung")});
+const linkRelated = () => local().getByRole("button", { name: "Ereignis zuordnen" });
 try {
   await page.goto("http://127.0.0.1:4174");
   await button("Sitzungsbereich").click();
   await button("Sitzung öffnen").click();
-  await button("TOP 2 öffnen").click();
+  const tabs=page.getByRole("navigation",{name:"Sitzung und Tagesordnungspunkte"});
+  await tabs.getByRole("button",{name:"TOP 2"}).click();
+  assert.equal(await tabs.getByRole("button",{name:"TOP 2"}).getAttribute("aria-current"),"page");
   await heading("Beschlussvorschlag / Dokumente").waitFor();
   assert.equal(await heading("Beschlussfassung").count(), 0);
   assert.equal(
@@ -58,8 +63,8 @@ try {
   assert.equal(await heading("Versionen").count(), 0);
   assert.equal(await heading("Beschlussvorschlag / Dokumente").count(), 1);
   assert.equal(await button("Fundstelle öffnen").count(), 1);
-  await button("Neu: Lokaler Bezug").click();
-  await heading("Lokalen Bezug hinzufügen").waitFor();
+  await linkRelated().click();
+  await heading("Weiteres Ereignis zuordnen").waitFor();
   assert.equal(await page.locator("select").count(), 0);
   assert.equal(
     await page.locator("textarea").count(),
@@ -72,7 +77,7 @@ try {
   await page.getByRole("alert").waitFor();
   await page.evaluate(() => window.denyLock = false);
   await button("Zuordnen").click();
-  await heading("Lokale Bezüge").waitFor();
+  await heading("Weitere Ereignisse zum TOP").waitFor();
   assert.ok(
     (await local().innerText()).includes("Pressebericht zur Kita-Finanzierung"),
   );
@@ -81,20 +86,20 @@ try {
   );
   assert.equal(call.rationale, undefined);
   assert.equal(call.role, undefined);
-  await button("Neu: Lokaler Bezug").click();
+  await linkRelated().click();
   await page.getByText(/Bereits zugeordnet/).waitFor();
   assert.ok(await page.getByRole("radio").first().isDisabled());
   await button("Abbrechen").click();
-  await local().getByRole("button", { name: /Lokalen Bezug.*entfernen/ })
+  await local().getByRole("button", { name: /Zuordnung zu .* entfernen/ })
     .click();
-  await page.getByText("Noch kein Ereignis zugeordnet.").waitFor();
-  await button("Neu: Lokaler Bezug").click();
+  await page.getByText("Keine weiteren Ereignisse zugeordnet.").waitFor();
+  await linkRelated().click();
   await button("Neu: Ereignis").click();
   await page.getByLabel("Ereignistitel *", { exact: true }).fill(
     "Lokales Ereignis außerhalb der Sitzung",
   );
   await button("Speichern").click();
-  await heading("Lokale Bezüge").waitFor();
+  await heading("Weitere Ereignisse zum TOP").waitFor();
   assert.ok(
     (await local().innerText()).includes(
       "Lokales Ereignis außerhalb der Sitzung",
@@ -104,7 +109,7 @@ try {
   await heading("Inhalt und Herkunft").waitFor();
   assert.equal(await heading("Ereignisbezug").count(), 0,
     "RIS documents do not expose independent event assignment");
-  assert.equal(await page.locator(".ris-external-link").count(), 1,
+  assert.equal(await page.locator(".ris-external-reference .fib-external-icon").count(), 1,
     "RIS original is linked exactly once");
   assert.equal(await button("Fundstelle ausdrücklich übernehmen").count(), 0);
   await button("Zurück zu TOP 2").click();
@@ -113,18 +118,42 @@ try {
     await local().getByRole("button", { name: "Ereignis öffnen", exact: true }).count(),
     1,
   );
-  await button("Neu: Lokaler Bezug").click();
+  await linkRelated().click();
   await button("Neu: Ereignis").click();
   await button("Abbrechen").click();
-  await heading("Lokalen Bezug hinzufügen").waitFor();
+  await heading("Weiteres Ereignis zuordnen").waitFor();
   await button("Abbrechen").click();
-  await heading("Lokale Bezüge").waitFor();
+  await heading("Weitere Ereignisse zum TOP").waitFor();
+  // One explicitly chosen main TOP event; press material is never auto-linked.
+  await main().getByRole("button", { name: "Auswählen oder erstellen" }).click();
+  await button("Neu: Ereignis").click();
+  await page.getByLabel("Ereignistitel *", { exact: true }).fill("TOP 2: Beratung zum Elternbeitragszuschuss");
+  await button("Speichern").click();
+  await heading("TOP als Ereignis festlegen").waitFor();
+  assert.equal(await main().getByRole("button", {name:"Ereignis öffnen"}).count(),1);
+  assert.equal(await main().getByRole("button", {name:"Auswählen oder erstellen"}).count(),0);
+  assert.equal(await page.evaluate(() => window.calls.filter(c=>c.action==="ris_link_main_event").length),0,
+    "Main event creation commits the explicit role without another linking action");
+  await page.getByRole("navigation", {name:"Sitzung und Tagesordnungspunkte"}).getByRole("button",{name:"Sitzungsübersicht"}).click();
+  await heading("Ereignisse zur Sitzung").waitFor();
+  await sessionEvents().getByRole("button",{name:"Ereignis zuordnen"}).click();
+  await page.getByRole("radio").first().check();
+  await button("Zuordnen").click();
+  await heading("Ereignisse zur Sitzung").waitFor();
+  assert.equal(await sessionEvents().getByRole("button",{name:"Ereignis öffnen"}).count(),1);
+  assert.equal(await page.evaluate(() => window.calls.filter(c=>c.action==="ris_link_session_event").length),1);
+  assert.equal(await page.getByText("TOP 2: Beratung zum Elternbeitragszuschuss").count(),0,
+    "Session event selection cannot automatically add the TOP's editorial main event to its list");
+  await button("TOP 2 öffnen").click();
+  await heading("TOP als Ereignis festlegen").waitFor();
   mkdirSync("/tmp/fib-source-ui", { recursive: true });
   await page.screenshot({
     path: "/tmp/fib-source-ui/ris-desktop.png",
     fullPage: true,
   });
   await page.setViewportSize({ width: 390, height: 844 });
+  assert.equal(await tabs.getByRole("button",{name:"TOP 2"}).count(),1);
+  assert.equal(await page.getByRole("button",{name:"‹ Zurück zur Tagesordnung"}).count(),0);
   assert.equal(
     await page.evaluate(() =>
       document.documentElement.scrollWidth > innerWidth + 1
@@ -150,7 +179,7 @@ try {
     await page.evaluate(() =>
       window.calls.filter((c) => c.action === "source_create_event").length
     ),
-    1,
+    2,
   );
   assert.deepEqual(errors, []);
   console.log(

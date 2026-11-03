@@ -77,34 +77,54 @@ try {
   assert.equal(await page.getByRole("heading", { name: "Beschlussfassung", exact: true }).count(), 0);
   assert.equal(await page.getByLabel("Tagesordnungspunkt", { exact: true }).count(), 0);
   assert.equal(await page.getByRole("heading", { name: "Redaktionelle Prüfung", exact: true }).count(), 0);
-  await page.getByRole("button", { name: "Neu: Lokaler Bezug", exact: true }).click();
-  await page.getByRole("heading", { name: "Lokalen Bezug hinzufügen" }).waitFor();
+  await page.locator("section").filter({has:page.getByRole("heading",{name:"Weitere Ereignisse zum TOP",exact:true})}).getByRole("button",{name:"Ereignis zuordnen"}).click();
+  await page.getByRole("heading", { name: "Weiteres Ereignis zuordnen" }).waitFor();
   await page.getByRole("button", { name: "Abbrechen" }).click();
-  assert.equal(await page.getByRole("heading", { name: "Lokalen Bezug hinzufügen" }).count(), 0);
+  assert.equal(await page.getByRole("heading", { name: "Weiteres Ereignis zuordnen" }).count(), 0);
   // Real authenticated document workflow; Storage and source responses are explicit fixtures.
   const beforeFindings=(await db.query("select count(*)::int n from fib.findings")).rows[0].n;
   assert.ok(beforeFindings>=2);
-  await page.getByRole("button",{name:"Neu: Lokaler Bezug",exact:true}).click();
+  await page.locator("section").filter({has:page.getByRole("heading",{name:"Weitere Ereignisse zum TOP",exact:true})}).getByRole("button",{name:"Ereignis zuordnen"}).click();
   await page.getByRole("button",{name:"Neu: Ereignis",exact:true}).click();
   await page.getByLabel("Ereignistitel *",{exact:true}).fill("Isolierter lokaler Bezug außerhalb der Sitzung");
   await page.getByRole("button",{name:"Speichern",exact:true}).click();
-  await page.getByRole("heading",{name:"Lokale Bezüge",exact:true}).waitFor();
+  await page.getByRole("heading",{name:"Weitere Ereignisse zum TOP",exact:true}).waitFor();
   assert.equal((await db.query("select count(*)::int n from fib.event_findings")).rows[0].n,0);
   await page.getByRole("button",{name:"Fundstelle öffnen",exact:true}).first().click();
   await page.getByRole("heading",{name:"Inhalt und Herkunft",exact:true}).waitFor();
   assert.equal(await page.getByRole("heading",{name:"Ereignisbezug",exact:true}).count(),0);
   assert.equal(await page.getByRole("heading",{name:"Versionen",exact:true}).count(),0);
   assert.equal(await page.getByRole("button",{name:"PDF-Vorschau öffnen",exact:true}).count(),0);
-  assert.equal(await page.locator(".ris-external-link").count(),1);
+  assert.equal(await page.locator(".ris-external-reference .fib-external-icon").count(),1);
   await page.getByRole("button",{name:"Zurück zu TOP 2",exact:true}).click();
   await page.getByRole("heading",{name:"Beschlussvorschlag / Dokumente",exact:true}).waitFor();
-  await page.getByRole("button",{name:"Neu: Lokaler Bezug",exact:true}).click();
+  await page.locator("section").filter({has:page.getByRole("heading",{name:"Weitere Ereignisse zum TOP",exact:true})}).getByRole("button",{name:"Ereignis zuordnen"}).click();
   await page.getByRole("button",{name:"Neu: Ereignis",exact:true}).click();
   await page.getByRole("button",{name:"Abbrechen",exact:true}).click();
-  await page.getByRole("heading",{name:"Lokalen Bezug hinzufügen",exact:true}).waitFor();
+  await page.getByRole("heading",{name:"Weiteres Ereignis zuordnen",exact:true}).waitFor();
   await page.getByRole("button",{name:"Abbrechen",exact:true}).click();
   record("Real MFA app → local TOP link → external RIS-only finding → return to TOP → modal cancel returns to selection");
-  await page.getByRole("button", { name: "‹ Zurück zur Tagesordnung" }).click();
+  await page.locator("section").filter({has:page.getByRole("heading",{name:"TOP als Ereignis festlegen",exact:true})})
+    .getByRole("button",{name:"Auswählen oder erstellen"}).click();
+  await page.getByRole("button",{name:"Neu: Ereignis"}).click();
+  await page.getByLabel("Ereignistitel *",{exact:true}).fill("TOP 2: redaktionelles Hauptereignis");
+  await page.getByRole("button",{name:"Speichern"}).click();
+  await page.getByRole("heading",{name:"TOP als Ereignis festlegen",exact:true}).waitFor();
+  await page.getByText("TOP 2: redaktionelles Hauptereignis",{exact:false}).waitFor();
+  assert.equal((await db.query("select count(*)::int n from fib.ris_agenda_events where role='main_event'")).rows[0].n,1);
+  assert.equal((await db.query("select count(*)::int n from fib.ris_agenda_events where role='local_reference'")).rows[0].n,1);
+  record("Manual TOP main event and related events remain independent");
+  await page.getByRole("navigation",{name:"Sitzung und Tagesordnungspunkte"}).getByRole("button",{name:"Sitzungsübersicht"}).click();
+  await page.getByRole("heading",{name:"Ereignisse zur Sitzung",exact:true}).waitFor();
+  await page.locator("section").filter({has:page.getByRole("heading",{name:"Ereignisse zur Sitzung",exact:true})})
+    .getByRole("button",{name:"Ereignis zuordnen"}).click();
+  await page.getByRole("radio").first().check();
+  await page.getByRole("button",{name:"Zuordnen"}).click();
+  await page.getByRole("heading",{name:"Ereignisse zur Sitzung",exact:true}).waitFor();
+  assert.equal((await db.query("select count(*)::int n from fib.ris_session_events")).rows[0].n,1);
+  assert.equal((await db.query("select count(*)::int n from fib.ris_agenda_events where role='main_event'")).rows[0].n,1,
+    "A session-wide event does not automatically attach to any TOP");
+  record("Session-wide event stored without automatic TOP association");
   await page.getByRole("button", { name: "TOP 3 öffnen" }).click();
   await page.getByRole("heading", { name: "Beschlussvorschlag / Dokumente", exact: true }).waitFor();
   assert.equal((await db.query("select count(*)::int n from fib.event_findings")).rows[0].n,0,
