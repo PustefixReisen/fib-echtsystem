@@ -331,7 +331,7 @@ export function RisSessionView(
                 <h2>TOP als Ereignis festlegen</h2>
                 {!mainEvents.length && (
                   <button type="button" disabled={busy || saving} onClick={() => setAssignment("main")}>
-                    Ereignis zuordnen
+                    Auswählen oder erstellen
                   </button>
                 )}
               </div>
