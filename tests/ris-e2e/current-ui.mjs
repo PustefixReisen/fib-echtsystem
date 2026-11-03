@@ -90,20 +90,18 @@ try {
   await page.getByRole("button",{name:"Speichern",exact:true}).click();
   await page.getByRole("heading",{name:"Weitere Ereignisse zum TOP",exact:true}).waitFor();
   assert.equal((await db.query("select count(*)::int n from fib.event_findings")).rows[0].n,0);
-  await page.getByRole("button",{name:"Fundstelle öffnen",exact:true}).first().click();
-  await page.getByRole("heading",{name:"Inhalt und Herkunft",exact:true}).waitFor();
+  assert.equal(await page.getByRole("button",{name:"Fundstelle öffnen",exact:true}).count(),0);
   assert.equal(await page.getByRole("heading",{name:"Ereignisbezug",exact:true}).count(),0);
   assert.equal(await page.getByRole("heading",{name:"Versionen",exact:true}).count(),0);
   assert.equal(await page.getByRole("button",{name:"PDF-Vorschau öffnen",exact:true}).count(),0);
-  assert.equal(await page.locator(".ris-external-reference .fib-external-icon").count(),1);
-  await page.getByRole("button",{name:"Zurück zu TOP 2",exact:true}).click();
-  await page.getByRole("heading",{name:"Beschlussvorschlag / Dokumente",exact:true}).waitFor();
+  assert.ok(await page.locator(".ris-document-item .ris-external-reference .fib-external-icon").count()>=1);
+  assert.equal(await page.locator(".ris-document-item").getByText("RIS-Original",{exact:true}).count(),0);
   await page.locator("section").filter({has:page.getByRole("heading",{name:"Weitere Ereignisse zum TOP",exact:true})}).getByRole("button",{name:"Ereignis zuordnen"}).click();
   await page.getByRole("button",{name:"Neu: Ereignis",exact:true}).click();
   await page.getByRole("button",{name:"Abbrechen",exact:true}).click();
   await page.getByRole("heading",{name:"Weiteres Ereignis zuordnen",exact:true}).waitFor();
   await page.getByRole("button",{name:"Abbrechen",exact:true}).click();
-  record("Real MFA app → local TOP link → external RIS-only finding → return to TOP → modal cancel returns to selection");
+  record("Real MFA app → local TOP link → external RIS-only icon without redundant finding page → modal cancel returns to selection");
   await page.locator("section").filter({has:page.getByRole("heading",{name:"TOP als Ereignis festlegen",exact:true})})
     .getByRole("button",{name:"Auswählen oder erstellen"}).click();
   await page.getByRole("button",{name:"Neu: Ereignis"}).click();
