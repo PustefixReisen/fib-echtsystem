@@ -96,7 +96,7 @@ try {
     "No extra search-submit click is needed");
   const detail=page.locator(".event-choice-details").first();
   assert.equal(await detail.locator("strong").innerText(),"Pressebericht zur Kita-Finanzierung");
-  assert.match(await detail.locator(".event-choice-date").innerText(),/20\\.10\\.2026/);
+  assert.match(await detail.locator(".event-choice-date").innerText(),/20\.10\.2026/);
   assert.match(await detail.locator(".event-choice-summary").innerText(),/Geschehen außerhalb/);
   await liveSearch.fill("");
   await page.getByRole("radio").first().waitFor();
