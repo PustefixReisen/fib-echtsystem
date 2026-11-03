@@ -40,6 +40,10 @@ try {
   await page.goto("http://127.0.0.1:4174");
   await button("Sitzungsbereich").click();
   await button("Sitzung öffnen").click();
+  const tabs=page.getByRole("navigation",{name:"Sitzung und Tagesordnungspunkte"});
+  await tabs.getByRole("button",{name:"TOP 2"}).click();
+  assert.equal(await tabs.getByRole("button",{name:"TOP 2"}).getAttribute("aria-current"),"page");
+  await heading("Beschlussvorschlag / Dokumente").waitFor();
   const desktopTopSpacing=await page.evaluate(() => {
     const shell=document.querySelector(".content-shell");
     const crumbs=document.querySelector(".source-workspace > .breadcrumbs");
@@ -52,10 +56,7 @@ try {
   });
   assert.ok(desktopTopSpacing.shellPadding<=15 && desktopTopSpacing.breadcrumbMargin<=9 && desktopTopSpacing.headingMargin<=14,
     "Sitzungsseite hat einen kompakten Abstand über dem Titel");
-  const tabs=page.getByRole("navigation",{name:"Sitzung und Tagesordnungspunkte"});
-  await tabs.getByRole("button",{name:"TOP 2"}).click();
-  assert.equal(await tabs.getByRole("button",{name:"TOP 2"}).getAttribute("aria-current"),"page");
-  await heading("Beschlussvorschlag / Dokumente").waitFor();
+
   assert.equal(await heading("Beschlussfassung").count(), 0);
   assert.equal(
     await page.getByText("Must not render raw", { exact: true }).count(),
