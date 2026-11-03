@@ -40,7 +40,7 @@ async function audit(
 async function hasCurrentSessionRisFinding(tx: RisSql, agendaId: string, eventId: string) {
   const rows=await tx.unsafe(
     `select 1 from fib.ris_agenda_items a
-      join fib.ris_document_links l on l.session_id=a.session_id and l.status='confirmed'
+      join fib.ris_document_links l on l.session_id=a.session_id and l.kind in ('proposal','attachment')
       join fib.ris_documents d on d.id=l.document_id
       join fib.event_findings ef on ef.finding_id=d.finding_id
       where a.id=$1 and ef.event_id=$2 limit 1`,
@@ -203,7 +203,7 @@ export async function risEditorial(
            from fib.ris_document_links l
            join fib.ris_documents d on d.id=l.document_id
            where l.id=$1 and l.agenda_id=$2 and l.session_id=$3
-             and l.status='confirmed' and l.kind in ('proposal','attachment')
+             and l.kind in ('proposal','attachment')
            for update of l,d`,
         [linkId,agenda.id,agenda.session_id]);
       // A selected RIS document has provenance; it is not a vote/decision proof.
