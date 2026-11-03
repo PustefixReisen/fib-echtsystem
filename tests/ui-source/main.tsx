@@ -63,7 +63,7 @@ const api = async (b: any) => {
     return {
       events: events.filter((e) =>
         e.title.toLowerCase().includes((b.search ?? "").toLowerCase()) &&
-        (!b.agendaId || (b.eventRole === "main_event"
+        ((window as any).legacyChoices || !b.agendaId || (b.eventRole === "main_event"
           ? mainEventFindings.some((link:any)=>link.event_id===e.id)
           : !mainEventFindings.some((link:any)=>link.event_id===e.id)))
       ),
