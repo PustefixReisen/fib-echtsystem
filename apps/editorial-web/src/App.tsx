@@ -56,7 +56,7 @@ function evidenceRoleLabel(role: string | null | undefined): string {
   return role ? (labels[role] ?? `Weitere Belegrolle (${role})`) : 'Nicht festgelegt';
 }
 type EventResult = { ok: true; event: EventData; sources?: EventSource[] };
-type FindingListResult = { ok: true; findings: EventSource[]; hasMore: boolean };
+type FindingListResult = { ok: true; findings: EventSource[]; hasMore: boolean; scopedToRisSessionId?: string };
 function readableSummary(summary: string | null): string | null {
   if (!summary) return null;
   if (!summary.startsWith('Entwicklungsdaten; Import ')) return summary;
@@ -925,12 +925,19 @@ export function App() {
     setSourceBusy(true);
     setSourceMessage(null);
     const { data, error } = await supabase.functions.invoke<FindingListResult>('fib-get-event', {
-      body: { action: 'list_findings', search, eventId: eventResult?.id },
+      body: { action: 'list_findings', search, eventId: eventResult?.id,
+        ...(eventSessionContext ? {risSessionId:eventSessionContext.sessionId} : {}) },
     });
     if (request !== sourceRequestRef.current) return;
     setSourceBusy(false);
-    if (error || !data?.ok) {
-      setSourceMessage('Fundstellen konnten nicht geladen werden.');
+    // Legacy get-event endpoints ignore risSessionId: fail closed instead of
+    // offering unrelated findings in an in-Sitzung editing context.
+    if (error || !data?.ok ||
+        (eventSessionContext && data.scopedToRisSessionId !== eventSessionContext.sessionId)) {
+      setSourceMatches([]);
+      setSourceMessage(eventSessionContext
+        ? 'Die Fundstellenauswahl ist hier auf die aktuelle Sitzung beschränkt. Der verwendete Dienst unterstützt diese Einschränkung noch nicht.'
+        : 'Fundstellen konnten nicht geladen werden.');
       return;
     }
     setSourceMatches(data.findings);
@@ -1028,7 +1035,8 @@ export function App() {
         }
       }
       const { data, error } = await supabase.functions.invoke<{ok?: boolean; error?: string}>('fib-editorial-write', {
-        body: { action: 'link_finding', eventId: eventResult.id, findingId, justification },
+        body: { action: 'link_finding', eventId: eventResult.id, findingId, justification,
+          ...(eventSessionContext ? {risSessionId:eventSessionContext.sessionId} : {}) },
       });
       if (error || !data?.ok) {
         const code = data?.error ?? 'server_error';
@@ -2004,6 +2012,7 @@ export function App() {
                   </ul>
                 )}
                 {sourcePickerOpen && <div className="stack">
+                  {eventSessionContext && <p className="field-validation-note">Es werden ausschließlich Fundstellen der aktuellen Gemeinderatssitzung angeboten.</p>}
                   <div className="finding-filter">
                     <label>Fundstellen filtern – Titel oder Quelle
                       <input type="search" value={sourceSearch} onChange={event => setSourceSearch(event.target.value)} maxLength={120} placeholder="Suchbegriff eingeben …" />
