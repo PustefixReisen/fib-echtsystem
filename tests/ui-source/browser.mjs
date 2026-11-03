@@ -131,7 +131,8 @@ try {
     ),
     false,
   );
-  const actionRows=await page.locator('.ris-document-item .fib-action-icon').evaluateAll(nodes=>nodes.map(n=>Math.round(n.getBoundingClientRect().top)));
+  const actionRows=await page.locator('.ris-document-item .source-actions > *').evaluateAll(nodes=>nodes.map(n=>Math.round(n.getBoundingClientRect().top)));
+  assert.ok(actionRows.length >= 2, 'External RIS link and finding action are present');
   assert.equal(new Set(actionRows).size,1,'Document actions stay together at mobile width');
   await page.screenshot({
     path: "/tmp/fib-source-ui/ris-mobile.png",
