@@ -84,10 +84,16 @@ try {
   // Real authenticated document workflow; Storage and source responses are explicit fixtures.
   const beforeFindings=(await db.query("select count(*)::int n from fib.findings")).rows[0].n;
   assert.ok(beforeFindings>=2);
+  // A related TOP event must already exist and have no RIS findings from this Sitzung.
+  const unrelatedEventId="99999999-9999-4999-8999-999999999953";
+  await db.query(
+    "insert into fib.events(id,title,status,confirmed_at) values($1,$2,'confirmed',now())",
+    [unrelatedEventId,"Isolierter lokaler Bezug außerhalb der Sitzung"],
+  );
   await page.locator("section").filter({has:page.getByRole("heading",{name:"Weitere Ereignisse zum TOP",exact:true})}).getByRole("button",{name:"Ereignis zuordnen"}).click();
-  await page.getByRole("button",{name:"Neu: Ereignis",exact:true}).click();
-  await page.getByLabel("Ereignistitel *",{exact:true}).fill("Isolierter lokaler Bezug außerhalb der Sitzung");
-  await page.getByRole("button",{name:"Speichern",exact:true}).click();
+  assert.equal(await page.getByRole("button",{name:"Neu: Ereignis",exact:true}).count(),0);
+  await page.getByRole("radio").first().check();
+  await page.getByRole("button",{name:"Zuordnen",exact:true}).click();
   await page.getByRole("heading",{name:"Weitere Ereignisse zum TOP",exact:true}).waitFor();
   assert.equal((await db.query("select count(*)::int n from fib.event_findings")).rows[0].n,0);
   assert.equal(await page.getByRole("button",{name:"Fundstelle öffnen",exact:true}).count(),0);
@@ -97,8 +103,7 @@ try {
   assert.ok(await page.locator(".ris-document-item .ris-external-reference .fib-external-icon").count()>=1);
   assert.equal(await page.locator(".ris-document-item").getByText("RIS-Original",{exact:true}).count(),0);
   await page.locator("section").filter({has:page.getByRole("heading",{name:"Weitere Ereignisse zum TOP",exact:true})}).getByRole("button",{name:"Ereignis zuordnen"}).click();
-  await page.getByRole("button",{name:"Neu: Ereignis",exact:true}).click();
-  await page.getByRole("button",{name:"Abbrechen",exact:true}).click();
+  assert.equal(await page.getByRole("button",{name:"Neu: Ereignis",exact:true}).count(),0);
   await page.getByRole("heading",{name:"Weiteres Ereignis zuordnen",exact:true}).waitFor();
   await page.getByRole("button",{name:"Abbrechen",exact:true}).click();
   record("Real MFA app → local TOP link → external RIS-only icon without redundant finding page → modal cancel returns to selection");
@@ -112,6 +117,18 @@ try {
   assert.equal((await db.query("select count(*)::int n from fib.ris_agenda_events where role='main_event'")).rows[0].n,1);
   assert.equal((await db.query("select count(*)::int n from fib.ris_agenda_events where role='local_reference'")).rows[0].n,1);
   record("Manual TOP main event and related events remain independent");
+  // Opening an event inside the Sitzung must reuse the existing event editor
+  // without changing the active sidebar item, and return to this exact TOP.
+  await page.locator("section").filter({has:page.getByRole("heading",{name:"TOP als Ereignis festlegen",exact:true})})
+    .getByRole("button",{name:"Ereignis öffnen"}).click();
+  await page.getByRole("heading",{name:"Ereignisdaten",exact:true}).waitFor();
+  assert.equal(await page.locator(".side-nav").getByRole("button",{name:"Sitzungen",exact:true}).getAttribute("aria-current"),"page");
+  await page.getByRole("button",{name:"Zurück zu TOP 2",exact:true}).click();
+  await page.getByRole("heading",{name:"TOP als Ereignis festlegen",exact:true}).waitFor();
+  assert.equal(await page.getByRole("navigation",{name:"Sitzung und Tagesordnungspunkte"})
+    .getByRole("button",{name:"TOP 2"}).getAttribute("aria-current"),"page");
+  record("Event editor reuses existing form with active Sitzung navigation and exact TOP return");
+
   await page.getByRole("navigation",{name:"Sitzung und Tagesordnungspunkte"}).getByRole("button",{name:"Sitzungsübersicht"}).click();
   await page.getByRole("heading",{name:"Ereignisse zur Sitzung",exact:true}).waitFor();
   await page.locator("section").filter({has:page.getByRole("heading",{name:"Ereignisse zur Sitzung",exact:true})})
@@ -125,8 +142,11 @@ try {
   record("Session-wide event stored without automatic TOP association");
   await page.getByRole("button", { name: "TOP 3 öffnen" }).click();
   await page.getByRole("heading", { name: "Beschlussvorschlag / Dokumente", exact: true }).waitFor();
-  assert.equal((await db.query("select count(*)::int n from fib.event_findings")).rows[0].n,0,
-    "TOP associations do not implicitly create finding associations");
+  assert.equal((await db.query("select count(*)::int n from fib.event_findings")).rows[0].n,1,
+    "The chosen TOP main event automatically reuses its RIS document as one finding");
+  assert.equal((await db.query(
+    "select count(*)::int n from fib.event_findings ef join fib.ris_agenda_events ae on ae.event_id=ef.event_id where ae.role='main_event'"
+  )).rows[0].n,1,"Only the main TOP event receives the official RIS finding");
   assert.deepEqual(errors, []);
   record("Real login and TOTP → RIS agenda → TOP2/TOP3 → separate event search view, without retired review masks");
   assert.equal((await db.query("select count(*)::int as n from fib.messages")).rows[0].n, 0);

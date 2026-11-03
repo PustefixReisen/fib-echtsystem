@@ -38,7 +38,7 @@ const events: any[] = [{
   summary: "Ein Geschehen außerhalb dieser Sitzung",
 }];
 let local: any[] = [], direct: any[] = [], findings: any[] = [finding];
-let sessionLinks: any[] = [], mainLinks: any[] = [];
+let sessionLinks: any[] = [], mainLinks: any[] = [], mainEventFindings:any[] = [];
 const observation = {
   scope_id: "news",
   external_id: "article",
@@ -51,6 +51,7 @@ const observation = {
 (window as any).calls = [];
 (window as any).denyLock = false;
 (window as any).failNext = false;
+(window as any).legacyChoices = false;
 const api = async (b: any) => {
   (window as any).calls.push(b);
   await new Promise((r) => setTimeout(r, 20));
@@ -61,10 +62,14 @@ const api = async (b: any) => {
   if (b.action === "source_choices") {
     return {
       events: events.filter((e) =>
-        e.title.toLowerCase().includes((b.search ?? "").toLowerCase())
+        e.title.toLowerCase().includes((b.search ?? "").toLowerCase()) &&
+        ((window as any).legacyChoices || !b.agendaId || (b.eventRole === "main_event"
+          ? mainEventFindings.some((link:any)=>link.event_id===e.id)
+          : !mainEventFindings.some((link:any)=>link.event_id===e.id)))
       ),
       processes: [],
       topics: [],
+      ...(b.agendaId && !(window as any).legacyChoices ? {scopedToAgendaId:b.agendaId,scopedRole:b.eventRole} : {}),
     };
   }
   if (b.action === "ris_sessions") {
@@ -115,6 +120,7 @@ const api = async (b: any) => {
         : [],
       events: local,
       mainEvents: mainLinks,
+      mainEventFindings,
       sessionEvents: sessionLinks,
       sessionRelated: {messages: [],processes: [],topics: []},
     };

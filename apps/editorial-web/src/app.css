@@ -867,3 +867,32 @@ button:has(> .action-icon) { display: inline-flex; align-items: center; justify-
   .source-workspace > .breadcrumbs { margin-bottom: .35rem; }
   .source-workspace > .page-heading { gap: .45rem; margin-bottom: .7rem; }
 }
+
+/* #389 visual acceptance: compact TOP header and reliably contained fundstelle choices. */
+.content-shell:has(> .source-workspace) { padding-top: .4rem; }
+.source-workspace > .breadcrumbs { margin-bottom: .3rem; }
+.source-workspace > .page-heading { margin-bottom: .55rem; }
+.source-workspace > .page-heading .eyebrow { margin-bottom: .1rem; }
+.ris-session-tabs { padding: .35rem .5rem; margin-bottom: .65rem; }
+.ris-session-tabs > button { position: relative; border-bottom-color: transparent; }
+.ris-session-tabs > button.active,
+.ris-session-tabs > button[aria-current="page"] {
+  border-bottom-color: transparent;
+  padding-bottom: .65rem;
+  font-weight: 800;
+}
+.ris-session-tabs > button[aria-current="page"]::after {
+  content: "";
+  position: absolute;
+  left: 18%; right: 18%; bottom: .16rem;
+  height: 3px; border-radius: 3px;
+  background: var(--fib-primary);
+  pointer-events: none;
+}
+.ris-simplified .ris-document-item .ris-external-reference > span { font-weight: 400; }
+.ris-simplified .ris-document-item .ris-external-reference > span strong { font-weight: 700; }
+@media (max-width: 760px) {
+  .content-shell:has(> .source-workspace) { padding-top: .3rem; }
+  .source-workspace > .breadcrumbs { margin-bottom: .2rem; }
+  .source-workspace > .page-heading { margin-bottom: .45rem; }
+}

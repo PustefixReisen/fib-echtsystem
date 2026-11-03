@@ -13,6 +13,7 @@ import {
   type RisActor,
 } from "../../supabase/functions/_shared/ris-editorial.ts";
 import { confirmEvent } from "../../packages/fachservices/src/editorial-write.js";
+import { sourceEditorial } from "../../supabase/functions/_shared/source-editorial.ts";
 const connection = process.env.U4_TEST_DATABASE_URL;
 if (!connection) throw Error("U4_TEST_DATABASE_URL required");
 const target = new URL(connection);
@@ -73,6 +74,7 @@ async function main() {
     "security/runtime-roles.sql",
     "security/runtime-policies.sql",
     "migrations/20261010194500_fib_last_edit_coordination.sql",
+    "migrations/20261015123000_finding_justification.sql",
     "migrations/20261029200933_fib_u4_source_monitor_persistence.sql",
     "migrations/20261030093000_fib_u4_source_observations.sql",
     "migrations/20261031081340_fib_ris_editorial_structure.sql",
@@ -814,6 +816,80 @@ async function main() {
       ),
     /foreign key/,
   );
+
+  // #387: main events require a RIS finding from this very Sitzung.
+  // Source creation is the single explicit exception: the editor then confirms
+  // one or more proposal/attachment documents in a separate review step.
+  const selectedProposalDoc = await first(
+    `select l.id,l.agenda_id,d.source_url,d.latest_version_id
+       from fib.ris_document_links l join fib.ris_documents d on d.id=l.document_id
+       where l.session_id=$1 and l.kind='proposal' and l.agenda_id is not null
+       order by l.id limit 1`,
+    [a.sessionId],
+  );
+  assert.ok(selectedProposalDoc,"Synthetic session contains a proposal");
+  const topForProposal = selectedProposalDoc.agenda_id;
+  const proposalVersion = await tx(db => persistRisDocument(
+    db,selectedProposalDoc.source_url,"synthetic-proposal","Synthetic RIS proposal",
+    "isolated-ris-387","2026-11-03T09:00:00Z",
+  ));
+  assert.ok(proposalVersion);
+  const firstNewId = "99999999-9999-4999-8999-999999999987";
+  const mainCreation = {
+    action:"source_create_event",requestId:firstNewId,
+    title:"TOP-Hauptereignis mit RIS-Quelle",summary:null,
+    occurredAt:null,rationale:null,approval:true,
+    agendaId:topForProposal,mainEvent:true,
+  };
+  await tx(db => sourceEditorial(db,actor,mainCreation));
+  assert.equal(Number((await first(
+    "select count(*) n from fib.event_findings where event_id=$1",[firstNewId]
+  )).n),1,"Choosing the TOP main event automatically attaches its RIS proposal in one transaction");
+  const reused = await tx(db => sourceEditorial(db,actor,mainCreation));
+  assert.equal(reused.reused,true,"The same main-event creation request is idempotent");
+  assert.equal(Number((await first(
+    "select count(*) n from fib.event_findings where event_id=$1",[firstNewId]
+  )).n),1,"Retry does not duplicate accepted RIS findings");
+  await pool.query(
+    "insert into fib.edit_locks(object_type,object_id,user_id,expires_at) values('event',$1,$2,now()+interval '1 hour')",
+    [firstNewId,uid],
+  );
+  // No secondary review step or action is required to connect TOP documents.
+  const confirmedLinks = await first(
+    "select count(*) n from fib.event_findings where event_id=$1",[firstNewId],
+  );
+  assert.equal(Number(confirmedLinks.n),1);
+  const choicesForMain = await tx(db => sourceEditorial(db,actor,{
+    action:"source_choices",agendaId:topForProposal,eventRole:"main_event",
+    search:"TOP-Hauptereignis mit RIS-Quelle",
+  }));
+  const choicesForRelated = await tx(db => sourceEditorial(db,actor,{
+    action:"source_choices",agendaId:topForProposal,eventRole:"local_reference",
+    search:"TOP-Hauptereignis mit RIS-Quelle",
+  }));
+  assert.ok(choicesForMain.events.some((e:any)=>e.id===firstNewId));
+  assert.ok(!choicesForRelated.events.some((e:any)=>e.id===firstNewId));
+  const anotherTop=(await first(
+    "select id from fib.ris_agenda_items where session_id=$1 and id<>$2 limit 1",
+    [a.sessionId,topForProposal],
+  )).id;
+  await assert.rejects(()=>run({action:"ris_link_event",
+    agendaId:anotherTop,eventId:firstNewId}),
+    /outside_current_session/);
+  const outOfMeeting="99999999-9999-4999-8999-999999999988";
+  await pool.query(
+    "insert into fib.events(id,title,status,confirmed_at) values($1,'Unabhängiges Ereignis','confirmed',now())",
+    [outOfMeeting],
+  );
+  await pool.query(
+    "insert into fib.edit_locks(object_type,object_id,user_id,expires_at) values('event',$1,$2,now()+interval '1 hour')",
+    [outOfMeeting,uid],
+  );
+  await assert.rejects(()=>run({action:"ris_link_main_event",
+    agendaId:anotherTop,eventId:outOfMeeting}),
+    /requires_current_session_finding/);
+  await run({action:"ris_link_event",agendaId:anotherTop,eventId:outOfMeeting});
+  console.log("RIS #387: strict session-aware choices, atomic TOP source attachment without secondary confirmation, duplicate-safe retries and backend link restrictions passed");
 
   assert.equal(await count("messages"), 0);
   console.log(

@@ -8,8 +8,10 @@ type Row = Record<string, any>;
 type Props = {
   mode: "findings" | "sessions";
   onHome: () => void;
-  onOpenEvent: (id: string) => void;
+  onOpenEvent: (id: string, context?: { sessionId: string; agendaId: string; number: string }) => void;
   initialFindingId?: string | null;
+  initialSessionId?: string | null;
+  initialTopId?: string;
   api?: SourceApi;
   eventLock?: typeof withEventLock;
   registerLeaveGuard?: (guard: () => boolean) => void;
@@ -76,6 +78,8 @@ export function SourceWorkspace({
   onHome,
   onOpenEvent,
   initialFindingId,
+  initialSessionId,
+  initialTopId = "",
   api = sourceApi,
   eventLock = withEventLock,
   registerLeaveGuard,
@@ -195,8 +199,10 @@ export function SourceWorkspace({
     setDirty(false);
     if (initialFindingId && mode === "findings") {
       void openFinding({ findingId: initialFindingId });
+    } else if (initialSessionId && mode === "sessions") {
+      void openSession(initialSessionId, initialTopId);
     } else void run(() => loadList(mode));
-  }, [mode, initialFindingId]);
+  }, [mode, initialFindingId, initialSessionId, initialTopId]);
   const finding = detail?.finding,
     document = detail?.document,
     observation = detail?.observation;
@@ -607,7 +613,10 @@ export function SourceWorkspace({
           key={session.session.id}
           data={session}
           busy={busy}
-          onOpenEvent={onOpenEvent}
+          onOpenEvent={(id) => {
+            const top = session.agenda.find((a: Row) => a.id === topId);
+            onOpenEvent(id, {sessionId:session.session.id, agendaId:topId, number:top?.number ?? ""});
+          }}
           selectedTopId={topId}
           onSelectTop={setTopId}
           registerLeaveGuard={(guard) => {

@@ -35,6 +35,64 @@ async function audit(
     [actor.userId, action, id, JSON.stringify(detail)],
   );
 }
+/** Attach only proposal/attachment documents physically linked to this TOP.
+ * This runs in the caller's existing database transaction; no second user
+ * confirmation is required after the explicit main-event choice.
+ * The returned finding IDs are independent of the TOP decision status. */
+export async function linkTopRisDocuments(
+  tx: RisSql, actor: RisActor, agendaId: string, eventId: string,
+) {
+  const agenda = await one(tx,
+    "select id,session_id from fib.ris_agenda_items where id=$1 for update",
+    [agendaId]);
+  const documents = await tx.unsafe(
+    `select l.id,d.id document_id,d.latest_version_id,
+        d.original_title
+       from fib.ris_document_links l
+       join fib.ris_documents d on d.id=l.document_id
+       where l.agenda_id=$1 and l.session_id=$2
+         and l.kind in ('proposal','attachment')
+       order by l.id for update of l,d`,
+    [agenda.id,agenda.session_id],
+  );
+  if (!documents.length) return {linked:0,findingIds:[]};
+  const source = await one(tx,
+    "select id from fib.sources where active and rtrim(homepage_url,'/')=$1 order by id limit 1",
+    [RIS_ORIGIN]);
+  const linked: string[] = [];
+  for (const document of documents) {
+    const result=await risEditorial(tx,actor,{
+      action:"ris_accept_finding",
+      versionId:document.latest_version_id,
+      sourceId:source.id,
+      title:document.original_title || "RIS-Unterlage",
+    });
+    await tx.unsafe(
+      `insert into fib.event_findings(event_id,finding_id,evidence_role)
+       values($1,$2,'source') on conflict do nothing`,
+      [eventId,result.findingId],
+    );
+    linked.push(result.findingId);
+  }
+  await audit(tx,actor,"ris_auto_link_top_documents",agenda.id,{
+    eventId,documentCount:documents.length,findingIds:linked,
+    provenance:"TOP proposal/attachment only",decisionConfirmed:false,
+  });
+  return {linked:linked.length,findingIds:linked};
+}
+/** A qualifying event must have a confirmed RIS document accepted as a finding
+ * in this exact Sitzung. An external news finding alone never qualifies. */
+async function hasCurrentSessionRisFinding(tx: RisSql, agendaId: string, eventId: string) {
+  const rows=await tx.unsafe(
+    `select 1 from fib.ris_agenda_items a
+      join fib.ris_document_links l on l.session_id=a.session_id and l.kind in ('proposal','attachment')
+      join fib.ris_documents d on d.id=l.document_id
+      join fib.event_findings ef on ef.finding_id=d.finding_id
+      where a.id=$1 and ef.event_id=$2 limit 1`,
+    [agendaId,eventId],
+  );
+  return rows.length>0;
+}
 export async function risEditorial(
   tx: RisSql,
   actor: RisActor,
@@ -78,6 +136,14 @@ export async function risEditorial(
     );
     const sessionEvents = await tx.unsafe(
       "select se.*,e.title event_title,e.occurred_at event_date,e.summary event_summary from fib.ris_session_events se join fib.events e on e.id=se.event_id where se.session_id=$1 order by e.occurred_at desc nulls last,e.title",
+      [session.id],
+    );
+    const mainEventFindings = await tx.unsafe(
+      `select ae.agenda_id,ae.event_id,ef.finding_id
+         from fib.ris_agenda_events ae
+         join fib.ris_agenda_items a on a.id=ae.agenda_id
+         join fib.event_findings ef on ef.event_id=ae.event_id
+         where a.session_id=$1 and ae.role='main_event'`,
       [session.id],
     );
     const eventIds = sessionEvents.map((e) => e.event_id);
@@ -128,6 +194,7 @@ export async function risEditorial(
       decisions,
       events,
       mainEvents,
+      mainEventFindings,
       sessionEvents,
       sessionRelated,
       suggestions,
@@ -165,6 +232,8 @@ export async function risEditorial(
       if (existing.length && existing[0].event_id!==input.eventId) {
         throw Error("ris_top_main_event_already_assigned");
       }
+      if (!await hasCurrentSessionRisFinding(tx,input.agendaId,input.eventId))
+        throw Error("ris_main_requires_current_session_finding");
       const prior = await tx.unsafe(
         "select role from fib.ris_agenda_events where agenda_id=$1 and event_id=$2",
         [input.agendaId,input.eventId],
@@ -174,6 +243,8 @@ export async function risEditorial(
         "insert into fib.ris_agenda_events(agenda_id,event_id,role,reviewed_by) values($1,$2,'main_event',$3) on conflict do nothing",
         [input.agendaId,input.eventId,actor.userId],
       );
+      // Same transaction: selecting a main event includes its TOP evidence.
+      await linkTopRisDocuments(tx,actor,input.agendaId,input.eventId);
     } else {
       await tx.unsafe(
         "delete from fib.ris_agenda_events where agenda_id=$1 and event_id=$2 and role='main_event'",
@@ -457,6 +528,8 @@ export async function risEditorial(
       [input.agendaId],
     );
     if (action === "ris_link_event") {
+      if (await hasCurrentSessionRisFinding(tx,input.agendaId,input.eventId))
+        throw Error("ris_related_must_be_outside_current_session");
       const previous = await tx.unsafe(
         "select role from fib.ris_agenda_events where agenda_id=$1 and event_id=$2",
         [input.agendaId, input.eventId],

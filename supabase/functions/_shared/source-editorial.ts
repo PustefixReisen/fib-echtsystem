@@ -1,5 +1,5 @@
 import { RIS_ORIGIN, type RisSql } from "./ris-structure.ts";
-import { type RisActor, risEditorial } from "./ris-editorial.ts";
+import { type RisActor, risEditorial, linkTopRisDocuments } from "./ris-editorial.ts";
 import { acceptObservation } from "./reviewed-observation.ts";
 function text(v: unknown, max = 2000) {
   if (typeof v !== "string" || !v.trim() || v.length > max) {
@@ -30,11 +30,38 @@ export async function sourceEditorial(
     };
   }
   if (input.action === "source_choices") {
-    return {
-      events: await tx.unsafe(
+    const agendaFilter = input.agendaId && input.eventRole;
+    if (agendaFilter && !["main_event","local_reference"].includes(input.eventRole))
+      throw Error("invalid_event_role");
+    const agenda = agendaFilter ? (await tx.unsafe(
+      "select a.session_id from fib.ris_agenda_items a where a.id=$1",
+      [input.agendaId],
+    ))[0] : null;
+    if (agendaFilter && !agenda) throw Error("source_missing");
+    // Only authoritative RIS document→accepted finding→event relationships count.
+    // Press mentions and loose textual similarity are never used to infer TOP links.
+    const events = agendaFilter
+      ? await tx.unsafe(
+        `select e.id,e.title,e.occurred_at event_date,e.summary
+         from fib.events e where e.status='confirmed' and e.title ilike $1
+         and ${input.eventRole === "main_event" ? "exists" : "not exists"} (
+           select 1 from fib.event_findings ef
+             join fib.ris_documents d on d.finding_id=ef.finding_id
+             join fib.ris_document_links l on l.document_id=d.id
+           where ef.event_id=e.id and l.session_id=$2 and l.kind in ('proposal','attachment')
+         ) order by e.title limit 101`,
+        [query,agenda.session_id],
+      )
+      : await tx.unsafe(
         "select id,title,occurred_at event_date,summary from fib.events where status='confirmed' and title ilike $1 order by title limit 101",
         [query],
-      ),
+      );
+    return {
+      events,
+      ...(agendaFilter ? {
+        scopedToAgendaId: input.agendaId,
+        scopedRole: input.eventRole,
+      } : {}),
       processes: await tx.unsafe(
         "select id,title from fib.processes where status<>'archived' and title ilike $1 order by title limit 101",
         [query],
@@ -207,7 +234,8 @@ export async function sourceEditorial(
       throw Error("invalid_source_input");
     }
     if ([input.findingId,input.agendaId,input.sessionId].filter(Boolean).length !== 1 ||
-        input.mainEvent && !input.agendaId) {
+        input.mainEvent && !input.agendaId ||
+        input.agendaId && !input.mainEvent) {
       throw Error("invalid_source_input");
     }
     await tx.unsafe("select pg_advisory_xact_lock(hashtextextended($1,0))", [
@@ -291,6 +319,11 @@ export async function sourceEditorial(
         "insert into fib.ris_session_events(session_id,event_id,origin,reviewed_by) values($1,$2,'manual',$3)",
         [input.sessionId,input.requestId,actor.userId],
       );
+    }
+    // The explicit decision to create the main event includes the attached
+    // proposal and attachments in the same atomic transaction.
+    if (input.agendaId && input.mainEvent) {
+      await linkTopRisDocuments(tx,actor,input.agendaId,input.requestId);
     }
     await tx.unsafe(
       "insert into fib.lead_responsibilities(object_type,object_id,user_id) values('event',$1,$2)",

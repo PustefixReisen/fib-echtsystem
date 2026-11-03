@@ -56,7 +56,7 @@ function evidenceRoleLabel(role: string | null | undefined): string {
   return role ? (labels[role] ?? `Weitere Belegrolle (${role})`) : 'Nicht festgelegt';
 }
 type EventResult = { ok: true; event: EventData; sources?: EventSource[] };
-type FindingListResult = { ok: true; findings: EventSource[]; hasMore: boolean };
+type FindingListResult = { ok: true; findings: EventSource[]; hasMore: boolean; scopedToRisSessionId?: string };
 function readableSummary(summary: string | null): string | null {
   if (!summary) return null;
   if (!summary.startsWith('Entwicklungsdaten; Import ')) return summary;
@@ -137,6 +137,7 @@ export function App() {
   const sourceLeaveRef=useRef<()=>boolean>(()=>true);
   const [sourceFindingId,setSourceFindingId]=useState<string|null>(null);
   const [sourceNavigationKey,setSourceNavigationKey]=useState(0);
+  const [eventSessionContext,setEventSessionContext]=useState<{sessionId:string;agendaId:string;number:string}|null>(null);
   const [view, setView] = useState<EditorialView>('dashboard');
   const [topicData,setTopicData] = useState<TopicListData | null>(null);
   const [topicListOpen,setTopicListOpen] = useState(true);
@@ -255,6 +256,7 @@ export function App() {
   function openSourceSection(mode: 'findings' | 'sessions', findingId: string | null = null) {
     if (!confirmLeave()) return;
     setEventListError(null);
+    setEventSessionContext(null);
     setSourceFindingId(findingId);
     setSourceNavigationKey(key => key + 1);
     navigateTo(mode);
@@ -282,7 +284,7 @@ export function App() {
   };
 
   useEffect(() => {
-    if (view === 'events' || view === 'event' || view === 'findings') {
+    if (view === 'events' || (view === 'event' && !eventSessionContext) || view === 'findings') {
       const group = document.getElementById('nav-recherche') as HTMLDetailsElement | null;
       if (group) group.open = true;
     }
@@ -659,7 +661,7 @@ export function App() {
     setEventListHasMore(data.hasMore);
   }
 
-  async function openListedEvent(eventId: string) {
+  async function openListedEvent(eventId: string, sessionContext?: {sessionId:string;agendaId:string;number:string}) {
     setEventListError(null);
     setServiceRunning(true);
     setServiceError(null);
@@ -676,7 +678,17 @@ export function App() {
     setCoordination(null);
     setCoordinationMessage(null);
     setEditingEvent(false);
+    setEventSessionContext(sessionContext ?? null);
     navigateTo('event');
+  }
+
+  function returnToSession() {
+    if (!eventSessionContext || !confirmLeave()) return;
+    if (editingEvent) { setEditingEvent(false); void runCoordinationAction('release_lock', true); }
+    setSourceFindingId(null);
+    setSourceNavigationKey(k=>k+1);
+    window.history.pushState({fibView:'sessions'},'',window.location.href);
+    setView('sessions');
   }
 
   async function loadEvent() {
@@ -913,12 +925,19 @@ export function App() {
     setSourceBusy(true);
     setSourceMessage(null);
     const { data, error } = await supabase.functions.invoke<FindingListResult>('fib-get-event', {
-      body: { action: 'list_findings', search, eventId: eventResult?.id },
+      body: { action: 'list_findings', search, eventId: eventResult?.id,
+        ...(eventSessionContext ? {risSessionId:eventSessionContext.sessionId} : {}) },
     });
     if (request !== sourceRequestRef.current) return;
     setSourceBusy(false);
-    if (error || !data?.ok) {
-      setSourceMessage('Fundstellen konnten nicht geladen werden.');
+    // Legacy get-event endpoints ignore risSessionId: fail closed instead of
+    // offering unrelated findings in an in-Sitzung editing context.
+    if (error || !data?.ok ||
+        (eventSessionContext && data.scopedToRisSessionId !== eventSessionContext.sessionId)) {
+      setSourceMatches([]);
+      setSourceMessage(eventSessionContext
+        ? 'Die Fundstellenauswahl ist hier auf die aktuelle Sitzung beschränkt. Der verwendete Dienst unterstützt diese Einschränkung noch nicht.'
+        : 'Fundstellen konnten nicht geladen werden.');
       return;
     }
     setSourceMatches(data.findings);
@@ -1016,7 +1035,8 @@ export function App() {
         }
       }
       const { data, error } = await supabase.functions.invoke<{ok?: boolean; error?: string}>('fib-editorial-write', {
-        body: { action: 'link_finding', eventId: eventResult.id, findingId, justification },
+        body: { action: 'link_finding', eventId: eventResult.id, findingId, justification,
+          ...(eventSessionContext ? {risSessionId:eventSessionContext.sessionId} : {}) },
       });
       if (error || !data?.ok) {
         const code = data?.error ?? 'server_error';
@@ -1366,7 +1386,7 @@ export function App() {
             <button className="nav-item" disabled><NavIcon src={reportIcon} />Meldungen <span>folgt</span></button>
             <button className="nav-item" disabled><NavIcon src={processIcon} />Vorgänge <span>folgt</span></button>
             <button className={view === "topics" ? "nav-item active" : "nav-item"} aria-current={view === "topics" ? "page" : undefined} onClick={() => navigateTo("topics")}><NavIcon src={topicIcon} />Themen</button>
-            <button className={view==='sessions'?'nav-item active':'nav-item'} aria-current={view==='sessions'?'page':undefined} onClick={()=>openSourceSection('sessions')}><NavIcon src={sessionIcon} />Sitzungen</button>
+            <button className={view==='sessions'||(view==='event'&&eventSessionContext)?'nav-item active':'nav-item'} aria-current={view==='sessions'||(view==='event'&&eventSessionContext)?'page':undefined} onClick={()=>openSourceSection('sessions')}><NavIcon src={sessionIcon} />Sitzungen</button>
           </div>
 
           <div className="nav-section">
@@ -1375,7 +1395,7 @@ export function App() {
               <summary>Recherche</summary>
               <button className="nav-subitem" disabled>Rechercheaufträge</button>
               <button className={view==='findings'?'nav-subitem active':'nav-subitem'} aria-current={view==='findings'?'page':undefined} onClick={()=>openSourceSection('findings')}>Fundstellen</button>
-              <button className={view === 'events' || view === 'event' ? 'nav-subitem active' : 'nav-subitem'} aria-current={view === 'events' || view === 'event' ? 'page' : undefined} onClick={() => navigateTo('events')}>Ereignisse</button>
+              <button className={view === 'events' || (view === 'event' && !eventSessionContext) ? 'nav-subitem active' : 'nav-subitem'} aria-current={view === 'events' || (view === 'event' && !eventSessionContext) ? 'page' : undefined} onClick={() => navigateTo('events')}>Ereignisse</button>
               <button className="nav-subitem" disabled>Quellen</button>
             </details>
             <details>
@@ -1426,7 +1446,7 @@ export function App() {
         <main className="content-shell">
         {import.meta.env.VITE_FIB_ACCEPTANCE_MODE && import.meta.env.VITE_FIB_ACCEPTANCE_MODE !== 'shared-apps' && <p className="warning" role="note">Isolierte technische Testumgebung · Gespeicherte Bearbeitungen bleiben lokal erhalten. {import.meta.env.VITE_FIB_ACCEPTANCE_MODE === 'fixtures' ? 'Synthetische PDF-Testdaten: Inhalte der Vorlagen sind damit nicht fachlich abnehmbar.' : 'Privat abgerufene Original-PDFs; HTML und Gemeinde-Nachricht sind dokumentierte Ausschnitte.'}</p>}
         {(view==='findings'||view==='sessions')&&eventListError&&<p className="error" role="alert">{eventListError}</p>}
-        {(view==='findings'||view==='sessions')&&<SourceWorkspace key={sourceNavigationKey} mode={view} initialFindingId={sourceFindingId} onHome={()=>navigateTo('dashboard')} onOpenEvent={id=>void openListedEvent(id)} registerLeaveGuard={guard=>{sourceLeaveRef.current=guard;}}/>}
+        {(view==='findings'||view==='sessions')&&<SourceWorkspace key={sourceNavigationKey} mode={view} initialFindingId={sourceFindingId} initialSessionId={eventSessionContext?.sessionId} initialTopId={eventSessionContext?.agendaId} onHome={()=>navigateTo('dashboard')} onOpenEvent={(id,context)=>void openListedEvent(id,context)} registerLeaveGuard={guard=>{sourceLeaveRef.current=guard;}}/>}
         {view === 'topics' && (
           <section className="panel card-headed fib-topic-screen">
             {topicError && <p className="error" role="alert">{topicError}</p>}
@@ -1897,7 +1917,7 @@ export function App() {
           <>
             <nav className="breadcrumbs" aria-label="Brotkrumen">
               <button onClick={() => navigateTo('dashboard')}>Dashboard</button>
-              <span>›</span><button onClick={() => navigateTo('events')}>Ereignisse</button>
+              <span>›</span>{eventSessionContext ? <button onClick={returnToSession}>Sitzungen · TOP {eventSessionContext.number}</button> : <button onClick={() => navigateTo('events')}>Ereignisse</button>}
               <span>›</span>
               <span aria-current="page">Ereignis</span>
             </nav>
@@ -1908,7 +1928,7 @@ export function App() {
                 <h1 className="object-title"><img className="object-icon" src={eventIcon} alt="" aria-hidden="true" />{readableEventTitle(eventResult.title)}</h1>
                 {readableSummary(eventResult.summary) && <p>{readableSummary(eventResult.summary)}</p>}
               </div>
-              <button className="action-button" onClick={() => navigateTo('events')}><ActionIcon name="back" />Zurück</button>
+              <button className="action-button" onClick={eventSessionContext ? returnToSession : () => navigateTo('events')}><ActionIcon name="back" />{eventSessionContext ? `Zurück zu TOP ${eventSessionContext.number}` : "Zurück"}</button>
             </div>
 
             <section className="object-status">
@@ -1962,7 +1982,7 @@ export function App() {
                 <div className="section-heading">
                   <div className="card-heading-content"><div className="card-title-group"><h2>Quellen und Fundstellen</h2>{sourcePickerOpen && <span className="card-mode-label">Bearbeiten</span>}</div>{sourcePickerOpen && <p className="card-heading-help">Fundstellen zuordnen, bearbeiten oder entfernen.</p>}</div>
                   {sourcePickerOpen && editingSourceId && <span className={!sourceNoteDraft.trim() ? 'card-edit-state error' : 'card-edit-state dirty'} role="status">{!sourceNoteDraft.trim() ? '⚠ Pflichteingaben unvollständig' : sourceNoteDraft !== (eventSources.find(item => item.findingId === editingSourceId)?.justification ?? '') ? '● Ungespeicherte Änderungen' : 'Unverändert'}</span>}
-                  {!sourcePickerOpen && <button type="button" className="primary action-button" disabled={editingEvent} onClick={() => { setSourcePickerOpen(true); setSourceMessage(null); }}>Fundstellen bearbeiten</button>}
+                  {!sourcePickerOpen && <button type="button" className="primary action-button" disabled={editingEvent} onClick={() => { setSourceMatches([]); setSourcePickerOpen(true); setSourceMessage(null); }}>Fundstellen bearbeiten</button>}
                 </div>
                 
                 {eventSources.length === 0 ? <p>Für dieses Ereignis sind noch keine Fundstellen zugeordnet.</p> : (
@@ -1992,6 +2012,7 @@ export function App() {
                   </ul>
                 )}
                 {sourcePickerOpen && <div className="stack">
+                  {eventSessionContext && <p className="field-validation-note">Es werden ausschließlich Fundstellen der aktuellen Gemeinderatssitzung angeboten.</p>}
                   <div className="finding-filter">
                     <label>Fundstellen filtern – Titel oder Quelle
                       <input type="search" value={sourceSearch} onChange={event => setSourceSearch(event.target.value)} maxLength={120} placeholder="Suchbegriff eingeben …" />

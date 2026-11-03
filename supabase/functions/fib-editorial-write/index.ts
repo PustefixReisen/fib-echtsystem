@@ -218,7 +218,21 @@ export default {
           return json({ error: 'invalid_finding_id' }, 400);
         if (justification != null && (typeof justification !== 'string' || justification.length > 2000))
           return json({error:'justification_required'},400);
+        if (body.risSessionId !== undefined &&
+            (typeof body.risSessionId !== "string" ||
+             !/^[0-9a-f]{8}-[0-9a-f-]{27,}$/i.test(body.risSessionId))) {
+          return json({error:"invalid_ris_session"},400);
+        }
         const restored = await sql.begin(tx => withDevelopmentDataset(tx,body,async () => {
+          if (body.risSessionId) {
+            const allowed = await tx.unsafe(
+              `select 1 from fib.ris_documents d
+               join fib.ris_document_links l on l.document_id=d.id
+               where d.finding_id=$1::uuid and l.session_id=$2::uuid limit 1`,
+              [findingId,body.risSessionId],
+            );
+            if (!allowed.length) throw Error("ris_finding_outside_current_session");
+          }
           const inserted = await tx.unsafe(
             `insert into fib.event_findings (event_id, finding_id, evidence_role, justification)
              select $1::uuid, f.id, 'editorial_reference', $3::text

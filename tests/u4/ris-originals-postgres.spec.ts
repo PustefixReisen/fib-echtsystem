@@ -316,15 +316,23 @@ async function main() {
   const top = await first(
     "select id from fib.ris_agenda_items where number='2'",
   );
-  const created = await tx((db) =>
-    sourceEditorial(db, actor, {
+  // #387: further TOP events must be pre-existing; creating a new local
+  // reference from the TOP dialog is forbidden even through the backend.
+  await assert.rejects(
+    () => tx((db) => sourceEditorial(db, actor, {
       action: "source_create_event",
       agendaId: top.id,
-      title: "External local event",
+      title: "Forbidden new local TOP event",
       occurredAt: "2026-10-20",
       approval: true,
       requestId: crypto.randomUUID(),
-    })
+    })),
+    /invalid_source_input/,
+  );
+  const created = { eventId: crypto.randomUUID() };
+  await pool.query(
+    "insert into fib.events(id,title,status,occurred_at,confirmed_at) values($1,$2,'confirmed',$3,now())",
+    [created.eventId,"External local event","2026-10-20"],
   );
   assert.equal(
     (await first("select count(*)::int n from fib.event_findings")).n,

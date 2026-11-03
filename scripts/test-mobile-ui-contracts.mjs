@@ -7,7 +7,8 @@ const css = readFileSync('apps/editorial-web/src/app.css', 'utf8');
 
 test('mobile navigation has accessible close control and current event position', () => {
   assert.match(app, /className="mobile-nav-close" aria-label="Navigationsmenü schließen"/);
-  assert.match(app, /aria-current=\{view === 'events' \|\| view === 'event' \? 'page'/);
+  assert.match(app, /aria-current=\{view === 'events' \|\| \(view === 'event' && !eventSessionContext\) \? 'page'/);
+  assert.match(app, /view==='sessions'\|\|\(view==='event'&&eventSessionContext\)/);
   assert.match(css, /\.side-nav\s*\{\s*overflow-y:\s*auto/);
 });
 
@@ -55,5 +56,22 @@ test('event form uses fixed save/cancel dock without duplicate controls', () => 
   assert.match(app, /aria-label="Aktionen für Ereignisbearbeitung"/);
   assert.match(app, /className=\{\x60panel card-headed\$\{editingEvent \? " workflow-dock-host"/);
   assert.match(app, /disabled=\{sourcePickerOpen \|\| coordinationRunning/);
-  assert.match(app, /disabled=\{editingEvent\} onClick=\{\(\) => \{ setSourcePickerOpen\(true\)/);
+  assert.match(app, /disabled=\{editingEvent\} onClick=\{\(\) => \{ setSourceMatches\(\[\]\); setSourcePickerOpen\(true\)/);
+});
+
+const findingRead = readFileSync('supabase/functions/fib-get-event/index.ts', 'utf8');
+const findingWrite = readFileSync('supabase/functions/fib-editorial-write/index.ts', 'utf8');
+
+test('RIS session event editor lists only findings originating in its current meeting', () => {
+  assert.match(app, /risSessionId:eventSessionContext\.sessionId/);
+  assert.match(app, /scopedToRisSessionId !== eventSessionContext\.sessionId/);
+  assert.match(app, /setSourceMatches\(\[\]\)/);
+  assert.match(findingRead, /join fib\.ris_document_links l on l\.document_id=d\.id/);
+  assert.match(findingRead, /d\.finding_id=f\.id and l\.session_id=\$3::uuid/);
+  assert.match(findingRead, /scopedToRisSessionId: payload\.risSessionId/);
+});
+test('RIS session event editor rejects out-of-session finding writes', () => {
+  assert.match(app, /risSessionId:eventSessionContext\.sessionId/);
+  assert.match(findingWrite, /ris_finding_outside_current_session/);
+  assert.match(findingWrite, /d\.finding_id=\$1::uuid and l\.session_id=\$2::uuid/);
 });

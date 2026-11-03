@@ -62,24 +62,25 @@ export function RisSessionView(
     : [];
   const sessionEvents: Row[] = data.sessionEvents ?? [];
   const sessionRelated: Row = data.sessionRelated ?? {messages: [],processes: [],topics: []};
-  const title = (d: Row) =>
-    [
-      ({
-        proposal: "Beschlussvorlage",
-        minutes: "Niederschrift",
-        attachment: "Anlage",
-        decision: "Beschluss",
-      } as Record<string, string>)[d.kind] ?? "Sitzungsunterlage",
-      displayDate(session.session_date),
-      d.reference,
-      d.title || d.original_title,
-    ].filter(Boolean).join(" · ");
+  const documentKind = (d: Row) => ({
+    proposal: "Beschlussvorlage",
+    minutes: "Niederschrift",
+    attachment: "Anlage",
+    decision: "Beschluss",
+  } as Record<string, string>)[d.kind] ?? "Sitzungsunterlage";
+  const documentDetail = (d: Row) =>
+    [displayDate(session.session_date),d.reference,d.title || d.original_title]
+      .filter(Boolean).join(" · ");
+  const title = (d: Row) => [documentKind(d),documentDetail(d)].filter(Boolean).join(" · ");
   const documentItem = (d: Row) => (
     <li className="ris-document-item" key={d.id ?? d.document_id}>
       <div className="ris-document-name">
-        <OriginalLink url={d.source_url}
-          label={`${title(d)} im RIS öffnen`}
-          text={title(d)} />
+        <span className="ris-external-reference">
+          <OriginalLink url={d.source_url} label={`${title(d)} im RIS öffnen`} />
+          <span><strong>{documentKind(d)}</strong>
+            {documentDetail(d) && ` · ${documentDetail(d)}`}
+          </span>
+        </span>
       </div>
     </li>
   );
@@ -254,25 +255,11 @@ export function RisSessionView(
                 <p>Niederschrift zum TOP noch nicht verfügbar.</p>
               )}
             </section>
-            {(proposals.length > 0 || topDocuments.length > 0) && (
+            {topDocuments.length > 0 && (
               <section className="panel card-headed">
                 <div className="section-heading">
                   <h2>Beschlussvorschlag / Dokumente</h2>
                 </div>
-                {proposals.length > 0 && (
-                  <div className="ris-proposal-copy">
-                    {proposals.map((p, i) => (
-                      <div key={p.id ?? i}>
-                        <strong>Beschlussvorschlag · Vorlage {p.reference}</strong>
-                        <p>Beschlussvorschlag als Text derzeit nicht in FIB verfügbar. Die Vorlage kann im RIS geöffnet werden.</p>
-                        {!topDocuments.some((d) => d.kind === "proposal" && (!d.reference || d.reference === p.reference)) &&
-                          <span className="ris-inline-row">
-                            <OriginalLink label="Vorlage im RIS öffnen" text="Originalvorlage im RIS" url={p.source_url} />
-                          </span>}
-                      </div>
-                    ))}
-                  </div>
-                )}
                 {topDocuments.length > 0 && (
                   <ul>{topDocuments.map(documentItem)}</ul>
                 )}

@@ -108,17 +108,12 @@ try {
     .click();
   await page.getByText("Keine weiteren Ereignisse zugeordnet.").waitFor();
   await linkRelated().click();
-  await button("Neu: Ereignis").click();
-  await page.getByLabel("Ereignistitel *", { exact: true }).fill(
-    "Lokales Ereignis außerhalb der Sitzung",
-  );
-  await button("Speichern").click();
+  assert.equal(await button("Neu: Ereignis").count(),0,
+    "Additional TOP events must be selected from existing events");
+  await page.getByRole("radio").first().check();
+  await button("Zuordnen").click();
   await heading("Weitere Ereignisse zum TOP").waitFor();
-  assert.ok(
-    (await local().innerText()).includes(
-      "Lokales Ereignis außerhalb der Sitzung",
-    ),
-  );
+  assert.ok((await local().innerText()).includes("Pressebericht zur Kita-Finanzierung"));
   assert.equal(await page.locator(".ris-document-item .fib-external-icon").count(),1,
     "RIS original is linked exactly once next to its document title");
   assert.equal(await page.locator(".ris-document-item").getByText("RIS-Original",{exact:true}).count(),0);
@@ -130,13 +125,23 @@ try {
     1,
   );
   await linkRelated().click();
-  await button("Neu: Ereignis").click();
-  await button("Abbrechen").click();
-  await heading("Weiteres Ereignis zuordnen").waitFor();
+  assert.equal(await button("Neu: Ereignis").count(),0);
   await button("Abbrechen").click();
   await heading("Weitere Ereignisse zum TOP").waitFor();
+  // Old Preview backends ignore agenda filters. The UI must never show
+  // unrelated events without a server-side scope confirmation.
+  await page.evaluate(() => window.legacyChoices = true);
+  await main().getByRole("button", { name: "Auswählen oder erstellen" }).click();
+  await page.getByText("Die Vorschau verwendet noch einen älteren Ereignisdienst.",{exact:false}).waitFor();
+  assert.equal(await page.getByRole("radio").count(),0,
+    "Legacy server event lists are not accepted as current-session candidates");
+  await button("Abbrechen").click();
+  await page.evaluate(() => window.legacyChoices = false);
   // One explicitly chosen main TOP event; press material is never auto-linked.
   await main().getByRole("button", { name: "Auswählen oder erstellen" }).click();
+  assert.equal(await page.getByRole("radio").count(),0,
+    "No existing event qualifies as a main event of this Sitzung yet");
+  await page.getByText("Noch kein Ereignis mit einer RIS-Fundstelle aus dieser Sitzung vorhanden.",{exact:false}).waitFor();
   await button("Neu: Ereignis").click();
   await page.getByLabel("Ereignistitel *", { exact: true }).fill("TOP 2: Beratung zum Elternbeitragszuschuss");
   await button("Speichern").click();
@@ -145,6 +150,34 @@ try {
   assert.equal(await main().getByRole("button", {name:"Auswählen oder erstellen"}).count(),0);
   assert.equal(await page.evaluate(() => window.calls.filter(c=>c.action==="ris_link_main_event").length),0,
     "Main event creation commits the explicit role without another linking action");
+  assert.equal(await main().getByRole("heading",{name:"Unterlagen als Fundstellen bestätigen"}).count(),0,
+    "No separate RIS findings confirmation after selecting a TOP main event");
+  assert.equal(await main().getByRole("checkbox").count(),0);
+  assert.equal(await page.getByText("Beschlussvorschlag als Text derzeit nicht in FIB verfügbar.").count(),0,
+    "Redundant proposal placeholder is no longer shown");
+  const documentLabel=page.locator(".ris-document-item .ris-external-reference > span").first();
+  assert.equal(await documentLabel.locator("strong").innerText(),"Beschlussvorlage");
+  assert.equal(await documentLabel.locator("strong").evaluate(el=>getComputedStyle(el).fontWeight),"700",
+    "Only document type is bold");
+  assert.equal(await documentLabel.evaluate(el=>getComputedStyle(el).fontWeight),"400",
+    "Date, reference and full title remain normal weight");
+  const tabStyle=await page.getByRole("navigation",{name:"Sitzung und Tagesordnungspunkte"})
+    .getByRole("button",{name:"TOP 2"}).evaluate(el=>{
+      const st=getComputedStyle(el);return {width:parseFloat(st.borderBottomWidth),color:st.borderBottomColor};
+    });
+  assert.ok(tabStyle.width<=2,"Selected TOP border stays thin");
+  const underline=await tabs.getByRole("button",{name:"TOP 2"}).evaluate(el=>{
+    const pseudo=getComputedStyle(el,"::after");
+    return {content:pseudo.content,width:parseFloat(pseudo.width),height:parseFloat(pseudo.height),position:pseudo.position};
+  });
+  assert.ok(underline.content!=="none" && underline.width>10 && underline.height>=2 && underline.position==="absolute",
+    "Selected TOP has a separate underline below its text");
+
+  assert.equal(await page.evaluate(() => window.calls.filter(c=>c.action==="ris_confirm_main_findings").length),0,
+    "Event creation is the only required user action");
+  const mainQueries=await page.evaluate(() => window.calls.filter(c=>c.action==="source_choices" && c.eventRole==="main_event"));
+  assert.ok(mainQueries.every(c=>c.agendaId==="t2"),"Main event choices are scoped to the current TOP");
+
   await page.getByRole("navigation", {name:"Sitzung und Tagesordnungspunkte"}).getByRole("button",{name:"Sitzungsübersicht"}).click();
   await heading("Ereignisse zur Sitzung").waitFor();
   await sessionEvents().getByRole("button",{name:"Ereignis zuordnen"}).click();
@@ -198,7 +231,7 @@ try {
     await page.evaluate(() =>
       window.calls.filter((c) => c.action === "source_create_event").length
     ),
-    2,
+    1, // only the new TOP main event; related events must already exist
   );
   assert.deepEqual(errors, []);
   console.log(
