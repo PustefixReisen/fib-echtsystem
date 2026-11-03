@@ -809,3 +809,9 @@ button:has(> .action-icon) { display: inline-flex; align-items: center; justify-
 .ris-simplified .ris-document-item .source-actions { flex-wrap: nowrap; }
 .ris-simplified .ris-document-item .source-actions > button,
 .ris-simplified .ris-document-item .source-actions > a { flex: 0 0 auto; }
+
+/* Session-wide event cards: derived objects are read-only, never separately assigned. */
+.ris-session-event { border-bottom: 1px solid var(--border, #d8e1dc); padding: .45rem 0 .7rem; }
+.ris-session-event:last-of-type { border-bottom: none; }
+.ris-derived-relations { display:flex; gap:.35rem; flex-wrap:wrap; margin:.2rem 0 .2rem .6rem; }
+.ris-derived-relations span { font-size:.9rem; border-radius:.35rem; padding:.2rem .45rem; background:#edf5ee; }
