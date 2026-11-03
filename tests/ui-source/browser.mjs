@@ -33,7 +33,7 @@ const button = (name) => page.getByRole("button", { name, exact: true });
 const heading = (name) => page.getByRole("heading", { name, exact: true });
 const local = () =>
   page.locator("section").filter({ has: heading("Weitere Ereignisse zum TOP") });
-const main = () => page.locator("section").filter({has: heading("Ereignis zum TOP")});
+const main = () => page.locator("section").filter({has: heading("TOP als Ereignis festlegen")});
 const sessionEvents = () => page.locator("section").filter({has: heading("Ereignisse zur Sitzung")});
 const linkRelated = () => local().getByRole("button", { name: "Ereignis zuordnen" });
 try {
@@ -123,13 +123,13 @@ try {
   await button("Abbrechen").click();
   await heading("Weitere Ereignisse zum TOP").waitFor();
   // One explicitly chosen main TOP event; press material is never auto-linked.
-  await main().getByRole("button", { name: "Ereignis zuordnen" }).click();
+  await main().getByRole("button", { name: "Auswählen oder erstellen" }).click();
   await button("Neu: Ereignis").click();
   await page.getByLabel("Ereignistitel *", { exact: true }).fill("TOP 2: Beratung zum Elternbeitragszuschuss");
   await button("Speichern").click();
-  await heading("Ereignis zum TOP").waitFor();
+  await heading("TOP als Ereignis festlegen").waitFor();
   assert.equal(await main().getByRole("button", {name:"Ereignis öffnen"}).count(),1);
-  assert.equal(await main().getByRole("button", {name:"Ereignis zuordnen"}).count(),0);
+  assert.equal(await main().getByRole("button", {name:"Auswählen oder erstellen"}).count(),0);
   assert.equal(await page.evaluate(() => window.calls.filter(c=>c.action==="ris_link_main_event").length),0,
     "Main event creation commits the explicit role without another linking action");
   await button("‹ Zurück zur Tagesordnung").click();
@@ -143,7 +143,7 @@ try {
   assert.equal(await page.getByText("TOP 2: Beratung zum Elternbeitragszuschuss").count(),0,
     "Session event selection cannot automatically add the TOP's editorial main event to its list");
   await button("TOP 2 öffnen").click();
-  await heading("Ereignis zum TOP").waitFor();
+  await heading("TOP als Ereignis festlegen").waitFor();
   mkdirSync("/tmp/fib-source-ui", { recursive: true });
   await page.screenshot({
     path: "/tmp/fib-source-ui/ris-desktop.png",
