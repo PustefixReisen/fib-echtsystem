@@ -80,7 +80,7 @@ async function main() {
       /"((?:schema|security|migrations)\/[^"\n]+\.sql)"/g,
     ),
   ].map((m) => m[1]);
-  for (const path of migrations.filter((p) => !p.includes("20261102221038"))) {
+  for (const path of migrations.filter((p) => !p.includes("20261102221038") && !p.includes("20261103113500"))) {
     await pool.query(readFileSync("supabase/" + path, "utf8"));
   }
   await pool.query(
@@ -101,6 +101,7 @@ async function main() {
       "utf8",
     ),
   );
+  await pool.query(readFileSync("supabase/migrations/20261103113500_fib_ris_session_top_events.sql","utf8"));
   assert.equal(
     (await first(
       "select extracted_text from fib.ris_document_versions where document_id=$1",
