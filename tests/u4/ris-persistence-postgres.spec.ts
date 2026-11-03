@@ -80,6 +80,7 @@ async function main() {
     await pool.query(readFileSync("supabase/" + path, "utf8"));
   await pool.query("create schema if not exists storage;create table if not exists storage.buckets(id text primary key,name text,public boolean,file_size_limit bigint,allowed_mime_types text[]);delete from storage.buckets where id='fib-ris-originals';");
   await pool.query(readFileSync("supabase/migrations/20261102221038_fib_ris_originals_and_editorial_links.sql","utf8"));
+  await pool.query(readFileSync("supabase/migrations/20261103113500_fib_ris_session_top_events.sql","utf8"));
   await pool.query(
     "insert into fib.app_users(user_id,role,setup_status) values($1,'editor','active')",
     [uid],
