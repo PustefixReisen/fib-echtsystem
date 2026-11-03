@@ -204,9 +204,7 @@ export function RisSessionView(
                     {proposals.map((p, i) => (
                       <div key={p.id ?? i}>
                         <strong>Beschlussvorschlag · Vorlage {p.reference}</strong>
-                        {p.wording || p.proposal_text
-                          ? <p className="source-evidence">{p.wording || p.proposal_text}</p>
-                          : <p>Beschlussvorschlag als Text derzeit nicht verfügbar. Die Vorlage kann im RIS geöffnet werden.</p>}
+                        <p>Beschlussvorschlag als Text derzeit nicht in FIB verfügbar. Die Vorlage kann im RIS geöffnet werden.</p>
                         {!topDocuments.some((d) => d.kind === "proposal" && (!d.reference || d.reference === p.reference)) &&
                           <span className="ris-inline-row">
                             <span>Originalvorlage</span>
