@@ -171,15 +171,6 @@ const api = async (b: any) => {
     mainLinks=[{agenda_id:b.agendaId,event_id:b.eventId,event_title:events.find(e=>e.id===b.eventId)?.title,event_date:events.find(e=>e.id===b.eventId)?.event_date}];
     return {};
   }
-  if (b.action === "ris_confirm_main_findings") {
-    if (!b.approval || !mainLinks.some((link:any)=>link.event_id===b.eventId) ||
-        !b.linkIds.every((id:string)=>id==="l1")) throw Error("invalid_documents_confirmation");
-    for (const id of b.linkIds) {
-      if (!mainEventFindings.some((link:any)=>link.event_id===b.eventId&&link.finding_id==="f1"))
-        mainEventFindings.push({agenda_id:b.agendaId,event_id:b.eventId,finding_id:"f1"});
-    }
-    return {confirmed:b.linkIds.length};
-  }
   if (b.action === "ris_unlink_main_event") {
     mainLinks=mainLinks.filter(e=>e.event_id!==b.eventId);
     return {};
