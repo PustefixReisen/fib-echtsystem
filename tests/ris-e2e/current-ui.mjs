@@ -142,8 +142,11 @@ try {
   record("Session-wide event stored without automatic TOP association");
   await page.getByRole("button", { name: "TOP 3 öffnen" }).click();
   await page.getByRole("heading", { name: "Beschlussvorschlag / Dokumente", exact: true }).waitFor();
-  assert.equal((await db.query("select count(*)::int n from fib.event_findings")).rows[0].n,0,
-    "TOP associations do not implicitly create finding associations");
+  assert.equal((await db.query("select count(*)::int n from fib.event_findings")).rows[0].n,1,
+    "The chosen TOP main event automatically reuses its RIS document as one finding");
+  assert.equal((await db.query(
+    "select count(*)::int n from fib.event_findings ef join fib.ris_agenda_events ae on ae.event_id=ef.event_id where ae.role='main_event'"
+  )).rows[0].n,1,"Only the main TOP event receives the official RIS finding");
   assert.deepEqual(errors, []);
   record("Real login and TOTP → RIS agenda → TOP2/TOP3 → separate event search view, without retired review masks");
   assert.equal((await db.query("select count(*)::int as n from fib.messages")).rows[0].n, 0);
