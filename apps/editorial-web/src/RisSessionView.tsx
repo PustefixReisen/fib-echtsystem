@@ -2,7 +2,6 @@ import { useState } from "react";
 import { type SourceApi, sourceApi, withEventLock } from "./source-api.js";
 import { ActionIcon, OriginalLink } from "./ActionIcon.js";
 import { EventAssignmentView } from "./EventAssignmentView.js";
-import { PdfPreview } from "./PdfPreview.js";
 type Row = Record<string, any>;
 type Props = {
   data: Row;
@@ -34,8 +33,7 @@ export function RisSessionView(
 ) {
   const [localTop, setLocalTop] = useState(""),
     [showSearch, setShowSearch] = useState(false);
-  const [preview, setPreview] = useState<Row | null>(null),
-    [error, setError] = useState(""),
+  const [error, setError] = useState(""),
     [saving, setSaving] = useState(false);
   const select = (id: string) => {
     setLocalTop(id);
@@ -72,42 +70,24 @@ export function RisSessionView(
       d.reference,
       d.title || d.original_title,
     ].filter(Boolean).join(" · ");
-  const previewButton = (d: Row) =>
-    d.has_pdf
-      ? (
-        <ActionIcon
-          label={`PDF-Vorschau: ${title(d)}`}
-          onClick={() => setPreview(d)}
-        >
-          ▤
-        </ActionIcon>
-      )
-      : (
-        <span className="muted">
-          {["municipality", "licensed"].includes(d.content_author)
-            ? "Original-PDF noch nicht gespeichert"
-            : "Speicherberechtigung ungeklärt – nur Originallink"}
-        </span>
-      );
   const documentItem = (d: Row) => (
     <li className="ris-document-item" key={d.id ?? d.document_id}>
-      <div>
+      <div className="ris-document-name">
         <span>{title(d)}</span>
-        {d.original_title && (
+        {d.original_title && d.original_title !== d.title && (
           <small>Originaltitel im RIS: {d.original_title}</small>
         )}
       </div>
       <div className="source-actions">
-        {previewButton(d)}
-        <OriginalLink url={d.source_url} />
+        <OriginalLink url={d.source_url} label="RIS-Original öffnen" />
         {d.latest_version_id && (
-          <ActionIcon
-            label="Dokumentfassung öffnen"
+          <button
+            type="button"
             disabled={busy}
             onClick={() => onOpenDocument(d.latest_version_id)}
           >
-            →
-          </ActionIcon>
+            Fundstelle öffnen
+          </button>
         )}
       </div>
     </li>
@@ -142,16 +122,16 @@ export function RisSessionView(
       {!selected
         ? (
           <>
-            <section className="panel">
-              <h2>Sitzung</h2>
-              <p>
-                {session.committee_name || "Gremium"} ·{" "}
-                {displayDate(session.session_date)}{" "}
+            <section className="panel card-headed">
+              <div className="section-heading"><h2>RIS-Gesamtübersicht</h2></div>
+              <div className="ris-inline-row">
+                <span>{session.committee_name || "Gremium"} ·{" "}
+                  {displayDate(session.session_date)} · Tagesordnung</span>
                 <OriginalLink
-                  label="RIS-Gesamtübersicht öffnen"
+                  label="Gesamtübersicht im RIS öffnen"
                   url={session.source_url}
                 />
-              </p>
+              </div>
               {sessionDocuments.length > 0 && (
                 <>
                   <h3>Sitzungsweite Dokumente</h3>
@@ -162,8 +142,8 @@ export function RisSessionView(
                 <p>Niederschrift genehmigt</p>
               )}
             </section>
-            <section className="panel">
-              <h2>Tagesordnung</h2>
+            <section className="panel card-headed">
+              <div className="section-heading"><h2>Tagesordnung</h2></div>
               {agenda.map((a) => {
                 const docs = documents.filter((d) => d.agenda_id === a.id),
                   prop = (data.proposals ?? []).find((p: Row) =>
@@ -173,7 +153,7 @@ export function RisSessionView(
                   d.kind !== "proposal"
                 ).length;
                 return (
-                  <article className="source-block" key={a.id}>
+                  <article className="source-block ris-top-item" key={a.id}>
                     <div className="section-heading">
                       <h3>TOP {a.number} · {a.title}</h3>
                       <ActionIcon
@@ -207,42 +187,36 @@ export function RisSessionView(
         )
         : (
           <>
-            <button type="button" onClick={() => select("")}>
-              ‹ Zurück zur Tagesordnung
-            </button>
-            <section className="panel">
-              <h2>TOP {selected.number} · {selected.title}</h2>
+            <section className="panel card-headed">
+              <div className="section-heading"><h2>TOP {selected.number} · {selected.title}</h2></div>
               {!sessionDocuments.some((d) => d.kind === "minutes") &&
                 !topDocuments.some((d) => d.kind === "minutes") && (
                 <p>Niederschrift zum TOP noch nicht verfügbar.</p>
               )}
             </section>
-            {proposals.length > 0 && (
-              <section className="panel">
-                <h2>Beschlussvorschlag</h2>
-                {proposals.map((p, i) => {
-                  const doc = topDocuments.find((d) =>
-                    d.kind === "proposal" &&
-                    (!d.reference || d.reference === p.reference)
-                  );
-                  return (
-                    <div className="source-block" key={p.id ?? i}>
-                      <p>
-                        Vorlage {p.reference} ·{" "}
-                        {displayDate(session.session_date)}
-                      </p>
-                      <p>
-                        Ein Vorschlag ist keine bestätigte Beschlussfassung.
-                      </p>
-                      {doc ? previewButton(doc) : (
-                        <OriginalLink
-                          label="Originalvorlage im RIS öffnen"
-                          url={p.source_url}
-                        />
-                      )}
-                    </div>
-                  );
-                })}
+            {(proposals.length > 0 || topDocuments.length > 0) && (
+              <section className="panel card-headed">
+                <div className="section-heading">
+                  <h2>Beschlussvorschlag / Dokumente</h2>
+                </div>
+                {proposals.length > 0 && (
+                  <div className="ris-proposal-copy">
+                    {proposals.map((p, i) => (
+                      <div key={p.id ?? i}>
+                        <strong>Beschlussvorschlag · Vorlage {p.reference}</strong>
+                        <p>Beschlussvorschlag als Text derzeit nicht in FIB verfügbar. Die Vorlage kann im RIS geöffnet werden.</p>
+                        {!topDocuments.some((d) => d.kind === "proposal" && (!d.reference || d.reference === p.reference)) &&
+                          <span className="ris-inline-row">
+                            <span>Originalvorlage</span>
+                            <OriginalLink label="Vorlage im RIS öffnen" url={p.source_url} />
+                          </span>}
+                      </div>
+                    ))}
+                  </div>
+                )}
+                {topDocuments.length > 0 && (
+                  <ul>{topDocuments.map(documentItem)}</ul>
+                )}
               </section>
             )}
             {decisions.length > 0 && (
@@ -269,19 +243,9 @@ export function RisSessionView(
                 ))}
               </section>
             )}
-            {topDocuments.length > 0 && (
-              <section className="panel">
-                <h2>
-                  {topDocuments.some((d) => d.kind === "minutes")
-                    ? "Dokumente und Niederschrift"
-                    : "Dokumente"}
-                </h2>
-                <ul>{topDocuments.map(documentItem)}</ul>
-              </section>
-            )}
             {sessionDocuments.some((d) => d.kind === "minutes") && (
-              <section className="panel">
-                <h2>Niederschrift der Sitzung</h2>
+              <section className="panel card-headed">
+                <div className="section-heading"><h2>Niederschrift der Sitzung</h2></div>
                 <ul>
                   {sessionDocuments.filter((d) => d.kind === "minutes").map(
                     documentItem,
@@ -289,8 +253,13 @@ export function RisSessionView(
                 </ul>
               </section>
             )}
-            <section className="panel">
-              <h2>Lokale Bezüge</h2>
+            <section className="panel card-headed">
+              <div className="section-heading">
+                <h2>Lokale Bezüge</h2>
+                <button type="button" disabled={busy || saving} onClick={() => setShowSearch(true)}>
+                  Neu: Lokaler Bezug
+                </button>
+              </div>
               {events.map((e) => (
                 <div className="work-item" key={e.event_id}>
                   <span>
@@ -335,24 +304,10 @@ export function RisSessionView(
                 </div>
               ))}
               {!events.length && <p>Noch kein Ereignis zugeordnet.</p>}
-              <button
-                type="button"
-                disabled={busy || saving}
-                onClick={() => setShowSearch(true)}
-              >
-                Neu: Lokaler Bezug
-              </button>
             </section>
           </>
         )}
-      {preview && (
-        <PdfPreview
-          versionId={preview.latest_version_id}
-          title={title(preview)}
-          api={api}
-          onClose={() => setPreview(null)}
-        />
-      )}
+
     </div>
   );
 }
