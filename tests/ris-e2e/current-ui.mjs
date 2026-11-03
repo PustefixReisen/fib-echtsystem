@@ -109,6 +109,8 @@ try {
   await page.getByRole("button",{name:"Neu: Ereignis"}).click();
   await page.getByLabel("Ereignistitel *",{exact:true}).fill("TOP 2: redaktionelles Hauptereignis");
   await page.getByRole("button",{name:"Speichern"}).click();
+  await page.getByRole("heading",{name:"Ereignis zum TOP",exact:true}).waitFor();
+  await page.getByText("TOP 2: redaktionelles Hauptereignis",{exact:false}).waitFor();
   assert.equal((await db.query("select count(*)::int n from fib.ris_agenda_events where role='main_event'")).rows[0].n,1);
   assert.equal((await db.query("select count(*)::int n from fib.ris_agenda_events where role='local_reference'")).rows[0].n,1);
   record("Manual TOP main event and related events remain independent");
@@ -118,6 +120,7 @@ try {
     .getByRole("button",{name:"Ereignis zuordnen"}).click();
   await page.getByRole("radio").first().check();
   await page.getByRole("button",{name:"Zuordnen"}).click();
+  await page.getByRole("heading",{name:"Ereignisse zur Sitzung",exact:true}).waitFor();
   assert.equal((await db.query("select count(*)::int n from fib.ris_session_events")).rows[0].n,1);
   assert.equal((await db.query("select count(*)::int n from fib.ris_agenda_events where role='main_event'")).rows[0].n,1,
     "A session-wide event does not automatically attach to any TOP");
