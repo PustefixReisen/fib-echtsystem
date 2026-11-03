@@ -91,6 +91,7 @@ try {
   await page.getByRole("heading",{name:"Lokale Bezüge",exact:true}).waitFor();
   assert.equal((await db.query("select count(*)::int n from fib.event_findings")).rows[0].n,0);
   await page.getByRole("button",{name:"Fundstelle öffnen",exact:true}).first().click();
+  await page.getByRole("heading",{name:"Ereignisbezug",exact:true}).waitFor();
   assert.equal(await page.getByRole("button",{name:"PDF-Vorschau öffnen",exact:true}).count(),0);
   assert.equal(await page.getByRole("heading",{name:"Versionen",exact:true}).count(),0);
   assert.equal(await page.getByRole("button",{name:"Speicherberechtigung bearbeiten",exact:true}).count(),0);
