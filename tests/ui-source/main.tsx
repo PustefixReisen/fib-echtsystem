@@ -61,12 +61,18 @@ const api = async (b: any) => {
   }
   if (b.action === "source_choices") {
     return {
-      events: events.filter((e) =>
-        e.title.toLowerCase().includes((b.search ?? "").toLowerCase()) &&
-        ((window as any).legacyChoices || !b.agendaId || (b.eventRole === "main_event"
-          ? mainEventFindings.some((link:any)=>link.event_id===e.id)
-          : !mainEventFindings.some((link:any)=>link.event_id===e.id)))
-      ),
+      events: events.filter((e) => {
+        const term=(b.search ?? "").toLocaleLowerCase("de-DE");
+        const date=e.event_date ?? "";
+        const shownDate=date ? new Date(date).toLocaleDateString("de-DE") : "";
+        const searchable=[e.title,e.summary ?? "",date,shownDate].join(" ").toLocaleLowerCase("de-DE");
+        return searchable.includes(term) && ((window as any).legacyChoices || !b.agendaId ||
+          (b.eventRole === "main_event"
+            ? mainEventFindings.some((link:any)=>link.event_id===e.id)
+            : !mainEventFindings.some((link:any)=>link.event_id===e.id) &&
+              !sessionLinks.some((link:any)=>link.event_id===e.id) &&
+              !mainLinks.some((link:any)=>link.event_id===e.id)));
+      }),
       processes: [],
       topics: [],
       ...(b.agendaId && !(window as any).legacyChoices ? {scopedToAgendaId:b.agendaId,scopedRole:b.eventRole} : {}),
