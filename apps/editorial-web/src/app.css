@@ -804,3 +804,8 @@ button:has(> .action-icon) { display: inline-flex; align-items: center; justify-
   .fib-assignment-content { padding:.75rem; }
   .fib-assignment-footer button { flex:1 1 auto; }
 }
+
+/* Keep the two document actions on one action row even in narrow layouts. */
+.ris-simplified .ris-document-item .source-actions { flex-wrap: nowrap; }
+.ris-simplified .ris-document-item .source-actions > button,
+.ris-simplified .ris-document-item .source-actions > a { flex: 0 0 auto; }
