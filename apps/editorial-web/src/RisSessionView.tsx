@@ -312,7 +312,7 @@ export function RisSessionView(
             )}
             <section className="panel card-headed">
               <div className="section-heading">
-                <h2>Ereignis zum TOP</h2>
+                <h2>TOP als Ereignis festlegen</h2>
                 {!mainEvents.length && (
                   <button type="button" disabled={busy || saving} onClick={() => setAssignment("main")}>
                     Ereignis zuordnen
