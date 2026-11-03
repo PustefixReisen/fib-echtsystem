@@ -850,6 +850,15 @@ async function main() {
     "isolated-ris-387","2026-11-03T09:00:00Z",
   ));
   assert.ok(proposalVersion);
+  await assert.rejects(
+    ()=>run({action:"ris_confirm_main_findings",agendaId:topForProposal,
+      eventId:firstNewId,linkIds:[selectedProposalDoc.id,link.id],approval:true}),
+    /ris_object_missing/,
+    "A session-wide minutes document cannot be smuggled into a TOP proposal batch",
+  );
+  assert.equal(Number((await first(
+    "select count(*) n from fib.event_findings where event_id=$1",
+    [firstNewId])).n),0,"An invalid batch rolls back all earlier selections");
   await run({action:"ris_confirm_main_findings",agendaId:topForProposal,
     eventId:firstNewId,linkIds:[selectedProposalDoc.id],approval:true});
   await run({action:"ris_confirm_main_findings",agendaId:topForProposal,
