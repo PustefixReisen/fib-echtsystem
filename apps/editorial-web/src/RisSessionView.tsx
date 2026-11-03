@@ -154,6 +154,22 @@ export function RisSessionView(
   );
   return (
     <div className="ris-simplified">
+      <nav className="ris-session-tabs" aria-label="Sitzung und Tagesordnungspunkte">
+        <button type="button" className={!selected ? "active" : ""}
+          aria-current={!selected ? "page" : undefined}
+          onClick={() => select("")}>
+          Sitzungsübersicht
+        </button>
+        {agenda.map((item) => (
+          <button type="button" key={item.id}
+            className={selected?.id === item.id ? "active" : ""}
+            aria-current={selected?.id === item.id ? "page" : undefined}
+            title={`TOP ${item.number}: ${item.title}`}
+            onClick={() => select(item.id)}>
+            TOP {item.number}
+          </button>
+        ))}
+      </nav>
       {error && <p role="alert">{error}</p>}
       {!selected
         ? (
