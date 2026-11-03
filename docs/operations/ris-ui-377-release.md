@@ -4,6 +4,14 @@ Stand: 03.11.2026 (Europe/Berlin), Auftrag vom 02.11.2026. Führender Betriebsab
 [u4-shared-apps-release-plan.md](u4-shared-apps-release-plan.md).
 Diese Ergänzung beschreibt ausschließlich das Paket aus PR #378.
 
+## Entwicklungsbetriebsregel und ausdrückliche Freigabe – 03.11.2026
+
+Der [Auftraggeber hat das Entwicklungsverfahren bestätigt](https://github.com/PustefixReisen/fib-echtsystem/pull/378#issuecomment-6597723230) und Merge sowie Entwicklungsbereitstellung von PR #378 ausdrücklich genehmigt. Es liegen noch keine produktiven redaktionellen Echtdaten vor. Für diese Bereitstellung werden die vorhandenen 10/10 erfolgreichen CI-Workflows genutzt; reine Dokumentationsänderungen verlangen keine neue vollständige Testserie.
+
+Eine **aktuelle FIB-Sicherung mit vorhandener Routine und Integritätsprüfung** genügt vor der gezielten Migration. Kein erneuter vollständiger Restore ohne konkreten Anlass, kein aufwendiges Wartungsfenster und keine zusätzlichen Zwischenfreigaben. Die Entfernung ungeklärter historischer extrahierter Texte ist nach Sicherung ausdrücklich zulässig. Ein kurzer gezielter Hosted-Funktionstest genügt zunächst; die persönliche fachliche UI-Abnahme bleibt beim Auftraggeber.
+
+Die Unterscheidung **Entwicklung / Pilot / Produktiv** und die weitergeltenden strengeren Anforderungen für Pilot/Produktiv stehen verbindlich im [führenden Release-Plan](u4-shared-apps-release-plan.md#verbindliche-entwicklungsfreigabe-für-pr-378--03112026). Die Vereinfachung betrifft nur FIB. Schutz von Memorix/anderen Anwendungen, unveränderte gemeinsame Auth-/MFA-Regeln, private Storage-Zugriffe und bestehende Berechtigungsgrenzen bleiben bestehen.
+
 ## Ergebnis und fachliche Grenzen
 
 - Markierbare TOP-/Dokument-/Ereignistitel; getrennte zugängliche Navigations-,
@@ -31,8 +39,7 @@ werden optional begründet und dürfen gezielt entfernt werden. Neuer privater
 Bucket: `fib-ris-originals`, PDF-MIME-Typ und 25-MB-Limit, keine direkten Browser-Policies.
 Keine Änderung an `public`, Auth, Memorix, `event-media`, Cron oder gemeinsamen Secrets.
 
-**Vor Anwendung:** aktuelle vollständige private Sicherung und tatsächliche
-Restoreprüfung nach dem Release-Plan. Die Migration entfernt bestehende
+**Vor Anwendung im Entwicklungsbetrieb:** aktuelle private FIB-Sicherung und Integritätsprüfung mit vorhandener Routine; erneuter vollständiger Restore nur bei begründetem Risiko. Für Pilot/Produktiv gilt der strengere Release-Plan. Die Migration entfernt bestehende
 `extracted_text`-Werte ohne dokumentierten fassungsspezifischen Rechtenachweis.
 Identitäten, Hashes und Beziehungen bleiben erhalten. Dieser Schritt ist keine
 verlustfreie additive Migration und wurde auf Shared-Apps nicht ausgeführt.
@@ -43,8 +50,7 @@ nicht diesem RIS-Speicher. Vor der Bereitstellung eine frische Inventur erstelle
 
 ## Konkrete Reihenfolge nach technischer Prüfung und Betriebsfreigabe
 
-1. Geprüften Merge-Commit festhalten; vorhandenes FIB-Wartungsfenster und Backup/Restore
-   nach dem führenden Plan. FIB-RIS-Schreibwege sperren, gemeinsame Anwendungen erhalten.
+1. Geprüften Merge-Commit festhalten; aktuelle FIB-Sicherung und Integrität nach der Entwicklungsregel prüfen. Kein aufwendiges Wartungsfenster. Bei konkreter Schreibkonkurrenz FIB-Aktionen kurz koordinieren; gemeinsame Anwendungen erhalten.
 2. Nur die oben genannte neue Migration anwenden; keine pauschale gemeinsame Migration,
    kein Schema-Reset. Privaten Bucket und fehlende anon/authenticated-Policies prüfen.
 3. Die tatsächlich betroffenen FIB-Funktionen mit allen relativen Modulen bereitstellen:
@@ -63,7 +69,7 @@ nicht diesem RIS-Speicher. Vor der Bereitstellung eine frische Inventur erstelle
    Ausgangsfassung einem aktiven Batch zugeordnet ist.
 5. Readiness v2 prüfen: bestehende 19 Tabellen, `fib_app`, neue Rechte-/Storage-Spalten
    und Runtime-Rechte. Erst dann FIB-Funktion freischalten und geprüften Frontend-Build
-   über den vorhandenen manuellen Workflow bereitstellen. Kein Scheduler/Cron.
+   über den vorhandenen manuellen, nichtlöschenden Frontend-only-Workflow bereitstellen; strengere Pilot-/Produktiv-Gates nicht deaktivieren. Kein Scheduler/Cron.
 6. In der normalen Redaktion die konkrete Speicherberechtigung der Referenzfassung
    dokumentieren. „Bestätigtes Original speichern“ lädt und verifiziert genau diesen
    Hash und speichert PDF/Text zusammen. Bei geänderter Quelle abbrechen und aktuellen
@@ -133,11 +139,7 @@ Die lesend abgerufenen Sicherheitsadvisories enthalten bereits vorhandene Hinwei
 wurden geändert. Die neue Guard-Funktion verwendet `search_path=''`, kein
 `SECURITY DEFINER`, keine öffentlichen Ausführungsrechte.
 
-**Externe Betriebsgrenzen:** Es fehlen ein nachgewiesenes aktuelles vollständiges
-Release-Backup samt Restore und der private bestehende Maintenance-/AAL2-Zugang für
-Hosted-Prüfung und Einspielung. Der Release-Plan verlangt eine ausdrückliche
-Betriebsfreigabe für den konkreten geprüften Merge-Commit. Eine persönliche
-fachliche Abnahme wird durch keinen automatisierten Test ersetzt.
+**Betriebliche Voraussetzung:** Die Merge-/Entwicklungsfreigabe liegt seit dem Auftrag vom 03.11.2026 vor. Es werden keine weiteren fachlichen Zwischenbestätigungen verlangt. Aktuelle FIB-Sicherung und Integritätsprüfung sowie bestehende autorisierte Zugriffe müssen tatsächlich verfügbar sein. Eine fehlende Workflow-/Maintenance-/AAL2-Berechtigung ist gegebenenfalls als konkreter technischer Blocker auszuweisen, ohne unabhängige Merge-/Dokumentationsarbeiten einzustellen. Die persönliche fachliche Abnahme wird durch keinen automatisierten Test ersetzt.
 
 ## Persönliche UI-Abnahme nach Bereitstellung
 

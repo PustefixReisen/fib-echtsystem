@@ -4,13 +4,28 @@
 |---|---|---|
 | 1.0 | 31.10.2026 | Josef Walter – mit KI-Unterstützung |
 
+## Verbindliche Entwicklungsfreigabe für PR #378 – 03.11.2026
+
+Auftrag vom 03.11.2026 und [Betriebsentscheidung des Auftraggebers](https://github.com/PustefixReisen/fib-echtsystem/pull/378#issuecomment-6597723230): FIB läuft derzeit im **Entwicklungsbetrieb ohne produktive redaktionelle Echtdaten**. Diese ausdrücklich genehmigte Ausnahme gilt für die unveränderte Implementierung aus PR #378 auf `44bb0695252eecf312ed743a87945f3f1b1b7129` sowie nachfolgende reine Dokumentationsänderungen.
+
+| Betriebsphase | Verhältnismäßige Anforderungen |
+|---|---|
+| Entwicklung – diese Bereitstellung | Vorhandene 10/10 CI-Nachweise wiederverwenden; aktuelle FIB-Sicherung mit bestehender Routine und Integritätsprüfung vor Migration; kein erneuter vollständiger Restore ohne konkreten Risikoanlass; kurze Scope-Prüfung und gezielter Hosted-Smoke-Test, kein aufwendiges Wartungsfenster |
+| Pilotbetrieb | Reale Nutzungs-/Datenrisiken vor jeder Bereitstellung bewerten; Backup, Rücknahme, Rollen/MFA und risikogerechte Wiederherstellungsnachweise sowie fachliche Pilotabnahme dokumentieren |
+| Produktivbetrieb | Die nachfolgenden strengeren Release-, vollständigen Bundle-/Restore-, Freigabe- und Wartungsanforderungen bleiben bestehen |
+
+Merge und Entwicklungsbereitstellung dieses Pakets sind **bereits ausdrücklich freigegeben**. Den tatsächlichen Squash-Merge-Commit dokumentieren; dafür ist keine weitere Zwischenbestätigung nötig. Das bislang verlangte erneute vollständige Release-Bundle/Restore und ein gesondertes Wartungsfenster sind für diesen Entwicklungsdurchlauf keine pauschalen Voraussetzungen. Technische bestehende Workflow-Gates werden nicht deaktiviert.
+
+Vor dem Eingriff weiterhin zwingend: aktuelle Sicherung des Schemas `fib` und seiner Daten mit bestehendem Snapshot-Dumpwerkzeug, Prüfsummen/lesbares Dump-Verzeichnis prüfen; tatsächlichen Migrationsumfang und Zustand abgleichen. Das gezielte Entfernen historischer extrahierter Texte ohne Rechtenachweis ist nach dieser Sicherung genehmigt. Andere Anwendungen, Memorix, gemeinsame Auth-Einstellungen, Secrets und Cron sind nicht Teil der Freigabe.
+
+Für das Entwicklungsfrontend ist der vorhandene nichtlöschende Workflow **Deploy Editorial Web (frontend only)** ein zulässiger bestehender Bereitstellungsweg, sobald Migration/Backend/Nachverarbeitung betriebsbereit sind. Der strengere vollständige Release-Workflow bleibt für Pilot/Produktiv erhalten. Fehlende bestehende Zugriffsrechte sind technische Blocker, keine neue fachliche Freigabefrage; unabhängige Arbeiten werden fortgesetzt.
+
 ## Ergänzung #377 / PR #378 – 02.11.2026
 
 Das neue Paket ergänzt Original-PDF-Speicherung, automatische Fundstellen und getrennte
 Ereignisbeziehungen. Die frühere Freigabe zu `7a73db6` deckt seine neue Migration/Bucket-
 Ressource nicht ab. Konkreter Umfang, Reihenfolge, Rechteprüfung und persönliche
-UI-Anleitung: [RIS-Redaktion #377](ris-ui-377-release.md). Für dieses Paket ist kein
-Deployment bestätigt. Insbesondere keine ungeklärten historischen Volltexte ohne
+UI-Anleitung: [RIS-Redaktion #377](ris-ui-377-release.md). Für dieses Paket gilt jetzt die vorstehende ausdrückliche Entwicklungsfreigabe; ein Deployment ist dadurch noch nicht nachgewiesen. Insbesondere keine ungeklärten historischen Volltexte ohne
 Sicherung entfernen und keinen Viewer aus erneut geladenen RIS-Links ableiten.
 
 ## Entscheidung und Grenze
