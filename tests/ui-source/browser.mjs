@@ -40,6 +40,18 @@ try {
   await page.goto("http://127.0.0.1:4174");
   await button("Sitzungsbereich").click();
   await button("Sitzung öffnen").click();
+  const desktopTopSpacing=await page.evaluate(() => {
+    const shell=document.querySelector(".content-shell");
+    const crumbs=document.querySelector(".source-workspace > .breadcrumbs");
+    const header=document.querySelector(".source-workspace > .page-heading");
+    return {
+      shellPadding:parseFloat(getComputedStyle(shell).paddingTop),
+      breadcrumbMargin:parseFloat(getComputedStyle(crumbs).marginBottom),
+      headingMargin:parseFloat(getComputedStyle(header).marginBottom),
+    };
+  });
+  assert.ok(desktopTopSpacing.shellPadding<=15 && desktopTopSpacing.breadcrumbMargin<=9 && desktopTopSpacing.headingMargin<=14,
+    "Sitzungsseite hat einen kompakten Abstand über dem Titel");
   const tabs=page.getByRole("navigation",{name:"Sitzung und Tagesordnungspunkte"});
   await tabs.getByRole("button",{name:"TOP 2"}).click();
   assert.equal(await tabs.getByRole("button",{name:"TOP 2"}).getAttribute("aria-current"),"page");
@@ -150,6 +162,10 @@ try {
     fullPage: true,
   });
   await page.setViewportSize({ width: 390, height: 844 });
+  assert.ok(await page.evaluate(() =>
+    parseFloat(getComputedStyle(document.querySelector(".content-shell")).paddingTop) <= 11
+  ),"Mobiler Seitenkopf bleibt kompakt");
+
   assert.equal(await tabs.getByRole("button",{name:"TOP 2"}).count(),1);
   assert.equal(await page.getByRole("button",{name:"‹ Zurück zur Tagesordnung"}).count(),0);
   assert.equal(
