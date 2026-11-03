@@ -221,53 +221,6 @@ export async function risEditorial(
     await audit(tx,actor,action,input.sessionId,{eventId:input.eventId,origin:"manual"});
     return {linked:action==="ris_link_session_event"};
   }
-  if (action === "ris_confirm_main_findings") {
-    // Each explicit checkbox choice belongs to this TOP; the entire batch
-    // is all-or-nothing, reuses accepted findings and survives safe retries.
-    if (!input.approval || !Array.isArray(input.linkIds) ||
-        !input.linkIds.length || input.linkIds.length > 30 ||
-        !input.linkIds.every((v:unknown)=>typeof v==="string") ||
-        new Set(input.linkIds).size!==input.linkIds.length) {
-      throw Error("ris_documents_confirmation_required");
-    }
-    await lockEvent(tx,input.eventId,actor.userId);
-    const agenda = await one(tx,
-      "select id,session_id from fib.ris_agenda_items where id=$1 for update",
-      [input.agendaId]);
-    await one(tx,
-      "select event_id from fib.ris_agenda_events where agenda_id=$1 and event_id=$2 and role='main_event'",
-      [agenda.id,input.eventId]);
-    const source = await one(tx,
-      "select id from fib.sources where active and rtrim(homepage_url,'/')=$1 order by id limit 1",
-      [RIS_ORIGIN]);
-    const linked:string[]=[];
-    for (const linkId of input.linkIds as string[]) {
-      const document=await one(tx,
-        `select l.id,d.id document_id,d.finding_id,d.latest_version_id,
-           d.original_title,d.source_url
-           from fib.ris_document_links l
-           join fib.ris_documents d on d.id=l.document_id
-           where l.id=$1 and l.agenda_id=$2 and l.session_id=$3
-             and l.kind in ('proposal','attachment')
-           for update of l,d`,
-        [linkId,agenda.id,agenda.session_id]);
-      // A selected RIS document has provenance; it is not a vote/decision proof.
-      const result=await risEditorial(tx,actor,{
-        action:"ris_accept_finding",
-        versionId:document.latest_version_id,
-        sourceId:source.id,
-        title:document.original_title || "RIS-Unterlage",
-      });
-      await tx.unsafe(
-        `insert into fib.event_findings(event_id,finding_id,evidence_role)
-         values($1,$2,'source') on conflict do nothing`,
-        [input.eventId,result.findingId],
-      );
-      linked.push(result.findingId);
-    }
-    await audit(tx,actor,action,agenda.id,{eventId:input.eventId,documentLinkIds:input.linkIds,findingIds:linked});
-    return {confirmed:linked.length,findingIds:linked};
-  }
   if (action === "ris_link_main_event" || action === "ris_unlink_main_event") {
     await lockEvent(tx, input.eventId, actor.userId);
     await one(tx, "select id from fib.ris_agenda_items where id=$1 for update", [input.agendaId]);
