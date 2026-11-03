@@ -38,7 +38,7 @@ try {
   await button("Sitzungsbereich").click();
   await button("Sitzung öffnen").click();
   await button("TOP 2 öffnen").click();
-  await heading("Beschlussvorschlag").waitFor();
+  await heading("Beschlussvorschlag / Dokumente").waitFor();
   assert.equal(await heading("Beschlussfassung").count(), 0);
   assert.equal(
     await page.getByText("Must not render raw", { exact: true }).count(),
@@ -54,17 +54,10 @@ try {
       "29.10.2026",
     ),
   );
-  const preview = page.getByRole("button", { name: /^PDF-Vorschau:/ }).first();
-  await preview.click();
-  const dialog = page.getByRole("dialog");
-  await dialog.waitFor();
-  await page.locator('iframe[title="Gespeichertes Original-PDF"]').waitFor();
-  assert.ok(
-    (await page.locator("iframe").getAttribute("src")).startsWith("blob:"),
-  );
-  await button("Schließen").click();
-  assert.equal(await dialog.count(), 0);
-  assert.equal(await heading("Beschlussvorschlag").count(), 1);
+  assert.equal(await page.getByRole("button", { name: /^PDF-Vorschau:/ }).count(), 0);
+  assert.equal(await heading("Versionen").count(), 0);
+  assert.equal(await heading("Beschlussvorschlag / Dokumente").count(), 1);
+  assert.equal(await button("Fundstelle öffnen").count(), 1);
   await button("Neu: Lokaler Bezug").click();
   await heading("Lokalen Bezug hinzufügen").waitFor();
   assert.equal(await page.locator("select").count(), 0);
@@ -107,19 +100,19 @@ try {
       "Lokales Ereignis außerhalb der Sitzung",
     ),
   );
-  await button("Dokumentfassung öffnen").click();
+  await button("Fundstelle öffnen").click();
   await page.getByText(/Amtliche Herkunft: verifizierter RIS-Import/).waitFor();
   assert.equal(await button("Fundstelle ausdrücklich übernehmen").count(), 0);
-  await button("Neu: Ereignisbezug").click();
+  await button("Ereignis zuordnen").click();
   await page.getByRole("radio").filter({ hasText: "" }).first().check();
   await button("Zuordnen").click();
-  await button("Neu: Ereignisbezug").waitFor();
+  await button("Ereignis zuordnen").waitFor();
   assert.equal(
     await page.getByRole("button", { name: "Ereignis öffnen", exact: true })
       .count(),
     1,
   );
-  await button("Neu: Ereignisbezug").click();
+  await button("Ereignis zuordnen").click();
   await button("Neu: Ereignis").click();
   assert.ok(
     (await page.getByLabel("Ereignistitel *", { exact: true }).inputValue())
@@ -129,7 +122,7 @@ try {
     "Ereignis aus Dokument-Fundstelle",
   );
   await button("Speichern").click();
-  await button("Neu: Ereignisbezug").waitFor();
+  await button("Ereignis zuordnen").waitFor();
   assert.equal(
     await page.getByRole("button", { name: "Ereignis öffnen", exact: true })
       .count(),
@@ -137,7 +130,7 @@ try {
     "A finding can support multiple events",
   );
   await button("Zurück zu TOP 2").click();
-  await heading("Beschlussvorschlag").waitFor();
+  await heading("Beschlussvorschlag / Dokumente").waitFor();
   assert.equal(
     await local().getByRole("button", { name: "Ereignis öffnen", exact: true })
       .count(),
@@ -178,7 +171,7 @@ try {
   );
   assert.deepEqual(errors, []);
   console.log(
-    "PASS actual SourceWorkspace/RisSessionView components: independent local/direct n:m links, optional rationale, event creation, lock retry, stored-blob preview, exact TOP return, origin, title, mobile and Gemeinde regression (simulated APIs; no live MFA or print claim)",
+    "PASS actual SourceWorkspace/RisSessionView components: independent local/direct n:m links, optional rationale, event creation, lock retry, external RIS navigation without stored-PDF UI, exact TOP return, origin, title, mobile and Gemeinde regression (simulated APIs; no live MFA or print claim)",
   );
 } catch (e) {
   console.error(await page.locator("body").innerText());
