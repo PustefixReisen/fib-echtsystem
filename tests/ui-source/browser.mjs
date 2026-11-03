@@ -79,6 +79,27 @@ try {
   assert.equal(await page.locator(".ris-document-item").getByRole("button",{name:"Fundstelle öffnen"}).count(),0);
   await linkRelated().click();
   await heading("Weiteres Ereignis zuordnen").waitFor();
+  const liveSearch=page.getByRole("searchbox",{name:"Ereignisse filtern"});
+  await liveSearch.fill("20.10.2026");
+  await page.waitForFunction(() => window.calls.some(
+    c=>c.action==="source_choices" && c.search==="20.10.2026"));
+  await page.getByRole("radio").first().waitFor();
+  assert.equal(await page.getByRole("radio").count(),1,
+    "A displayed date filters event candidates without pressing a search button");
+  await liveSearch.fill("Geschehen außerhalb");
+  await page.waitForFunction(() => window.calls.some(
+    c=>c.action==="source_choices" && c.search==="Geschehen außerhalb"));
+  await page.getByRole("radio").first().waitFor();
+  assert.equal(await page.getByRole("radio").count(),1,
+    "A short description filters event candidates automatically");
+  assert.equal(await button("Suchen").count(),0,
+    "No extra search-submit click is needed");
+  const detail=page.locator(".event-choice-details").first();
+  assert.equal(await detail.locator("strong").innerText(),"Pressebericht zur Kita-Finanzierung");
+  assert.match(await detail.locator(".event-choice-date").innerText(),/20\\.10\\.2026/);
+  assert.match(await detail.locator(".event-choice-summary").innerText(),/Geschehen außerhalb/);
+  await liveSearch.fill("");
+  await page.getByRole("radio").first().waitFor();
   assert.equal(await page.locator("select").count(), 0);
   assert.equal(
     await page.locator("textarea").count(),
