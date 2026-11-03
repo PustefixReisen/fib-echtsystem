@@ -51,6 +51,7 @@ const observation = {
 (window as any).calls = [];
 (window as any).denyLock = false;
 (window as any).failNext = false;
+(window as any).legacyChoices = false;
 const api = async (b: any) => {
   (window as any).calls.push(b);
   await new Promise((r) => setTimeout(r, 20));
@@ -68,7 +69,7 @@ const api = async (b: any) => {
       ),
       processes: [],
       topics: [],
-      ...(b.agendaId ? {scopedToAgendaId:b.agendaId,scopedRole:b.eventRole} : {}),
+      ...(b.agendaId && !(window as any).legacyChoices ? {scopedToAgendaId:b.agendaId,scopedRole:b.eventRole} : {}),
     };
   }
   if (b.action === "ris_sessions") {
