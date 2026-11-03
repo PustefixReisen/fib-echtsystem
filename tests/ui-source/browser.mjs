@@ -40,7 +40,9 @@ try {
   await page.goto("http://127.0.0.1:4174");
   await button("Sitzungsbereich").click();
   await button("Sitzung öffnen").click();
-  await button("TOP 2 öffnen").click();
+  const tabs=page.getByRole("navigation",{name:"Sitzung und Tagesordnungspunkte"});
+  await tabs.getByRole("button",{name:"TOP 2"}).click();
+  assert.equal(await tabs.getByRole("button",{name:"TOP 2"}).getAttribute("aria-current"),"page");
   await heading("Beschlussvorschlag / Dokumente").waitFor();
   assert.equal(await heading("Beschlussfassung").count(), 0);
   assert.equal(
@@ -107,7 +109,7 @@ try {
   await heading("Inhalt und Herkunft").waitFor();
   assert.equal(await heading("Ereignisbezug").count(), 0,
     "RIS documents do not expose independent event assignment");
-  assert.equal(await page.locator(".ris-external-link").count(), 1,
+  assert.equal(await page.locator(".ris-external-reference .fib-external-icon").count(), 1,
     "RIS original is linked exactly once");
   assert.equal(await button("Fundstelle ausdrücklich übernehmen").count(), 0);
   await button("Zurück zu TOP 2").click();
@@ -132,7 +134,7 @@ try {
   assert.equal(await main().getByRole("button", {name:"Auswählen oder erstellen"}).count(),0);
   assert.equal(await page.evaluate(() => window.calls.filter(c=>c.action==="ris_link_main_event").length),0,
     "Main event creation commits the explicit role without another linking action");
-  await button("‹ Zurück zur Tagesordnung").click();
+  await page.getByRole("navigation", {name:"Sitzung und Tagesordnungspunkte"}).getByRole("button",{name:"Sitzungsübersicht"}).click();
   await heading("Ereignisse zur Sitzung").waitFor();
   await sessionEvents().getByRole("button",{name:"Ereignis zuordnen"}).click();
   await page.getByRole("radio").first().check();
@@ -150,6 +152,8 @@ try {
     fullPage: true,
   });
   await page.setViewportSize({ width: 390, height: 844 });
+  assert.equal(await tabs.getByRole("button",{name:"TOP 2"}).count(),1);
+  assert.equal(await page.getByRole("button",{name:"‹ Zurück zur Tagesordnung"}).count(),0);
   assert.equal(
     await page.evaluate(() =>
       document.documentElement.scrollWidth > innerWidth + 1
