@@ -38,7 +38,7 @@ const events: any[] = [{
   summary: "Ein Geschehen außerhalb dieser Sitzung",
 }];
 let local: any[] = [], direct: any[] = [], findings: any[] = [finding];
-let sessionLinks: any[] = [], mainLinks: any[] = [];
+let sessionLinks: any[] = [], mainLinks: any[] = [], mainEventFindings:any[] = [];
 const observation = {
   scope_id: "news",
   external_id: "article",
@@ -61,7 +61,10 @@ const api = async (b: any) => {
   if (b.action === "source_choices") {
     return {
       events: events.filter((e) =>
-        e.title.toLowerCase().includes((b.search ?? "").toLowerCase())
+        e.title.toLowerCase().includes((b.search ?? "").toLowerCase()) &&
+        (!b.agendaId || (b.eventRole === "main_event"
+          ? mainEventFindings.some((link:any)=>link.event_id===e.id)
+          : !mainEventFindings.some((link:any)=>link.event_id===e.id)))
       ),
       processes: [],
       topics: [],
@@ -115,6 +118,7 @@ const api = async (b: any) => {
         : [],
       events: local,
       mainEvents: mainLinks,
+      mainEventFindings,
       sessionEvents: sessionLinks,
       sessionRelated: {messages: [],processes: [],topics: []},
     };
@@ -164,6 +168,15 @@ const api = async (b: any) => {
     if (mainLinks.length && mainLinks[0].event_id!==b.eventId) throw Error("ris_top_main_event_already_assigned");
     mainLinks=[{agenda_id:b.agendaId,event_id:b.eventId,event_title:events.find(e=>e.id===b.eventId)?.title,event_date:events.find(e=>e.id===b.eventId)?.event_date}];
     return {};
+  }
+  if (b.action === "ris_confirm_main_findings") {
+    if (!b.approval || !mainLinks.some((link:any)=>link.event_id===b.eventId) ||
+        !b.linkIds.every((id:string)=>id==="l1")) throw Error("invalid_documents_confirmation");
+    for (const id of b.linkIds) {
+      if (!mainEventFindings.some((link:any)=>link.event_id===b.eventId&&link.finding_id==="f1"))
+        mainEventFindings.push({agenda_id:b.agendaId,event_id:b.eventId,finding_id:"f1"});
+    }
+    return {confirmed:b.linkIds.length};
   }
   if (b.action === "ris_unlink_main_event") {
     mainLinks=mainLinks.filter(e=>e.event_id!==b.eventId);
