@@ -22,7 +22,6 @@ export function RisSessionView(
     data,
     busy,
     onOpenEvent,
-    onOpenDocument,
     onReload,
     selectedTopId,
     onSelectTop,
@@ -78,22 +77,9 @@ export function RisSessionView(
   const documentItem = (d: Row) => (
     <li className="ris-document-item" key={d.id ?? d.document_id}>
       <div className="ris-document-name">
-        <span>{title(d)}</span>
-        {d.original_title && d.original_title !== d.title && (
-          <small>Originaltitel im RIS: {d.original_title}</small>
-        )}
-      </div>
-      <div className="source-actions">
-        <OriginalLink url={d.source_url} label="RIS-Original öffnen" text="RIS-Original" />
-        {d.latest_version_id && (
-          <button
-            type="button"
-            disabled={busy}
-            onClick={() => onOpenDocument(d.latest_version_id)}
-          >
-            Fundstelle öffnen
-          </button>
-        )}
+        <OriginalLink url={d.source_url}
+          label={`${title(d)} im RIS öffnen`}
+          text={title(d)} />
       </div>
     </li>
   );

@@ -62,7 +62,8 @@ try {
   assert.equal(await page.getByRole("button", { name: /^PDF-Vorschau:/ }).count(), 0);
   assert.equal(await heading("Versionen").count(), 0);
   assert.equal(await heading("Beschlussvorschlag / Dokumente").count(), 1);
-  assert.equal(await button("Fundstelle öffnen").count(), 1);
+  assert.equal(await page.locator(".ris-document-item .fib-external-icon").count(), 1);
+  assert.equal(await page.locator(".ris-document-item").getByRole("button",{name:"Fundstelle öffnen"}).count(),0);
   await linkRelated().click();
   await heading("Weiteres Ereignis zuordnen").waitFor();
   assert.equal(await page.locator("select").count(), 0);
@@ -105,14 +106,11 @@ try {
       "Lokales Ereignis außerhalb der Sitzung",
     ),
   );
-  await button("Fundstelle öffnen").click();
-  await heading("Inhalt und Herkunft").waitFor();
-  assert.equal(await heading("Ereignisbezug").count(), 0,
-    "RIS documents do not expose independent event assignment");
-  assert.equal(await page.locator(".ris-external-reference .fib-external-icon").count(), 1,
-    "RIS original is linked exactly once");
-  assert.equal(await button("Fundstelle ausdrücklich übernehmen").count(), 0);
-  await button("Zurück zu TOP 2").click();
+  assert.equal(await page.locator(".ris-document-item .fib-external-icon").count(),1,
+    "RIS original is linked exactly once next to its document title");
+  assert.equal(await page.locator(".ris-document-item").getByText("RIS-Original",{exact:true}).count(),0);
+  assert.equal(await button("Fundstelle öffnen").count(),0,
+    "RIS TOP does not open a redundant findings detail");
   await heading("Beschlussvorschlag / Dokumente").waitFor();
   assert.equal(
     await local().getByRole("button", { name: "Ereignis öffnen", exact: true }).count(),
@@ -160,9 +158,13 @@ try {
     ),
     false,
   );
-  const actionRows=await page.locator('.ris-document-item .source-actions > *').evaluateAll(nodes=>nodes.map(n=>{const r=n.getBoundingClientRect();return Math.round(r.top+r.height/2)}));
-  assert.ok(actionRows.length >= 2, 'External RIS link and finding action are present');
-  assert.equal(new Set(actionRows).size,1,'Document actions stay together at mobile width');
+  assert.equal(await page.locator('.ris-document-item .ris-external-reference .fib-external-icon').count(),1);
+  assert.equal(await page.evaluate(() => {
+    const row=document.querySelector('.ris-document-item .ris-external-reference');
+    const icon=row?.querySelector('.fib-external-icon');
+    const name=row?.querySelector('span');
+    return Boolean(icon && name && icon.getBoundingClientRect().left < name.getBoundingClientRect().left);
+  }), true, 'External RIS icon precedes the plain document title at mobile width');
   await page.screenshot({
     path: "/tmp/fib-source-ui/ris-mobile.png",
     fullPage: true,

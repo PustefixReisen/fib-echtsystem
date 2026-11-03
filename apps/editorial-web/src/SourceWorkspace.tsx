@@ -337,7 +337,7 @@ export function SourceWorkspace({
       </nav>
       <div className="page-heading">
         <div>
-          <p className="eyebrow">Recherche · Redaktion</p>
+          <p className="eyebrow">{session || route === "sessions" ? "Sitzungen" : "Recherche · Redaktion"}</p>
           <h1>
             {session
               ? `${session.session.committee_name ?? "Sitzung"} · ${
