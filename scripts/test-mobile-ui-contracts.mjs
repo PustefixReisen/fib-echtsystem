@@ -7,7 +7,8 @@ const css = readFileSync('apps/editorial-web/src/app.css', 'utf8');
 
 test('mobile navigation has accessible close control and current event position', () => {
   assert.match(app, /className="mobile-nav-close" aria-label="Navigationsmenü schließen"/);
-  assert.match(app, /aria-current=\{view === 'events' \|\| view === 'event' \? 'page'/);
+  assert.match(app, /aria-current=\{view === 'events' \|\| \(view === 'event' && !eventSessionContext\) \? 'page'/);
+  assert.match(app, /view==='sessions'\|\|\(view==='event'&&eventSessionContext\)/);
   assert.match(css, /\.side-nav\s*\{\s*overflow-y:\s*auto/);
 });
 
