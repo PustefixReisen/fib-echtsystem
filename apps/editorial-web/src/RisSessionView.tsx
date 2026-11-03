@@ -187,11 +187,6 @@ export function RisSessionView(
         )
         : (
           <>
-            <div className="ris-top-navigation">
-              <button type="button" onClick={() => select("")}>
-                ‹ Zurück zur Tagesordnung
-              </button>
-            </div>
             <section className="panel card-headed">
               <div className="section-heading"><h2>TOP {selected.number} · {selected.title}</h2></div>
               {!sessionDocuments.some((d) => d.kind === "minutes") &&
