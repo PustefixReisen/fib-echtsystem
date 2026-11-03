@@ -881,11 +881,20 @@ button:has(> .action-icon) { display: inline-flex; align-items: center; justify-
 .source-workspace > .page-heading { margin-bottom: .55rem; }
 .source-workspace > .page-heading .eyebrow { margin-bottom: .1rem; }
 .ris-session-tabs { padding: .35rem .5rem; margin-bottom: .65rem; }
+.ris-session-tabs > button { position: relative; border-bottom-color: transparent; }
 .ris-session-tabs > button.active,
 .ris-session-tabs > button[aria-current="page"] {
-  border-bottom: 4px solid var(--fib-primary);
-  padding-bottom: calc(.65rem - 3px);
+  border-bottom-color: transparent;
+  padding-bottom: .65rem;
   font-weight: 800;
+}
+.ris-session-tabs > button[aria-current="page"]::after {
+  content: "";
+  position: absolute;
+  left: 18%; right: 18%; bottom: .16rem;
+  height: 3px; border-radius: 3px;
+  background: var(--fib-primary);
+  pointer-events: none;
 }
 .ris-simplified .ris-document-item .ris-external-reference > span { font-weight: 700; }
 .ris-finding-confirm { min-width: 0; max-width: 100%; }
