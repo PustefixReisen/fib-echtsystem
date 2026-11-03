@@ -35,6 +35,19 @@ async function audit(
     [actor.userId, action, id, JSON.stringify(detail)],
   );
 }
+/** A qualifying event must have a confirmed RIS document accepted as a finding
+ * in this exact Sitzung. An external news finding alone never qualifies. */
+async function hasCurrentSessionRisFinding(tx: RisSql, agendaId: string, eventId: string) {
+  const rows=await tx.unsafe(
+    `select 1 from fib.ris_agenda_items a
+      join fib.ris_document_links l on l.session_id=a.session_id and l.status='confirmed'
+      join fib.ris_documents d on d.id=l.document_id
+      join fib.event_findings ef on ef.finding_id=d.finding_id
+      where a.id=$1 and ef.event_id=$2 limit 1`,
+    [agendaId,eventId],
+  );
+  return rows.length>0;
+}
 export async function risEditorial(
   tx: RisSql,
   actor: RisActor,
@@ -165,6 +178,8 @@ export async function risEditorial(
       if (existing.length && existing[0].event_id!==input.eventId) {
         throw Error("ris_top_main_event_already_assigned");
       }
+      if (!await hasCurrentSessionRisFinding(tx,input.agendaId,input.eventId))
+        throw Error("ris_main_requires_current_session_finding");
       const prior = await tx.unsafe(
         "select role from fib.ris_agenda_events where agenda_id=$1 and event_id=$2",
         [input.agendaId,input.eventId],
@@ -457,6 +472,8 @@ export async function risEditorial(
       [input.agendaId],
     );
     if (action === "ris_link_event") {
+      if (await hasCurrentSessionRisFinding(tx,input.agendaId,input.eventId))
+        throw Error("ris_related_must_be_outside_current_session");
       const previous = await tx.unsafe(
         "select role from fib.ris_agenda_events where agenda_id=$1 and event_id=$2",
         [input.agendaId, input.eventId],
