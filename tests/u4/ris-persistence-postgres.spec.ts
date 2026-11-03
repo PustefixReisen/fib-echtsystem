@@ -875,7 +875,7 @@ async function main() {
   )).id;
   await assert.rejects(()=>run({action:"ris_link_event",
     agendaId:anotherTop,eventId:firstNewId}),
-    /outside_current_session/);
+    /must_be_independent_event/);
   const outOfMeeting="99999999-9999-4999-8999-999999999988";
   await pool.query(
     "insert into fib.events(id,title,status,confirmed_at) values($1,'Unabhängiges Ereignis','confirmed',now())",
@@ -889,6 +889,55 @@ async function main() {
     agendaId:anotherTop,eventId:outOfMeeting}),
     /requires_current_session_finding/);
   await run({action:"ris_link_event",agendaId:anotherTop,eventId:outOfMeeting});
+  const legitimate = await tx(db => sourceEditorial(db,actor,{
+    action:"source_choices",agendaId:anotherTop,eventRole:"local_reference",
+    search:"Unabhängiges",
+  }));
+  assert.ok(legitimate.events.some((e:any)=>e.id===outOfMeeting),
+    "A pre-existing, independent external event remains available");
+  const sessionOnlyId="99999999-9999-4999-8999-999999999989";
+  const sameDayId="99999999-9999-4999-8999-999999999990";
+  const demoId="99999999-9999-4999-8999-999999999991";
+  const sessionDate=(await first("select session_date from fib.ris_sessions where id=$1",[a.sessionId])).session_date;
+  await pool.query(
+    `insert into fib.events(id,title,status,summary,occurred_at,confirmed_at)
+      values ($1,'Nur Sitzung', 'confirmed','Sitzungsbezogen',null,now()),
+             ($2,'Nur an diesem Sitzungstag', 'confirmed','TEST', $4,now()),
+             ($3,'[ENTWICKLUNG demo-20261013] Demoereignis', 'confirmed','Entwicklungsdaten',null,now())`,
+    [sessionOnlyId,sameDayId,demoId,sessionDate],
+  );
+  await pool.query(
+    "insert into fib.ris_session_events(session_id,event_id,origin,reviewed_by) values($1,$2,'manual',$3)",
+    [a.sessionId,sessionOnlyId,uid],
+  );
+  for (const id of [sessionOnlyId,sameDayId,demoId]) {
+    await pool.query(
+      "insert into fib.edit_locks(object_type,object_id,user_id,expires_at) values('event',$1,$2,now()+interval '1 hour')",
+      [id,uid],
+    );
+    await assert.rejects(()=>run({action:"ris_link_event",
+      agendaId:anotherTop,eventId:id}),/must_be_independent_event/,
+      "A session event, unsubstantiated meeting-day event or demo must not be linked as an independent related TOP event");
+  }
+  const filtered=await tx(db => sourceEditorial(db,actor,{
+    action:"source_choices",agendaId:anotherTop,eventRole:"local_reference",search:"",
+  }));
+  for (const id of [sessionOnlyId,sameDayId,demoId,firstNewId]) {
+    assert.ok(!filtered.events.some((e:any)=>e.id===id),
+      "Session, meeting-day, demo and main-event choices are excluded");
+  }
+  await pool.query(
+    "update fib.events set occurred_at='2026-09-21',summary='Nur diese Kurzbeschreibung ist suchbar' where id=$1",
+    [outOfMeeting],
+  );
+  for (const search of ["21.09.2026","2026-09-21","Nur diese Kurzbeschreibung","Unabhängiges Ereignis"]) {
+    const found=await tx(db=>sourceEditorial(db,actor,{
+      action:"source_choices",agendaId:anotherTop,eventRole:"local_reference",search,
+    }));
+    assert.ok(found.events.some((e:any)=>e.id===outOfMeeting),
+      "Event candidate search includes visible title, ISO/local date and summary: "+search);
+  }
+
   console.log("RIS #387: strict session-aware choices, atomic TOP source attachment without secondary confirmation, duplicate-safe retries and backend link restrictions passed");
 
   assert.equal(await count("messages"), 0);
