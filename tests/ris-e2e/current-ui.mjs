@@ -95,7 +95,7 @@ try {
   assert.equal(await page.getByRole("heading",{name:"Ereignisbezug",exact:true}).count(),0);
   assert.equal(await page.getByRole("heading",{name:"Versionen",exact:true}).count(),0);
   assert.equal(await page.getByRole("button",{name:"PDF-Vorschau öffnen",exact:true}).count(),0);
-  assert.equal(await page.locator(".ris-external-link").count(),1);
+  assert.equal(await page.locator(".ris-external-reference .fib-external-icon").count(),1);
   await page.getByRole("button",{name:"Zurück zu TOP 2",exact:true}).click();
   await page.getByRole("heading",{name:"Beschlussvorschlag / Dokumente",exact:true}).waitFor();
   await page.locator("section").filter({has:page.getByRole("heading",{name:"Weitere Ereignisse zum TOP",exact:true})}).getByRole("button",{name:"Ereignis zuordnen"}).click();
@@ -114,7 +114,7 @@ try {
   assert.equal((await db.query("select count(*)::int n from fib.ris_agenda_events where role='main_event'")).rows[0].n,1);
   assert.equal((await db.query("select count(*)::int n from fib.ris_agenda_events where role='local_reference'")).rows[0].n,1);
   record("Manual TOP main event and related events remain independent");
-  await page.getByRole("button", { name: "‹ Zurück zur Tagesordnung" }).click();
+  await page.getByRole("navigation",{name:"Sitzung und Tagesordnungspunkte"}).getByRole("button",{name:"Sitzungsübersicht"}).click();
   await page.getByRole("heading",{name:"Ereignisse zur Sitzung",exact:true}).waitFor();
   await page.locator("section").filter({has:page.getByRole("heading",{name:"Ereignisse zur Sitzung",exact:true})})
     .getByRole("button",{name:"Ereignis zuordnen"}).click();
