@@ -829,49 +829,43 @@ async function main() {
   );
   assert.ok(selectedProposalDoc,"Synthetic session contains a proposal");
   const topForProposal = selectedProposalDoc.agenda_id;
-  const firstNewId = "99999999-9999-4999-8999-999999999987";
-  await tx(db => sourceEditorial(db,actor,{
-    action:"source_create_event",requestId:firstNewId,
-    title:"Explizit bestätigte TOP-Quelle",summary:null,
-    occurredAt:null,rationale:null,approval:true,
-    agendaId:topForProposal,mainEvent:true,
-  }));
-  await pool.query(
-    "insert into fib.edit_locks(object_type,object_id,user_id,expires_at) values('event',$1,$2,now()+interval '1 hour')",
-    [firstNewId,uid],
-  );
-  await assert.rejects(
-    ()=>run({action:"ris_confirm_main_findings",agendaId:topForProposal,
-      eventId:firstNewId,linkIds:[selectedProposalDoc.id],approval:false}),
-    /confirmation_required/,
-  );
   const proposalVersion = await tx(db => persistRisDocument(
     db,selectedProposalDoc.source_url,"synthetic-proposal","Synthetic RIS proposal",
     "isolated-ris-387","2026-11-03T09:00:00Z",
   ));
   assert.ok(proposalVersion);
-  await assert.rejects(
-    ()=>run({action:"ris_confirm_main_findings",agendaId:topForProposal,
-      eventId:firstNewId,linkIds:[selectedProposalDoc.id,link.id],approval:true}),
-    /ris_object_missing/,
-    "A session-wide minutes document cannot be smuggled into a TOP proposal batch",
-  );
+  const firstNewId = "99999999-9999-4999-8999-999999999987";
+  const mainCreation = {
+    action:"source_create_event",requestId:firstNewId,
+    title:"TOP-Hauptereignis mit RIS-Quelle",summary:null,
+    occurredAt:null,rationale:null,approval:true,
+    agendaId:topForProposal,mainEvent:true,
+  };
+  await tx(db => sourceEditorial(db,actor,mainCreation));
   assert.equal(Number((await first(
-    "select count(*) n from fib.event_findings where event_id=$1",
-    [firstNewId])).n),0,"An invalid batch rolls back all earlier selections");
-  await run({action:"ris_confirm_main_findings",agendaId:topForProposal,
-    eventId:firstNewId,linkIds:[selectedProposalDoc.id],approval:true});
-  await run({action:"ris_confirm_main_findings",agendaId:topForProposal,
-    eventId:firstNewId,linkIds:[selectedProposalDoc.id],approval:true});
-  assert.equal(Number((await first("select count(*) n from fib.event_findings where event_id=$1",[firstNewId])).n),1,
-    "Confirmed RIS finding is not duplicated");
+    "select count(*) n from fib.event_findings where event_id=$1",[firstNewId]
+  )).n),1,"Choosing the TOP main event automatically attaches its RIS proposal in one transaction");
+  const reused = await tx(db => sourceEditorial(db,actor,mainCreation));
+  assert.equal(reused.reused,true,"The same main-event creation request is idempotent");
+  assert.equal(Number((await first(
+    "select count(*) n from fib.event_findings where event_id=$1",[firstNewId]
+  )).n),1,"Retry does not duplicate accepted RIS findings");
+  await pool.query(
+    "insert into fib.edit_locks(object_type,object_id,user_id,expires_at) values('event',$1,$2,now()+interval '1 hour')",
+    [firstNewId,uid],
+  );
+  // No secondary review step or action is required to connect TOP documents.
+  const confirmedLinks = await first(
+    "select count(*) n from fib.event_findings where event_id=$1",[firstNewId],
+  );
+  assert.equal(Number(confirmedLinks.n),1);
   const choicesForMain = await tx(db => sourceEditorial(db,actor,{
     action:"source_choices",agendaId:topForProposal,eventRole:"main_event",
-    search:"Explizit bestätigte TOP-Quelle",
+    search:"TOP-Hauptereignis mit RIS-Quelle",
   }));
   const choicesForRelated = await tx(db => sourceEditorial(db,actor,{
     action:"source_choices",agendaId:topForProposal,eventRole:"local_reference",
-    search:"Explizit bestätigte TOP-Quelle",
+    search:"TOP-Hauptereignis mit RIS-Quelle",
   }));
   assert.ok(choicesForMain.events.some((e:any)=>e.id===firstNewId));
   assert.ok(!choicesForRelated.events.some((e:any)=>e.id===firstNewId));
@@ -895,7 +889,7 @@ async function main() {
     agendaId:anotherTop,eventId:outOfMeeting}),
     /requires_current_session_finding/);
   await run({action:"ris_link_event",agendaId:anotherTop,eventId:outOfMeeting});
-  console.log("RIS #387: strict session-aware choices, intentional source review, duplicate-safe document confirmation and backend link restrictions passed");
+  console.log("RIS #387: strict session-aware choices, atomic TOP source attachment without secondary confirmation, duplicate-safe retries and backend link restrictions passed");
 
   assert.equal(await count("messages"), 0);
   console.log(
