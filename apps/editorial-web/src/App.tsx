@@ -1982,7 +1982,7 @@ export function App() {
                 <div className="section-heading">
                   <div className="card-heading-content"><div className="card-title-group"><h2>Quellen und Fundstellen</h2>{sourcePickerOpen && <span className="card-mode-label">Bearbeiten</span>}</div>{sourcePickerOpen && <p className="card-heading-help">Fundstellen zuordnen, bearbeiten oder entfernen.</p>}</div>
                   {sourcePickerOpen && editingSourceId && <span className={!sourceNoteDraft.trim() ? 'card-edit-state error' : 'card-edit-state dirty'} role="status">{!sourceNoteDraft.trim() ? '⚠ Pflichteingaben unvollständig' : sourceNoteDraft !== (eventSources.find(item => item.findingId === editingSourceId)?.justification ?? '') ? '● Ungespeicherte Änderungen' : 'Unverändert'}</span>}
-                  {!sourcePickerOpen && <button type="button" className="primary action-button" disabled={editingEvent} onClick={() => { setSourcePickerOpen(true); setSourceMessage(null); }}>Fundstellen bearbeiten</button>}
+                  {!sourcePickerOpen && <button type="button" className="primary action-button" disabled={editingEvent} onClick={() => { setSourceMatches([]); setSourcePickerOpen(true); setSourceMessage(null); }}>Fundstellen bearbeiten</button>}
                 </div>
                 
                 {eventSources.length === 0 ? <p>Für dieses Ereignis sind noch keine Fundstellen zugeordnet.</p> : (
