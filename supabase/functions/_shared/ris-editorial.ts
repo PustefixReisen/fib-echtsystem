@@ -72,6 +72,29 @@ export async function risEditorial(
       "select ae.*,e.title event_title,e.occurred_at event_date from fib.ris_agenda_events ae join fib.ris_agenda_items a on a.id=ae.agenda_id join fib.events e on e.id=ae.event_id where a.session_id=$1 and ae.role='local_reference'",
       [session.id],
     );
+    const mainEvents = await tx.unsafe(
+      "select ae.*,e.title event_title,e.occurred_at event_date from fib.ris_agenda_events ae join fib.ris_agenda_items a on a.id=ae.agenda_id join fib.events e on e.id=ae.event_id where a.session_id=$1 and ae.role='main_event'",
+      [session.id],
+    );
+    const sessionEvents = await tx.unsafe(
+      "select se.*,e.title event_title,e.occurred_at event_date,e.summary event_summary from fib.ris_session_events se join fib.events e on e.id=se.event_id where se.session_id=$1 order by e.occurred_at desc nulls last,e.title",
+      [session.id],
+    );
+    const eventIds = sessionEvents.map((e) => e.event_id);
+    const sessionRelated = eventIds.length ? {
+      messages: await tx.unsafe(
+        "select m.event_id,m.id,m.title,m.status from fib.messages m where m.event_id = any($1::uuid[]) and m.status<>'withdrawn'",
+        [eventIds],
+      ),
+      processes: await tx.unsafe(
+        "select ep.event_id,p.id,p.title from fib.event_processes ep join fib.processes p on p.id=ep.process_id where ep.event_id = any($1::uuid[]) and p.status<>'archived'",
+        [eventIds],
+      ),
+      topics: await tx.unsafe(
+        "select et.event_id,t.id,t.title from fib.event_topics et join fib.topics t on t.id=et.topic_id where et.event_id = any($1::uuid[]) and t.status<>'archived'",
+        [eventIds],
+      ),
+    } : { messages: [], processes: [], topics: [] };
     const suggestions = await tx.unsafe(
       "select s.* from fib.ris_suggestions s join fib.ris_agenda_items a on a.id=s.agenda_id where a.session_id=$1",
       [session.id],
@@ -104,11 +127,61 @@ export async function risEditorial(
       documents,
       decisions,
       events,
+      mainEvents,
+      sessionEvents,
+      sessionRelated,
       suggestions,
       proposals,
       approvals,
       relationSuggestions,
     };
+  }
+  // Separate relationships: session-wide events never silently become TOP links.
+  if (action === "ris_link_session_event" || action === "ris_unlink_session_event") {
+    await lockEvent(tx, input.eventId, actor.userId);
+    await one(tx, "select id from fib.ris_sessions where id=$1 for update", [input.sessionId]);
+    if (action === "ris_link_session_event") {
+      await tx.unsafe(
+        "insert into fib.ris_session_events(session_id,event_id,origin,reviewed_by) values($1,$2,'manual',$3) on conflict do nothing",
+        [input.sessionId, input.eventId, actor.userId],
+      );
+    } else {
+      await tx.unsafe(
+        "delete from fib.ris_session_events where session_id=$1 and event_id=$2 and origin='manual'",
+        [input.sessionId, input.eventId],
+      );
+    }
+    await audit(tx,actor,action,input.sessionId,{eventId:input.eventId,origin:"manual"});
+    return {linked:action==="ris_link_session_event"};
+  }
+  if (action === "ris_link_main_event" || action === "ris_unlink_main_event") {
+    await lockEvent(tx, input.eventId, actor.userId);
+    await one(tx, "select id from fib.ris_agenda_items where id=$1 for update", [input.agendaId]);
+    if (action === "ris_link_main_event") {
+      const existing = await tx.unsafe(
+        "select event_id from fib.ris_agenda_events where agenda_id=$1 and role='main_event'",
+        [input.agendaId],
+      );
+      if (existing.length && existing[0].event_id!==input.eventId) {
+        throw Error("ris_top_main_event_already_assigned");
+      }
+      const prior = await tx.unsafe(
+        "select role from fib.ris_agenda_events where agenda_id=$1 and event_id=$2",
+        [input.agendaId,input.eventId],
+      );
+      if (prior.length && prior[0].role!=="main_event") throw Error("existing_event_role_conflict");
+      await tx.unsafe(
+        "insert into fib.ris_agenda_events(agenda_id,event_id,role,reviewed_by) values($1,$2,'main_event',$3) on conflict do nothing",
+        [input.agendaId,input.eventId,actor.userId],
+      );
+    } else {
+      await tx.unsafe(
+        "delete from fib.ris_agenda_events where agenda_id=$1 and event_id=$2 and role='main_event'",
+        [input.agendaId,input.eventId],
+      );
+    }
+    await audit(tx,actor,action,input.agendaId,{eventId:input.eventId});
+    return {linked:action==="ris_link_main_event"};
   }
   if (action === "ris_review_agenda_status") {
     if (
