@@ -31,6 +31,7 @@ export function EventAssignmentView(
   const [creating, setCreating] = useState(false),
     [busy, setBusy] = useState(false),
     [error, setError] = useState("");
+  const [scopeUnavailable, setScopeUnavailable] = useState(false);
   const [title, setTitle] = useState(suggestion.title),
     [date, setDate] = useState(suggestion.date?.slice(0, 10) ?? ""),
     [summary, setSummary] = useState(suggestion.summary ?? "");
@@ -62,7 +63,14 @@ export function EventAssignmentView(
           : {}),
       });
       if (token === generation.current) {
-        setItems(r.events ?? []);
+        // Older Preview backends silently ignore new server-side filters.
+        // Never display potentially unrelated events without scope attestation.
+        const scoped = "agendaId" in target;
+        const role = scoped ? target.mainEvent ? "main_event" : "local_reference" : "";
+        const validScope = !scoped ||
+          (r.scopedToAgendaId === target.agendaId && r.scopedRole === role);
+        setScopeUnavailable(!validScope);
+        setItems(validScope ? (r.events ?? []) : []);
         setChosen("");
       }
     });
@@ -204,6 +212,9 @@ export function EventAssignmentView(
                 <button disabled={busy}>Suchen</button>
               </form>
               <h2>Suchergebnisse</h2>
+              {scopeUnavailable && <p role="status">Die Vorschau verwendet noch einen älteren Ereignisdienst. Eine auf die aktuelle Sitzung beschränkte Ereignisauswahl ist hier nicht verfügbar.</p>}
+              {!scopeUnavailable && "agendaId" in target && target.mainEvent && !items.length && !busy &&
+                <p>Noch kein Ereignis mit einer RIS-Fundstelle aus dieser Sitzung vorhanden. Bitte ein neues Hauptereignis anlegen.</p>}
               <fieldset disabled={busy}>
                 <legend>Ereignis auswählen</legend>
                 {items.map((item) => (
@@ -233,7 +244,7 @@ export function EventAssignmentView(
                   </label>
                 ))}
               </fieldset>
-              {!busy && !items.length && (
+              {!busy && !items.length && !scopeUnavailable && (!("agendaId" in target) || !target.mainEvent) && (
                 <p>Keine passenden Ereignisse gefunden.</p>
               )}
 
@@ -259,7 +270,9 @@ export function EventAssignmentView(
                 ));
                 await onDone();
               })}>Zuordnen</button>
-            <button type="button" disabled={busy} onClick={() => setCreating(true)}>Neu: Ereignis</button>
+            {(!("agendaId" in target) || !!target.mainEvent) && (
+              <button type="button" disabled={busy} onClick={() => setCreating(true)}>Neu: Ereignis</button>
+            )}
             <button type="button" disabled={busy} onClick={cancel}>Abbrechen</button>
           </>
         )}
