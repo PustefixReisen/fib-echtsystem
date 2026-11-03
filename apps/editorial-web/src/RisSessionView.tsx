@@ -32,12 +32,14 @@ export function RisSessionView(
 ) {
   const [localTop, setLocalTop] = useState(""),
     [assignment, setAssignment] = useState<"session" | "main" | "related" | null>(null);
+  const [selectedDocuments, setSelectedDocuments] = useState<string[] | null>(null);
   const [error, setError] = useState(""),
     [saving, setSaving] = useState(false);
   const select = (id: string) => {
     setLocalTop(id);
     onSelectTop?.(id);
     setError("");
+    setSelectedDocuments(null);
   };
   const session: Row = data.session, documents: Row[] = data.documents ?? [];
   const agenda: Row[] = [...(data.agenda ?? [])].sort((a, b) =>
@@ -61,6 +63,7 @@ export function RisSessionView(
     ? (data.mainEvents ?? []).filter((e: Row) => e.agenda_id === selected.id)
     : [];
   const sessionEvents: Row[] = data.sessionEvents ?? [];
+  const mainEventFindings: Row[] = data.mainEventFindings ?? [];
   const sessionRelated: Row = data.sessionRelated ?? {messages: [],processes: [],topics: []};
   const title = (d: Row) =>
     [
@@ -108,6 +111,7 @@ export function RisSessionView(
         onCancel={() => setAssignment(null)}
         onDone={async () => {
           await onReload();
+          setSelectedDocuments(null);
           setAssignment(null);
         }}
       />
@@ -323,6 +327,56 @@ export function RisSessionView(
               </div>
               {mainEvents.map((e) => eventRow(e, "ris_unlink_main_event", selected.id))}
               {!mainEvents.length && <p>Noch kein Hauptereignis zugeordnet. Die Zuordnung erfolgt nur durch die Redaktion.</p>}
+              {mainEvents.length > 0 && (() => {
+                const linkedFindingIds = new Set(
+                  mainEventFindings.filter((row: Row) =>
+                    row.event_id === mainEvents[0].event_id
+                  ).map((row: Row) => row.finding_id),
+                );
+                const eligible = topDocuments.filter((d: Row) =>
+                  d.status === "confirmed" &&
+                  (d.kind === "proposal" || d.kind === "attachment") &&
+                  (!d.finding_id || !linkedFindingIds.has(d.finding_id))
+                );
+                const selectedIds = selectedDocuments ?? eligible.map((d: Row) => d.id);
+                return eligible.length > 0 ? (
+                  <div className="ris-finding-confirm">
+                    <h3>Unterlagen als Fundstellen bestätigen</h3>
+                    <p>Die Unterlagen werden nur nach deiner Bestätigung mit dem Hauptereignis verknüpft. Eine Beschlussfassung wird dadurch nicht bestätigt.</p>
+                    <fieldset disabled={busy || saving}>
+                      <legend>Vorlage und Anlagen auswählen</legend>
+                      {eligible.map((d: Row) => (
+                        <label key={d.id} className="ris-document-check">
+                          <input type="checkbox" checked={selectedIds.includes(d.id)}
+                            onChange={(e) => {
+                              const current = selectedDocuments ?? eligible.map((item: Row) => item.id);
+                              setSelectedDocuments(e.target.checked
+                                ? [...current,d.id] : current.filter((id: string) => id !== d.id));
+                            }} />
+                          <span>{title(d)}</span>
+                        </label>
+                      ))}
+                    </fieldset>
+                    <button type="button" disabled={busy || saving || !selectedIds.length}
+                      onClick={() => {
+                        if (!window.confirm(`${selectedIds.length} RIS-Unterlage(n) als Fundstellen mit dem Hauptereignis verbinden?`)) return;
+                        setSaving(true);
+                        setError("");
+                        void eventLock(mainEvents[0].event_id, () => api({
+                          action:"ris_confirm_main_findings",
+                          agendaId:selected!.id,
+                          eventId:mainEvents[0].event_id,
+                          linkIds:selectedIds,
+                          approval:true,
+                        })).then(async () => {await onReload();setSelectedDocuments(null);})
+                          .catch((e) => setError(e instanceof Error ? e.message : "Fundstellen konnten nicht bestätigt werden."))
+                          .finally(() => setSaving(false));
+                      }}>
+                      Ausgewählte Fundstellen bestätigen
+                    </button>
+                  </div>
+                ) : null;
+              })()}
             </section>
             <section className="panel card-headed">
               <div className="section-heading">
