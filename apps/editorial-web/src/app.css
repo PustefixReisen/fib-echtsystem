@@ -896,7 +896,8 @@ button:has(> .action-icon) { display: inline-flex; align-items: center; justify-
   background: var(--fib-primary);
   pointer-events: none;
 }
-.ris-simplified .ris-document-item .ris-external-reference > span { font-weight: 700; }
+.ris-simplified .ris-document-item .ris-external-reference > span { font-weight: 400; }
+.ris-simplified .ris-document-item .ris-external-reference > span strong { font-weight: 700; }
 .ris-finding-confirm { min-width: 0; max-width: 100%; }
 .ris-finding-confirm fieldset { min-width: 0; width: 100%; }
 .source-workspace .ris-finding-confirm label.ris-document-check {
