@@ -13,6 +13,7 @@ import {
   type RisActor,
 } from "../../supabase/functions/_shared/ris-editorial.ts";
 import { confirmEvent } from "../../packages/fachservices/src/editorial-write.js";
+import { sourceEditorial } from "../../supabase/functions/_shared/source-editorial.ts";
 const connection = process.env.U4_TEST_DATABASE_URL;
 if (!connection) throw Error("U4_TEST_DATABASE_URL required");
 const target = new URL(connection);
@@ -814,6 +815,77 @@ async function main() {
       ),
     /foreign key/,
   );
+
+  // #387: main events require a RIS finding from this very Sitzung.
+  // Source creation is the single explicit exception: the editor then confirms
+  // one or more proposal/attachment documents in a separate review step.
+  const proposalDoc = await first(
+    `select l.id,l.agenda_id,d.source_url,d.latest_version_id
+       from fib.ris_document_links l join fib.ris_documents d on d.id=l.document_id
+       where l.session_id=$1 and l.kind='proposal' and l.agenda_id is not null
+       order by l.id limit 1`,
+    [a.sessionId],
+  );
+  assert.ok(proposalDoc,"Synthetic session contains a proposal");
+  const topForProposal = proposalDoc.agenda_id;
+  const firstNewId = "99999999-9999-4999-8999-999999999987";
+  await tx(db => sourceEditorial(db,actor,{
+    action:"source_create_event",requestId:firstNewId,
+    title:"Explizit bestätigte TOP-Quelle",summary:null,
+    occurredAt:null,rationale:null,approval:true,
+    agendaId:topForProposal,mainEvent:true,
+  }));
+  await pool.query(
+    "insert into fib.edit_locks(object_type,object_id,user_id,expires_at) values('event',$1,$2,now()+interval '1 hour')",
+    [firstNewId,uid],
+  );
+  await assert.rejects(
+    ()=>run({action:"ris_confirm_main_findings",agendaId:topForProposal,
+      eventId:firstNewId,linkIds:[proposalDoc.id],approval:false}),
+    /confirmation_required/,
+  );
+  const proposalVersion = await tx(db => persistRisDocument(
+    db,proposalDoc.source_url,"synthetic-proposal","Synthetic RIS proposal",
+    "isolated-ris-387","2026-11-03T09:00:00Z",
+  ));
+  assert.ok(proposalVersion);
+  await run({action:"ris_confirm_main_findings",agendaId:topForProposal,
+    eventId:firstNewId,linkIds:[proposalDoc.id],approval:true});
+  await run({action:"ris_confirm_main_findings",agendaId:topForProposal,
+    eventId:firstNewId,linkIds:[proposalDoc.id],approval:true});
+  assert.equal(Number((await first("select count(*) n from fib.event_findings where event_id=$1",[firstNewId])).n),1,
+    "Confirmed RIS finding is not duplicated");
+  const choicesForMain = await tx(db => sourceEditorial(db,actor,{
+    action:"source_choices",agendaId:topForProposal,eventRole:"main_event",
+    search:"Explizit bestätigte TOP-Quelle",
+  }));
+  const choicesForRelated = await tx(db => sourceEditorial(db,actor,{
+    action:"source_choices",agendaId:topForProposal,eventRole:"local_reference",
+    search:"Explizit bestätigte TOP-Quelle",
+  }));
+  assert.ok(choicesForMain.events.some((e:any)=>e.id===firstNewId));
+  assert.ok(!choicesForRelated.events.some((e:any)=>e.id===firstNewId));
+  const anotherTop=(await first(
+    "select id from fib.ris_agenda_items where session_id=$1 and id<>$2 limit 1",
+    [a.sessionId,topForProposal],
+  )).id;
+  await assert.rejects(()=>run({action:"ris_link_event",
+    agendaId:anotherTop,eventId:firstNewId}),
+    /outside_current_session/);
+  const outOfMeeting="99999999-9999-4999-8999-999999999988";
+  await pool.query(
+    "insert into fib.events(id,title,status,confirmed_at) values($1,'Unabhängiges Ereignis','confirmed',now())",
+    [outOfMeeting],
+  );
+  await pool.query(
+    "insert into fib.edit_locks(object_type,object_id,user_id,expires_at) values('event',$1,$2,now()+interval '1 hour')",
+    [outOfMeeting,uid],
+  );
+  await assert.rejects(()=>run({action:"ris_link_main_event",
+    agendaId:anotherTop,eventId:outOfMeeting}),
+    /requires_current_session_finding/);
+  await run({action:"ris_link_event",agendaId:anotherTop,eventId:outOfMeeting});
+  console.log("RIS #387: strict session-aware choices, intentional source review, duplicate-safe document confirmation and backend link restrictions passed");
 
   assert.equal(await count("messages"), 0);
   console.log(
