@@ -819,15 +819,15 @@ async function main() {
   // #387: main events require a RIS finding from this very Sitzung.
   // Source creation is the single explicit exception: the editor then confirms
   // one or more proposal/attachment documents in a separate review step.
-  const proposalDoc = await first(
+  const selectedProposalDoc = await first(
     `select l.id,l.agenda_id,d.source_url,d.latest_version_id
        from fib.ris_document_links l join fib.ris_documents d on d.id=l.document_id
        where l.session_id=$1 and l.kind='proposal' and l.agenda_id is not null
        order by l.id limit 1`,
     [a.sessionId],
   );
-  assert.ok(proposalDoc,"Synthetic session contains a proposal");
-  const topForProposal = proposalDoc.agenda_id;
+  assert.ok(selectedProposalDoc,"Synthetic session contains a proposal");
+  const topForProposal = selectedProposalDoc.agenda_id;
   const firstNewId = "99999999-9999-4999-8999-999999999987";
   await tx(db => sourceEditorial(db,actor,{
     action:"source_create_event",requestId:firstNewId,
@@ -841,18 +841,18 @@ async function main() {
   );
   await assert.rejects(
     ()=>run({action:"ris_confirm_main_findings",agendaId:topForProposal,
-      eventId:firstNewId,linkIds:[proposalDoc.id],approval:false}),
+      eventId:firstNewId,linkIds:[selectedProposalDoc.id],approval:false}),
     /confirmation_required/,
   );
   const proposalVersion = await tx(db => persistRisDocument(
-    db,proposalDoc.source_url,"synthetic-proposal","Synthetic RIS proposal",
+    db,selectedProposalDoc.source_url,"synthetic-proposal","Synthetic RIS proposal",
     "isolated-ris-387","2026-11-03T09:00:00Z",
   ));
   assert.ok(proposalVersion);
   await run({action:"ris_confirm_main_findings",agendaId:topForProposal,
-    eventId:firstNewId,linkIds:[proposalDoc.id],approval:true});
+    eventId:firstNewId,linkIds:[selectedProposalDoc.id],approval:true});
   await run({action:"ris_confirm_main_findings",agendaId:topForProposal,
-    eventId:firstNewId,linkIds:[proposalDoc.id],approval:true});
+    eventId:firstNewId,linkIds:[selectedProposalDoc.id],approval:true});
   assert.equal(Number((await first("select count(*) n from fib.event_findings where event_id=$1",[firstNewId])).n),1,
     "Confirmed RIS finding is not duplicated");
   const choicesForMain = await tx(db => sourceEditorial(db,actor,{
