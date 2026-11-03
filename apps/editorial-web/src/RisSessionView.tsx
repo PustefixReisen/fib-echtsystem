@@ -334,7 +334,6 @@ export function RisSessionView(
                   ).map((row: Row) => row.finding_id),
                 );
                 const eligible = topDocuments.filter((d: Row) =>
-                  d.status === "confirmed" &&
                   (d.kind === "proposal" || d.kind === "attachment") &&
                   (!d.finding_id || !linkedFindingIds.has(d.finding_id))
                 );
