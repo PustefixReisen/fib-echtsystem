@@ -844,3 +844,14 @@ button:has(> .action-icon) { display: inline-flex; align-items: center; justify-
   background: #fff; color: #18533e; border: 1px solid #b8d1c2; font-weight: 600;
 }
 .ris-simplified .card-headed > .section-heading:first-child > button:hover { background: #f1f7f3; }
+
+/* Development stage is visible in the header, not as a repeated content warning. */
+.fib-development-pill {
+  display: inline-flex; align-items: center; flex: 0 0 auto;
+  font-size: .72rem; font-weight: 700; color: #68531a;
+  background: #fff6db; border: 1px solid #e8d99c;
+  border-radius: 999px; padding: .2rem .5rem;
+}
+@media (max-width: 600px) {
+  .fib-development-pill { font-size: .65rem; }
+}
