@@ -56,7 +56,11 @@ export function EventAssignmentView(
     if (inFlight.current) return;
     const token = ++generation.current;
     await perform(async () => {
-      const r = await api({ action: "source_choices", search });
+      const r = await api({ action: "source_choices", search,
+        ...("agendaId" in target
+          ? { agendaId: target.agendaId, eventRole: target.mainEvent ? "main_event" : "local_reference" }
+          : {}),
+      });
       if (token === generation.current) {
         setItems(r.events ?? []);
         setChosen("");
