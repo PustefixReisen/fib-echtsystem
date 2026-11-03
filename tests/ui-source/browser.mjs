@@ -150,24 +150,17 @@ try {
   assert.equal(await main().getByRole("button", {name:"Auswählen oder erstellen"}).count(),0);
   assert.equal(await page.evaluate(() => window.calls.filter(c=>c.action==="ris_link_main_event").length),0,
     "Main event creation commits the explicit role without another linking action");
-  await main().getByRole("heading",{name:"Unterlagen als Fundstellen bestätigen"}).waitFor();
+  assert.equal(await main().getByRole("heading",{name:"Unterlagen als Fundstellen bestätigen"}).count(),0,
+    "No separate RIS findings confirmation after selecting a TOP main event");
+  assert.equal(await main().getByRole("checkbox").count(),0);
   assert.equal(await page.getByText("Beschlussvorschlag als Text derzeit nicht in FIB verfügbar.").count(),0,
     "Redundant proposal placeholder is no longer shown");
   const documentLabel=page.locator(".ris-document-item .ris-external-reference > span").first();
-  assert.equal(await documentLabel.evaluate(el=>getComputedStyle(el).fontWeight),"700",
-    "RIS finding title is bold");
-  const boxGeometry=await main().locator(".ris-document-check").first().evaluate(label=>{
-    const check=label.querySelector('input[type="checkbox"]');
-    const caption=label.querySelector('span');
-    const bounds=label.getBoundingClientRect(),input=check.getBoundingClientRect(),text=caption.getBoundingClientRect();
-    return {labelWidth:bounds.width,checkWidth:input.width,
-      captionWidth:text.width,iconBeforeCaption:input.right<text.left,
-      textWithinLabel:text.right<=bounds.right+1,captionHeight:text.height};
-  });
-  assert.ok(boxGeometry.checkWidth<=24 && boxGeometry.captionWidth>100 &&
-    boxGeometry.iconBeforeCaption && boxGeometry.textWithinLabel &&
-    boxGeometry.captionHeight<120,
-    "Document checkbox and title remain on a readable row within the card");
+  assert.equal(await documentLabel.locator("strong").innerText(),"Beschlussvorlage");
+  assert.equal(await documentLabel.locator("strong").evaluate(el=>getComputedStyle(el).fontWeight),"700",
+    "Only document type is bold");
+  assert.equal(await documentLabel.evaluate(el=>getComputedStyle(el).fontWeight),"400",
+    "Date, reference and full title remain normal weight");
   const tabStyle=await page.getByRole("navigation",{name:"Sitzung und Tagesordnungspunkte"})
     .getByRole("button",{name:"TOP 2"}).evaluate(el=>{
       const st=getComputedStyle(el);return {width:parseFloat(st.borderBottomWidth),color:st.borderBottomColor};
@@ -180,14 +173,8 @@ try {
   assert.ok(underline.content!=="none" && underline.width>10 && underline.height>=2 && underline.position==="absolute",
     "Selected TOP has a separate underline below its text");
 
-  assert.equal(await main().getByRole("checkbox").count(),1);
-  assert.equal(await main().getByRole("checkbox").first().isChecked(),true);
-  await main().getByRole("button",{name:"Ausgewählte Fundstellen bestätigen"}).click();
-  await page.getByRole("heading",{name:"Unterlagen als Fundstellen bestätigen"}).waitFor({state:"detached"});
-  const confirmationCalls=await page.evaluate(() => window.calls.filter(c=>c.action==="ris_confirm_main_findings"));
-  assert.equal(confirmationCalls.length,1);
-  assert.deepEqual(confirmationCalls[0].linkIds,["l1"]);
-  assert.equal(confirmationCalls[0].approval,true);
+  assert.equal(await page.evaluate(() => window.calls.filter(c=>c.action==="ris_confirm_main_findings").length),0,
+    "Event creation is the only required user action");
   const mainQueries=await page.evaluate(() => window.calls.filter(c=>c.action==="source_choices" && c.eventRole==="main_event"));
   assert.ok(mainQueries.every(c=>c.agendaId==="t2"),"Main event choices are scoped to the current TOP");
 
