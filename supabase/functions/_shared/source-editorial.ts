@@ -78,7 +78,9 @@ export async function sourceEditorial(
         : independent
       : "true";
     const args = agendaFilter
-      ? [query,agenda.session_id,agenda.session_date]
+      ? input.eventRole === "local_reference"
+        ? [query,agenda.session_id,agenda.session_date]
+        : [query,agenda.session_id]
       : [query];
     const events = await tx.unsafe(
       `select e.id,e.title,e.occurred_at event_date,e.summary
