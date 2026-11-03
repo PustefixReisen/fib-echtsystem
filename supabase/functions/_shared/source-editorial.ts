@@ -58,6 +58,10 @@ export async function sourceEditorial(
       );
     return {
       events,
+      ...(agendaFilter ? {
+        scopedToAgendaId: input.agendaId,
+        scopedRole: input.eventRole,
+      } : {}),
       processes: await tx.unsafe(
         "select id,title from fib.processes where status<>'archived' and title ilike $1 order by title limit 101",
         [query],
@@ -230,7 +234,8 @@ export async function sourceEditorial(
       throw Error("invalid_source_input");
     }
     if ([input.findingId,input.agendaId,input.sessionId].filter(Boolean).length !== 1 ||
-        input.mainEvent && !input.agendaId) {
+        input.mainEvent && !input.agendaId ||
+        input.agendaId && !input.mainEvent) {
       throw Error("invalid_source_input");
     }
     await tx.unsafe("select pg_advisory_xact_lock(hashtextextended($1,0))", [
