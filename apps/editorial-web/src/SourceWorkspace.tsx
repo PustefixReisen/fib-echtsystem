@@ -1,5 +1,4 @@
 import { ActionIcon, OriginalLink } from "./ActionIcon.js";
-import { PdfPreview } from "./PdfPreview.js";
 import { EventAssignmentView } from "./EventAssignmentView.js";
 import { RisSessionView } from "./RisSessionView.js";
 import { type ReactNode, useEffect, useRef, useState } from "react";
@@ -97,14 +96,10 @@ export function SourceWorkspace({
   eventLock = withEventLock,
   registerLeaveGuard,
 }: Props) {
-  const [assignment, setAssignment] = useState(false),
-    [previewVersion, setPreviewVersion] = useState<string | null>(null);
+  const [assignment, setAssignment] = useState(false);
   const [returnContext, setReturnContext] = useState<
     { sessionId: string; agendaId: string; number: string } | null
   >(null);
-  const [rightsEditing, setRightsEditing] = useState(false),
-    [rightsAuthor, setRightsAuthor] = useState("municipality"),
-    [rightsEvidence, setRightsEvidence] = useState("");
   const [route, setRoute] = useState<"findings" | "sessions">(mode),
     [search, setSearch] = useState(""),
     [filter, setFilter] = useState("all");
@@ -309,78 +304,6 @@ export function SourceWorkspace({
           setAssignment(false);
         }}
       />
-    );
-  }
-  if (rightsEditing && document) {
-    return (
-      <div className="source-workspace">
-        <nav aria-label="Pfadnavigation">
-          {currentTitle} / Speicherberechtigung
-        </nav>
-        <section className="panel stack">
-          <h1>Speicherberechtigung dokumentieren</h1>
-          <p>
-            Die Bestätigung gilt ausschließlich für diese Dokumentfassung. Die
-            amtliche Herkunft allein bestätigt keine Urheberschaft.
-          </p>
-          {error && <p role="alert">{error}</p>}
-          <form
-            className="stack"
-            onSubmit={(e) => {
-              e.preventDefault();
-              void run(async () => {
-                await api({
-                  action: "ris_confirm_storage_rights",
-                  versionId: document.version_id,
-                  contentAuthor: rightsAuthor,
-                  evidence: rightsEvidence,
-                });
-                setDetail(
-                  await api({
-                    action: "source_read",
-                    versionId: document.version_id,
-                  }),
-                );
-                setRightsEditing(false);
-              });
-            }}
-          >
-            <label>
-              Speichergrundlage<select
-                value={rightsAuthor}
-                onChange={(e) => setRightsAuthor(e.target.value)}
-              >
-                <option value="municipality">
-                  Gemeinde Feldkirchen ist Urheberin
-                </option>
-                <option value="licensed">
-                  Anderweitige Speicherberechtigung
-                </option>
-              </select>
-            </label>
-            <label>
-              Nachweis der Speicherberechtigung<textarea
-                required
-                maxLength={4000}
-                value={rightsEvidence}
-                onChange={(e) => setRightsEvidence(e.target.value)}
-              />
-            </label>
-            <div className="source-actions">
-              <button disabled={busy || !rightsEvidence.trim()}>
-                Speichern
-              </button>
-              <button
-                type="button"
-                disabled={busy}
-                onClick={() => setRightsEditing(false)}
-              >
-                Abbrechen
-              </button>
-            </div>
-          </form>
-        </section>
-      </div>
     );
   }
   return (
@@ -609,147 +532,23 @@ export function SourceWorkspace({
                       finding?.discovered_at,
                   )}
               </p>
-              <p>
-                Herkunftsnachweis:{" "}
-                <code>
-                  {document?.content_hash ??
-                    observation?.content_fingerprint ??
-                    finding?.content_fingerprint ??
-                    "Unbekannt"}
-                </code>
-              </p>
-              {document && (
-                <div className="stack">
-                  <p>
-                    Urheberschaft / Speicherberechtigung: {({
-                      municipality: "Gemeinde Feldkirchen bestätigt",
-                      licensed: "Speicherberechtigung bestätigt",
-                      unknown: "Ungeklärt",
-                      external: "Fremde Urheberschaft",
-                    } as Record<string, string>)[document.content_author] ??
-                      "Ungeklärt"}
-                  </p>
-                  {document.original_title && (
-                    <p>Originaltitel im RIS: {document.original_title}</p>
-                  )}
-                  <div className="source-actions">
-                    {document.has_pdf && (
-                      <ActionIcon
-                        label="PDF-Vorschau öffnen"
-                        onClick={() => setPreviewVersion(document.version_id)}
-                      >
-                        ▤
-                      </ActionIcon>
-                    )}
-                    <ActionIcon label="Speicherberechtigung bearbeiten" disabled={busy} onClick={()=>{setRightsEvidence(document.rights_evidence ?? "");setRightsAuthor(document.content_author === "licensed" ? "licensed" : "municipality");setRightsEditing(true);}}>✎</ActionIcon>
-                    {["municipality", "licensed"].includes(
-                      document.content_author,
-                    ) && !document.has_pdf && (
-                      <button
-                        disabled={busy}
-                        onClick={() =>
-                          void run(
-                            async () => {
-                              await api({
-                                action: "source_capture_pdf",
-                                versionId: document.version_id,
-                              });
-                              setDetail(
-                                await api({
-                                  action: "source_read",
-                                  versionId: document.version_id,
-                                }),
-                              );
-                            },
-                            "Original-PDF und Text dieser Fassung gespeichert.",
-                          )}
-                      >
-                        Bestätigtes Original speichern
-                      </button>
-                    )}
-                    {["municipality", "licensed"].includes(
-                      document.content_author,
-                    ) && (
-                      <button
-                        disabled={busy}
-                        onClick={() => {
-                          if (
-                            window.confirm(
-                              "Speicherberechtigung widerrufen und gespeichertes PDF sowie Volltext dieser Fassung entfernen?",
-                            )
-                          ) {
-                            void run(async () => {
-                              await api({
-                                action: "ris_revoke_storage_rights",
-                                versionId: document.version_id,
-                              });
-                              setDetail(
-                                await api({
-                                  action: "source_read",
-                                  versionId: document.version_id,
-                                }),
-                              );
-                            });
-                          }
-                        }}
-                      >
-                        Speicherberechtigung widerrufen
-                      </button>
-                    )}
-                  </div>
-                </div>
+              {document?.original_title && (
+                <p>Originaltitel im RIS: {document.original_title}</p>
               )}
-              {document?.extracted_text
-                ? (
-                  <details>
-                    <summary>Dokumenttext – interner Beleg</summary>
-                    <pre className="source-evidence">
-                    {document.extracted_text}
-                    </pre>
-                  </details>
-                )
-                : (
-                  <p>
-                    Kein vollständiger Quelltext in dieser Ansicht gespeichert.
-                    Originalquelle prüfen.
-                  </p>
-                )}
+              <div className="ris-inline-row">
+                <span>Originaldokument im RIS öffnen</span>
+                <OriginalLink url={currentUrl} label="RIS-Original öffnen" />
+              </div>
+              <p>
+                In FIB ist derzeit kein Dokumentvolltext gespeichert. Für den
+                vollständigen Inhalt bitte die Originalquelle im RIS öffnen.
+              </p>
             </Card>
-            <Card title="Versionen">
-              {versions.length
-                ? versions.map((v: Row) => (
-                  <div className="source-block" key={v.id}>
-                    <span>
-                      {v.revision
-                        ? "Fundstellenfassung " + v.revision
-                        : "Dokumentfassung"} · {date(v.observed_at)}
-                    </span>
-                    <p>
-                      <code>{v.fingerprint ?? v.content_hash}</code>
-                    </p>
-                    {(document || v.metadata?.risDocumentVersionId) && (
-                      <ActionIcon
-                        label="Beleg dieser Fassung öffnen"
-                        disabled={busy || v.id === document?.version_id}
-                        onClick={() =>
-                          void openFinding({
-                            versionId: v.metadata?.risDocumentVersionId ?? v.id,
-                          }, true)}
-                      >
-                        →
-                      </ActionIcon>
-                    )}
-                  </div>
-                ))
-                : (
-                  <p>
-                    {observation
-                      ? "Beobachtungsrevision " + observation.revision
-                      : "Noch keine gespeicherte Fassung."}
-                  </p>
-                )}
-            </Card>
-            <Card title="Ereignisbezug">
+            <Card title="Ereignisbezug" action={finding ? (
+              <button disabled={busy} onClick={() => setAssignment(true)}>
+                Ereignis zuordnen
+              </button>
+            ) : undefined}>
               {(detail.events ?? []).map((e: Row) => (
                 <div className="work-item" key={e.id}>
                   <div>
@@ -804,61 +603,42 @@ export function SourceWorkspace({
                 <p>Noch keinem Ereignis zugeordnet.</p>
               )}
               {(detail.contexts ?? []).map((c: Row, i: number) => (
-                <div key={i}>
+                <div className="ris-inline-row" key={i}>
                   <span>
-                    Dokumentzuordnung: {c.status === "candidate"
-                      ? "Importierter Bezug"
-                      : label(c.status)}
+                    RIS-Zuordnung: {label(c.kind)}
                   </span>
-                  <span>· {label(c.kind)}</span>
-                  <ActionIcon label="RIS-Kontext öffnen" disabled={busy} onClick={()=>void openSession(c.session_id,c.agenda_id ?? "")}>→</ActionIcon>
+                  <button type="button" disabled={busy}
+                    onClick={() => void openSession(c.session_id, c.agenda_id ?? "")}>
+                    Sitzung / TOP öffnen
+                  </button>
                 </div>
               ))}
             </Card>
           </div>
-          <aside className="detail-side-column">
-            <Card title={finding ? "Ereignisbezug" : "Fundstelle übernehmen"}>
-              {document && !finding
-                ? (
-                  <p>
-                    Die automatische Fundstellenzuordnung fehlt noch. Bitte den
-                    freigegebenen Bestandsabgleich ausführen.
-                  </p>
-                )
-                : finding
-                ? (
-                  <button disabled={busy} onClick={() => setAssignment(true)}>
-                    Neu: Ereignisbezug
+          {!finding && !document && (
+            <aside className="detail-side-column">
+              <Card title="Fundstelle übernehmen">
+                <div className="stack">
+                  <label>
+                    Titel der Fundstelle *
+                    <input
+                      value={title}
+                      maxLength={2000}
+                      onChange={(e) => {
+                        setTitle(e.target.value);
+                        setDirty(true);
+                      }}
+                    />
+                  </label>
+                  <p>Die Übernahme legt keine Meldung an.</p>
+                  <button className="primary" disabled={busy || !title.trim()}
+                    onClick={() => void accept()}>
+                    Fundstelle ausdrücklich übernehmen
                   </button>
-                )
-                : (
-                  <div className="stack">
-                    <label>
-                      Titel der Fundstelle *
-                      <input
-                        value={title}
-                        maxLength={2000}
-                        onChange={(e) => {
-                          setTitle(e.target.value);
-                          setDirty(true);
-                        }}
-                      />
-                    </label>
-                    <p>
-                      Die Übernahme bestätigt keine unsichere RIS-Zuordnung und
-                      erzeugt keine Meldung.
-                    </p>
-                    <button
-                      className="primary"
-                      disabled={busy || !title.trim()}
-                      onClick={() => void accept()}
-                    >
-                      Fundstelle ausdrücklich übernehmen
-                    </button>
-                  </div>
-                )}
-            </Card>
-          </aside>
+                </div>
+              </Card>
+            </aside>
+          )}
         </div>
       )}
       {session && (
@@ -886,14 +666,7 @@ export function SourceWorkspace({
           onReload={refreshSession}
         />
       )}
-      {previewVersion && (
-        <PdfPreview
-          versionId={previewVersion}
-          title={currentTitle}
-          api={api}
-          onClose={() => setPreviewVersion(null)}
-        />
-      )}
+
     </div>
   );
 }
