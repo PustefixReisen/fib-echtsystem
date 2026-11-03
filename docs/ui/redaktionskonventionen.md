@@ -17,9 +17,13 @@ Stand 03.11.2026; Nutzerabnahme Issue #379. Diese Regeln gelten für neue und ü
 - Innerhalb eines mehrstufigen Dialogs führt `Abbrechen` zuerst zur vorherigen Dialogstufe (bei Neuanlage zurück zur Suche). Erst auf der ersten Stufe führt es zurück zur aufrufenden Seite; ungespeicherte Änderungen sind zu schützen.
 - Tastatur, Escape, Fokusführung und Darstellung bei schmalem Bildschirm sind bei jeder Dialogänderung zu testen.
 
+- Die Seitenrubrik folgt der Hauptnavigation: **Sitzungsübersicht und TOP-Detail = „Sitzungen“**, Fundstellenverwaltung = „Recherche · Redaktion“.
+- Während des Entwicklungsbetriebs wird eine knappe Kennzeichnung im Header verwendet; lange technische Banner werden nicht auf jeder Redaktionsseite wiederholt.
+
 ## RIS-spezifisch
 - Sitzungen: `Ereignisse zur Sitzung` mit manuell zuordenbaren Ereignissen und daraus abgeleiteten Meldungen/Vorgängen/Themen. TOPs: `TOP als Ereignis festlegen` (ein ausgewähltes Hauptereignis) und `Weitere Ereignisse zum TOP` (weitere manuell zugeordnete Ereignisse). Keine automatischen TOP-Zuordnungen aus Presseberichten.
-- Ein im TOP geöffnetes RIS-Dokument zeigt nur Quelle und Original-Link, keine zweite Ereigniszuordnungskarte. Allgemeine redaktionelle Fundstellen behalten ihre fachlich eigenständigen Ereignisbezüge.
+- RIS-Dokumente werden im TOP als Liste mit gerahmtem externen Icon **unmittelbar vor dem normalen Dokumenttitel** dargestellt. Die separate Aktion „Fundstelle öffnen“ und die redundante RIS-Fundstellendetailseite werden von dieser TOP-Liste aus nicht angeboten; die eigenständige Fundstelle bleibt in der allgemeinen Fundstellenverwaltung erhalten.
+- Die TOP-Auswahl eines Hauptereignisses **verknüpft noch keine RIS-Dokumente automatisch** mit `event_findings`. Ein späterer Prüfdialog muss die Vorlage und Anlagen einzeln bestätigen lassen, dabei vorhandene Fundstellen und Beziehungen wiederverwenden und amtliche Belegarten beachten. Presse kann keine Beschlussfassung bestätigen.
 - Gemäß Issue #380 derzeit keine lokale PDF-Anzeige, Versions- oder Speicherrechtsaktionen in der Redaktion; technische Vorarbeit bleibt deaktiviert.
 
 ## Abnahme
