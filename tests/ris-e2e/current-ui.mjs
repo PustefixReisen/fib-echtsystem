@@ -104,12 +104,12 @@ try {
   await page.getByRole("heading",{name:"Weiteres Ereignis zuordnen",exact:true}).waitFor();
   await page.getByRole("button",{name:"Abbrechen",exact:true}).click();
   record("Real MFA app → local TOP link → external RIS-only finding → return to TOP → modal cancel returns to selection");
-  await page.locator("section").filter({has:page.getByRole("heading",{name:"Ereignis zum TOP",exact:true})})
-    .getByRole("button",{name:"Ereignis zuordnen"}).click();
+  await page.locator("section").filter({has:page.getByRole("heading",{name:"TOP als Ereignis festlegen",exact:true})})
+    .getByRole("button",{name:"Auswählen oder erstellen"}).click();
   await page.getByRole("button",{name:"Neu: Ereignis"}).click();
   await page.getByLabel("Ereignistitel *",{exact:true}).fill("TOP 2: redaktionelles Hauptereignis");
   await page.getByRole("button",{name:"Speichern"}).click();
-  await page.getByRole("heading",{name:"Ereignis zum TOP",exact:true}).waitFor();
+  await page.getByRole("heading",{name:"TOP als Ereignis festlegen",exact:true}).waitFor();
   await page.getByText("TOP 2: redaktionelles Hauptereignis",{exact:false}).waitFor();
   assert.equal((await db.query("select count(*)::int n from fib.ris_agenda_events where role='main_event'")).rows[0].n,1);
   assert.equal((await db.query("select count(*)::int n from fib.ris_agenda_events where role='local_reference'")).rows[0].n,1);
