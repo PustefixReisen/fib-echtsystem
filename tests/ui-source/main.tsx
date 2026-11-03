@@ -38,6 +38,7 @@ const events: any[] = [{
   summary: "Ein Geschehen außerhalb dieser Sitzung",
 }];
 let local: any[] = [], direct: any[] = [], findings: any[] = [finding];
+let sessionLinks: any[] = [], mainLinks: any[] = [];
 const observation = {
   scope_id: "news",
   external_id: "article",
@@ -113,6 +114,9 @@ const api = async (b: any) => {
         }]
         : [],
       events: local,
+      mainEvents: mainLinks,
+      sessionEvents: sessionLinks,
+      sessionRelated: {messages: [],processes: [],topics: []},
     };
   }
   if (b.action === "source_read") {
@@ -148,6 +152,23 @@ const api = async (b: any) => {
       }),
     };
   }
+  if (b.action === "ris_link_session_event") {
+    sessionLinks.push({event_id:b.eventId,event_title:events.find(e=>e.id===b.eventId)?.title,event_date:events.find(e=>e.id===b.eventId)?.event_date});
+    return {};
+  }
+  if (b.action === "ris_unlink_session_event") {
+    sessionLinks = sessionLinks.filter(e=>e.event_id!==b.eventId);
+    return {};
+  }
+  if (b.action === "ris_link_main_event") {
+    if (mainLinks.length && mainLinks[0].event_id!==b.eventId) throw Error("ris_top_main_event_already_assigned");
+    mainLinks=[{agenda_id:b.agendaId,event_id:b.eventId,event_title:events.find(e=>e.id===b.eventId)?.title,event_date:events.find(e=>e.id===b.eventId)?.event_date}];
+    return {};
+  }
+  if (b.action === "ris_unlink_main_event") {
+    mainLinks=mainLinks.filter(e=>e.event_id!==b.eventId);
+    return {};
+  }
   if (b.action === "ris_link_event") {
     local.push({
       agenda_id: b.agendaId,
@@ -176,7 +197,15 @@ const api = async (b: any) => {
       event_date: b.occurredAt,
       summary: b.summary,
     });
-    if (b.agendaId) {
+    if (b.sessionId) {
+      sessionLinks.push({
+        event_id:b.requestId,event_title:b.title,event_date:b.occurredAt,
+      });
+    }
+    if (b.agendaId && b.mainEvent) {
+      if (mainLinks.length) throw Error("ris_top_main_event_already_assigned");
+      mainLinks.push({agenda_id:b.agendaId,event_id:b.requestId,event_title:b.title,event_date:b.occurredAt});
+    } else if (b.agendaId) {
       local.push({
         agenda_id: b.agendaId,
         event_id: b.requestId,
