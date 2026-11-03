@@ -244,7 +244,7 @@ try {
     await page.evaluate(() =>
       window.calls.filter((c) => c.action === "source_create_event").length
     ),
-    2,
+    1, // only the new TOP main event; related events must already exist
   );
   assert.deepEqual(errors, []);
   console.log(
