@@ -32,6 +32,7 @@ export function EventAssignmentView(
     [busy, setBusy] = useState(false),
     [error, setError] = useState("");
   const [scopeUnavailable, setScopeUnavailable] = useState(false);
+  const [searchBusy, setSearchBusy] = useState(false);
   const [title, setTitle] = useState(suggestion.title),
     [date, setDate] = useState(suggestion.date?.slice(0, 10) ?? ""),
     [summary, setSummary] = useState(suggestion.summary ?? "");
@@ -53,18 +54,16 @@ export function EventAssignmentView(
       setBusy(false);
     }
   }
-  async function searchEvents() {
-    if (inFlight.current) return;
+  async function searchEvents(value: string) {
     const token = ++generation.current;
-    await perform(async () => {
-      const r = await api({ action: "source_choices", search,
+    setSearchBusy(true);
+    try {
+      const r = await api({ action: "source_choices", search:value,
         ...("agendaId" in target
           ? { agendaId: target.agendaId, eventRole: target.mainEvent ? "main_event" : "local_reference" }
           : {}),
       });
       if (token === generation.current) {
-        // Older Preview backends silently ignore new server-side filters.
-        // Never display potentially unrelated events without scope attestation.
         const scoped = "agendaId" in target;
         const role = scoped ? target.mainEvent ? "main_event" : "local_reference" : "";
         const validScope = !scoped ||
@@ -72,15 +71,26 @@ export function EventAssignmentView(
         setScopeUnavailable(!validScope);
         setItems(validScope ? (r.events ?? []) : []);
         setChosen("");
+        setError("");
       }
-    });
+    } catch (e) {
+      if (token === generation.current) {
+        setItems([]);
+        setError(e instanceof Error ? e.message : "Suche fehlgeschlagen.");
+      }
+    } finally {
+      if (token === generation.current) setSearchBusy(false);
+    }
   }
+  // Shared live-search convention: update after each change, debounce network
+  // requests and discard stale responses from earlier terms.
   useEffect(() => {
-    void searchEvents();
+    const timer = window.setTimeout(() => void searchEvents(search), 250);
     return () => {
+      window.clearTimeout(timer);
       generation.current++;
     };
-  }, []);
+  }, [search]);
   const dirty = title !== suggestion.title ||
     summary !== (suggestion.summary ?? "") ||
     date !== (suggestion.date?.slice(0, 10) ?? "") || Boolean(rationale);
@@ -195,27 +205,22 @@ export function EventAssignmentView(
           )
           : (
             <>
-              <form
-                onSubmit={(e) => {
-                  e.preventDefault();
-                  void searchEvents();
-                }}
-                className="finding-filter"
-              >
+              <div className="finding-filter">
                 <label>
-                  Vorhandenes Ereignis suchen<input
-                    type="search"
-                    value={search}
+                  Ereignisse filtern – Titel, Datum oder Kurzbeschreibung
+                  <input type="search" value={search}
                     onChange={(e) => setSearch(e.target.value)}
-                  />
+                    placeholder="Suchbegriff eingeben …"
+                    aria-label="Ereignisse filtern" />
                 </label>
-                <button disabled={busy}>Suchen</button>
-              </form>
+                {search && <button type="button" disabled={busy} onClick={() => setSearch("")}>Filter löschen</button>}
+              </div>
+              {searchBusy && <p role="status">Suche läuft …</p>}
               <h2>Suchergebnisse</h2>
               {scopeUnavailable && <p role="status">Die Vorschau verwendet noch einen älteren Ereignisdienst. Eine auf die aktuelle Sitzung beschränkte Ereignisauswahl ist hier nicht verfügbar.</p>}
-              {!scopeUnavailable && "agendaId" in target && target.mainEvent && !items.length && !busy &&
+              {!scopeUnavailable && "agendaId" in target && target.mainEvent && !items.length && !searchBusy &&
                 <p>Noch kein Ereignis mit einer RIS-Fundstelle aus dieser Sitzung vorhanden. Bitte ein neues Hauptereignis anlegen.</p>}
-              <fieldset disabled={busy}>
+              <fieldset disabled={busy || searchBusy}>
                 <legend>Ereignis auswählen</legend>
                 {items.map((item) => (
                   <label
@@ -229,17 +234,13 @@ export function EventAssignmentView(
                       disabled={linkedIds.includes(item.id)}
                       onChange={() => setChosen(item.id)}
                     />
-                    <span>
-                      {item.title}
-                      {item.event_date && (
-                        <span>
-                          · {new Date(item.event_date).toLocaleDateString(
-                            "de-DE",
-                          )}
-                        </span>
-                      )}
-                      {linkedIds.includes(item.id) && " · Bereits zugeordnet"}
-                      {item.summary && <small>{item.summary}</small>}
+                    <span className="event-choice-details">
+                      <strong>{item.title}</strong>
+                      {item.event_date && <span className="event-choice-date">
+                        {new Date(item.event_date).toLocaleDateString("de-DE")}
+                      </span>}
+                      {item.summary && <small className="event-choice-summary">{item.summary}</small>}
+                      {linkedIds.includes(item.id) && <small>Bereits zugeordnet</small>}
                     </span>
                   </label>
                 ))}
@@ -259,7 +260,7 @@ export function EventAssignmentView(
           </>
         ) : (
           <>
-            <button type="button" disabled={busy || !chosen} onClick={() =>
+            <button type="button" disabled={busy || searchBusy || !chosen} onClick={() =>
               void perform(async () => {
                 await eventLock(chosen, () => api(
                   "sessionId" in target
