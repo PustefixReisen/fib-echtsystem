@@ -1,5 +1,5 @@
 import { RIS_ORIGIN, type RisSql } from "./ris-structure.ts";
-import { type RisActor, risEditorial } from "./ris-editorial.ts";
+import { type RisActor, risEditorial, linkTopRisDocuments } from "./ris-editorial.ts";
 import { acceptObservation } from "./reviewed-observation.ts";
 function text(v: unknown, max = 2000) {
   if (typeof v !== "string" || !v.trim() || v.length > max) {
@@ -319,6 +319,11 @@ export async function sourceEditorial(
         "insert into fib.ris_session_events(session_id,event_id,origin,reviewed_by) values($1,$2,'manual',$3)",
         [input.sessionId,input.requestId,actor.userId],
       );
+    }
+    // The explicit decision to create the main event includes the attached
+    // proposal and attachments in the same atomic transaction.
+    if (input.agendaId && input.mainEvent) {
+      await linkTopRisDocuments(tx,actor,input.agendaId,input.requestId);
     }
     await tx.unsafe(
       "insert into fib.lead_responsibilities(object_type,object_id,user_id) values('event',$1,$2)",
