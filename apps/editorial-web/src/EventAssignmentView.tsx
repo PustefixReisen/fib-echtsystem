@@ -209,11 +209,16 @@ export function EventAssignmentView(
                 <label>
                   Ereignisse filtern – Titel, Datum oder Kurzbeschreibung
                   <input type="search" value={search}
-                    onChange={(e) => setSearch(e.target.value)}
+                    onChange={(e) => {
+                      setSearch(e.target.value);
+                      setItems([]);
+                      setChosen("");
+                      setSearchBusy(true);
+                    }}
                     placeholder="Suchbegriff eingeben …"
                     aria-label="Ereignisse filtern" />
                 </label>
-                {search && <button type="button" disabled={busy} onClick={() => setSearch("")}>Filter löschen</button>}
+                {search && <button type="button" disabled={busy} onClick={() => { setSearch(""); setItems([]); setChosen(""); setSearchBusy(true); }}>Filter löschen</button>}
               </div>
               {searchBusy && <p role="status">Suche läuft …</p>}
               <h2>Suchergebnisse</h2>
