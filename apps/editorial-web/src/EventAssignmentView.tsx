@@ -15,7 +15,7 @@ export function EventAssignmentView(
     registerLeaveGuard,
   }: {
     context: string;
-    target: { agendaId: string } | { findingId: string };
+    target: { agendaId: string; mainEvent?: boolean } | { sessionId: string } | { findingId: string };
     linkedIds: string[];
     suggestion: { title: string; date?: string; summary?: string };
     onDone: () => Promise<void>;
@@ -101,8 +101,10 @@ export function EventAssignmentView(
   };
   const heading = creating
     ? "Neu: Ereignis"
+    : "sessionId" in target
+    ? "Sitzungsereignis zuordnen"
     : "agendaId" in target
-    ? "Lokalen Bezug hinzufügen"
+    ? target.mainEvent ? "Ereignis zum TOP zuordnen" : "Weiteres Ereignis zuordnen"
     : "Ereignisbezug hinzufügen";
   return (
     <div className="fib-assignment-overlay">
@@ -174,7 +176,7 @@ export function EventAssignmentView(
               )}
               <p>
                 Mit dem Speichern wird das Ereignis angelegt und mit{" "}
-                {"agendaId" in target ? "dem TOP" : "dieser Fundstelle"}{" "}
+                {"sessionId" in target ? "der Sitzung" : "agendaId" in target ? "dem TOP" : "dieser Fundstelle"}{" "}
                 verbunden.
               </p>
             </form>
@@ -245,8 +247,10 @@ export function EventAssignmentView(
             <button type="button" disabled={busy || !chosen} onClick={() =>
               void perform(async () => {
                 await eventLock(chosen, () => api(
-                  "agendaId" in target
-                    ? {action: "ris_link_event", ...target, eventId: chosen}
+                  "sessionId" in target
+                    ? {action: "ris_link_session_event", ...target, eventId: chosen}
+                    : "agendaId" in target
+                    ? {action: target.mainEvent ? "ris_link_main_event" : "ris_link_event", ...target, eventId: chosen}
                     : {action: "link_finding", ...target, eventId: chosen},
                 ));
                 await onDone();
