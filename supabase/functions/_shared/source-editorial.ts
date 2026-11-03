@@ -34,28 +34,58 @@ export async function sourceEditorial(
     if (agendaFilter && !["main_event","local_reference"].includes(input.eventRole))
       throw Error("invalid_event_role");
     const agenda = agendaFilter ? (await tx.unsafe(
-      "select a.session_id from fib.ris_agenda_items a where a.id=$1",
+      "select a.session_id,s.session_date from fib.ris_agenda_items a join fib.ris_sessions s on s.id=a.session_id where a.id=$1",
       [input.agendaId],
     ))[0] : null;
     if (agendaFilter && !agenda) throw Error("source_missing");
-    // Only authoritative RIS document→accepted finding→event relationships count.
-    // Press mentions and loose textual similarity are never used to infer TOP links.
-    const events = agendaFilter
-      ? await tx.unsafe(
-        `select e.id,e.title,e.occurred_at event_date,e.summary
-         from fib.events e where e.status='confirmed' and e.title ilike $1
-         and ${input.eventRole === "main_event" ? "exists" : "not exists"} (
-           select 1 from fib.event_findings ef
-             join fib.ris_documents d on d.finding_id=ef.finding_id
-             join fib.ris_document_links l on l.document_id=d.id
-           where ef.event_id=e.id and l.session_id=$2 and l.kind in ('proposal','attachment')
-         ) order by e.title limit 101`,
-        [query,agenda.session_id],
+
+    // Search across the same displayed fields (title, date and short summary)
+    // and use the same live-search contract as other editorial object lists.
+    const match = `(e.title ilike $1 or coalesce(e.summary,'') ilike $1
+      or to_char(e.occurred_at, 'DD.MM.YYYY') ilike $1
+      or e.occurred_at::date::text ilike $1)`;
+    // A "Weiteres Ereignis zum TOP" is independently evidenced and neither a
+    // session event nor another TOP's main event. Legacy test-only records are
+    // not editorial candidates; they remain intact for development purposes.
+    const independent = `not exists (
+      select 1 from fib.ris_session_events se where se.event_id=e.id
+    ) and not exists (
+      select 1 from fib.ris_agenda_events ae where ae.event_id=e.id and ae.role='main_event'
+    ) and not exists (
+      select 1 from fib.event_findings ef
+        join fib.ris_documents d on d.finding_id=ef.finding_id
+        join fib.ris_document_links l on l.document_id=d.id
+      where ef.event_id=e.id and l.session_id=$2
+    ) and (
+      e.occurred_at::date is distinct from $3::date
+      or exists (
+        select 1 from fib.event_findings ef
+          join fib.findings f on f.id=ef.finding_id
+        where ef.event_id=e.id and not exists (
+          select 1 from fib.ris_documents d where d.finding_id=f.id
+        )
       )
-      : await tx.unsafe(
-        "select id,title,occurred_at event_date,summary from fib.events where status='confirmed' and title ilike $1 order by title limit 101",
-        [query],
-      );
+    ) and e.title not ilike '[ENTWICKLUNG %'
+      and e.title not ilike 'FIB Live-Testereignis'`;
+    const scope = agendaFilter
+      ? input.eventRole === "main_event"
+        ? `exists (
+          select 1 from fib.event_findings ef
+            join fib.ris_documents d on d.finding_id=ef.finding_id
+            join fib.ris_document_links l on l.document_id=d.id
+          where ef.event_id=e.id and l.session_id=$2 and l.kind in ('proposal','attachment')
+        )`
+        : independent
+      : "true";
+    const args = agendaFilter
+      ? [query,agenda.session_id,agenda.session_date]
+      : [query];
+    const events = await tx.unsafe(
+      `select e.id,e.title,e.occurred_at event_date,e.summary
+       from fib.events e where e.status='confirmed' and ${match} and ${scope}
+       order by e.occurred_at desc nulls last,e.title limit 101`,
+      args,
+    );
     return {
       events,
       ...(agendaFilter ? {
