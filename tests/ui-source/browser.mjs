@@ -101,42 +101,24 @@ try {
     ),
   );
   await button("Fundstelle öffnen").click();
-  await page.getByText(/Amtliche Herkunft: verifizierter RIS-Import/).waitFor();
+  await heading("Inhalt und Herkunft").waitFor();
+  assert.equal(await heading("Ereignisbezug").count(), 0,
+    "RIS documents do not expose independent event assignment");
+  assert.equal(await page.locator(".ris-external-link").count(), 1,
+    "RIS original is linked exactly once");
   assert.equal(await button("Fundstelle ausdrücklich übernehmen").count(), 0);
-  await button("Ereignis zuordnen").click();
-  await page.getByRole("radio").filter({ hasText: "" }).first().check();
-  await button("Zuordnen").click();
-  await button("Ereignis zuordnen").waitFor();
-  assert.equal(
-    await page.getByRole("button", { name: "Ereignis öffnen", exact: true })
-      .count(),
-    1,
-  );
-  await button("Ereignis zuordnen").click();
-  await button("Neu: Ereignis").click();
-  assert.ok(
-    (await page.getByLabel("Ereignistitel *", { exact: true }).inputValue())
-      .includes("29.10.2026"),
-  );
-  await page.getByLabel("Ereignistitel *", { exact: true }).fill(
-    "Ereignis aus Dokument-Fundstelle",
-  );
-  await button("Speichern").click();
-  await button("Ereignis zuordnen").waitFor();
-  assert.equal(
-    await page.getByRole("button", { name: "Ereignis öffnen", exact: true })
-      .count(),
-    2,
-    "A finding can support multiple events",
-  );
   await button("Zurück zu TOP 2").click();
   await heading("Beschlussvorschlag / Dokumente").waitFor();
   assert.equal(
-    await local().getByRole("button", { name: "Ereignis öffnen", exact: true })
-      .count(),
+    await local().getByRole("button", { name: "Ereignis öffnen", exact: true }).count(),
     1,
-    "Document relationships do not add TOP relationships",
   );
+  await button("Neu: Lokaler Bezug").click();
+  await button("Neu: Ereignis").click();
+  await button("Abbrechen").click();
+  await heading("Lokalen Bezug hinzufügen").waitFor();
+  await button("Abbrechen").click();
+  await heading("Lokale Bezüge").waitFor();
   mkdirSync("/tmp/fib-source-ui", { recursive: true });
   await page.screenshot({
     path: "/tmp/fib-source-ui/ris-desktop.png",
@@ -149,7 +131,8 @@ try {
     ),
     false,
   );
-  const actionRows=await page.locator('.ris-document-item .fib-action-icon').evaluateAll(nodes=>nodes.map(n=>Math.round(n.getBoundingClientRect().top)));
+  const actionRows=await page.locator('.ris-document-item .source-actions > *').evaluateAll(nodes=>nodes.map(n=>{const r=n.getBoundingClientRect();return Math.round(r.top+r.height/2)}));
+  assert.ok(actionRows.length >= 2, 'External RIS link and finding action are present');
   assert.equal(new Set(actionRows).size,1,'Document actions stay together at mobile width');
   await page.screenshot({
     path: "/tmp/fib-source-ui/ris-mobile.png",
@@ -167,11 +150,11 @@ try {
     await page.evaluate(() =>
       window.calls.filter((c) => c.action === "source_create_event").length
     ),
-    2,
+    1,
   );
   assert.deepEqual(errors, []);
   console.log(
-    "PASS actual SourceWorkspace/RisSessionView components: independent local/direct n:m links, optional rationale, event creation, lock retry, external RIS navigation without stored-PDF UI, exact TOP return, origin, title, mobile and Gemeinde regression (simulated APIs; no live MFA or print claim)",
+    "PASS actual SourceWorkspace/RisSessionView components: local event links, modal cancel navigation, event creation, lock retry, external RIS navigation without stored-PDF UI, exact TOP return, origin, title, mobile and Gemeinde regression (simulated APIs; no live MFA or print claim)",
   );
 } catch (e) {
   console.error(await page.locator("body").innerText());

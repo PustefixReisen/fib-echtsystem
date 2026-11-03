@@ -79,7 +79,7 @@ export function RisSessionView(
         )}
       </div>
       <div className="source-actions">
-        <OriginalLink url={d.source_url} label="RIS-Original öffnen" />
+        <OriginalLink url={d.source_url} label="RIS-Original öffnen" text="RIS-Original" />
         {d.latest_version_id && (
           <button
             type="button"
@@ -114,10 +114,6 @@ export function RisSessionView(
   }
   return (
     <div className="ris-simplified">
-      <nav aria-label="Pfadnavigation">
-        Sitzung {displayDate(session.session_date)}
-        {selected && ` / TOP ${selected.number}`}
-      </nav>
       {error && <p role="alert">{error}</p>}
       {!selected
         ? (
@@ -125,10 +121,9 @@ export function RisSessionView(
             <section className="panel card-headed">
               <div className="section-heading"><h2>RIS-Gesamtübersicht</h2></div>
               <div className="ris-inline-row">
-                <span>{session.committee_name || "Gremium"} ·{" "}
-                  {displayDate(session.session_date)} · Tagesordnung</span>
                 <OriginalLink
                   label="Gesamtübersicht im RIS öffnen"
+                  text={`${session.committee_name || "Gremium"} · ${displayDate(session.session_date)} · Tagesordnung`}
                   url={session.source_url}
                 />
               </div>
@@ -207,8 +202,7 @@ export function RisSessionView(
                         <p>Beschlussvorschlag als Text derzeit nicht in FIB verfügbar. Die Vorlage kann im RIS geöffnet werden.</p>
                         {!topDocuments.some((d) => d.kind === "proposal" && (!d.reference || d.reference === p.reference)) &&
                           <span className="ris-inline-row">
-                            <span>Originalvorlage</span>
-                            <OriginalLink label="Vorlage im RIS öffnen" url={p.source_url} />
+                            <OriginalLink label="Vorlage im RIS öffnen" text="Originalvorlage im RIS" url={p.source_url} />
                           </span>}
                       </div>
                     ))}

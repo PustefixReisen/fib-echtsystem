@@ -45,22 +45,6 @@ const label = (value: unknown) =>
   labels[String(value)] ?? String(value ?? "Unbekannt");
 const date = (value: unknown) =>
   value ? new Date(String(value)).toLocaleDateString("de-DE") : "Unbekannt";
-function Link({
-  url,
-  children,
-}: {
-  url?: string | null;
-  children?: ReactNode;
-}) {
-  return url && /^https:\/\//i.test(url)
-    ? (
-      <span>
-        {children}
-        <OriginalLink url={url} label="Originalquelle öffnen" />
-      </span>
-    )
-    : <span>Originaladresse unbekannt</span>;
-}
 function Card({
   title,
   children,
@@ -308,7 +292,7 @@ export function SourceWorkspace({
   }
   return (
     <div className="source-workspace">
-      <nav className="breadcrumbs" aria-label="Brotkrumen">
+      <nav className="breadcrumbs ris-breadcrumb-help" aria-label="Brotkrumen">
         <button
           onClick={() => {
             if (leave()) onHome();
@@ -340,6 +324,16 @@ export function SourceWorkspace({
             </span>
           </>
         )}
+        <details className="fib-context-help">
+          <summary aria-label="Hilfe zur aktuellen Seite" title="Hilfe zur aktuellen Seite">ⓘ</summary>
+          <div role="note">
+            {session
+              ? "Sitzung: TOPs öffnen, Originalunterlagen im RIS ansehen und lokale Ereignisse beim TOP zuordnen."
+              : detail
+                ? "Fundstellen zeigen Quellen und Verweise. RIS-Dokumente werden über Original-Links geprüft; lokale Bezüge bearbeiten Sie beim TOP."
+                : "In der Liste können Sie nach Sitzungen oder Fundstellen suchen und Einträge öffnen."}
+          </div>
+        </details>
       </nav>
       <div className="page-heading">
         <div>
@@ -362,6 +356,12 @@ export function SourceWorkspace({
               ‹ Zurück zur Tagesordnung
             </button>
           )}
+          {returnContext && detail && (
+            <button type="button" disabled={busy}
+              onClick={() => void openSession(returnContext.sessionId, returnContext.agendaId)}>
+              {returnContext.number ? `Zurück zu TOP ${returnContext.number}` : "Zurück zur Sitzung"}
+            </button>
+          )}
         <button
           className="action-button"
           disabled={busy}
@@ -377,18 +377,6 @@ export function SourceWorkspace({
         </button>
         </div>
       </div>
-      {returnContext && detail && (
-        <button
-          type="button"
-          disabled={busy}
-          onClick={() =>
-            void openSession(returnContext.sessionId, returnContext.agendaId)}
-        >
-          {returnContext.number
-            ? `Zurück zu TOP ${returnContext.number}`
-            : "Zurück zur Sitzung"}
-        </button>
-      )}
       {route === "findings" && (
         <p className="source-release-note" role="note">
           Recherche und redaktionelle Prüfung im Entwicklungsstand.
@@ -510,48 +498,19 @@ export function SourceWorkspace({
                   aktuelle Fassung öffnen.
                 </p>
               )}
-              <p>
-                {finding
-                  ? (
-                    detail.originVerified
-                      ? "Amtliche Herkunft: verifizierter RIS-Import. Redaktionelle Verwendung separat prüfen."
-                      : "Übernommene Fundstelle – fachliche Beziehungen separat prüfen"
-                  )
-                  : (
-                    detail.originVerified
-                      ? "Amtliche Herkunft: verifizierter RIS-Import"
-                      : <Status value="candidate" />
-                  )}
-              </p>
-              <p>
-                {finding?.source_name ??
-                  observation?.source_name ??
-                  "RIS Feldkirchen"}
-              </p>
-              <Link url={currentUrl} />
-              <p>
-                {observation
-                  ? "Zuletzt geprüft"
-                  : document?.observed_at || versions[0]?.observed_at ? "Stand der gespeicherten Fassung" : "Erstmals erfasst"}: {date(
-                    document?.observed_at ??
-                      observation?.last_seen_at ??
-                      versions[0]?.observed_at ??
-                      finding?.discovered_at,
-                  )}
-              </p>
-              {document?.original_title && (
+              {!document && (
+                <p>{finding?.source_name ?? observation?.source_name ?? "Quelle"} · {observation ? "Zuletzt geprüft" : "Erfasst"}: {date(
+                  observation?.last_seen_at ?? finding?.discovered_at,
+                )}</p>
+              )}
+              {document?.original_title && document.original_title !== "Vorlage" && (
                 <p>Originaltitel im RIS: {document.original_title}</p>
               )}
-              <div className="ris-inline-row">
-                <span>Originaldokument im RIS öffnen</span>
-                <OriginalLink url={currentUrl} label="RIS-Original öffnen" />
-              </div>
-              <p>
-                In FIB ist derzeit kein Dokumentvolltext gespeichert. Für den
-                vollständigen Inhalt bitte die Originalquelle im RIS öffnen.
-              </p>
+              <OriginalLink url={currentUrl}
+                label="Originalquelle öffnen"
+                text={document ? "Originaldokument im RIS öffnen" : "Originalquelle öffnen"} />
             </Card>
-            <Card title="Ereignisbezug" action={finding ? (
+            {!document && <Card title="Ereignisbezug" action={finding ? (
               <button disabled={busy} onClick={() => setAssignment(true)}>
                 Ereignis zuordnen
               </button>
@@ -620,7 +579,7 @@ export function SourceWorkspace({
                   </button>
                 </div>
               ))}
-            </Card>
+            </Card>}
           </div>
           {!finding && !document && (
             <aside className="detail-side-column">

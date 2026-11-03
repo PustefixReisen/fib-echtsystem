@@ -31,15 +31,16 @@ export function ActionIcon(
   );
 }
 export function OriginalLink(
-  { url, label = "Original im RIS öffnen" }: {
+  { url, label = "Original im RIS öffnen", text }: {
     url?: string | null;
     label?: string;
+    text?: string;
   },
 ) {
   return url && /^https:\/\//i.test(url)
     ? (
       <a
-        className="fib-action-icon"
+        className={text ? "ris-external-link" : "fib-action-icon"}
         href={url}
         target="_blank"
         rel="noopener noreferrer"
@@ -47,6 +48,7 @@ export function OriginalLink(
         aria-label={label}
       >
         <IconGlyph name="↗"/>
+        {text && <span>{text}</span>}
       </a>
     )
     : null;
