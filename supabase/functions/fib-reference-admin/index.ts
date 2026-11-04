@@ -109,11 +109,11 @@ export default {
         const result = await sql.begin(async tx => {
           const [s] = await tx`insert into fib.research_reference_objects(object_kind,label)
              values(${subject.kind},${subject.label})
-             on conflict(object_kind,normalized_label) do update set label=excluded.label
+             on conflict(object_kind,normalized_label) do update set label=research_reference_objects.label
              returning id`;
           const [o] = await tx`insert into fib.research_reference_objects(object_kind,label)
              values(${object.kind},${object.label})
-             on conflict(object_kind,normalized_label) do update set label=excluded.label
+             on conflict(object_kind,normalized_label) do update set label=research_reference_objects.label
              returning id`;
           const [link] = await tx`insert into fib.research_reference_links
             (subject_id,object_id,relation_kind,evidence_url,rationale,created_by)
