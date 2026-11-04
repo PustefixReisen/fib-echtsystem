@@ -86,11 +86,15 @@ export default {
 
       if (body.action === 'get_context') {
         // A confirmed-only, revisioned snapshot for future U4 search planners.
-        const [version] = await sql`select active_revision from fib.research_context_state where singleton=true`;
-        const rows = await sql`select id, revision, subject_kind, subject_label,
-          relation_kind, object_kind, object_label, evidence_url, rationale
-          from fib.research_active_reference_context order by id`;
-        return json({ok:true,activeRevision:Number(version?.active_revision ?? 0),references:rows});
+        const snapshot = await sql.begin(async tx => {
+          await tx`set transaction isolation level repeatable read read only`;
+          const [version] = await tx`select active_revision from fib.research_context_state where singleton=true`;
+          const references = await tx`select id, revision, subject_kind, subject_label,
+            relation_kind, object_kind, object_label, evidence_url, rationale
+            from fib.research_active_reference_context order by id`;
+          return {activeRevision:Number(version?.active_revision ?? 0),references};
+        });
+        return json({ok:true,...snapshot});
       }
 
       if (body.action === 'propose') {
