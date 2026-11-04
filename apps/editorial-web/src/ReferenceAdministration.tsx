@@ -82,7 +82,7 @@ export function ReferenceAdministration(){
     }catch{setError('Entscheidung fehlgeschlagen. Eventuell wurde der Vorschlag bereits bearbeitet. Bitte neu laden.');}
     finally{setBusy(false);}
   }
-  const field=<K extends keyof typeof defaultForm>(key:K,value:typeof defaultForm[K])=>
+  const field=(key:keyof typeof defaultForm,value:string)=>
     setForm(p=>({...p,[key]:value}));
   return <section className="stack" aria-label="Referenzsystem">
     <div className="page-heading">
