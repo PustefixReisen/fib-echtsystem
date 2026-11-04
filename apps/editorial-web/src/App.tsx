@@ -1,4 +1,5 @@
 import {SourceWorkspace} from './SourceWorkspace.js';
+import {ReferenceAdministration} from './ReferenceAdministration.js';
 import { FormEvent, useEffect, useState, useRef, type ReactNode } from 'react';
 import { PasswordField } from './PasswordField.js';
 import { supabase, invitationMode, authLinkError, invitationPasswordDone, rememberInvitationPassword } from './supabase.js';
@@ -14,7 +15,7 @@ import assistantIcon from '../../../assets/brand/icons/fib-assistent.svg';
 import './app.css';
 
 type AuthState = 'checking' | 'auth_error' | 'signed_out' | 'aal1_no_factor' | 'aal1_factor_available' | 'aal2';
-type EditorialView = 'dashboard' | 'event' | 'events' | 'topics' | 'profile' | 'users' | 'u4pilot' | 'findings' | 'sessions';
+type EditorialView = 'dashboard' | 'event' | 'events' | 'topics' | 'profile' | 'users' | 'u4pilot' | 'findings' | 'sessions' | 'references';
 type TopicData = { id:string; title:string; guiding_question:string | null; description:string | null; status:string };
 type TopicProposal = { id:string; topic_id:string; process_id:string; suggested_significance:string; suggested_rationale:string; status:string; origin:string; process_title:string; topic_title:string };
 type TopicContributionVersion = {id:string;version_no:number;body:string;editorial_assessment:string|null;approved_at:string;revoked_at:string|null;published_at:string|null;ended_at:string|null};
@@ -1420,7 +1421,7 @@ export function App() {
               <p className="nav-heading">Administration</p>
               <button className={view === 'u4pilot' ? 'nav-item active' : 'nav-item'} aria-current={view === 'u4pilot' ? 'page' : undefined} onClick={() => navigateTo('u4pilot')}>Tasks & Läufe</button>
               <button className="nav-item" disabled>KI & Kosten</button>
-              <button className="nav-item" disabled>Referenzsystem</button>
+              <button className={view === "references" ? "nav-item active" : "nav-item"} aria-current={view === "references" ? "page" : undefined} onClick={() => navigateTo("references")}>Referenzsystem</button>
               <button className={view === 'users' ? 'nav-item active' : 'nav-item'} aria-current={view === 'users' ? 'page' : undefined} onClick={() => navigateTo('users')}>Benutzer & Rollen</button>
               <button className="nav-item" disabled>System</button>
               <button className="nav-item" disabled>Audit</button>
@@ -1749,6 +1750,16 @@ export function App() {
               <h2>Arbeitskorb</h2>
               <p>Offene oder bewusst zurückgestellte Entscheidungen. Er bleibt nachgeordnet und ist kein Pflicht-Zwischenschritt für jede Bearbeitung.</p>
             </section>
+          </>
+        )}
+
+        {view === "references" && isAdmin && (
+          <>
+            <nav className="breadcrumbs" aria-label="Brotkrumen">
+              <button onClick={() => navigateTo("dashboard")}>Dashboard</button>
+              <span>›</span><span aria-current="page">Referenzsystem</span>
+            </nav>
+            <ReferenceAdministration />
           </>
         )}
 
