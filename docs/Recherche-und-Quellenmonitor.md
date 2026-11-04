@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 1.3 | 03.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
+| 1.4 | 04.11.2026 | Josef Walter – erstellt mit KI-Unterstützung |
 
 ## 1. Zweck und Geltung
 
@@ -311,10 +311,25 @@ Erst die Kombination aus Bewertungswirkung und Entdeckungswirkung erlaubt eine b
 
 Ein Regeltest verändert keine regulären Fachobjekte und erzeugt keinen normalen Arbeitskorb-Eintrag. Erst nach Aktivierung gilt die neue Regel für produktive Rechercheläufe.
 
+## Verbindliche Reichweitenregel – sämtliche Nachrichten mit Feldkirchen-Bezug (04.11.2026)
+
+**Redaktionell bestätigte Präzisierung:** Der Suchauftrag lautet, **alle Nachrichten mit einem sachlich begründbaren Bezug zur Gemeinde Feldkirchen** als Recherchekandidaten zu finden – nicht nur Treffer mit dem Wort „Feldkirchen“ und nicht nur Veröffentlichungen zu bereits bekannten FIB-Themen.
+
+- **Direkter Bezug:** Ereignis, Institution, Person in öffentlicher Funktion, Ort, Maßnahme oder Entscheidung in Feldkirchen beziehungsweise auf Feldkirchner Gebiet.
+- **Räumlicher Bezug ohne Ortsnennung:** Durch Feldkirchen verlaufende Verkehrswege (z. B. A94, A99, B471, Radschnellweg München–Markt Schwaben), ÖPNV, angrenzende Vorhaben und lokale Auswirkungen. Der konkrete Korridor oder Wirkungsweg ist mit einer belastbaren Quelle zu belegen; bloße Nachbarschaft genügt nicht.
+- **Thematischer/funktionaler Bezug ohne Ortsnennung:** Gesetzesänderungen, Finanzierung und Entscheidungen anderer Kommunen, soweit ihre Auswirkungen auf Feldkirchner Aufgaben, Einrichtungen, Einwohner oder laufende Vorgänge konkret belegbar bzw. als offene Prüffrage dokumentiert sind (z. B. BayKiBiG und Kita-Beiträge).
+- **Neue/unbekannte Sachverhalte:** Quellenüberwachung und breite themenunabhängige Recherche müssen auch ohne bekannte FIB-Schlagwörter oder vorhandenes Referenzobjekt Kandidaten sammeln. Referenzobjekte verbessern die Erkennung, sind keine Voraussetzung.
+- **Erfassung vor Aussonderung:** Pflichtquellen werden im zulässigen technischen Rahmen zunächst auf neue URLs/Veröffentlichungen erfasst. Erst danach wird Relevanz bewertet; Fund- und Ausschlussgründe bleiben nachvollziehbar.
+- **Negativabgrenzung:** Allgemeine Nachrichten aus Nachbarorten ohne begründbaren Feldkirchen-Bezug sind nicht allein wegen geographischer Nähe relevant. Die bestehende 30-%-Warnschwelle für nur mittelbare Relevanz bleibt eine Warn-/Redaktionsregel, **keine Beschränkung des Suchraums**.
+- **Qualitätskontrolle:** Laufberichte unterscheiden Quellenabruf, Erkennung, Relevanzentscheidung und redaktionelle Zuordnung. Regressionen umfassen direkte und versteckte räumliche/thematische Bezüge. Nicht gefundene relevante Artikel gelten als Recherchefehler und sind nachzuverfolgen.
+
+Die Regel ist fachlich verbindlich; die vollständige technische Abdeckung einer Quelle wird erst durch die Untersuchung und Messung in Issue #265 nachgewiesen. Das Regelwerk darf keinen technisch unbelegten Vollständigkeitsstatus ausgeben.
+
 ## Änderungshistorie
 
 | Version | Datum | Änderung |
 |---|---|---|
+| 1.4 | 04.11.2026 | Verbindlicher Suchraum: alle Nachrichten mit direktem, räumlichem oder funktionalem Feldkirchen-Bezug auch ohne Ortsnennung; Erfassung vor Relevanzfilter, Nachweis der Bezugskette und Regressionstests. |
 | 1.3 | 03.10.2026 | G2.5-Transfer: gestaffelten erweiterten Suchraum, mögliche zukünftige Bedeutung, dynamischen Suchkontext aus Themen/Vorgängen, sechsmonatigen Rückblick, 30-%-Warnschwelle, Folgerecherche aus internen Quellen und Beteiligungsaufrufe als verbindliche Recherchelogik ergänzt. |
 | 1.2 | 03.10.2026 | Redaktionell eingebrachte URLs und Dateien als dritter Quellenweg ergänzt; öffentliche Bereitstellung hochgeladener Quellen unabhängig von ursprünglicher Internetverfügbarkeit geregelt; Herkunft, Dokument, Speicherort und Sichtbarkeit getrennt. |
 | 1.1 | 03.10.2026 | Quellenmonitor verbindlich in Quellenbeobachtung bekannter Quellen und KI-gestützte Entdeckung neuer Quellen gegliedert; KI-Einsatz auf semantisch erforderliche Schritte begrenzt und Qualitätsvorrang bei diesen Eingangsschritten festgelegt. |
