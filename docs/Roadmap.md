@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 5.1 | 31.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
+| 5.2 | 04.11.2026 | Operative Fortschreibung mit KI-Unterstützung; strategische U1–U6-Phasen unverändert |
 
 ## Statusmodell
 
@@ -51,6 +51,27 @@ Für neue fachliche Funktionen gilt der Ablauf **Roadmap → Issue → Fachplanu
 Ein Issue darf mehrere Umsetzungsschritte auslösen. Bei umfangreichen Vorhaben werden nach der Fachplanung getrennte technische Issues erstellt; die fachlichen Primärdokumente bleiben verbindlich.
 
 **Beispiel:** Issue #145 (versionierte WP-Sprachprofile) startet zunächst den Abgleich des Bibliotheks-Merkblatts v2.2 mit `docs/Sprachleitfaden.md` und die Fachplanung. Die Datenbank- und UI-Umsetzung folgt **erst nach fachlicher Klärung**; U1/U2/U4 bleiben dafür die Roadmap-Zuordnung.
+
+## Operative Roadmap – laufende Entwicklungssteuerung (Stand 04.11.2026)
+
+**Planungsregel:** Die strategischen Umsetzungsphasen U1–U6 ändern sich nur bei begründeten Grundsatzentscheidungen. Diese operative Sicht wird **fortlaufend und iterativ** nach fachlichen Entscheidungen, Implementierungen, Tests, Deployments, Abnahmen und neuen Risiken aktualisiert. Eine PR-Merge-/CI-Meldung allein ist keine fachliche oder produktive Abnahme. Der folgende Plan ist kein starres Wasserfallmodell: unabhängige Arbeitspakete laufen parallel, sofern die technischen und fachlichen Abhängigkeiten eingehalten sind.
+
+| Operatives Paket | Phasen | Stand / Priorität | Nächster nachweisbarer Abschluss |
+|---|---|---|---|
+| RIS-Redaktionsworkflow und Fachabnahme | U2/U4/U6 | **In Arbeit – unmittelbar** | Persönliche Abnahme am 08.11.2026: TOP ist Ereignis / TOP hat Ereignisse / Sitzung hat Ereignisse; Aufgabe bei neuer Sitzung; mobile UI; anschließend bestätigte Regeln in zuständige Fachhandbuchkapitel. [#356](https://github.com/PustefixReisen/fib-echtsystem/issues/356), [#377](https://github.com/PustefixReisen/fib-echtsystem/issues/377), [#387](https://github.com/PustefixReisen/fib-echtsystem/issues/387), [Draft PR #392](https://github.com/PustefixReisen/fib-echtsystem/pull/392). |
+| Entwicklungs-, Test- und Bereitstellungsprozess | **U1/U5/U6 – übergreifend** | **Geplant – nächste technische Priorität** | Bestandsprüfung bestehender Workflows, lokaler/isolationstauglicher Supabase-Testweg ohne zusätzliches Cloud-Projekt, kontrollierte Testmigrationen, standardisierte CI und risikogerechte automatisierte Releases mit Sicherung, Smoke-Test und Rücknahme. U1 = Umgebungen/Tests/Migrationen, U5 = Deploy/Backup/Betrieb, U6 = End-to-End-/Go-live-Prüfung. [#375](https://github.com/PustefixReisen/fib-echtsystem/issues/375), [Release-Plan](operations/u4-shared-apps-release-plan.md). Kein Umbau laufender Shared-Apps/Auth/Memorix ohne eigene Freigabe. |
+| Zentrale administrative Relevanzregelpflege | U1/U2/U4/U6 | **Geplant – vor Echtbetrieb** | Regeln für Fundstellenübernahme und Ereignisrelevanz für Meldungen, Vorgänge und Themen als **eine operative versionierte Regelbasis** verwalten. Heute fachlich bestätigte Dokumentation ist Ausgangsbestand; nach kontrollierter Einführung wird die aktivierte FIB-Regelversion operative Quelle der Wahrheit. Berechtigung, Entwurf, Simulation/Blindtests, Freigabe, Aktivierung, Audit und Rücknahme. [#393](https://github.com/PustefixReisen/fib-echtsystem/issues/393). |
+| Gemeinsame Ereignis-Auswirkungsprüfung | U2/U4/U6 | **Teilweise fachlich geregelt, technischer Gesamtstand zu prüfen** | Bei neuem/wesentlich geändertem Ereignis – gleich welcher Quelle – Folgen für Meldungsentwürfe, Vorgänge, Themen und bestehende Analysen prüfen; redaktionell bestätigte Ergebnisse nicht still überschreiben; Auslöser, Wiederanlauf, Deduplizierung und E2E nachweisen. Kapitel 03 §03.3.3–03.3.5. |
+| Informationsgewinnung: Quellenmonitor + offene Recherche | U4/U6 | **Teilweise umgesetzt – nächster Fachschwerpunkt** | Kapitel 03 (29.10.) als verbindliche Basis; Pflichtquellen inkl. RIS, offene Recherche, Änderungs-/Lückenmonitoring, Referenz- und verdeckte Blindtests. Bekannt gewordene Demonstrator-Lücken (Hundewiese, Rechenzentrum R111, B471, Radschnellweg, Grundstückskauf R077, Kita-Finanzierung/BayKiBiG, Bürgerversammlung, verspätete Indexierung) als Regressionen und Qualitätsmessung. [#265](https://github.com/PustefixReisen/fib-echtsystem/issues/265), [#281](https://github.com/PustefixReisen/fib-echtsystem/issues/281). |
+| Redaktioneller Kern: Fundstellen, Ereignisse, **Meldungen** | U2/U6 | **In Arbeit / Abnahmeumfang zu ergänzen** | Vollständige Arbeitsgänge, Status, Versionen, Freigaben, neue/Folge-/Korrekturmeldungen und Verknüpfungen mit Quellennachweisen; fachliche und technische E2E-Prüfung. |
+| Vorgänge und Themen einschließlich Analysen/Beiträge | U2/U6 | **Teilweise umgesetzt** | Kapitel 05/06 und vorhandene Issues mit UI, Analyseversionen, Beiträgen, Teilfreigaben und Beziehungen abgleichen; danach vertikale Umsetzung. |
+| Öffentliches FIB / Pilot / Echtbetrieb | U3/U5/U6 | **Geplant** | Öffentliche Darstellung und Veröffentlichungskette, Betriebs-/Rollen-/Backup-Nachweise, Pilotabnahme und Go-live-Gates. [#264](https://github.com/PustefixReisen/fib-echtsystem/issues/264). |
+
+**Wichtige Abhängigkeiten, ohne starre Sequenz:** RIS-Fachabnahme und Dokumentationsabschluss können parallel zur Bestandsprüfung der Entwicklungs-/Bereitstellungsumgebung stattfinden. Vor größeren *neuen* DB-Änderungen müssen isolierte Migrations- und Wiederherstellungsprüfungen tragfähig sein. Die operative Regelpflege soll vor dem Echtbetrieb als verbindlicher FIB-Datenbestand eingeführt sein. Die gemeinsame Ereignis-Auswirkungsprüfung ist **keine RIS-Sonderfunktion**. RIS-Aufgabenautomatik bei neu importierter Sitzung ist fachlich beschlossen; technischen End-to-End-Nachweis gesondert führen.
+
+**Dokumentationsprozess:** Neue bestätigte Entscheidungen zeitnah als gezielte Änderungen in den zuständigen Primärdokumenten vorbereiten. Entwürfe und offene Abnahmen bleiben ausdrücklich gekennzeichnet. Fachliche Freigaben dürfen nicht aus Commit oder CI abgeleitet werden. Fachhandbuch und operativer Regelbestand bleiben unterschiedliche Ebenen: dauerhaftes Regelmodell/Leitplanken in der Doku, konkrete aktivierte Regeln nach Einführung in FIB.
+
+---
 
 ## 2. Umsetzungsphasen
 
@@ -268,6 +289,7 @@ Noch bewusst nicht vorgetäuscht werden Funktionen, deren Fachservice-/Datenweg 
 
 ## Änderungshistorie
 
+| 5.2 | 04.11.2026 | Operative/strategische Roadmap getrennt, U1/U5/U6-Querschnittspaket für Entwicklung/Test/Bereitstellung verortet, RIS-Aufgabe und Relevanzregelpflege, Ereignis-Auswirkungen, Meldungsworkflow und Demonstrator-Regressionen priorisiert; strategische U1–U6-Struktur unverändert. |
 | Version | Datum | Änderung |
 |---|---|---|
 | 5.1 | 31.10.2026 | Verbindlichen Shared-Apps-Weg korrigiert; lesende Inventur, gezieltes Testdatenmanifest, Sicherungs-/Rücknahmeplan und Bereitstellungsfreigabe #357/#358 vorbereitet. |
