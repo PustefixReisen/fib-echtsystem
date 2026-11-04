@@ -61,3 +61,27 @@ Quellen: [#379](https://github.com/PustefixReisen/fib-echtsystem/issues/379), [#
 - Vor größeren neuen Datenbankänderungen isolierte Entwicklungs-/Test- und Migrationsprüfung sowie reproduzierbare Bereitstellung festlegen; kein zusätzliches gehostetes Supabase-Projekt voraussetzen.
 - Anschließend Informationsgewinnung mit den dokumentierten Demonstrator-Lücken, Blindtests und Quellenmonitor priorisieren ([#265](https://github.com/PustefixReisen/fib-echtsystem/issues/265), [#281](https://github.com/PustefixReisen/fib-echtsystem/issues/281)).
 - Dies ist **noch keine Umsetzung der Roadmap** und keine Freigabe für Echtsystem-Migrationen.
+
+## 7. Verbindliche Präzisierungen vom 04.11.2026 – fachliche Einordnung
+
+### RIS als besonderer Teil des Quellenmonitors
+
+Die Informationsgewinnung ist administrativ gesteuert und umfasst **Quellenmonitor einschließlich RIS** sowie **offene Recherche** und ihre gemeinsame Erkenntnisverarbeitung. Das RIS ist innerhalb des Quellenmonitors ein eigener, weitgehend strukturgetreu übernommener Informationsstrang; seine öffentliche Fachstruktur ist nicht auf Fundstellen oder Ereignisse zu reduzieren. RIS-Dokumente und Niederschriften erzeugen **zusätzlich** Fundstellen für die allgemeine Redaktion.
+
+### Eigenes Fachhandbuchkapitel: Redaktionelle Bearbeitung der RIS-Daten
+
+Im redaktionellen Bereich ist ein **eigenes Kapitel/Unterkapitel für den bereits implementierten, reduzierten RIS-Workflow** erforderlich; genaue Position und Nummerierung im bestehenden Fachhandbuch vor Übernahme prüfen. Diese Arbeit ist **ausschließlich Ereigniszuordnung**: Ein TOP kann selbst ein Ereignis **sein** (Hauptereignis) oder weitere Ereignisse **haben**. Zudem können Ereignisse der ganzen Sitzung zugeordnet werden. Alle anderen RIS-Daten kommen aus der amtlichen Quelle und benötigen **keine zusätzliche redaktionelle Inhaltsabnahme**. Die persönliche Abnahme am 08.11.2026 betrifft den **FIB-Workflow und die Bedienbarkeit**, nicht eine manuelle Freigabe der importierten amtlichen Daten.
+
+**Verbindlicher Aufgaben-Auslöser:** Sobald der Quellenmonitor eine **neue Sitzung** in das FIB-RIS übernimmt, erzeugt FIB **automatisch die Redaktionsaufgabe „Ereignisse zu dieser RIS-Sitzung zuordnen“**. Die Aufgabenlogik ist als verbindliche Anforderung festgelegt; ihre tatsächliche Ende-zu-Ende-Implementierung bleibt gesondert nachzuweisen. Redaktionelle Bearbeitung der Aufgabe ist nicht an eine Freigabe der RIS-Daten gekoppelt. Bei nachträglich wesentlichen RIS-Änderungen ist eine erneute Aufgabenprüfung fachlich zu präzisieren, ohne für jede unveränderte technische Überwachung Aufgaben zu erzeugen.
+
+**Kurzhilfe für die RIS-Startseite (Entwurf):** „Sitzungen, Tagesordnungspunkte und Dokumente werden automatisch aus dem öffentlichen Ratsinformationssystem übernommen. Eine redaktionelle Freigabe dieser RIS-Daten ist nicht erforderlich. Ihre Aufgabe ist es, Ereignisse zuzuordnen: Ein TOP kann selbst ein Ereignis sein oder weitere Ereignisse haben; außerdem können Ereignisse einer gesamten Sitzung zugeordnet werden. Die daraus entstehenden Ereignisse werden anschließend nach den allgemeinen FIB-Regeln auf ihre Bedeutung für Meldungen, Vorgänge und Themen geprüft.“
+
+### Gemeinsame Relevanzregeln, nicht RIS-spezifisch
+
+Die Regeln zur Übernahme/Bearbeitung von Fundstellen und zur Relevanz von Ereignissen für **Meldungen, Vorgänge und Themen** bleiben fachlich **an einer gemeinsamen Stelle** geführt. Die Auswirkungsprüfung gehört zum allgemeinen FIB-Prozess, nicht zur RIS-Redaktion. Neue oder wesentlich veränderte Ereignisse und geeignete Beziehungsänderungen sind unabhängig von der Herkunft der Ausgangsinformationen zu prüfen; bereits bestätigte fachliche Entscheidungen dürfen nicht stillschweigend überschrieben werden. Grundlage: Kapitel 03, insbesondere §03.3.3–03.3.5 und die dortigen Regeln zur operativen Regelpflege.
+
+### Übergang von Dokumentation zum operativen FIB-Regelbestand
+
+Die fachlich bestätigten Regeln der Dokumentation sind derzeit Grundlage der Implementierung. Sobald die zentrale administrative Regelpflege umgesetzt und kontrolliert eingeführt ist, wird **die jeweils aktive, versionierte Regelfassung im FIB-Datenbestand zur operativ maßgeblichen Quelle**. Die Fachdokumentation beschreibt weiterhin Prinzipien, fachliche Leitplanken, Berechtigungen und Verfahren, aber dient dann **nicht als parallel zu pflegende aktive Parametertabelle**. Die Überführung des Startbestands erfordert Inventur, Abgleich, geprüfte Migration/Initialisierung sowie dokumentierte Aktivierung und Rücknahme. Regeländerungen müssen testbar, auditierbar und je Ausführung einer Regelversion zuordenbar sein. Folgeauftrag: [#393](https://github.com/PustefixReisen/fib-echtsystem/issues/393).
+
+**Roadmap-Konsequenz:** (1) RIS-Ereigniszuordnung und automatische Sitzungsaufgabe abnehmen; (2) fachlich zentrale Relevanzregeln samt administrativer Pflege und kontrolliertem Übergang zum DB-Regelbestand umsetzen; (3) allgemeine Ereignis-Auswirkungsprüfung nach denselben aktiven Regeln integrieren; (4) End-to-End-Tests mit RIS, Presse und offener Recherche; (5) Umsetzung vor bzw. spätestens zum Echtbetrieb abschließen. Keine Änderung im Produktivbestand durch diesen Dokumentations-PR.
