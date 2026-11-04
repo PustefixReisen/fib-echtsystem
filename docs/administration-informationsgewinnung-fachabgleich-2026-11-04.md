@@ -71,3 +71,40 @@ Die tatsächliche Fundquote hängt **nicht nur** vom KI-Modell ab. Steuerbar sin
 - **Regelgrenzen:** Abgrenzung frei formulierbarer fachlicher Leitlinien von systemseitig zulässigen ausführbaren Regeltypen (Datenmodell §17).
 
 **Nächster fachlicher Meilenstein:** Bestandsabgleich der vorhandenen technischen Tabellen/Fachservices und ein kleiner klickbarer Administrations-Slice. Dieses Dokument ist kein Produktivauftrag und ersetzt nicht die Fachabnahme.
+
+## Technische Repository-Bestandsaufnahme – 04.11.2026
+
+**Prüfgrenze:** Dateien des GitHub-Branches `main` und dort vorhandene technische Belege. Kein Zugriff auf aktuelle Tabellen-/Funktionsstände der Live-Datenbank im Rahmen dieser Prüfung; daher gilt „Migration im Repository“ nicht automatisch als Nachweis der aktuellen Live-Verfügbarkeit. Keine End-to-End-Tests neu ausgeführt.
+
+| Komponente | Konkreter technischer Befund | Folgerung für #394 |
+|---|---|---|
+| Quellenmonitor-Datenhaltung | `supabase/migrations/20261029200933_fib_u4_source_monitor_persistence.sql` legt `fib.source_scopes`, `fib.source_runs`, `fib.finding_versions` an; `20261030093000_fib_u4_source_observations.sql` ergänzt `fib.source_observations` mit RLS. | Bestehende Tabellen nutzen, keinen zweiten Quellenmonitor modellieren. Prüfen, welche Pflegefelder/Status für Admin-UI fehlen und welche Rechte ausschließlich über Fachservices erreichbar sind. |
+| Monitor-Fachservice | `packages/fachservices/src/u4-source-monitor-run.ts` mit `runSourceMonitor`, `U4SourceMonitorStorage`, getrenntem Erfolgs-/Fehler-Commit; Source-Discovery und SQL-Fachservices existieren. | Bestehenden Überwachungsdienst und Persistenz als Basis der operativen Quellenverwaltung benutzen. |
+| RIS | RIS-spezifische Migrationen und Fachservices (Quellenfenster/Cursor, Struktur, Sitzungs-/TOP-Beziehungen), RIS-Tests unter `tests/u4/` und `tests/ris-e2e/`. | RIS bleibt besonderer Quellenmonitor-Strang, nicht neue allgemeine Administrationslogik. RIS-Endabnahme am 08.11.2026 separat. |
+| Gemeinsame Redaktionsoberfläche | `apps/editorial-web/src/App.tsx`: Admin-Navigation mit **Tasks & Läufe** und **Benutzer & Rollen** aktiv; **Referenzsystem**, **KI & Kosten**, **System**, **Audit** aktuell als `disabled` deklariert. | Der erste Administrations-Slice muss einen echten, zugriffsgeschützten Menü-/Fachservice-Weg bereitstellen; kein bloßer UI-Platzhalter. |
+| Quellen-/RIS-UI | `apps/editorial-web/src/SourceWorkspace.tsx` hat tatsächliche Redaktionsansichten für `findings` und `sessions`; nicht als Beleg einer fertigen Admin-Quellenregisterverwaltung missverstehen. | Quellenpflege und RIS-Ereigniszuordnung fachlich getrennt halten und auf Daten/Service wiederverwenden. |
+| Bestands-UI-Entwurf | `docs/ui-wireframes/admin-referenzsystem.html`, `admin-schwellenwerte-statusregeln.html`, `admin-tasks-laeufe.html`, `recherche-quellen.html` vorhanden; `docs/Redaktionssystem-UI-Konzept.md` sieht gemeinsame Redaktion/Admin-Anwendung vor. | Vorhandene Navigations-/UI-Konventionen übernehmen; kein eigenständiges zweites Admin-Produkt. |
+| Referenz-/Relevanz-Fachmodell | `docs/Datenmodell.md` §§9–10, 17 und „Recherche- und Relevanzregeln als operativer Regelbestand“ beschreiben logisch Referenzobjekte, -maßstäbe und Regelversionen. Das Umsetzungs-Audit nennt **UV-001 GELB** (DB/Service/Tests offen) und **UV-011 GELB** (Referenzterminologie synchronisieren). | **Konzept vorhanden, operativer Slice nicht nachgewiesen.** Keine Behauptung, dass Referenzobjekte, -fälle oder Regeln heute bereits in der Produktivdatenbank zentral administrierbar wären. |
+| Tests/Isolation | `tests/u4/` enthält Quellenmonitor-/RIS-Tests; `tests/integration/schema-isolation.sql` existiert. | Für neue Tabellen zuerst isolierte Migrationstests und RLS-/Fachservice-Tests, dann Integration in Shared-Apps gemäß Release-/Backupregeln. |
+
+### Minimaler fachlicher End-to-End-Slice (erster Umsetzungsschritt)
+
+**Pflege eines belegten Referenzobjekts bzw. einer Beziehung mit Wirkung in der Informationsgewinnung:**
+
+1. Admin öffnet **Administration → Informationsgewinnung → Recherchehorizont / Referenzen** (bestehendes, rollenabhängiges Navigationssystem erweitern).
+2. Liste zeigt bestätigte Referenzobjekte/Beziehungen und Vorschläge, samt Status, Beschreibung, Quelle/Beleg, fachlicher Verwendung und Änderungen.
+3. Berechtigter Benutzer erfasst einen Vorschlag zu einer funktionalen oder thematischen Beziehung (Beispiel Radschnellweg ↔ Feldkirchen) mit Herkunft. KI darf Vorschläge vorbereiten, aber nicht aktivieren.
+4. FIB prüft Doppelidentitäten/Ähnlichkeiten und Belege; Benutzer kann einen Vorschlag nachvollziehbar bestätigen, ablehnen oder überarbeiten.
+5. Die **aktive bestätigte Fassung** wird für den nächsten Recherchelauf als Kontext bereitgestellt; Lauf speichert die verwendete Kontextfassung und den tatsächlichen Suchweg.
+6. Tests belegen: vor/nach Freigabe unterschiedliche wirksame Kontexte; keine unbestätigten Referenzen im aktiven Suchhorizont; RLS/Berechtigungen/Audit, konkurrierende Änderungen, Regression und Wiederanlauf.
+
+**Vor der Implementierung konkretisieren:** systemseitig gültige Referenzobjekttypen und Beziehungstypen, Bestätigung/Rücknahme, versionierter Horizont-Snapshot, Rechte nach bestehendem Rollenmodell sowie Anschluss an den vorhandenen KI-/Recherche-Service. Felder und physische DDL erst nach dieser Inventur festlegen.
+
+### Umsetzung in inkrementellen, überprüfbaren Schritten
+
+- **Slice 1:** Datenbank/Fachservice + sichtbare Referenzpflege; eigenständige fachliche Wirkung auf einen protokollierten Recherchelauf; Tests.
+- **Slice 2:** Quellenregister-Admin auf `source_scopes`/Source-Monitor aufbauen; Prüfabruf vor Aktivierung und Abdeckungssicht. RIS-Sonderadapter beibehalten.
+- **Slice 3:** Referenzfälle und operative Regelverwaltung #393 mit Vergleichs-/Blindtests #265 integrieren; aktive Konfiguration mit nachvollziehbarer Versionsbindung.
+- **Slice 4:** Qualität/Monitoring, Fehler- und Kostenvergleich, Regression mit Demonstrator-Lücken, Pilot/Live-Abnahme.
+
+**Wesentliche Abgrenzung:** Die verfügbare Quelle ist **nur der Repository-Zustand**; aktuelle Live-Datenbank, Hosting-Bereitstellung und tatsächlich ausgeführte UI-Tests erfordern eigene überprüfbare Nachweise.
