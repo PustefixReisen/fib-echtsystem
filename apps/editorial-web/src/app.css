@@ -901,3 +901,10 @@ button:has(> .action-icon) { display: inline-flex; align-items: center; justify-
   .source-workspace > .breadcrumbs { margin-bottom: .2rem; }
   .source-workspace > .page-heading { margin-bottom: .45rem; }
 }
+
+/* Administrative reference workflow – Issue #394 */
+.reference-admin-grid { display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1rem; }
+.reference-admin-grid select { width:100%;margin-top:.35rem;border:1px solid #aeb9b1;border-radius:8px;padding:.7rem .8rem;background:white; }
+.reference-admin-entry { border:1px solid #d8dfda;border-radius:10px;padding:1rem;display:grid;gap:.55rem;overflow-wrap:anywhere; }
+.reference-admin-entry p { margin:0; }
+.reference-admin-entry .button-row { margin-top:0; }
