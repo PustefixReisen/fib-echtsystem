@@ -84,6 +84,15 @@ export default {
         return json({ok:true,links:rows,activeRevision:Number(version?.active_revision ?? 0)});
       }
 
+      if (body.action === 'get_context') {
+        // A confirmed-only, revisioned snapshot for future U4 search planners.
+        const [version] = await sql`select active_revision from fib.research_context_state where singleton=true`;
+        const rows = await sql`select id, revision, subject_kind, subject_label,
+          relation_kind, object_kind, object_label, evidence_url, rationale
+          from fib.research_active_reference_context order by id`;
+        return json({ok:true,activeRevision:Number(version?.active_revision ?? 0),references:rows});
+      }
+
       if (body.action === 'propose') {
         const subject = objectInput(body.subject), object = objectInput(body.object);
         const relation = typeof body.relationKind === 'string' ? body.relationKind : '';
