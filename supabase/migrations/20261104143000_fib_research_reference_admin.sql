@@ -67,7 +67,7 @@ alter table fib.research_reference_audit enable row level security;
 alter table fib.research_context_state enable row level security;
 revoke all on fib.research_reference_objects, fib.research_reference_links, fib.research_reference_audit, fib.research_context_state from public, anon, authenticated, service_role;
 revoke all on fib.research_active_reference_context from public, anon, authenticated, service_role;
-grant select,insert on fib.research_reference_objects to fib_runtime;
+grant select,insert,update on fib.research_reference_objects to fib_runtime;
 grant select,insert,update on fib.research_reference_links to fib_runtime;
 grant select,insert on fib.research_reference_audit to fib_runtime;
 grant select,update on fib.research_context_state to fib_runtime;
