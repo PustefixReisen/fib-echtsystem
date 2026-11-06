@@ -4,9 +4,29 @@
 
 ## Geltung und Abgrenzung
 
-Dies ist der erste, rein dokumentierende Arbeitsschritt des allgemeinen Entwicklungs-, Test- und Bereitstellungsprozesses. **Issue #375 ist nicht dieses Paket:** Es betrifft ausschließlich die spätere Bereinigung einmaliger RIS-Schalter **nach der RIS-Nutzerabnahme**. Die Abnahme am 08.11.2026 wird nicht vorgezogen oder ersetzt.
+Dies ist der erste, rein dokumentierende Arbeitsschritt des allgemeinen Entwicklungs-, Test-, Produktions- und Bereitstellungskonzepts. **Issue #375 ist nicht dieses Paket:** Es betrifft ausschließlich die spätere Bereinigung einmaliger RIS-Schalter **nach der RIS-Nutzerabnahme**. Die Abnahme am 08.11.2026 wird nicht vorgezogen oder ersetzt.
 
 Der [konkrete RIS-Shared-Apps-Releaseplan](u4-shared-apps-release-plan.md) und die [FIB-Release-Sicherung](fib-release-backup.md) bleiben für betroffene Releases maßgeblich. Dieser Überblick deaktiviert kein Gate und erlaubt keine Veränderung an Shared-Apps, Auth, Memorix, Secrets, Storage oder produktivem Frontend.
+
+## Zielbild: drei fachlich getrennte Umgebungen (Konzeptentwurf, noch keine Architekturfreigabe)
+
+Die Umgebungsgrenzen werden **logisch und bezüglich ihrer Daten-/Schreibrechte** festgelegt. Es sind nicht automatisch drei dauerhaft kostenpflichtige Cloud-Installationen nötig. Ziel ist ein reproduzierbarer Entwicklungs- und Testprozess mit klar getrennter späterer Produktion.
+
+| Umgebung | Ziel / mögliche Umsetzung | Sicherheits- und Kostenprinzip | Offene Entscheidung |
+|---|---|---|---|
+| **Entwicklung** | Lokaler Rechner + GitHub-Branch/PR; lokal oder kurzlebig isoliertes PostgreSQL/Supabase für FIB-Migrationen; synthetische Daten | Kein Entwicklungszugriff auf Produktivdaten erforderlich; minimale laufende Cloud-Kosten | Für welche Integrationsfälle genügt PGLite/PG17, wann wird der volle Supabase-Stack gebraucht? |
+| **Test und fachliche Abnahme** | GitHub Actions mit isolierten FIB-Schema-/RLS-Tests, UI- und Edge-Contract-Tests; bei Bedarf zeitlich begrenzte integrierte Testumgebung/Frontend-Preview | Testdaten unabhängig von echten produktiven Datensätzen; gezielter Testabruf statt dauerhafter zweiter Instanz, wenn möglich | Benötigen Auth/MFA, echte Edge-Läufe oder Browser-E2E eine dauerhaft getrennte Supabase-Testinstanz? |
+| **Produktion** | Bewertetes Ziel aus vorhandenen IONOS-, Shared-Apps-`fib`-, Storage- und Auth-Komponenten; abgesicherte Benutzer-/Release-Zugriffe | Verfügbarkeit, Isolation und Datenschutz vor Kostenvorteil; Memorix und gemeinsamer Auth-Bestand geschützt | Reicht Schema-/RLS-Trennung in Shared-Apps langfristig aus oder sind getrennte Projektgrenzen fachlich/operativ notwendig? |
+
+### Zu klärende Rahmenbedingungen
+
+- **Heute ≠ Ziel:** Die bestehende Shared-Apps-Redaktion ist bisher Entwicklungs-/Abnahmebetrieb. Daraus folgt **nicht**, dass Entwicklungsdaten schon belastbar von einer künftigen produktiven FIB-Installation getrennt sind.
+- **Testdaten:** Möglichst synthetische oder gezielt freigegebene Daten, deterministische Testfälle und nachvollziehbarer Reset. Produktivkopien nur mit eigener Zweck-/Datenschutzprüfung und Schutzmaßnahmen.
+- **Migrationen:** Lokal/isoliert erproben, bei Testlauf gegen den vorgesehenen Ausgangsstand verifizieren, erst danach risikogerecht für die Zielumgebung freigeben.
+- **Integrationsprüfung:** Browser, Session/MFA, Rollen/RLS, Edge Functions, Storage und echte Rechte werden in der notwendigen Kombination nachgewiesen. Reine Unit-Tests ersetzen dies nicht.
+- **Kostenvergleich:** Laufende Hostingkosten, Verwaltungsaufwand, Sicherheitsrisiko und Aufwand bei Fehlersuche gemeinsam betrachten. Neue Cloud-Projekte nur bei konkret belegtem Bedarf.
+- **Übergang:** Entwicklung und CI → integrationsnahe Tests → fachliche Abnahme → freigegebener Deploy mit dokumentiertem Zielcommit → Live-Smoke/Überwachung → Rücknahmeplan.
+- **Entscheidungsbedarf:** Vor der Implementierung dieses Zielbild mit bestehender `docs/Zielarchitektur.md`, `docs/Betrieb-und-Wiederherstellung.md`, ADR-011, Datenschutz-/RLS-Vorgaben und operativer Roadmap abgleichen. Kein stillschweigender Architekturwechsel.
 
 ## Nachgewiesene bestehende Pfade (Repository, nicht Live-Nachweis)
 
