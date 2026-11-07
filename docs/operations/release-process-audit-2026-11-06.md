@@ -1,6 +1,6 @@
 # FIB – Bereitstellungsprozess: Bestandsprüfung und risikogerechter Zielablauf
 
-**Stand 06.11.2026 · Issue #398 · Bestandsprüfung, keine operative Freigabe.**
+**Stand 07.11.2026 · Issue #398 · Fachlich abgestimmtes Zielkonzept und technischer Bestandsabgleich; keine operative Freigabe.**
 
 ## Geltung und Abgrenzung
 
@@ -27,6 +27,79 @@ Die Umgebungsgrenzen werden **logisch und bezüglich ihrer Daten-/Schreibrechte*
 - **Kostenvergleich:** Laufende Hostingkosten, Verwaltungsaufwand, Sicherheitsrisiko und Aufwand bei Fehlersuche gemeinsam betrachten. Neue Cloud-Projekte nur bei konkret belegtem Bedarf.
 - **Übergang:** Entwicklung und CI → integrationsnahe Tests → fachliche Abnahme → freigegebener Deploy mit dokumentiertem Zielcommit → Live-Smoke/Überwachung → Rücknahmeplan.
 - **Entscheidungsbedarf:** Vor der Implementierung dieses Zielbild mit bestehender `docs/Zielarchitektur.md`, `docs/Betrieb-und-Wiederherstellung.md`, ADR-011, Datenschutz-/RLS-Vorgaben und operativer Roadmap abgleichen. Kein stillschweigender Architekturwechsel.
+
+## Beschlossenes fachliches Zielbild und ökonomische Leitplanke (07.11.2026)
+
+**Konzeptstatus:** Fachliches Zielbild und die Priorität **0 EUR zusätzliche laufende Infrastrukturkosten** sind vom Auftraggeber bestätigt. Der Umsetzungs- und Sicherheitsnachweis je Workflow steht aus. Dieses Dokument ist *keine* technische Betriebsfreigabe. Die aus der verbindlichen G5/G7-Architektur stammenden Anforderungen an Sicherheit, Verfügbarkeit und Wiederherstellbarkeit gelten fort.
+
+### Grundprinzipien
+
+1. **0 EUR zusätzlich pro Monat als verbindliches Planungsziel:** Bestehende IONOS-, Nextcloud-, Shared-Apps-, GitHub- und lokale Ressourcen nutzen. Bereits bestehende Grundkosten sowie verbrauchsabhängige KI-/Entwicklungsagent-Kosten sind *nicht* null. Neue laufende Gebühren, Mehrverbrauch über Gratislimits oder kostenpflichtige Projekte sind nur nach ausdrücklicher Genehmigung zulässig. Deshalb vor Aktivierung Kontingente und Ist-Rechnung prüfen, Warnungen/Stopps für Zusatzverbrauch vorsehen, soweit technisch möglich. Sicherheitsanforderungen nicht aus Kostengründen absenken; falls die Nullkostenvariante sie nicht erfüllt, vor Produktivstart mit benannter Alternative und Kostenfolge entscheiden.
+2. **Drei logisch und in ihren Daten getrennte Umgebungen; nicht drei ständige Cloud-Installationen.** Entwicklungs- und Testdaten sind zurücksetzbar und nicht gleichzeitig produktive Echtdaten. Keine unkontrollierten schreibenden CI-/Testzugriffe auf Shared-Apps.
+3. **Ein gemeinsamer fachlicher Code- und Migrationsstand:** Git-Branch und Commit, reproduzierbarer Build, versionierte Konfiguration ohne Geheimnisse und kontrollierte Datenmigration. Umgebungsbesonderheiten werden konfiguriert.
+4. **Wiederverwenden vor Neubauen:** GitHub Actions, PostgreSQL-17-Tests, bisherige Supabase-/FIB-Skripte, die verschlüsselte Backupkette und IONOS verwenden; keine neue CI-Plattform, kein dauernder Worker und keine zweite Backuparchitektur.
+5. **Schutz proportional zum Änderungsrisiko:** Keine vollständige DB-Restoresimulation für reine Text- oder UI-Korrekturen. DB-/RLS-/Auth-Eingriffe dagegen nur mit isoliertem Test, risikogerechter Sicherung, Freigabe und Rücknahmeplanung.
+6. **Agenten statt Betreiber-Kleinschritte:** Entwicklungsagent führt technische Tests, Fehlerbehebung und Nachweisprüfung im zusammenhängenden Auftrag aus; Nutzer prüft sichtbare Fachfunktionen und genehmigt substanzielle Architektur-/Datenrisiken. Keine autonome Änderung der geschützten Produktivumgebung nur aufgrund dieser Konzeptfreigabe.
+
+### Sicherheit: erforderlicher Mindestumfang
+
+- **K0 öffentliche Inhalte:** Nur ausdrücklich freigegebene Stände ausliefern; keine redaktionellen Daten, Tokens oder Secrets in HTML, Build oder öffentlichem Cache.
+- **Redaktionszugang K1/K2:** Sichere Anmeldung, rollen- und aktionsbezogene Fachservice-Autorisierung und RLS; MFA entsprechend bestehendem G6-Konzept; Audit für bestätigende und privilegierte Aktionen. Bestehende Schutzklassen gelten unverändert; **K3 nicht an externe KI**.
+- **Shared-Apps-Grenze:** Keine pauschalen `db push`/Restore-/Schema-Drops in einer gemeinsamen Projektinstanz; Migrationen auf FIB-Scope begrenzen und übrige Anwendungen/Auth/Secrets unverändert lassen. Geteilte Ressourcen, Auth und administrative Projektbefugnisse sind zusätzliche Restrisiken und vor Echtbetrieb zu bewerten.
+- **Datenintegrität:** Vor risikobehafteten Eingriffen aktuelle und geprüfte FIB-Sicherung, Restorefähigkeit nach bestehendem G7-Konzept, dokumentierte Daten-/Dateikonsistenz, keine unbeabsichtigte Überschreibung fachlich bestätigter Objekte.
+- **Transport/Softwarelieferkette:** Hostidentität für SFTP unabhängig prüfen; Secrets nur in vorgesehenen Umgebungen; geprüfte Abhängigkeiten/CI, Build-Artefaktidentität und überprüfbare Release-Kennung.
+- **Verfügbarkeit:** Für Redaktion gelten vorläufig die vorhandenen G7-Zielwerte RPO höchstens 24 h und RTO ein Arbeitstag. Öffentliche statische Seite soll letzten gültigen Stand weiter ausliefern. Mindestens eine funktionierende Betriebswarnung für fehlende Backups oder kritische Fehler.
+- **Datenschutz:** Keine unkontrollierten Produktivkopien in Vorschau/Test/Logs/Artefakte, angemessene Lösch-/Aufbewahrungsfristen aus G4/G7.
+
+Diese Anforderungen sind **Mindestbedingungen**, keine Aufforderung zu Enterprise-Infrastruktur. Ein öffentlich erreichbarer Echtbetrieb erfordert außerdem einen belegten End-to-End-Restore-/Notfalltest und die vorhandenen Go-live-Gates.
+
+### Umgebungen konkret
+
+| Dimension | Entwicklung | Test / Abnahme | Produktion (Zielbetrieb) |
+|---|---|---|---|
+| Ausführung | GitHub-Featurebranch; lokal oder abgeschottete Agenten-/CI-Workspace | CI für Einheiten und Integration; bedarfsweise separat bereitgestellte Preview und authentifizierter Testlauf | Versionierter und freigegebener Release auf IONOS + evaluiertem Supabase/Storage |
+| Daten | Synthetisch, frei zurücksetzbar | Synthetisch; feste Regressionen; keine freie Schreibverbindung zu Echtdaten | Reale redaktionelle und Benutzer-/Betriebsdaten; keine automatischen Test-Resets |
+| Datenbank | Isolierter PG17; bei Supabase-spezifischen Tests zeitweilig lokaler vollständiger Supabase-Stack | Isoliertes Schema/DB/Container, mit passenden FIB-Rollen und RLS; Auth/Edge/Storage integriert prüfen, wo relevant | Shared-Apps-`fib` nur solange dies ausdrücklich als Pilot/Entwicklungsbetrieb freigegeben ist; finale Produktionsentscheidung gesondert |
+| Zugang | Entwicklungskonten ohne privilegierte produktive Credentials | Zweckgebundene Testidentitäten, möglichst kurzlebige Secrets; keine echten Fremdanwendungsdaten | Freigegebene Admin-/Redaktionskonten mit MFA, Audit, geringstmöglichen Rechten |
+| Freigabe | Review/CI | Technische Tests und erforderliche fachliche Abnahme | Explizite Freigabe bei fachlich/operativ riskanten Änderungen |
+| Kosten | lokal/bestehende GitHub-Kontingente | primär kurzlebig/lokal/CI | bereits bestehende Dienste, zusätzlicher Bedarf vorab genehmigt |
+
+**Shared-Apps-Entscheidung:** Aktuell weiter als Entwicklungs-/Pilotplattform nutzen, kein voreiliger Umzug. **Vor Verarbeitung regulärer produktiver Echtdaten** anhand Schutzbedarf, geteilter Auth-/Administrationsgrenzen, Wiederherstellbarkeit, Ausfallfolgen, Kontingenten und Betriebskosten ausdrücklich entscheiden, ob eigenes Supabase-Projekt notwendig ist. Der langfristige organisationskontrollierte Zielbetrieb aus `docs/Zielarchitektur.md` (§13) wird nicht stillschweigend aufgehoben. Keine Behauptung, dass Shared-Apps aufgrund separatem Schema allein vollständige Isolation bietet.
+
+### Regelmäßiger Arbeitsablauf und geringe Benutzerbelastung
+
+1. Fachlicher Auftrag/Issue und klare Abnahmekriterien.
+2. Entwickler/Agent arbeitet auf separatem Branch, stellt PR bereit und prüft eigenständig Tests/Build/Änderungsumfang.
+3. CI läuft automatisch, bei Fehlern erfolgt Korrektur ohne wiederkehrende Einzelfreigaben.
+4. Bei Bedarf Integrationstest mit isolierten Testdaten, Browser/Session/RLS/Edge und geschützter Preview.
+5. Fachliche Abnahme **nur bei** materieller Änderung oder ausdrücklich vereinbartem Prüffall.
+6. Releaseklasse und Zielcommit dokumentieren. Nach Freigabe automatisierte Bereitstellung aus geprüftem Stand mit notwendiger Sicherung und Rücknahmemöglichkeit.
+7. Gezielter Live-Smoke und Abschlussbericht (tatsächlicher Zielstand, Ergebnisse, Abweichungen); keine Erfolgsmeldung allein wegen PR-Merge.
+
+**Für Nutzer normalerweise:** Auftrag formulieren, ggf. Fachfunktion ansehen, wesentliche Release-/Architekturentscheidung freigeben, Ergebnisbericht lesen. Kein manuelles Bedienen von Backups/Secrets/SQL als regelmäßiger Sollprozess. Für seltene Sicherheits-/Kontowechsel können bewusste Admin-Handlungen nötig bleiben.
+
+### Umsetzung in der operativen Roadmap (Planung vom 07.11.2026)
+
+Die folgenden Zeitfenster sind **Planungsziele**, keine festen Zusagen oder bereits ausgeführten Arbeiten. Wegen der RIS-Fachabnahme am **08.11.2026** laufen ausschließlich unabhängige Arbeiten parallel.
+
+| Paket | Geplantes Zeitfenster | Phasen | Ergebnis / Abnahme |
+|---|---|---|---|
+| **B0 – Konzept und Roadmap** | 07.–08.11.2026 | U1/U5/U6 | Diese fachlichen Grundsätze, Risikoklassen, 0-EUR-Vorgabe, Umgebungsgrenzen und Prüfmaßstäbe sind konsolidiert; technische Änderungen noch nicht freigegeben. |
+| **B1 – Sicherheits-/Ablaufkonsolidierung** | 09.–15.11.2026 | U1/U5 | GitHub-Workflow-Bestand gegen Zielbild, Host-Key-Checks (auch Preview/Full), feste CLI-Versionen/Funktions-JWT-Konfiguration, eindeutige Workflow-Auswahl, sparsame Release-Evidenz; alles ohne Produktivänderung CI-geprüft. |
+| **B2 – Test-/Integrationsweg** | 16.–22.11.2026 | U1/U6 | Reproduzierbarer PG17-/Supabase-Testweg, synthetische Testdaten, RLS/Migrations-/Edge-/Browser-E2E für wesentliche FIB-Fälle; Kosten-/Kontingentscheck; CI-Nachweise. |
+| **B3 – Bereitstellung und Rücknahme erproben** | 23.–29.11.2026 | U5/U6 | Risikoklassen A–E praktisch in isolierten/geeigneten Umgebungen belegt, Sicherung/Rücknahme und Smoke-Checks nachgewiesen; ggf. freigegebener einfacher Frontend-Release; keine ungenehmigten Shared-Apps-Eingriffe. |
+| **B4 – Produktionsentscheidung vorbereiten** | vor nächstem Echtbetriebs-/Go-live-Gate; Planungsziel bis 06.12.2026 | U5/U6 | Shared-Apps vs. eigenes FIB-Projekt inklusive Trennung, Restore, Auth, Kosten, Kapazität und Migration vergleichen; Betreiberentscheidung vor echten Produktionsdaten. |
+
+**Abhängigkeiten:** B1 kann parallel zur RIS-Fachabnahme vorbereitet werden; #375 erst nach dokumentierter RIS-Abnahme. B2/B3 erfordern jeweils funktionierende isolierte Tests und freigegebene risikoreiche Eingriffe. B4 ist keine Vorbedingung für weitere lokale Entwicklung, wohl aber für den verbindlichen Produktivbetrieb. Terminverschiebungen werden anhand tatsächlicher CI-/Abnahmeergebnisse nachvollzogen.
+
+### Wirtschaftlichkeits-/Qualitätsgates
+
+- Vor Aktivierung eines zusätzlichen Dienstes: **monatl. Zusatzkosten = 0 EUR?** Falls nein, Funktionsnotwendigkeit, kostenlose Alternative und ausdrückliche Entscheidung dokumentieren. Die Gesamtkosten sind nicht null (bestehende Verträge und KI-/Agentencredits).
+- Neue dauerhafte Test- oder Produktionsinstallation nicht ohne Beleg ihres Mehrwerts gegenüber isolierten temporären Tests oder bisherigem Pilotbetrieb.
+- **Kriterium für B1:** Frontend-only sicher und eindeutig auslösbar, kein Remote-Delete; Full/Preview Hostidentität geprüft, Edge-JWT-/Versionszustand geschützt; vorhandene Gates nicht ohne Freigabe entfernt.
+- **Kriterium für B2:** Isolierte Migration/RLS/Backend-Tests wiederholbar, mindestens ein End-to-End-Test für tatsächlichen FIB-Zugriff mit Testidentität; dokumentierter Daten-/Zugriffsabschluss.
+- **Kriterium für B3:** Release lässt sich mit unverändertem Commit nachweisen, Restore-/Rücknahmeschritt wurde risikogerecht real geprüft, Live-Smoke und Fehlerpfad dokumentiert.
+- **Kriterium für B4:** Vor Echtdatenbetrieb ein eigenständiger signierter/akzeptierter Architektur- und Kostenentscheid, belastbarer Restore-/Datenschutzabgleich; keine unbelegte 0-EUR-Betriebsgarantie.
 
 ## Nachgewiesene bestehende Pfade (Repository, nicht Live-Nachweis)
 
