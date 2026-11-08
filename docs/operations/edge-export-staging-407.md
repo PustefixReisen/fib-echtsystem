@@ -527,3 +527,43 @@ Ein sicherer isolierter Build-/Wiederherstellungsversuch und eine
 nachvollziehbare Runtime-/Konfigurationsinventur bleiben deshalb
 Pflicht für `completeFunctionExportsReviewed=true`. Keine
 automatische Reviewer-Freigabe, kein Deployment.
+
+
+## Verbindlicher Multipart-Binärabgleich, Stand 08.11.2026
+
+**Echter geschützter Diagnose-Lauf
+[#42528562354](https://github.com/PustefixReisen/fib-echtsystem/actions/runs/42528562354):**
+Alle 9 offiziellen CLI-Funktionsdownloads und die Abhängigkeitsprüfung
+der gemeinsam heruntergeladenen Programmdateien haben bestanden.
+Der unmittelbar folgende Binärcheck meldete dagegen
+`DEPLOYED_BUNDLE_fib-admin-users_UNEXPECTED_FORMAT`.
+
+Die Supabase-Management-API kann unter
+`GET /functions/{slug}/body` eine **Multipart-Antwort mit eingebetteter
+ESZIP-Datei** bereitstellen. Ein Vergleich des vier Zeichen langen
+`EZBR`-Headers am Anfang der **gesamten HTTP-Antwort** ist somit
+kein gültiger Beleg für einen defekten Funktionskörper. Der öffentliche
+GET-API-Vertrag legt das genaue Antwortformat nicht fest. Der
+Upload-Endpunkt dagegen dokumentiert das rohe EZBR-Format; die beiden
+Endpunkte dürfen nicht verwechselt werden.
+
+Mit [PR #413](https://github.com/PustefixReisen/fib-echtsystem/pull/413)
+wird im isolierten, read-only Diagnose-Skript ein größenbegrenzter
+Multipart-Wrapper ausgewertet und darin eine eindeutig erkannte
+`EZBR`- oder `ESZIP`-Binärdatei gesucht. Nur der SHA-256-Wert
+dieser Datei wird mit dem Live-Inventar verglichen. Bei fehlenden,
+mehrdeutigen oder unerwarteten Binärdaten wird weiterhin abgebrochen.
+Draft-PR #408 verwendet nun dieselbe begrenzte Bundle-Erkennung.
+
+**Keine unzulässige Freigabe aus Teilnachweisen:** Der isolierte
+CLI-Quellbaum wurde auf Dateien und relative Abhängigkeiten geprüft.
+Die eingebettete Binärdatei wird zusätzlich gegen das
+Live-Bundle-Metadatum geprüft. Eine **vollständige Rekonstruktion,
+lokale Kompilierung und ausführbare Wiederherstellung** der
+ursprünglichen Supabase-Funktion samt Runtime-/Konfigurationseinstellungen
+ist weiterhin nicht nachgewiesen. Diese Freigabe darf erst nach
+einem separaten Restore-Versuch mit unveränderten Produktionsdaten
+und überprüfter Konfigurationsprovenienz erfolgen.
+
+Bis dahin bleibt `completeFunctionExportsReviewed=true` eine
+unabhängige, nicht automatisch gesetzte Betreiberentscheidung.
