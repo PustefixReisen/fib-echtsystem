@@ -6,6 +6,8 @@ fails closed when Supabase CLI cannot reconstruct an import dependency.
 """
 import argparse
 import hashlib
+from email.parser import BytesParser
+from email.policy import default as email_policy
 import json
 import os
 import pathlib
@@ -69,6 +71,51 @@ def dependency_check(edge):
                 raise ValueError("Downloaded bundle missing relative module")
 
 
+class SafeBodyError(ValueError):
+    pass
+
+
+def binary_digest(payload, content_type=""):
+    """Hash only a clearly identified deployed ESZIP/EZBR file payload.
+
+    The Management API may wrap the file in multipart/form-data. Never hash
+    an entire multipart envelope or treat arbitrary JSON/errors as a bundle.
+    """
+    if not payload:
+        raise SafeBodyError("EMPTY")
+    if len(payload) > 32 * 1024 * 1024:
+        raise SafeBodyError("TOO_LARGE")
+    mime = (content_type or "").split(";", 1)[0].strip().lower()
+    if mime in ("multipart/form-data", "multipart/mixed"):
+        if not isinstance(content_type, str) or "boundary=" not in content_type.lower():
+            raise SafeBodyError("UNEXPECTED_FORMAT")
+        # Only parse in-memory, with a bound above; never print parser exceptions.
+        try:
+            prefix = ("MIME-Version: 1.0\r\nContent-Type: " + content_type + "\r\n\r\n").encode("ascii")
+            envelope = BytesParser(policy=email_policy).parsebytes(prefix + payload)
+        except Exception:
+            raise SafeBodyError("UNEXPECTED_FORMAT") from None
+        if not envelope.is_multipart():
+            raise SafeBodyError("UNEXPECTED_FORMAT")
+        candidates = []
+        for part in envelope.iter_parts():
+            disposition = part.get_content_disposition()
+            if disposition not in ("form-data", "attachment"):
+                continue
+            name = part.get_param("name", header="content-disposition")
+            if name not in ("file", "body", None):
+                continue
+            value = part.get_payload(decode=True)
+            if isinstance(value, bytes) and (value.startswith(b"EZBR") or value.startswith(b"ESZIP")):
+                candidates.append(value)
+        if len(candidates) != 1:
+            raise SafeBodyError("UNEXPECTED_FORMAT")
+        payload = candidates[0]
+    if not (payload.startswith(b"EZBR") or payload.startswith(b"ESZIP")):
+        raise SafeBodyError("UNEXPECTED_FORMAT")
+    return hashlib.sha256(payload).hexdigest()
+
+
 def deployed_bundle_digest(token, slug):
     """Read the documented EZBR function body, never log/persist its bytes."""
     req = urllib.request.Request(
@@ -77,9 +124,8 @@ def deployed_bundle_digest(token, slug):
     )
     with urllib.request.urlopen(req, timeout=30) as response:
         binary = response.read(32 * 1024 * 1024 + 1)
-    if len(binary) > 32 * 1024 * 1024 or binary[:4] != b"EZBR":
-        raise ValueError("Invalid deployed EZBR body")
-    return hashlib.sha256(binary).hexdigest()
+        content_type = response.headers.get("Content-Type", "")
+    return binary_digest(binary, content_type)
 
 
 def verify_deployed_bundles(metadata, fetcher, token):
