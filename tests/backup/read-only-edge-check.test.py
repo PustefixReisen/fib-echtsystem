@@ -64,7 +64,7 @@ class ReadOnlyCheck(unittest.TestCase):
             return DIGEST
         with self.assertRaises(module.SafeDiagnostic) as e:
             module.check("mock-token", api=api, body=changed, run=downloaded)
-        self.assertEqual(str(e.exception), "DEPLOYED_BUNDLE_fib-u4-ris-pilot")
+        self.assertEqual(str(e.exception), "DEPLOYED_BUNDLE_fib-u4-ris-pilot_DIGEST_MISMATCH")
 
     def test_metadata_drift_blocks(self):
         count = 0
