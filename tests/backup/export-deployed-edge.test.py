@@ -22,6 +22,12 @@ def data():
     }
 
 
+
+def live_source(_, slug):
+    row = data()[slug]
+    return {**row, "files": [{"name": slug + "/index.ts", "content": "export const ok = true;"}]}
+
+
 class ExportTests(unittest.TestCase):
     def test_success_and_no_synthetic_review_flag(self):
         with tempfile.TemporaryDirectory() as base:
@@ -32,7 +38,7 @@ class ExportTests(unittest.TestCase):
                 folder.mkdir(parents=True, exist_ok=True)
                 (folder / "index.ts").write_text("export const ok = true;")
                 return subprocess.CompletedProcess(cmd, 0)
-            self.assertEqual(module.export(path, "private", get_inventory=lambda _: data(), run=download), 3)
+            self.assertEqual(module.export(path, "private", get_inventory=lambda _: data(), run=download, get_source=live_source), 3)
             self.assertTrue((path / "edge/inventory.json").is_file())
             self.assertFalse((path / "configuration/evidence.json").exists())
             self.assertFalse((path / "release.json").exists())
@@ -54,7 +60,7 @@ class ExportTests(unittest.TestCase):
                 (folder / "index.ts").write_text("export const ok = true;")
                 return subprocess.CompletedProcess(cmd, 0)
             with self.assertRaises(ValueError):
-                module.export(path, "private", get_inventory=inventory, run=download)
+                module.export(path, "private", get_inventory=inventory, run=download, get_source=live_source)
             self.assertFalse(path.exists())
 
     def test_relative_import_missing_fails_closed(self):
@@ -66,7 +72,62 @@ class ExportTests(unittest.TestCase):
                 (folder / "index.ts").write_text("import '../_shared/missing.ts';")
                 return subprocess.CompletedProcess(cmd, 0)
             with self.assertRaises(ValueError):
-                module.export(path, "private", get_inventory=lambda _: data(), run=download)
+                module.export(path, "private", get_inventory=lambda _: data(), run=download, get_source=live_source)
+            self.assertFalse(path.exists())
+
+    def test_detects_same_path_with_different_live_bytes(self):
+        with tempfile.TemporaryDirectory() as base:
+            path = pathlib.Path(base) / "new"
+            def download(cmd, **kwargs):
+                slug = cmd[3]
+                folder = pathlib.Path(kwargs["cwd"]) / "supabase/functions" / slug
+                folder.mkdir(parents=True, exist_ok=True)
+                (folder / "index.ts").write_text("export const ok = true;")
+                return subprocess.CompletedProcess(cmd, 0)
+            def changed(_, slug):
+                live = live_source(_, slug)
+                if slug == "fib-u4-ris-pilot":
+                    live["files"][0]["content"] = "export const tampered = true;"
+                return live
+            with self.assertRaises(ValueError):
+                module.export(path, "private", get_inventory=lambda _: data(),
+                              run=download, get_source=changed)
+            self.assertFalse(path.exists())
+
+    def test_live_file_aliases_and_traversal(self):
+        meta = data()["fib-u4-pilot"]
+        doc = {**meta, "files": [
+            {"name": "index.ts", "content": "export const ok = true;"},
+            {"name": "_shared/u4-news.ts", "content": "export const shared = true;"},
+        ]}
+        normalized = module.normalized_live_files(doc, "fib-u4-pilot")
+        self.assertEqual(set(normalized), {"fib-u4-pilot/index.ts", "_shared/u4-news.ts"})
+        doc["files"].append({"name": "../leak.ts", "content": "should not pass"})
+        with self.assertRaises(ValueError):
+            module.normalized_live_files(doc, "fib-u4-pilot")
+
+    def test_shared_module_source_drift_aborts(self):
+        with tempfile.TemporaryDirectory() as base:
+            path = pathlib.Path(base) / "new"
+            def download(cmd, **kwargs):
+                root = pathlib.Path(kwargs["cwd"]) / "supabase/functions"
+                folder = root / cmd[3]
+                folder.mkdir(parents=True, exist_ok=True)
+                (folder / "index.ts").write_text("export const ok = true;")
+                shared = root / "_shared"
+                shared.mkdir(exist_ok=True)
+                (shared / "lib.ts").write_text("export const shared = true;")
+                return subprocess.CompletedProcess(cmd, 0)
+            def divergent(_, slug):
+                doc = live_source(_, slug)
+                doc["files"].append({
+                    "name": "_shared/lib.ts",
+                    "content": "export const shared = " + ("false" if slug == "fib-u4-pilot" else "true") + ";",
+                })
+                return doc
+            with self.assertRaises(ValueError):
+                module.export(path, "private", get_inventory=lambda _: data(),
+                              run=download, get_source=divergent)
             self.assertFalse(path.exists())
 
     def test_existing_destination_untouched(self):
