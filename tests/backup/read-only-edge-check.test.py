@@ -45,6 +45,14 @@ class ReadOnlyCheck(unittest.TestCase):
     def test_successful_cli_and_bundle_audit(self):
         self.assertEqual(module.check("mock-token", api=api, body=body, run=downloaded, typecheck=lambda *_: 3), (3, 3))
 
+    def test_failed_isolated_deno_check_blocks_without_leaking_output(self):
+        def fail(*_):
+            raise RuntimeError("PRIVATE_TYPESCRIPT_SOURCE")
+        with self.assertRaises(module.SafeDiagnostic) as caught:
+            module.check("mock-token", api=api, body=body, run=downloaded, typecheck=fail)
+        self.assertEqual(str(caught.exception), "ISOLATED_DENO_TYPECHECK")
+        self.assertNotIn("PRIVATE_TYPESCRIPT", str(caught.exception))
+
     def test_missing_nested_type_import_blocks(self):
         def missing(cmd, **kw):
             result = downloaded(cmd, **kw)
