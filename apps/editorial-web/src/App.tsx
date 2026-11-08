@@ -882,14 +882,14 @@ export function App() {
   }
 
   async function runCoordinationAction(action: 'get_state' | 'take_lead' | 'release_lead' | 'acquire_lock' | 'renew_lock' | 'release_lock', quiet = false) {
-    if (!quiet) setCoordinationRunning(true);
+    setCoordinationRunning(true);
     if (!quiet) setCoordinationMessage(null);
 
     const { data, error } = await supabase.functions.invoke<CoordinationResult>('fib-coordination', {
       body: { action, objectType: 'event', objectId: eventResult?.id ?? LIVE_TEST_EVENT_ID },
-    });
+    }).catch(error => ({data: null, error}));
 
-    if (!quiet) setCoordinationRunning(false);
+    setCoordinationRunning(false);
 
     if (error) {
       if (!quiet) setCoordinationMessage(error.message || 'Koordinationsfunktion konnte nicht aufgerufen werden.');
@@ -989,7 +989,7 @@ export function App() {
         setSourceMessage('Begründung der Zuordnung gespeichert.');
       }
       setEditingSourceId(null);
-      void runCoordinationAction('release_lock', true);
+      await runCoordinationAction('release_lock', true);
     } finally {
       if (acquiredForThisAction) await runCoordinationAction('release_lock', true);
       setSourceBusy(false);
@@ -1256,6 +1256,7 @@ export function App() {
 
   async function logout() {
     if (!confirmLeave()) return;
+    if ((editingEvent || editingSourceId) && !await runCoordinationAction('release_lock')) return;
     ++authRevision.current;
     const { error } = await supabase.auth.signOut({ scope: 'local' });
     if (error) { setMessage('Abmelden fehlgeschlagen. Bitte erneut versuchen.'); return; }
@@ -1970,6 +1971,7 @@ export function App() {
                 {editFailed && !editingEvent && <p role="alert">{editMessage}</p>}
                 {!!(coordination?.lock && !coordination.lock.mine) && <p role="status">Bearbeitung gesperrt durch {coordination.lock.displayName}.</p>}
                 {sourcePickerOpen && !editingEvent && <p>Bitte die Fundstellenbearbeitung zuerst beenden, um Ereignisdaten zu bearbeiten.</p>}
+                {(editingEvent || editingSourceId) && !coordination?.lock?.mine && <p role="alert">Die Bearbeitungssperre ist nicht mehr aktiv. Bitte Bearbeitung beenden und neu starten.</p>}
                 {editingEvent ? (
                   <form className="stack edit-form" onSubmit={saveEventEdit}>
                     <label>Titel *
@@ -2021,7 +2023,7 @@ export function App() {
                           </div>
                         ) : (
                           <div className="button-row">
-                            <button type="button" disabled={sourceBusy || !!editingSourceId} onClick={() => startFindingMetadataEdit(source)}>Zuordnung bearbeiten</button>
+                            <button type="button" disabled={sourceBusy || coordinationRunning || !!editingSourceId} onClick={() => void startFindingMetadataEdit(source)}>Zuordnung bearbeiten</button>
                             <button type="button" disabled={sourceBusy || !!editingSourceId} onClick={() => void unlinkFinding(source.findingId)}>Zuordnung aufheben</button>
                           </div>
                         ))}
