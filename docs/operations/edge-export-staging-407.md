@@ -466,3 +466,31 @@ Dies ist ausschließlich ein lesender Funktionsexporttest, noch keine
 Rücknahme-/Release-Freigabe. Die GitHub-Verbindung in diesem Chat
 kann `workflow_dispatch` nicht selbst auslösen; zur tatsächlichen
 Ausführung ist ein berechtigter Betreiberstart in GitHub notwendig.
+
+
+## Präzisierung 08.11.2026: gemeinsame statt einzelne Funktionsquellen
+
+Die oben dokumentierte fehlende Typdatei in der **einzelnen**
+`fib-u4-pilot`-API-Antwort ist **nicht zwangsläufig ein Blocker für
+den vollständigen FIB-Gesamtexport**: Zwei andere tatsächlich
+bereitgestellte RIS-Funktionen enthalten die gleichnamige historische
+Datei `_shared/ris-structure.ts` in **identischer** Fassung. Der
+Gesamtexport aller `fib-*`-Funktionen fasst Shared-Dateien nur dann
+zusammen, wenn deren tatsächlich deployte Inhalte übereinstimmen,
+und prüft deren Byte-Inhalte unabhängig gegen Supabase.
+
+Die Abschlussvalidierung `components.exports` prüft nun ebenfalls
+**alle** Unterdateien des gesamten `edge/`-Baums, einschließlich
+transitiver relativer Imports aus `_shared`. Zuvor wurden dort
+nur die Verzeichnisse unterhalb der einzelnen Funktionsnamen geprüft.
+Damit scheitert die Sicherung bei fehlenden transitiven Typdateien,
+auch wenn sie nicht direkt von einem Entrypoint importiert werden.
+
+**Verbleibender Nachweis:** Der offizielle CLI-Download muss die
+gemeinsame historische Datei tatsächlich in den Gesamtexport
+übernehmen. Falls er sie nicht liefert, darf der Exporter nicht
+automatisch Dateien aus `main` substituieren; stattdessen braucht
+es einen separat dokumentierten, inhaltlich geprüften
+Quell-Provenienz-Adapter sowie einen isolierten Deno-Build- und
+Rollback-Versuch. Die bloße Quellinventur ist **kein**
+vollständiger Wiederherstellungsnachweis.
