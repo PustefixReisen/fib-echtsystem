@@ -1,7 +1,7 @@
 name: Release backup contracts
 on:
   pull_request:
-    paths: ['scripts/backup/**', 'tests/backup/**', 'tests/u4/release-backup.spec.mjs', 'tests/u4/frontend-backup.spec.py', 'tests/u4/complete-backup.spec.py', 'tests/u4/backup-database-tls.spec.mjs', 'scripts/ris-shared-apps/io.mjs', '.github/workflows/complete-backup.yml', '.github/workflows/ris-correction-release.yml', '.github/workflows/frontend-backup.yml', '.github/workflows/editorial-web-deploy.yml', '.github/workflows/release-backup-tests.yml']
+    paths: ['scripts/backup/**', 'tests/backup/**', 'tests/u4/release-backup.spec.mjs', 'tests/u4/frontend-backup.spec.py', 'tests/u4/complete-backup.spec.py', 'tests/u4/backup-database-tls.spec.mjs', 'scripts/ris-shared-apps/io.mjs', '.github/workflows/complete-backup.yml', '.github/workflows/ris-correction-release.yml', '.github/workflows/fib-edge-source-readiness.yml', '.github/workflows/frontend-backup.yml', '.github/workflows/editorial-web-deploy.yml', '.github/workflows/release-backup-tests.yml']
 permissions:
   contents: read
 jobs:
@@ -28,6 +28,7 @@ jobs:
           set -euo pipefail
           docker run --rm -v "$PWD:/repo:ro" -w /repo rhysd/actionlint:1.7.12 \
             .github/workflows/complete-backup.yml \
-            .github/workflows/ris-correction-release.yml
+            .github/workflows/ris-correction-release.yml \
+            .github/workflows/fib-edge-source-readiness.yml
       - run: python3 tests/backup/check-ris-deploy-drift.test.py
       - run: node tests/u4/backup-database-tls.spec.mjs
