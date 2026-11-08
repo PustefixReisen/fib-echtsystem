@@ -155,3 +155,54 @@ Offline-Test:
 Der echte Zugriff aus dem Actions-Runner bleibt bis zum gesonderten
 Betriebsnachweis ungeprüft; DB-Leseexporte werden nicht in öffentlichen CI-Logs
 oder Actions-Artefakten gespeichert.
+
+
+## Stage 0b: eng begrenzte Supabase-Featureflags prüfen (neu)
+
+Supabase bestätigt für das Management-API `GET /v1/projects/{ref}/secrets`
+eine **sensible** Antwort, die auch Geheimwerte enthalten kann
+(siehe offizielle Management-API-Dokumentation: `List all secrets`,
+https://supabase.com/docs/reference/api/v1-list-all-secrets).
+Deshalb darf dieser Endpunkt **ausschließlich** in einem geschützten
+Betreiberprozess abgefragt werden. Niemals vollständige Antwort oder
+`supabase secrets list` in öffentlichem CI-Log/Issue/Chat protokollieren.
+
+Der neue Export `scripts/backup/capture-feature-flags.py` verarbeitet
+in einem eigenen, privaten Prozess ausschließlich folgende *bekannten*
+booleschen FIB-RIS-Schalter:
+
+- `FIB_RIS_STRUCTURE_ENABLED`
+- `FIB_RIS_AUTOMATION_ENABLED`
+- `FIB_RIS_INTEGRATION_TEST_ENABLED`
+
+Andere Secret-Namen und **sämtliche** anderen Werte werden verworfen.
+Nur exakt boolesche Werte `true`/`false` sind erlaubt.
+Fehlende Flags werden ausdrücklich als `missing` bezeichnet – **nicht**
+still auf `false` gesetzt. Die Ergebnisdatei enthält keine Tokens,
+Passwörter oder andere Konfigurationswerte.
+
+Privater Beispielablauf, nur mit vorhandener Berechtigung:
+
+```bash
+umask 077
+mkdir -m 700 -p /PRIVAT/fib-review
+node scripts/backup/capture-source-state.mjs --out=/PRIVAT/fib-review/source.json
+# Bestehenden geschützten Management-Token nur als SUPABASE_ACCESS_TOKEN setzen.
+python3 scripts/backup/capture-feature-flags.py \
+  --source-capture /PRIVAT/fib-review/source.json \
+  --out /PRIVAT/fib-review/features.json
+```
+
+**Nicht daraus abgeleitet:** ein vollständiger Export sämtlicher
+Supabase-Projekteinstellungen oder eine wiederherstellbare Kopie von
+Geheimnissen. `features.json` kennzeichnet ausdrücklich
+`operatorReview=false`, `reviewRequired=true`.
+Der geschützte unabhängige Abgleich und die Erstellung einer freigegebenen
+`configuration/state.json` und `configuration/capture.json` bleiben
+notwendig. Die Daten anderer Shared-Apps-Projekte und sämtliche geheimen
+Werte sind von diesem Auftrag ausgeschlossen.
+
+Offline-Test:
+`python3 tests/backup/capture-feature-flags.test.py`.
+Auch grüne Tests beweisen nicht, dass der Management-Token auf dem
+geschützten Runner tatsächlich für den Endpoint berechtigt ist.
