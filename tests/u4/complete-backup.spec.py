@@ -25,6 +25,12 @@ class Contracts(unittest.TestCase):
    self.assertEqual(exports(root,live,now),['fib-example'])
    (root/'edge/fib-example/index.ts').write_text("import '../_shared/missing.ts';")
    with self.assertRaises(ValueError):exports(root,live,now)
+   (root/'edge/fib-example/index.ts').write_text("export * from './missing-reexport.ts';")
+   with self.assertRaises(ValueError):exports(root,live,now)
+   (root/'edge/fib-example/index.ts').write_text("import './missing-sideeffect.ts';")
+   with self.assertRaises(ValueError):exports(root,live,now)
+   (root/'edge/fib-example/index.ts').write_text("const x = import('./missing-dynamic.ts');")
+   with self.assertRaises(ValueError):exports(root,live,now)
  def test_retention_never_deletes(self):
   now=datetime.datetime.now(datetime.timezone.utc)
   records=[dict(backupId=str(i),createdAt=(now-datetime.timedelta(days=i*10)).isoformat(),readback='passed') for i in range(4)]
