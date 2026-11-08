@@ -109,7 +109,7 @@ def normalized_live_files(detail, slug):
     return normalized
 
 
-def compare_to_live_source(source, metadata, fetcher, token):
+def compare_to_live_source(source, metadata, fetcher, token, allow_private_inventory=False):
     """All bytes must match the live Management API source file by file.
 
     Supabase's bundle SHA is not a portable hash of local source files.
@@ -130,7 +130,10 @@ def compare_to_live_source(source, metadata, fetcher, token):
     actual = {}
     for file in source.rglob("*"):
         if file.is_file():
-            actual[file.relative_to(source).as_posix()] = hashlib.sha256(file.read_bytes()).hexdigest()
+            relative = file.relative_to(source).as_posix()
+            if allow_private_inventory and relative == "inventory.json":
+                continue
+            actual[relative] = hashlib.sha256(file.read_bytes()).hexdigest()
     if actual != live_union:
         raise ValueError("CLI export differs from deployed source files")
     return len(live_union)
