@@ -62,7 +62,24 @@ def backup(env,run=f.command):
   check=root/'proof.json';run(rc+['copyto','fib-backup-crypt:Receipts/'+backup_id+'.json',str(check)],env=env)
   if check.read_bytes()!=proof.read_bytes():raise ValueError('Receipt mismatch')
   return receipt
+def emit_verified_receipt(receipt,env):
+ """Action outputs only after readback/receipt verification is complete."""
+ if receipt.get('readback')!='passed' or not re.fullmatch(r'release-[a-f0-9]{32}',receipt.get('backupId','')) or not re.fullmatch(r'[a-f0-9]{64}',receipt.get('manifestSha256','')) or not re.fullmatch(r'[a-f0-9]{40}',receipt.get('commit','')):
+  raise ValueError('Invalid release receipt')
+ output=env.get('GITHUB_OUTPUT','')
+ if not output:raise ValueError('GitHub Actions output channel unavailable')
+ with open(output,'a',encoding='utf-8') as stream:
+  stream.write('backup_id='+receipt['backupId']+'\\n')
+  stream.write('manifest_sha256='+receipt['manifestSha256']+'\\n')
+  stream.write('verified_commit='+receipt['commit']+'\\n')
+
 if __name__=='__main__':
  os.umask(0o077)
- try:print(json.dumps(backup(dict(os.environ))))
- except Exception:print('Complete backup failed; inspect protected prerequisites. No deployment permitted.',file=sys.stderr);sys.exit(1)
+ try:
+  env=dict(os.environ);receipt=backup(env)
+  if env.get('FIB_BACKUP_EMIT_GITHUB_OUTPUT')=='true':
+   emit_verified_receipt(receipt,env)
+   print('Complete FIB release backup verified and sealed; private receipt passed to protected workflow.')
+  else:print(json.dumps(receipt))
+ except Exception:
+  print('Complete backup failed; inspect protected prerequisites. No deployment permitted.',file=sys.stderr);sys.exit(1)
