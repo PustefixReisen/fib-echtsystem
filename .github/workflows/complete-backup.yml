@@ -11,7 +11,27 @@ on:
         description: Fresh reviewed private edge/config export ID under Inputs/
         required: true
         type: string
-# No schedule: regular mode is manually testable; unattended exports need a protected adapter.
+  workflow_call:
+    inputs:
+      mode:
+        description: Reusable backup execution mode
+        required: true
+        type: string
+      input_id:
+        description: Independently reviewed private export ID
+        required: true
+        type: string
+    outputs:
+      backup_id:
+        description: Verified encrypted complete backup ID
+        value: ${{ jobs.backup.outputs.backup_id }}
+      manifest_sha256:
+        description: Verified release manifest digest
+        value: ${{ jobs.backup.outputs.manifest_sha256 }}
+      verified_commit:
+        description: Commit bound to the verified backup
+        value: ${{ jobs.backup.outputs.verified_commit }}
+# No schedule: unattended exports need a protected adapter.
 permissions:
   contents: read
 concurrency:
@@ -19,6 +39,10 @@ concurrency:
   cancel-in-progress: false
 jobs:
   backup:
+    outputs:
+      backup_id: ${{ steps.capture.outputs.backup_id }}
+      manifest_sha256: ${{ steps.capture.outputs.manifest_sha256 }}
+      verified_commit: ${{ steps.capture.outputs.verified_commit }}
     environment: fib-release
     runs-on: ubuntu-latest
     timeout-minutes: 45
@@ -67,7 +91,9 @@ jobs:
           node scripts/backup/prepare-ca.mjs "$RUNNER_TEMP/fib-complete-private/postgres-ca.pem"
           echo "PGSSLROOTCERT=$RUNNER_TEMP/fib-complete-private/postgres-ca.pem" >> "$GITHUB_ENV"
       - name: Capture and verify complete private bundle
+        id: capture
         env:
+          FIB_BACKUP_EMIT_GITHUB_OUTPUT: "true"
           FIB_BACKUP_MODE: ${{ inputs.mode }}
           FIB_BACKUP_INPUT_ID: ${{ inputs.input_id }}
           FIB_BACKUP_TEMP_PARENT: ${{ runner.temp }}/fib-complete-private
