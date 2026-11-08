@@ -19,4 +19,5 @@ jobs:
       - run: python3 tests/u4/frontend-backup.spec.py
       - run: python3 tests/u4/complete-backup.spec.py
       - run: python3 tests/backup/export-deployed-edge.test.py
+      - run: python3 tests/backup/stage-reviewed-input.test.py
       - run: node tests/u4/backup-database-tls.spec.mjs
