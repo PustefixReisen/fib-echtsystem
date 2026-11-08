@@ -270,3 +270,34 @@ konkurrierenden Bereitstellungswege zu schaffen.
 
 Offline-Tests:
 `python3 tests/backup/orchestrated-release.test.py`.
+
+
+## Release-Konsolidierung und Live-Drift-Schutz
+
+Der neue verkettete Release-Workflow in PR #408 ist der bevorzugte
+**einzige** künftige Weg für dieses RIS-#404-Korrekturpaket. Der separate
+Entwurf #406 (`ris-targeted-edge-deploy.yml`) ist damit inhaltlich
+überholt; er darf nicht parallel aktiviert werden.
+
+Unmittelbar vor dem ersten Schreibzugriff auf Supabase verifiziert
+`check-ris-deploy-drift.py` das aktuelle Management-API-Inventar
+gegen den am 08.11.2026 lesend geprüften Live-Stand:
+
+| Funktion | Erwartete Version | JWT-Verifikation |
+|---|---:|---|
+| `fib-editorial-write` | 20 | false |
+| `fib-u4-ris-pilot` | 21 | true |
+
+Auch die bekannten SHA-256-Bundle-Digests werden verglichen. Änderungen
+an Version, Bundle oder JWT stoppen die Bereitstellung, statt ältere
+oder fremde neue Deployments still zu überschreiben. Vor einer
+späteren neuen Freigabe dürfen Referenzwerte nur mit dokumentierter
+Live-Neuinventur und ausdrücklich neu geprüftem Umfang angepasst
+werden. Der Guard löst kein Rollback aus.
+
+**Einschränkung:** Ein Versionscheck vor dem Deploy schließt ein
+Konkurrenzrennen *nach* der Prüfung nicht vollständig aus. Zusätzliche
+Deployments außerhalb des bestehenden betrieblichen Wartungsfensters
+müssen daher ausgeschlossen werden. Ein grüner CI-Test ersetzt weder
+die Berechtigung zum GitHub-Actions-Dispatch noch einen tatsächlichen
+verschlüsselten vollständigen Release-Backup- und Restore-Nachweis.
