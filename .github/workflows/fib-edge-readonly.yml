@@ -33,9 +33,27 @@ jobs:
           python3 tests/backup/read-only-edge-check.test.py
           python3 tests/backup/check-edge-isolated.test.py
 
+  isolated-deno-fixture:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: denoland/setup-deno@v2
+        with:
+          deno-version: 2.5.6
+      - name: Isolated Deno typecheck on synthetic source only
+        shell: bash
+        run: |
+          set -euo pipefail
+          path="$(mktemp -d)"
+          trap 'rm -rf "$path"' EXIT
+          mkdir -p "$path/fib-test"
+          echo 'export const value: number = 1;' > "$path/fib-test/index.ts"
+          python3 scripts/backup/check-edge-isolated.py "$path" fib-test
+
   live-readonly:
     if: ${{ github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main' && inputs.confirmation == 'CHECK' }}
-    needs: offline-contract
+    needs: [offline-contract, isolated-deno-fixture]
     runs-on: ubuntu-latest
     environment: fib-release
     timeout-minutes: 30
