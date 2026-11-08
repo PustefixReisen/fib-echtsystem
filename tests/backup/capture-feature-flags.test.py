@@ -71,6 +71,7 @@ class FeatureCaptureTests(unittest.TestCase):
 
     def test_private_destination_outside_repo_only(self):
         with tempfile.TemporaryDirectory() as folder:
+            pathlib.Path(folder).chmod(0o755)  # deliberately unsafe: assert rejection
             with self.assertRaises(ValueError):
                 module.private_destination(pathlib.Path(folder) / "flags.json")
             parent = pathlib.Path(folder) / "private"
