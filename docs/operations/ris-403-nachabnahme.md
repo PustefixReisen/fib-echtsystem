@@ -10,7 +10,7 @@ Keine Bereitstellung, produktive Migration, Datenkorrektur oder Automation mit d
 | Drei statt 19 TOPs am 15.10. | Der bewusst reduzierte Referenzimport enthält TOP 2/3/6. Lesender Shared-Apps-Abgleich am 08.11.: Sitzung 1031, Revision 1, drei TOPs, Beobachtung vom 01.11.; RIS-Quelle aktiv, Scopes candidate, Cursor ohne structureState. Das beweist keine vollständige reguläre Erfassung. Die tatsächliche aktuelle Edge-Konfiguration wurde nicht ausgelesen. |
 | Titel enthält Status | Parser übernahm die ganze Titelzelle einschließlich Beschlussblock. Jetzt nur TOP-Ankertitel; beobachteter Status separat im vorhandenen Snapshot-JSON, ohne Schemaänderung oder automatische fachliche Bestätigung. Legacy-Titel werden nur bei der Anzeige aufgeteilt. |
 | Niederschriftkarte ohne TOP-Ergebnis | Bestehende strukturierte Beschluss-/Abstimmungsangaben werden als Absätze je Beschlusspunkt gemeinsam mit dem Original-Link angezeigt. Keine isolierten Zahlenfelder, keine wörtlichen Niederschrifttexte, keine Ableitung aus Vorschlägen. Fehlende Angaben bleiben ausdrücklich unbekannt. |
-| Pflichtbegründung / fehlende automatische Belege | Der bisherige Weg setzte eine Dokumentversion voraus und setzte keine Standardbegründung. Nun Metadaten-Fundstellen im bestehenden Import-/Zuordnungsweg, atomar und idempotent mit TOP-/Sitzungsbegründung. Nur physisch dem TOP zugehörige Vorlagen/Anlagen/Beschlussdokumente; keine sitzungsweite Niederschrift und keine Fremdfundstellen. |
+| Pflichtbegründung / fehlende automatische Belege | Der bisherige Weg setzte eine Dokumentversion voraus und setzte keine Standardbegründung. Nun Metadaten-Fundstellen im bestehenden Import-/Zuordnungsweg, atomar und idempotent mit TOP-/Sitzungsbegründung. Nur physisch dem TOP zugehörige, nicht abgelehnte Vorlagen/Anlagen/Beschlussdokumente; keine sitzungsweite Niederschrift und keine Fremdfundstellen. |
 | Nachträge | ensureRisFinding ergänzt die Dokumentbeziehung auch für bestehende manuelle TOP-Hauptereignisse. Mehrere TOPs aggregieren ihre Belege; keine automatische TOP-Ereignis-Entscheidung. Aufhebung löscht nur den gewählten TOP-Bezug. |
 | Mobile Suche | Vorhandene Desktop-Suche bleibt bestehen. Generation wird bereits beim Tastendruck invalidiert, statt erst beim nächsten verzögerten Request; Suchkontextwechsel löst neue Abfrage aus. Der konkrete persönliche Smartphonefehler ist damit noch nicht live reproduziert. |
 | Zuordnung direkt speichern | Im aktuellen main bereits vorhanden; erhalten und in Komponenten-/DB-Tests geprüft. Nur Ereignisneuanlage und Freitextbearbeitung behalten Speichern/Abbrechen. |
@@ -55,6 +55,16 @@ Bestehende Tests verwenden ausschließlich synthetische Storage-Erlaubnisse;
 sie bestätigen keine Rechte für echte Dokumente. Keine persönliche Live-MFA- oder
 Smartphone-Gesamtabnahme und kein Nachweis authentifizierter mobiler App-Sperren
 allein durch diese Komponentenprüfungen. CI am PR bleibt zusätzlicher Nachweis.
+
+Zusätzlicher CI-Nachweis: [integrierter Lauf 42495718044](https://github.com/PustefixReisen/fib-echtsystem/actions/runs/42495718044)
+bestand mit Chromium und Firefox auf Code-Stand 9f68910. Er prüft jetzt auch
+mobile Bearbeitung eines bestätigten Ereignisses und einer Fundstellenbegründung,
+Persistenz und Sperrablehnung eines zweiten authentifizierten Akteurs mit echten
+isolierten Auth-/Deno-/Datenbankdiensten. Externe RIS-Antworten bleiben simuliert.
+Der zunächst fehlgeschlagene persönliche Start-/Wiederaufnahmetest erwartete die
+alte separate Beschlusskarte; er wurde auf die neue Niederschriftkarte angepasst,
+mit unveränderter Prüfung beider Beschlusspunkte und des erhaltenen DB-Bestands.
+Die CI des endgültigen PR-Stands ist zusätzlich in dessen Checks nachzusehen.
 
 ## Gezielte persönliche Nachabnahme nach gesondertem Release
 
