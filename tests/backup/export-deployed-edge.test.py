@@ -1,4 +1,5 @@
-"""Offline fail-closed tests for deployed Edge export staging; no network or secrets."""
+"""Offline contracts for protected Supabase CLI downloads and EZBR body digests."""
+import hashlib
 import importlib.util
 import json
 import pathlib
@@ -13,175 +14,100 @@ spec = importlib.util.spec_from_file_location("fib_edge_export", MODULE)
 module = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(module)
 
+BUNDLE = b"EZBR" + b"read-only-extracted-bundle"
+DIGEST = hashlib.sha256(BUNDLE).hexdigest()
+
 
 def data():
     return {
         name: {"slug": name, "version": 3, "verify_jwt": True,
-               "ezbr_sha256": "a" * 64, "import_map": False}
+               "ezbr_sha256": DIGEST, "import_map": False}
         for name in ("fib-editorial-write", "fib-u4-ris-pilot", "fib-u4-pilot")
     }
 
 
+def source_digest(_, slug):
+    assert slug in data()
+    return DIGEST
 
-def live_source(_, slug):
-    row = data()[slug]
-    return {**row, "files": [{"name": slug + "/index.ts", "content": "export const ok = true;"}]}
+
+def downloaded(cmd, **kwargs):
+    slug = cmd[3]
+    folder = pathlib.Path(kwargs["cwd"]) / "supabase/functions" / slug
+    folder.mkdir(parents=True, exist_ok=True)
+    (folder / "index.ts").write_text("export const ok = true;")
+    return subprocess.CompletedProcess(cmd, 0)
 
 
 class ExportTests(unittest.TestCase):
     def test_success_and_no_synthetic_review_flag(self):
-        with tempfile.TemporaryDirectory() as base:
-            path = pathlib.Path(base) / "new"
-            def download(cmd, **kwargs):
-                slug = cmd[3]
-                folder = pathlib.Path(kwargs["cwd"]) / "supabase/functions" / slug
-                folder.mkdir(parents=True, exist_ok=True)
-                (folder / "index.ts").write_text("export const ok = true;")
-                return subprocess.CompletedProcess(cmd, 0)
-            self.assertEqual(module.export(path, "private", get_inventory=lambda _: data(), run=download, get_source=live_source), 3)
+        with tempfile.TemporaryDirectory() as tmp:
+            path = pathlib.Path(tmp) / "new"
+            self.assertEqual(module.export(
+                path, "private", get_inventory=lambda _: data(),
+                run=downloaded, get_source=source_digest), 3)
             self.assertTrue((path / "edge/inventory.json").is_file())
             self.assertFalse((path / "configuration/evidence.json").exists())
             self.assertFalse((path / "release.json").exists())
 
     def test_inventory_drift_fails_before_output(self):
-        with tempfile.TemporaryDirectory() as base:
-            path = pathlib.Path(base) / "new"
-            calls = 0
+        with tempfile.TemporaryDirectory() as tmp:
+            path = pathlib.Path(tmp) / "new"
+            count = 0
             def inventory(_):
-                nonlocal calls
-                calls += 1
-                result = data()
-                if calls == 2:
-                    result["fib-u4-ris-pilot"]["version"] = 4
-                return result
-            def download(cmd, **kwargs):
-                folder = pathlib.Path(kwargs["cwd"]) / "supabase/functions" / cmd[3]
-                folder.mkdir(parents=True, exist_ok=True)
-                (folder / "index.ts").write_text("export const ok = true;")
-                return subprocess.CompletedProcess(cmd, 0)
+                nonlocal count
+                count += 1
+                rows = data()
+                if count == 2:
+                    rows["fib-u4-ris-pilot"]["version"] = 4
+                return rows
             with self.assertRaises(ValueError):
-                module.export(path, "private", get_inventory=inventory, run=download, get_source=live_source)
+                module.export(path, "private", get_inventory=inventory,
+                              run=downloaded, get_source=source_digest)
             self.assertFalse(path.exists())
 
-    def test_relative_import_missing_fails_closed(self):
-        with tempfile.TemporaryDirectory() as base:
-            path = pathlib.Path(base) / "new"
-            def download(cmd, **kwargs):
-                folder = pathlib.Path(kwargs["cwd"]) / "supabase/functions" / cmd[3]
-                folder.mkdir(parents=True, exist_ok=True)
-                (folder / "index.ts").write_text("import '../_shared/missing.ts';")
-                return subprocess.CompletedProcess(cmd, 0)
-            with self.assertRaises(ValueError):
-                module.export(path, "private", get_inventory=lambda _: data(), run=download, get_source=live_source)
-            self.assertFalse(path.exists())
-
-    def test_detects_same_path_with_different_live_bytes(self):
-        with tempfile.TemporaryDirectory() as base:
-            path = pathlib.Path(base) / "new"
-            def download(cmd, **kwargs):
-                slug = cmd[3]
-                folder = pathlib.Path(kwargs["cwd"]) / "supabase/functions" / slug
-                folder.mkdir(parents=True, exist_ok=True)
-                (folder / "index.ts").write_text("export const ok = true;")
-                return subprocess.CompletedProcess(cmd, 0)
-            def changed(_, slug):
-                live = live_source(_, slug)
-                if slug == "fib-u4-ris-pilot":
-                    live["files"][0]["content"] = "export const tampered = true;"
-                return live
-            with self.assertRaises(ValueError):
-                module.export(path, "private", get_inventory=lambda _: data(),
-                              run=download, get_source=changed)
-            self.assertFalse(path.exists())
-
-    def test_live_file_aliases_and_traversal(self):
-        meta = data()["fib-u4-pilot"]
-        doc = {**meta, "files": [
-            {"name": "index.ts", "content": "export const ok = true;"},
-            {"name": "_shared/u4-news.ts", "content": "export const shared = true;"},
-        ]}
-        normalized = module.normalized_live_files(doc, "fib-u4-pilot")
-        self.assertEqual(set(normalized), {"fib-u4-pilot/index.ts", "_shared/u4-news.ts"})
-        doc["files"].append({"name": "../leak.ts", "content": "should not pass"})
-        with self.assertRaises(ValueError):
-            module.normalized_live_files(doc, "fib-u4-pilot")
-
-    def test_shared_module_source_drift_aborts(self):
-        with tempfile.TemporaryDirectory() as base:
-            path = pathlib.Path(base) / "new"
-            def download(cmd, **kwargs):
-                root = pathlib.Path(kwargs["cwd"]) / "supabase/functions"
-                folder = root / cmd[3]
-                folder.mkdir(parents=True, exist_ok=True)
-                (folder / "index.ts").write_text("export const ok = true;")
-                shared = root / "_shared"
-                shared.mkdir(exist_ok=True)
-                (shared / "lib.ts").write_text("export const shared = true;")
-                return subprocess.CompletedProcess(cmd, 0)
-            def divergent(_, slug):
-                doc = live_source(_, slug)
-                doc["files"].append({
-                    "name": "_shared/lib.ts",
-                    "content": "export const shared = " + ("false" if slug == "fib-u4-pilot" else "true") + ";",
-                })
-                return doc
-            with self.assertRaises(ValueError):
-                module.export(path, "private", get_inventory=lambda _: data(),
-                              run=download, get_source=divergent)
-            self.assertFalse(path.exists())
-
-    def test_private_inventory_is_excluded_but_real_source_must_match(self):
-        with tempfile.TemporaryDirectory() as base:
-            edge = pathlib.Path(base)
-            for slug in data():
-                folder = edge / slug
-                folder.mkdir()
-                (folder / "index.ts").write_text("export const ok = true;")
-            (edge / "inventory.json").write_text(json.dumps(list(data().values())))
-            self.assertEqual(module.compare_to_live_source(
-                edge, data(), live_source, "private", allow_private_inventory=True), 3)
-            (edge / "fib-u4-ris-pilot/index.ts").write_text("CHANGED")
-            with self.assertRaises(ValueError):
-                module.compare_to_live_source(
-                    edge, data(), live_source, "private", allow_private_inventory=True)
-
-    def test_private_inventory_does_not_whitelist_extra_source_file(self):
-        with tempfile.TemporaryDirectory() as base:
-            edge = pathlib.Path(base)
-            for slug in data():
-                folder = edge / slug
-                folder.mkdir()
-                (folder / "index.ts").write_text("export const ok = true;")
-            (edge / "inventory.json").write_text(json.dumps(list(data().values())))
-            (edge / "fib-u4-ris-pilot/unexpected.ts").write_text("export const leaked = true;")
-            with self.assertRaises(ValueError):
-                module.compare_to_live_source(
-                    edge, data(), live_source, "private", allow_private_inventory=True)
-
-    def test_type_only_dependency_missing_from_live_bundle_is_a_blocker(self):
-        with tempfile.TemporaryDirectory() as base:
-            path = pathlib.Path(base) / "new"
-            def download(cmd, **kwargs):
-                slug = cmd[3]
-                folder = pathlib.Path(kwargs["cwd"]) / "supabase/functions" / slug
-                folder.mkdir(parents=True, exist_ok=True)
-                (folder / "index.ts").write_text("export const ok = true;")
-                if slug == "fib-u4-pilot":
-                    common = pathlib.Path(kwargs["cwd"]) / "supabase/functions/_shared"
-                    common.mkdir(parents=True, exist_ok=True)
-                    (common / "development-datasets.ts").write_text(
-                        'import type { RisSql } from "./ris-structure.ts";'
+    def test_missing_relative_dependency_blocks(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            path = pathlib.Path(tmp) / "new"
+            def missing(cmd, **kwargs):
+                result = downloaded(cmd, **kwargs)
+                if cmd[3] == "fib-u4-pilot":
+                    (pathlib.Path(kwargs["cwd"]) / "supabase/functions/fib-u4-pilot/index.ts").write_text(
+                        'import type { RisSql } from "../_shared/ris-structure.ts";'
                     )
-                return subprocess.CompletedProcess(cmd, 0)
+                return result
             with self.assertRaisesRegex(ValueError, "missing relative module"):
-                module.export(
-                    path, "private", get_inventory=lambda _: data(),
-                    run=download, get_source=live_source)
+                module.export(path, "private", get_inventory=lambda _: data(),
+                              run=missing, get_source=source_digest)
+            self.assertFalse(path.exists())
+
+    def test_bad_ezbr_digest_blocks(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            path = pathlib.Path(tmp) / "new"
+            def bad(_, slug):
+                return ("0" * 64) if slug == "fib-u4-pilot" else DIGEST
+            with self.assertRaisesRegex(ValueError, "EZBR digest mismatch"):
+                module.export(path, "private", get_inventory=lambda _: data(),
+                              run=downloaded, get_source=bad)
+            self.assertFalse(path.exists())
+
+    def test_private_inventory_cannot_bypass_hash_audit(self):
+        with self.assertRaisesRegex(ValueError, "EZBR digest mismatch"):
+            module.verify_deployed_bundles(data(), lambda *_: "0"*64, "private")
+
+    def test_entrypoint_required(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            path = pathlib.Path(tmp) / "new"
+            def missing(cmd, **kwargs):
+                return subprocess.CompletedProcess(cmd, 0)
+            with self.assertRaises(ValueError):
+                module.export(path, "private", get_inventory=lambda _: data(),
+                              run=missing, get_source=source_digest)
             self.assertFalse(path.exists())
 
     def test_existing_destination_untouched(self):
-        with tempfile.TemporaryDirectory() as base:
-            path = pathlib.Path(base) / "existing"
+        with tempfile.TemporaryDirectory() as tmp:
+            path = pathlib.Path(tmp) / "existing"
             path.mkdir()
             sentinel = path / "keep"
             sentinel.write_text("safe")
