@@ -365,3 +365,53 @@ sind weiterhin nicht erprobt. Dies ist **kein** Beweis eines erfolgreichen
 privaten Export-/Rücklese-/Restore-Laufs. Nichtliteral-dynamische Imports,
 Runtime-Konfigurationsdateien und eine tatsächlich getestete gezielte
 Rücknahme bleiben gesonderte Abnahmepunkte.
+
+
+## Tatsächlicher Restore-Blocker: typisierte Abhängigkeit in `fib-u4-pilot` (08.11.2026)
+
+Der **lesende, vollständige Management-API-Quelldateiabgleich aller neun
+laufenden FIB-Funktionen** hat folgenden konkreten Sonderfall gezeigt:
+
+- `fib-u4-pilot` v11: das Live-Datei-Inventar enthält
+  `fib-u4-pilot/index.ts`, `_shared/development-datasets.ts`
+  und `_shared/u4-news.ts`.
+- `_shared/development-datasets.ts` enthält **`import type { RisSql } from
+  "./ris-structure.ts";`**, aber das Live-Datei-Inventar dieser Funktion
+  liefert **keine** `_shared/ris-structure.ts`.
+- Die vollständige Datei `_shared/ris-structure.ts` ist dagegen bei
+  den Live-Funktionen `fib-u4-ris-pilot` v21 und
+  `fib-editorial-write` v20 vorhanden und in **diesen beiden**
+  Deployments identisch.
+- Die aktuelle Datei `supabase/functions/_shared/ris-structure.ts`
+  auf `main` unterscheidet sich von der älteren, live deployten
+  Datei. Eine Ergänzung aus `main` wäre deshalb **kein originalgetreuer
+  Restore**. `development-datasets.ts` hingegen stimmt in den drei
+  Live-Deployments untereinander sowie mit `main` überein.
+
+**Bewertung:** Der fehlende Verweis ist ein `import type`, der für
+die Laufzeit im transpilierten Bundle entfernt sein kann. Trotzdem
+kann der zurückgelieferte Quellbestand nicht ohne Weiteres vollständig
+zur erneuten Quelltextprüfung und Bereitstellung verwendet werden.
+Der bestehende strenge Abhängigkeitsprüfer **muss** daher
+`fib-u4-pilot` derzeit als nicht quellvollständig zurückweisen.
+Eine grüne CI mit synthetischen Quellen ist **kein** E2E-Restorenachweis.
+
+**Vorgeschlagene sichere Auflösung:**
+1. Offiziellen CLI-Download dieser tatsächlich deployten Version in
+   einem geschützten, isolierten Betreiberprozess durchführen und
+   feststellen, ob er die fehlende rein typisierte Abhängigkeit liefert.
+2. Falls nein, die Lücke in einem ausdrücklich versionierten,
+   **separat gekennzeichneten** Wiederherstellungs-Adapter behandeln:
+   die ältere Datei darf erst nach unabhängiger Prüfung der
+   übereinstimmenden Quellstände aus mindestens zwei tatsächlich
+   deployten RIS-Funktionen und dokumentierter Provenienz ergänzend
+   verwendet werden. Nicht stillschweigend Repo-`main` substituieren.
+3. Einen isolierten Deno-/Supabase-Kompilations- und
+   Funktions-Wiederherstellungstest mit diesem Paket durchführen,
+   ohne die Live-Funktionen zu überschreiben.
+4. Erst danach das Review `completeFunctionExportsReviewed=true`
+   und die verschlüsselte Gesamtsicherung freigeben.
+
+Hier ist **noch keine** automatische Ergänzung eingebaut und
+**keine** Restore-Freigabe erteilt. Ein Regressionstest erzwingt
+den Abbruch bei fehlendem TypeScript-Typimport.
