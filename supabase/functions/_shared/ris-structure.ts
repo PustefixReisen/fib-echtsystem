@@ -84,6 +84,7 @@ export type RisSnapshot = {
   url: string;
   hash: string;
   observedAt: string;
+  parserVersion?: string;
   committee: string | null;
   reference: string | null;
   date: string | null;
@@ -253,6 +254,7 @@ export async function parseRisStructure(
     url: canonical,
     hash: await risHash(html),
     observedAt,
+    parserVersion: "agenda-rows-v2",
     committee: field("sigrname"),
     reference: field("siname"),
     date: validDate,
@@ -297,11 +299,11 @@ export async function persistRisStructure(tx: RisSql, snapshot: RisSnapshot) {
   }
   const latest = (
     await tx.unsafe(
-      "select id,content_hash,revision from fib.ris_session_versions where session_id=$1 order by revision desc limit 1",
+      "select id,content_hash,revision,snapshot->>'parserVersion' parser_version from fib.ris_session_versions where session_id=$1 order by revision desc limit 1",
       [s.id],
     )
   )[0];
-  if (latest?.content_hash === snapshot.hash) {
+  if (latest?.content_hash === snapshot.hash && latest.parser_version === (snapshot.parserVersion ?? null)) {
     await tx.unsafe(
       "update fib.ris_sessions set last_observed_at=$2 where id=$1",
       [s.id, snapshot.observedAt],

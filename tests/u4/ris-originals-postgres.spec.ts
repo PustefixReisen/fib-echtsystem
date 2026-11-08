@@ -401,6 +401,14 @@ async function main() {
   const full=await parseRisStructure('<div class="siname">Synthetic full session</div><table>'+Array.from({length:19},(_,i)=>`<tr><td>Ö ${i+1}</td><td class="tolink"><a href="to0050.asp?__ktonr=${300+i}">Synthetic ${i+1}</a></td></tr>`).join('')+'</table>',RIS_ORIGIN+'/si0057.asp?__ksinr=9999','2026-11-08');
   const fullResult=await tx(db=>persistRisStructure(db,full));
   assert.equal((await first("select count(*)::int n from fib.ris_agenda_items where session_id=$1",[fullResult.sessionId])).n,19,"19 TOPs without proposals survive DB import");
+  // Parser fixes must be applied to unchanged source HTML as well, without
+  // falsifying the source hash or mutating historical snapshots.
+  await pool.query("update fib.ris_session_versions set snapshot=snapshot-'parserVersion' where session_id=$1",[fullResult.sessionId]);
+  const reparsed=await tx(db=>persistRisStructure(db,full));
+  assert.equal(reparsed.changed,true);
+  assert.equal(reparsed.revision,2);
+  assert.equal((await first("select content_hash from fib.ris_session_versions where session_id=$1 and revision=2",[fullResult.sessionId])).content_hash,full.hash);
+  assert.equal((await tx(db=>persistRisStructure(db,full))).changed,false);
   const originalTop=await first("select id from fib.ris_agenda_items where session_id=$1 and number='1'",[fullResult.sessionId]);
   const expanded=structuredClone(full);expanded.hash='1'.repeat(64);expanded.observedAt='2026-11-08T15:00:00Z';
   expanded.agenda[0].title='Changed public title';

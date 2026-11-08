@@ -85,7 +85,11 @@ Referenzmaterial, nicht aus einem nachgewiesenen vollständigen Sitzungsabruf.
    erhaltene TOPs. Die UI benennt `reference_excerpt` ausdrücklich als reduzierte
    Referenz. Ein beobachteter Seitenbestand bleibt **unverified**, auch bei 19 Zeilen.
    Kein neues Schema, keine rückwirkende pauschale Datenbereinigung.
-4. Bestehende Revisions-/Hashprüfung bleibt erhalten: neue oder geänderte TOPs werden
+4. Die Parserfassung wird im vorhandenen Snapshot-JSON dokumentiert. Ein erneuter Abruf
+   identischer HTML-Bytes aus einer älteren Parserfassung erzeugt eine neue abgeleitete
+   Revision, statt die Korrektur wegen gleichen Quellhashs zu überspringen. Der Quellhash
+   bleibt unverändert, die frühere Revision erhalten.
+   Bestehende Revisions-/Hashprüfung bleibt erhalten: neue oder geänderte TOPs werden
    beim erneuten regulären Sitzungsabruf übernommen, stabile Identitäten und manuelle
    Beziehungen bleiben erhalten. Eine später nicht mehr beobachtete Zeile wird nicht
    gelöscht, sondern als ältere Fassung erkennbar. Der Scanner besucht bekannte Sitzungen
