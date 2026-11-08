@@ -446,3 +446,23 @@ hilft, einen unvollständigen Restore nicht freizugeben.
 Eine Übernahme von PR #408 allein ist **keine** Freigabe zum
 Schreib-Release. Vor dem ersten produktiven Einsatz ist die
 Gesamtarchitektur gesondert zu prüfen.
+
+
+## Entkoppelter schreibfreier Live-Test bereits in main (PR #409)
+
+Am 08.11.2026 wurde der eigenständige, geschützte
+`FIB Edge source readiness - read only`-Workflow mit vier grünen
+CI-Prüfungen über PR #409 nach `main` übernommen
+(Squash-Commit `6276868f73024b199d93fc01c9097ca4a2a0051b`).
+Er liegt unter `.github/workflows/fib-edge-readonly.yml`,
+verwendet `scripts/backup/read-only-edge-check.py` und benötigt
+keinen Merge von PR #408.
+
+**Der zuvor in diesem Entwurf erwähnte Workflow
+`fib-edge-source-readiness.yml` ist veraltet und wurde entfernt.**
+In GitHub unter **Actions → FIB Edge source readiness - read only**
+`Run workflow` auf `main` wählen und `CHECK` eingeben.
+Dies ist ausschließlich ein lesender Funktionsexporttest, noch keine
+Rücknahme-/Release-Freigabe. Die GitHub-Verbindung in diesem Chat
+kann `workflow_dispatch` nicht selbst auslösen; zur tatsächlichen
+Ausführung ist ein berechtigter Betreiberstart in GitHub notwendig.
