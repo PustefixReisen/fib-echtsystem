@@ -31,6 +31,31 @@ class Contracts(unittest.TestCase):
    with self.assertRaises(ValueError):exports(root,live,now)
    (root/'edge/fib-example/index.ts').write_text("const x = import('./missing-dynamic.ts');")
    with self.assertRaises(ValueError):exports(root,live,now)
+ def test_nested_shared_type_dependency_in_complete_export(self):
+  now=datetime.datetime.now(datetime.timezone.utc)
+  live=[dict(slug='fib-u4-pilot',version=11,verify_jwt=True,ezbr_sha256='a'*64)]
+  with tempfile.TemporaryDirectory() as tmp:
+   root=pathlib.Path(tmp);(root/'edge/fib-u4-pilot').mkdir(parents=True)
+   (root/'edge/_shared').mkdir();(root/'configuration').mkdir()
+   (root/'edge/inventory.json').write_text(json.dumps(live))
+   (root/'edge/fib-u4-pilot/index.ts').write_text('import "../_shared/development-datasets.ts";')
+   (root/'edge/_shared/development-datasets.ts').write_text(
+    'import type { RisSql } from "./ris-structure.ts";')
+   (root/'configuration/capture.json').write_text(json.dumps({
+    'capturedAt':now.isoformat(),
+    'featureStatesReviewed':True,
+    'completeFunctionExportsReviewed':True}))
+   with self.assertRaises(ValueError):
+    exports(root,live,now)
+   # The missing historical type can be provided by the combined FIB
+   # source set, but only if its actual deployed bytes were checked
+   # independently by export-deployed-edge and final run.py.
+   (root/'edge/_shared/ris-structure.ts').write_text('export type RisSql = object;')
+   self.assertEqual(exports(root,live,now),['fib-u4-pilot'])
+   (root/'edge/_shared/ris-structure.ts').unlink()
+   with self.assertRaises(ValueError):
+    exports(root,live,now)
+
  def test_retention_never_deletes(self):
   now=datetime.datetime.now(datetime.timezone.utc)
   records=[dict(backupId=str(i),createdAt=(now-datetime.timedelta(days=i*10)).isoformat(),readback='passed') for i in range(4)]
