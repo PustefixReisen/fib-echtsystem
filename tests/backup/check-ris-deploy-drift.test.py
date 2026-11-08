@@ -13,6 +13,14 @@ class DriftTests(unittest.TestCase):
     def live(self):
         return [{"slug":slug, **value} for slug,value in module.BASELINE.items()]
 
+    def test_release_uses_same_pinned_cli_as_live_readonly_check(self):
+        workflows=pathlib.Path(__file__).resolve().parents[2]/".github/workflows"
+        release=(workflows/"ris-correction-release.yml").read_text()
+        diagnostic=(workflows/"fib-edge-readonly.yml").read_text()
+        self.assertIn("version: 2.122.0", release)
+        self.assertIn("version: 2.122.0", diagnostic)
+        self.assertNotIn("version: latest", release)
+
     def test_exact_match(self):
         self.assertTrue(module.check(self.live()))
         self.assertTrue(module.check({"functions":self.live()}))
