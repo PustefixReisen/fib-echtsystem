@@ -1,4 +1,5 @@
-"""Offline tests of the standalone source-readiness diagnosis; no credentials."""
+"""Offline tests for the read-only CLI + deployed EZBR digest diagnostic."""
+import hashlib
 import importlib.util
 import pathlib
 import subprocess
@@ -9,24 +10,27 @@ SCRIPT = pathlib.Path(__file__).resolve().parents[2] / "scripts/backup/read-only
 spec = importlib.util.spec_from_file_location("fib_readonly", SCRIPT)
 module = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(module)
+BUNDLE = b"EZBR" + b"example readonly compiled bundle"
+DIGEST = hashlib.sha256(BUNDLE).hexdigest()
 
 
 def expected():
     return {
         slug: {"slug": slug, "version": 2, "verify_jwt": slug != "fib-editorial-write",
-               "import_map": False, "ezbr_sha256": "a" * 64}
+               "import_map": False, "ezbr_sha256": DIGEST}
         for slug in ("fib-editorial-write", "fib-u4-ris-pilot", "fib-u4-pilot")
     }
 
 
 def api(_, path):
-    all_functions = expected()
-    if not path:
-        return list(all_functions.values())
-    slug = path[1:]
-    return {**all_functions[slug], "files": [
-        {"name": slug + "/index.ts", "content": "export const ok = true;"}
-    ]}
+    if path:
+        raise AssertionError("Metadata API per-function files are not supported")
+    return list(expected().values())
+
+
+def body(_, slug):
+    assert slug in expected()
+    return DIGEST
 
 
 def downloaded(cmd, **kw):
@@ -38,92 +42,78 @@ def downloaded(cmd, **kw):
 
 
 class ReadOnlyCheck(unittest.TestCase):
-    def test_exact_deployed_source(self):
-        self.assertEqual(module.check("mock-token", api=api, run=downloaded), (3, 3))
+    def test_successful_cli_and_bundle_audit(self):
+        self.assertEqual(module.check("mock-token", api=api, body=body, run=downloaded), (3, 3))
 
-    def test_missing_type_dependency_blocks(self):
-        def live(_, path):
-            value = api(_, path)
-            if path == "/fib-u4-pilot":
-                value["files"][0]["content"] = 'import type { RisSql } from "../_shared/ris-structure.ts";'
-            return value
-        with self.assertRaises(ValueError):
-            module.check("mock-token", api=live, run=downloaded)
+    def test_missing_nested_type_import_blocks(self):
+        def missing(cmd, **kw):
+            result = downloaded(cmd, **kw)
+            if cmd[3] == "fib-u4-pilot":
+                (pathlib.Path(kw["cwd"]) / "supabase/functions/fib-u4-pilot/index.ts").write_text(
+                    'import type { RisSql } from "../_shared/ris-structure.ts";'
+                )
+            return result
+        with self.assertRaises(module.SafeDiagnostic) as e:
+            module.check("mock-token", api=api, body=body, run=missing)
+        self.assertEqual(str(e.exception), "CLI_SOURCE_DEPENDENCIES")
 
-    def test_changed_deployed_file_blocks(self):
-        def changed(_, path):
-            value = api(_, path)
-            if path == "/fib-u4-ris-pilot":
-                value["files"][0]["content"] = "export const changed = true;"
-            return value
-        with self.assertRaises(ValueError):
-            module.check("mock-token", api=changed, run=downloaded)
+    def test_bundle_digest_mismatch_blocks(self):
+        def changed(_, slug):
+            if slug == "fib-u4-ris-pilot":
+                return "0" * 64
+            return DIGEST
+        with self.assertRaises(module.SafeDiagnostic) as e:
+            module.check("mock-token", api=api, body=changed, run=downloaded)
+        self.assertEqual(str(e.exception), "DEPLOYED_BUNDLE_fib-u4-ris-pilot")
 
-    def test_drift_blocks(self):
+    def test_metadata_drift_blocks(self):
         count = 0
-        def drift(token, path):
+        def drift(_, path):
             nonlocal count
             if not path:
                 count += 1
-            value = api(token, path)
-            if count > 1 and not path:
-                value[0]["version"] = 3
-            return value
-        with self.assertRaises(ValueError):
-            module.check("mock-token", api=drift, run=downloaded)
+            result = api(_, path)
+            if count > 1:
+                result[0]["version"] = 3
+            return result
+        with self.assertRaises(module.SafeDiagnostic) as e:
+            module.check("mock-token", api=drift, body=body, run=downloaded)
+        self.assertEqual(str(e.exception), "FINAL_INVENTORY")
 
-    def test_shared_module_conflict_blocks(self):
-        def source(_, path):
-            value = api(_, path)
-            if path:
-                value["files"].append({
-                    "name": "_shared/common.ts",
-                    "content": "export const x = " + ("0" if path == "/fib-u4-ris-pilot" else "1") + ";",
-                })
-            return value
-        with self.assertRaises(ValueError):
-            module.check("mock-token", api=source, run=downloaded)
-
-    def test_unsafe_paths_are_rejected(self):
-        for path in ("../secret.ts", "_shared/../secret.ts", "/tmp/index.ts", "other/f.ts", "a\\b.ts"):
-            with self.assertRaises(ValueError):
-                module.canonical("fib-u4-pilot", path)
-
-    def test_safe_phase_reports_download_without_exposing_cli_text(self):
+    def test_download_failure_does_not_leak_raw_cli_output(self):
         def failed(cmd, **kwargs):
             return subprocess.CompletedProcess(cmd, 1, stdout=b"SENSITIVE_PATH",
                                                stderr=b"PRIVATE_KEY_MUST_NOT_APPEAR")
-        with self.assertRaises(module.SafeDiagnostic) as error:
-            module.check("mock-token", api=api, run=failed)
-        self.assertEqual(str(error.exception), "CLI_DOWNLOAD_fib-editorial-write")
-        self.assertNotIn("PRIVATE_KEY", str(error.exception))
+        with self.assertRaises(module.SafeDiagnostic) as e:
+            module.check("mock-token", api=api, body=body, run=failed)
+        self.assertEqual(str(e.exception), "CLI_DOWNLOAD_fib-editorial-write")
+        self.assertNotIn("PRIVATE_KEY", str(e.exception))
 
-    def test_safe_phase_reports_live_source_without_exposing_api_text(self):
-        def broken(_, path):
-            if path == "/fib-u4-pilot":
+    def test_broken_body_does_not_leak_api_exception(self):
+        def broken(_, slug):
+            if slug == "fib-u4-pilot":
                 raise ValueError("PRIVATE_SECRET_MUST_NOT_APPEAR")
-            return api(_, path)
-        with self.assertRaises(module.SafeDiagnostic) as error:
-            module.check("mock-token", api=broken, run=downloaded)
-        self.assertEqual(str(error.exception), "LIVE_SOURCE_fib-u4-pilot")
-        self.assertNotIn("PRIVATE_SECRET", str(error.exception))
+            return DIGEST
+        with self.assertRaises(module.SafeDiagnostic) as e:
+            module.check("mock-token", api=api, body=broken, run=downloaded)
+        self.assertEqual(str(e.exception), "DEPLOYED_BUNDLE_fib-u4-pilot")
+        self.assertNotIn("PRIVATE_SECRET", str(e.exception))
 
-    def test_safe_phase_reports_file_mismatch_without_contents(self):
-        def changed(_, path):
-            value = api(_, path)
-            if path == "/fib-u4-ris-pilot":
-                value["files"][0]["content"] = "TOP_SECRET_VALUE"
-            return value
-        with self.assertRaises(module.SafeDiagnostic) as error:
-            module.check("mock-token", api=changed, run=downloaded)
-        self.assertEqual(str(error.exception), "FILE_AND_DEPENDENCY_COMPARISON")
-        self.assertNotIn("TOP_SECRET_VALUE", str(error.exception))
+    def test_body_requires_ezbr_header(self):
+        class Resp:
+            def __enter__(self): return self
+            def __exit__(self, *args): return None
+            def read(self, n): return b"INVALID_CONTENT"
+        with self.assertRaises(ValueError):
+            module.read_body("private", "fib-editorial-write", opener=lambda *a, **kw: Resp())
 
-    def test_empty_or_missing_ris_inventory_rejected(self):
+    def test_duplicate_or_missing_ris_inventory_rejected(self):
         with self.assertRaises(ValueError):
             module.inventory([])
         with self.assertRaises(ValueError):
             module.inventory([expected()["fib-u4-pilot"]])
+        with self.assertRaises(ValueError):
+            module.inventory(list(expected().values()) * 2)
 
 
 if __name__ == "__main__":
