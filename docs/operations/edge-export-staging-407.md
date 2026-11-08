@@ -206,3 +206,67 @@ Offline-Test:
 `python3 tests/backup/capture-feature-flags.test.py`.
 Auch grüne Tests beweisen nicht, dass der Management-Token auf dem
 geschützten Runner tatsächlich für den Endpoint berechtigt ist.
+
+
+## Stage 4: Eine GitHub-Actions-Ausführung ab geprüfter privater input_id (neu)
+
+Der neue **Entwurf** `.github/workflows/ris-correction-release.yml` fasst
+drei zuvor getrennte Bedienhandlungen zu einem geschützten
+`workflow_dispatch`-Lauf zusammen. Er benötigt exakt:
+
+- `confirmation=DEPLOY` und den tatsächlich genehmigten
+  40-stelligen `main`-Commit,
+- `reviewed_input_id` aus dem bereits unabhängig geprüften,
+  verschlüsselten Input-Staging (keine frei erfundene ID).
+
+**Erforderliche Reihenfolge, ohne Bypass:**
+
+1. `preflight`: Branch, Commit und Input-ID streng prüfen;
+2. `backup`: den bestehenden `Complete FIB backup` als
+   **reusable workflow** mit geschütztem `fib-release`-Environment
+   aufrufen; PostgreSQL-17-Dump/isolierter Restore, Frontend/Edge/
+   Konfiguration, Crypto-Upload, Rückleseprüfung und Quittung unverändert
+   vor jedem Deployment. Die freigegebene Backup-ID, Manifest-Prüfsumme
+   und tatsächliche Commit-SHA werden **erst nach Erfolg** über
+   geschützte GitHub-Job-Outputs weitergegeben;
+3. `deploy-edge`: bei erfolgreicher Sicherung ausschließlich
+   `fib-editorial-write` (`verify_jwt=false`) und
+   `fib-u4-ris-pilot` (`verify_jwt=true`) in bestehendem
+   `fib-shared-apps`-Environment deployen;
+4. `deploy-frontend`: nur bei erfolgreichem Edge-Job und nach **erneuter**
+   unabhängiger Backup-Manifestprüfung das statische Frontend in
+   `redaktion/` ohne Remote-Löschung mit geprüftem SFTP-Hostkey
+   übertragen. Die vorhandenen geschützten Variablen/Secrets und
+   Umgebungsfreigaben bleiben in Kraft.
+
+GitHub-Workflow-Jobs werden niemals durch einen synthetischen
+Backup-Erfolg oder durch das Setzen einer Readiness-Variable entsperrt.
+Eine fehlende Secret-/Actions-Berechtigung bewirkt Abbruch, keine
+Umgehung. Bei einem Teilfehler muss nach dem erhaltenen geprüften
+Vorversionspaket gezielt zurückgenommen werden; **keine**
+automatische Shared-Apps-Datenbankwiederherstellung.
+
+Die Verknüpfung ist als **Draft** implementiert und mit Offline-Vertragstests
+abgesichert; sie wurde **nicht** gegen echte GitHub-Environment-/Nextcloud-/
+IONOS-/Supabase-Schreibzugänge ausgeführt und ist **keine** Erlaubnis,
+jetzt den Workflow zu starten.
+
+**Noch nicht gelöst:** Die unabhängige Prüfung der tatsächlich
+wiederherstellbaren Feature-/Edge-Konfiguration vor Staging des
+Inputpakets. Deshalb verlangt das Menü noch eine geprüfte
+`reviewed_input_id`; eine echte *Ein-Freigabe-Bereitstellung ohne
+technische Vorbereitung* ist noch nicht erreicht. Bei einem späteren
+Merge aller Workflow-Änderungen muss die sichere Release-Sicherung
+an die **neue** ausführende `main`-SHA gebunden werden. Die alte
+#404-Implementierungs-SHA ist keine gültige Backup-Ziel-SHA
+eines neuen Workflow-Commits.
+
+Vor Einsatz eine gezielte Sicherheits-/Rollbackprüfung und
+gesonderte Freigabe der neuen Orchestrierung durchführen;
+die bisherige fachliche Freigabe von #404 ersetzt diesen
+technischen Review nicht. Parallel bestehender Draft-PR #406
+(deploy-only) nur nach Abstimmung konsolidieren, um keine
+konkurrierenden Bereitstellungswege zu schaffen.
+
+Offline-Tests:
+`python3 tests/backup/orchestrated-release.test.py`.
