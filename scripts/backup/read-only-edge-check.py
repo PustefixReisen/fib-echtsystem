@@ -48,7 +48,7 @@ def binary_digest(payload, content_type=""):
             raise SafeBodyError("UNEXPECTED_FORMAT")
         # Only parse in-memory, with a bound above; never print parser exceptions.
         try:
-            prefix = ("MIME-Version: 1.0\\r\\nContent-Type: " + content_type + "\\r\\n\\r\\n").encode("ascii")
+            prefix = ("MIME-Version: 1.0\r\nContent-Type: " + content_type + "\r\n\r\n").encode("ascii")
             envelope = BytesParser(policy=email_policy).parsebytes(prefix + payload)
         except Exception:
             raise SafeBodyError("UNEXPECTED_FORMAT") from None
