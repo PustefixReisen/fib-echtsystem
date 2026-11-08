@@ -21,4 +21,5 @@ jobs:
       - run: python3 tests/backup/export-deployed-edge.test.py
       - run: python3 tests/backup/stage-reviewed-input.test.py
       - run: node tests/backup/capture-source-state.spec.mjs
+      - run: python3 tests/backup/capture-feature-flags.test.py
       - run: node tests/u4/backup-database-tls.spec.mjs
