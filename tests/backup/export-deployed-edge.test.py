@@ -130,6 +130,34 @@ class ExportTests(unittest.TestCase):
                               run=download, get_source=divergent)
             self.assertFalse(path.exists())
 
+    def test_private_inventory_is_excluded_but_real_source_must_match(self):
+        with tempfile.TemporaryDirectory() as base:
+            edge = pathlib.Path(base)
+            for slug in data():
+                folder = edge / slug
+                folder.mkdir()
+                (folder / "index.ts").write_text("export const ok = true;")
+            (edge / "inventory.json").write_text(json.dumps(list(data().values())))
+            self.assertEqual(module.compare_to_live_source(
+                edge, data(), live_source, "private", allow_private_inventory=True), 3)
+            (edge / "fib-u4-ris-pilot/index.ts").write_text("CHANGED")
+            with self.assertRaises(ValueError):
+                module.compare_to_live_source(
+                    edge, data(), live_source, "private", allow_private_inventory=True)
+
+    def test_private_inventory_does_not_whitelist_extra_source_file(self):
+        with tempfile.TemporaryDirectory() as base:
+            edge = pathlib.Path(base)
+            for slug in data():
+                folder = edge / slug
+                folder.mkdir()
+                (folder / "index.ts").write_text("export const ok = true;")
+            (edge / "inventory.json").write_text(json.dumps(list(data().values())))
+            (edge / "fib-u4-ris-pilot/unexpected.ts").write_text("export const leaked = true;")
+            with self.assertRaises(ValueError):
+                module.compare_to_live_source(
+                    edge, data(), live_source, "private", allow_private_inventory=True)
+
     def test_existing_destination_untouched(self):
         with tempfile.TemporaryDirectory() as base:
             path = pathlib.Path(base) / "existing"
