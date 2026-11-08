@@ -15,6 +15,8 @@ import sys
 import tempfile
 import urllib.request
 
+from components import RELATIVE_IMPORT_RE
+
 PROJECT = "apaubomxffcwtzjimori"
 SLUG = re.compile(r"^fib-[a-z0-9-]+$")
 API = f"https://api.supabase.com/v1/projects/{PROJECT}/functions"
@@ -56,12 +58,11 @@ def safe_tree(root):
 
 
 def dependency_check(edge):
-    imports = re.compile(r"""(?:from\s*|import\s*\()?["'](\.{1,2}/[^"'\r\n]+)["']""")
     base = edge.resolve()
     for source in edge.rglob("*"):
         if not source.is_file() or source.suffix not in (".ts", ".js", ".mjs", ".json"):
             continue
-        for dep in imports.findall(source.read_text(encoding="utf-8")):
+        for dep in RELATIVE_IMPORT_RE.findall(source.read_text(encoding="utf-8")):
             target = (source.parent / dep).resolve()
             if not target.is_relative_to(base) or not target.is_file():
                 raise ValueError("Downloaded bundle missing relative module")
