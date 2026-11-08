@@ -607,3 +607,31 @@ Testkontext zu prüfen. Der sichere Rückweg muss außerdem an einer
 vom Produktivsystem getrennten Laufzeit praktisch ausprobiert werden.
 Bis dahin kein `completeFunctionExportsReviewed=true`
 aufgrund dieser Teilprüfung allein.
+
+
+## Live-Deno-Preflight unabhängig bereitgestellt (PR #414)
+
+Die bislang nur in Draft-PR #408 vorgesehene
+`check-edge-isolated.py`-Prüfung ist nun auch über
+[PR #414](https://github.com/PustefixReisen/fib-echtsystem/pull/414)
+eigenständig in `main` integriert
+(Merge-Commit `47d7b5678b67b81cc2f7650cf9b8d5aba3618efc`).
+
+Der geschützte Workflow `FIB Edge source readiness - read only`
+führt beim nächsten manuellen `CHECK` nach Download und
+Modulabhängigkeitsprüfung **auch für die tatsächlich deployten
+neun Funktionen** einen isolierten `deno check` durch. Dafür
+erhält Deno keine Supabase-/GitHub-/DB-/Backup-Zugangsdaten.
+Ein Fehler wird allein als `ISOLATED_DENO_TYPECHECK`
+angezeigt. Die temporären Originalquellen werden nicht als
+GitHub-Artefakt veröffentlicht.
+
+Auf dem Merge-Vorstand von PR #414 waren vier von vier
+CI-Workflows erfolgreich; die tatsächliche Deno-CLI wurde an
+einer künstlichen TypeScript-Datei getestet. Der Live-Deno-Test
+selbst ist **noch nicht ausgeführt** und bleibt ein eigener
+Abnahmeschritt, keine stillschweigende Freigabe. Die Prüfung
+kann beim Auflösen externer `npm:`-/`https:`-Module Netzwerk
+benötigen; für dauerhaft reproduzierbare Wiederherstellung
+werden zusätzlich eindeutige Abhängigkeitsversionen,
+Runtime-Eigenschaften und ein ausgeführter Restore-Test benötigt.
