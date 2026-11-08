@@ -567,3 +567,43 @@ und überprüfter Konfigurationsprovenienz erfolgen.
 
 Bis dahin bleibt `completeFunctionExportsReviewed=true` eine
 unabhängige, nicht automatisch gesetzte Betreiberentscheidung.
+
+
+## Rekonstruktionsprüfung im isolierten Deno-Prozess (08.11.2026)
+
+Im Draft-PR #408 steht nun `scripts/backup/check-edge-isolated.py`.
+Der Prüfer erhält einen privaten Gesamtexport und alle tatsächlich
+inventarisierten Funktions-Slugs und führt für deren `index.ts`
+einen reinen `deno check --no-config --no-lock` aus:
+
+- kein Funktionsaufruf, keine Abfrage von Datenbanken, kein Deploy;
+- Deno bekommt ausschließlich `PATH`, ein separates temporäres
+  `HOME`, `DENO_DIR`, `DENO_NO_PROMPT` und `NO_COLOR`.
+  Supabase-/DB-/IONOS-/Nextcloud-Tokens und GitHub-Variablen
+  werden explizit **nicht** an den Deno-Unterprozess weitergegeben;
+- Kompilations-/Dependency-Fehler beenden den Sicherungsworkflow,
+  **bevor** der Live-Datenbankdump beginnt. Deno-Compiler-Output
+  mit möglicherweise privaten Pfaden/Quellfragmenten bleibt
+  aus den GitHub-Protokollen heraus;
+- der vollständige Backup-Workflow installiert Deno 2.5.6 und
+  verlangt den Preflight zusätzlich zum CLI-Quellbestand und
+  dem separaten Live-Bundle-Digest.
+
+Die CI enthält einen tatsächlich ausgeführten Deno-Check an einer
+**künstlich erzeugten** Edge-Funktion ohne Produktivquellen sowie
+Unit-Tests für Fehler, Symlinks, unzulässige Slugs und
+Geheimnisisolation. Der isolierte Test ist im GitHub-Runner
+erfolgreich. Es sind **keine** produktiven Edge-Quelltexte in
+Testartefakten abgelegt.
+
+**Einschränkung:** `deno check` ist Typechecking, keine ausgeführte
+Supabase-Edge-Runtime und kein Rollback. Es kann für
+externe `npm:`-/`https:`-Module Netzwerkzugriffe benötigen;
+ohne Lockfile ist die Reproduzierbarkeit zukünftiger Abhängigkeiten
+nicht garantiert. Vor einer Betriebsgenehmigung sind
+die tatsächlichen Live-Quellen mit ihren Imports und
+Konfigurations-/Runtime-Anforderungen in einem isolierten
+Testkontext zu prüfen. Der sichere Rückweg muss außerdem an einer
+vom Produktivsystem getrennten Laufzeit praktisch ausprobiert werden.
+Bis dahin kein `completeFunctionExportsReviewed=true`
+aufgrund dieser Teilprüfung allein.
