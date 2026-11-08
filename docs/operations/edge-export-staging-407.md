@@ -124,3 +124,34 @@ Zusätzliche Offline-Tests:
 ```bash
 python3 tests/backup/stage-reviewed-input.test.py
 ```
+
+
+## Stage 0: FIB-Quellenzustände lesend erfassen (neu)
+
+Mit vorhandener, TLS-verifizierter Maintenance-Datenbankverbindung lassen sich
+**nur die tatsächlichen FIB-Quellen- und Scope-Zustände** sichern:
+
+```bash
+umask 077
+node scripts/backup/capture-source-state.mjs --out=/PRIVAT/FIB-Quellenzustand.json
+```
+
+Der neue Export liest mit einer Repeatable-Read-/Read-only-Transaktion aus
+`fib.sources` und `fib.source_scopes`. Er erfasst ausschließlich
+Identitäten, `active`, `homepage_url`, Scope-Schlüssel, Status und
+Pflichtquellenkennzeichen. Freitext, Konten, API-Schlüssel und Zugangsdaten
+werden nicht übernommen.
+
+Die Ausgabe hält ausdrücklich `projectFeatures.status = not_captured`
+und `operatorReview = false` fest. **Sie ersetzt nicht**
+`configuration/state.json` oder die geschützte Prüfung der tatsächlich
+wirksamen Supabase-Projekt-Featureflags. Sie darf nicht automatisch in einen
+positiven Release-Review umgewandelt werden. Fehlende Project-Level-Flags
+bleiben ein offener Stop-Punkt, kein Wert `false`.
+
+Offline-Test:
+`node tests/backup/capture-source-state.spec.mjs`
+
+Der echte Zugriff aus dem Actions-Runner bleibt bis zum gesonderten
+Betriebsnachweis ungeprüft; DB-Leseexporte werden nicht in öffentlichen CI-Logs
+oder Actions-Artefakten gespeichert.
