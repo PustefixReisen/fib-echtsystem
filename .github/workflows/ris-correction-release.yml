@@ -83,7 +83,9 @@ jobs:
           python3 scripts/backup/check-ris-deploy-drift.py
       - uses: supabase/setup-cli@v1
         with:
-          version: latest
+          # The read-only export and RIS validation use this tested CLI release.
+          # Never deploy with an unreviewed moving 'latest' version.
+          version: 2.122.0
       - name: Check expected source functions
         shell: bash
         run: |
