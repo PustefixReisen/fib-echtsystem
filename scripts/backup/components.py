@@ -1,6 +1,10 @@
 """Application-neutral private inventory, freshness and retention planning contracts."""
 import datetime,json,pathlib,re
 
+# Covers side-effect imports, re-exports, static imports and literal dynamic imports.
+# Non-literal runtime dynamic imports remain an independent operator review item.
+RELATIVE_IMPORT_RE=re.compile(r'''(?:\bfrom\s*|\bimport\s*\(?\s*)["'](\.{1,2}/[^"'\r\n]+)["']''')
+
 def fresh(value, now, hours=1):
  t=datetime.datetime.fromisoformat(value.replace('Z','+00:00'))
  if t.tzinfo is None or not -60 <= (now-t).total_seconds() <= hours*3600:
@@ -23,7 +27,7 @@ def exports(root, live, now):
   # Every relative code dependency must be present within the exported edge tree.
   for file in folder.rglob('*'):
    if file.is_file() and file.suffix in ['.ts','.js','.mjs','.json']:
-    for dep in re.findall(r'''(?:from\s*|import\s*\()?["'](\.{1,2}/[^"'\r\n]+)["']''',file.read_text()):
+    for dep in RELATIVE_IMPORT_RE.findall(file.read_text(encoding='utf-8')):
      target=(file.parent/dep).resolve()
      if not target.is_relative_to((root/'edge').resolve()) or not target.is_file():raise ValueError('Missing relative dependency')
  evidence=json.loads((root/'configuration/capture.json').read_text())
