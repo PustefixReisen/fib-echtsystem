@@ -113,32 +113,47 @@ def compare_downloads(source, live_union):
     return len(actual)
 
 
+class SafeDiagnostic(ValueError):
+    """Fixed, non-sensitive failure category. Never include remote exception text."""
+
+
 def check(token, *, api=read_api, run=subprocess.run):
-    first = inventory(api(token, ""))
-    with tempfile.TemporaryDirectory(prefix="fib-readonly-edge-") as temp:
-        root = Path(temp)
-        root.chmod(0o700)
-        for slug in sorted(first):
-            p = run(
-                ["supabase", "functions", "download", slug, "--project-ref", PROJECT],
-                cwd=root, capture_output=True, timeout=180, check=False,
-            )
-            if p.returncode != 0:
-                raise ValueError("Official Supabase CLI function download failed")
-        source = root / "supabase" / "functions"
-        if not source.is_dir():
-            raise ValueError("Supabase CLI did not create a source tree")
-        union = {}
-        for slug in sorted(first):
-            files = live_files(api(token, "/" + slug), slug, first[slug])
-            for path, body in files.items():
-                if path in union and union[path] != body:
-                    raise ValueError("Conflicting deployed shared module versions")
-                union[path] = body
-        count = compare_downloads(source, union)
-        if inventory(api(token, "")) != first:
-            raise ValueError("Deployed function inventory changed during download")
-        return len(first), count
+    stage = "INITIAL_INVENTORY"
+    try:
+        first = inventory(api(token, ""))
+        with tempfile.TemporaryDirectory(prefix="fib-readonly-edge-") as temp:
+            root = Path(temp)
+            root.chmod(0o700)
+            for slug in sorted(first):
+                stage = "CLI_DOWNLOAD_" + slug
+                p = run(
+                    ["supabase", "functions", "download", slug, "--project-ref", PROJECT],
+                    cwd=root, capture_output=True, timeout=180, check=False,
+                )
+                if p.returncode != 0:
+                    raise ValueError("Official Supabase CLI function download failed")
+            stage = "CLI_OUTPUT_LAYOUT"
+            source = root / "supabase" / "functions"
+            if not source.is_dir():
+                raise ValueError("Supabase CLI did not create a source tree")
+            union = {}
+            for slug in sorted(first):
+                stage = "LIVE_SOURCE_" + slug
+                files = live_files(api(token, "/" + slug), slug, first[slug])
+                for path, body in files.items():
+                    if path in union and union[path] != body:
+                        raise ValueError("Conflicting deployed shared module versions")
+                    union[path] = body
+            stage = "FILE_AND_DEPENDENCY_COMPARISON"
+            count = compare_downloads(source, union)
+            stage = "FINAL_INVENTORY"
+            if inventory(api(token, "")) != first:
+                raise ValueError("Deployed function inventory changed during download")
+            return len(first), count
+    except Exception:
+        # Prevent exception text, API response bodies, paths, tokens or source
+        # content from escaping to public GitHub job logs.
+        raise SafeDiagnostic(stage) from None
 
 
 if __name__ == "__main__":
@@ -149,7 +164,10 @@ if __name__ == "__main__":
             raise ValueError("Protected Supabase management token required")
         functions, files = check(token)
         print(f"Read-only FIB Edge check passed: {functions} functions, {files} exact source files. No restore or backup performed.")
+    except SafeDiagnostic as error:
+        # Only whitelisted phase names are allowed in the log, no API details.
+        print("Read-only FIB Edge check BLOCKED at " + str(error) + ". No changes performed.", file=sys.stderr)
+        sys.exit(1)
     except Exception:
-        # Do not print HTTP bodies, source code, CLI output or protected credentials.
-        print("Read-only FIB Edge check BLOCKED: incomplete or unavailable verified source. No changes performed.", file=sys.stderr)
+        print("Read-only FIB Edge check BLOCKED at INITIAL_SETUP. No changes performed.", file=sys.stderr)
         sys.exit(1)

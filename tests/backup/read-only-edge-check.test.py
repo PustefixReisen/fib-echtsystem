@@ -89,6 +89,36 @@ class ReadOnlyCheck(unittest.TestCase):
             with self.assertRaises(ValueError):
                 module.canonical("fib-u4-pilot", path)
 
+    def test_safe_phase_reports_download_without_exposing_cli_text(self):
+        def failed(cmd, **kwargs):
+            return subprocess.CompletedProcess(cmd, 1, stdout=b"SENSITIVE_PATH",
+                                               stderr=b"PRIVATE_KEY_MUST_NOT_APPEAR")
+        with self.assertRaises(module.SafeDiagnostic) as error:
+            module.check("mock-token", api=api, run=failed)
+        self.assertEqual(str(error.exception), "CLI_DOWNLOAD_fib-editorial-write")
+        self.assertNotIn("PRIVATE_KEY", str(error.exception))
+
+    def test_safe_phase_reports_live_source_without_exposing_api_text(self):
+        def broken(_, path):
+            if path == "/fib-u4-pilot":
+                raise ValueError("PRIVATE_SECRET_MUST_NOT_APPEAR")
+            return api(_, path)
+        with self.assertRaises(module.SafeDiagnostic) as error:
+            module.check("mock-token", api=broken, run=downloaded)
+        self.assertEqual(str(error.exception), "LIVE_SOURCE_fib-u4-pilot")
+        self.assertNotIn("PRIVATE_SECRET", str(error.exception))
+
+    def test_safe_phase_reports_file_mismatch_without_contents(self):
+        def changed(_, path):
+            value = api(_, path)
+            if path == "/fib-u4-ris-pilot":
+                value["files"][0]["content"] = "TOP_SECRET_VALUE"
+            return value
+        with self.assertRaises(module.SafeDiagnostic) as error:
+            module.check("mock-token", api=changed, run=downloaded)
+        self.assertEqual(str(error.exception), "FILE_AND_DEPENDENCY_COMPARISON")
+        self.assertNotIn("TOP_SECRET_VALUE", str(error.exception))
+
     def test_empty_or_missing_ris_inventory_rejected(self):
         with self.assertRaises(ValueError):
             module.inventory([])
