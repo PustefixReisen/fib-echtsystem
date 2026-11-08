@@ -3,10 +3,12 @@ import importlib.util
 import json
 import pathlib
 import subprocess
+import sys
 import tempfile
 import unittest
 
 MODULE = pathlib.Path(__file__).resolve().parents[2] / "scripts/backup/export-deployed-edge.py"
+sys.path.insert(0, str(MODULE.parent))
 spec = importlib.util.spec_from_file_location("fib_edge_export", MODULE)
 module = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(module)
