@@ -494,3 +494,36 @@ es einen separat dokumentierten, inhaltlich geprüften
 Quell-Provenienz-Adapter sowie einen isolierten Deno-Build- und
 Rollback-Versuch. Die bloße Quellinventur ist **kein**
 vollständiger Wiederherstellungsnachweis.
+
+
+## Korrektur nach echtem GitHub-Run vom 08.11.2026 (verbindlich)
+
+**Wichtige Berichtigung zu früheren Textabschnitten:** Der öffentliche
+Supabase-Management-Endpunkt `GET /v1/projects/{ref}/functions/{slug}`
+liefert nur **Funktionsmetadaten**, ausdrücklich **keine**
+`files`-Liste mit Source-Inhalten. Die im älteren Entwurf behauptete
+bytegenaue Datei-für-Datei-Verifikation über diesen Endpunkt ist
+technisch unmöglich und ist **kein** bereits erbrachter Nachweis.
+Die im Chat verfügbare Supabase-Connector-Aktion `get_edge_function`
+stellt zwar Datei-Inhalte bereit, deren kombinierte Antwort darf aber
+nicht mit dem einzelnen öffentlichen HTTP-Endpunkt verwechselt werden.
+
+Der echte geschützte Read-only-Run #42527253129 scheiterte daher
+bei `LIVE_SOURCE_fib-admin-users`, nachdem alle CLI-Downloads
+ohne unmittelbar gemeldeten Fehler durchlaufen waren.
+
+**Verbindliche Fassung im Draft #408:** Offizieller CLI-Download
+mit privatem vollständigen `edge/`-Baum, Verzeichnis-/
+Abhängigkeitsprüfung, plus separater GET
+`/v1/projects/{ref}/functions/{slug}/body`-Abruf des echten
+EZBR-Funktionskörpers, Prüfung auf `EZBR`-Header und seines SHA-256
+gegen das jeweilige Live-Metadatenfeld `ezbr_sha256`.
+Nachgelagerter Live-Metadaten-Driftcheck bleibt verpflichtend.
+
+**Grenze des Ergebnisses:** Selbst ein erfolgreicher EZBR-Abgleich
+beweist noch **nicht**, dass die von der CLI extrahierten Textdateien
+byteidentisch zu allen ursprünglich bereitgestellten Quellmodulen sind.
+Ein sicherer isolierter Build-/Wiederherstellungsversuch und eine
+nachvollziehbare Runtime-/Konfigurationsinventur bleiben deshalb
+Pflicht für `completeFunctionExportsReviewed=true`. Keine
+automatische Reviewer-Freigabe, kein Deployment.
