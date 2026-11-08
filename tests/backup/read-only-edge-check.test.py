@@ -101,6 +101,7 @@ class ReadOnlyCheck(unittest.TestCase):
 
     def test_body_requires_ezbr_header(self):
         class Resp:
+            headers = {"Content-Type": "application/octet-stream"}
             def __enter__(self): return self
             def __exit__(self, *args): return None
             def read(self, n): return b"INVALID_CONTENT"
@@ -139,21 +140,21 @@ class ReadOnlyCheck(unittest.TestCase):
 
     def test_binary_digest_extracts_real_multipart_file(self):
         payload = b"ESZIP2.3" + b"real archived bundle payload"
-        envelope = (b"--abc123\\r\\n"
-                    b'Content-Disposition: form-data; name="metadata"\\r\\n\\r\\n'
-                    b'{"version":1}\\r\\n'
-                    b"--abc123\\r\\n"
-                    b'Content-Disposition: form-data; name="file"; filename="bundle.eszip"\\r\\n'
-                    b"Content-Type: application/octet-stream\\r\\n\\r\\n"
-                    + payload + b"\\r\\n--abc123--\\r\\n")
+        envelope = (b"--abc123\r\n"
+                    b'Content-Disposition: form-data; name="metadata"\r\n\r\n'
+                    b'{"version":1}\r\n'
+                    b"--abc123\r\n"
+                    b'Content-Disposition: form-data; name="file"; filename="bundle.eszip"\r\n'
+                    b"Content-Type: application/octet-stream\r\n\r\n"
+                    + payload + b"\r\n--abc123--\r\n")
         self.assertEqual(module.binary_digest(envelope,
                              "multipart/form-data; boundary=abc123"),
                              hashlib.sha256(payload).hexdigest())
 
     def test_rejects_multipart_without_exactly_one_bundle(self):
-        payload = (b"--abc123\\r\\n"
-                   b'Content-Disposition: form-data; name="file"\\r\\n\\r\\n'
-                   b'NOT_A_BUNDLE\\r\\n--abc123--\\r\\n')
+        payload = (b"--abc123\r\n"
+                   b'Content-Disposition: form-data; name="file"\r\n\r\n'
+                   b'NOT_A_BUNDLE\r\n--abc123--\r\n')
         with self.assertRaises(module.SafeBodyError):
             module.binary_digest(payload, "multipart/form-data; boundary=abc123")
         with self.assertRaises(module.SafeBodyError):
@@ -161,9 +162,9 @@ class ReadOnlyCheck(unittest.TestCase):
 
     def test_read_body_uses_content_type_and_never_logs_payload(self):
         payload = b"EZBR" + b"secret bundle"
-        envelope = (b"--abc\\r\\n"
-                    b'Content-Disposition: form-data; name="file"\\r\\n\\r\\n'
-                    + payload + b"\\r\\n--abc--\\r\\n")
+        envelope = (b"--abc\r\n"
+                    b'Content-Disposition: form-data; name="file"\r\n\r\n'
+                    + payload + b"\r\n--abc--\r\n")
         class Response:
             headers = {"Content-Type": "multipart/form-data; boundary=abc"}
             def __enter__(self): return self
