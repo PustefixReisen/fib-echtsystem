@@ -167,7 +167,7 @@ class SafeDiagnostic(ValueError):
     """Fixed, non-sensitive failure category. Never include remote exception text."""
 
 
-def check(token, *, api=read_api, body=read_body, run=subprocess.run):
+def check(token, *, api=read_api, body=read_body, run=subprocess.run, typecheck=check_exported_types):
     stage = "INITIAL_INVENTORY"
     try:
         first = inventory(api(token, ""))
@@ -185,7 +185,7 @@ def check(token, *, api=read_api, body=read_body, run=subprocess.run):
             stage = "CLI_SOURCE_DEPENDENCIES"
             file_count = verify_local_sources(root / "supabase" / "functions", first)
             stage = "ISOLATED_DENO_TYPECHECK"
-            check_exported_types(root / "supabase" / "functions", first)
+            typecheck(root / "supabase" / "functions", first)
             # GET /functions/{slug} returns metadata only: it has no 'files'.
             # The documented /body endpoint returns the deployed EZBR bundle.
             # Check its own declared digest; this does NOT prove that CLI
