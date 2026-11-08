@@ -23,5 +23,11 @@ jobs:
       - run: node tests/backup/capture-source-state.spec.mjs
       - run: python3 tests/backup/capture-feature-flags.test.py
       - run: python3 tests/backup/orchestrated-release.test.py
+      - name: Validate reusable backup and RIS release workflow structure with actionlint
+        run: |
+          set -euo pipefail
+          docker run --rm -v "$PWD:/repo:ro" -w /repo rhysd/actionlint:1.7.12 \
+            .github/workflows/complete-backup.yml \
+            .github/workflows/ris-correction-release.yml
       - run: python3 tests/backup/check-ris-deploy-drift.test.py
       - run: node tests/u4/backup-database-tls.spec.mjs
