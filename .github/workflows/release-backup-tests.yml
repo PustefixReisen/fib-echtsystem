@@ -32,3 +32,21 @@ jobs:
             .github/workflows/ris-correction-release.yml
       - run: python3 tests/backup/check-ris-deploy-drift.test.py
       - run: node tests/u4/backup-database-tls.spec.mjs
+
+  isolated-deno-fixture:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: denoland/setup-deno@v2
+        with:
+          deno-version: 2.5.6
+      - name: Reconstruct and typecheck a synthetic FIB function without project access
+        shell: bash
+        run: |
+          set -euo pipefail
+          export TEST_EDGE_DIR="$(mktemp -d)"
+          trap 'rm -rf "$TEST_EDGE_DIR"' EXIT
+          mkdir -p "$TEST_EDGE_DIR/fib-test"
+          printf '%s\\n' 'export const value: number = 1;' > "$TEST_EDGE_DIR/fib-test/index.ts"
+          python3 scripts/backup/check-edge-isolated.py "$TEST_EDGE_DIR" fib-test
