@@ -415,3 +415,34 @@ Eine grüne CI mit synthetischen Quellen ist **kein** E2E-Restorenachweis.
 Hier ist **noch keine** automatische Ergänzung eingebaut und
 **keine** Restore-Freigabe erteilt. Ein Regressionstest erzwingt
 den Abbruch bei fehlendem TypeScript-Typimport.
+
+
+## Geschützter Live-CLI-Test ohne Deployment (neuer Diagnose-Workflow)
+
+Der Entwurf `.github/workflows/fib-edge-source-readiness.yml`
+ermöglicht **nach einer gesonderten Prüfung und Übernahme des PRs**
+einen autorisierten, nur lesenden CLI-Exporttest direkt in GitHub Actions:
+
+1. In **Actions → FIB Edge source recovery readiness (read-only)**
+   den Workflow auf `main` auswählen und `confirmation=CHECK` eingeben.
+2. GitHub `fib-release`-Environment-Freigabe und bereits vorhandene
+   geschützte `SUPABASE_ACCESS_TOKEN`-Berechtigung verwenden.
+3. Der bestehende Exporter lädt alle aktiven `fib-*`-Quellstände via
+   offiziellen CLI und vergleicht sie Datei für Datei mit der
+   Management-API. Fehler werden nur als generische
+   Zugangs-/Vollständigkeitsfehler gemeldet; Quellcode bleibt im
+   temporären Runner-Verzeichnis.
+4. `if: always()` löscht die Exportdateien auch nach einem Fehler.
+   Keine Datenbankmigration, keine neue Secret-Verwaltung, kein
+   Deploy, keine Review-Freigabe und keine Sicherungsquittung.
+
+**Status:** Die Workflow-Definition und die statische Syntaxprüfung
+sind zunächst nur im Draft-PR #408 vorhanden. Es wurde **kein**
+Live-Workflow gestartet. Es ist ausdrücklich möglich und auf Basis der
+oben beschriebenen Typimport-Lücke sogar zu erwarten, dass dieser
+strenge Vollständigkeitstest vorerst abbricht. Gerade dieses Ergebnis
+hilft, einen unvollständigen Restore nicht freizugeben.
+
+Eine Übernahme von PR #408 allein ist **keine** Freigabe zum
+Schreib-Release. Vor dem ersten produktiven Einsatz ist die
+Gesamtarchitektur gesondert zu prüfen.
