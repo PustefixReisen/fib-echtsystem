@@ -1,0 +1,188 @@
+name: FIB RIS correction – backup and scoped deployment
+
+# One approval at dispatch, but a genuinely reviewed private input remains mandatory.
+# No push, schedule or automatic approval. This workflow must not be used until
+# the protected environments and existing backup process are operationally reviewed.
+on:
+  workflow_dispatch:
+    inputs:
+      confirmation:
+        description: 'Type DEPLOY only for the approved RIS correction release'
+        type: string
+        required: true
+      approved_commit:
+        description: 'Exact reviewed main SHA (40 hex characters)'
+        type: string
+        required: true
+      reviewed_input_id:
+        description: 'Independently reviewed private input ID in encrypted Nextcloud'
+        type: string
+        required: true
+
+permissions:
+  contents: read
+
+concurrency:
+  group: fib-ris-correction-release
+  cancel-in-progress: false
+
+jobs:
+  preflight:
+    if: ${{ github.ref == 'refs/heads/main' && inputs.confirmation == 'DEPLOY' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Bind approval to exact code and existing protected private input
+        env:
+          APPROVED_COMMIT: ${{ inputs.approved_commit }}
+          INPUT_ID: ${{ inputs.reviewed_input_id }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          [[ "$APPROVED_COMMIT" =~ ^[0-9a-f]{40}$ ]]
+          test "$GITHUB_SHA" = "$APPROVED_COMMIT"
+          [[ "$INPUT_ID" =~ ^input-[0-9a-f]{32}$ ]]
+
+  backup:
+    needs: preflight
+    uses: ./.github/workflows/complete-backup.yml
+    with:
+      mode: release
+      input_id: ${{ inputs.reviewed_input_id }}
+    secrets: inherit
+
+  deploy-edge:
+    needs: [preflight, backup]
+    if: ${{ needs.backup.result == 'success' }}
+    runs-on: ubuntu-latest
+    environment: fib-shared-apps
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - name: Recheck approved revision and release receipt
+        shell: bash
+        env:
+          APPROVED_COMMIT: ${{ inputs.approved_commit }}
+          BACKUP_ID: ${{ needs.backup.outputs.backup_id }}
+          MANIFEST_SHA: ${{ needs.backup.outputs.manifest_sha256 }}
+          VERIFIED_COMMIT: ${{ needs.backup.outputs.verified_commit }}
+          SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
+        run: |
+          set -euo pipefail
+          test "$GITHUB_SHA" = "$APPROVED_COMMIT"
+          test "$VERIFIED_COMMIT" = "$APPROVED_COMMIT"
+          [[ "$BACKUP_ID" =~ ^release-[0-9a-f]{32}$ ]]
+          [[ "$MANIFEST_SHA" =~ ^[0-9a-f]{64}$ ]]
+          test -n "$SUPABASE_ACCESS_TOKEN"
+      - uses: supabase/setup-cli@v1
+        with:
+          version: latest
+      - name: Check expected source functions
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -f supabase/functions/fib-editorial-write/index.ts
+          test -f supabase/functions/fib-u4-ris-pilot/index.ts
+      - name: Deploy only approved RIS correction Edge Functions
+        shell: bash
+        env:
+          SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
+        run: |
+          set -euo pipefail
+          # Existing live verify_jwt: editorial-write=false; u4-ris-pilot=true.
+          supabase functions deploy fib-editorial-write --project-ref apaubomxffcwtzjimori --no-verify-jwt
+          supabase functions deploy fib-u4-ris-pilot --project-ref apaubomxffcwtzjimori
+      - name: Confirm deployed inventory (no secret content)
+        shell: bash
+        env:
+          SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
+        run: |
+          set -euo pipefail
+          supabase functions list --project-ref apaubomxffcwtzjimori
+
+  deploy-frontend:
+    needs: [backup, deploy-edge]
+    if: ${{ needs.deploy-edge.result == 'success' }}
+    runs-on: ubuntu-latest
+    environment: fib-release
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Verify readback-proven complete backup again before frontend mutation
+        shell: bash
+        env:
+          APPROVED_COMMIT: ${{ inputs.approved_commit }}
+          BACKUP_ID: ${{ needs.backup.outputs.backup_id }}
+          MANIFEST_SHA: ${{ needs.backup.outputs.manifest_sha256 }}
+          VERIFIED_COMMIT: ${{ needs.backup.outputs.verified_commit }}
+          READY: ${{ vars.FIB_BACKUP_READY }}
+          RCLONE_CONFIG_TEXT: ${{ secrets.FIB_BACKUP_RCLONE_CONFIG }}
+        run: |
+          set -euo pipefail
+          umask 077
+          test "$GITHUB_SHA" = "$APPROVED_COMMIT"
+          test "$VERIFIED_COMMIT" = "$APPROVED_COMMIT"
+          test "$READY" = true
+          [[ "$BACKUP_ID" =~ ^release-[0-9a-f]{32}$ ]]
+          [[ "$MANIFEST_SHA" =~ ^[0-9a-f]{64}$ ]]
+          test -n "$RCLONE_CONFIG_TEXT"
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq rclone
+          printf '%s' "$RCLONE_CONFIG_TEXT" > "$RUNNER_TEMP/fib-rclone.conf"
+          python3 - <<'PY'
+          import configparser,os
+          p=configparser.ConfigParser(interpolation=None)
+          p.read(os.environ['RUNNER_TEMP']+'/fib-rclone.conf')
+          assert p.get('fib-backup-crypt','type',fallback='')=='crypt'
+          PY
+          mkdir -m 700 "$RUNNER_TEMP/fib-backup"
+          rclone --config "$RUNNER_TEMP/fib-rclone.conf" copy "fib-backup-crypt:$BACKUP_ID" "$RUNNER_TEMP/fib-backup" > "$RUNNER_TEMP/fib-transfer.log" 2>&1
+          FIB_BACKUP_MANIFEST_SHA256="$MANIFEST_SHA" node scripts/backup/bundle.mjs verify "$RUNNER_TEMP/fib-backup" "$APPROVED_COMMIT"
+      - name: Build FIB editorial web
+        shell: bash
+        env:
+          VITE_FIB_ACCEPTANCE_MODE: shared-apps
+          VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
+          VITE_SUPABASE_PUBLISHABLE_KEY: ${{ secrets.VITE_SUPABASE_PUBLISHABLE_KEY }}
+        run: |
+          set -euo pipefail
+          test -n "$VITE_SUPABASE_URL"
+          test -n "$VITE_SUPABASE_PUBLISHABLE_KEY"
+          npm install
+          npm run build --workspace @fib/editorial-web
+          test -f apps/editorial-web/dist/index.html
+      - name: Deploy static files only, preserving other remote files
+        shell: bash
+        env:
+          IONOS_SFTP_HOST: ${{ secrets.IONOS_SFTP_HOST }}
+          IONOS_SFTP_USER: ${{ secrets.IONOS_SFTP_USER }}
+          IONOS_SFTP_PASSWORD: ${{ secrets.IONOS_SFTP_PASSWORD }}
+          FIB_SFTP_KNOWN_HOSTS_TEXT: ${{ secrets.FIB_SFTP_KNOWN_HOSTS }}
+        run: |
+          set -euo pipefail
+          umask 077
+          test -n "$IONOS_SFTP_HOST"
+          test -n "$IONOS_SFTP_USER"
+          test -n "$IONOS_SFTP_PASSWORD"
+          test -n "$FIB_SFTP_KNOWN_HOSTS_TEXT"
+          sudo apt-get install -y -qq lftp
+          printf '%s\n' "$FIB_SFTP_KNOWN_HOSTS_TEXT" > "$RUNNER_TEMP/fib-known-hosts"
+          ssh-keygen -F "$IONOS_SFTP_HOST" -f "$RUNNER_TEMP/fib-known-hosts" >/dev/null
+          lftp -u "$IONOS_SFTP_USER","$IONOS_SFTP_PASSWORD" "sftp://$IONOS_SFTP_HOST" <<EOF
+          set cmd:fail-exit yes
+          set net:max-retries 1
+          set net:timeout 30
+          set sftp:connect-program "ssh -a -x -o StrictHostKeyChecking=yes -o UserKnownHostsFile=$RUNNER_TEMP/fib-known-hosts"
+          cd redaktion
+          mirror --reverse --no-perms apps/editorial-web/dist/ ./
+          bye
+          EOF
+      - name: Remove private data
+        if: always()
+        shell: bash
+        run: |
+          rm -rf "$RUNNER_TEMP/fib-backup"
+          rm -f "$RUNNER_TEMP/fib-rclone.conf" "$RUNNER_TEMP/fib-transfer.log" "$RUNNER_TEMP/fib-known-hosts"
