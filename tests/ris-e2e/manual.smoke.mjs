@@ -128,18 +128,18 @@ try {
       .locator("section")
       .filter({
         has: page.getByRole("heading", {
-          name: "Beschlussfassung",
+          name: "Niederschrift der Sitzung",
           exact: true,
         }),
       })
-      .locator("article")
+      .locator("p").filter({hasText:/Beschlusspunkt/})
       .count(),
     2,
   );
   // This manual launcher test verifies RIS persistence across restarts. Source
   // intake is covered by the dedicated source-editorial UI suite; no fixture
   // observation is assumed to exist in this isolated RIS launch.
-  assert.equal(await page.getByRole("heading", { name: "Beschlussfassung", exact: true }).count(), 1);
+  assert.equal(await page.getByRole("heading", { name: "Niederschrift der Sitzung", exact: true }).count(), 1);
   await context.close();
   await stop();
   console.log(
@@ -151,7 +151,7 @@ try {
   await next.page.locator(".side-nav").getByRole("button", { name: "Sitzungen", exact: true }).click();
   await next.page.locator(".work-item").filter({ hasText: "GR/439/2026" }).getByRole("button", { name: "Sitzung öffnen" }).click();
   await next.page.getByRole("button", { name: "TOP 6 öffnen" }).click();
-  assert.equal(await next.page.locator("section").filter({has:next.page.getByRole("heading",{name:"Beschlussfassung",exact:true})}).locator("article").count(), 2);
+  assert.equal(await next.page.locator("section").filter({has:next.page.getByRole("heading",{name:"Niederschrift der Sitzung",exact:true})}).locator("p").filter({hasText:/Beschlusspunkt/}).count(), 2);
   const resumed = new pg.Client({ connectionString: next.f.runtime });
   await resumed.connect();
   assert.equal(
