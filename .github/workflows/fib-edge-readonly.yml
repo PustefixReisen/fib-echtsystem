@@ -1,0 +1,50 @@
+name: FIB Edge source readiness - read only
+
+# Standalone check; never deploy, alter secrets, publish source files or grant release.
+on:
+  pull_request:
+    paths:
+      - 'scripts/backup/read-only-edge-check.py'
+      - 'tests/backup/read-only-edge-check.test.py'
+      - '.github/workflows/fib-edge-readonly.yml'
+  workflow_dispatch:
+    inputs:
+      confirmation:
+        description: 'Type CHECK for a read-only deployed FIB source audit'
+        type: string
+        required: true
+
+permissions:
+  contents: read
+
+concurrency:
+  group: fib-edge-source-readonly
+  cancel-in-progress: false
+
+jobs:
+  offline-contract:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Test fail-closed source checker
+        run: python3 tests/backup/read-only-edge-check.test.py
+
+  live-readonly:
+    if: ${{ github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main' && inputs.confirmation == 'CHECK' }}
+    needs: offline-contract
+    runs-on: ubuntu-latest
+    environment: fib-release
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: supabase/setup-cli@v1
+        with:
+          version: 2.122.0
+      - name: Compare actual deployed source with private Supabase CLI downloads
+        env:
+          SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
+        run: |
+          set -euo pipefail
+          umask 077
+          test -n "$SUPABASE_ACCESS_TOKEN"
+          python3 scripts/backup/read-only-edge-check.py
