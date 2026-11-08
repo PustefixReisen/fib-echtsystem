@@ -28,6 +28,15 @@ def backup(env,run=f.command):
   if isinstance(live,dict):live=live['functions']
   print('Backup phase: validate-function-exports',flush=True)
   now=datetime.datetime.now(datetime.timezone.utc);slugs=exports(bundle,live,now)
+  print('Backup phase: verify-live-source-file-digests',flush=True)
+  # Re-query every deployed FIB function's real source bytes at backup time.
+  # This is not equivalent to trusting an unreviewed inventory/manifest.
+  spec=importlib.util.spec_from_file_location('fib_export_deployed',pathlib.Path(__file__).with_name('export-deployed-edge.py'))
+  verifier=importlib.util.module_from_spec(spec);spec.loader.exec_module(verifier)
+  metadata={item['slug']:item for item in json.loads((bundle/'edge/inventory.json').read_text())}
+  verifier.compare_to_live_source(
+    bundle/'edge',metadata,verifier.deployed_files,
+    env['FIB_BACKUP_MANAGEMENT_TOKEN'],allow_private_inventory=True)
   print('Backup phase: database-capture',flush=True)
   run(['node','scripts/ris-shared-apps/backup.mjs','--out='+str(bundle/'database')],env=env)
   dump=bundle/'database/fib.dump';digest=hashlib.sha256(dump.read_bytes()).hexdigest()
