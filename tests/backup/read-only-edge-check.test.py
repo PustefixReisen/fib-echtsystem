@@ -43,7 +43,15 @@ def downloaded(cmd, **kw):
 
 class ReadOnlyCheck(unittest.TestCase):
     def test_successful_cli_and_bundle_audit(self):
-        self.assertEqual(module.check("mock-token", api=api, body=body, run=downloaded), (3, 3))
+        self.assertEqual(module.check("mock-token", api=api, body=body, run=downloaded, typecheck=lambda *_: 3), (3, 3))
+
+    def test_failed_isolated_deno_check_blocks_without_leaking_output(self):
+        def fail(*_):
+            raise RuntimeError("PRIVATE_TYPESCRIPT_SOURCE")
+        with self.assertRaises(module.SafeDiagnostic) as caught:
+            module.check("mock-token", api=api, body=body, run=downloaded, typecheck=fail)
+        self.assertEqual(str(caught.exception), "ISOLATED_DENO_TYPECHECK")
+        self.assertNotIn("PRIVATE_TYPESCRIPT", str(caught.exception))
 
     def test_missing_nested_type_import_blocks(self):
         def missing(cmd, **kw):
@@ -54,7 +62,7 @@ class ReadOnlyCheck(unittest.TestCase):
                 )
             return result
         with self.assertRaises(module.SafeDiagnostic) as e:
-            module.check("mock-token", api=api, body=body, run=missing)
+            module.check("mock-token", api=api, body=body, run=missing, typecheck=lambda *_: 3)
         self.assertEqual(str(e.exception), "CLI_SOURCE_DEPENDENCIES")
 
     def test_bundle_digest_mismatch_blocks(self):
@@ -63,7 +71,7 @@ class ReadOnlyCheck(unittest.TestCase):
                 return "0" * 64
             return DIGEST
         with self.assertRaises(module.SafeDiagnostic) as e:
-            module.check("mock-token", api=api, body=changed, run=downloaded)
+            module.check("mock-token", api=api, body=changed, run=downloaded, typecheck=lambda *_: 3)
         self.assertEqual(str(e.exception), "DEPLOYED_BUNDLE_fib-u4-ris-pilot_DIGEST_MISMATCH")
 
     def test_metadata_drift_blocks(self):
@@ -77,7 +85,7 @@ class ReadOnlyCheck(unittest.TestCase):
                 result[0]["version"] = 3
             return result
         with self.assertRaises(module.SafeDiagnostic) as e:
-            module.check("mock-token", api=drift, body=body, run=downloaded)
+            module.check("mock-token", api=drift, body=body, run=downloaded, typecheck=lambda *_: 3)
         self.assertEqual(str(e.exception), "FINAL_INVENTORY")
 
     def test_download_failure_does_not_leak_raw_cli_output(self):
@@ -85,7 +93,7 @@ class ReadOnlyCheck(unittest.TestCase):
             return subprocess.CompletedProcess(cmd, 1, stdout=b"SENSITIVE_PATH",
                                                stderr=b"PRIVATE_KEY_MUST_NOT_APPEAR")
         with self.assertRaises(module.SafeDiagnostic) as e:
-            module.check("mock-token", api=api, body=body, run=failed)
+            module.check("mock-token", api=api, body=body, run=failed, typecheck=lambda *_: 3)
         self.assertEqual(str(e.exception), "CLI_DOWNLOAD_fib-editorial-write")
         self.assertNotIn("PRIVATE_KEY", str(e.exception))
 
@@ -95,7 +103,7 @@ class ReadOnlyCheck(unittest.TestCase):
                 raise ValueError("PRIVATE_SECRET_MUST_NOT_APPEAR")
             return DIGEST
         with self.assertRaises(module.SafeDiagnostic) as e:
-            module.check("mock-token", api=api, body=broken, run=downloaded)
+            module.check("mock-token", api=api, body=broken, run=downloaded, typecheck=lambda *_: 3)
         self.assertEqual(str(e.exception), "DEPLOYED_BUNDLE_fib-u4-pilot")
         self.assertNotIn("PRIVATE_SECRET", str(e.exception))
 
@@ -112,7 +120,7 @@ class ReadOnlyCheck(unittest.TestCase):
         def digest(_, slug):
             return "0" * 64 if slug == "fib-editorial-write" else DIGEST
         with self.assertRaises(module.SafeDiagnostic) as error:
-            module.check("mock-token", api=api, body=digest, run=downloaded)
+            module.check("mock-token", api=api, body=digest, run=downloaded, typecheck=lambda *_: 3)
         self.assertEqual(str(error.exception), "DEPLOYED_BUNDLE_fib-editorial-write_DIGEST_MISMATCH")
 
     def test_ezbr_body_unexpected_format_classified_without_content(self):
