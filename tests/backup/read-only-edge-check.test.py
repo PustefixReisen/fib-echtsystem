@@ -64,7 +64,7 @@ class ReadOnlyCheck(unittest.TestCase):
             return DIGEST
         with self.assertRaises(module.SafeDiagnostic) as e:
             module.check("mock-token", api=api, body=changed, run=downloaded)
-        self.assertEqual(str(e.exception), "DEPLOYED_BUNDLE_fib-u4-ris-pilot")
+        self.assertEqual(str(e.exception), "DEPLOYED_BUNDLE_fib-u4-ris-pilot_DIGEST_MISMATCH")
 
     def test_metadata_drift_blocks(self):
         count = 0
@@ -106,6 +106,31 @@ class ReadOnlyCheck(unittest.TestCase):
             def read(self, n): return b"INVALID_CONTENT"
         with self.assertRaises(ValueError):
             module.read_body("private", "fib-editorial-write", opener=lambda *a, **kw: Resp())
+
+    def test_ezbr_digest_mismatch_phase_is_precise(self):
+        def digest(_, slug):
+            return "0" * 64 if slug == "fib-editorial-write" else DIGEST
+        with self.assertRaises(module.SafeDiagnostic) as error:
+            module.check("mock-token", api=api, body=digest, run=downloaded)
+        self.assertEqual(str(error.exception), "DEPLOYED_BUNDLE_fib-editorial-write_DIGEST_MISMATCH")
+
+    def test_ezbr_body_unexpected_format_classified_without_content(self):
+        class Resp:
+            def __enter__(self): return self
+            def __exit__(self, *args): return None
+            def read(self, n): return b"VERY_PRIVATE_NOT_AN_EZBR"
+        with self.assertRaises(module.SafeBodyError) as error:
+            module.read_body("mock-token", "fib-u4-pilot", opener=lambda *a, **kw: Resp())
+        self.assertEqual(str(error.exception), "UNEXPECTED_FORMAT")
+        self.assertNotIn("VERY_PRIVATE", str(error.exception))
+
+    def test_body_http_status_classification(self):
+        from urllib.error import HTTPError
+        def denied(*args, **kwargs):
+            raise HTTPError("https://secret.invalid/path", 403, "PRIVATE", {}, None)
+        with self.assertRaises(module.SafeBodyError) as error:
+            module.read_body("mock-token", "fib-u4-pilot", opener=denied)
+        self.assertEqual(str(error.exception), "AUTH_DENIED")
 
     def test_duplicate_or_missing_ris_inventory_rejected(self):
         with self.assertRaises(ValueError):
