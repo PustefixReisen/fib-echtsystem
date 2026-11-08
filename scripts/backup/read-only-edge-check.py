@@ -5,6 +5,7 @@ Never writes to Supabase, never emits live source contents, never claims restore
 success or release approval. All outputs are inside a private temporary folder.
 """
 import hashlib
+import importlib.util
 from email.parser import BytesParser
 from email.policy import default as email_policy
 import json
@@ -153,6 +154,15 @@ def verify_local_sources(source, function_slugs):
     return len(sources)
 
 
+def check_exported_types(root, slugs):
+    """Use isolated Deno typecheck; no production secrets forwarded to Deno."""
+    path = Path(__file__).with_name("check-edge-isolated.py")
+    spec = importlib.util.spec_from_file_location("fib_isolated_deno", path)
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module.check(root, slugs)
+
+
 class SafeDiagnostic(ValueError):
     """Fixed, non-sensitive failure category. Never include remote exception text."""
 
@@ -174,6 +184,8 @@ def check(token, *, api=read_api, body=read_body, run=subprocess.run):
                     raise ValueError("Supabase CLI download failed")
             stage = "CLI_SOURCE_DEPENDENCIES"
             file_count = verify_local_sources(root / "supabase" / "functions", first)
+            stage = "ISOLATED_DENO_TYPECHECK"
+            check_exported_types(root / "supabase" / "functions", first)
             # GET /functions/{slug} returns metadata only: it has no 'files'.
             # The documented /body endpoint returns the deployed EZBR bundle.
             # Check its own declared digest; this does NOT prove that CLI
