@@ -5,6 +5,8 @@ Never writes to Supabase, never emits live source contents, never claims restore
 success or release approval. All outputs are inside a private temporary folder.
 """
 import hashlib
+from email.parser import BytesParser
+from email.policy import default as email_policy
 import json
 import os
 from pathlib import Path, PurePosixPath
@@ -30,16 +32,57 @@ class SafeBodyError(ValueError):
     """An allowlisted phase detail only; no remote content or headers."""
 
 
+def binary_digest(payload, content_type=""):
+    """Hash only a clearly identified deployed ESZIP/EZBR file payload.
+
+    The Management API may wrap the file in multipart/form-data. Never hash
+    an entire multipart envelope or treat arbitrary JSON/errors as a bundle.
+    """
+    if not payload:
+        raise SafeBodyError("EMPTY")
+    if len(payload) > 32 * 1024 * 1024:
+        raise SafeBodyError("TOO_LARGE")
+    mime = (content_type or "").split(";", 1)[0].strip().lower()
+    if mime in ("multipart/form-data", "multipart/mixed"):
+        if not isinstance(content_type, str) or "boundary=" not in content_type.lower():
+            raise SafeBodyError("UNEXPECTED_FORMAT")
+        # Only parse in-memory, with a bound above; never print parser exceptions.
+        try:
+            prefix = ("MIME-Version: 1.0\r\nContent-Type: " + content_type + "\r\n\r\n").encode("ascii")
+            envelope = BytesParser(policy=email_policy).parsebytes(prefix + payload)
+        except Exception:
+            raise SafeBodyError("UNEXPECTED_FORMAT") from None
+        if not envelope.is_multipart():
+            raise SafeBodyError("UNEXPECTED_FORMAT")
+        candidates = []
+        for part in envelope.iter_parts():
+            disposition = part.get_content_disposition()
+            if disposition not in ("form-data", "attachment"):
+                continue
+            name = part.get_param("name", header="content-disposition")
+            if name not in ("file", "body", None):
+                continue
+            value = part.get_payload(decode=True)
+            if isinstance(value, bytes) and (value.startswith(b"EZBR") or value.startswith(b"ESZIP")):
+                candidates.append(value)
+        if len(candidates) != 1:
+            raise SafeBodyError("UNEXPECTED_FORMAT")
+        payload = candidates[0]
+    if not (payload.startswith(b"EZBR") or payload.startswith(b"ESZIP")):
+        raise SafeBodyError("UNEXPECTED_FORMAT")
+    return hashlib.sha256(payload).hexdigest()
+
+
 def read_body(token, slug, *, opener=urlopen):
-    """Read deployed EZBR body only; never print or persist the binary payload."""
+    """Read the deployed function bundle via documented API, without logs."""
     req = Request(BASE + "/" + slug + "/body", headers={
         "Authorization": "Bearer " + token
     })
     try:
         with opener(req, timeout=30) as response:
             binary = response.read(32 * 1024 * 1024 + 1)
+            content_type = response.headers.get("Content-Type", "")
     except Exception as exc:
-        # Only a fixed classification may reach logs, no URL/body/header/error.
         from urllib.error import HTTPError
         if isinstance(exc, HTTPError):
             code = exc.code
@@ -51,13 +94,7 @@ def read_body(token, slug, *, opener=urlopen):
                 raise SafeBodyError("RATE_LIMIT") from None
             raise SafeBodyError("HTTP_OTHER") from None
         raise SafeBodyError("TRANSPORT") from None
-    if len(binary) > 32 * 1024 * 1024:
-        raise SafeBodyError("TOO_LARGE")
-    if not binary:
-        raise SafeBodyError("EMPTY")
-    if binary[:4] != b"EZBR":
-        raise SafeBodyError("UNEXPECTED_FORMAT")
-    return hashlib.sha256(binary).hexdigest()
+    return binary_digest(binary, content_type)
 
 
 
