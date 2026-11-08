@@ -401,6 +401,23 @@ async function main() {
   const full=await parseRisStructure('<div class="siname">Synthetic full session</div><table>'+Array.from({length:19},(_,i)=>`<tr><td>Ö ${i+1}</td><td class="tolink"><a href="to0050.asp?__ktonr=${300+i}">Synthetic ${i+1}</a></td></tr>`).join('')+'</table>',RIS_ORIGIN+'/si0057.asp?__ksinr=9999','2026-11-08');
   const fullResult=await tx(db=>persistRisStructure(db,full));
   assert.equal((await first("select count(*)::int n from fib.ris_agenda_items where session_id=$1",[fullResult.sessionId])).n,19,"19 TOPs without proposals survive DB import");
+  const originalTop=await first("select id from fib.ris_agenda_items where session_id=$1 and number='1'",[fullResult.sessionId]);
+  const expanded=structuredClone(full);expanded.hash='1'.repeat(64);expanded.observedAt='2026-11-08T15:00:00Z';
+  expanded.agenda[0].title='Changed public title';
+  expanded.agenda.push({...structuredClone(expanded.agenda[18]),key:'number:20',number:'20',title:'Late TOP without proposal'});
+  await tx(db=>persistRisStructure(db,expanded));
+  await tx(db=>persistRisStructure(db,expanded));
+  assert.equal((await first("select count(*)::int n from fib.ris_agenda_items where session_id=$1",[fullResult.sessionId])).n,20);
+  assert.equal((await first("select id from fib.ris_agenda_items where session_id=$1 and number='1'",[fullResult.sessionId])).id,originalTop.id);
+  const expandedRead=await run({action:'ris_read',sessionId:fullResult.sessionId});
+  assert.equal(expandedRead.agendaCoverage.snapshotTopCount,20);
+  assert.equal(expandedRead.agendaCoverage.retainedFromEarlierRevisions,0);
+  const shorter=structuredClone(expanded);shorter.hash='2'.repeat(64);shorter.observedAt='2026-11-08T16:00:00Z';shorter.agenda.pop();
+  await tx(db=>persistRisStructure(db,shorter));
+  const retainedRead=await run({action:'ris_read',sessionId:fullResult.sessionId});
+  assert.equal(retainedRead.agendaCoverage.snapshotTopCount,19);
+  assert.equal(retainedRead.agendaCoverage.storedTopCount,20);
+  assert.equal(retainedRead.agendaCoverage.retainedFromEarlierRevisions,1,'Missing later row is retained and explicitly distinguished');
   for (const role of ["anon", "authenticated", "service_role"]) {
     const c = await pool.connect();
     try {

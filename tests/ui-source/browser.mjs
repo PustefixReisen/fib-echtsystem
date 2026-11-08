@@ -40,6 +40,7 @@ try {
   await page.goto("http://127.0.0.1:4174");
   await button("Sitzungsbereich").click();
   await button("Sitzung öffnen").click();
+  await page.getByText(/Bewusst reduzierter Referenzbestand; keine vollständige Sitzung/).waitFor();
   const tabs=page.getByRole("navigation",{name:"Sitzung und Tagesordnungspunkte"});
   await tabs.getByRole("button",{name:"TOP 2"}).click();
   assert.equal(await tabs.getByRole("button",{name:"TOP 2"}).getAttribute("aria-current"),"page");

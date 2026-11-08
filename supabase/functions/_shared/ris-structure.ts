@@ -99,7 +99,21 @@ export type RisSnapshot = {
     proposalReferences: Record<string, string>;
   }[];
   documents: RisDocumentHint[];
+  capture?: {scope?: string; fixture?: string; bundleSha256?: string};
 };
+/** Observed source rows are not proof that the portal exposed the whole session. */
+export function risAgendaCoverage(snapshot: RisSnapshot | undefined, stored: {observed_revision?: number}[] = [], revision?: number) {
+  const rows = snapshot?.agenda ?? [];
+  return {
+    scope: snapshot?.capture?.scope === "documented_reference_excerpt"
+      ? "reference_excerpt" : snapshot ? "observed_page" : "unknown",
+    snapshotTopCount: snapshot ? rows.length : null,
+    storedTopCount: stored.length,
+    retainedFromEarlierRevisions: revision === undefined ? null : stored.filter(a => a.observed_revision !== revision).length,
+    unresolvedTopCount: snapshot ? rows.filter(a => !a.number || a.issues?.includes("missing_top_number")).length : null,
+    completeness: "unverified",
+  };
+}
 export async function parseRisStructure(
   html: string,
   url: string,
@@ -138,10 +152,12 @@ export async function parseRisStructure(
     const row = m[1],
       plain = risText(row),
       a = links(row, canonical);
-    const first = risText(row.match(/<td\b[^>]*>([\s\S]*?)<\/td>/i)?.[1] ?? "");
+    const numberedCell = row.match(/<td\b[^>]*class=["'][^"']*\btofnum\b[^"']*["'][^>]*>([\s\S]*?)<\/td>/i);
+    const first = risText(numberedCell?.[1] ?? row.match(/<td\b[^>]*>([\s\S]*?)<\/td>/i)?.[1] ?? "");
     const number =
       /^(?:Ö\s*|TOP\s*)?(\d{1,3}(?:\.\d{1,3})?)\.?$/.exec(first)?.[1] ?? null;
-    if (!number && !/\btofnum\b/.test(row)) continue;
+    // Headers use th.tofnum too; only actual agenda data cells count.
+    if (!number && !numberedCell) continue;
     const top = [
       ...new Set(
         a

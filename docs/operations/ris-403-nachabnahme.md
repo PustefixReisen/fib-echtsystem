@@ -22,7 +22,7 @@ Keine Bereitstellung, produktive Migration, Datenkorrektur oder Automation mit d
 
 ## Recht und Vollständigkeitsgrenze
 
-Die öffentliche RIS-Sitzungsseite lieferte im Arbeitskontext HTTP 403. Die reale
+Der Cloud-Ausgangsproxy verweigert den HTTPS-CONNECT zum RIS mit HTTP 403; der RIS-Server wurde dabei nicht erreicht. Die genaue Diagnose und erweiterte Abdeckungsprüfung stehen im [Vollständigkeitsbericht](ris-403-vollstaendigkeit.md). Die reale
 Liste aller 19 TOPs konnte daher nicht neu abgerufen und geprüft werden. Der
 vorhandene reale reduzierte Ausschnitt prüft TOP 2 abgesetzt, TOP 3 abgelehnt
 und TOP 6 einstimmig angenommen. Ein zusätzliches **synthetisches** 19-TOP-Beispiel

@@ -188,7 +188,11 @@ export function RisSessionView(
             </section>
             <section className="panel card-headed">
               <div className="section-heading"><h2>Tagesordnung</h2></div>
-              <p role="status">{agenda.length} erfasste TOPs. Beobachteter Bestand; Vollständigkeit gegenüber der Original-Tagesordnung nicht bestätigt. Reduzierte Referenzdaten können TOPs auslassen.</p>
+              <p role="status">{agenda.length} erfasste TOPs. {data.agendaCoverage?.scope === "reference_excerpt"
+                ? "Bewusst reduzierter Referenzbestand; keine vollständige Sitzung."
+                : "Beobachteter Erfassungsbestand; Vollständigkeit gegenüber der Original-Tagesordnung nicht bestätigt."}</p>
+              {data.agendaCoverage?.retainedFromEarlierRevisions > 0 && <p role="status">{data.agendaCoverage.retainedFromEarlierRevisions} TOPs stammen aus früheren Fassungen und wurden im letzten Abruf nicht erneut beobachtet. Bestehende redaktionelle Bezüge bleiben erhalten.</p>}
+              {data.agendaCoverage?.unresolvedTopCount > 0 && <p role="alert">{data.agendaCoverage.unresolvedTopCount} TOP-Zeilen haben keine eindeutige Nummer. Original-Tagesordnung prüfen.</p>}
               {agenda.map((a) => {
                 const docs = documents.filter((d) => d.agenda_id === a.id),
                   prop = (data.proposals ?? []).find((p: Row) =>

@@ -4,6 +4,7 @@ import { readFileSync } from "node:fs";
 import { extractText } from "unpdf";
 import {
   parseRisStructure,
+  risAgendaCoverage,
   risUrl,
   RIS_ORIGIN,
 } from "../../supabase/functions/_shared/ris-structure.ts";
@@ -25,6 +26,16 @@ async function main() {
   const complete=await parseRisStructure(completeHtml,url,"2026-11-08");
   assert.equal(complete.agenda.length,19);
   assert.ok(complete.agenda.every(a=>a.proposals.length===0));
+  const headerAndExtraColumn = completeHtml.replace('<table>','<table><tr><th class="tofnum">TOP</th><th>Titel</th></tr>').replaceAll('<td class="tofnum">','<td>Zusatzspalte</td><td class="tofnum">');
+  const withHeader=await parseRisStructure(headerAndExtraColumn,url,"2026-11-08");
+  assert.equal(withHeader.agenda.length,19,"Header is not a TOP; number cell may follow another column");
+  assert.equal(withHeader.agenda[18].number,"19");
+  assert.equal(risAgendaCoverage(withHeader).scope,"observed_page");
+  assert.equal(risAgendaCoverage(withHeader).completeness,"unverified","All parsed rows alone never prove a full session");
+  ref.capture={scope:"documented_reference_excerpt"};
+  assert.equal(risAgendaCoverage(ref).scope,"reference_excerpt");
+  assert.equal(risAgendaCoverage(undefined).scope,"unknown");
+  assert.equal(risAgendaCoverage(ref,[{observed_revision:1},{observed_revision:2}],2).retainedFromEarlierRevisions,1);
   const s = await parseRisStructure(html, url, "2026-10-31T12:00:00Z");
   assert.equal(s.date, "2026-10-29");
   assert.equal(s.agenda.length, 2);

@@ -1,4 +1,4 @@
-import { RIS_ORIGIN, type RisSql, risUrl, ensureRisFinding } from "./ris-structure.ts";
+import { RIS_ORIGIN, type RisSql, risUrl, ensureRisFinding, risAgendaCoverage } from "./ris-structure.ts";
 /** Run inside one transaction. Actor is supplied by verified server auth, never request JSON. */
 export type RisActor = {
   userId: string;
@@ -229,6 +229,7 @@ export async function risEditorial(
     );
     return {
       snapshots,
+      agendaCoverage: risAgendaCoverage(snapshots[0]?.snapshot, agenda, snapshots[0]?.revision),
       reviewLog,
       session,
       agenda,

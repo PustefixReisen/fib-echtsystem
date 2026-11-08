@@ -103,6 +103,7 @@ const api = async (b: any) => {
         session_date: "2026-10-29",
         source_url: origin + "/si0057.asp?__ksinr=1032",
       },
+      agendaCoverage: {scope:"reference_excerpt",snapshotTopCount:2,storedTopCount:2,completeness:"unverified"},
       agenda: [{ id: "t2", number: "2", title }, {
         id: "t3",
         number: "3",
