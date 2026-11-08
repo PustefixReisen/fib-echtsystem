@@ -1,3 +1,4 @@
+import {isRisCollection} from "../../apps/editorial-web/src/ris-presentation.ts";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import { extractText } from "unpdf";
@@ -9,6 +10,21 @@ import {
 const html = readFileSync("tests/u4/fixtures/ris-1032-top-2-3.html", "utf8");
 const url = RIS_ORIGIN + "/si0057.asp?__ksinr=1032";
 async function main() {
+  assert.equal(isRisCollection(RIS_ORIGIN+"/do0040.asp?smcmode=32832"),true);
+  assert.equal(isRisCollection(RIS_ORIGIN+"/si0040.asp"),true);
+  assert.equal(isRisCollection(RIS_ORIGIN+"/getfile.asp?id=75785"),false);
+  assert.equal(isRisCollection(RIS_ORIGIN+"/si0057.asp?__ksinr=1031"),false);
+  assert.equal(isRisCollection("https://other.invalid/do0040.asp"),false);
+  const ref = await parseRisStructure(readFileSync("tests/u4/fixtures/ris-1031-top-2-3-6.html","utf8"),RIS_ORIGIN+"/si0057.asp?__ksinr=1031","2026-11-08");
+  assert.equal(ref.agenda.length,3,"Explicitly reduced real reference, not all 19 TOPs");
+  assert.equal(ref.agenda[0].observedTreatment,"abgesetzt");
+  assert.equal(ref.agenda[1].observedTreatment,"abgelehnt");
+  assert.ok(ref.agenda.every(a=>!a.title.includes("Beschluss:")));
+  // Synthetic full public agenda includes TOPs without proposal links.
+  const completeHtml='<div class="siname">Synthetic</div><table>'+Array.from({length:19},(_,i)=>`<tr><td class="tofnum">Ö ${i+1}</td><td class="tolink"><a href="to0050.asp?__ktonr=${100+i}">Synthetic TOP ${i+1}</a></td></tr>`).join('')+'</table>';
+  const complete=await parseRisStructure(completeHtml,url,"2026-11-08");
+  assert.equal(complete.agenda.length,19);
+  assert.ok(complete.agenda.every(a=>a.proposals.length===0));
   const s = await parseRisStructure(html, url, "2026-10-31T12:00:00Z");
   assert.equal(s.date, "2026-10-29");
   assert.equal(s.agenda.length, 2);

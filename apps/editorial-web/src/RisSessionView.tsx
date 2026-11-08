@@ -3,6 +3,12 @@ import { type SourceApi, sourceApi, withEventLock } from "./source-api.js";
 import { ActionIcon, OriginalLink } from "./ActionIcon.js";
 import { EventAssignmentView } from "./EventAssignmentView.js";
 type Row = Record<string, any>;
+// Legacy reference titles included the portal's separate status block.
+export const topTitle = (a: Row) => String(a.title ?? "").replace(/\s+Beschluss:\s*.+$/i, "");
+export const topStatus = (a: Row) => a.observed_treatment ||
+  String(a.title ?? "").match(/\s+Beschluss:\s*(.+)$/i)?.[1] ||
+  ({withdrawn:"Abgesetzt",deferred:"Vertagt",treated:"Behandelt",announced:"Angekündigt"} as Row)[a.treatment_status] || "Nicht angegeben";
+
 type Props = {
   data: Row;
   busy: boolean;
@@ -101,7 +107,7 @@ export function RisSessionView(
         suggestion={{
           title: isSession
             ? `${session.committee_name || "Gemeinderat"} · Sitzung am ${displayDate(session.session_date)}`
-            : selected!.title,
+            : topTitle(selected!),
           date: session.session_date,
         }}
         api={api}
@@ -182,6 +188,7 @@ export function RisSessionView(
             </section>
             <section className="panel card-headed">
               <div className="section-heading"><h2>Tagesordnung</h2></div>
+              <p role="status">{agenda.length} erfasste TOPs. Beobachteter Bestand; Vollständigkeit gegenüber der Original-Tagesordnung nicht bestätigt. Reduzierte Referenzdaten können TOPs auslassen.</p>
               {agenda.map((a) => {
                 const docs = documents.filter((d) => d.agenda_id === a.id),
                   prop = (data.proposals ?? []).find((p: Row) =>
@@ -193,7 +200,7 @@ export function RisSessionView(
                 return (
                   <article className="source-block ris-top-item" key={a.id}>
                     <div className="section-heading">
-                      <h3>TOP {a.number} · {a.title}</h3>
+                      <h3>TOP {a.number} · {topTitle(a)}</h3>
                       <ActionIcon
                         label={`TOP ${a.number} öffnen`}
                         onClick={() => select(a.id)}
@@ -201,6 +208,7 @@ export function RisSessionView(
                         →
                       </ActionIcon>
                     </div>
+                    <p>TOP-Status (RIS): {topStatus(a)}</p>
                     <p className="ris-inline-links">
                       {[
                         prop ? `Vorlage ${prop.reference || ""}` : null,
@@ -249,7 +257,8 @@ export function RisSessionView(
         : (
           <>
             <section className="panel card-headed">
-              <div className="section-heading"><h2>TOP {selected.number} · {selected.title}</h2></div>
+              <div className="section-heading"><h2>TOP {selected.number} · {topTitle(selected)}</h2></div>
+              <p>TOP-Status (RIS): {topStatus(selected)}</p>
               {!sessionDocuments.some((d) => d.kind === "minutes") &&
                 !topDocuments.some((d) => d.kind === "minutes") && (
                 <p>Niederschrift zum TOP noch nicht verfügbar.</p>
@@ -265,40 +274,20 @@ export function RisSessionView(
                 )}
               </section>
             )}
-            {decisions.length > 0 && (
-              <section className="panel">
-                <h2>Beschlussfassung</h2>
-                {decisions.map((d, i) => (
-                  <article className="source-block" key={d.version_id ?? i}>
-                    <h3>Beschlusspunkt {d.point_key ?? i + 1}</h3>
-                    <p className="source-evidence">{d.wording}</p>
-                    <p>
-                      Ergebnis: {({
-                        accepted: "Angenommen",
-                        rejected: "Abgelehnt",
-                        no_vote: "Keine Abstimmung",
-                        unknown: "Nicht angegeben",
-                      } as Record<string, string>)[d.result] ??
-                        "Nicht angegeben"}
-                    </p>
-                    <p>
-                      Ja: {d.yes_count ?? "–"} · Nein: {d.no_count ?? "–"}{" "}
-                      · Enthaltungen: {d.abstention_count ?? "–"}
-                    </p>
-                  </article>
-                ))}
-              </section>
-            )}
-            {sessionDocuments.some((d) => d.kind === "minutes") && (
-              <section className="panel card-headed">
-                <div className="section-heading"><h2>Niederschrift der Sitzung</h2></div>
-                <ul>
-                  {sessionDocuments.filter((d) => d.kind === "minutes").map(
-                    documentItem,
-                  )}
-                </ul>
-              </section>
-            )}
+            <section className="panel card-headed">
+              <div className="section-heading"><h2>Niederschrift der Sitzung</h2></div>
+              <p>TOP {selected.number}: {topStatus(selected)}. Veröffentlichter RIS-Stand; keine redaktionelle Beschlussbestätigung daraus abgeleitet.</p>
+              {decisions.map((d, i) => (
+                <p key={d.version_id ?? i}>
+                  Beschlusspunkt {d.point_key ?? i + 1}: {({accepted:"angenommen",rejected:"abgelehnt",no_vote:"keine Abstimmung",unknown:"Ergebnis nicht angegeben"} as Row)[d.result] ?? "Ergebnis nicht angegeben"}.
+                  {d.result !== "no_vote" && <> Die Quelle nennt {d.yes_count ?? "keine Angabe zu"} Ja-Stimmen, {d.no_count ?? "keine Angabe zu"} Nein-Stimmen und {d.abstention_count ?? "keine Angabe zu"} Enthaltungen.</>}
+                  {d.source_changed && " Die Originalquelle wurde seither geändert; erneute Prüfung erforderlich."}
+                </p>
+              ))}
+              {!decisions.length && <p>Keine geprüften TOP-spezifischen Beschlussangaben erfasst.</p>}
+              <p className="meta">Wörtliche Niederschriftabschnitte werden bis zur rechtlichen Klärung nicht übernommen. Maßgeblich bleibt die vollständige Originalniederschrift.</p>
+              <ul>{[...sessionDocuments,...topDocuments].filter((d) => d.kind === "minutes").map(documentItem)}</ul>
+            </section>
             <section className="panel card-headed">
               <div className="section-heading">
                 <h2>TOP als Ereignis festlegen</h2>

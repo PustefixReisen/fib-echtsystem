@@ -363,6 +363,33 @@ async function main() {
     ])).n,
     1,
   );
+  // #403: TOP metadata alone is sufficient; no PDF/text/version needed.
+  const mainId=crypto.randomUUID();
+  const createMain={action:"source_create_event",agendaId:top.id,mainEvent:true,
+    title:"Metadata-only TOP event",approval:true,requestId:mainId};
+  await tx(db=>sourceEditorial(db,actor,createMain));
+  await tx(db=>sourceEditorial(db,actor,createMain));
+  assert.ok((await first("select justification from fib.event_findings where event_id=$1",[mainId])).justification);
+  // Add a document after the explicit choice; must synchronize without reselecting.
+  const late=structuredClone(snapshot);
+  late.observedAt="2026-11-08T12:00:00Z";
+  late.hash="d".repeat(64);
+  late.agenda[0].documents.push({url:RIS_ORIGIN+"/getfile.asp?id=998",kind:"attachment",title:"Late attachment"});
+  await tx(db=>persistRisStructure(db,late));
+  await tx(db=>persistRisStructure(db,late));
+  assert.equal((await first("select count(*)::int n from fib.event_findings where event_id=$1",[mainId])).n,2);
+  assert.equal((await first("select count(*)::int n from fib.ris_document_versions v join fib.ris_documents d on d.id=v.document_id where d.source_url like '%id=998'")).n,0);
+  await pool.query("insert into fib.edit_locks(object_type,object_id,user_id,expires_at) values('event',$1,$2,now()+interval '1 hour')",[mainId,uid]);
+  const otherTop=await first("select id from fib.ris_agenda_items where number='3'");
+  await run({action:"ris_link_main_event",agendaId:otherTop.id,eventId:mainId});
+  await run({action:"ris_link_main_event",agendaId:otherTop.id,eventId:mainId});
+  assert.equal((await first("select count(*)::int n from fib.event_findings where event_id=$1",[mainId])).n,3,"Multiple TOPs aggregate their own evidence exactly once");
+  assert.equal((await first("select user_id from fib.object_last_edits where object_type='event' and object_id=$1",[mainId])).user_id,uid);
+  await run({action:"ris_unlink_main_event",agendaId:top.id,eventId:mainId});
+  assert.equal((await first("select count(*)::int n from fib.event_findings where event_id=$1",[mainId])).n,3,"Unlink preserves evidence and event");
+  const full=await parseRisStructure('<div class="siname">Synthetic full session</div><table>'+Array.from({length:19},(_,i)=>`<tr><td>Ö ${i+1}</td><td class="tolink"><a href="to0050.asp?__ktonr=${300+i}">Synthetic ${i+1}</a></td></tr>`).join('')+'</table>',RIS_ORIGIN+'/si0057.asp?__ksinr=9999','2026-11-08');
+  const fullResult=await tx(db=>persistRisStructure(db,full));
+  assert.equal((await first("select count(*)::int n from fib.ris_agenda_items where session_id=$1",[fullResult.sessionId])).n,19,"19 TOPs without proposals survive DB import");
   for (const role of ["anon", "authenticated", "service_role"]) {
     const c = await pool.connect();
     try {
@@ -393,7 +420,7 @@ async function main() {
     "untouched",
   );
   console.log(
-    "PASS PG16: automatic idempotent findings, exact-version rights, immutable original/text pair, denied historical/new content, upload failure/rollback/retry/revocation, independent local links, MFA/RLS and untouched public sentinel; Storage transport simulated",
+    "PASS isolated PostgreSQL: automatic idempotent findings, exact-version rights, immutable original/text pair, denied historical/new content, upload failure/rollback/retry/revocation, independent local links, MFA/RLS and untouched public sentinel; Storage transport simulated",
   );
 }
 main().finally(() => pool.end()).catch((e) => {

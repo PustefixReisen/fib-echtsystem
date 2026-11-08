@@ -102,6 +102,13 @@ Produktive Migration/Deployment/Feature-Aktivierung brauchen separate Freigabe;
 #336 betrifft weiterhin die davon getrennte RIS-Automatisierung. Keine Änderungen
 an produktivem Shared-Apps oder Memorix durch dieses Arbeitspaket.
 
+### RIS-Nacharbeit 08.11.2026 (#403)
+
+Persönliche Abnahme #356 mit Beanstandungen aus #377; zusammenhängendes Korrekturpaket
+in Entwicklung. [Ursachen, technische Belege, Grenzen und Nachabnahme](operations/ris-403-nachabnahme.md).
+Nächster Schritt: PR/CI prüfen, reale 19-TOP-Erfassung nachweisen und anschließend
+gesonderte Bereitstellungsentscheidung. PDF-/Volltextspeicherung bleibt zurückgestellt.
+
 ## 3. U1 – aktueller Stand
 
 ### U1.1 Monorepo-/Paketstruktur – umgesetzt

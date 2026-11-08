@@ -82,6 +82,7 @@ export function EventAssignmentView(
       if (token === generation.current) setSearchBusy(false);
     }
   }
+  const targetIdentity = JSON.stringify(target);
   // Shared live-search convention: update after each change, debounce network
   // requests and discard stale responses from earlier terms.
   useEffect(() => {
@@ -90,7 +91,7 @@ export function EventAssignmentView(
       window.clearTimeout(timer);
       generation.current++;
     };
-  }, [search]);
+  }, [search, targetIdentity]);
   const dirty = title !== suggestion.title ||
     summary !== (suggestion.summary ?? "") ||
     date !== (suggestion.date?.slice(0, 10) ?? "") || Boolean(rationale);
@@ -210,6 +211,7 @@ export function EventAssignmentView(
                   Ereignisse filtern – Titel, Datum oder Kurzbeschreibung
                   <input type="search" value={search}
                     onChange={(e) => {
+                      generation.current++;
                       setSearch(e.target.value);
                       setItems([]);
                       setChosen("");
@@ -218,7 +220,7 @@ export function EventAssignmentView(
                     placeholder="Suchbegriff eingeben …"
                     aria-label="Ereignisse filtern" />
                 </label>
-                {search && <button type="button" disabled={busy} onClick={() => { setSearch(""); setItems([]); setChosen(""); setSearchBusy(true); }}>Filter löschen</button>}
+                {search && <button type="button" disabled={busy} onClick={() => { generation.current++; setSearch(""); setItems([]); setChosen(""); setSearchBusy(true); }}>Filter löschen</button>}
               </div>
               {searchBusy && <p role="status">Suche läuft …</p>}
               <h2>Suchergebnisse</h2>

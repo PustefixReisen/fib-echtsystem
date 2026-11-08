@@ -91,6 +91,7 @@ export type RisSnapshot = {
     key: string;
     number: string | null;
     title: string;
+    observedTreatment?: string | null;
     proposals: string[];
     documents: RisDocumentHint[];
     issues: string[];
@@ -178,7 +179,12 @@ export async function parseRisStructure(
       : top.length === 1
       ? top[0]
       : "unresolved:" + (await risHash(row));
-    const title = risText(
+    // The title anchor excludes the separate published treatment/status block.
+    const titleLink = [...row.matchAll(/<a\b[^>]*href=["']([^"']+)["'][^>]*>([\s\S]*?)<\/a>/gi)]
+      .find((m) => risUrl(m[1], canonical) === top[0]);
+    const observedTreatment = risText(row.match(/<p\b[^>]*class=["'][^"']*\bbeschluss\b[^"']*["'][^>]*>([\s\S]*?)<\/p>/i)?.[1] ??
+      row.match(/<p\b[^>]*class=["'][^"']*_beschluss[^"']*["'][^>]*>([\s\S]*?)<\/p>/i)?.[1] ?? "").replace(/^Beschluss:\s*/i, "") || null;
+    const title = risText(titleLink?.[2] ??
       row.match(/class="[^"]*\btolink\b[^"]*"[^>]*>([\s\S]*?)<\/td>/i)?.[1] ??
         plain,
     );
@@ -186,6 +192,7 @@ export async function parseRisStructure(
       key,
       number,
       title,
+      observedTreatment,
       proposals,
       documents,
       publishedTopUrls: top,
@@ -442,6 +449,15 @@ export async function ensureRisFinding(
       ],
     );
   }
+  // Late metadata must reach existing explicit TOP choices as well. Never create
+  // a TOP-event relationship here, nor overwrite an editorial justification.
+  await tx.unsafe(`insert into fib.event_findings(event_id,finding_id,evidence_role,justification)
+    select distinct ae.event_id,$1::uuid,'source',
+      'Automatisch zugeordnet aufgrund der dokumentierten Zugehörigkeit zu TOP ' || coalesce(a.number,'?') || ' der Sitzung vom ' || coalesce(s.session_date::text,'unbekannten Datum') || '.'
+    from fib.ris_document_links l join fib.ris_agenda_events ae on ae.agenda_id=l.agenda_id
+    join fib.ris_agenda_items a on a.id=l.agenda_id join fib.ris_sessions s on s.id=a.session_id
+    where l.document_id=$2 and l.kind in ('proposal','attachment','decision') and ae.role='main_event'
+    on conflict do nothing`, [findingId,doc.id]);
   return findingId;
 }
 export async function persistRisDocument(
