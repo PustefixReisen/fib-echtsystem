@@ -117,6 +117,7 @@ class ReadOnlyCheck(unittest.TestCase):
 
     def test_ezbr_body_unexpected_format_classified_without_content(self):
         class Resp:
+            headers = {"Content-Type": "application/octet-stream"}
             def __enter__(self): return self
             def __exit__(self, *args): return None
             def read(self, n): return b"VERY_PRIVATE_NOT_AN_EZBR"
