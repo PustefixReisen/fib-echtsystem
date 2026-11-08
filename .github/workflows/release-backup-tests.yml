@@ -49,4 +49,6 @@ jobs:
           trap 'rm -rf "$TEST_EDGE_DIR"' EXIT
           mkdir -p "$TEST_EDGE_DIR/fib-test"
           printf '%s\\n' 'export const value: number = 1;' > "$TEST_EDGE_DIR/fib-test/index.ts"
+          # Synthetic source only: direct CLI diagnostics contain no protected data.
+          deno check --no-config --no-lock "$TEST_EDGE_DIR/fib-test/index.ts"
           python3 scripts/backup/check-edge-isolated.py "$TEST_EDGE_DIR" fib-test
