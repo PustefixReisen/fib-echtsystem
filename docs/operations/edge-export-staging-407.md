@@ -301,3 +301,46 @@ Deployments außerhalb des bestehenden betrieblichen Wartungsfensters
 müssen daher ausgeschlossen werden. Ein grüner CI-Test ersetzt weder
 die Berechtigung zum GitHub-Actions-Dispatch noch einen tatsächlichen
 verschlüsselten vollständigen Release-Backup- und Restore-Nachweis.
+
+
+## Live-Quellabgleich und tatsächlicher RIS-Bundle-Befund (08.11.2026)
+
+Eine **lesende** Inventur über die bestehende Supabase-Verwaltungsanbindung
+hat am 08.11.2026 alle neun aktiven `fib-*`-Edge-Funktionen als
+zugänglich bestätigt. Die drei für die RIS-Sicherung besonders wichtigen
+Live-Versionen enthalten folgende bereitgestellte Dateimengen:
+
+| Funktion | Version | Quelldateien | JWT |
+|---|---:|---:|---|
+| `fib-editorial-write` | 20 | 8 | false |
+| `fib-u4-ris-pilot` | 21 | 5 | true |
+| `fib-u4-pilot` | 11 | 3 | true |
+
+Die verwendeten Shared-Module (`_shared/ris-structure.ts`,
+`_shared/ris-originals.ts`, `_shared/development-datasets.ts`)
+stimmen bei mehrfacher Bereitstellung in diesen drei konkreten
+Live-Bundles **inhaltlich überein**. Das ist ein lesender
+**Live-Quellinventarnachweis**, kein privater Backup-Readback und
+kein erfolgreicher Wiederherstellungstest.
+
+Der Exporter `export-deployed-edge.py` nutzt nun zusätzlich
+den offiziellen Management-API-Abruf
+`GET /v1/projects/{ref}/functions/{function_slug}` und vergleicht
+nach dem offiziellen CLI-Download **jede einzelne Datei anhand
+SHA-256 ihres Originalinhalts**. Die Liste muss exakt
+übereinstimmen, einschließlich `_shared`-Dateien;
+zusätzliche, fehlende oder abweichende Dateien führen zum Abbruch.
+Versions-, JWT- und Bundle-Metadaten werden nochmals gegen den
+ursprünglichen Live-Stand geprüft. Verschiedene Versionen eines
+gleichnamigen Shared-Moduls in unterschiedlichen Live-Functions
+führen bewusst zum Abbruch, statt eine beliebige Fassung zu sichern.
+
+Der API-Abruf findet ausschließlich im geschützten Betreiberkontext
+statt; niemals Live-Quelltexte oder vollständige API-Antworten
+in GitHub-Logs, Issues oder Chat kopieren. **CLI-Download selbst,
+private Ablage, vollständiger Restore und GitHub-Environment-Zugänge
+sind weiterhin nicht live getestet.** Bei einem CLI-Export, der
+`deno.json` oder Importmaps nicht liefert, muss der genaue
+Live-Dateiabgleich stoppen, sofern diese Dateien Teil des
+API-Inventars sind. Unbekannte nichtstatische Runtime-Imports
+bleiben gesondert zu prüfen.
