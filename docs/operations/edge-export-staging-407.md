@@ -70,3 +70,57 @@ Inventaränderung während des Downloads, fehlendes Shared-Modul,
 bestehendes privates Zielverzeichnis wird nicht überschrieben.
 Echte Cloud-Downloads und private Secure-Runner-Freigabe bleiben
 gesonderte Betriebsnachweise.
+
+
+## Stage 3: geprüfte private Eingabe automatisch verschlüsselt ablegen
+
+Nachdem die vollständigen Edge-Module und die **wirklichen** FIB-Featurezustände
+privat überprüft wurden, liegt ein frisches Verzeichnis mit exakt diesen
+beiden Unterverzeichnissen vor:
+
+- `edge/` mit vollständigen runtimefähigen Dateien und `inventory.json`,
+- `configuration/` mit `state.json` sowie `capture.json` (aktueller
+  `capturedAt`, `featureStatesReviewed=true`,
+  `completeFunctionExportsReviewed=true`, **nur nach echter Prüfung**).
+
+Nur im bereits berechtigten privaten Betreiberkontext (kein öffentliches CI,
+keine ungeschützten GitHub-Artefakte) kann dann ausgeführt werden:
+
+```bash
+umask 077
+python3 scripts/backup/stage-reviewed-input.py /PRIVAT/GEPRUEFTES-VERZEICHNIS
+```
+
+Das Skript verwendet die vorhandenen geschützten Umgebungswerte
+`FIB_BACKUP_MANAGEMENT_TOKEN` und `FIB_BACKUP_RCLONE_CONFIG`; die
+passenden rclone-Remotes bleiben unverändert. Es prüft das tatsächliche
+Managementinventar zweimal, alle Function-Versionen und -Hashs, die
+vollständigen lokalen Abhängigkeiten, den frischen Freigabebeleg und den
+exakten Verzeichnisumfang. Erst nach erfolgreichem verschlüsseltem
+Upload unter `fib-backup-crypt:Inputs/input-<uuid>` und SHA-256-verifizierter
+Rücklesung gibt es die zufällig erzeugte `input_id` aus.
+
+**Folgeschritt:** Die ausgegebene `input_id` in der bestehenden GitHub
+Action `Complete FIB backup`, `mode=release`, verwenden. Der Workflow
+validiert die Quellinhalte erneut und erstellt erst dann den vollständigen
+Release-Sicherungsnachweis. Ein erfolgreiches Staging ist **noch kein**
+Release-Backup und keine Bereitstellungsfreigabe.
+
+Wenn ein privater Upload/Readback fehlschlägt, kann ein unvollständiges,
+verschlüsseltes `Inputs/<id>`-Verzeichnis zurückbleiben. Es wird niemals
+als gültige Eingabe-ID ausgegeben. Eine spätere Bereinigung darf nur nach
+gezielter Inventur erfolgen, keinesfalls durch breites Löschen.
+
+**Offene Integrationsarbeiten:** Geschützte automatische Erfassung der
+wirklichen FIB-Featurekonfiguration, belastbarer vollständiger
+Edge-Runtime-Export trotz etwaiger CLI-Grenzen, Verkettung der geschützten
+GitHub-Actions-Läufe und die eigentliche Einmal-Freigabe. Die im Screenshot
+sichtbare `input_id`-Pflicht ist mit diesem Schritt noch nicht aus der
+GitHub-Oberfläche entfernt. Die Codeprüfung mit simuliertem rclone-Transfer
+beweist keine realen Cloud-Zugänge.
+
+Zusätzliche Offline-Tests:
+
+```bash
+python3 tests/backup/stage-reviewed-input.test.py
+```
