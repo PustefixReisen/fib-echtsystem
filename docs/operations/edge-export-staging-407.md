@@ -344,3 +344,24 @@ sind weiterhin nicht live getestet.** Bei einem CLI-Export, der
 Live-Dateiabgleich stoppen, sofern diese Dateien Teil des
 API-Inventars sind. Unbekannte nichtstatische Runtime-Imports
 bleiben gesondert zu prüfen.
+
+
+## Abgleich direkt während der Komplettsicherung (Ergänzung 08.11.2026)
+
+Die in PR #408 vorgesehene vollständige Backup-Routine prüft seit dieser
+Ergänzung **nicht nur** Version/JWT/Bundle-SHA und Dateiexistenz, sondern
+liest bei ihrem eigenen, geschützten Durchlauf die echten Deploy-Quelldateien
+**aller** aktiven `fib-*`-Functions erneut aus der Supabase-Management-API.
+Die `edge/`-Dateien aus dem verschlüsselten, geprüften Input müssen
+bytegenau mit diesem Live-Stand übereinstimmen (SHA-256 pro Datei);
+`inventory.json` wird als Sicherungsmetadatei ausgenommen.
+Fehlende, zusätzliche, widersprüchliche Shared-Module oder geänderte
+Dateiinhalte führen **vor dem Datenbankdump und jedem Release** zum Abbruch.
+
+Damit ist eine relevante zeitliche Lücke zwischen der Vorbereitung
+und der abschließenden Versiegelung des Sicherungspakets geschlossen.
+Die Live-Anbindung und die nötigen Geheimzugänge im echten GitHub-Runner
+sind weiterhin nicht erprobt. Dies ist **kein** Beweis eines erfolgreichen
+privaten Export-/Rücklese-/Restore-Laufs. Nichtliteral-dynamische Imports,
+Runtime-Konfigurationsdateien und eine tatsächlich getestete gezielte
+Rücknahme bleiben gesonderte Abnahmepunkte.
