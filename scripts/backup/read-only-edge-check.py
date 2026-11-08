@@ -26,6 +26,19 @@ def read_api(token, path):
         return json.load(response)
 
 
+def read_body(token, slug, *, opener=urlopen):
+    """Read deployed EZBR body only; never print or persist the binary payload."""
+    req = Request(BASE + "/" + slug + "/body", headers={
+        "Authorization": "Bearer " + token
+    })
+    with opener(req, timeout=30) as response:
+        binary = response.read(32 * 1024 * 1024 + 1)
+    if len(binary) > 32 * 1024 * 1024 or binary[:4] != b"EZBR":
+        raise ValueError("Unavailable or unexpected deployed EZBR")
+    return hashlib.sha256(binary).hexdigest()
+
+
+
 def inventory(rows):
     rows = rows.get("functions") if isinstance(rows, dict) else rows
     if not isinstance(rows, list):
@@ -49,75 +62,43 @@ def inventory(rows):
     return result
 
 
-def canonical(slug, name):
-    if not isinstance(name, str) or "\\" in name:
-        raise ValueError("Unsafe deployed file path")
-    value = PurePosixPath(name)
-    if value.is_absolute() or any(p in ("", ".", "..") for p in name.split("/")):
-        raise ValueError("Unsafe deployed file path")
-    if name.startswith("_shared/") or name.startswith(slug + "/"):
-        return name
-    if len(value.parts) != 1:
-        raise ValueError("Unrecognized function file path")
-    return slug + "/" + name
-
-
-def live_files(detail, slug, expected):
-    if not isinstance(detail, dict) or detail.get("slug") != slug:
-        raise ValueError("Unexpected deployed source response")
-    for field, want in expected.items():
-        if detail.get(field) != want:
-            raise ValueError("Source metadata drift")
-    if not isinstance(detail.get("files"), list):
-        raise ValueError("Deployed source files unavailable")
-    found = {}
-    for file in detail["files"]:
-        if not isinstance(file, dict) or not isinstance(file.get("content"), str):
-            raise ValueError("Unavailable source body")
-        path = canonical(slug, file.get("name"))
-        if path in found:
-            raise ValueError("Duplicate function file")
-        found[path] = file["content"]
-    if slug + "/index.ts" not in found:
-        raise ValueError("Missing deployed entrypoint")
-    return found
-
-
-def compare_downloads(source, live_union):
-    actual = {}
+def verify_local_sources(source, function_slugs):
+    """Inspect CLI-extracted sources; no unsubstantiated file-byte equality claim."""
+    if not source.is_dir():
+        raise ValueError("Supabase CLI did not create a source tree")
+    sources = {}
     for file in source.rglob("*"):
         if file.is_symlink():
             raise ValueError("Symlink in downloaded sources")
         if file.is_file():
-            key = file.relative_to(source).as_posix()
-            actual[key] = hashlib.sha256(file.read_bytes()).hexdigest()
+            sources[file.relative_to(source).as_posix()] = file.read_bytes()
         elif not file.is_dir():
-            raise ValueError("Unexpected downloaded file type")
-    expected = {p: hashlib.sha256(c.encode("utf-8")).hexdigest() for p, c in live_union.items()}
-    if actual != expected:
-        raise ValueError("CLI file bytes differ from deployed Management API")
-    for path, content in live_union.items():
-        base = PurePosixPath(path).parent
-        for match in RELATIVE.findall(content):
-            dest = base.joinpath(match)
-            parts = []
-            for part in dest.parts:
+            raise ValueError("Untrusted downloaded file type")
+    for slug in function_slugs:
+        if slug + "/index.ts" not in sources:
+            raise ValueError("Missing downloaded function entrypoint")
+    for path, content in sources.items():
+        if not path.endswith((".ts", ".js", ".mjs", ".json")):
+            continue
+        for relative in RELATIVE.findall(content.decode("utf-8")):
+            parts = list(PurePosixPath(path).parent.parts)
+            for part in PurePosixPath(relative).parts:
                 if part == "..":
                     if not parts:
-                        raise ValueError("Dependency escapes function source tree")
+                        raise ValueError("Dependency escapes source tree")
                     parts.pop()
                 elif part != ".":
                     parts.append(part)
-            if "/".join(parts) not in live_union:
-                raise ValueError("Incomplete deployed source dependency")
-    return len(actual)
+            if "/".join(parts) not in sources:
+                raise ValueError("Incomplete downloaded source dependency")
+    return len(sources)
 
 
 class SafeDiagnostic(ValueError):
     """Fixed, non-sensitive failure category. Never include remote exception text."""
 
 
-def check(token, *, api=read_api, run=subprocess.run):
+def check(token, *, api=read_api, body=read_body, run=subprocess.run):
     stage = "INITIAL_INVENTORY"
     try:
         first = inventory(api(token, ""))
@@ -126,33 +107,28 @@ def check(token, *, api=read_api, run=subprocess.run):
             root.chmod(0o700)
             for slug in sorted(first):
                 stage = "CLI_DOWNLOAD_" + slug
-                p = run(
+                result = run(
                     ["supabase", "functions", "download", slug, "--project-ref", PROJECT],
                     cwd=root, capture_output=True, timeout=180, check=False,
                 )
-                if p.returncode != 0:
-                    raise ValueError("Official Supabase CLI function download failed")
-            stage = "CLI_OUTPUT_LAYOUT"
-            source = root / "supabase" / "functions"
-            if not source.is_dir():
-                raise ValueError("Supabase CLI did not create a source tree")
-            union = {}
+                if result.returncode != 0:
+                    raise ValueError("Supabase CLI download failed")
+            stage = "CLI_SOURCE_DEPENDENCIES"
+            file_count = verify_local_sources(root / "supabase" / "functions", first)
+            # GET /functions/{slug} returns metadata only: it has no 'files'.
+            # The documented /body endpoint returns the deployed EZBR bundle.
+            # Check its own declared digest; this does NOT prove that CLI
+            # extraction is byte-for-byte identical to all original sources.
             for slug in sorted(first):
-                stage = "LIVE_SOURCE_" + slug
-                files = live_files(api(token, "/" + slug), slug, first[slug])
-                for path, body in files.items():
-                    if path in union and union[path] != body:
-                        raise ValueError("Conflicting deployed shared module versions")
-                    union[path] = body
-            stage = "FILE_AND_DEPENDENCY_COMPARISON"
-            count = compare_downloads(source, union)
+                stage = "DEPLOYED_BUNDLE_" + slug
+                if body(token, slug) != first[slug]["ezbr_sha256"]:
+                    raise ValueError("Deployed EZBR digest mismatch")
             stage = "FINAL_INVENTORY"
             if inventory(api(token, "")) != first:
-                raise ValueError("Deployed function inventory changed during download")
-            return len(first), count
+                raise ValueError("Function inventory changed during source export")
+            return len(first), file_count
     except Exception:
-        # Prevent exception text, API response bodies, paths, tokens or source
-        # content from escaping to public GitHub job logs.
+        # Print phase only; never leak API exceptions or downloaded source.
         raise SafeDiagnostic(stage) from None
 
 
@@ -163,7 +139,7 @@ if __name__ == "__main__":
         if not token:
             raise ValueError("Protected Supabase management token required")
         functions, files = check(token)
-        print(f"Read-only FIB Edge check passed: {functions} functions, {files} exact source files. No restore or backup performed.")
+        print(f"Read-only FIB Edge check passed: {functions} functions, {files} CLI-extracted source files and verified deployed bundle digests. No restore or backup performed.")
     except SafeDiagnostic as error:
         # Only whitelisted phase names are allowed in the log, no API details.
         print("Read-only FIB Edge check BLOCKED at " + str(error) + ". No changes performed.", file=sys.stderr)
