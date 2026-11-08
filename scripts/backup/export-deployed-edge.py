@@ -69,77 +69,32 @@ def dependency_check(edge):
                 raise ValueError("Downloaded bundle missing relative module")
 
 
-def deployed_files(token, slug):
-    """Official Management API read-only source: never log response bodies."""
+def deployed_bundle_digest(token, slug):
+    """Read the documented EZBR function body, never log/persist its bytes."""
     req = urllib.request.Request(
-        API + "/" + slug, headers={"Authorization": "Bearer " + token}
+        API + "/" + slug + "/body",
+        headers={"Authorization": "Bearer " + token},
     )
     with urllib.request.urlopen(req, timeout=30) as response:
-        return json.load(response)
+        binary = response.read(32 * 1024 * 1024 + 1)
+    if len(binary) > 32 * 1024 * 1024 or binary[:4] != b"EZBR":
+        raise ValueError("Invalid deployed EZBR body")
+    return hashlib.sha256(binary).hexdigest()
 
 
-def normalized_live_files(detail, slug):
-    """Canonical function-relative source paths, preserving shared modules.
+def verify_deployed_bundles(metadata, fetcher, token):
+    """Independently check live deployed EZBR digests, not imaginary file JSON.
 
-    The Management API can return either 'index.ts' or 'SLUG/index.ts';
-    both are installed at supabase/functions/SLUG/index.ts by the CLI.
+    This does NOT prove individual CLI-extracted bytes equal original
+    source bytes. Complete source/restore review remains mandatory.
     """
-    if not isinstance(detail, dict) or not isinstance(detail.get("files"), list):
-        raise ValueError("Live function source files unavailable")
-    normalized = {}
-    for entry in detail["files"]:
-        if not isinstance(entry, dict):
-            raise ValueError("Invalid deployed function file")
-        name, content = entry.get("name"), entry.get("content")
-        if not isinstance(name, str) or not isinstance(content, str):
-            raise ValueError("Invalid deployed source file content")
-        parts = pathlib.PurePosixPath(name)
-        if (parts.is_absolute() or ".." in parts.parts or "." in parts.parts
-                or "\\\\" in name or not parts.parts):
-            raise ValueError("Untrusted deployed source path")
-        canonical = name if name.startswith(slug + "/") or name.startswith("_shared/") else slug + "/" + name
-        # Never permit an arbitrary deployed folder to be included in another function's backup.
-        if not (canonical.startswith(slug + "/") or canonical.startswith("_shared/")):
-            raise ValueError("Unexpected deployed path")
-        if canonical in normalized:
-            raise ValueError("Duplicate deployed source path")
-        normalized[canonical] = hashlib.sha256(content.encode("utf-8")).hexdigest()
-    if slug + "/index.ts" not in normalized:
-        raise ValueError("Deployed entrypoint not in management source inventory")
-    return normalized
-
-
-def compare_to_live_source(source, metadata, fetcher, token, allow_private_inventory=False):
-    """All bytes must match the live Management API source file by file.
-
-    Supabase's bundle SHA is not a portable hash of local source files.
-    Compare the actual returned files separately; require no extras.
-    """
-    live_union = {}
     for slug in sorted(metadata):
-        detail = fetcher(token, slug)
-        if (not isinstance(detail, dict) or detail.get("slug") != slug
-                or any(detail.get(key) != metadata[slug].get(key)
-                       for key in ("version", "verify_jwt", "ezbr_sha256", "import_map"))):
-            raise ValueError("Live function source differs from deployed inventory")
-        files = normalized_live_files(detail, slug)
-        for path, digest in files.items():
-            if path in live_union and live_union[path] != digest:
-                raise ValueError("Shared module differs across deployed functions")
-            live_union[path] = digest
-    actual = {}
-    for file in source.rglob("*"):
-        if file.is_file():
-            relative = file.relative_to(source).as_posix()
-            if allow_private_inventory and relative == "inventory.json":
-                continue
-            actual[relative] = hashlib.sha256(file.read_bytes()).hexdigest()
-    if actual != live_union:
-        raise ValueError("CLI export differs from deployed source files")
-    return len(live_union)
+        if fetcher(token, slug) != metadata[slug]["ezbr_sha256"]:
+            raise ValueError("Deployed EZBR digest mismatch")
+    return len(metadata)
 
 
-def export(target, token, cli="supabase", get_inventory=inventory, run=subprocess.run, get_source=deployed_files):
+def export(target, token, cli="supabase", get_inventory=inventory, run=subprocess.run, get_source=deployed_bundle_digest):
     if target.exists():
         raise ValueError("Private destination must not exist")
     before = get_inventory(token)
@@ -163,7 +118,7 @@ def export(target, token, cli="supabase", get_inventory=inventory, run=subproces
             if not (source / slug / "index.ts").is_file():
                 raise ValueError("Missing deployed function entrypoint")
         dependency_check(source)
-        compare_to_live_source(source, before, get_source, token)
+        verify_deployed_bundles(before, get_source, token)
         after = get_inventory(token)
         if before != after:
             raise ValueError("Deployed function inventory changed during export")
