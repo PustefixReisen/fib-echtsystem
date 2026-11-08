@@ -1,0 +1,123 @@
+name: Deploy approved RIS correction functions (verified backup)
+
+# Explicit operator approval only. No PR, push or cron trigger.
+on:
+  workflow_dispatch:
+    inputs:
+      confirmation:
+        description: 'Type DEPLOY for the two approved RIS correction functions'
+        required: true
+        type: string
+      approved_commit:
+        description: 'Exact approved main-branch SHA'
+        required: true
+        type: string
+      backup_id:
+        description: 'Reviewed private complete release backup ID'
+        required: true
+        type: string
+      backup_manifest_sha256:
+        description: 'Reviewed private release.json SHA-256'
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+concurrency:
+  group: fib-shared-apps-edge-functions
+  cancel-in-progress: false
+
+jobs:
+  verify-backup:
+    if: ${{ github.ref == 'refs/heads/main' && inputs.confirmation == 'DEPLOY' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    environment: fib-release
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate exact revision and backup input
+        env:
+          APPROVED_COMMIT: ${{ inputs.approved_commit }}
+          BACKUP_ID: ${{ inputs.backup_id }}
+          MANIFEST_SHA: ${{ inputs.backup_manifest_sha256 }}
+          BACKUP_READY: ${{ vars.FIB_BACKUP_READY }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$GITHUB_SHA" = "$APPROVED_COMMIT" || { echo "::error::Approved SHA differs from checkout"; exit 1; }
+          test "$BACKUP_READY" = true || { echo "::error::FIB_BACKUP_READY is not true"; exit 1; }
+          [[ "$BACKUP_ID" =~ ^[a-zA-Z0-9_-]{1,80}$ ]]
+          [[ "$MANIFEST_SHA" =~ ^[a-f0-9]{64}$ ]]
+      - name: Verify encrypted private release bundle
+        env:
+          RCLONE_CONFIG_TEXT: ${{ secrets.FIB_BACKUP_RCLONE_CONFIG }}
+          BACKUP_ID: ${{ inputs.backup_id }}
+          FIB_BACKUP_MANIFEST_SHA256: ${{ inputs.backup_manifest_sha256 }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          umask 077
+          test -n "$RCLONE_CONFIG_TEXT"
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq rclone
+          printf '%s' "$RCLONE_CONFIG_TEXT" > "$RUNNER_TEMP/fib-rclone.conf"
+          python3 - <<'PY'
+          import configparser, os
+          p = configparser.ConfigParser(interpolation=None)
+          p.read(os.environ["RUNNER_TEMP"] + "/fib-rclone.conf")
+          assert p.get("fib-backup-crypt", "type", fallback="") == "crypt", "Encrypted remote required"
+          PY
+          mkdir -p "$RUNNER_TEMP/fib-backup"
+          rclone --config "$RUNNER_TEMP/fib-rclone.conf" copy "fib-backup-crypt:$BACKUP_ID" "$RUNNER_TEMP/fib-backup" > "$RUNNER_TEMP/fib-backup-transfer.log" 2>&1
+          node scripts/backup/bundle.mjs verify "$RUNNER_TEMP/fib-backup" "$GITHUB_SHA"
+      - name: Remove private material
+        if: always()
+        shell: bash
+        run: |
+          rm -rf "$RUNNER_TEMP/fib-backup"
+          rm -f "$RUNNER_TEMP/fib-rclone.conf" "$RUNNER_TEMP/fib-backup-transfer.log"
+
+  deploy:
+    needs: verify-backup
+    if: ${{ needs.verify-backup.result == 'success' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    environment: fib-shared-apps
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate checkout
+        env:
+          APPROVED_COMMIT: ${{ inputs.approved_commit }}
+          SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$GITHUB_SHA" = "$APPROVED_COMMIT"
+          test -n "$SUPABASE_ACCESS_TOKEN"
+      - uses: supabase/setup-cli@v1
+        with:
+          version: latest
+      - name: Capture existing function versions for rollback evidence
+        env:
+          SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          supabase functions list --project-ref apaubomxffcwtzjimori
+      - name: Deploy exactly two approved functions (no schema, scheduler or other apps)
+        env:
+          SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          supabase functions deploy fib-editorial-write --project-ref apaubomxffcwtzjimori --no-verify-jwt
+          # Preserve the existing JWT verification on the RIS pilot endpoint.
+          supabase functions deploy fib-u4-ris-pilot --project-ref apaubomxffcwtzjimori
+      - name: Confirm deployed versions
+        env:
+          SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          supabase functions list --project-ref apaubomxffcwtzjimori
