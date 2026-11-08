@@ -69,9 +69,9 @@ def emit_verified_receipt(receipt,env):
  output=env.get('GITHUB_OUTPUT','')
  if not output:raise ValueError('GitHub Actions output channel unavailable')
  with open(output,'a',encoding='utf-8') as stream:
-  stream.write('backup_id='+receipt['backupId']+'\\n')
-  stream.write('manifest_sha256='+receipt['manifestSha256']+'\\n')
-  stream.write('verified_commit='+receipt['commit']+'\\n')
+  stream.write('backup_id='+receipt['backupId']+'\n')
+  stream.write('manifest_sha256='+receipt['manifestSha256']+'\n')
+  stream.write('verified_commit='+receipt['commit']+'\n')
 
 if __name__=='__main__':
  os.umask(0o077)
