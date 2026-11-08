@@ -40,6 +40,7 @@ try {
   await page.goto("http://127.0.0.1:4174");
   await button("Sitzungsbereich").click();
   await button("Sitzung öffnen").click();
+  await page.getByText(/Bewusst reduzierter Referenzbestand; keine vollständige Sitzung/).waitFor();
   const tabs=page.getByRole("navigation",{name:"Sitzung und Tagesordnungspunkte"});
   await tabs.getByRole("button",{name:"TOP 2"}).click();
   assert.equal(await tabs.getByRole("button",{name:"TOP 2"}).getAttribute("aria-current"),"page");
@@ -254,6 +255,16 @@ try {
     ),
     1, // only the new TOP main event; related events must already exist
   );
+  await page.evaluate(() => { window.showDecisionCases=true; });
+  await button("Sitzungsbereich").click();
+  await button("Sitzung öffnen").click();
+  await page.getByRole("navigation",{name:"Sitzung und Tagesordnungspunkte"}).getByRole("button",{name:"TOP 2"}).click();
+  const minutes=page.locator("section").filter({has:heading("Niederschrift der Sitzung")});
+  await minutes.getByText(/Beschlusspunkt A:/).waitFor();
+  await minutes.getByText(/Beschlusspunkt B: angenommen/).waitFor();
+  assert.equal(await minutes.locator("img").count(),0,"No unlicensed wording or HTML rendered");
+  assert.ok((await minutes.innerText()).includes("10 Ja-Stimmen, 2 Nein-Stimmen"));
+  assert.equal(await minutes.locator('a[href*="id=75785"]').count(),1,"Complete original remains linked");
   assert.deepEqual(errors, []);
   console.log(
     "PASS actual SourceWorkspace/RisSessionView components: local event links, modal cancel navigation, event creation, lock retry, external RIS navigation without stored-PDF UI, exact TOP return, origin, title, mobile and Gemeinde regression (simulated APIs; no live MFA or print claim)",

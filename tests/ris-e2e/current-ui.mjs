@@ -123,6 +123,32 @@ try {
     .getByRole("button",{name:"Ereignis öffnen"}).click();
   await page.getByRole("heading",{name:"Ereignisdaten",exact:true}).waitFor();
   assert.equal(await page.locator(".side-nav").getByRole("button",{name:"Sitzungen",exact:true}).getAttribute("aria-current"),"page");
+  // #403: the actual MFA-authenticated App on mobile, including competing actor.
+  await page.setViewportSize({width:390,height:844});
+  const mainEventId=(await db.query("select event_id from fib.ris_agenda_events where role='main_event'")).rows[0].event_id;
+  const eventCard=page.locator("section").filter({has:page.getByRole("heading",{name:"Ereignisdaten",exact:true})});
+  await eventCard.getByRole("button",{name:"Bearbeiten",exact:true}).click();
+  await eventCard.locator("textarea").waitFor();
+  assert.equal((await db.query("select count(*)::int n from fib.edit_locks where object_id=$1 and expires_at>now()",[mainEventId])).rows[0].n,1);
+  const contention=await invoke("fib-coordination",{action:"acquire_lock",objectType:"event",objectId:mainEventId});
+  assert.equal(contention.status,409,"A second authenticated actor cannot acquire the active edit lock");
+  await eventCard.locator("textarea").fill("Mobile correction of the existing confirmed event");
+  await eventCard.getByRole("button",{name:"Speichern",exact:true}).click();
+  await eventCard.getByText("Mobile correction of the existing confirmed event",{exact:true}).waitFor();
+  assert.equal((await db.query("select status from fib.events where id=$1",[mainEventId])).rows[0].status,"confirmed");
+  await page.getByRole("button",{name:"Fundstellen bearbeiten",exact:true}).click();
+  await page.getByRole("button",{name:"Zuordnung bearbeiten",exact:true}).click();
+  const justification=page.locator(".finding-justification-input");
+  await justification.waitFor();
+  assert.equal((await db.query("select count(*)::int n from fib.edit_locks where object_id=$1 and expires_at>now()",[mainEventId])).rows[0].n,1,"Finding edit locks before typing");
+  assert.equal((await invoke("fib-coordination",{action:"acquire_lock",objectType:"event",objectId:mainEventId})).status,409);
+  await justification.fill("Reviewed structured TOP evidence");
+  await page.getByRole("group",{name:"Aktionen für Fundstellenbearbeitung"}).getByRole("button",{name:"Speichern",exact:true}).click();
+  await page.getByText("Begründung der Zuordnung gespeichert.",{exact:true}).waitFor();
+  assert.equal((await db.query("select justification from fib.event_findings where event_id=$1",[mainEventId])).rows[0].justification,"Reviewed structured TOP evidence");
+  await page.getByRole("button",{name:"Fertig",exact:true}).click();
+  await page.setViewportSize({width:1440,height:1050});
+  record("Actual mobile confirmed-event edit, finding edit, competing authenticated lock rejection, persistence and unchanged confirmed status");
   await page.getByRole("button",{name:"Zurück zu TOP 2",exact:true}).click();
   await page.getByRole("heading",{name:"TOP als Ereignis festlegen",exact:true}).waitFor();
   assert.equal(await page.getByRole("navigation",{name:"Sitzung und Tagesordnungspunkte"})

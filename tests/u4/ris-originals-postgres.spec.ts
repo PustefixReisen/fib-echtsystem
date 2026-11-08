@@ -363,6 +363,69 @@ async function main() {
     ])).n,
     1,
   );
+  // #403: TOP metadata alone is sufficient; no PDF/text/version needed.
+  const mainId=crypto.randomUUID();
+  const createMain={action:"source_create_event",agendaId:top.id,mainEvent:true,
+    title:"Metadata-only TOP event",approval:true,requestId:mainId};
+  await tx(db=>sourceEditorial(db,actor,createMain));
+  await tx(db=>sourceEditorial(db,actor,createMain));
+  assert.ok((await first("select justification from fib.event_findings where event_id=$1",[mainId])).justification);
+  // Add a document after the explicit choice; must synchronize without reselecting.
+  const late=structuredClone(snapshot);
+  late.observedAt="2026-11-08T12:00:00Z";
+  late.hash="d".repeat(64);
+  late.agenda[0].documents.push({url:RIS_ORIGIN+"/getfile.asp?id=998",kind:"attachment",title:"Late attachment"});
+  await tx(db=>persistRisStructure(db,late));
+  await tx(db=>persistRisStructure(db,late));
+  assert.equal((await first("select count(*)::int n from fib.event_findings where event_id=$1",[mainId])).n,2);
+  assert.equal((await first("select count(*)::int n from fib.ris_document_versions v join fib.ris_documents d on d.id=v.document_id where d.source_url like '%id=998'")).n,0);
+  await pool.query("insert into fib.edit_locks(object_type,object_id,user_id,expires_at) values('event',$1,$2,now()+interval '1 hour')",[mainId,uid]);
+  const classified=structuredClone(late);
+  classified.observedAt="2026-11-08T13:00:00Z";classified.hash="e".repeat(64);
+  classified.agenda[0].documents.push({url:RIS_ORIGIN+"/getfile.asp?id=997",kind:"unknown",title:"Unclassified"});
+  await tx(db=>persistRisStructure(db,classified));
+  assert.equal((await first("select count(*)::int n from fib.event_findings where event_id=$1",[mainId])).n,2);
+  const classifiedLink=await first("select l.id from fib.ris_document_links l join fib.ris_documents d on d.id=l.document_id where d.source_url like '%id=997'");
+  await run({action:"ris_review_document",linkId:classifiedLink.id,kind:"attachment",status:"rejected",rationale:"Synthetic exclusion"});
+  await tx(db=>persistRisStructure(db,{...classified,hash:"f".repeat(64),observedAt:"2026-11-08T14:00:00Z"}));
+  assert.equal((await first("select count(*)::int n from fib.event_findings where event_id=$1",[mainId])).n,2,"Rejected evidence must not be adopted");
+  await run({action:"ris_review_document",linkId:classifiedLink.id,kind:"attachment",status:"confirmed",rationale:"Synthetic reviewed exact TOP attachment"});
+  assert.equal((await first("select count(*)::int n from fib.event_findings where event_id=$1",[mainId])).n,3,"Later classification synchronizes without PDF storage");
+  const otherTop=await first("select id from fib.ris_agenda_items where number='3'");
+  await run({action:"ris_link_main_event",agendaId:otherTop.id,eventId:mainId});
+  await run({action:"ris_link_main_event",agendaId:otherTop.id,eventId:mainId});
+  assert.equal((await first("select count(*)::int n from fib.event_findings where event_id=$1",[mainId])).n,4,"Multiple TOPs aggregate their own evidence exactly once");
+  assert.equal((await first("select user_id from fib.object_last_edits where object_type='event' and object_id=$1",[mainId])).user_id,uid);
+  await run({action:"ris_unlink_main_event",agendaId:top.id,eventId:mainId});
+  assert.equal((await first("select count(*)::int n from fib.event_findings where event_id=$1",[mainId])).n,4,"Unlink preserves evidence and event");
+  const full=await parseRisStructure('<div class="siname">Synthetic full session</div><table>'+Array.from({length:19},(_,i)=>`<tr><td>Ö ${i+1}</td><td class="tolink"><a href="to0050.asp?__ktonr=${300+i}">Synthetic ${i+1}</a></td></tr>`).join('')+'</table>',RIS_ORIGIN+'/si0057.asp?__ksinr=9999','2026-11-08');
+  const fullResult=await tx(db=>persistRisStructure(db,full));
+  assert.equal((await first("select count(*)::int n from fib.ris_agenda_items where session_id=$1",[fullResult.sessionId])).n,19,"19 TOPs without proposals survive DB import");
+  // Parser fixes must be applied to unchanged source HTML as well, without
+  // falsifying the source hash or mutating historical snapshots.
+  await pool.query("update fib.ris_session_versions set snapshot=snapshot-'parserVersion' where session_id=$1",[fullResult.sessionId]);
+  const reparsed=await tx(db=>persistRisStructure(db,full));
+  assert.equal(reparsed.changed,true);
+  assert.equal(reparsed.revision,2);
+  assert.equal((await first("select content_hash from fib.ris_session_versions where session_id=$1 and revision=2",[fullResult.sessionId])).content_hash,full.hash);
+  assert.equal((await tx(db=>persistRisStructure(db,full))).changed,false);
+  const originalTop=await first("select id from fib.ris_agenda_items where session_id=$1 and number='1'",[fullResult.sessionId]);
+  const expanded=structuredClone(full);expanded.hash='1'.repeat(64);expanded.observedAt='2026-11-08T15:00:00Z';
+  expanded.agenda[0].title='Changed public title';
+  expanded.agenda.push({...structuredClone(expanded.agenda[18]),key:'number:20',number:'20',title:'Late TOP without proposal'});
+  await tx(db=>persistRisStructure(db,expanded));
+  await tx(db=>persistRisStructure(db,expanded));
+  assert.equal((await first("select count(*)::int n from fib.ris_agenda_items where session_id=$1",[fullResult.sessionId])).n,20);
+  assert.equal((await first("select id from fib.ris_agenda_items where session_id=$1 and number='1'",[fullResult.sessionId])).id,originalTop.id);
+  const expandedRead=await run({action:'ris_read',sessionId:fullResult.sessionId});
+  assert.equal(expandedRead.agendaCoverage.snapshotTopCount,20);
+  assert.equal(expandedRead.agendaCoverage.retainedFromEarlierRevisions,0);
+  const shorter=structuredClone(expanded);shorter.hash='2'.repeat(64);shorter.observedAt='2026-11-08T16:00:00Z';shorter.agenda.pop();
+  await tx(db=>persistRisStructure(db,shorter));
+  const retainedRead=await run({action:'ris_read',sessionId:fullResult.sessionId});
+  assert.equal(retainedRead.agendaCoverage.snapshotTopCount,19);
+  assert.equal(retainedRead.agendaCoverage.storedTopCount,20);
+  assert.equal(retainedRead.agendaCoverage.retainedFromEarlierRevisions,1,'Missing later row is retained and explicitly distinguished');
   for (const role of ["anon", "authenticated", "service_role"]) {
     const c = await pool.connect();
     try {
@@ -393,7 +456,7 @@ async function main() {
     "untouched",
   );
   console.log(
-    "PASS PG16: automatic idempotent findings, exact-version rights, immutable original/text pair, denied historical/new content, upload failure/rollback/retry/revocation, independent local links, MFA/RLS and untouched public sentinel; Storage transport simulated",
+    "PASS isolated PostgreSQL: automatic idempotent findings, exact-version rights, immutable original/text pair, denied historical/new content, upload failure/rollback/retry/revocation, independent local links, MFA/RLS and untouched public sentinel; Storage transport simulated",
   );
 }
 main().finally(() => pool.end()).catch((e) => {

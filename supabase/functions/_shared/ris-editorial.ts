@@ -1,4 +1,4 @@
-import { RIS_ORIGIN, type RisSql, risUrl } from "./ris-structure.ts";
+import { RIS_ORIGIN, type RisSql, risUrl, ensureRisFinding, risAgendaCoverage } from "./ris-structure.ts";
 /** Run inside one transaction. Actor is supplied by verified server auth, never request JSON. */
 export type RisActor = {
   userId: string;
@@ -34,6 +34,13 @@ async function audit(
     "insert into fib.ris_review_log(actor_id,action,object_id,detail) values($1,$2,$3,$4::text::jsonb)",
     [actor.userId, action, id, JSON.stringify(detail)],
   );
+  const eventId = (detail as {eventId?: string} | null)?.eventId;
+  if (eventId) await tx.unsafe(
+    `insert into fib.object_last_edits(object_type,object_id,user_id,edited_at)
+     values('event',$1,$2,now()) on conflict(object_type,object_id)
+     do update set user_id=excluded.user_id,edited_at=excluded.edited_at`,
+    [eventId,actor.userId],
+  );
 }
 /** Attach only proposal/attachment documents physically linked to this TOP.
  * This runs in the caller's existing database transaction; no second user
@@ -43,7 +50,7 @@ export async function linkTopRisDocuments(
   tx: RisSql, actor: RisActor, agendaId: string, eventId: string,
 ) {
   const agenda = await one(tx,
-    "select id,session_id from fib.ris_agenda_items where id=$1 for update",
+    "select a.id,a.session_id,a.number,s.session_date::text from fib.ris_agenda_items a join fib.ris_sessions s on s.id=a.session_id where a.id=$1 for update of a",
     [agendaId]);
   const documents = await tx.unsafe(
     `select l.id,d.id document_id,d.latest_version_id,
@@ -51,32 +58,26 @@ export async function linkTopRisDocuments(
        from fib.ris_document_links l
        join fib.ris_documents d on d.id=l.document_id
        where l.agenda_id=$1 and l.session_id=$2
-         and l.kind in ('proposal','attachment')
+         and l.kind in ('proposal','attachment','decision') and l.status<>'rejected'
        order by l.id for update of l,d`,
     [agenda.id,agenda.session_id],
   );
   if (!documents.length) return {linked:0,findingIds:[]};
-  const source = await one(tx,
-    "select id from fib.sources where active and rtrim(homepage_url,'/')=$1 order by id limit 1",
-    [RIS_ORIGIN]);
   const linked: string[] = [];
   for (const document of documents) {
-    const result=await risEditorial(tx,actor,{
-      action:"ris_accept_finding",
-      versionId:document.latest_version_id,
-      sourceId:source.id,
-      title:document.original_title || "RIS-Unterlage",
-    });
+    // Metadata-only documents need no extracted text or document version.
+    const findingId = await ensureRisFinding(tx,document.document_id);
+    const rationale = `Automatisch zugeordnet aufgrund der dokumentierten Zugehörigkeit zu TOP ${agenda.number ?? "?"} der Sitzung vom ${agenda.session_date ?? "unbekannten Datum"}.`;
     await tx.unsafe(
-      `insert into fib.event_findings(event_id,finding_id,evidence_role)
-       values($1,$2,'source') on conflict do nothing`,
-      [eventId,result.findingId],
+      `insert into fib.event_findings(event_id,finding_id,evidence_role,justification)
+       values($1,$2,'source',$3) on conflict do nothing`,
+      [eventId,findingId,rationale],
     );
-    linked.push(result.findingId);
+    linked.push(findingId);
   }
   await audit(tx,actor,"ris_auto_link_top_documents",agenda.id,{
     eventId,documentCount:documents.length,findingIds:linked,
-    provenance:"TOP proposal/attachment only",decisionConfirmed:false,
+    provenance:"TOP proposal/attachment/decision metadata only",decisionConfirmed:false,
   });
   return {linked:linked.length,findingIds:linked};
 }
@@ -154,7 +155,9 @@ export async function risEditorial(
       [input.sessionId],
     );
     const agenda = await tx.unsafe(
-      "select a.*,v.revision observed_revision from fib.ris_agenda_items a join fib.ris_session_versions v on v.id=a.latest_snapshot_id where a.session_id=$1 order by a.number",
+      `select a.*,v.revision observed_revision,
+        (select item->>'observedTreatment' from jsonb_array_elements(v.snapshot->'agenda') item where item->>'key'=a.source_key limit 1) observed_treatment
+       from fib.ris_agenda_items a join fib.ris_session_versions v on v.id=a.latest_snapshot_id where a.session_id=$1 order by a.number`,
       [session.id],
     );
     const documents = await tx.unsafe(
@@ -226,6 +229,7 @@ export async function risEditorial(
     );
     return {
       snapshots,
+      agendaCoverage: risAgendaCoverage(snapshots[0]?.snapshot, agenda, snapshots[0]?.revision),
       reviewLog,
       session,
       agenda,
@@ -408,6 +412,7 @@ export async function risEditorial(
       rationale,
       versionId: input.versionId ?? null,
     });
+    if (status === "confirmed") await ensureRisFinding(tx,old.document_id);
     return { id: old.id };
   }
   if (action === "ris_accept_finding") {

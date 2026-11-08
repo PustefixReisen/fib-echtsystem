@@ -330,6 +330,22 @@ async function main() {
     (await call({ action: "ris_read", sessionId: session })).status,
     503,
   );
+  // #403: the regular scanner path imports every observed TOP, including
+  // procedural TOPs without proposal/document links. Entire transport is synthetic.
+  const agendaHtml=(n:number)=>'<html><div class="siname">Synthetic full agenda</div><table><tr><th class="tofnum">TOP</th></tr>'+Array.from({length:n},(_,i)=>`<tr><td>extra</td><td class="tofnum">Ö ${i+1}</td><td class="tolink"><a href="to0050.asp?__ktonr=${800+i}">Synthetic TOP ${i+1}</a></td></tr>`).join('')+'</table></html>';
+  enabled=true;
+  html=agendaHtml(19);
+  const fullScan=await invoke();
+  assert.equal(fullScan.status,200,JSON.stringify(fullScan));
+  assert.equal(fullScan.body.structureSessions,1);
+  assert.equal((await first("select count(*)::int n from fib.ris_agenda_items where session_id=$1",[session])).n,19);
+  const fullRevision=await revisions();
+  await invoke();
+  assert.equal(await revisions(),fullRevision,'Unchanged full agenda is idempotent');
+  html=agendaHtml(20).replace('Synthetic TOP 1</a>','Changed synthetic TOP 1</a>');
+  await invoke();
+  assert.equal((await first("select count(*)::int n from fib.ris_agenda_items where session_id=$1",[session])).n,20,'Later TOP without proposal is imported through regular revisit');
+  assert.equal((await first("select title from fib.ris_agenda_items where session_id=$1 and number='1'",[session])).title,'Changed synthetic TOP 1');
   // Feature off retains the old scanner behavior without touching structure.
   const structureBeforeDisable = JSON.parse(await cursor()).structureState;
   enabled = false;

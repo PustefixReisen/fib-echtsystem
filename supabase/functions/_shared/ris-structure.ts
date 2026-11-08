@@ -84,6 +84,7 @@ export type RisSnapshot = {
   url: string;
   hash: string;
   observedAt: string;
+  parserVersion?: string;
   committee: string | null;
   reference: string | null;
   date: string | null;
@@ -91,6 +92,7 @@ export type RisSnapshot = {
     key: string;
     number: string | null;
     title: string;
+    observedTreatment?: string | null;
     proposals: string[];
     documents: RisDocumentHint[];
     issues: string[];
@@ -98,7 +100,21 @@ export type RisSnapshot = {
     proposalReferences: Record<string, string>;
   }[];
   documents: RisDocumentHint[];
+  capture?: {scope?: string; fixture?: string; bundleSha256?: string};
 };
+/** Observed source rows are not proof that the portal exposed the whole session. */
+export function risAgendaCoverage(snapshot: RisSnapshot | undefined, stored: {observed_revision?: number}[] = [], revision?: number) {
+  const rows = snapshot?.agenda ?? [];
+  return {
+    scope: snapshot?.capture?.scope === "documented_reference_excerpt"
+      ? "reference_excerpt" : snapshot ? "observed_page" : "unknown",
+    snapshotTopCount: snapshot ? rows.length : null,
+    storedTopCount: stored.length,
+    retainedFromEarlierRevisions: revision === undefined ? null : stored.filter(a => a.observed_revision !== revision).length,
+    unresolvedTopCount: snapshot ? rows.filter(a => !a.number || a.issues?.includes("missing_top_number")).length : null,
+    completeness: "unverified",
+  };
+}
 export async function parseRisStructure(
   html: string,
   url: string,
@@ -137,10 +153,12 @@ export async function parseRisStructure(
     const row = m[1],
       plain = risText(row),
       a = links(row, canonical);
-    const first = risText(row.match(/<td\b[^>]*>([\s\S]*?)<\/td>/i)?.[1] ?? "");
+    const numberedCell = row.match(/<td\b[^>]*class=["'][^"']*\btofnum\b[^"']*["'][^>]*>([\s\S]*?)<\/td>/i);
+    const first = risText(numberedCell?.[1] ?? row.match(/<td\b[^>]*>([\s\S]*?)<\/td>/i)?.[1] ?? "");
     const number =
       /^(?:Ö\s*|TOP\s*)?(\d{1,3}(?:\.\d{1,3})?)\.?$/.exec(first)?.[1] ?? null;
-    if (!number && !/\btofnum\b/.test(row)) continue;
+    // Headers use th.tofnum too; only actual agenda data cells count.
+    if (!number && !numberedCell) continue;
     const top = [
       ...new Set(
         a
@@ -178,7 +196,12 @@ export async function parseRisStructure(
       : top.length === 1
       ? top[0]
       : "unresolved:" + (await risHash(row));
-    const title = risText(
+    // The title anchor excludes the separate published treatment/status block.
+    const titleLink = [...row.matchAll(/<a\b[^>]*href=["']([^"']+)["'][^>]*>([\s\S]*?)<\/a>/gi)]
+      .find((m) => risUrl(m[1], canonical) === top[0]);
+    const observedTreatment = risText(row.match(/<p\b[^>]*class=["'][^"']*\bbeschluss\b[^"']*["'][^>]*>([\s\S]*?)<\/p>/i)?.[1] ??
+      row.match(/<p\b[^>]*class=["'][^"']*_beschluss[^"']*["'][^>]*>([\s\S]*?)<\/p>/i)?.[1] ?? "").replace(/^Beschluss:\s*/i, "") || null;
+    const title = risText(titleLink?.[2] ??
       row.match(/class="[^"]*\btolink\b[^"]*"[^>]*>([\s\S]*?)<\/td>/i)?.[1] ??
         plain,
     );
@@ -186,6 +209,7 @@ export async function parseRisStructure(
       key,
       number,
       title,
+      observedTreatment,
       proposals,
       documents,
       publishedTopUrls: top,
@@ -230,6 +254,7 @@ export async function parseRisStructure(
     url: canonical,
     hash: await risHash(html),
     observedAt,
+    parserVersion: "agenda-rows-v2",
     committee: field("sigrname"),
     reference: field("siname"),
     date: validDate,
@@ -274,11 +299,11 @@ export async function persistRisStructure(tx: RisSql, snapshot: RisSnapshot) {
   }
   const latest = (
     await tx.unsafe(
-      "select id,content_hash,revision from fib.ris_session_versions where session_id=$1 order by revision desc limit 1",
+      "select id,content_hash,revision,snapshot->>'parserVersion' parser_version from fib.ris_session_versions where session_id=$1 order by revision desc limit 1",
       [s.id],
     )
   )[0];
-  if (latest?.content_hash === snapshot.hash) {
+  if (latest?.content_hash === snapshot.hash && latest.parser_version === (snapshot.parserVersion ?? null)) {
     await tx.unsafe(
       "update fib.ris_sessions set last_observed_at=$2 where id=$1",
       [s.id, snapshot.observedAt],
@@ -442,6 +467,15 @@ export async function ensureRisFinding(
       ],
     );
   }
+  // Late metadata must reach existing explicit TOP choices as well. Never create
+  // a TOP-event relationship here, nor overwrite an editorial justification.
+  await tx.unsafe(`insert into fib.event_findings(event_id,finding_id,evidence_role,justification)
+    select distinct ae.event_id,$1::uuid,'source',
+      'Automatisch zugeordnet aufgrund der dokumentierten Zugehörigkeit zu TOP ' || coalesce(a.number,'?') || ' der Sitzung vom ' || coalesce(s.session_date::text,'unbekannten Datum') || '.'
+    from fib.ris_document_links l join fib.ris_agenda_events ae on ae.agenda_id=l.agenda_id
+    join fib.ris_agenda_items a on a.id=l.agenda_id join fib.ris_sessions s on s.id=a.session_id
+    where l.document_id=$2 and l.kind in ('proposal','attachment','decision') and l.status<>'rejected' and ae.role='main_event'
+    on conflict do nothing`, [findingId,doc.id]);
   return findingId;
 }
 export async function persistRisDocument(

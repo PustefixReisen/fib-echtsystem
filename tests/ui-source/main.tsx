@@ -103,12 +103,13 @@ const api = async (b: any) => {
         session_date: "2026-10-29",
         source_url: origin + "/si0057.asp?__ksinr=1032",
       },
+      agendaCoverage: {scope:"reference_excerpt",snapshotTopCount:2,storedTopCount:2,completeness:"unverified"},
       agenda: [{ id: "t2", number: "2", title }, {
         id: "t3",
         number: "3",
         title: "Beitragsanpassung der Kindertageseinrichtungen zum 01.01.2027",
       }],
-      documents: [doc],
+      documents: [doc,...((window as any).showDecisionCases ? [{...doc,id:"minutes",agenda_id:null,kind:"minutes",source_url:origin+"/getfile.asp?id=75785"}] : [])],
       proposals: [{
         id: "p1",
         agenda_id: "t2",
@@ -122,6 +123,8 @@ const api = async (b: any) => {
           point_key: "A",
           wording: "<img src=x onerror=alert(1)>",
           result: "unknown",
+        },{
+          agenda_id:"t2",point_key:"B",result:"accepted",yes_count:10,no_count:2,abstention_count:null,
         }]
         : [],
       events: local,

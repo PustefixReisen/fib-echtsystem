@@ -1,3 +1,4 @@
+import { isRisCollection } from "./ris-presentation.js";
 import {SourceWorkspace} from './SourceWorkspace.js';
 import { FormEvent, useEffect, useState, useRef, type ReactNode } from 'react';
 import { PasswordField } from './PasswordField.js';
@@ -250,7 +251,7 @@ export function App() {
     (editSummary.trim() || null) !== (readableSummary(eventResult.summary)?.trim() || null) ||
     editOccurredAt !== (eventResult.occurredAt?.slice(0, 10) ?? '')
   );
-  leaveGuardRef.current = eventDirty || editSaving;
+  leaveGuardRef.current = eventDirty || editSaving || Boolean(editingSourceId && sourceNoteDraft !== (eventSources.find(s => s.findingId === editingSourceId)?.justification ?? ''));
   currentViewRef.current = view;
 
   function openSourceSection(mode: 'findings' | 'sessions', findingId: string | null = null) {
@@ -264,7 +265,7 @@ export function App() {
 
   function confirmLeave(): boolean {
     if (editSaving || !sourceLeaveRef.current()) return false;
-    return !eventDirty || window.confirm('Ungespeicherte Änderungen\\n\\nÄnderungen verwerfen und den Bereich verlassen?');
+    return !(eventDirty || (editingSourceId && sourceNoteDraft !== (eventSources.find(s => s.findingId === editingSourceId)?.justification ?? ''))) || window.confirm('Ungespeicherte Änderungen\\n\\nÄnderungen verwerfen und den Bereich verlassen?');
   }
 
   useEffect(() => {
@@ -279,7 +280,7 @@ export function App() {
 
   historyLeaveRef.current = () => {
     if (!confirmLeave()) return false;
-    if (editingEvent) { setEditingEvent(false); void runCoordinationAction('release_lock', true); }
+    if (editingEvent || editingSourceId) { setEditingEvent(false); setEditingSourceId(null); void runCoordinationAction('release_lock', true); }
     return true;
   };
 
@@ -292,7 +293,7 @@ export function App() {
 
   function navigateTo(nextView: EditorialView) {
     if (nextView === view || !confirmLeave()) return;
-    if (editingEvent) { setEditingEvent(false); void runCoordinationAction('release_lock', true); }
+    if (editingEvent || editingSourceId) { setEditingEvent(false); setEditingSourceId(null); void runCoordinationAction('release_lock', true); }
     window.history.pushState({ fibView: nextView }, '', window.location.href);
     setView(nextView);
     setNavigationOpen(false);
@@ -523,14 +524,20 @@ export function App() {
   }, [view, eventResult?.id]);
 
   useEffect(() => {
-    if (!editingEvent || !coordination?.lock?.mine) return;
+    if ((!editingEvent && !editingSourceId) || !coordination?.lock?.mine) return;
 
     const timer = window.setInterval(() => {
       void runCoordinationAction('renew_lock', true);
     }, 60_000);
 
     return () => window.clearInterval(timer);
-  }, [editingEvent, coordination?.lock?.mine]);
+  }, [editingEvent, editingSourceId, coordination?.lock?.mine]);
+
+  useEffect(() => {
+    if (view !== 'event' || !eventResult) return;
+    const timer = window.setInterval(() => void loadCoordinationState(), 15_000);
+    return () => window.clearInterval(timer);
+  }, [view, eventResult?.id]);
 
   async function login(event: FormEvent) {
     event.preventDefault();
@@ -684,7 +691,7 @@ export function App() {
 
   function returnToSession() {
     if (!eventSessionContext || !confirmLeave()) return;
-    if (editingEvent) { setEditingEvent(false); void runCoordinationAction('release_lock', true); }
+    if (editingEvent || editingSourceId) { setEditingEvent(false); setEditingSourceId(null); void runCoordinationAction('release_lock', true); }
     setSourceFindingId(null);
     setSourceNavigationKey(k=>k+1);
     window.history.pushState({fibView:'sessions'},'',window.location.href);
@@ -875,14 +882,14 @@ export function App() {
   }
 
   async function runCoordinationAction(action: 'get_state' | 'take_lead' | 'release_lead' | 'acquire_lock' | 'renew_lock' | 'release_lock', quiet = false) {
-    if (!quiet) setCoordinationRunning(true);
+    setCoordinationRunning(true);
     if (!quiet) setCoordinationMessage(null);
 
     const { data, error } = await supabase.functions.invoke<CoordinationResult>('fib-coordination', {
       body: { action, objectType: 'event', objectId: eventResult?.id ?? LIVE_TEST_EVENT_ID },
-    });
+    }).catch(error => ({data: null, error}));
 
-    if (!quiet) setCoordinationRunning(false);
+    setCoordinationRunning(false);
 
     if (error) {
       if (!quiet) setCoordinationMessage(error.message || 'Koordinationsfunktion konnte nicht aufgerufen werden.');
@@ -944,7 +951,11 @@ export function App() {
     if (data.hasMore) setSourceMessage('Maximal 100 Fundstellen. Suche bitte eingrenzen.');
   }
 
-  function startFindingMetadataEdit(source: EventSource) {
+  async function startFindingMetadataEdit(source: EventSource) {
+    if (!await runCoordinationAction('acquire_lock')) {
+      setSourceMessage('Fundstellenbearbeitung konnte nicht gestartet werden. Bitte Sperre und Verbindung prüfen.');
+      return;
+    }
     setEditingSourceId(source.findingId);
     setSourceRoleDraft(source.evidenceRole ?? 'editorial_reference');
     setSourceNoteDraft(source.justification ?? '');
@@ -978,6 +989,7 @@ export function App() {
         setSourceMessage('Begründung der Zuordnung gespeichert.');
       }
       setEditingSourceId(null);
+      await runCoordinationAction('release_lock', true);
     } finally {
       if (acquiredForThisAction) await runCoordinationAction('release_lock', true);
       setSourceBusy(false);
@@ -1064,7 +1076,11 @@ export function App() {
   async function startEventEditing() {
     if (!eventResult) return;
     const acquired = await runCoordinationAction('acquire_lock');
-    if (!acquired) return;
+    if (!acquired) {
+      setEditFailed(true);
+      setEditMessage('Bearbeitung konnte nicht gestartet werden. Bitte Sperre und Verbindung prüfen.');
+      return;
+    }
     setEditTitle(eventResult.title);
     setEditSummary(readableSummary(eventResult.summary) ?? '');
     setEditOccurredAt(eventResult.occurredAt ? eventResult.occurredAt.slice(0, 10) : '');
@@ -1240,6 +1256,7 @@ export function App() {
 
   async function logout() {
     if (!confirmLeave()) return;
+    if ((editingEvent || editingSourceId) && !await runCoordinationAction('release_lock')) return;
     ++authRevision.current;
     const { error } = await supabase.auth.signOut({ scope: 'local' });
     if (error) { setMessage('Abmelden fehlgeschlagen. Bitte erneut versuchen.'); return; }
@@ -1944,13 +1961,17 @@ export function App() {
                   {editingEvent && <span className={editFailed ? 'card-edit-state error' : !editTitle.trim() ? 'card-edit-state error' : eventDirty ? 'card-edit-state dirty' : 'card-edit-state'} role="status">{editSaving ? 'Speichern läuft …' : editFailed ? 'Änderung nicht gespeichert' : !editTitle.trim() ? '⚠ Pflichteingaben unvollständig' : eventDirty ? '● Ungespeicherte Änderungen' : 'Unverändert'}</span>}
                   {!editingEvent && editSaved && <span className="card-edit-state saved" role="status">✓ Gespeichert</span>}
                   {!editingEvent && (
-                    <button className="primary action-button" onClick={startEventEditing} disabled={sourcePickerOpen || coordinationRunning || !!(coordination?.lock && !coordination.lock.mine)}>
+                    <button className="primary action-button" type="button" onClick={startEventEditing} disabled={sourcePickerOpen || coordinationRunning || !!(coordination?.lock && !coordination.lock.mine)}>
                       <ActionIcon name="edit" />
                       Bearbeiten
                     </button>
                   )}
                 </div>
 
+                {editFailed && !editingEvent && <p role="alert">{editMessage}</p>}
+                {!!(coordination?.lock && !coordination.lock.mine) && <p role="status">Bearbeitung gesperrt durch {coordination.lock.displayName}.</p>}
+                {sourcePickerOpen && !editingEvent && <p>Bitte die Fundstellenbearbeitung zuerst beenden, um Ereignisdaten zu bearbeiten.</p>}
+                {(editingEvent || editingSourceId) && !coordination?.lock?.mine && <p role="alert">Die Bearbeitungssperre ist nicht mehr aktiv. Bitte Bearbeitung beenden und neu starten.</p>}
                 {editingEvent ? (
                   <form className="stack edit-form" onSubmit={saveEventEdit}>
                     <label>Titel *
@@ -1987,7 +2008,7 @@ export function App() {
                 
                 {eventSources.length === 0 ? <p>Für dieses Ereignis sind noch keine Fundstellen zugeordnet.</p> : (
                   <ul className="event-source-list">
-                    {eventSources.map((source) => (
+                    {eventSources.filter(source => !isRisCollection(source.originalUrl)).map((source) => (
                       <li key={source.findingId}>
                         <strong>{readableSourceName(source.sourceName)}</strong>
                         <span>{source.originalUrl && /^https?:\/\//i.test(source.originalUrl) ? <a href={source.originalUrl} target="_blank" rel="noopener noreferrer">{source.findingTitle}</a> : source.findingTitle}</span>
@@ -2002,7 +2023,7 @@ export function App() {
                           </div>
                         ) : (
                           <div className="button-row">
-                            <button type="button" disabled={sourceBusy || !!editingSourceId} onClick={() => startFindingMetadataEdit(source)}>Zuordnung bearbeiten</button>
+                            <button type="button" disabled={sourceBusy || coordinationRunning || !!editingSourceId} onClick={() => void startFindingMetadataEdit(source)}>Zuordnung bearbeiten</button>
                             <button type="button" disabled={sourceBusy || !!editingSourceId} onClick={() => void unlinkFinding(source.findingId)}>Zuordnung aufheben</button>
                           </div>
                         ))}
@@ -2010,6 +2031,10 @@ export function App() {
                     ))}
                   </ul>
                 )}
+                {eventSources.some(source => isRisCollection(source.originalUrl)) && <section aria-label="Allgemeine RIS-Navigation">
+                  <h3>Allgemeine RIS-Navigation</h3><p>Portalweite Sammlungen sind keine Belege für dieses Ereignis. Bestehende Verknüpfungen bleiben erhalten.</p>
+                  {eventSources.filter(source => isRisCollection(source.originalUrl)).map(source => <p key={source.findingId}><a href={source.originalUrl!} target="_blank" rel="noopener noreferrer">{source.findingTitle}</a></p>)}
+                </section>}
                 {sourcePickerOpen && <div className="stack">
                   {eventSessionContext && <p className="field-validation-note">Es werden ausschließlich Fundstellen der aktuellen Gemeinderatssitzung angeboten.</p>}
                   <div className="finding-filter">
@@ -2035,7 +2060,8 @@ export function App() {
                 {sourcePickerOpen && <div className="workflow-action-dock" role="group" aria-label="Aktionen für Fundstellenbearbeitung">
                   {editingSourceId ? <>
                     <button type="button" className="primary action-button" disabled={sourceBusy || !sourceNoteDraft.trim() || sourceNoteDraft === (eventSources.find(item => item.findingId === editingSourceId)?.justification ?? '')} onClick={() => void saveFindingMetadata(editingSourceId)}><ActionIcon name="save" />Speichern</button>
-                    <button type="button" className="action-button" disabled={sourceBusy} onClick={() => { const current = eventSources.find(item => item.findingId === editingSourceId); if (sourceNoteDraft !== (current?.justification ?? '') && !window.confirm('Ungespeicherte Änderungen an dieser Zuordnung verwerfen?')) return; setEditingSourceId(null); }}>Abbrechen</button>
+                    <button type="button" className="action-button" disabled={sourceBusy} onClick={() => { const current = eventSources.find(item => item.findingId === editingSourceId); if (sourceNoteDraft !== (current?.justification ?? '') && !window.confirm('Ungespeicherte Änderungen an dieser Zuordnung verwerfen?')) return; setEditingSourceId(null);
+      void runCoordinationAction('release_lock', true); }}>Abbrechen</button>
                   </> : <button type="button" className="action-button" disabled={sourceBusy} onClick={() => { const pending = sourceMatches.some(finding => !eventSources.some(item => item.findingId === finding.findingId) && (linkJustificationDrafts[finding.findingId] ?? "").trim().length > 0); if (pending && !window.confirm("Nicht zugeordnete Begründungsentwürfe verwerfen und Fundstellenbearbeitung beenden?")) return; setSourcePickerOpen(false); setLinkJustificationDrafts({}); setSourceMessage(null); }}>Fertig</button>}
                 </div>}
 

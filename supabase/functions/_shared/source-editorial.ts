@@ -362,7 +362,7 @@ export async function sourceEditorial(
       [input.requestId, actor.userId],
     );
     await tx.unsafe(
-      "insert into fib.object_last_edits(object_type,object_id,user_id) values('event',$1,$2)",
+      "insert into fib.object_last_edits(object_type,object_id,user_id) values('event',$1,$2) on conflict(object_type,object_id) do update set user_id=excluded.user_id,edited_at=now()",
       [input.requestId, actor.userId],
     );
     return { eventId: input.requestId };
