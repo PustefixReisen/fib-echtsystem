@@ -456,7 +456,7 @@ export async function ensureRisFinding(
       'Automatisch zugeordnet aufgrund der dokumentierten Zugehörigkeit zu TOP ' || coalesce(a.number,'?') || ' der Sitzung vom ' || coalesce(s.session_date::text,'unbekannten Datum') || '.'
     from fib.ris_document_links l join fib.ris_agenda_events ae on ae.agenda_id=l.agenda_id
     join fib.ris_agenda_items a on a.id=l.agenda_id join fib.ris_sessions s on s.id=a.session_id
-    where l.document_id=$2 and l.kind in ('proposal','attachment','decision') and ae.role='main_event'
+    where l.document_id=$2 and l.kind in ('proposal','attachment','decision') and l.status<>'rejected' and ae.role='main_event'
     on conflict do nothing`, [findingId,doc.id]);
   return findingId;
 }

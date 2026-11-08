@@ -58,7 +58,7 @@ export async function linkTopRisDocuments(
        from fib.ris_document_links l
        join fib.ris_documents d on d.id=l.document_id
        where l.agenda_id=$1 and l.session_id=$2
-         and l.kind in ('proposal','attachment','decision')
+         and l.kind in ('proposal','attachment','decision') and l.status<>'rejected'
        order by l.id for update of l,d`,
     [agenda.id,agenda.session_id],
   );
@@ -411,6 +411,7 @@ export async function risEditorial(
       rationale,
       versionId: input.versionId ?? null,
     });
+    if (status === "confirmed") await ensureRisFinding(tx,old.document_id);
     return { id: old.id };
   }
   if (action === "ris_accept_finding") {
