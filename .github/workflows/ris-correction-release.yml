@@ -74,6 +74,13 @@ jobs:
           [[ "$BACKUP_ID" =~ ^release-[0-9a-f]{32}$ ]]
           [[ "$MANIFEST_SHA" =~ ^[0-9a-f]{64}$ ]]
           test -n "$SUPABASE_ACCESS_TOKEN"
+      - name: Refuse release on changed live RIS function versions/JWT/bundles
+        shell: bash
+        env:
+          SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
+        run: |
+          set -euo pipefail
+          python3 scripts/backup/check-ris-deploy-drift.py
       - uses: supabase/setup-cli@v1
         with:
           version: latest
