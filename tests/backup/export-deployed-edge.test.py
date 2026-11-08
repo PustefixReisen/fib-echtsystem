@@ -95,6 +95,21 @@ class ExportTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "EZBR digest mismatch"):
             module.verify_deployed_bundles(data(), lambda *_: "0"*64, "private")
 
+    def test_multipart_ezbr_digest_is_verified(self):
+        payload = b"EZBR" + b"historic protected bundle"
+        wrapper = (b"--bundle123\r\n"
+                   b'Content-Disposition: form-data; name="file"; filename="edge.eszip"\r\n'
+                   b"Content-Type: application/octet-stream\r\n\r\n"
+                   + payload + b"\r\n--bundle123--\r\n")
+        self.assertEqual(
+            module.binary_digest(wrapper, "multipart/form-data; boundary=bundle123"),
+            hashlib.sha256(payload).hexdigest()
+        )
+
+    def test_json_error_body_never_accepted_as_export(self):
+        with self.assertRaises(module.SafeBodyError):
+            module.binary_digest(b'{"token":"private"}', "application/json")
+
     def test_entrypoint_required(self):
         with tempfile.TemporaryDirectory() as tmp:
             path = pathlib.Path(tmp) / "new"
