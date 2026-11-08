@@ -26,15 +26,37 @@ def read_api(token, path):
         return json.load(response)
 
 
+class SafeBodyError(ValueError):
+    """An allowlisted phase detail only; no remote content or headers."""
+
+
 def read_body(token, slug, *, opener=urlopen):
     """Read deployed EZBR body only; never print or persist the binary payload."""
     req = Request(BASE + "/" + slug + "/body", headers={
         "Authorization": "Bearer " + token
     })
-    with opener(req, timeout=30) as response:
-        binary = response.read(32 * 1024 * 1024 + 1)
-    if len(binary) > 32 * 1024 * 1024 or binary[:4] != b"EZBR":
-        raise ValueError("Unavailable or unexpected deployed EZBR")
+    try:
+        with opener(req, timeout=30) as response:
+            binary = response.read(32 * 1024 * 1024 + 1)
+    except Exception as exc:
+        # Only a fixed classification may reach logs, no URL/body/header/error.
+        from urllib.error import HTTPError
+        if isinstance(exc, HTTPError):
+            code = exc.code
+            if code in (401, 403):
+                raise SafeBodyError("AUTH_DENIED") from None
+            if code == 404:
+                raise SafeBodyError("BODY_NOT_FOUND") from None
+            if code == 429:
+                raise SafeBodyError("RATE_LIMIT") from None
+            raise SafeBodyError("HTTP_OTHER") from None
+        raise SafeBodyError("TRANSPORT") from None
+    if len(binary) > 32 * 1024 * 1024:
+        raise SafeBodyError("TOO_LARGE")
+    if not binary:
+        raise SafeBodyError("EMPTY")
+    if binary[:4] != b"EZBR":
+        raise SafeBodyError("UNEXPECTED_FORMAT")
     return hashlib.sha256(binary).hexdigest()
 
 
@@ -121,7 +143,13 @@ def check(token, *, api=read_api, body=read_body, run=subprocess.run):
             # extraction is byte-for-byte identical to all original sources.
             for slug in sorted(first):
                 stage = "DEPLOYED_BUNDLE_" + slug
-                if body(token, slug) != first[slug]["ezbr_sha256"]:
+                try:
+                    digest = body(token, slug)
+                except SafeBodyError as error:
+                    stage += "_" + str(error)
+                    raise
+                if digest != first[slug]["ezbr_sha256"]:
+                    stage += "_DIGEST_MISMATCH"
                     raise ValueError("Deployed EZBR digest mismatch")
             stage = "FINAL_INVENTORY"
             if inventory(api(token, "")) != first:
