@@ -16,10 +16,15 @@ def sql(q):return run(['docker','exec','-i',name,'psql','-U','postgres','-d','po
 try:
  run(['docker','run','--detach','--name',name,'--network=none','-e','POSTGRES_HOST_AUTH_METHOD=trust','postgres:17'])
  for i in range(60):
-  r=subprocess.run(['docker','exec',name,'pg_isready','-U','postgres'],capture_output=True)
-  if r.returncode==0:break
+  # pg_isready alone may report ready before post-init SQL is reliable.
+  # Require a working connection to the final postgres database.
+  probe=subprocess.run(
+   ['docker','exec','-i',name,'psql','-U','postgres','-d','postgres',
+    '-v','ON_ERROR_STOP=1','-At','-c','SELECT 1'],
+   stdout=subprocess.PIPE,stderr=subprocess.PIPE)
+  if probe.returncode==0 and probe.stdout.strip()==b'1':break
   time.sleep(1)
- else:raise RuntimeError('Isolated PostgreSQL unavailable')
+ else:raise RuntimeError('Isolated PostgreSQL SQL connection unavailable')
  sql('CREATE SCHEMA auth; CREATE TABLE auth.users(id uuid PRIMARY KEY);'+''.join('CREATE ROLE '+r+' NOLOGIN;' for r in ['fib_runtime','fib_app','anon','authenticated','service_role']))
  base=['docker','exec','-i',name,'pg_restore','-U','postgres','--no-owner','--exit-on-error']
  toc=run(base+['--list'],data).decode()
