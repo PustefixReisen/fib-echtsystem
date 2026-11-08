@@ -158,6 +158,27 @@ class ExportTests(unittest.TestCase):
                 module.compare_to_live_source(
                     edge, data(), live_source, "private", allow_private_inventory=True)
 
+    def test_type_only_dependency_missing_from_live_bundle_is_a_blocker(self):
+        with tempfile.TemporaryDirectory() as base:
+            path = pathlib.Path(base) / "new"
+            def download(cmd, **kwargs):
+                slug = cmd[3]
+                folder = pathlib.Path(kwargs["cwd"]) / "supabase/functions" / slug
+                folder.mkdir(parents=True, exist_ok=True)
+                (folder / "index.ts").write_text("export const ok = true;")
+                if slug == "fib-u4-pilot":
+                    common = pathlib.Path(kwargs["cwd"]) / "supabase/functions/_shared"
+                    common.mkdir(parents=True, exist_ok=True)
+                    (common / "development-datasets.ts").write_text(
+                        'import type { RisSql } from "./ris-structure.ts";'
+                    )
+                return subprocess.CompletedProcess(cmd, 0)
+            with self.assertRaisesRegex(ValueError, "missing relative module"):
+                module.export(
+                    path, "private", get_inventory=lambda _: data(),
+                    run=download, get_source=live_source)
+            self.assertFalse(path.exists())
+
     def test_existing_destination_untouched(self):
         with tempfile.TemporaryDirectory() as base:
             path = pathlib.Path(base) / "existing"
