@@ -63,7 +63,7 @@ nach #407 schrittweise umgesetzt, ohne die bisherigen Prüfungen zu
 
 ## Tests
 
-`python3 -m unittest discover -s tests/backup -p 'export-deployed-edge.test.py'`
+`python3 tests/backup/export-deployed-edge.test.py`
 
 Offline-Fälle: erfolgreicher Export ohne fingierten Review-Beleg,
 Inventaränderung während des Downloads, fehlendes Shared-Modul,
