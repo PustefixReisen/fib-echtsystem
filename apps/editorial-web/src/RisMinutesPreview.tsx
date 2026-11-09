@@ -58,7 +58,7 @@ const data = {
     agenda_id: "preview-top-3",
     point_key: "1",
     version_id: "preview-v3",
-    wording: "Der Gemeinderat beschließt einen Entwurf für die Schaffung einer innerörtlichen Parkanlage mit Tiny Forest, Biodiversitätsgarten, Wegen, Bänken und allgemeiner Bepflanzung erarbeiten zu lassen und dem Gemeinderat zur weiteren Beratung vorzulegen. Mittel für die Planung sind im Haushalt 2027 vorzusehen.",
+    wording: "Der zur Abstimmung gestellte Antrag sah vor, einen Entwurf für eine innerörtliche Parkanlage ausarbeiten zu lassen. Dieser sollte einen Tiny Forest, einen Biodiversitätsgarten, Wege, Bänke und weitere Bepflanzung umfassen und anschließend erneut dem Gemeinderat zur Beratung vorgelegt werden. Die Planungskosten sollten im Haushalt 2027 berücksichtigt werden. Der Gemeinderat lehnte diesen Antrag ab.",
     result: "rejected",
     yes_count: 7,
     no_count: 13,
