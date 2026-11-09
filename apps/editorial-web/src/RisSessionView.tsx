@@ -20,6 +20,8 @@ type Props = {
   registerLeaveGuard?: (guard: () => boolean) => void;
   api?: SourceApi;
   eventLock?: typeof withEventLock;
+  /** Only the isolated, static acceptance preview may show supplied source wording. */
+  previewOriginalWording?: boolean;
 };
 const displayDate = (v: unknown) =>
   v ? new Date(String(v)).toLocaleDateString("de-DE") : "Datum unbekannt";
@@ -34,6 +36,7 @@ export function RisSessionView(
     registerLeaveGuard,
     api = sourceApi,
     eventLock = withEventLock,
+    previewOriginalWording = false,
   }: Props,
 ) {
   const [localTop, setLocalTop] = useState(""),
@@ -285,12 +288,12 @@ export function RisSessionView(
                   {decisions.map((d, i) => (
                     <div key={d.version_id ?? i} className="ris-minutes-decision">
                       <p><strong>Beschlusspunkt {d.point_key ?? i + 1}</strong></p>
-                      <p>Ergebnis laut Niederschrift: {({accepted:"angenommen",rejected:"abgelehnt",no_vote:"keine Abstimmung",unknown:"Ergebnis nicht angegeben"} as Row)[d.result] ?? "Ergebnis nicht angegeben"}.
-                        {d.result !== "no_vote" && <> Ja: {d.yes_count ?? "nicht angegeben"}, Nein: {d.no_count ?? "nicht angegeben"}, Enthaltungen: {d.abstention_count ?? "nicht angegeben"}.</>}
+                      {previewOriginalWording && d.wording
+                        ? <p className="ris-minutes-wording" style={{whiteSpace:"pre-line"}}>{d.wording}</p>
+                        : <p className="meta">Der vollständige Beschlusswortlaut wurde für die Anzeige noch nicht freigegeben. Bitte die Originalniederschrift verwenden.</p>}
+                      <p><strong>Abstimmung:</strong> {({accepted:"angenommen",rejected:"abgelehnt",no_vote:"keine Abstimmung",unknown:"Ergebnis nicht angegeben"} as Row)[d.result] ?? "Ergebnis nicht angegeben"}
+                        {d.result !== "no_vote" && <> · Ja {d.yes_count ?? "nicht angegeben"} · Nein {d.no_count ?? "nicht angegeben"}{d.abstention_count != null && <> · Enthaltungen {d.abstention_count}</>}</>}
                       </p>
-                      {d.factual_summary && !d.source_changed
-                        ? <p><strong>Beschlussinhalt:</strong> {d.factual_summary}</p>
-                        : <p className="meta">Der zugehörige Beschlussinhalt wurde noch nicht als geprüfte sachliche Zusammenfassung übernommen.</p>}
                       {d.source_changed && <p role="status">Originalquelle geändert – erneute Prüfung erforderlich.</p>}
                     </div>
                   ))}
