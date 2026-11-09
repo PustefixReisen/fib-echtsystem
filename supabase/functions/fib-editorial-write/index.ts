@@ -180,7 +180,7 @@ export default {
           sessionId:row.session_id,
           sourceDocumentId,sourceUrl:official,
           expectedNumbers:expected,selectedTopNumber:n,provider,
-        });
+        },fetch,async bytes=>(await extractText(bytes.slice(),{mergePages:true})).text);
         // Contains ONLY rewritten draft and vote metadata, never PDF bytes
         // or a raw official source excerpt.
         return json({ok:true,status:outcome.status,reasons:outcome.reasons,
