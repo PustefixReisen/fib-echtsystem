@@ -44,14 +44,19 @@ def redact_to_flags(rows):
         if name in flags:
             raise ValueError("Duplicate FIB feature flag")
         raw = row.get("value")
-        if not isinstance(raw, str) or raw.strip().lower() not in BOOLEAN:
-            raise ValueError("FIB feature flag is not an explicit boolean")
-        flags[name] = BOOLEAN[raw.strip().lower()]
+        # Record non-boolean/masked values only as UNVERIFIED; never persist
+        # any raw secret bytes or infer a boolean from their presence.
+        if isinstance(raw, str) and raw.strip().lower() in BOOLEAN:
+            flags[name] = BOOLEAN[raw.strip().lower()]
+        else:
+            flags[name] = {"status": "unverified"}
     missing = [name for name in ALLOWED if name not in flags]
+    unverified = [name for name, value in flags.items() if isinstance(value, dict)]
     return {
-        "status": "captured" if not missing else "incomplete",
+        "status": "captured" if not missing and not unverified else "incomplete",
         "values": flags,
         "missing": missing,
+        "unverified": sorted(unverified),
     }
 
 
@@ -122,7 +127,8 @@ def main():
             handle.write("\n")
         output.chmod(0o600)
         missing = len(state["projectFeatures"]["missing"])
-        print(f"FIB allowlisted flag snapshot captured privately; missing={missing}; operator review still required.")
+        unverified = len(state["projectFeatures"]["unverified"])
+        print(f"FIB allowlisted flag snapshot captured privately; missing={missing}; unverified={unverified}; operator review still required.")
     except Exception:
         print("FIB feature snapshot blocked; secret values and API bodies withheld. No release approved.", file=sys.stderr)
         sys.exit(1)
