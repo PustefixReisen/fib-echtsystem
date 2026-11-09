@@ -9,6 +9,7 @@ const reference = JSON.parse(readFileSync(
   "tests/u4/fixtures/ris-1031-public-agenda-indexed-20261109.json","utf8",
 ));
 const url="https://buergerinfo-feldkirchen.digitalfabrix.de/si0057.asp?__ksinr=1031&smcmode=32832";
+async function main(){
 const controller=new AbortController();
 const timeout=setTimeout(()=>controller.abort(),15000);
 let failure="";
@@ -37,3 +38,6 @@ try{
   console.error(JSON.stringify({scope:"public_1031_html_read_only",error:String(e).slice(0,220)}));
 }finally{clearTimeout(timeout)}
 if(failure) {console.error(failure); process.exitCode=1;}
+
+}
+void main().catch(err=>{console.error(err);process.exitCode=1;});
