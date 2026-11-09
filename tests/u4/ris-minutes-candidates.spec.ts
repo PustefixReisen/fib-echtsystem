@@ -1,4 +1,5 @@
 import assert from "node:assert/strict";
+import {generateRisFactualReviewDraft} from "../../supabase/functions/_shared/ris-minutes-draft.ts";
 import {readFileSync} from "node:fs";
 import {extractRisMinutesCandidates,validateRisFactualDraft} from
   "../../supabase/functions/_shared/ris-minutes-candidates.ts";
@@ -27,3 +28,25 @@ assert.ok(validateRisFactualDraft(top6,[factual[0]]).reasons.includes("candidate
 assert.ok(validateRisFactualDraft(top6,[factual[0],{...factual[1],vote:{...factual[1].vote,yes:17}}]).reasons.includes("vote_changed"));
 assert.ok(extractRisMinutesCandidates("Unklare Beratung ohne Abstimmungsergebnis").length===0);
 console.log("PASS RIS referenced minutes: TOP2 no vote, TOP3 7:13, TOP6 two separate 17:2/19:0; no invented votes, candidate review required");
+
+const unavailable=await generateRisFactualReviewDraft(sections[2]);
+assert.equal(unavailable.status,"unavailable");
+assert.deepEqual(unavailable.reasons,["draft_provider_not_configured"]);
+const incomplete=await generateRisFactualReviewDraft(sections[2],async(_items,instructions)=>{
+  assert.ok(instructions.includes("Kostenverteilungen"));
+  return [factual[0]];
+});
+assert.equal(incomplete.status,"rejected");
+assert.ok(incomplete.reasons.includes("candidate_count_mismatch"));
+const review=await generateRisFactualReviewDraft(sections[2],async(items)=>items.map((item,i)=>({
+  ...factual[i],pointKey:item.pointKey,vote:item.vote,
+})));
+assert.equal(review.status,"review_required");
+assert.equal(review.drafts.length,2);
+assert.deepEqual(review.reasons,["human_content_review_required"]);
+const voteTamper=await generateRisFactualReviewDraft(sections[2],async(items)=>items.map((item,i)=>({
+  ...factual[i],pointKey:item.pointKey,vote:{...item.vote,no:99},
+})));
+assert.equal(voteTamper.status,"rejected");
+assert.deepEqual(voteTamper.drafts,[]);
+console.log("PASS provider-neutral AI drafting: no provider is unavailable, incomplete/changed votes fail, valid draft still needs human review");
