@@ -280,16 +280,24 @@ export function RisSessionView(
             )}
             <section className="panel card-headed">
               <div className="section-heading"><h2>Niederschrift der Sitzung</h2></div>
-              <p>TOP {selected.number}: {topStatus(selected)}. Veröffentlichter RIS-Stand; keine redaktionelle Beschlussbestätigung daraus abgeleitet.</p>
-              {decisions.map((d, i) => (
-                <p key={d.version_id ?? i}>
-                  Beschlusspunkt {d.point_key ?? i + 1}: {({accepted:"angenommen",rejected:"abgelehnt",no_vote:"keine Abstimmung",unknown:"Ergebnis nicht angegeben"} as Row)[d.result] ?? "Ergebnis nicht angegeben"}.
-                  {d.result !== "no_vote" && <> Die Quelle nennt {d.yes_count ?? "keine Angabe zu"} Ja-Stimmen, {d.no_count ?? "keine Angabe zu"} Nein-Stimmen und {d.abstention_count ?? "keine Angabe zu"} Enthaltungen.</>}
-                  {d.source_changed && " Die Originalquelle wurde seither geändert; erneute Prüfung erforderlich."}
-                </p>
-              ))}
-              {!decisions.length && <p>Keine geprüften TOP-spezifischen Beschlussangaben erfasst.</p>}
-              <p className="meta">Wörtliche Niederschriftabschnitte werden bis zur rechtlichen Klärung nicht übernommen. Maßgeblich bleibt die vollständige Originalniederschrift.</p>
+              {decisions.length > 0 ? (
+                <div className="ris-minutes-decisions">
+                  {decisions.map((d, i) => (
+                    <div key={d.version_id ?? i} className="ris-minutes-decision">
+                      <p><strong>Beschlusspunkt {d.point_key ?? i + 1}</strong></p>
+                      <p>Ergebnis laut Niederschrift: {({accepted:"angenommen",rejected:"abgelehnt",no_vote:"keine Abstimmung",unknown:"Ergebnis nicht angegeben"} as Row)[d.result] ?? "Ergebnis nicht angegeben"}.
+                        {d.result !== "no_vote" && <> Ja: {d.yes_count ?? "nicht angegeben"}, Nein: {d.no_count ?? "nicht angegeben"}, Enthaltungen: {d.abstention_count ?? "nicht angegeben"}.</>}
+                      </p>
+                      <p className="meta">Der zugehörige Beschlussinhalt wurde noch nicht zur zulässigen Anzeige aus der Niederschrift übernommen.</p>
+                      {d.source_changed && <p role="status">Originalquelle geändert – erneute Prüfung erforderlich.</p>}
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <p role="status">{String(topStatus(selected)).toLowerCase() === "abgesetzt"
+                  ? "Dieser TOP wurde abgesetzt. Ein Beschluss oder Abstimmungsergebnis liegt für diesen TOP nicht vor; der protokollierte Behandlungstext ist in FIB noch nicht erfasst."
+                  : "Der TOP-bezogene Beschlusstext und die Abstimmungsergebnisse wurden aus der Niederschrift noch nicht geprüft und übernommen."}</p>
+              )}
               <ul>{[...sessionDocuments,...topDocuments].filter((d) => d.kind === "minutes").map(documentItem)}</ul>
             </section>
             <section className="panel card-headed">
