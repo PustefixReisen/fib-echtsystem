@@ -284,7 +284,7 @@ try {
     "AI generated only on deliberate editorial action");
   await review.getByLabel("Beschlussinhalt – vollständig, aber eigenständig formuliert")
     .fill("Der Gemeinderat beauftragte die Verwaltung mit der Prüfung des Vorhabens sowie der anschließenden Berichterstattung.");
-  await review.getByRole("combobox").selectOption("accepted");
+  await review.getByRole("combobox",{name:"Abstimmung"}).selectOption("accepted");
   await review.getByLabel("Ja").fill("10");
   await review.getByLabel("Nein").fill("2");
   const submit=review.getByRole("button",{name:"Geprüften Entwurf vormerken"});
