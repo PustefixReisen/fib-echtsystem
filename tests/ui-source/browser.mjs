@@ -263,7 +263,7 @@ try {
   await minutes.getByText("Beschlusspunkt A", { exact: true }).waitFor();
   await minutes.getByText("Beschlusspunkt B", { exact: true }).waitFor();
   await minutes.getByText(/Abstimmung: angenommen · Ja 10 · Nein 2/).waitFor();
-  await minutes.getByText(/Der vollständige Beschlusswortlaut wurde für die Anzeige noch nicht freigegeben/).first().waitFor();
+  await minutes.getByText(/Die vollständige sachliche Beschlussdarstellung ist noch nicht geprüft und freigegeben/).first().waitFor();
   assert.equal(await minutes.locator("img").count(),0,"No unlicensed wording or HTML rendered");
   assert.ok((await minutes.innerText()).includes("Ja 10 · Nein 2"));
   assert.equal(await minutes.locator('a[href*="id=75785"]').count(),1,"Complete original remains linked");
