@@ -267,32 +267,25 @@ try {
   assert.equal(await minutes.locator("img").count(),0,"No unlicensed wording or HTML rendered");
   assert.ok((await minutes.innerText()).includes("Ja 10 · Nein 2"));
   assert.equal(await minutes.locator('a[href*="id=75785"]').count(),1,"Complete original remains linked");
-  const review=page.getByRole("region",{name:"Beschlusswortlaut redaktionell prüfen"});
-  await review.getByLabel("Vollständiger protokollierter Beschlusswortlaut").fill("Der Gemeinderat beschließt eine Prüfung des Vorhabens.");
-  await review.getByLabel("Prüfbeleg aus der Originalniederschrift (enthält Beschlusstext und Abstimmung)").fill(
-    "Der Gemeinderat beschließt eine Prüfung des Vorhabens. Abstimmung: Ja 10 Nein 2"
-  );
-  await review.getByLabel("Ergebnis").selectOption("accepted");
-  await review.getByLabel("Ja-Stimmen").fill("10");
-  await review.getByLabel("Nein-Stimmen").fill("2");
-  const propose=review.getByRole("button",{name:"Beschlussentwurf zur Prüfung speichern"});
-  assert.equal(await propose.isDisabled(),true,"No source wording can be submitted without explicit usage rights");
-  await review.getByLabel("Rechtsgrundlage für die wörtliche Anzeige")
-    .selectOption("explicit_permission");
-  await review.getByLabel("Konkreter Rechtsnachweis / Begründung (mindestens 30 Zeichen)")
-    .fill("Nur synthetischer Testbeleg für die isolierte Browserprüfung.");
+  const review=page.getByRole("region",{name:"Beschlussinhalt redaktionell prüfen"});
+  await review.getByLabel("Beschlussinhalt – vollständig, aber eigenständig formuliert")
+    .fill("Der Gemeinderat beauftragte die Verwaltung mit der Prüfung des Vorhabens sowie der anschließenden Berichterstattung.");
+  await review.getByLabel("Abstimmung").selectOption("accepted");
+  await review.getByLabel("Ja").fill("10");
+  await review.getByLabel("Nein").fill("2");
+  const submit=review.getByRole("button",{name:"Geprüften Entwurf vormerken"});
+  assert.equal(await submit.isDisabled(),true,"Source verification required");
   await review.getByRole("checkbox").check();
-  await propose.click();
-  await review.getByText(/Entwurf wartet auf ausdrückliche redaktionelle Bestätigung/).waitFor();
+  await submit.click();
+  await review.getByText(/Entwurf vorgemerkt/).waitFor();
   const proposals=await page.evaluate(()=>window.calls.filter(c=>c.action==="ris_suggest"));
   assert.equal(proposals.length,1);
-  assert.equal(proposals[0].payload.manualSourceVerification,true);
-  assert.equal(proposals[0].payload.usageRightsBasis,"explicit_permission");
-  await review.getByLabel("Prüfvermerk").fill("Wortlaut, Quelle, Abstimmung und Rechtebeleg im Test geprüft.");
-  await review.getByRole("button",{name:"Beschluss und Abstimmung bestätigen"}).click();
-  await review.getByText(/Beschluss und Abstimmung geprüft und übernommen/).waitFor();
+  assert.equal(proposals[0].payload.representation,"complete_factual");
+  assert.equal(proposals[0].payload.usageRightsBasis,undefined);
+  await review.getByRole("button",{name:"Beschluss bestätigen"}).click();
+  await review.getByText(/Beschlussinhalt und Abstimmung bestätigt/).waitFor();
   assert.equal(await page.evaluate(()=>window.calls.filter(c=>c.action==="ris_review_suggestion").length),1,
-    "Proposal and final review require separate explicit actions");
+    "Separate submission and confirmation");
   assert.deepEqual(errors, []);
   console.log(
     "PASS actual SourceWorkspace/RisSessionView components: local event links, modal cancel navigation, event creation, lock retry, external RIS navigation without stored-PDF UI, exact TOP return, origin, title, mobile and Gemeinde regression (simulated APIs; no live MFA or print claim)",
