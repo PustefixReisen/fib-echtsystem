@@ -267,6 +267,9 @@ try {
   assert.equal(await minutes.locator("img").count(),0,"No unlicensed wording or HTML rendered");
   assert.ok((await minutes.innerText()).includes("Ja 10 · Nein 2"));
   assert.equal(await minutes.locator('a[href*="id=75785"]').count(),1,"Complete original remains linked");
+  const optionalEditor=page.locator("details.ris-minutes-editor-optional");
+  assert.equal(await optionalEditor.getAttribute("open"),null,"Rare correction UI is initially collapsed");
+  await optionalEditor.locator("summary").click();
   const review=page.getByRole("region",{name:"Beschlussinhalt redaktionell prüfen"});
   await review.getByLabel("Beschlussinhalt – vollständig, aber eigenständig formuliert")
     .fill("Der Gemeinderat beauftragte die Verwaltung mit der Prüfung des Vorhabens sowie der anschließenden Berichterstattung.");
