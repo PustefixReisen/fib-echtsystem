@@ -429,3 +429,65 @@ Verbindung aktuell noch blockiert, bis die
 amtliche Quelle redaktionell bestätigt
 ist. Dies ist beabsichtigtes Fail-Closed-
 Verhalten und kein Defekt der KI.
+
+## Redaktionell ausgelöste Vorbefüllung: Implementationsnachweis 09.11.2026
+
+Die bislang nur isoliert vorhandene Kette ist nun **direkt
+im bestehenden geschützten Handler** `fib-editorial-write`
+als Aktion `ris_prepare_minutes_draft` verbunden:
+
+- Bestehende Supabase-JWT-Verifikation, MFA/AAL2,
+  aktive FIB-Mitgliedschaft und Editor-/Admin-Rolle
+  müssen vor dem Aufruf bestanden werden.
+- `FIB_RIS_STRUCTURE_ENABLED` bleibt aktives Gate;
+  zusätzlich `FIB_RIS_MISTRAL_ENABLED`,
+  `FIB_RIS_MISTRAL_BUDGET_CONFIRMED`,
+  `FIB_RIS_MISTRAL_DPA_CONFIRMED` und das
+  serverseitige `FIB_RIS_MISTRAL_API_KEY`.
+  **Alle bleiben ungesetzt**, solange die
+  Mistral-Betriebseinrichtung nicht stattgefunden hat.
+- Die konkrete aktuelle Dokumentversion wird **aus
+  `fib.ris_document_versions`** nachgeladen.
+  Sie muss mit einer bestätigten Sitzungs-Niederschrift
+  zusammenhängen und auch auf der frisch abgerufenen
+  amtlichen RIS-Sitzungsseite verlinkt sein.
+- Der amtliche PDF-Download wird **vor der Übertragung
+  an Mistral zusätzlich gegen den gespeicherten
+  SHA-256-Fingerabdruck** geprüft. Abweichungen
+  führen zu `ris_minutes_source_changed`,
+  nicht zu ungeprüften oder vermischten Fassungen.
+- Der Server sendet ausschließlich den **bewusst vom
+  Redakteur ausgewählten TOP** an Mistral, nicht die
+  vollständige Niederschrift. Andere TOPs werden
+  nur im RAM für die vollständige strukturelle
+  Zuordnung ausgewertet.
+- Der Browser erhält nur die neu formulierten
+  Beschlusspunkt-Entwürfe und Abstimmungs-Metadaten,
+  keine PDF-Bytes oder wörtlichen Originalabschnitte.
+  Mehrere Beschlusspunkte bleiben als einzelne
+  Auswahloptionen verfügbar; ein gelungener
+  Aufruf aktiviert **keine** Fachfreigabe-Checkbox.
+- Der Redakteur entscheidet anschließend selbst
+  über die bestehende `ris_suggest`- und
+  `ris_review_suggestion`-Freigabekette.
+
+**Kostendisziplin:** Pro bewusstem Button-Klick
+wird lediglich *ein* TOP verarbeitet; ohne
+Abstimmungsbeleg erfolgt kein bezahlter Modellaufruf.
+Für die genehmigten 5 EUR ist die offizielle
+Workspace-Ausgabenbegrenzung von Mistral maßgeblich,
+keine bloße intern ungesicherte Kostenabschätzung.
+Nach dem einmaligen Test ist die Monatsfreigabe
+wieder abzuschalten, damit daraus kein
+automatisch wiederkehrendes 5-EUR-Monatsbudget wird.
+Es wurde **weder ein API-Key noch ein
+Workspace-Ausgabenlimit eingerichtet**.
+
+**Produktiver aktueller Stopp:** Die RIS-Niederschrift
+für Sitzung 1031 ist im echten FIB-Schema derzeit
+noch `candidate`, nicht `confirmed`. Der neue
+redaktionelle API-Aufruf blockiert sie deshalb
+absichtlich, bis die amtliche Dokumentversion über
+den bestehenden Freigabemechanismus bestätigt ist.
+Eine automatische Bestätigung oder ein SQL-Update
+nur für den Test wäre fachlich unzulässig.
