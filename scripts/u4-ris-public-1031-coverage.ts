@@ -30,6 +30,16 @@ try{
     indexedExpected:expected.length,parserObserved:parsed.agenda.length,
     uniqueObserved:observed.size,missingNumbers:missing,unexpectedNumbers:unexpected,
     coverState:"unverified_by_live_edge",noDatabaseWrites:true}));
+  console.log(JSON.stringify({
+    scope:"public_1031_minutes_document_metadata",
+    sessionDocumentKinds:parsed.documents.map(d=>d.kind),
+    sessionDocumentCount:parsed.documents.length,
+    directMinutesDocuments:parsed.documents.filter(d=>d.kind==="minutes")
+      .map(d=>({url:d.url,title:d.title??null})),
+    topDocumentCount:parsed.agenda.reduce((sum,top)=>sum+top.documents.length,0),
+    hasDirectMinutes:parsed.documents.some(d=>d.kind==="minutes"),
+    noPdfDownload:true,noDatabaseWrites:true,
+  }));
   if(missing.length||unexpected.length||observed.size!==expected.length){
     failure="ris_real_agenda_coverage_mismatch";
   }
