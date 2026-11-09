@@ -4,6 +4,8 @@ on:
   pull_request:
     paths:
       - "scripts/u4-source-smoke.mjs"
+      - "scripts/u4-ris-public-1031-coverage.ts"
+      - "tests/u4/fixtures/ris-1031-public-agenda-indexed-20261109.json"
       - "tests/u4/ris-scheduler-batches.spec.ts"
       - "tests/u4/ris-handler-fault-injection.spec.ts"
       - "tests/u4/ris-runtime-recovery.spec.ts"
@@ -53,6 +55,8 @@ jobs:
         run: node scripts/u4-source-smoke.mjs
       - name: Install workspace dependencies
         run: npm install --ignore-scripts --no-audit --no-fund --no-package-lock
+      - name: Compare real public 15 October RIS agenda with 19-TOP reference
+        run: npx tsx scripts/u4-ris-public-1031-coverage.ts
       - name: Verify U4 source parser tests
         run: npm run test:u4
       - name: Verify core type contracts
