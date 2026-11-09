@@ -26,6 +26,16 @@ async function run(){
       const parsed=await extractText(data.slice(),{mergePages:true});
       const text=parsed.text||"";
       // No protected source text in logs; strictly structural presence flags.
+      const lines=text.split(/\r?\n/);
+      const topPrefixed=lines.map(line=>line.match(/^\s*(?:TOP|Tagesordnungspunkt)\s*(\d{1,2})(?:[.\s:]|$)/i)?.[1]).filter(Boolean);
+      const numbered=lines.map(line=>line.match(/^\s*(\d{1,2})[.)]\s+\S/)?.[1]).filter(Boolean);
+      const numLines=lines.filter(line=>/^\s*II[.)]?\s*Beschluss\b/i.test(line));
+      const votes=(text.match(/Abstimmung\s*:/gi)||[]).length;
+      console.log(JSON.stringify({scope:"real_1031_minutes_structure_metadata",
+        totalLines:lines.length,prefixedTopHeadings:topPrefixed.length,
+        prefixedTopNumbers:[...new Set(topPrefixed)],numberedLineCount:numbered.length,
+        numberedUnique:[...new Set(numbered)],beschlussSectionHeaders:numLines.length,
+        abstimmungLabels:votes,noExtractedTextOutput:true}));
       const detectable=[/Hundewiese/i,/Parkanlage/i,/Rechenzentrum/i];
       console.log(JSON.stringify({
         scope:"real_1031_minutes_transient_readability",
