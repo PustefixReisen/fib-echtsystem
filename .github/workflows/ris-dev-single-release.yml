@@ -59,6 +59,17 @@ jobs:
           grep -q 'alter table fib.ris_votes alter column evidence_quote drop not null' \
             supabase/migrations/20261109150000_fib_ris_factual_vote_evidence.sql
       - run: npm install --no-audit --no-fund
+      - name: Build and validate editorial frontend before any live changes
+        env:
+          VITE_FIB_ACCEPTANCE_MODE: shared-apps
+          VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
+          VITE_SUPABASE_PUBLISHABLE_KEY: ${{ secrets.VITE_SUPABASE_PUBLISHABLE_KEY }}
+        run: |
+          set -euo pipefail
+          test -n "$VITE_SUPABASE_URL"
+          test -n "$VITE_SUPABASE_PUBLISHABLE_KEY"
+          npm run build --workspace @fib/editorial-web
+          test -f apps/editorial-web/dist/index.html
       - name: Install PostgreSQL 17 and verified SSH/SFTP/rclone clients
         run: |
           set -euo pipefail
@@ -179,9 +190,6 @@ jobs:
           IONOS_SFTP_PASSWORD: ${{ secrets.IONOS_SFTP_PASSWORD }}
         run: |
           set -euo pipefail
-          test -n "$VITE_SUPABASE_URL"
-          test -n "$VITE_SUPABASE_PUBLISHABLE_KEY"
-          npm run build --workspace @fib/editorial-web
           test -f apps/editorial-web/dist/index.html
           lftp -u "$IONOS_SFTP_USER","$IONOS_SFTP_PASSWORD" "sftp://$IONOS_SFTP_HOST" <<EOF
           set cmd:fail-exit yes
