@@ -405,15 +405,44 @@ async function main() {
   }
   const projection = await run({ action: "ris_read", sessionId: a.sessionId });
   assert.equal(projection.decisions!.length, 3);
-  assert.deepEqual(
-    projection.decisions!.map((d: any) => d.factual_summary).sort(),
-    [
-      "Der Gemeinderat befürwortete die Anpassung des Bebauungsplans für ein Rechenzentrum.",
-      "Die Kostenbeteiligung des Investors soll geprüft werden.",
-      "Die Verwaltung soll eine mögliche Kostenbeteiligung im Vertrag prüfen.",
-    ].sort(),
-    "Only expressly reviewed factual summaries accompany the vote versions",
+  assert.ok(
+    projection.decisions!.every((d: any) => d.display_wording == null),
+    "Legacy confirmed wording is not released without document-specific reproduction rights",
   );
+  // Review the complete wording from a manually verified official source.
+  // The synthetic permission text is intentionally NOT a real document licence.
+  const manualWording = quote1.split("Abstimmung:")[0].trim();
+  const manualRightsEvidence =
+    "Isolated synthetic test licence; not a real-world reproduction permission.";
+  await assert.rejects(
+    () => run({
+      action: "ris_suggest", agendaId:top, versionId, kind:"decision", origin:"editor",
+      payload:{eventId:event.eventId,pointKey:"manual-invalid",wording:manualWording,
+        evidenceQuote:quote1, result:"accepted",yes:17,no:2,
+        manualSourceVerification:true, verifiedSourceUrl:url},
+    }),
+    /ris_wording_rights_review_required/,
+    "Manual source verification alone cannot grant verbatim reproduction rights",
+  );
+  const manuallyProposed = await run({
+    action:"ris_suggest", agendaId:top, versionId, kind:"decision", origin:"editor",
+    payload:{eventId:event.eventId,pointKey:"manual-review",wording:manualWording,
+      evidenceQuote:quote1,result:"accepted",yes:17,no:2,
+      manualSourceVerification:true, verifiedSourceUrl:url,
+      usageRightsBasis:"explicit_permission",usageRightsEvidence:manualRightsEvidence},
+  });
+  const beforeReview = await run({action:"ris_read",sessionId:a.sessionId});
+  assert.ok(beforeReview.decisions!.every((d:any) => d.point_key !== "manual-review"),
+    "Unreviewed decision remains invisible");
+  await run({action:"ris_review_suggestion", suggestionId:manuallyProposed.suggestionId,
+    status:"confirmed",rationale:"Synthetic source text and reproduction permission checked"});
+  const afterReview = await run({action:"ris_read",sessionId:a.sessionId});
+  const reviewed = afterReview.decisions!.find((d:any) => d.point_key === "manual-review");
+  assert.equal(reviewed?.display_wording,manualWording);
+  assert.equal(reviewed?.yes_count,17);
+  assert.equal(reviewed?.no_count,2);
+  assert.ok(afterReview.decisions!.filter((d:any) => d.point_key !== "manual-review")
+    .every((d:any) => d.display_wording == null));
   assert.equal(projection.events!.length, 0, "Decision events are separate from local references");
   assert.equal((await first("select topic_id from fib.event_topics where event_id=$1",[event.eventId])).topic_id,topicId);
   const pending = await run({
