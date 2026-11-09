@@ -102,3 +102,29 @@ Diese Referenz darf **nicht** als produktiver Scanner-Ersatz oder
 automatische SQL-Befüllung der `fib.ris_agenda_items` verwendet werden.
 Sie erlaubt aber einen fachlich echten Soll-/Ist-Nummernvergleich und
 die Feststellung, dass die fehlenden 16 TOPs nicht frei erfunden sind.
+
+## Produktive Read-only-Inventur vom 09.11.2026
+
+Direkt in Supabase Shared-Apps (`apaubomxffcwtzjimori`, Schema `fib`)
+read-only verifiziert:
+
+- `fib.source_scopes.scope_key='ris-dokumentliste'` hat
+  `status='candidate'`, Zugangsmethode `ris`, letzter
+  erfolgreicher und letzter versuchter Lauf jeweils
+  **30.10.2026 16:49:22.875 UTC**.
+- `fib.ris_scan_cursors.cursor_state->>'structureState'` ist
+  **NULL**, letzter Cursorstand 30.10.2026 16:49:22.882 UTC.
+  Ein produktiv ausgeführter vollständiger neuer
+  Sitzungsstrukturimport ist damit **nicht** nachgewiesen.
+- Edge-Inventar ist unverändert: `fib-editorial-write` v21 ACTIVE
+  (JWT-Flag false), `fib-u4-ris-pilot` v22 ACTIVE
+  (JWT-Flag true). Die Module aus Draft PR #416 sind dort
+  noch **nicht** bereitgestellt.
+
+**Betriebsentscheidung vor RIS-Scanneraktivierung:** Konfiguration,
+Zugriffsrechte und tatsächlich erlaubten Netzweg des offiziellen
+RIS-Hosts nach Sicherung/Releasefreigabe prüfen. Ein Statuswechsel
+`candidate` nach `active`, neuer Cron, Datenbankbefüllung oder
+Scannerlauf ist **nicht** Teil der vorliegenden read-only-Inventur.
+Auch die öffentlichen 19 indexierten TOP-Titel sind kein Nachweis
+für einen bereits erfolgten Live-Import.
