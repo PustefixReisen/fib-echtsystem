@@ -1,5 +1,39 @@
 # Issue #407 – geschützter Export bereits bereitgestellter Edge Functions
 
+## Technische Präzisierung 09.11.2026 – ESZIP-Integrität
+
+Der bisherige Vergleich `SHA256(GET /functions/<slug>/body) == ezbr_sha256`
+war fachlich falsch: Der Live-Endpunkt liefert einen **ESZIP**-Körper,
+während `ezbr_sha256` die Prüfsumme eines ursprünglich hochgeladenen
+**EZBR + Brotli**-Payloads bezeichnet. Eine erneute Brotli-Komprimierung
+garantiert kein Bytegleichnis.
+
+Das Exportskript bewahrt nun das unveränderte Metadatum `ezbr_sha256`
+im Inventar, ruft den echten ESZIP-Funktionskörper **zweimal** je Funktion
+ab und verlangt identische Antworten. Die gelesenen Bytes werden als
+`input/edge/_deployed_bundles/<slug>.eszip` geschützt mitgesichert.
+`inventory.json` enthält zusätzlich `download_eszip_sha256`; der
+vorhandene Validierer `components.exports` prüft diesen SHA-256
+gegen die tatsächlich gesicherten ESZIP-Dateien und der vorhandene
+Staging-/Gesamtbackup-Readback prüft den vollständigen Datei-Bestand.
+
+**Grenze dieser Prüfung:** Metadaten-/Versionsdrift, zweifache
+Live-Byteidentität und SHA-256-Readback beweisen die **stabile Sicherung des
+über die API gelieferten Funktionskörpers**. Sie beweisen *nicht*, dass die
+rekonstruierten CLI-Quelldateien bytegleich dem ursprünglich hochgeladenen
+Bundle sind oder dass ein späteres Deployment sofort gelingt. Diese
+Restore-/Quellvollständigkeitsprüfung bleibt vor positiven
+`completeFunctionExportsReviewed`-Belegen eine unabhängige
+Betreiberaufgabe. Keine Produktionsbereitstellung, keine künstliche
+Reviewfreigabe. Ein fehlerfreier Offline-CI-Lauf ist kein Live-Backup.
+
+Die Featureflag-Aufnahme speichert vorhandene Nicht-Boolean-Werte
+ausschließlich als `unverified` (niemals den Rohwert). Fehlende Flags
+bleiben `missing`; ein `incomplete`-Snapshot ist **nicht** freigegeben.
+Die zugehörigen echten Werte müssen vor positivem Review unabhängig
+geklärt werden.
+
+
 ## Einmalige Vorbereitung am geschützten Ubuntu-Betreiberrechner (09.11.2026)
 
 Statt der bisherigen drei getrennten Exportschritte genügt **ein**
