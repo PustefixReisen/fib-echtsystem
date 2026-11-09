@@ -14,7 +14,7 @@ spec = importlib.util.spec_from_file_location("fib_edge_export", MODULE)
 module = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(module)
 
-BUNDLE = b"EZBR" + b"read-only-extracted-bundle"
+BUNDLE = b"ESZIP" + b"read-only-extracted-bundle"
 DIGEST = hashlib.sha256(BUNDLE).hexdigest()
 
 
@@ -28,7 +28,7 @@ def data():
 
 def source_digest(_, slug):
     assert slug in data()
-    return DIGEST
+    return BUNDLE
 
 
 def downloaded(cmd, **kwargs):
@@ -47,6 +47,7 @@ class ExportTests(unittest.TestCase):
                 path, "private", get_inventory=lambda _: data(),
                 run=downloaded, get_source=source_digest), 3)
             self.assertTrue((path / "edge/inventory.json").is_file())
+            self.assertTrue((path / "edge/_deployed_bundles/fib-editorial-write.eszip").is_file())
             self.assertFalse((path / "configuration/evidence.json").exists())
             self.assertFalse((path / "release.json").exists())
 
@@ -81,19 +82,27 @@ class ExportTests(unittest.TestCase):
                               run=missing, get_source=source_digest)
             self.assertFalse(path.exists())
 
-    def test_bad_ezbr_digest_blocks(self):
+    def test_changed_live_eszip_blocks(self):
         with tempfile.TemporaryDirectory() as tmp:
             path = pathlib.Path(tmp) / "new"
+            count = 0
             def bad(_, slug):
-                return ("0" * 64) if slug == "fib-u4-pilot" else DIGEST
-            with self.assertRaisesRegex(ValueError, "EZBR digest mismatch"):
+                nonlocal count
+                count += 1
+                return BUNDLE + (b"changed" if count == 2 else b"")
+            with self.assertRaisesRegex(ValueError, "ESZIP body changed"):
                 module.export(path, "private", get_inventory=lambda _: data(),
                               run=downloaded, get_source=bad)
             self.assertFalse(path.exists())
 
-    def test_private_inventory_cannot_bypass_hash_audit(self):
-        with self.assertRaisesRegex(ValueError, "EZBR digest mismatch"):
-            module.verify_deployed_bundles(data(), lambda *_: "0"*64, "private")
+    def test_unstable_body_cannot_bypass_snapshot_audit(self):
+        calls = 0
+        def changing(*_):
+            nonlocal calls
+            calls += 1
+            return BUNDLE + (b"changed" if calls == 2 else b"")
+        with self.assertRaisesRegex(ValueError, "ESZIP body changed"):
+            module.verify_deployed_bundles(data(), changing, "private")
 
     def test_multipart_ezbr_digest_is_verified(self):
         payload = b"EZBR" + b"historic protected bundle"
