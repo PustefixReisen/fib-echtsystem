@@ -165,3 +165,53 @@ Ein fehlgeschlagener Abruf wird mit einer verständlichen Fehlermeldung
 zurückgegeben und verändert keine Bestandsdaten. Den vorhandenen
 Integrations-Schreibmodus `integrationSession=1032` nicht als
 Ersatz für diese Diagnose verwenden.
+
+## Echter RIS-End-to-End-Quellennachweis 09.11.2026 (GitHub-Runner, ohne Datenübernahme)
+
+Vom GitHub-Actions-Runner über öffentliche RIS-Endpunkte tatsächlich geprüft,
+**nicht** bloß synthetisch und **nicht** aus der produktiven Edge-Laufzeit:
+
+- Sitzung `1031` vom 15.10.2026: **HTTP 200**, vollständige
+  öffentliche Tagesordnung **19/19** korrekt durch FIB-Parser erkannt,
+  **0 fehlende/überzählige** TOP-Nummern.
+- Beide offiziellen URL-Varianten, mit und ohne `smcmode=32832`,
+  ergeben **19/19**. Ein fehlender Navigationsparameter ist im Runner
+  damit **nicht** die Ursache des produktiven 3/19-Bestands.
+- Amtlicher PDF-Link `getfile.asp?id=75785`, vom selben
+  tatsächlichen Sitzungs-HTML als `Niederschrift öffentlich` erkannt;
+  Dokument ist im Runner als PDF **erreichbar** (1.999.578 Bytes).
+- `unpdf` hat im temporären Arbeitsspeicher **85.884 Zeichen**
+  extrahiert. Das Testprotokoll enthält keine Originaltexte, keine
+  PDF-Datei, keine personenbezogenen Beschlusspassagen und keine
+  FIB-Datenbankschreibvorgänge.
+- Das tatsächliche Dokument enthält **19 eindeutig nummerierte
+  TOP-Abschnitte (1 bis 19)** und insgesamt **29 Abstimmungsvermerke**.
+  `splitRisMinutesByAgenda` trennt bei eindeutiger vollständiger
+  Reihenfolge alle 19 Abschnitte. Fehlende/doppelte/umgeordnete
+  Überschriften führen zur ausdrücklichen Ablehnung, nicht zu einer
+  stillen Fehlzuordnung.
+- Echte Regression anhand der **extrahierten amtlichen Abschnitte**:
+  TOP 2 ein Vermerk *keine Abstimmung*, TOP 3 *abgelehnt, 7:13*,
+  TOP 6 zwei getrennte Beschlüsse *angenommen, 17:2* und
+  *angenommen, 19:0*.
+
+**Neu abgenommener technischer Zwischenstand:** RIS-Tagesordnung
+und PDF-Texterkennung funktionieren am offiziellen, tatsächlich
+erreichbaren Quellmaterial **im GitHub-Runner**. Die KI darf daraus
+später nur vorläufige eigenständig formulierte Vollständigkeitsentwürfe
+machen, mit nachfolgender menschlicher Prüfung. Die Erkennung der
+Stimmenzahlen beweist noch nicht die Vollständigkeit eines solchen
+KI-Texts.
+
+**Noch offen:** Die tatsächliche Erreichbarkeit derselben Quellen in
+der **gehosteten Supabase-Edge-Umgebung**, die bewusst nicht aktivierte
+Scanner-Konfiguration (`ris-dokumentliste` ist `candidate`) sowie
+ein real konfigurierter KI-Provider für die nichtwortgetreue,
+inhaltlich vollständige Beschlussfassung. Kein automatischer Import,
+keine Speicherung von Original-PDF/-Volltext und keine Produktivänderung.
+Die isolierte AAL2-Edge-Diagnose ist vorbereitet, noch nicht deployt.
+
+Reproduzierbare Quellen-/Strukturdatenprüfungen laufen in der CI
+`U4 public-source connectivity check`:
+`scripts/u4-ris-public-1031-coverage.ts` und
+`scripts/u4-ris-public-minutes-readability.ts`.
