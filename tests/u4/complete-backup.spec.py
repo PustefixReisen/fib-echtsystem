@@ -71,6 +71,15 @@ class Contracts(unittest.TestCase):
    with self.assertRaises(ValueError):
     exports(root,live,now)
 
+ def test_live_eszip_matches_reviewed_snapshot(self):
+  spec=importlib.util.spec_from_file_location('runner',pathlib.Path(__file__).resolve().parents[2]/'scripts/backup/run.py')
+  m=importlib.util.module_from_spec(spec);spec.loader.exec_module(m)
+  body=b'ESZIPrestorable-snapshot'
+  good={'fib-example':dict(download_eszip_sha256=hashlib.sha256(body).hexdigest())}
+  m.verify_live_snapshot(good,{'fib-example':body})
+  with self.assertRaises(ValueError):m.verify_live_snapshot(good,{'fib-example':b'ESZIPchanged'})
+  with self.assertRaises(ValueError):m.verify_live_snapshot(good,{})
+  with self.assertRaises(ValueError):m.verify_live_snapshot(good,{'fib-example':b'not-eszip'})
  def test_retention_never_deletes(self):
   now=datetime.datetime.now(datetime.timezone.utc)
   records=[dict(backupId=str(i),createdAt=(now-datetime.timedelta(days=i*10)).isoformat(),readback='passed') for i in range(4)]
