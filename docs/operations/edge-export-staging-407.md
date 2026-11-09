@@ -49,6 +49,46 @@ vollständiger Restore-/Readback-Receipt, keine RIS-Bereitstellung.
 Nicht erneut herunterladen oder die vorhandenen privaten Dateien löschen,
 solange keine tatsächliche Änderung der Live-Inventare sie überholt.
 
+### Codeprüfung des nicht lesbaren RIS-Flags (09.11.2026)
+
+Das Flag ist **aktiv im Programmcode verwendet** und darf nicht als Altlast
+eingestuft werden:
+
+- `supabase/functions/fib-u4-ris-pilot/index.ts` prüft
+  `Deno.env.get('FIB_RIS_STRUCTURE_ENABLED') === 'true'` (im
+  Repository-Stand bei Zeile 114). Bei `true` wird beim RIS-PDF-Durchlauf
+  `persistRisDocument(...)` ausgeführt; bei anderen/fehlenden Werten
+  ist dieser zusätzliche Struktur-/Originalspeicherpfad nicht eingeschaltet.
+- `FIB_RIS_AUTOMATION_ENABLED` steuert gesondert den Scheduler-Zugang
+  (nur explizites `true` aktiviert); `FIB_RIS_INTEGRATION_TEST_ENABLED`
+  steuert gesondert den integrierten Test-Schreibpfad (ebenfalls nur
+  explizites `true` aktiviert). Beide sind laut Management-API derzeit
+  nicht angelegt; ihr Fehlen bleibt als Fehlen dokumentiert.
+- `docs/operations/u4-ris-persistence.md` bestätigt, dass
+  `FIB_RIS_STRUCTURE_ENABLED=true` die RIS-Fachstruktur einschaltet.
+  `u4-shared-apps-release-plan.md` sieht ausdrücklich eine
+  kontrollierte Aktivierung *nach* gesonderter Freigabe vor und betont,
+  dass der bisherige Wert nicht ausgelesen wurde. Diese Planangabe
+  ist **kein Beleg**, dass der aktuelle produktive Wert `true` oder
+  `false` ist.
+
+**Befund:** Das Secret ist funktional relevant, aber sein genauer
+produktiver Inhalt lässt sich weder aus dem Secret-API noch aus dem
+Supabase-Dashboard noch aus der privaten KeePass-Dokumentation
+rekonstruieren. Eine reine Quellcodeanalyse beweist nicht den aktuell
+eingestellten Wert. Daher keine Umdeutung in `false` und kein positives
+`featureStatesReviewed`.
+
+**Entscheidungsgrenze:** Vor einer vollständig wiederherstellbaren
+Konfigurationssicherung müsste der bisherige autorisierte Wert aus einer
+anderen verifizierbaren geschützten Quelle nachgewiesen werden; falls
+nicht möglich, ist eine gesondert freigegebene, kontrollierte Neusetzung
+mit vorheriger Wirkungs-/Rollback-Prüfung notwendig. Solch eine Änderung
+gehört **nicht** in den read-only Sicherungsauftrag. Eine separat
+verschlüsselte Beweissicherung des unvollständigen Ist-Zustands wäre
+allenfalls als eingeschränkter Snapshot, nicht als vollständiger
+Release-Backup-Receipt zu kennzeichnen.
+
 ## Technische Präzisierung 09.11.2026 – ESZIP-Integrität
 
 Der bisherige Vergleich `SHA256(GET /functions/<slug>/body) == ezbr_sha256`
