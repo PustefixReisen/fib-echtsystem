@@ -441,6 +441,27 @@ async function main() {
   assert.equal(reviewed?.display_wording,manualWording);
   assert.equal(reviewed?.yes_count,17);
   assert.equal(reviewed?.no_count,2);
+  const factualWording = "Der Gemeinderat unterstützt die Ansiedlung des Rechenzentrums und verlangt eine Anpassung des Bebauungsplanentwurfs einschließlich Sondergebietsausweisung und baulicher Vorgaben.";
+  await assert.rejects(
+    () => run({action:"ris_suggest",agendaId:top,versionId,kind:"decision",origin:"editor",
+      payload:{eventId:event.eventId,pointKey:"factual-no-review",wording:factualWording,
+        evidenceQuote:"",representation:"complete_factual",result:"accepted",yes:17,no:2,
+        verifiedSourceUrl:url}}),
+    /ris_factual_review_required/,
+  );
+  const factual = await run({action:"ris_suggest",agendaId:top,versionId,
+    kind:"decision",origin:"editor",
+    payload:{eventId:event.eventId,pointKey:"factual-reviewed",wording:factualWording,
+      evidenceQuote:"",representation:"complete_factual",manualSourceVerification:true,
+      verifiedSourceUrl:url,result:"accepted",yes:17,no:2}});
+  await run({action:"ris_review_suggestion",suggestionId:factual.suggestionId,
+    status:"confirmed",rationale:"Sachliche Vollständigkeit und Abstimmung gegen RIS geprüft"});
+  const factualRead = await run({action:"ris_read",sessionId:a.sessionId});
+  const fdecision = factualRead.decisions!.find((d:any)=>d.point_key==="factual-reviewed");
+  assert.equal(fdecision?.display_wording,factualWording,
+    "Reviewed independently formulated complete factual content may be displayed without a verbatim licence");
+  assert.equal(fdecision?.yes_count,17);
+  assert.equal(fdecision?.no_count,2);
   assert.ok(afterReview.decisions!.filter((d:any) => d.point_key !== "manual-review")
     .every((d:any) => d.display_wording == null));
   assert.equal(projection.events!.length, 0, "Decision events are separate from local references");
@@ -559,7 +580,7 @@ async function main() {
     rationale: "Synthetischer Test für den getrennten Vorschlagspfad",
   });
   assert.equal(await count("ris_proposal_texts"), 1);
-  assert.equal(await count("ris_decision_points"), 3);
+  assert.equal(await count("ris_decision_points"), 4);
   const deferred = await run({
     action: "ris_propose_relation",
     eventId: event.eventId,
@@ -757,7 +778,7 @@ async function main() {
       rationale: "Originalwortlaut und Ergebnis geprüft",
     });
   }
-  assert.equal(await count("ris_decision_points"), 5);
+  assert.equal(await count("ris_decision_points"), 6);
   assert.equal(
     (await first("select count(*) from fib.ris_votes where result='no_vote'"))
       .count,
