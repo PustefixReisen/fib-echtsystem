@@ -28,16 +28,19 @@ def backup(env,run=f.command):
   if isinstance(live,dict):live=live['functions']
   print('Backup phase: validate-function-exports',flush=True)
   now=datetime.datetime.now(datetime.timezone.utc);slugs=exports(bundle,live,now)
-  print('Backup phase: verify-deployed-ezbr-bundle-digests',flush=True)
-  # Supabase GET /functions/{slug} contains metadata, not source files.
-  # Validate real deployed EZBR body digests separately, while the complete
-  # reviewed CLI source tree and its relative dependencies remain mandatory.
-  # This is not proof of a byte-identical extraction or restorable Edge runtime.
+  print('Backup phase: verify-live-eszip-against-reviewed-snapshot',flush=True)
+  # Do not compare GET /body ESZIP bytes against upload-only ezbr_sha256.
+  # Recheck that two live ESZIP responses are stable and match the exact
+  # encrypted-input bytes already validated by components.exports().
+  # Neither proves CLI source byte equality nor executable restore.
   spec=importlib.util.spec_from_file_location('fib_export_deployed',pathlib.Path(__file__).with_name('export-deployed-edge.py'))
   verifier=importlib.util.module_from_spec(spec);spec.loader.exec_module(verifier)
   metadata={item['slug']:item for item in json.loads((bundle/'edge/inventory.json').read_text())}
-  verifier.verify_deployed_bundles(metadata,verifier.deployed_bundle_digest,
-                                  env['FIB_BACKUP_MANAGEMENT_TOKEN'])
+  current=verifier.verify_deployed_bundles(metadata,verifier.deployed_bundle_body,
+                                          env['FIB_BACKUP_MANAGEMENT_TOKEN'])
+  for slug,body in current.items():
+   if hashlib.sha256(body).hexdigest()!=metadata[slug].get('download_eszip_sha256'):
+    raise ValueError('Live deployed ESZIP differs from reviewed snapshot')
   print('Backup phase: database-capture',flush=True)
   run(['node','scripts/ris-shared-apps/backup.mjs','--out='+str(bundle/'database')],env=env)
   dump=bundle/'database/fib.dump';digest=hashlib.sha256(dump.read_bytes()).hexdigest()
