@@ -21,6 +21,8 @@ on:
       - 'supabase/migrations/*fib_ris_originals_and_editorial_links.sql'
       - 'tests/u4/ris-originals-postgres.spec.ts'
       - 'tests/u4/ris-persistence-postgres.spec.ts'
+      - 'tests/u4/ris-minutes-candidates.spec.ts'
+      - 'supabase/migrations/*fib_ris_factual_vote_evidence.sql'
       - 'tests/u4/ris-scanner-structure-postgres.spec.ts'
       - 'supabase/functions/fib-u4-pilot/**'
       - 'supabase/functions/_shared/u4-news.ts'
@@ -83,6 +85,9 @@ jobs:
         env:
           U4_TEST_DATABASE_URL: postgres://postgres:integration_only@localhost:5432/fib_u4_test
         run: npx tsx tests/u4/reviewed-finding-postgres.spec.ts
+
+      - name: Transient RIS minutes parsing and AI-draft vote guard
+        run: npx tsx tests/u4/ris-minutes-candidates.spec.ts
 
       - name: Persistent RIS structure and editorial workflow using real FIB migrations
         env:
