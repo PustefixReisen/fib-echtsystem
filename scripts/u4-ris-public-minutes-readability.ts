@@ -3,6 +3,7 @@
  * Metadata-only diagnostics for the human-reviewed factual drafting pipeline.
  */
 import {extractText} from "unpdf";
+import {splitRisMinutesByAgenda,extractRisMinutesCandidates} from "../supabase/functions/_shared/ris-minutes-candidates.ts";
 const endpoints=[
   "https://buergerinfo-feldkirchen.digitalfabrix.de/getfile.asp?id=75785&type=do&smcmode=32832",
   "https://buergerinfo-feldkirchen.digitalfabrix.de/getfile.asp?id=75785",
@@ -36,6 +37,26 @@ async function run(){
         prefixedTopNumbers:[...new Set(topPrefixed)],numberedLineCount:numbered.length,
         numberedUnique:[...new Set(numbered)],beschlussSectionHeaders:numLines.length,
         abstimmungLabels:votes,noExtractedTextOutput:true}));
+      const expected=Array.from({length:19},(_,i)=>i+1);
+      const split=splitRisMinutesByAgenda(text,expected);
+      console.log(JSON.stringify({scope:"real_1031_minutes_section_split",
+        valid:split.ok,issues:split.issues,sectionCount:split.sections.length,
+        sectionNumbers:split.sections.map(v=>v.topNumber),
+        noOriginalStorage:true,noExtractedTextOutput:true}));
+      if(!split.ok)throw Error("real_minutes_top_segmentation_incomplete");
+      const section=(n:number)=>split.sections.find(s=>s.topNumber===n)?.transientText??"";
+      const v2=extractRisMinutesCandidates(section(2));
+      const v3=extractRisMinutesCandidates(section(3));
+      const v6=extractRisMinutesCandidates(section(6));
+      console.log(JSON.stringify({scope:"real_1031_minutes_reference_votes",
+        top2:v2.map(v=>({status:v.vote.status,yes:v.vote.yes,no:v.vote.no})),
+        top3:v3.map(v=>({status:v.vote.status,yes:v.vote.yes,no:v.vote.no})),
+        top6:v6.map(v=>({status:v.vote.status,yes:v.vote.yes,no:v.vote.no})),
+        noOriginalStorage:true,noExtractedTextOutput:true}));
+      if(v2.length!==1||v2[0].vote.status!=="no_vote"||
+         v3.length!==1||v3[0].vote.yes!==7||v3[0].vote.no!==13||
+         v6.length!==2||v6[0].vote.yes!==17||v6[0].vote.no!==2||
+         v6[1].vote.yes!==19||v6[1].vote.no!==0)throw Error("real_minutes_reference_votes_mismatch");
       const detectable=[/Hundewiese/i,/Parkanlage/i,/Rechenzentrum/i];
       console.log(JSON.stringify({
         scope:"real_1031_minutes_transient_readability",
