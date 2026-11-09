@@ -257,3 +257,39 @@ Anbieterdokumentation:
 [Zero Data Retention](https://help.mistral.ai/en/articles/347612-can-i-activate-zero-data-retention-zdr).
 Vor diesem Schritt dürfen keine ungeprüften RIS-Originalpassagen
 an die API übermittelt werden.
+
+## In-Memory-Verarbeitungskette für echte RIS-Niederschriften
+
+`supabase/functions/_shared/ris-minutes-pipeline.ts` verbindet jetzt:
+
+1. Abgesicherte, ausschließlich offizielle URL `/getfile.asp?id=...`
+   (HTTPS, zulässiger Host, passende Dokument-ID).
+2. Größen- und Formatprüfung, `unpdf` im RAM, kein dauerhafter
+   PDF-/Textspeicher.
+3. Gegenprüfung aller erwarteten TOP-Nummern, Ablehnung bei
+   unvollständiger/fehlerhafter Dokumentstruktur.
+4. Einzelne Beschlusspunkte und Abstimmungsdaten je TOP mit dem
+   freigeschalteten KI-Adapter zu unabhängigen Sachentwürfen.
+5. Ausschließlich den **Status `review_required`** für
+   syntaktisch akzeptierte Entwürfe; **keine**
+   automatische FIB-Freigabe oder Speicherung in die Echtdatenbank.
+
+Ohne freigegebenen Provider wird die Verarbeitung bereits
+**vor einem PDF-Abruf** mit `draft_provider_not_configured`
+beendet. Test `tests/u4/ris-minutes-pipeline.spec.ts`
+prüft einen synthetischen offiziellen PDF-Abruf, eine gültige
+vollständige Struktur, eine unvollständige Tagesordnung,
+einen verbotenen Fremdhost und das Verbot impliziter
+Quellenabrufe ohne Provider. Die Transporttests zur Mistral-API
+verwenden ausschließlich künstliche Antworten und
+keine echten Zugangsschlüssel.
+
+**Noch kein Produktionsendpunkt und keine produktive KI-Freigabe.**
+Für einen echten Aufruf muss zunächst die fachlich
+verantwortete Datenübermittlung/Vertragsgrundlage,
+ein aktivierter Provider mit geheimem Schlüssel,
+Kostengrenze und die bestehende FIB-Rollen-/MFA-
+Freigabe im HTTP-Handler nachgewiesen sein.
+Eine Produktivbereitstellung der bestehenden UI
+allein wäre deshalb **kein** Abschluss der
+automatischen Beschlusserzeugung.
