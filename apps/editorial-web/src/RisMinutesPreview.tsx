@@ -57,7 +57,7 @@ const data = {
     agenda_id: "preview-top-3",
     point_key: "1",
     version_id: "preview-v3",
-    factual_summary: "Der Vorschlag, eine innerörtliche Parkanlage mit Tiny Forest, Biodiversitätsgarten, Wegen, Sitzgelegenheiten und Bepflanzung planen zu lassen, wurde abgelehnt.",
+    wording: "Der Gemeinderat beschließt einen Entwurf für die Schaffung einer innerörtlichen Parkanlage mit Tiny Forest, Biodiversitätsgarten, Wegen, Bänken und allgemeiner Bepflanzung erarbeiten zu lassen und dem Gemeinderat zur weiteren Beratung vorzulegen. Mittel für die Planung sind im Haushalt 2027 vorzusehen.",
     result: "rejected",
     yes_count: 7,
     no_count: 13,
@@ -67,7 +67,7 @@ const data = {
     agenda_id: "preview-top-6",
     point_key: "1",
     version_id: "preview-v6a",
-    factual_summary: "Der Gemeinderat beurteilte die Voranfrage für ein Rechenzentrum grundsätzlich positiv und beschloss, den Bebauungsplanentwurf entsprechend anzupassen.",
+    wording: "1. Der Gemeinderat beurteilt die vorliegende Voranfrage zur Ansiedlung eines Rechenzentrums grundsätzlich positiv. Der Vorentwurf des Bebauungsplanes ist entsprechend anzupassen. Ziele sind die Ausweisung eines Sondergebietes „Rechenzentrum“ im westlichen Bereich des Plangebietes sowie die Anpassung der baulichen Parameter.",
     result: "accepted",
     yes_count: 17,
     no_count: 2,
@@ -77,7 +77,7 @@ const data = {
     agenda_id: "preview-top-6",
     point_key: "2",
     version_id: "preview-v6b",
-    factual_summary: "Die Verwaltung wurde beauftragt, eine anteilige Beteiligung des Investors an den Planungskosten zu prüfen und gegebenenfalls einen entsprechenden städtebaulichen Vertrag auszuarbeiten.",
+    wording: "2. Die Verwaltung wird beauftragt, aufgrund der relevanten Anpassungen an den Bebauungsplan eine anteilige Kostenbeteiligung an den Planungskosten des Investors in einem städtebaulichen Vertrag zu prüfen und ggf. einen entsprechenden Vertrag zu erarbeiten.\n\nDie Kosten des Verfahrens tragen der Investor und die Gemeinde Feldkirchen im Verhältnis der Grundstücksgrößen.",
     result: "accepted",
     yes_count: 19,
     no_count: 0,
@@ -96,13 +96,13 @@ export function RisMinutesPreview() {
       <header className="panel" style={{padding: "1rem", marginBottom: "1rem"}}>
         <h1>RIS-Niederschrift – Testdarstellung</h1>
         <p role="status"><strong>Nur Vorschau. Keine Anmeldung, keine Datenbankverbindung und keine Speicherung.</strong></p>
-        <p>Historisch belegte Referenzausschnitte vom 15.10.2026, sachlich zusammengefasst.
+        <p>Historische Referenzausschnitte der Niederschrift vom 15.10.2026, im Beschlusswortlaut ohne inhaltliche Kürzung dargestellt. PDF-Zeilenumbrüche und Trennstriche wurden nur für die Lesbarkeit aufgelöst.
           Diese drei TOPs sind keine vollständige Tagesordnung und keine bereits im Echtsystem
           redaktionell bestätigten Beschlussdaten.</p>
         <p>Bitte nacheinander TOP 2, TOP 3 und TOP 6 auswählen und prüfen, ob Behandlung,
           Beschlussinhalt und Abstimmung verständlich dargestellt werden.</p>
       </header>
-      <RisSessionView data={data} busy={false}
+      <RisSessionView data={data} busy={false} previewOriginalWording={true}
         selectedTopId={undefined}
         onOpenEvent={() => {}}
         onOpenDocument={() => {}}
