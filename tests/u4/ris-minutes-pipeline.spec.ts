@@ -1,4 +1,5 @@
 import assert from "node:assert/strict";
+import {createHash} from "node:crypto";
 import {prepareRisMinutesSessionDrafts} from "../../supabase/functions/_shared/ris-minutes-pipeline.ts";
 import type {RisMinutesDraftProvider} from "../../supabase/functions/_shared/ris-minutes-draft.ts";
 const sourceUrl="https://buergerinfo-feldkirchen.digitalfabrix.de/getfile.asp?id=75785";
@@ -31,7 +32,13 @@ async function run(){
   const invalid=await prepareRisMinutesSessionDrafts({...args,sourceUrl:"https://evil.invalid/getfile.asp?id=75785",provider:mockProvider},fakeFetch,mockExtractor);
   assert.deepEqual(invalid.reasons,["unapproved_ris_document_url"]);
   assert.equal(downloads,0);
-  const ready=await prepareRisMinutesSessionDrafts({...args,provider:mockProvider},fakeFetch,mockExtractor);
+  const hash=createHash("sha256").update(Uint8Array.from([37,80,68,70,45,49,50,51,49])).digest("hex");
+  const changed=await prepareRisMinutesSessionDrafts({
+    ...args,provider:mockProvider,expectedPdfHash:"0".repeat(64),
+  },fakeFetch,mockExtractor);
+  assert.deepEqual(changed.reasons,["ris_minutes_source_changed"]);
+  assert.equal(changed.topResults.length,0,"Never send stale source data to AI");
+  const ready=await prepareRisMinutesSessionDrafts({...args,provider:mockProvider,expectedPdfHash:hash},fakeFetch,mockExtractor);
   assert.equal(ready.status,"review_required");
   assert.equal(ready.topResults.length,2);
   assert.equal(ready.topResults[0].result.drafts[0].vote.yes,17);
