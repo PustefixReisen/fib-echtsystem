@@ -691,9 +691,10 @@ export async function risEditorial(
     if (!payload || typeof payload !== "object") {
       throw Error("invalid_ris_input");
     }
-    const wording = required(payload.wording, 30000),
-      quote = required(payload.evidenceQuote, 30000);
     const completeFactual = payload.representation === "complete_factual";
+    const wording = required(payload.wording, 30000),
+      quote = completeFactual ? "" : required(payload.evidenceQuote, 30000);
+    if (completeFactual && wording.length < 20) throw Error("ris_factual_content_too_short");
     if (completeFactual && (input.kind !== "decision" || input.origin !== "editor" ||
         actor.kind !== "human" || payload.manualSourceVerification !== true ||
         payload.verifiedSourceUrl == null || payload.usageRightsBasis != null ||
