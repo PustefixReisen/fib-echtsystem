@@ -43,7 +43,7 @@ async function run(){
   assert.equal(ready.topResults.length,2);
   assert.equal(ready.topResults[0].result.drafts[0].vote.yes,17);
   assert.equal(ready.topResults[1].result.drafts[0].vote.status,"no_vote");
-  assert.equal(downloads,1);
+  assert.equal(downloads,2,"One guarded source read for stale-hash test and one for valid source");
   const incomplete=await prepareRisMinutesSessionDrafts({...args,expectedNumbers:[1,2,3],provider:mockProvider},fakeFetch,mockExtractor);
   assert.equal(incomplete.status,"unavailable");
   assert.ok(incomplete.reasons[0].includes("segmentation"));
