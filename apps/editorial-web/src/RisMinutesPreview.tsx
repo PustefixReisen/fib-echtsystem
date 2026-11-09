@@ -1,4 +1,5 @@
 import { RisSessionView } from "./RisSessionView.js";
+import { RisMinutesReview } from "./RisMinutesReview.js";
 import "./app.css";
 
 /** Preview-only, static examples: never calls Supabase or modifies FIB data. */
@@ -109,6 +110,38 @@ export function RisMinutesPreview() {
         onReload={async () => {}}
         api={async () => {throw new Error("In der Vorschau ist keine Datenänderung möglich.");}}
         eventLock={async () => {throw new Error("In der Vorschau ist keine Datenänderung möglich.");}}
+      />
+    </main>
+  );
+}
+
+/** A complete UI trial with an in-memory stand-in, never real RIS writes. */
+export function RisMinutesReviewPreview() {
+  const demoSource = {
+    source_url: minutes,
+    latest_version_id: "preview-original-version",
+    status: "confirmed",
+    kind: "minutes",
+  };
+  return (
+    <main className="ris-minutes-preview" style={{padding:"1rem"}}>
+      <header className="panel" style={{padding:"1rem",marginBottom:"1rem"}}>
+        <h1>RIS-Beschlussprüfung – schreibfreier Bedienungstest</h1>
+        <p role="status"><strong>Reine Testansicht. Keine echte Rechtefreigabe, keine Anmeldung,
+          keine Datenbankverbindung und keine Speicherung.</strong></p>
+        <p>Du kannst den Erfassungs- und Bestätigungsdialog vollständig ausprobieren.
+          Die Einträge werden ausschließlich an einen simulierten Testdienst übergeben.
+          In der echten Redaktion ist eine konkrete, dokumentierte Wiedergabeberechtigung erforderlich.</p>
+      </header>
+      <RisMinutesReview agendaId="preview-top-6" eventId="preview-main-event"
+        source={demoSource}
+        onReload={async()=>{}}
+        api={async(body)=>{
+          if(body.action === "ris_suggest") return {suggestionId:"preview-pending",status:"pending"};
+          if(body.action === "ris_review_suggestion") return {status:body.status};
+          throw Error("In der Vorschau sind nur die beiden simulierten Prüfschritte zulässig.");
+        }}
+        eventLock={async(_eventId,work)=>work()}
       />
     </main>
   );
