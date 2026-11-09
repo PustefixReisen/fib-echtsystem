@@ -2,6 +2,10 @@ import { useState } from "react";
 import { type SourceApi, withEventLock } from "./source-api.js";
 
 type Source = { source_url:string; latest_version_id:string; status:string; kind:string };
+type Prepared = {
+  pointKey:string;factualText:string;
+  vote:{status:string;yes:number|null;no:number|null;abstention:number|null};
+};
 type Props = {
   agendaId:string; eventId:string; source:Source; onReload:()=>Promise<void>;
   api:SourceApi; eventLock:typeof withEventLock;
@@ -21,6 +25,17 @@ export function RisMinutesReview({agendaId,eventId,source,onReload,api,eventLock
   const [error,setError] = useState("");
   const [success,setSuccess] = useState("");
   const [pending,setPending] = useState("");
+  const [preparedDrafts,setPreparedDrafts] = useState<Prepared[]>([]);
+  const [selectedDraft,setSelectedDraft] = useState(0);
+  function applyDraft(draft:Prepared,index:number) {
+    setSelectedDraft(index);
+    setPointKey(String(draft.pointKey));setContent(draft.factualText);
+    setResult(draft.vote.status);
+    setYes(draft.vote.yes==null?"":String(draft.vote.yes));
+    setNo(draft.vote.no==null?"":String(draft.vote.no));
+    setAbstention(draft.vote.abstention==null?"":String(draft.vote.abstention));
+    setVerified(false);
+  }
   const number = (v:string) => v.trim() === "" ? null : Number(v);
   const counts = [yes,no,abstention];
   const validCounts = counts.every(v => v.trim() === "" ||
@@ -40,17 +55,11 @@ export function RisMinutesReview({agendaId,eventId,source,onReload,api,eventLock
       if (r.status !== "review_required" || !Array.isArray(r.drafts) ||
           r.drafts.length < 1)
         throw Error("Für diesen TOP konnte noch kein prüffähiger KI-Entwurf erstellt werden.");
-      const first=r.drafts[0] as {
-        pointKey:string;factualText:string;
-        vote:{status:string;yes:number|null;no:number|null;abstention:number|null};
-      };
-      if (!first || typeof first.factualText !== "string" || !first.vote)
+      const drafts=r.drafts as Prepared[];
+      if(drafts.some(d=>!d ||typeof d.pointKey!=="string" ||
+        typeof d.factualText!=="string" ||!d.vote))
         throw Error("Unvollständiger KI-Entwurf.");
-      setPointKey(String(first.pointKey));setContent(first.factualText);
-      setResult(first.vote.status);setYes(first.vote.yes==null?"":String(first.vote.yes));
-      setNo(first.vote.no==null?"":String(first.vote.no));
-      setAbstention(first.vote.abstention==null?"":String(first.vote.abstention));
-      setVerified(false);
+      setPreparedDrafts(drafts);applyDraft(drafts[0],0);
       setSuccess(r.drafts.length>1
         ? "KI-Entwurf vorbereitet. Mehrere Beschlusspunkte erkannt – bitte alle einzeln prüfen."
         : "KI-Entwurf vorbereitet. Inhalt und Abstimmung bitte anhand der Niederschrift prüfen.");
@@ -106,6 +115,14 @@ export function RisMinutesReview({agendaId,eventId,source,onReload,api,eventLock
     <button type="button" disabled={busy||!!pending||source.status!=="confirmed"}
       onClick={()=>void prepareAutomaticDraft()}>KI-Entwurf vorbereiten</button>
 
+    {preparedDrafts.length>1 && <label>Automatisch vorbereitete Beschlusspunkte
+      <select aria-label="Automatisch vorbereiteten Beschlusspunkt auswählen"
+        disabled={busy||!!pending} value={selectedDraft}
+        onChange={e=>applyDraft(preparedDrafts[Number(e.target.value)],Number(e.target.value))}>
+        {preparedDrafts.map((draft,i)=><option key={i} value={i}>
+          Beschlusspunkt {draft.pointKey}</option>)}
+      </select>
+    </label>}
     <label>Beschlusspunkt
       <input value={pointKey} maxLength={200} disabled={!!pending||busy}
         onChange={e=>setPointKey(e.target.value)}/>
