@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { type SourceApi, withEventLock } from "./source-api.js";
 
 type Source = { source_url:string; latest_version_id:string; status:string; kind:string };
@@ -27,6 +27,15 @@ export function RisMinutesReview({agendaId,eventId,source,onReload,api,eventLock
   const [pending,setPending] = useState("");
   const [preparedDrafts,setPreparedDrafts] = useState<Prepared[]>([]);
   const [selectedDraft,setSelectedDraft] = useState(0);
+  // Navigating to another TOP or source version must never carry over
+  // an earlier AI draft, vote result or pending confirmation.
+  useEffect(()=>{
+    setPointKey("1");setContent(initialText);setResult("unknown");
+    setYes("");setNo("");setAbstention("");setVerified(false);
+    setPending("");setPreparedDrafts([]);setSelectedDraft(0);
+    setError("");setSuccess("");
+  },[agendaId,source.latest_version_id,initialText]);
+
   function applyDraft(draft:Prepared,index:number) {
     setSelectedDraft(index);
     setPointKey(String(draft.pointKey));setContent(draft.factualText);
