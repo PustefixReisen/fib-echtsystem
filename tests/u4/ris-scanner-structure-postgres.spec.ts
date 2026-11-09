@@ -186,6 +186,29 @@ async function main() {
       (await first("select count(*) from fib.ris_session_versions")).count,
     );
   const initial = await revisions();
+  // Reuse exactly the production AAL2/admin handler for the no-write
+  // official-session coverage probe; no original bytes are returned.
+  async function previewSession(body:Record<string,unknown>) {
+    const response=await context.handler(new Request("https://test.invalid", {
+      method:"POST",
+      headers:{authorization:"Bearer "+jwt,"content-type":"application/json"},
+      body:JSON.stringify(body),
+    }));
+    return {status:response.status,body:await response.json()};
+  }
+  const cursorBeforePreview=await cursor();
+  const previewsBefore=await revisions();
+  const trial=await previewSession({previewSession:"1032",commit:false});
+  assert.equal(trial.status,200,JSON.stringify(trial));
+  assert.equal(trial.body.mode,"read_only_session_preview");
+  assert.equal(trial.body.publicTopCount,2);
+  assert.equal(trial.body.completeness,"unverified");
+  assert.equal(trial.body.agenda.length,2);
+  assert.equal(await cursor(),cursorBeforePreview,"Preview must never change scanner cursor");
+  assert.equal(await revisions(),previewsBefore,"Preview must never import session data");
+  assert.equal((await previewSession({previewSession:"1031",commit:true})).status,403);
+  assert.equal((await previewSession({previewSession:"9999",commit:false})).status,400);
+
   failPage = true;
   const gap = await invoke();
   assert.equal(gap.status, 200, JSON.stringify(gap));
