@@ -88,6 +88,8 @@ jobs:
 
       - name: Transient RIS minutes parsing and AI-draft vote guard
         run: npx tsx tests/u4/ris-minutes-candidates.spec.ts
+      - name: Provider adapter safety contract without real external API calls
+        run: npx tsx tests/u4/ris-minutes-mistral-provider.spec.ts
 
       - name: Persistent RIS structure and editorial workflow using real FIB migrations
         env:
