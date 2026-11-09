@@ -79,3 +79,26 @@ Blocker, nicht Anlass für weitere UI-Entwurfsschleifen.
 - Issue #403/PR #416 erst schließen, wenn die tatsächlich gelieferten
   Funktionen abgenommen und alle externen Blocker sauber in Folge-Issues
   dokumentiert sind.
+
+## Zusätzlicher realer Strukturbeleg vom 09.11.2026
+
+Die öffentlich von einem Suchindex erfasste offizielle RIS-Sitzungsseite
+`https://buergerinfo-feldkirchen.digitalfabrix.de/si0057.asp?__ksinr=1031`
+lieferte die **19 öffentlichen TOP-Nummern mit Bezeichnung und
+Vorlagenreferenzen** der Sitzung GR/439/2026 vom 15.10.2026.
+Die Metadaten sind mit ausdrücklicher Herkunftsbegrenzung unter
+`tests/u4/fixtures/ris-1031-public-agenda-indexed-20261109.json`
+als Regression erfasst. Dazu zählt ausdrücklich die Unterscheidung:
+
+- **19 indexierte öffentliche TOP-Titel** nachgewiesen, nicht nur
+  eine synthetische Tabelle.
+- **Nur 3 reale TOP-Referenzobjekte (2/3/6) in FIB** nach der letzten
+  lesenden Datenbankprüfung. Es erfolgte kein echter 19er-Import.
+- Der Index ist weder ein ungefilterter RIS-HTTP-Abruf noch eine
+  vollständige Niederschrift: die amtlichen Abstimmungen und
+  Beschlussinhalte anderer TOPs sind damit nicht bestätigt.
+
+Diese Referenz darf **nicht** als produktiver Scanner-Ersatz oder
+automatische SQL-Befüllung der `fib.ris_agenda_items` verwendet werden.
+Sie erlaubt aber einen fachlich echten Soll-/Ist-Nummernvergleich und
+die Feststellung, dass die fehlenden 16 TOPs nicht frei erfunden sind.
