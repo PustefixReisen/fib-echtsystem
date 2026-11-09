@@ -165,7 +165,7 @@ export async function risEditorial(
       [session.id],
     );
     const decisions = await tx.unsafe(
-      `select p.*,v.id version_id,v.wording,v.document_version_id,v.created_at,w.result,w.yes_count,w.no_count,w.abstention_count,w.evidence_quote,(d.latest_version_id<>v.document_version_id) source_changed from fib.ris_decision_points p join fib.ris_agenda_items a on a.id=p.agenda_id join fib.ris_decision_versions v on v.point_id=p.id join fib.ris_document_versions dv on dv.id=v.document_version_id join fib.ris_documents d on d.id=dv.document_id left join fib.ris_votes w on w.decision_version_id=v.id where a.session_id=$1`,
+      `select p.*,v.id version_id,v.wording,v.document_version_id,v.created_at,w.result,w.yes_count,w.no_count,w.abstention_count,w.evidence_quote,(d.latest_version_id<>v.document_version_id) source_changed,case when s.status='confirmed' then nullif(btrim(s.payload->>'factualSummary'),'') else null end factual_summary from fib.ris_decision_points p join fib.ris_agenda_items a on a.id=p.agenda_id join fib.ris_decision_versions v on v.point_id=p.id join fib.ris_document_versions dv on dv.id=v.document_version_id join fib.ris_documents d on d.id=dv.document_id left join fib.ris_votes w on w.decision_version_id=v.id left join fib.ris_suggestions s on s.id=v.suggestion_id where a.session_id=$1`,
       [session.id],
     );
     const events = await tx.unsafe(
@@ -693,6 +693,10 @@ export async function risEditorial(
     }
     const wording = required(payload.wording, 30000),
       quote = required(payload.evidenceQuote, 30000);
+    // A separately authored factual summary is displayed only after review;
+    // never present source wording as an implicitly licensed text copy.
+    const factualSummary = payload.factualSummary == null ? null
+      : required(payload.factualSummary, 4000);
     const v = await one(
       tx,
       "select v.*,d.latest_version_id from fib.ris_document_versions v join fib.ris_documents d on d.id=v.document_id where v.id=$1",
@@ -715,7 +719,7 @@ export async function risEditorial(
         v.id,
         input.kind,
         input.origin,
-        JSON.stringify({ ...payload, wording, evidenceQuote: quote }),
+        JSON.stringify({ ...payload, wording, evidenceQuote: quote, factualSummary }),
         actor.userId,
       ],
     );
