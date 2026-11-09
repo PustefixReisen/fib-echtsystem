@@ -3,6 +3,15 @@ import {generateRisFactualReviewDraft} from "../../supabase/functions/_shared/ri
 import {readFileSync} from "node:fs";
 import {extractRisMinutesCandidates,validateRisFactualDraft} from
   "../../supabase/functions/_shared/ris-minutes-candidates.ts";
+const indexed = JSON.parse(readFileSync("tests/u4/fixtures/ris-1031-public-agenda-indexed-20261109.json","utf8"));
+assert.equal(indexed.kind,"indexed_official_ris_public_agenda_reference");
+assert.equal(indexed.agenda.length,19,"All 19 publicly indexed agenda rows must remain present");
+assert.deepEqual(indexed.agenda.map((a:{number:string})=>Number(a.number)),
+  Array.from({length:19},(_,i)=>i+1),"All real public numbers 1..19 must be present once");
+assert.equal(indexed.agenda.find((a:{number:string})=>a.number==="2")?.proposal_reference,"5283/2026");
+assert.equal(indexed.agenda.find((a:{number:string})=>a.number==="3")?.proposal_reference,"5351/2026");
+assert.equal(indexed.agenda.find((a:{number:string})=>a.number==="6")?.proposal_reference,"5370/2026");
+assert.equal(indexed.agenda.find((a:{number:string})=>a.number==="18")?.proposal_reference,null);
 const source=readFileSync("tests/u4/fixtures/ris-1031-minutes-excerpts.txt","utf8");
 const sections=source.split(/\[… Ausschnitt …\]/);
 assert.equal(sections.length,3);
