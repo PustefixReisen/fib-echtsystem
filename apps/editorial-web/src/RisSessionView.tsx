@@ -2,6 +2,7 @@ import { useState } from "react";
 import { type SourceApi, sourceApi, withEventLock } from "./source-api.js";
 import { ActionIcon, OriginalLink } from "./ActionIcon.js";
 import { EventAssignmentView } from "./EventAssignmentView.js";
+import { RisMinutesReview } from "./RisMinutesReview.js";
 type Row = Record<string, any>;
 // Legacy reference titles included the portal's separate status block.
 export const topTitle = (a: Row) => String(a.title ?? "").replace(/\s+Beschluss:\s*.+$/i, "");
@@ -288,8 +289,8 @@ export function RisSessionView(
                   {decisions.map((d, i) => (
                     <div key={d.version_id ?? i} className="ris-minutes-decision">
                       <p><strong>Beschlusspunkt {d.point_key ?? i + 1}</strong></p>
-                      {previewOriginalWording && d.wording
-                        ? <p className="ris-minutes-wording" style={{whiteSpace:"pre-line"}}>{d.wording}</p>
+                      {(previewOriginalWording && d.wording || d.display_wording)
+                        ? <p className="ris-minutes-wording" style={{whiteSpace:"pre-line"}}>{previewOriginalWording && d.wording || d.display_wording}</p>
                         : <p className="meta">Der vollständige Beschlusswortlaut wurde für die Anzeige noch nicht freigegeben. Bitte die Originalniederschrift verwenden.</p>}
                       <p><strong>Abstimmung:</strong> {({accepted:"angenommen",rejected:"abgelehnt",no_vote:"keine Abstimmung",unknown:"Ergebnis nicht angegeben"} as Row)[d.result] ?? "Ergebnis nicht angegeben"}
                         {d.result !== "no_vote" && <> · Ja {d.yes_count ?? "nicht angegeben"} · Nein {d.no_count ?? "nicht angegeben"}{d.abstention_count != null && <> · Enthaltungen {d.abstention_count}</>}</>}
@@ -305,6 +306,12 @@ export function RisSessionView(
               )}
               <ul>{[...sessionDocuments,...topDocuments].filter((d) => d.kind === "minutes").map(documentItem)}</ul>
             </section>
+            {!previewOriginalWording && mainEvents.length > 0 && sessionDocuments.some(d => d.kind === "minutes") && (
+              <RisMinutesReview agendaId={selected.id}
+                eventId={mainEvents[0].event_id}
+                source={sessionDocuments.find(d => d.kind === "minutes")!}
+                api={api} eventLock={eventLock} onReload={onReload}/>
+            )}
             <section className="panel card-headed">
               <div className="section-heading">
                 <h2>TOP als Ereignis festlegen</h2>
