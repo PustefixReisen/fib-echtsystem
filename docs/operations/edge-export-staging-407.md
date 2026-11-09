@@ -1,5 +1,51 @@
 # Issue #407 – geschützter Export bereits bereitgestellter Edge Functions
 
+> **Verbindlicher Betriebsstand – 09.11.2026 (ersetzt widersprechende historische Aussagen unten):**
+>
+> **Noch nicht startbereit:** Eine **echt geprüfte private**
+> `reviewed_input_id` ist nicht belegt. Der Workflow darf deshalb
+> nicht mit einer erfundenen ID oder künstlichen Review-Flags gestartet
+> werden. Vier grüne PR-CI-Workflows sind kein Beweis einer vollständigen
+> verschlüsselten Sicherung.
+>
+> **Einmaliger, notwendiger Betreiberablauf:** Im bestehenden geschützten
+> Ausführungskontext zuerst `export-deployed-edge.py` für **alle neun**
+> aktiven FIB-Edge-Functions ausführen. Den vollständigen privaten
+> `edge/`-Baum inklusive `_shared` und `inventory.json` sowie
+> Runtime/Imports und das separate Live-Bundle-Digest-Ergebnis prüfen.
+> Danach die tatsächlichen FIB-Quellen-/Featurezustände über
+> `capture-source-state.mjs` und `capture-feature-flags.py`
+> erfassen, fehlende Flags ausdrücklich als **ungeklärt** behandeln
+> und nur aus tatsächlich geprüften Werten
+> `configuration/state.json` und `configuration/capture.json`
+> erstellen. **Nur nach echter Review** dürfen
+> `featureStatesReviewed` und `completeFunctionExportsReviewed`
+> wahr sein. Anschließend `stage-reviewed-input.py` ausführen:
+> Dieses Skript validiert und verschlüsselt den Input, liest ihn
+> zurück und gibt die echte `input_id` aus.
+>
+> **Dann genau ein echter vollständiger Sicherungslauf:**
+> Geschützter Workflow `Complete FIB backup` mit
+> `mode=release` und dieser `input_id`; nach erfolgreichem
+> DB-Restore, Quellen-/Frontend-/Konfigurationsinventar,
+> Nextcloud-Crypt-Upload und Rückleseprüfung muss eine verifizierte
+> Backup-Quittung vorliegen. **Erst anschließend** den gesondert
+> genehmigten RIS-Release in Betracht ziehen.
+>
+> **Nicht mehr notwendig:** Wiederholungen des alten roten
+> Read-only-Workflows allein wegen des optionalen, isolierten
+> Deno-Typechecks. Der erfolgreiche Quell-Download-/Importteil
+> des echten Laufs ist dokumentiert. Das unabhängige Deno-Diagnosewerkzeug
+> bleibt verfügbar, ist jedoch **kein Backup-Gate**. Ein vollständig
+> durchgespielter Edge-Runtime-Rollback ist weiterhin offen und darf
+> nicht als erfolgreich bezeichnet werden.
+>
+> **Grenze dieser Chat-Anbindung:** Der private Runner, seine
+> verschlüsselten Eingangsdaten und geschützten GitHub-Actions-Secrets
+> sind hier nicht für eine echte `reviewed_input_id`-Erstellung
+> verfügbar. Der Chat kann daher den produktiven vollständigen
+> Sicherungslauf nicht ehrlich als durchgeführt kennzeichnen.
+
 Stand: 08.11.2026. Dieser Schritt automatisiert nur den **technischen
 Download und die Prüfung**. Er gibt keine Release-Sicherung frei und
 aktualisiert keine Live-Services.
