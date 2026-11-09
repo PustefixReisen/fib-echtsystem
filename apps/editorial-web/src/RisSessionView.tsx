@@ -288,7 +288,9 @@ export function RisSessionView(
                       <p>Ergebnis laut Niederschrift: {({accepted:"angenommen",rejected:"abgelehnt",no_vote:"keine Abstimmung",unknown:"Ergebnis nicht angegeben"} as Row)[d.result] ?? "Ergebnis nicht angegeben"}.
                         {d.result !== "no_vote" && <> Ja: {d.yes_count ?? "nicht angegeben"}, Nein: {d.no_count ?? "nicht angegeben"}, Enthaltungen: {d.abstention_count ?? "nicht angegeben"}.</>}
                       </p>
-                      <p className="meta">Der zugehörige Beschlussinhalt wurde noch nicht zur zulässigen Anzeige aus der Niederschrift übernommen.</p>
+                      {d.factual_summary && !d.source_changed
+                        ? <p><strong>Beschlussinhalt:</strong> {d.factual_summary}</p>
+                        : <p className="meta">Der zugehörige Beschlussinhalt wurde noch nicht als geprüfte sachliche Zusammenfassung übernommen.</p>}
                       {d.source_changed && <p role="status">Originalquelle geändert – erneute Prüfung erforderlich.</p>}
                     </div>
                   ))}
