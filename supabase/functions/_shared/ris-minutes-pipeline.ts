@@ -65,8 +65,14 @@ export async function prepareRisMinutesSessionDrafts(
     if(!split.ok)return unavailable("ris_top_segmentation_"+split.issues.join("_"));
     const topResults:Array<{topNumber:number;result:RisMinutesDraftResult}>=[];
     for(const sec of split.sections){
-      // Every section is considered independently. In particular, no
-      // decision is invented for headings without a vote/decision.
+      // No paid model call when a TOP has no vote evidence. This also
+      // prevents submitting unrelated meeting discussion to a provider.
+      if(!/Abstimmung\s*:/i.test(sec.transientText)){
+        topResults.push({topNumber:sec.topNumber,result:{
+          status:"unavailable",drafts:[],reasons:["no_structured_vote_evidence"],
+        }});
+        continue;
+      }
       const result=await generateRisFactualReviewDraft(sec.transientText,opts.provider);
       topResults.push({topNumber:sec.topNumber,result});
     }
