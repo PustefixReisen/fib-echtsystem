@@ -40,7 +40,7 @@ jobs:
           done
           grep -q 'alter table fib.ris_votes alter column evidence_quote drop not null' \
             supabase/migrations/20261109150000_fib_ris_factual_vote_evidence.sql
-      - run: npm ci --ignore-scripts --no-audit --no-fund
+      - run: npm install --no-audit --no-fund
       - name: Install PostgreSQL 17 and verified SSH/SFTP/rclone clients
         run: |
           set -euo pipefail
