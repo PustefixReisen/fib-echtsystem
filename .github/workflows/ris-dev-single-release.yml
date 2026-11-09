@@ -30,6 +30,16 @@ jobs:
           grep -Fq -- '--single-transaction' .github/workflows/ris-dev-single-release.yml
           grep -Fq -- '--no-verify-jwt' .github/workflows/ris-dev-single-release.yml
           grep -Fq 'StrictHostKeyChecking=yes' .github/workflows/ris-dev-single-release.yml
+          node - <<'JS'
+          const fs=require('node:fs');
+          const src=fs.readFileSync('.github/workflows/ris-dev-single-release.yml','utf8');
+          const build=src.indexOf('- name: Build and validate editorial frontend before any live changes');
+          const snapshot=src.indexOf('- name: Secure current FIB-only snapshot');
+          const migration=src.indexOf('- name: Apply the single, FIB-only');
+          if(build<0 || snapshot<0 || migration<0 || !(build<snapshot && snapshot<migration)) {
+            throw Error('Preflight build must precede backup and all live changes');
+          }
+          JS
   deploy:
     if: github.ref == 'refs/heads/main' && inputs.confirmation == 'RIS-DEV'
     runs-on: ubuntu-latest
