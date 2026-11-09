@@ -136,6 +136,13 @@ const api = async (b: any) => {
       sessionRelated: {messages: [],processes: [],topics: []},
     };
   }
+  if (b.action === "ris_prepare_minutes_draft") {
+    if(!b.agendaId || !b.versionId)throw Error("invalid source");
+    return {status:"review_required",drafts:[
+      {pointKey:"1",factualText:"Der Gemeinderat hat die weitere Planung einschließlich ihrer Finanzierung gebilligt und die Verwaltung mit der Umsetzung beauftragt.",vote:{status:"accepted",yes:10,no:2,abstention:null}},
+      {pointKey:"2",factualText:"Ein weiterer Antrag wurde nach der Beratung zurückgezogen. Eine Entscheidung durch Abstimmung fand deshalb nicht statt.",vote:{status:"no_vote",yes:null,no:null,abstention:null}},
+    ]};
+  }
   if (b.action === "ris_suggest") {
     if (!b.payload?.manualSourceVerification || b.payload?.representation !== "complete_factual" ||
         b.payload?.usageRightsBasis || !b.payload?.wording?.trim())
