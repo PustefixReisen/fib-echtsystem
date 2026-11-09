@@ -41,6 +41,18 @@ async function run(){
   assert.equal(incomplete.status,"unavailable");
   assert.ok(incomplete.reasons[0].includes("segmentation"));
   assert.equal(incomplete.topResults.length,0,"Never release subset when source is incomplete");
+  let paidCalls=0;
+  const trackingProvider:RisMinutesDraftProvider=async (items,instruction)=>{
+    paidCalls++;
+    return mockProvider(items,instruction);
+  };
+  const oneNoVote=await prepareRisMinutesSessionDrafts({
+    ...args,expectedNumbers:[1,2,3],provider:trackingProvider,
+  },fakeFetch,async()=>sourceText+"\nTOP 3\nNur Bekanntgaben ohne Beschluss");
+  assert.equal(oneNoVote.status,"unavailable");
+  assert.equal(oneNoVote.topResults.length,3);
+  assert.deepEqual(oneNoVote.topResults[2].result.reasons,["no_structured_vote_evidence"]);
+  assert.equal(paidCalls,2,"No provider request for TOP without voting decision");
   console.log("PASS official URL restriction, no-provider/no-fetch, in-memory segmentation, full review and incomplete-source rejection");
 }
 void run().catch(e=>{console.error(e);process.exitCode=1;});
