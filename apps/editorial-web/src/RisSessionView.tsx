@@ -291,7 +291,7 @@ export function RisSessionView(
                       <p><strong>Beschlusspunkt {d.point_key ?? i + 1}</strong></p>
                       {(previewOriginalWording && d.wording || d.display_wording)
                         ? <p className="ris-minutes-wording" style={{whiteSpace:"pre-line"}}>{previewOriginalWording && d.wording || d.display_wording}</p>
-                        : <p className="meta">Der vollständige Beschlusswortlaut wurde für die Anzeige noch nicht freigegeben. Bitte die Originalniederschrift verwenden.</p>}
+                        : <p className="meta">Die vollständige sachliche Beschlussdarstellung ist noch nicht geprüft und freigegeben. Maßgeblich bleibt die Originalniederschrift.</p>}
                       <p><strong>Abstimmung:</strong> {({accepted:"angenommen",rejected:"abgelehnt",no_vote:"keine Abstimmung",unknown:"Ergebnis nicht angegeben"} as Row)[d.result] ?? "Ergebnis nicht angegeben"}
                         {d.result !== "no_vote" && <> · Ja {d.yes_count ?? "nicht angegeben"} · Nein {d.no_count ?? "nicht angegeben"}{d.abstention_count != null && <> · Enthaltungen {d.abstention_count}</>}</>}
                       </p>
@@ -302,7 +302,7 @@ export function RisSessionView(
               ) : (
                 <p role="status">{String(topStatus(selected)).toLowerCase() === "abgesetzt"
                   ? "Dieser TOP wurde abgesetzt. Ein Beschluss oder Abstimmungsergebnis liegt für diesen TOP nicht vor; der protokollierte Behandlungstext ist in FIB noch nicht erfasst."
-                  : "Der TOP-bezogene Beschlusstext und die Abstimmungsergebnisse wurden aus der Niederschrift noch nicht geprüft und übernommen."}</p>
+                  : "Die vollständige sachliche Beschlussdarstellung und die Abstimmungsergebnisse wurden noch nicht geprüft und übernommen."}</p>
               )}
               <ul>{[...sessionDocuments,...topDocuments].filter((d) => d.kind === "minutes").map(documentItem)}</ul>
             </section>
