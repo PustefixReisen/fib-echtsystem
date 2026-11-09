@@ -236,3 +236,37 @@ Wiedergabe erfülle die Fachanforderung, sind durch die neueste
 Nutzerentscheidung ersetzt. Die fachliche Gesamtintegration ist
 noch offen; der Entwicklungscode allein begründet keine
 Produktivfreigabe.
+
+## Automatisierung: Extraktion und kontrollierter Entwurfsauftrag (09.11.2026)
+
+Die technische Vorstufe wurde um zwei providerunabhängige Bausteine
+im Entwicklungs-Branch ergänzt:
+
+- `supabase/functions/_shared/ris-minutes-candidates.ts` erkennt
+  Abstimmungen und nummerierte Beschlusspunkte in einem **bereits
+  gesichert zugeordneten TOP-Abschnitt**; bekannte Ja-/Nein-Werte
+  werden zugeordnet, unbekannte Werte bleiben unbekannt. Historische
+  Regressionen: TOP 2 ohne Abstimmung, TOP 3 mit 7:13, TOP 6 mit
+  zwei separaten 17:2- und 19:0-Abstimmungen. Nicht eindeutige Fälle
+  bleiben redaktionell zu prüfen; aus ganzen Niederschriften wird
+  **nicht ohne TOP-Abgrenzung** automatisch ein Entscheidungsdatensatz.
+- `supabase/functions/_shared/ris-minutes-draft.ts` enthält einen
+  Modell-/Provider-neutralen KI-Entwurfsvertrag: Erhalt aller
+  Beschlusspunkte und wesentlichen Sachparameter, unabhängige
+  Formulierung, keinerlei erfundene Informationen, unveränderte
+  Abstimmungsergebnisse, Rückgabe **nur als Prüfentwurf**. Die
+  fachlich unabhängige Validierung verwirft unvollständige oder
+  zahlenmäßig veränderte Modellantworten. Auch ein syntaktisch
+  gültiger Entwurf benötigt weiterhin persönliche Inhaltsprüfung.
+
+Die Tests unter `tests/u4/ris-minutes-candidates.spec.ts` werden
+über `U4 PostgreSQL integration` mit ausgeführt. Es gibt
+**noch keinen konfigurierten KI-Provider**, keinen verlässlichen
+Originaldokument-Abruf, keine produktive KI-Entwurfserzeugung und
+keine nachgewiesene vollständige Übernahme der Sitzung 1031. Bei
+fehlendem Provider antwortet die Entwurfsfunktion ausdrücklich
+`draft_provider_not_configured` statt Scheintexte zu erzeugen.
+
+Der Nutzer soll später eine automatische Vorbefüllung erhalten;
+derzeit ist diese Vorstufe ausschließlich Entwicklungslogik und
+nicht als fertige Funktion abgenommen. Keine Echt-DB-Änderung.
