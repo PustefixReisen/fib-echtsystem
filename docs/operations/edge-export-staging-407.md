@@ -1,5 +1,28 @@
 # Issue #407 – geschützter Export bereits bereitgestellter Edge Functions
 
+## Verschlüsselter PreReview-Snapshot – Betreiberbeleg vom 09.11.2026
+
+Der Betreiber hat den bereits bestehenden lokalen Snapshot unverändert über
+das vorhandene `rclone`-Crypt-Remote `fib-backup-crypt:` nach Nextcloud
+übertragen und vollständig zurückgelesen.
+
+- **Kennung:** `snapshot-20261109T104910Z-4f8e54d609ec6bf4`
+- **Ablage:** `fib-backup-crypt:PreReview/snapshot-20261109T104910Z-4f8e54d609ec6bf4`
+- **Umfang:** 32 Dateien, darunter neun FIB-Edge-Bundles und private
+  Quellen-/Featureflag-Aufnahmen; keine neu erzeugte Datenbank-/Frontend-Sicherung.
+- **Nachweis:** 32 Originaldateien gegen 32 zurückgelesene Dateien geprüft,
+  SHA-256-Inventare vollständig gleich; verschlüsselte Kopie bestätigt.
+- **Klassifikation:** ausdrücklich **Teil-Snapshot mit unvollständigem
+  Konfigurationsreview**, keine geprüfte `input_id`, kein vollständiger
+  verschlüsselter Release-Backup-Receipt, kein isolierter neuer DB-Restore,
+  kein Edge-Wiederherstellungstest und keine RIS-Bereitstellungsfreigabe.
+- Die ursprüngliche lokale Kopie und der private Rückleseordner bleiben
+  erhalten. Keine Bereinigung von PreReview ohne gesonderte Inventur.
+
+Dieser Betriebsnachweis beruht auf der vom Betreiber zurückgemeldeten
+lokalen Terminalausgabe und ist **kein unabhängig durch GitHub Actions
+erzeugter Release-Receipt**.
+
 ## Betreiberbefund 09.11.2026 – private Ist-Aufnahme, Restore-Grenze
 
 Auf Ubuntu `fib-private-backup/review-gesamt-0911/` liegt eine **unreviewte**
