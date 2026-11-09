@@ -68,3 +68,31 @@ export function validateRisFactualDraft(
   }
   return {ok:reasons.length===0,reasons};
 }
+
+/** Split one temporarily extracted minutes document by its official TOP headings.
+ * Do not accept missing/duplicate/out-of-order headings: that would silently
+ * assign one TOP's decision to another. Caller is responsible for source trust.
+ * The complete text never needs to be persisted.
+ */
+export function splitRisMinutesByAgenda(
+  text:string, expectedNumbers:readonly number[],
+):{ok:boolean;sections:Array<{topNumber:number;transientText:string}>;issues:string[]} {
+  if(!text||text.length>500_000||expectedNumbers.length===0||
+     new Set(expectedNumbers).size!==expectedNumbers.length)
+    return {ok:false,sections:[],issues:["invalid_source_or_reference"]};
+  const lines=text.replace(/\r/g,"").split("\n");
+  const headings:Array<{n:number;line:number}>=[];
+  for(let i=0;i<lines.length;i++){
+    const match=/^\s*(?:TOP|Tagesordnungspunkt)\s*(\d{1,3})(?=[\s.:]|$)/i.exec(lines[i]);
+    if(match)headings.push({n:Number(match[1]),line:i});
+  }
+  const actual=headings.map(h=>h.n),issues:string[]=[];
+  if(actual.length!==expectedNumbers.length)issues.push("top_count_mismatch");
+  if(actual.length!==new Set(actual).size)issues.push("duplicate_top_heading");
+  if(actual.some((n,i)=>n!==expectedNumbers[i]))issues.push("top_sequence_mismatch");
+  if(issues.length)return {ok:false,sections:[],issues};
+  return {ok:true,sections:headings.map((h,i)=>({
+    topNumber:h.n,
+    transientText:lines.slice(h.line+1,headings[i+1]?.line??lines.length).join("\n").trim(),
+  })),issues:[]};
+}
