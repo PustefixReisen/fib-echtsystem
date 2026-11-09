@@ -309,7 +309,11 @@ export function RisSessionView(
             {!previewOriginalWording && mainEvents.length > 0 && sessionDocuments.some(d => d.kind === "minutes") && (
               <RisMinutesReview agendaId={selected.id}
                 eventId={mainEvents[0].event_id}
-                source={sessionDocuments.find(d => d.kind === "minutes")!}
+                source={{...sessionDocuments.find(d => d.kind === "minutes")!,
+                  source_url: String(sessionDocuments.find(d => d.kind === "minutes")?.source_url ?? ""),
+                  latest_version_id: String(sessionDocuments.find(d => d.kind === "minutes")?.latest_version_id ?? ""),
+                  status: String(sessionDocuments.find(d => d.kind === "minutes")?.status ?? ""),
+                  kind: "minutes"}}
                 api={api} eventLock={eventLock} onReload={onReload}/>
             )}
             <section className="panel card-headed">
