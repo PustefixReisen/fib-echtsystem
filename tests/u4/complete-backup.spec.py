@@ -1,6 +1,16 @@
-import datetime,importlib.util,json,pathlib,sys,tempfile,unittest
+import datetime,importlib.util,json,pathlib,sys,tempfile,unittest,hashlib
 sys.path.insert(0,str(pathlib.Path(__file__).resolve().parents[2]/'scripts/backup'))
 from components import exports,fresh,retention
+def fixture_snapshots(root,live):
+ snapshots=root/'edge'/'_deployed_bundles'
+ snapshots.mkdir()
+ inventory=[]
+ for row in live:
+  slug=row['slug']
+  body=b'ESZIP' + slug.encode('ascii')
+  (snapshots/(slug+'.eszip')).write_bytes(body)
+  inventory.append({**row,'download_eszip_sha256':hashlib.sha256(body).hexdigest()})
+ (root/'edge/inventory.json').write_text(json.dumps(inventory))
 class Contracts(unittest.TestCase):
  def test_age(self):
   now=datetime.datetime.now(datetime.timezone.utc)
@@ -12,10 +22,15 @@ class Contracts(unittest.TestCase):
   live=[dict(slug='fib-example',version=1,verify_jwt=False,ezbr_sha256='hash')]
   with tempfile.TemporaryDirectory() as tmp:
    root=pathlib.Path(tmp);(root/'edge/fib-example').mkdir(parents=True);(root/'configuration').mkdir()
-   (root/'edge/inventory.json').write_text(json.dumps(live))
+   fixture_snapshots(root,live)
    (root/'edge/fib-example/index.ts').write_text('export const x=1;')
    (root/'configuration/capture.json').write_text(json.dumps(dict(capturedAt=now.isoformat(),featureStatesReviewed=True,completeFunctionExportsReviewed=True)))
    self.assertEqual(exports(root,live,now),['fib-example'])
+   snapshot=root/'edge/_deployed_bundles/fib-example.eszip'
+   snapshot.write_bytes(b'ESZIPtampered')
+   with self.assertRaisesRegex(ValueError,'readback mismatch'):exports(root,live,now)
+   fixture_bytes=b'ESZIPfib-example'
+   snapshot.write_bytes(fixture_bytes)
    with self.assertRaises(ValueError):exports(root,live+[dict(slug='fib-other')],now)
    with self.assertRaises(ValueError):exports(root,[dict(live[0],version=2)],now)
    (root/'edge/fib-example/index.ts').write_text('const padded = "=".repeat(4); const header = req.headers.get("Authorization");')
@@ -37,7 +52,7 @@ class Contracts(unittest.TestCase):
   with tempfile.TemporaryDirectory() as tmp:
    root=pathlib.Path(tmp);(root/'edge/fib-u4-pilot').mkdir(parents=True)
    (root/'edge/_shared').mkdir();(root/'configuration').mkdir()
-   (root/'edge/inventory.json').write_text(json.dumps(live))
+   fixture_snapshots(root,live)
    (root/'edge/fib-u4-pilot/index.ts').write_text('import "../_shared/development-datasets.ts";')
    (root/'edge/_shared/development-datasets.ts').write_text(
     'import type { RisSql } from "./ris-structure.ts";')
