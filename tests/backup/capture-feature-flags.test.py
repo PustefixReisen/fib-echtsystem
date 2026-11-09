@@ -49,9 +49,19 @@ class FeatureCaptureTests(unittest.TestCase):
         self.assertNotIn("FIB_RIS_AUTOMATION_ENABLED", state["projectFeatures"]["values"])
         self.assertIn("FIB_RIS_AUTOMATION_ENABLED", state["projectFeatures"]["missing"])
 
-    def test_invalid_or_duplicate_allowed_value_rejected(self):
+    def test_unverified_value_is_redacted_and_not_approved(self):
+        rows = [
+            {"name": "FIB_RIS_STRUCTURE_ENABLED", "value": "SENSITIVE_UNEXPECTED_VALUE"},
+        ]
+        result = module.redact_to_flags(rows)
+        self.assertEqual(result["status"], "incomplete")
+        self.assertEqual(result["values"]["FIB_RIS_STRUCTURE_ENABLED"], {"status": "unverified"})
+        self.assertEqual(result["unverified"], ["FIB_RIS_STRUCTURE_ENABLED"])
+        self.assertEqual(len(result["missing"]), 2)
+        self.assertNotIn("SENSITIVE_UNEXPECTED_VALUE", json.dumps(result))
+
+    def test_invalid_structure_or_duplicate_allowed_value_rejected(self):
         for rows in (
-            [{"name": "FIB_RIS_STRUCTURE_ENABLED", "value": "SUPER_SECRET"}],
             [{"name": "FIB_RIS_STRUCTURE_ENABLED", "value": "true"},
              {"name": "FIB_RIS_STRUCTURE_ENABLED", "value": "false"}],
             {"name": "FIB_RIS_STRUCTURE_ENABLED", "value": "true"},
