@@ -1,5 +1,60 @@
 # RIS-Nachabnahme: gebündelte Freigabe und Bereitstellung (#403 / PR #416)
 
+## Aktuelle Betreiberentscheidung 09.11.2026 – gilt vorrangig für die Entwicklungsbereitstellung
+
+Der Betreiber hat die drei offenen fachlichen Entscheidungen bestätigt:
+**Mistral AI** als vorgesehener KI-Anbieter; **5 EUR Höchstbudget
+für die Erprobung**; **gebündelte Übernahme ins vorhandene
+FIB-Echtsystem** auf Shared-Apps/IONOS. Der derzeitige Zustand
+ist ausdrücklich **Entwicklung ohne wichtige fachliche
+Bestandsdaten** und niedriger Kritikalität. Für diesen konkreten
+Entwicklungsrelease gelten deshalb folgende abgestuften Regeln
+anstelle der oben beschriebenen strengeren Pilot-/Produktivgates:
+
+- **Kurze Sicherung reicht:** Vor einer FIB-Schema-Migration
+  einmal die vorhandene FIB-Snapshot-Routine mit privater Ablage
+  ausführen, Prüfsumme und lesbares Archiv verifizieren.
+  Rückfallweg und vorhandenen Frontendstand dokumentieren.
+  Kein zusätzlicher vollständiger isolierter Restore, kein
+  mehrstufiges Release-Bundle und kein aufwendiges
+  Wartungsfenster allein wegen fehlender wertvoller Echtdaten.
+  **Die bestehende Workflow-/Migrations-Sicherungssperre darf
+  nicht stillschweigend abgeschaltet werden.** Bei technisch
+  erzwungenen strengeren Anforderungen muss die
+  Bereitstellung darauf Rücksicht nehmen.
+- **Keine neue Authentifizierung oder öffentliche Lesefreigabe:**
+  Die öffentlich erreichbare Webadresse ist nicht mit
+  öffentlicher Datenfreigabe gleichzusetzen; vorhandene
+  angemeldete Benutzer behalten ihre gewohnten Rechte.
+- **Redaktionelle Freigabe genau abgrenzen:**
+  „Keine automatische Veröffentlichung“ bedeutet lediglich:
+  Ein KI-generierter Entwurf ist fachlich noch nicht
+  `confirmed`, bis die Redaktion ihn bei Bedarf korrigiert
+  und bestätigt. Es ist **kein** zusätzliches Login-Gate
+  gemeint. Automatisches Vorbefüllen von Entwürfen für
+  bereits angemeldete Redakteure ist ausdrücklich erwünscht.
+- **KI-Test:** Mistral als vorgesehener Anbieter und
+  5 EUR Budget genehmigt. Kein automatischer
+  kostenpflichtiger Aufruf ohne vorhandenen API-Schlüssel,
+  nachgewiesene datenschutzgerechte Konfiguration und
+  messbare Verbrauchsbegrenzung. Die 5 EUR sind keine
+  technische API-Hard-Limit-Funktion und dürfen nicht so
+  behauptet werden. Originalniederschriften können
+  personenbezogene Inhalte enthalten; Übermittlung nur nach
+  geklärter Aufbewahrung/Vertragsgrundlage.
+- **Freigabeumfang:** Gebündelte RIS-Entwicklungsbereitstellung
+  ist fachlich gewünscht, mit vorhandener Schutztechnik,
+  konkreter Änderungsversion, gezielten Tests und
+  Wiederanlauf. **Keine** Freigabe zur Änderung anderer
+  Apps, gemeinsamen Secrets oder Cron; keine
+  Behauptung, KI-Erstellung sei produktiv fertig, solange
+  der Redaktions-HTTP-Pfad und Anbieterzugang fehlen.
+
+Die abgenommenen Beschlussdarstellungen bleiben unverändert;
+Beschlusskorrekturen sind ein eingeklappter, selten
+benötigter Vorgang. Ein einzelner gemeinsamer
+Nachabnahmetest reicht nach erfolgreicher Bereitstellung.
+
 **Stand:** 09.11.2026. Diese Arbeitsanweisung stellt keine Produktivfreigabe dar.
 
 ## Ziel
