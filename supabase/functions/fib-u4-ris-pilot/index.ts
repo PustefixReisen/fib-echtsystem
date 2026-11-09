@@ -137,7 +137,7 @@ export async function handleRis(req:Request,mode:'interactive'|'scheduler'='inte
     const agenda=snapshot.agenda.map(item=>({
       number:item.number,title:item.title,
       observedTreatment:item.observedTreatment??null,
-      proposalReferences:item.proposals.map(p=>p.reference),
+      proposalReferences:item.proposals,
     }));
     return reply({mode:'read_only_session_preview',session:payload.previewSession,
       source:sessionUrl,publicTopCount:agenda.length,completeness:'unverified',agenda});
