@@ -126,15 +126,16 @@ export function RisMinutesReviewPreview() {
   return (
     <main className="ris-minutes-preview" style={{padding:"1rem"}}>
       <header className="panel" style={{padding:"1rem",marginBottom:"1rem"}}>
-        <h1>RIS-Beschlussprüfung – schreibfreier Bedienungstest</h1>
+        <h1>RIS-Beschlussprüfung – vereinfachter Bedienungstest</h1>
         <p role="status"><strong>Reine Testansicht. Keine echte Rechtefreigabe, keine Anmeldung,
           keine Datenbankverbindung und keine Speicherung.</strong></p>
-        <p>Du kannst den Erfassungs- und Bestätigungsdialog vollständig ausprobieren.
+        <p>Ein inhaltlich vollständiger, eigenständig formulierter Entwurf ist bereits eingetragen. Prüfe ihn, ergänze bei Bedarf Details und bestätige das Abstimmungsergebnis.
           Die Einträge werden ausschließlich an einen simulierten Testdienst übergeben.
           In der echten Redaktion ist eine konkrete, dokumentierte Wiedergabeberechtigung erforderlich.</p>
       </header>
       <RisMinutesReview agendaId="preview-top-6" eventId="preview-main-event"
         source={demoSource}
+        initialText={"Der Gemeinderat bewertet die geplante Ansiedlung eines Rechenzentrums positiv. Der Bebauungsplanentwurf soll hierfür angepasst werden. Im westlichen Teil des Plangebiets soll ein Sondergebiet für das Rechenzentrum vorgesehen werden; die baulichen Parameter sind entsprechend zu ändern."}
         onReload={async()=>{}}
         api={async(body)=>{
           if(body.action === "ris_suggest") return {suggestionId:"preview-pending",status:"pending"};
