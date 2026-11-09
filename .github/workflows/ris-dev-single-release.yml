@@ -1,5 +1,8 @@
 name: RIS development release (single controlled run)
 on:
+  pull_request:
+    paths:
+      - '.github/workflows/ris-dev-single-release.yml'
   workflow_dispatch:
     inputs:
       confirmation:
@@ -12,6 +15,21 @@ concurrency:
   group: editorial-web-pilot
   cancel-in-progress: false
 jobs:
+  validate:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify scoped release workflow protections
+        run: |
+          set -euo pipefail
+          grep -Fq "inputs.confirmation == 'RIS-DEV'" .github/workflows/ris-dev-single-release.yml
+          grep -Fq 'pg_restore --list' .github/workflows/ris-dev-single-release.yml
+          grep -Fq 'rclone --config' .github/workflows/ris-dev-single-release.yml
+          grep -Fq -- '--download' .github/workflows/ris-dev-single-release.yml
+          grep -Fq -- '--single-transaction' .github/workflows/ris-dev-single-release.yml
+          grep -Fq -- '--no-verify-jwt' .github/workflows/ris-dev-single-release.yml
+          grep -Fq 'StrictHostKeyChecking=yes' .github/workflows/ris-dev-single-release.yml
   deploy:
     if: github.ref == 'refs/heads/main' && inputs.confirmation == 'RIS-DEV'
     runs-on: ubuntu-latest
