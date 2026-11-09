@@ -23,6 +23,8 @@ export async function prepareRisMinutesSessionDrafts(
     sessionId:string;
     sourceDocumentId:string;
     sourceUrl:string;
+    /** Current approved document-version SHA-256. */
+    expectedPdfHash?:string;
     expectedNumbers:number[];
     /** Optional editorial focus: only one TOP is ever sent to the paid provider. */
     selectedTopNumber?:number;
@@ -60,6 +62,15 @@ export async function prepareRisMinutesSessionDrafts(
     if(bytes.length<8||bytes.length>12_000_000||
        new TextDecoder().decode(bytes.subarray(0,5))!=="%PDF-")
       return unavailable("ris_pdf_invalid");
+    if(opts.expectedPdfHash){
+      if(!/^[a-f0-9]{64}$/i.test(opts.expectedPdfHash))
+        return unavailable("ris_document_hash_invalid");
+      const digest=await crypto.subtle.digest("SHA-256",bytes);
+      const actual=[...new Uint8Array(digest)]
+        .map(n=>n.toString(16).padStart(2,"0")).join("");
+      if(actual.toLowerCase()!==opts.expectedPdfHash.toLowerCase())
+        return unavailable("ris_minutes_source_changed");
+    }
     const raw=await extractor(bytes);
     if(raw.length<100||raw.length>500_000)return unavailable("ris_pdf_text_invalid");
     const split=splitRisMinutesByAgenda(raw,opts.expectedNumbers);
