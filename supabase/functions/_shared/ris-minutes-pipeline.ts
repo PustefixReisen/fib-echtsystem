@@ -25,6 +25,8 @@ export async function prepareRisMinutesSessionDrafts(
     sourceDocumentId:string;
     sourceUrl:string;
     expectedNumbers:number[];
+    /** Optional editorial focus: only one TOP is ever sent to the paid provider. */
+    selectedTopNumber?:number;
     /** A configured, separately approved provider. Undefined means no disclosure. */
     provider?:RisMinutesDraftProvider;
   },
@@ -63,8 +65,13 @@ export async function prepareRisMinutesSessionDrafts(
     if(raw.length<100||raw.length>500_000)return unavailable("ris_pdf_text_invalid");
     const split=splitRisMinutesByAgenda(raw,opts.expectedNumbers);
     if(!split.ok)return unavailable("ris_top_segmentation_"+split.issues.join("_"));
+    if(opts.selectedTopNumber!==undefined &&
+       !opts.expectedNumbers.includes(opts.selectedTopNumber))
+      return unavailable("selected_top_not_in_agenda");
+    const selected=opts.selectedTopNumber===undefined?split.sections:
+      split.sections.filter(x=>x.topNumber===opts.selectedTopNumber);
     const topResults:Array<{topNumber:number;result:RisMinutesDraftResult}>=[];
-    for(const sec of split.sections){
+    for(const sec of selected){
       // No paid model call when a TOP has no vote evidence. This also
       // prevents submitting unrelated meeting discussion to a provider.
       if(!/Abstimmung\s*:/i.test(sec.transientText)){
