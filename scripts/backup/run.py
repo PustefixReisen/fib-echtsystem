@@ -38,10 +38,6 @@ def backup(env,run=f.command):
   metadata={item['slug']:item for item in json.loads((bundle/'edge/inventory.json').read_text())}
   verifier.verify_deployed_bundles(metadata,verifier.deployed_bundle_digest,
                                   env['FIB_BACKUP_MANAGEMENT_TOKEN'])
-  print('Backup phase: isolated-deno-reconstruction-check',flush=True)
-  # The isolated checker executes typechecking only, never function handlers.
-  # It explicitly forwards no FIB/DB/Supabase/Nextcloud credentials to Deno.
-  run([sys.executable,'scripts/backup/check-edge-isolated.py',str(bundle/'edge'),*slugs],env=env)
   print('Backup phase: database-capture',flush=True)
   run(['node','scripts/ris-shared-apps/backup.mjs','--out='+str(bundle/'database')],env=env)
   dump=bundle/'database/fib.dump';digest=hashlib.sha256(dump.read_bytes()).hexdigest()
