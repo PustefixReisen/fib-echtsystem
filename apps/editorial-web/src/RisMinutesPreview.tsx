@@ -68,7 +68,7 @@ const data = {
     agenda_id: "preview-top-6",
     point_key: "1",
     version_id: "preview-v6a",
-    wording: "1. Der Gemeinderat beurteilt die vorliegende Voranfrage zur Ansiedlung eines Rechenzentrums grundsätzlich positiv. Der Vorentwurf des Bebauungsplanes ist entsprechend anzupassen. Ziele sind die Ausweisung eines Sondergebietes „Rechenzentrum“ im westlichen Bereich des Plangebietes sowie die Anpassung der baulichen Parameter.",
+    wording: "Der Gemeinderat bewertet die geplante Ansiedlung eines Rechenzentrums grundsätzlich positiv. Dazu soll der Vorentwurf des Bebauungsplans angepasst werden: Im westlichen Bereich des Plangebiets ist ein Sondergebiet für das Rechenzentrum vorzusehen. Auch die baulichen Festsetzungen des Entwurfs sollen entsprechend geändert werden.",
     result: "accepted",
     yes_count: 17,
     no_count: 2,
@@ -78,7 +78,7 @@ const data = {
     agenda_id: "preview-top-6",
     point_key: "2",
     version_id: "preview-v6b",
-    wording: "2. Die Verwaltung wird beauftragt, aufgrund der relevanten Anpassungen an den Bebauungsplan eine anteilige Kostenbeteiligung an den Planungskosten des Investors in einem städtebaulichen Vertrag zu prüfen und ggf. einen entsprechenden Vertrag zu erarbeiten.\n\nDie Kosten des Verfahrens tragen der Investor und die Gemeinde Feldkirchen im Verhältnis der Grundstücksgrößen.",
+    wording: "Die Verwaltung soll prüfen, ob und in welchem Umfang der Investor sich wegen der vorgesehenen Änderungen am Bebauungsplan anteilig an den Planungskosten beteiligen kann. Falls dies möglich ist, soll sie einen entsprechenden städtebaulichen Vertrag ausarbeiten. Die Verfahrenskosten sollen sich Investor und Gemeinde Feldkirchen entsprechend dem Verhältnis ihrer Grundstücksflächen teilen.",
     result: "accepted",
     yes_count: 19,
     no_count: 0,
@@ -97,7 +97,7 @@ export function RisMinutesPreview() {
       <header className="panel" style={{padding: "1rem", marginBottom: "1rem"}}>
         <h1>RIS-Niederschrift – Testdarstellung</h1>
         <p role="status"><strong>Nur Vorschau. Keine Anmeldung, keine Datenbankverbindung und keine Speicherung.</strong></p>
-        <p>Historische Referenzausschnitte der Niederschrift vom 15.10.2026, im Beschlusswortlaut ohne inhaltliche Kürzung dargestellt. PDF-Zeilenumbrüche und Trennstriche wurden nur für die Lesbarkeit aufgelöst.
+        <p>Historische Referenzbeschlüsse vom 15.10.2026 in vollständiger sachlicher Wiedergabe, jedoch unabhängig vom Original formuliert. Jeder wesentliche Punkt des Beschlussinhalts soll erhalten bleiben.
           Diese drei TOPs sind keine vollständige Tagesordnung und keine bereits im Echtsystem
           redaktionell bestätigten Beschlussdaten.</p>
         <p>Bitte nacheinander TOP 2, TOP 3 und TOP 6 auswählen und prüfen, ob Behandlung,
