@@ -165,7 +165,7 @@ export async function risEditorial(
       [session.id],
     );
     const decisions = await tx.unsafe(
-      `select p.*,v.id version_id,v.wording,v.document_version_id,v.created_at,w.result,w.yes_count,w.no_count,w.abstention_count,w.evidence_quote,(d.latest_version_id<>v.document_version_id) source_changed,case when s.status='confirmed' then nullif(btrim(s.payload->>'factualSummary'),'') else null end factual_summary from fib.ris_decision_points p join fib.ris_agenda_items a on a.id=p.agenda_id join fib.ris_decision_versions v on v.point_id=p.id join fib.ris_document_versions dv on dv.id=v.document_version_id join fib.ris_documents d on d.id=dv.document_id left join fib.ris_votes w on w.decision_version_id=v.id left join fib.ris_suggestions s on s.id=v.suggestion_id where a.session_id=$1`,
+      `select p.*,v.id version_id,v.document_version_id,v.created_at,w.result,w.yes_count,w.no_count,w.abstention_count,(d.latest_version_id<>v.document_version_id) source_changed,case when s.status='confirmed' and d.latest_version_id=v.document_version_id and s.payload->>'usageRightsBasis' in ('official_work_5_urhg','explicit_permission') and length(coalesce(s.payload->>'usageRightsEvidence',''))>=30 then v.wording else null end display_wording from fib.ris_decision_points p join fib.ris_agenda_items a on a.id=p.agenda_id join fib.ris_decision_versions v on v.point_id=p.id join fib.ris_document_versions dv on dv.id=v.document_version_id join fib.ris_documents d on d.id=dv.document_id left join fib.ris_votes w on w.decision_version_id=v.id left join fib.ris_suggestions s on s.id=v.suggestion_id where a.session_id=$1`,
       [session.id],
     );
     const events = await tx.unsafe(
@@ -693,18 +693,33 @@ export async function risEditorial(
     }
     const wording = required(payload.wording, 30000),
       quote = required(payload.evidenceQuote, 30000);
-    // A separately authored factual summary is displayed only after review;
-    // never present source wording as an implicitly licensed text copy.
-    const factualSummary = payload.factualSummary == null ? null
-      : required(payload.factualSummary, 4000);
+    // Original wording may be stored only following an explicit document-specific
+    // rights assessment. Public access to a PDF is not itself a reproduction licence.
+    const manuallyReviewed = payload.manualSourceVerification === true;
+    const usageRightsBasis = payload.usageRightsBasis == null ? null
+      : required(payload.usageRightsBasis, 60);
+    const usageRightsEvidence = payload.usageRightsEvidence == null ? null
+      : required(payload.usageRightsEvidence, 2000);
+    if (manuallyReviewed || usageRightsBasis || usageRightsEvidence) {
+      if (input.kind !== "decision" || input.origin !== "editor" ||
+          actor.kind !== "human" || !manuallyReviewed ||
+          !["official_work_5_urhg", "explicit_permission"].includes(usageRightsBasis ?? "") ||
+          (usageRightsEvidence?.length ?? 0) < 30) {
+        throw Error("ris_wording_rights_review_required");
+      }
+    }
     const v = await one(
       tx,
-      "select v.*,d.latest_version_id from fib.ris_document_versions v join fib.ris_documents d on d.id=v.document_id where v.id=$1",
+      "select v.*,d.latest_version_id,d.source_url from fib.ris_document_versions v join fib.ris_documents d on d.id=v.document_id where v.id=$1",
       [input.versionId],
     );
     if (v.id !== v.latest_version_id) throw Error("stale_ris_review");
-    if (!v.extracted_text?.includes(quote) || !quote.includes(wording)) {
+    if (!quote.includes(wording) ||
+        (!manuallyReviewed && !v.extracted_text?.includes(quote))) {
       throw Error("missing_exact_evidence");
+    }
+    if (manuallyReviewed && (payload.verifiedSourceUrl !== v.source_url || !quote.includes(wording))) {
+      throw Error("ris_manual_source_verification_required");
     }
     await one(
       tx,
@@ -719,7 +734,9 @@ export async function risEditorial(
         v.id,
         input.kind,
         input.origin,
-        JSON.stringify({ ...payload, wording, evidenceQuote: quote, factualSummary }),
+        JSON.stringify({ ...payload, wording, evidenceQuote: quote,
+          manualSourceVerification: manuallyReviewed,
+          usageRightsBasis, usageRightsEvidence }),
         actor.userId,
       ],
     );
@@ -747,11 +764,19 @@ export async function risEditorial(
         [s.document_version_id],
       );
       if (v.id !== v.latest_version_id) throw Error("stale_ris_review");
-      if (
-        !v.extracted_text?.includes(p.evidenceQuote) ||
-        !p.evidenceQuote?.includes(p.wording)
-      ) {
+      if (!p.evidenceQuote?.includes(p.wording) ||
+          (!p.manualSourceVerification && !v.extracted_text?.includes(p.evidenceQuote))) {
         throw Error("missing_exact_evidence");
+      }
+      if (p.manualSourceVerification) {
+        if (s.kind !== "decision" || s.origin !== "editor" ||
+            !["official_work_5_urhg", "explicit_permission"].includes(p.usageRightsBasis) ||
+            typeof p.usageRightsEvidence !== "string" || p.usageRightsEvidence.length < 30) {
+          throw Error("ris_wording_rights_review_required");
+        }
+        await one(tx,
+          `select d.id from fib.ris_documents d where d.id=$1 and d.source_url=$2`,
+          [v.document_id,p.verifiedSourceUrl]);
       }
       if (s.kind === "proposal_text") {
         await one(
