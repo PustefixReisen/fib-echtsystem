@@ -843,7 +843,7 @@ export async function risEditorial(
             p.yes ?? null,
             p.no ?? null,
             p.abstention ?? null,
-            p.evidenceQuote,
+            completeFactual ? null : p.evidenceQuote,
           ],
         );
       }
