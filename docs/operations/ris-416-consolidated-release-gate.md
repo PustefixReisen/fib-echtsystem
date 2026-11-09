@@ -215,3 +215,45 @@ Reproduzierbare Quellen-/Strukturdatenprüfungen laufen in der CI
 `U4 public-source connectivity check`:
 `scripts/u4-ris-public-1031-coverage.ts` und
 `scripts/u4-ris-public-minutes-readability.ts`.
+
+## KI-Anbieteradapter (Entwicklungsstand, keine produktive Datenübermittlung)
+
+Der Draft enthält jetzt
+`supabase/functions/_shared/ris-minutes-mistral-provider.ts`.
+Er implementiert den bestehenden `RisMinutesDraftProvider` als
+**ausdrücklich optionalen** Chat-Completions-Aufruf an die fest
+konfigurierte Adresse `https://api.mistral.ai/v1/chat/completions`.
+Modell- und Formatfestlegung: JSON-Objekt, Temperatur 0,1, feste
+Größen-/Zeitlimits, kein dynamischer Fremdhost. Ein unvollständiges
+oder manipuliertes Ergebnis wird abgelehnt bzw. als nicht verfügbar
+gemeldet. Außerdem führt die bereits vorhandene Fachprüfung
+`validateRisFactualDraft` zu einer zwingenden redaktionellen
+Prüfung; kein KI-Datensatz gelangt automatisch in die FIB-Datenbank.
+
+Die Verwendung ist ausdrücklich **nicht** standardmäßig aktiviert:
+Ein Aufruf ist nur möglich, wenn eine aufrufende Komponente
+`enabled:true`, ein gültiges API-Geheimnis und ein Modell
+explizit übergibt. Kein neues Secret wurde angelegt, keine
+bestehenden Zugangsdaten ausgelesen, und der Provider ist noch
+an keinen produktiven HTTP-Endpunkt oder Cron gebunden.
+
+Der deterministische Vertrag wird mit einem simulierten
+Netzwerkaufruf in
+`tests/u4/ris-minutes-mistral-provider.spec.ts`
+getestet: kein Provider → keine Datenübertragung; deaktivierte
+Konfiguration → Fehler; erfolgreiche strukturierte Antwort →
+`review_required`; veränderte Stimmen → Ablehnung;
+API-Fehler → `unavailable`.
+
+**Noch ausdrücklich offen:** Nutzungsentscheidung, Kostenkontrolle,
+API-Zugang sowie Datenschutzbewertung für das Senden von
+TOP-Originalpassagen an einen externen Anbieter. Eine
+Standortangabe „EU“ allein genügt nicht für die erforderliche
+Bewertung von Subprozessoren und Aufbewahrung. Aktuelle
+Anbieterdokumentation:
+[API Chat](https://docs.mistral.ai/api),
+[Datenspeicherort](https://help.mistral.ai/en/articles/347629-where-do-you-store-my-data-or-my-organization-s-data),
+[Datenspeicherung](https://legal.mistral.ai/terms/privacy-policy/),
+[Zero Data Retention](https://help.mistral.ai/en/articles/347612-can-i-activate-zero-data-retention-zdr).
+Vor diesem Schritt dürfen keine ungeprüften RIS-Originalpassagen
+an die API übermittelt werden.
