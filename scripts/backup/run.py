@@ -5,6 +5,14 @@ from components import exports
 spec=importlib.util.spec_from_file_location('frontend',pathlib.Path(__file__).with_name('frontend-run.py'))
 f=importlib.util.module_from_spec(spec);spec.loader.exec_module(f)
 
+def verify_live_snapshot(metadata, current):
+ if set(metadata)!=set(current):raise ValueError('Incomplete live ESZIP snapshot')
+ for slug,body in current.items():
+  if not isinstance(body,bytes) or not body.startswith(b'ESZIP'):
+   raise ValueError('Invalid live ESZIP')
+  if hashlib.sha256(body).hexdigest()!=metadata[slug].get('download_eszip_sha256'):
+   raise ValueError('Live deployed ESZIP differs from reviewed snapshot')
+
 def backup(env,run=f.command):
  print('Backup phase: prerequisites',flush=True)
  mode=env.get('FIB_BACKUP_MODE','manual');commit=env.get('GITHUB_SHA','')
@@ -38,9 +46,7 @@ def backup(env,run=f.command):
   metadata={item['slug']:item for item in json.loads((bundle/'edge/inventory.json').read_text())}
   current=verifier.verify_deployed_bundles(metadata,verifier.deployed_bundle_body,
                                           env['FIB_BACKUP_MANAGEMENT_TOKEN'])
-  for slug,body in current.items():
-   if hashlib.sha256(body).hexdigest()!=metadata[slug].get('download_eszip_sha256'):
-    raise ValueError('Live deployed ESZIP differs from reviewed snapshot')
+  verify_live_snapshot(metadata,current)
   print('Backup phase: database-capture',flush=True)
   run(['node','scripts/ris-shared-apps/backup.mjs','--out='+str(bundle/'database')],env=env)
   dump=bundle/'database/fib.dump';digest=hashlib.sha256(dump.read_bytes()).hexdigest()
