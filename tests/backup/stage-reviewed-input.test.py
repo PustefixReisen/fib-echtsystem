@@ -1,5 +1,6 @@
 """Offline tests for encrypted reviewed input staging; no live cloud access."""
 import datetime
+import hashlib
 import importlib.util
 import json
 import pathlib
@@ -26,7 +27,12 @@ LIVE = [{"slug": "fib-example", "version": 1, "verify_jwt": False,
 def prepare(root, reviewed=True):
     (root / "edge/fib-example").mkdir(parents=True)
     (root / "edge/fib-example/index.ts").write_text("export const ok=true")
-    (root / "edge/inventory.json").write_text(json.dumps(LIVE))
+    body = b"ESZIPfib-example"
+    folder = root / "edge/_deployed_bundles"
+    folder.mkdir()
+    (folder / "fib-example.eszip").write_bytes(body)
+    rows = [{**LIVE[0], "download_eszip_sha256": hashlib.sha256(body).hexdigest()}]
+    (root / "edge/inventory.json").write_text(json.dumps(rows))
     (root / "configuration").mkdir()
     (root / "configuration/state.json").write_text(json.dumps({"flags": {"enabled": False}}))
     (root / "configuration/capture.json").write_text(json.dumps({
