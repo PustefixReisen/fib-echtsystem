@@ -1,5 +1,63 @@
 # Issue #407 – geschützter Export bereits bereitgestellter Edge Functions
 
+## Einmalige Vorbereitung am geschützten Ubuntu-Betreiberrechner (09.11.2026)
+
+Statt der bisherigen drei getrennten Exportschritte genügt **ein**
+lokaler Befehl aus dem ausgecheckten PR-#408-Stand. Er verwendet die
+bereits vorhandenen geschützten Umgebungswerte
+`SUPABASE_ACCESS_TOKEN` und `FIB_MAINTENANCE_DATABASE_URL`.
+Die Zugangsdaten werden **nicht** als Argumente übergeben. Die
+Zieladresse muss unter einem bereits vorhandenen privaten Ordner
+mit Berechtigung 0700 liegen, **außerhalb** des Git-Repositories.
+
+```bash
+umask 077
+mkdir -p -m 700 "$HOME/fib-private-backup"
+python3 scripts/backup/prepare-private-review.py \
+  --private-root "$HOME/fib-private-backup/review-erstlauf"
+```
+
+Das Skript ruft die bereits vorhandenen Lese-Exporte nacheinander auf.
+Es erstellt ausschließlich
+`review-erstlauf/input/edge/` (neun FIB-Funktionen und
+`inventory.json`),
+`review-erstlauf/review/source.json`,
+`review-erstlauf/review/features.json` und das **leere**
+`review-erstlauf/input/configuration/`. Keine echten Secrets oder
+Quellinhalte werden nach GitHub übertragen oder ausgegeben.
+Falls ein Teilschritt scheitert, wird nur das gerade neu erstellte
+Arbeitsverzeichnis wieder entfernt.
+
+**Danach ist eine tatsächliche Betreiberprüfung erforderlich:**
+Die `review/`-Dateien samt etwaigen fehlenden Featureflags gegen
+den wirklichen FIB-Konfigurationsstand prüfen, den vollständigen
+`input/edge/`-Baum auf originale Runtime-Dateien und kritische
+Shared-Abhängigkeiten prüfen. Die geprüften Ergebnisse als
+`input/configuration/state.json` und den wahrheitsgemäß
+bestätigten Freigabebeleg `input/configuration/capture.json`
+erfassen. **Das Skript setzt keinerlei Reviewflag und erzeugt keine
+`input_id`.** Bei fehlenden Nachweisen bleibt die Freigabe
+gesperrt. `review/` selbst darf nicht in das gesicherte
+`input/` übernommen werden.
+
+Erst danach:
+```bash
+python3 scripts/backup/stage-reviewed-input.py \
+  "$HOME/fib-private-backup/review-erstlauf/input"
+```
+
+Das bestehende Staging validiert den Inhalt gegen die aktuellen
+Live-Deployments, verschlüsselt ihn, prüft die Rücklesung und gibt
+erst bei Erfolg eine **echte** `input_id` aus. Diese ist die
+Eingabe für genau einen geschützten `Complete FIB backup`-Run
+(`mode=release`). Der gesamte Ablauf berührt keine
+Produktionsdaten durch schreibende Befehle.
+
+**Grenze:** Ohne die lokalen, bestehenden Management- und
+Datenbankzugänge kann ChatGPT diesen privaten Erstlauf nicht
+stellvertretend ausführen. Der Betreiber muss die Eingangsdaten
+nicht an den Chat schicken.
+
 > **Verbindlicher Betriebsstand – 09.11.2026 (ersetzt widersprechende historische Aussagen unten):**
 >
 > **Noch nicht startbereit:** Eine **echt geprüfte private**
