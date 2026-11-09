@@ -29,7 +29,7 @@ export async function prepareRisMinutesSessionDrafts(
     /** A configured, separately approved provider. Undefined means no disclosure. */
     provider?:RisMinutesDraftProvider;
   },
-  transport:typeof fetch=fetch,
+  transport:typeof fetch,
   extractor:PdfTextExtractor,
 ):Promise<RisSessionDraftReview>{
   const unavailable=(reason:string):RisSessionDraftReview=>({
