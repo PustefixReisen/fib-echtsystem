@@ -44,6 +44,15 @@ async function run(){
         sectionNumbers:split.sections.map(v=>v.topNumber),
         noOriginalStorage:true,noExtractedTextOutput:true}));
       if(!split.ok)throw Error("real_minutes_top_segmentation_incomplete");
+      const recognized=split.sections.map(s=>({
+        top:s.topNumber, voteCount:extractRisMinutesCandidates(s.transientText).length,
+      }));
+      const parsedVoteCount=recognized.reduce((sum,s)=>sum+s.voteCount,0);
+      console.log(JSON.stringify({scope:"real_1031_minutes_vote_coverage",
+        sourceVoteLabels:votes,parsedVoteCount,perTop:recognized,
+        fullVoteCoverage:parsedVoteCount===votes,
+        noOriginalStorage:true,noExtractedTextOutput:true}));
+      if(parsedVoteCount!==votes)throw Error("real_minutes_incomplete_vote_coverage");
       const section=(n:number)=>split.sections.find(s=>s.topNumber===n)?.transientText??"";
       const v2=extractRisMinutesCandidates(section(2));
       const v3=extractRisMinutesCandidates(section(3));
