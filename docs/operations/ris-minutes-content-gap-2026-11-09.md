@@ -116,3 +116,69 @@ die rechtskonforme fachliche Erfassung der tatsächlichen
 Niederschrift bleiben Voraussetzung für die gewünschte reale
 Beschlusstextanzeige. Die Änderung darf nicht als fertige
 RIS-Nachabnahme bezeichnet werden.
+
+## Verbindliche Nutzerentscheidung vom 09.11.2026: vollständiger Beschlusswortlaut
+
+Die statische Testvorschau wurde fachlich mit **„passt“** abgenommen:
+pro Beschlusspunkt **vollständiger protokollierter Wortlaut zuerst**,
+**Abstimmungsergebnis unmittelbar danach**. Keine sachliche
+Zusammenfassung als Ersatz. PDF-Zeilenenden und weiche Worttrennungen
+dürfen nur lesefreundlich bereinigt werden, ohne Inhalt zu kürzen.
+
+Die frühere Entwicklungslösung `factualSummary` genügt dieser
+Anforderung nicht und wurde als Anzeigepfad verworfen.
+
+### Neuer geschützter Datenweg in diesem Draft
+
+- In der TOP-Detailansicht steht für bestehende **manuell gewählte
+  TOP-Hauptereignisse** mit einer sitzungsweiten Niederschrift ein
+  Dialog `Beschluss aus Niederschrift erfassen` zur Verfügung.
+- Vollständigen Beschlusswortlaut und einen konkreten Originalbeleg
+  erfassen; je Punkt Abstimmung und Zahlen getrennt eingeben.
+  Unbekannte Enthaltungen bleiben null, nicht null Stimmen.
+- Vor Einreichen muss der Redakteur das amtliche Dokument tatsächlich
+  prüfen und **pro Fassung** eine Wiedergabeberechtigung benennen und
+  dokumentieren. Die Auswahl einer Rechtsgrundlage allein ist kein
+  allgemeiner Freibrief.
+- Mit `ris_suggest` wird nur ein **offener** Vorschlag gespeichert.
+  Die zweite bewusste Aktion `ris_review_suggestion` bestätigt oder
+  verwirft den Vorschlag unter bestehendem AAL2-/Rollen-/Edit-Lock-
+  und Auditverfahren; der Backend-Validator verlangt aktuelle
+  Dokumentversion, passenden Sitzungskontext und ein bestätigtes
+  RIS-Dokument. Die sachlich unpassende Vorlage gilt nie als Beschluss.
+- `ris_read` gibt den Originalwortlaut ausschließlich als
+  `display_wording` weiter, wenn der verknüpfte Vorschlag bestätigt,
+  die Dokumentversion aktuell und der dokumentierte Rechtsgrund
+  `official_work_5_urhg` oder `explicit_permission` vorhanden ist.
+  Alte bestätigte Beschlussdaten ohne gesonderte Rechtebewertung
+  bleiben für wörtliche Anzeige gesperrt.
+- Die für die statische Vorschau verwendete Schaltlogik bleibt
+  ausschließlich dort aktiv. Keine SQL-Migration, kein
+  Datenimport, keine PDF-/Volltextarchivierung oder automatische
+  Rechtefestlegung im Live-Bestand.
+- Der Freigabe-Dialog ist kein automatischer Import aus der Niederschrift.
+  Ein neuer, echter Vollständigkeitsnachweis der Sitzung bleibt offen.
+
+### Rechtsprüfung und Quellen (kein pauschaler Freigabevermerk)
+
+[§ 5 UrhG](https://www.gesetze-im-internet.de/urhg/__5.html)
+unterscheidet die in Absatz 1 genannten amtlichen Werke und andere
+amtliche Werke nach Absatz 2; bei Absatz 2 sind insbesondere
+Änderungsverbot und Quellenangabe zu beachten. Aus bloßer
+RIS-Abrufbarkeit darf nicht automatisch die Ausnahme für jede
+Niederschrift oder enthaltene Drittinhalte abgeleitet werden.
+Das [BVerwG, Urteil vom 25.06.2015, 7 C 2.14](https://www.bverwg.de/250615U7C2.14.0)
+unterscheidet Informationszugang vom spezifischen allgemeinen
+Verbreitungsinteresse nach § 5 Abs. 2 UrhG.
+
+Vor produktiver Erfassung vollständiger Texte muss die
+dokumentbezogene Einordnung und die Möglichkeit unveränderter
+Wiedergabe bzw. die ausdrückliche Erlaubnis positiv geklärt werden.
+Eine pauschale Erlaubnis wird durch diesen Entwicklungs-PR
+**nicht** behauptet.
+
+**Offene Restarbeiten**: echter Quellenabruf/Erfassungsumfang für
+Sitzung 1031, rechtliche Freigabe einzelner Niederschriftfassungen,
+persönliche Testabnahme des neuen redaktionellen Dialogs und
+gesondertes Release/Backup. Die zuvor abgenommene reine
+Vorschau-Darstellung ist davon unabhängig.
