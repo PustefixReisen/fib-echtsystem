@@ -1,5 +1,54 @@
 # Issue #407 – geschützter Export bereits bereitgestellter Edge Functions
 
+## Betreiberbefund 09.11.2026 – private Ist-Aufnahme, Restore-Grenze
+
+Auf Ubuntu `fib-private-backup/review-gesamt-0911/` liegt eine **unreviewte**
+private Ist-Aufnahme (nicht im Repository):
+
+- `input/edge/`: neun per Supabase-CLI heruntergeladene FIB-Funktionen,
+  neun durch zwei identische API-Abrufe bestätigte ESZIP-Pakete und
+  unverändert mitgesicherte Live-Metadaten; lokale SHA-256-Prüfung **9/9**,
+  **19** relative Modulabhängigkeiten geprüft. Die lokale Exportdatei-Prüfung
+  ist kein unabhängiger Funktions-Wiederherstellungstest.
+- `review/source.json`: drei Quellen, drei Scopes, lesend erfasst.
+- `review/features.json`: `status=incomplete`.
+  `FIB_RIS_STRUCTURE_ENABLED` existiert, sein Wert ist **unverified**.
+  `FIB_RIS_AUTOMATION_ENABLED` und
+  `FIB_RIS_INTEGRATION_TEST_ENABLED` sind **missing**, nicht `false`.
+
+Der Betreiber hat die Anzeige in Supabase **Edge Functions → Secrets**
+geprüft: Dort kann ein einmal gespeicherter Secret-Wert nicht erneut
+eingesehen werden. Das angezeigte Eingabefeld enthält nur einen Platzhalter.
+Es erfolgte **keine** Secret-Änderung.
+
+**Freigabeentscheidung: GESPERRT.** Die bisherige Erfassung ist ein
+verifizierter *Datei*-Snapshot mit bekannten Grenzen, aber keine
+vollständig bestätigte wiederherstellbare Konfiguration. Weder
+`featureStatesReviewed=true` noch
+`completeFunctionExportsReviewed=true` ist daraus ableitbar;
+`configuration/state.json` und `configuration/capture.json` dürfen
+nicht fingiert werden. Keine gültige `input_id`, kein verschlüsselter
+vollständiger Restore-/Readback-Receipt, keine RIS-Bereitstellung.
+
+**Kleinster nächster tatsächlicher Nachweis:**
+1. Betreiberseitig prüfen, ob der exakte ursprüngliche Wert von
+   `FIB_RIS_STRUCTURE_ENABLED` bereits in einer zugelassenen lokalen
+   Geheimnisverwaltung oder privaten Betriebsdokumentation hinterlegt ist.
+   Den Wert **nicht** in GitHub, Chat, Logs oder unverschlüsselte
+   Snapshotdateien übertragen. Fehlende Flags als fehlend beibehalten.
+2. Falls keine autorisierte Originalkopie existiert, lässt sich der
+   ursprüngliche Zustand nicht rückwirkend durch API/Dashboard rekonstruieren.
+   Eine Festlegung eines **neuen** bekannten Werts wäre eine gesondert
+   zu genehmigende produktive Konfigurationsänderung und gehört nicht zur
+   laufenden read-only Sicherung.
+3. Unabhängige Prüfung der Edge-Quellvollständigkeit und
+   Wiederherstellbarkeit vor positiver Reviewer-Bestätigung.
+   Erst danach bestehendes `stage-reviewed-input.py` und den geschützten
+   `Complete FIB backup` verwenden.
+
+Nicht erneut herunterladen oder die vorhandenen privaten Dateien löschen,
+solange keine tatsächliche Änderung der Live-Inventare sie überholt.
+
 ## Technische Präzisierung 09.11.2026 – ESZIP-Integrität
 
 Der bisherige Vergleich `SHA256(GET /functions/<slug>/body) == ezbr_sha256`
