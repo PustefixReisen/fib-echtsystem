@@ -1,5 +1,45 @@
 # Issue #407 – geschützter Export bereits bereitgestellter Edge Functions
 
+## Abschluss der verhältnismäßigen Entwicklungssicherung – 09.11.2026
+
+**Betreiberbestätigung:** Der vorhandene GitHub-Actions-Workflow
+`Backup published editorial frontend` auf `main` wurde am
+09.11.2026 manuell ausgelöst und als **grün** zurückgemeldet.
+Dieser Workflow nutzt die bereits hinterlegten geschützten IONOS- und
+Nextcloud-Zugänge; er führt einen lesenden SFTP-Capture sowie verschlüsselte
+Ablage und SHA-256-Rücklesekontrolle aus. Eine konkrete Workflow-Run-ID
+oder Frontend-Backup-ID liegt dieser Rückmeldung nicht bei und wird nicht
+erfunden.
+
+**Drei Entwicklungs-Sicherungsbausteine:**
+
+| Komponente | Betreiber-Nachweis |
+|---|---|
+| Edge + Konfiguration | `PreReview/snapshot-20261109T104910Z-4f8e54d609ec6bf4`; 32/32 SHA-256-Rückleseprüfung erfolgreich |
+| PostgreSQL-Schema `fib` | `Development/fib-db-20261109T105332Z`; isolierter PostgreSQL-17-Restore erfolgreich, 4/4 SHA-256-Rückleseprüfung |
+| IONOS-Redaktionsfrontend | Workflow `Backup published editorial frontend` grün, laut Betreiber am 09.11.2026; Workflow-Beleg ohne bekannte Run-ID |
+
+**Betriebsentscheidung:** Die gemäß
+`docs/operations/u4-shared-apps-release-plan.md` zulässige,
+risikogerechte **Entwicklungssicherung gilt damit als abgeschlossen**.
+Die Komponenten sind getrennt gesichert; es gibt bewusst **keinen**
+vollständig geprüften kombinierten Release-Backup-Receipt.
+
+**Dokumentierte Grenzen:** Der ursprüngliche Wert des vorhandenen
+Secrets `FIB_RIS_STRUCTURE_ENABLED` bleibt nicht rekonstruierbar.
+Unvollständige Featurewerte dürfen nicht als geprüft markiert werden.
+Für die neun Edge-Functions liegt kein unabhängiger Live-Rollback-Test
+vor. Eine produktive Systemwiederherstellung und ein produktiver
+RIS-Release bedürfen gesonderter Sicherheits-/Freigabenachweise.
+Ein grüner Frontend-Backup-Workflow bedeutet keine Bereitstellung
+und bewirkt keine Änderung von Frontend, Datenbank oder Secrets.
+
+**Nächster Arbeitsabschnitt:** Fachliche Nutzerabnahme der
+RIS-Darstellung und -Redaktion anhand des bereits bereitgestellten
+Entwicklungsstands. Keine automatischen Bereitstellungen, keine
+Änderung der Secretwerte und keine erneute pauschale Komplettsicherung
+wegen der hier dokumentierten Entwicklungs-Abnahme.
+
 ## PostgreSQL-17-Entwicklungssicherung – Betreiberbeleg vom 09.11.2026
 
 Der Betreiber hat die vorhandenen FIB-only-Routinen
