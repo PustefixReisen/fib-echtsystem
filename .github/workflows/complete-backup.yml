@@ -51,9 +51,6 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
-      - uses: denoland/setup-deno@v2
-        with:
-          deno-version: 2.5.6
       - name: Require reviewed complete backup access
         env:
           READY: ${{ vars.FIB_COMPLETE_BACKUP_READY }}
