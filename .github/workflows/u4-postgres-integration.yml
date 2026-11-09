@@ -90,6 +90,8 @@ jobs:
         run: npx tsx tests/u4/ris-minutes-candidates.spec.ts
       - name: Provider adapter safety contract without real external API calls
         run: npx tsx tests/u4/ris-minutes-mistral-provider.spec.ts
+      - name: Transient public RIS PDF to reviewed drafts pipeline
+        run: npx tsx tests/u4/ris-minutes-pipeline.spec.ts
 
       - name: Persistent RIS structure and editorial workflow using real FIB migrations
         env:
