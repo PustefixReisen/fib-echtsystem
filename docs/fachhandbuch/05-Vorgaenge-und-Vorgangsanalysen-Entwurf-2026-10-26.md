@@ -39,7 +39,7 @@ Auch die Redaktion darf aus einem bekannten Sachverhalt unmittelbar einen Vorgan
 
 ### 05.3.2 Neue Ereignisse und geänderte Sachstände
 
-FIB prüft neue Ereignisse und Korrekturen auf die Zugehörigkeit zu bestehenden Vorgängen. Eindeutige Zuordnungen darf es vorläufig setzen; unklare Zuordnungen werden anhand vorhandenen Wissens oder freigegebener Recherche selbstständig geklärt und bei verbleibender entscheidungsrelevanter Unsicherheit vorgelegt.
+FIB prüft neue Ereignisse und Korrekturen auf die Zugehörigkeit zu bestehenden Vorgängen. Eindeutige Zuordnungen darf es **als vorläufige Beziehungen** setzen; dies bedeutet keine automatisch verbindliche Themenzuordnung und keine redaktionelle Bestätigung. Unklare Zuordnungen werden anhand vorhandenen Wissens oder freigegebener Recherche selbstständig geklärt und bei verbleibender entscheidungsrelevanter Unsicherheit vorgelegt.
 
 **Jede fachlich relevante Sachstandsänderung löst automatisch die Auswirkungsprüfung der Vorgangsanalyse aus.** FIB prüft nicht zwingend alles neu, sondern zunächst unmittelbar betroffene Aussagen und danach mögliche Widersprüche und Folgewirkungen in anderen Bereichen. Auch die Bedeutung des Vorgangs für bestehende Themen wird auf Aktualisierungsbedarf geprüft.
 
