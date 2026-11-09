@@ -1,6 +1,19 @@
 import { supabase } from "./supabase.js";
 export type SourceApi = (body: Record<string, unknown>) => Promise<any>;
 const messages: Record<string, string> = {
+  ris_draft_not_enabled:
+    "Die KI-Vorbefüllung ist noch nicht freigeschaltet. Die bestätigte Quellen- und Budgetkonfiguration fehlt.",
+  ris_draft_provider_key_missing:
+    "Der Mistral-Zugang ist serverseitig noch nicht eingerichtet.",
+  ris_draft_confirmed_source_required:
+    "Die aktuelle Niederschrift muss vor der KI-Vorbefüllung als Quelle bestätigt sein.",
+  ris_draft_official_session_unavailable:
+    "Der amtliche RIS-Sitzungsabruf ist gerade nicht erreichbar.",
+  ris_draft_live_agenda_incomplete:
+    "Die amtliche Tagesordnung ist noch nicht eindeutig vollständig.",
+  ris_draft_minutes_source_changed:
+    "Der Niederschriftlink wurde geändert. Bitte die aktuelle amtliche Quelle prüfen.",
+
   ris_structure_disabled:
     "Noch nicht produktiv nutzbar: Datenbank und serverseitige Funktionen sind noch nicht freigegeben.",
   stale_review:
