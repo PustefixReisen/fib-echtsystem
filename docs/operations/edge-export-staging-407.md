@@ -635,3 +635,43 @@ kann beim Auflösen externer `npm:`-/`https:`-Module Netzwerk
 benötigen; für dauerhaft reproduzierbare Wiederherstellung
 werden zusätzlich eindeutige Abhängigkeitsversionen,
 Runtime-Eigenschaften und ein ausgeführter Restore-Test benötigt.
+
+
+## Entscheidung 09.11.2026 – Datensicherung nicht durch Deno-Typecheck blockieren
+
+Der reale, vom Betreiber autorisierte Read-only-Run
+[#42571680641](https://github.com/PustefixReisen/fib-echtsystem/actions/runs/42571680641)
+ist beim ersten Versuch bereits während `supabase/setup-cli@v1` mit
+HTTP 504 gescheitert. Der fehlgeschlagene Job wurde über die GitHub-
+Anbindung **direkt erneut ausgeführt**, ohne weitere Betreiberhandlung.
+Beim zweiten Versuch gelangen CLI-Installation, Deno-Installation,
+CLI-Quelldownload und gemeinsame relative Modulprüfung; erst danach
+brach der zusätzliche isolierte Deno-Typecheck mit
+`ISOLATED_DENO_TYPECHECK` ab. Die echten Fehlerdetails werden aus
+Geheimnisschutzgründen nicht öffentlich geloggt.
+
+Die Bestandsfunktionen verwenden unter anderem `npm:`- und `jsr:`-
+Abhängigkeiten; ein `deno check --no-config --no-lock` außerhalb der
+ursprünglichen Deploy-Konfiguration ist kein verlässliches Kriterium
+für die *Sicherbarkeit* bereits deployter Originalquellen. Daher ist
+die zusätzliche Deno-Typprüfung **kein verpflichtendes Backup-Gate**
+mehr: Sie wurde aus `scripts/backup/run.py` und der
+`complete-backup.yml` entfernt, ebenso die redundante Deno-CI-
+Fixture im Backup-Draft. Der separat bereitgestellte schreibfreie
+Diagnoseworkflow und seine isolierten Tests bleiben verfügbar.
+
+**Verbindlicher Backup-Mindestumfang:** Vollständiger CLI-Export aller
+neun tatsächlich bereitgestellten FIB-Funktionen samt notwendiger
+`_shared`-Module und Herkunfts-/Versionsinventar, relative
+Abhängigkeitsprüfung, gesonderte Live-Binärdigestkontrolle (sofern
+das tatsächlich gelieferte API-Format technisch valide geparst werden
+kann), verschlüsselte Aufbewahrung samt vollständigem Rücklesen,
+Datenbankdump mit isoliertem Restore, Frontend und Konfiguration.
+Keine fiktive Freigabe von `completeFunctionExportsReviewed` und
+kein automatisches Deploy. Ein laufzeitnaher Edge-Start-/Rollbacktest
+bleibt als separates, klar benanntes Restrisiko offen, darf aber
+eine vorhandene **Datensicherung** nicht pauschal verhindern.
+
+Diese Entscheidung korrigiert die früheren Abschnitte dieser Datei,
+die Deno-Typechecking ausdrücklich als zwingende Sperre bezeichnet
+hatten. **Diese ältere Forderung gilt nicht mehr.**
