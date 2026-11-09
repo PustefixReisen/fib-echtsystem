@@ -300,6 +300,9 @@ async function main() {
       payload: {
         wording: quote.split("Abstimmung:")[0].trim(),
         evidenceQuote: quote,
+        factualSummary: i === 0
+          ? "Der Gemeinderat befürwortete die Anpassung des Bebauungsplans für ein Rechenzentrum."
+          : "Die Kostenbeteiligung des Investors soll geprüft werden.",
         eventId: event.eventId,
         pointKey: String(i + 1),
         result: i === 0 ? "accepted" : "unknown",
@@ -352,6 +355,7 @@ async function main() {
     payload: {
       wording: quote2.split("Abstimmung:")[0].trim(),
       evidenceQuote: quote2,
+      factualSummary: "Die Verwaltung soll eine mögliche Kostenbeteiligung im Vertrag prüfen.",
       eventId: event.eventId,
       pointKey: "2",
       result: "accepted",
@@ -401,6 +405,15 @@ async function main() {
   }
   const projection = await run({ action: "ris_read", sessionId: a.sessionId });
   assert.equal(projection.decisions!.length, 3);
+  assert.deepEqual(
+    projection.decisions!.map((d: any) => d.factual_summary).sort(),
+    [
+      "Der Gemeinderat befürwortete die Anpassung des Bebauungsplans für ein Rechenzentrum.",
+      "Die Kostenbeteiligung des Investors soll geprüft werden.",
+      "Die Verwaltung soll eine mögliche Kostenbeteiligung im Vertrag prüfen.",
+    ].sort(),
+    "Only expressly reviewed factual summaries accompany the vote versions",
+  );
   assert.equal(projection.events!.length, 0, "Decision events are separate from local references");
   assert.equal((await first("select topic_id from fib.event_topics where event_id=$1",[event.eventId])).topic_id,topicId);
   const pending = await run({
