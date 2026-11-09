@@ -295,6 +295,8 @@ async function main() {
     readFileSync("supabase/functions/fib-editorial-write/index.ts", "utf8")
       .replace(/^import .*ris-originals.*;\s*/m, "")
       .replace(/^import .*ris-structure.*;\s*/m, "")
+      .replace(/^import .*ris-minutes-pipeline.*;\s*/m, "")
+      .replace(/^import .*ris-minutes-mistral-provider.*;\s*/m, "")
       .replace(/^import .*npm:unpdf.*;\s*/m, "")
       .replace(/^import .*source-editorial.*;\s*/m, "")
       .replace(/^import .*ris-editorial.*;\s*/m, "")
