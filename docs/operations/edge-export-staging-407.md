@@ -1,5 +1,43 @@
 # Issue #407 – geschützter Export bereits bereitgestellter Edge Functions
 
+## Verhältnismäßige Entwicklungssicherung – Entscheidung 09.11.2026
+
+Das FIB-Echtsystem wird derzeit im **Entwicklungsbetrieb** geführt;
+laut bestehender Betriebsentscheidung im
+`docs/operations/u4-shared-apps-release-plan.md` liegen noch keine
+produktiven redaktionellen Echtdaten vor. Der bestehende Plan fordert
+bereits verhältnismäßige Sicherungsmaßnahmen statt eines pauschalen
+vollständigen Release-Restores vor jedem Entwicklungsschritt.
+
+Daher unterscheiden wir strikt:
+1. **Entwicklungs-Sicherungsstand:** Der nachweislich verschlüsselte
+   `PreReview`-Snapshot vom 09.11.2026 sichert neun FIB-Edge-Funktionen
+   und ihre Live-Bundles, Quellkonfiguration und den als unvollständig
+   markierten Featurezustand. Eine **aktuelle** FIB-Schema-Datenbankkopie
+   mit eigenem isoliertem PostgreSQL-17-Restore und verschlüsselter
+   Nextcloud-Rücklesung ist separat auszuführen und nachzuweisen.
+   Den Frontend-Stand aus den vorhandenen SFTP-/Release-Sicherungen
+   gesondert belegen, erforderlichenfalls mit vorhandener Routine
+   ergänzen. Teil-Receipts dürfen nicht als vollständiger Receipt
+   ausgegeben werden.
+2. **Vollständige Release-Systemwiederherstellung:** Der gesonderte
+   `Complete FIB backup`-Workflow, positive unabhängige
+   `featureStatesReviewed`- und `completeFunctionExportsReviewed`-
+   Belege und freigegebene `input_id` sind dafür weiterhin nötig und
+   werden **nicht** durch die Entwicklungssicherung fingiert oder
+   deaktiviert.
+
+`FIB_RIS_STRUCTURE_ENABLED` ist im Code relevant, der tatsächliche
+alte Secretwert ist unbekannt. Nicht verändern oder erraten.
+Vor einer produktiven RIS-Featureaktivierung ist eine eigene Freigabe
+mit überprüftem Zielzustand notwendig. Die beiden anderen fehlenden
+RIS-Schalter werden nicht als gespeichertes `false` ausgegeben.
+
+Die Dokumentation dieser begrenzten Entwicklungsentscheidung ist
+keine produktive Deployment-Freigabe. Verschlüsselung, Integrität,
+PostgreSQL-17-Restore und die Trennung von FIB und Memorix bleiben
+erforderlich.
+
 ## Verschlüsselter PreReview-Snapshot – Betreiberbeleg vom 09.11.2026
 
 Der Betreiber hat den bereits bestehenden lokalen Snapshot unverändert über
