@@ -62,7 +62,7 @@ const fetchMock = async (url: string) => {
     );
   if (url === origin + "/si0057.asp?__ksinr=1032") {
     if (failPage) throw Error("session_outage");
-    return new Response(html);
+    return new Response(html,{headers:{"content-type":"text/html; charset=utf-8"}});
   }
   if (url.startsWith(origin + "/getfile.asp?id=")) {
     if (failPdf) throw Error("pdf_outage");
