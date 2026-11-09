@@ -137,7 +137,7 @@ jobs:
           FIB_MAINTENANCE_DATABASE_URL: ${{ secrets.FIB_MAINTENANCE_DATABASE_URL }}
         run: |
           set -euo pipefail
-          psql "$FIB_MAINTENANCE_DATABASE_URL" -X -v ON_ERROR_STOP=1 \
+          psql "$FIB_MAINTENANCE_DATABASE_URL" -X --single-transaction -v ON_ERROR_STOP=1 \
             -f supabase/migrations/20261109150000_fib_ris_factual_vote_evidence.sql
           result=$(psql "$FIB_MAINTENANCE_DATABASE_URL" -X -Atq -c \
             "select is_nullable from information_schema.columns where table_schema='fib' and table_name='ris_votes' and column_name='evidence_quote'")
