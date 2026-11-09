@@ -79,3 +79,40 @@ Die Entwicklungssicherung und der Release #404 sind nachgewiesen.
 **Die RIS-Niederschriftanzeige bleibt fachlich nicht abgenommen**,
 solange der Beschlussinhalt samt Abstimmungsergebnissen für belegte
 TOPs nicht vollständig und zulässig angezeigt wird.
+
+## Implementierter zusätzlicher Anzeigepfad im Draft
+
+Die bestehende bestätigte RIS-Vorschlagsverwaltung verfügt über das
+JSON-Feld `ris_suggestions.payload` und die Beziehung
+`ris_decision_versions.suggestion_id`. Ohne Schemaänderung ist jetzt
+ein **separat von wörtlichem Quelleninhalt verfasster**
+`factualSummary`-Wert optional erfassbar:
+
+- `ris_suggest` validiert den redaktionell verfassten Wert (bis
+  4.000 Zeichen) und speichert ihn mit dem bestehenden, weiterhin
+  nach exakter RIS-Quelle prüfbaren Vorschlag.
+- Erst bei `ris_review_suggestion` mit `confirmed` und dem
+  bestehenden FIB-/RIS-Prüfverfahren wird das sachliche
+  Zusammenfassungsfeld über `suggestion_id` in der Sitzungs-API als
+  `factual_summary` lesbar. Ein noch offener/abgelehnter Vorschlag
+  erscheint dort nicht als bestätigter Beschlussinhalt.
+- Die UI zeigt diese geprüfte sachliche Zusammenfassung **zusammen
+  mit** dem zugeordneten Ergebnis und den explizit bekannten
+  Ja-/Nein-/Enthaltungszahlen. Bei Quellversionsänderung wird die
+  Zusammenfassung vorsichtshalber nicht ausgegeben und eine erneute
+  Prüfung verlangt.
+- Das historische `v.wording` (wörtlicher Belegtext) wird **nicht**
+  im Browser ausgegeben. Weder PDF-Archivierung noch neue SQL-Tabellen
+  oder Produktivdatenänderungen.
+- Isolierte Browser-Fälle prüfen, dass eine synthetische
+  Sachzusammenfassung einschließlich Abstimmungswerten angezeigt
+  wird, ohne HTML-Quelltext zu rendern.
+
+**Offen:** Es existieren für Sitzung 1031 bisher noch keine
+bestätigten Beschluss-/Abstimmungsdatensätze. Die FIB-Oberfläche hat
+zudem noch keinen eigenen vollständigen redaktionellen Eingabedialog
+für diese neuen Sachzusammenfassungen. Diese Eingabe/Bestätigung sowie
+die rechtskonforme fachliche Erfassung der tatsächlichen
+Niederschrift bleiben Voraussetzung für die gewünschte reale
+Beschlusstextanzeige. Die Änderung darf nicht als fertige
+RIS-Nachabnahme bezeichnet werden.
