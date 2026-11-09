@@ -1,0 +1,181 @@
+name: RIS development release (single controlled run)
+on:
+  workflow_dispatch:
+    inputs:
+      confirmation:
+        description: "After checking Mistral is disabled and development data is low-risk, type RIS-DEV"
+        required: true
+        type: string
+permissions:
+  contents: read
+concurrency:
+  group: editorial-web-pilot
+  cancel-in-progress: false
+jobs:
+  deploy:
+    if: github.ref == 'refs/heads/main' && inputs.confirmation == 'RIS-DEV'
+    runs-on: ubuntu-latest
+    environment: fib-release
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Check explicit scoped development release and private backup prerequisites
+        env:
+          ENABLED: ${{ vars.FIB_BACKUP_READY }}
+          URL: ${{ secrets.FIB_MAINTENANCE_DATABASE_URL }}
+          CA: ${{ secrets.FIB_BACKUP_DATABASE_CA }}
+          RCLONE: ${{ secrets.FIB_BACKUP_RCLONE_CONFIG }}
+          TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
+          SFTP_HOST: ${{ secrets.IONOS_SFTP_HOST }}
+          SFTP_USER: ${{ secrets.IONOS_SFTP_USER }}
+          SFTP_PASS: ${{ secrets.IONOS_SFTP_PASSWORD }}
+        run: |
+          set -euo pipefail
+          test "$ENABLED" = "true"
+          for name in URL CA RCLONE TOKEN SFTP_HOST SFTP_USER SFTP_PASS; do
+            test -n "$(printenv "$name")" || { echo "::error::Missing protected $name"; exit 1; }
+          done
+          grep -q 'alter table fib.ris_votes alter column evidence_quote drop not null' \
+            supabase/migrations/20261109150000_fib_ris_factual_vote_evidence.sql
+      - run: npm ci --ignore-scripts --no-audit --no-fund
+      - name: Install PostgreSQL 17 and verified SSH/SFTP/rclone clients
+        run: |
+          set -euo pipefail
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq ca-certificates curl gnupg lftp rclone
+          curl --fail --silent --show-error --location \
+            https://www.postgresql.org/media/keys/ACCC4CF8.asc -o "$RUNNER_TEMP/pgdg.asc"
+          gpg --show-keys --with-colons "$RUNNER_TEMP/pgdg.asc" |
+            grep -q '^fpr:::::::::B97B0AFCAA1A47F044F244A07FCC7D46ACCC4CF8:'
+          gpg --dearmor -o "$RUNNER_TEMP/pgdg.gpg" "$RUNNER_TEMP/pgdg.asc"
+          sudo install -m 0644 "$RUNNER_TEMP/pgdg.gpg" /usr/share/keyrings/postgresql-pgdg.gpg
+          source /etc/os-release
+          echo "deb [signed-by=/usr/share/keyrings/postgresql-pgdg.gpg] https://apt.postgresql.org/pub/repos/apt $VERSION_CODENAME-pgdg main" |
+            sudo tee /etc/apt/sources.list.d/postgresql-pgdg.list >/dev/null
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq postgresql-client-17
+          test -x /usr/lib/postgresql/17/bin/pg_dump
+          echo /usr/lib/postgresql/17/bin >>"$GITHUB_PATH"
+      - name: Create private work directory, pinned database CA, and pinned SFTP host key
+        env:
+          FIB_BACKUP_DATABASE_CA: ${{ secrets.FIB_BACKUP_DATABASE_CA }}
+          IONOS_SFTP_HOST: ${{ secrets.IONOS_SFTP_HOST }}
+        run: |
+          set -euo pipefail
+          umask 077
+          mkdir -m 700 "$RUNNER_TEMP/fib-ris-dev-release"
+          node scripts/backup/prepare-ca.mjs "$RUNNER_TEMP/fib-ris-dev-release/postgres-ca.pem"
+          echo "PGSSLROOTCERT=$RUNNER_TEMP/fib-ris-dev-release/postgres-ca.pem" >>"$GITHUB_ENV"
+          ssh-keyscan -T 15 -p 22 -t ed25519 "$IONOS_SFTP_HOST" 2>/dev/null >"$RUNNER_TEMP/fib-ris-dev-release/known_hosts"
+          test "$(ssh-keygen -lf "$RUNNER_TEMP/fib-ris-dev-release/known_hosts" -E sha256 | awk '{print $2}')" = \
+            "SHA256:1gx2w8Rtv3wCgi7Jh8myf/KVd72cRQbow03UP8P095Q"
+      - name: Secure current FIB-only snapshot; verify custom archive
+        env:
+          FIB_MAINTENANCE_DATABASE_URL: ${{ secrets.FIB_MAINTENANCE_DATABASE_URL }}
+        run: |
+          set -euo pipefail
+          umask 077
+          node scripts/ris-shared-apps/backup.mjs --out="$RUNNER_TEMP/fib-ris-dev-release/fib"
+          pg_restore --list "$RUNNER_TEMP/fib-ris-dev-release/fib/fib.dump" >/dev/null
+          node - <<'JS'
+          const fs=require('node:fs'), crypto=require('node:crypto'),path=require('node:path');
+          const d=path.join(process.env.RUNNER_TEMP,'fib-ris-dev-release','fib');
+          const m=JSON.parse(fs.readFileSync(path.join(d,'manifest.json')));
+          if(m.schema!=='fib'||m.project!=='apaubomxffcwtzjimori')throw Error('Wrong backup target');
+          for(const [n,expected] of Object.entries(m.files)){
+            const h=crypto.createHash('sha256').update(fs.readFileSync(path.join(d,n))).digest('hex');
+            if(h!==expected)throw Error('Backup checksum mismatch: '+n);
+          }
+          JS
+      - name: Capture prior IONOS frontend without modifying it
+        env:
+          IONOS_SFTP_HOST: ${{ secrets.IONOS_SFTP_HOST }}
+          IONOS_SFTP_USER: ${{ secrets.IONOS_SFTP_USER }}
+          IONOS_SFTP_PASSWORD: ${{ secrets.IONOS_SFTP_PASSWORD }}
+        run: |
+          set -euo pipefail
+          umask 077
+          mkdir -m 700 "$RUNNER_TEMP/fib-ris-dev-release/frontend-before"
+          lftp -u "$IONOS_SFTP_USER","$IONOS_SFTP_PASSWORD" "sftp://$IONOS_SFTP_HOST" <<EOF
+          set cmd:fail-exit yes
+          set net:max-retries 1
+          set net:timeout 30
+          set sftp:connect-program "ssh -a -x -o StrictHostKeyChecking=yes -o UserKnownHostsFile=$RUNNER_TEMP/fib-ris-dev-release/known_hosts"
+          cd redaktion
+          mirror ./ $RUNNER_TEMP/fib-ris-dev-release/frontend-before/
+          bye
+          EOF
+          test -f "$RUNNER_TEMP/fib-ris-dev-release/frontend-before/index.html"
+      - name: Encrypt FIB-only snapshot and prior frontend in separate Nextcloud crypt remote; verify readback
+        env:
+          FIB_BACKUP_RCLONE_CONFIG: ${{ secrets.FIB_BACKUP_RCLONE_CONFIG }}
+        run: |
+          set -euo pipefail
+          umask 077
+          printf '%s' "$FIB_BACKUP_RCLONE_CONFIG" >"$RUNNER_TEMP/fib-ris-dev-release/rclone.conf"
+          python3 - <<'PY'
+          import configparser,os
+          c=configparser.ConfigParser(interpolation=None)
+          c.read(os.environ['RUNNER_TEMP']+'/fib-ris-dev-release/rclone.conf')
+          assert c.get('fib-backup-crypt','type',fallback='')=='crypt'
+          PY
+          dest="fib-backup-crypt:RIS-Dev-Release/${{ github.run_id }}-${{ github.run_attempt }}"
+          rclone --config "$RUNNER_TEMP/fib-ris-dev-release/rclone.conf" copy \
+            "$RUNNER_TEMP/fib-ris-dev-release/fib" "$dest/fib"
+          rclone --config "$RUNNER_TEMP/fib-ris-dev-release/rclone.conf" copy \
+            "$RUNNER_TEMP/fib-ris-dev-release/frontend-before" "$dest/frontend-before"
+          rclone --config "$RUNNER_TEMP/fib-ris-dev-release/rclone.conf" check \
+            "$RUNNER_TEMP/fib-ris-dev-release/fib" "$dest/fib" --download
+          rclone --config "$RUNNER_TEMP/fib-ris-dev-release/rclone.conf" check \
+            "$RUNNER_TEMP/fib-ris-dev-release/frontend-before" "$dest/frontend-before" --download
+          echo "FIB-only backup and prior frontend encrypted, uploaded and verified; release steps now permitted."
+      - name: Apply the single, FIB-only, non-destructive factual votes migration
+        env:
+          FIB_MAINTENANCE_DATABASE_URL: ${{ secrets.FIB_MAINTENANCE_DATABASE_URL }}
+        run: |
+          set -euo pipefail
+          psql "$FIB_MAINTENANCE_DATABASE_URL" -X -v ON_ERROR_STOP=1 \
+            -f supabase/migrations/20261109150000_fib_ris_factual_vote_evidence.sql
+          result=$(psql "$FIB_MAINTENANCE_DATABASE_URL" -X -Atq -c \
+            "select is_nullable from information_schema.columns where table_schema='fib' and table_name='ris_votes' and column_name='evidence_quote'")
+          test "$result" = "YES"
+      - name: Deploy only changed FIB Edge handlers; preserve existing JWT gateway settings
+        env:
+          SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
+        run: |
+          set -euo pipefail
+          npx --yes supabase@2.122.0 functions deploy fib-editorial-write \
+            --project-ref apaubomxffcwtzjimori --no-verify-jwt
+          npx --yes supabase@2.122.0 functions deploy fib-u4-ris-pilot \
+            --project-ref apaubomxffcwtzjimori
+      - name: Build and deploy non-deleting IONOS editorial frontend
+        env:
+          VITE_FIB_ACCEPTANCE_MODE: shared-apps
+          VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
+          VITE_SUPABASE_PUBLISHABLE_KEY: ${{ secrets.VITE_SUPABASE_PUBLISHABLE_KEY }}
+          IONOS_SFTP_HOST: ${{ secrets.IONOS_SFTP_HOST }}
+          IONOS_SFTP_USER: ${{ secrets.IONOS_SFTP_USER }}
+          IONOS_SFTP_PASSWORD: ${{ secrets.IONOS_SFTP_PASSWORD }}
+        run: |
+          set -euo pipefail
+          test -n "$VITE_SUPABASE_URL"
+          test -n "$VITE_SUPABASE_PUBLISHABLE_KEY"
+          npm run build --workspace @fib/editorial-web
+          test -f apps/editorial-web/dist/index.html
+          lftp -u "$IONOS_SFTP_USER","$IONOS_SFTP_PASSWORD" "sftp://$IONOS_SFTP_HOST" <<EOF
+          set cmd:fail-exit yes
+          set net:max-retries 1
+          set net:timeout 30
+          set sftp:connect-program "ssh -a -x -o StrictHostKeyChecking=yes -o UserKnownHostsFile=$RUNNER_TEMP/fib-ris-dev-release/known_hosts"
+          cd redaktion
+          mirror --reverse --no-perms apps/editorial-web/dist/ ./
+          bye
+          EOF
+          curl --fail --silent --show-error --location --max-time 25 \
+            https://fib.pustivo.de/redaktion/ >/dev/null
+      - name: Remove all private material from runner
+        if: always()
+        run: rm -rf "$RUNNER_TEMP/fib-ris-dev-release"
