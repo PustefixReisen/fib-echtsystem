@@ -128,3 +128,40 @@ RIS-Hosts nach Sicherung/Releasefreigabe prüfen. Ein Statuswechsel
 Scannerlauf ist **nicht** Teil der vorliegenden read-only-Inventur.
 Auch die öffentlichen 19 indexierten TOP-Titel sind kein Nachweis
 für einen bereits erfolgten Live-Import.
+
+## Schreibfreier Direktquellen-Test vor Scannerfreigabe (PR #416)
+
+Der vorhandene AAL2-geschützte, nur für aktive FIB-Administratoren
+zulässige Edge-Handler `fib-u4-ris-pilot` erhält den ausdrücklich
+getrennten **Nur-Lesen-Aufruf**:
+
+```json
+{ "previewSession": "1031", "commit": false }
+```
+
+- Zulässig ausschließlich für die fest erlaubten Sitzungs-IDs
+  `1031` (15.10.) und `1032` (29.10.). Ein ungeprüfter
+  beliebiger Link wird nicht akzeptiert (kein SSRF-Proxy).
+- Abgewiesen bei `commit=true`, `pdfBackfill=true` oder
+  Kombination mit dem bestehenden Integrationsmodus.
+- Die Funktion lädt **nur** die offizielle RIS-Sitzungsseite,
+  prüft HTML-Content-Type und Größenobergrenze und liefert
+  gelesene öffentliche TOP-Nummern, Titel, Status und
+  Vorlagenreferenzen sowie einen **unverified**-Abdeckungsstatus.
+- **Kein** PDF-Abruf, keine Niederschriftsextraktion,
+  keine Datensatz-/Cursor-/Beobachtungsänderung und
+  kein Verschieben des bestehenden Quellenscopes.
+- Der isolierte echte PG-Integrationstest prüft, dass
+  `ris_session_versions` und der Scanner-Cursor vor/nach dem
+  Preview-Aufruf unverändert sind. Ungültige und kombinierte
+  Schreibaufrufe werden abgewiesen.
+
+Dies ist die sichere erste, separat freizugebende Betriebsdiagnose
+nach echtem Edge-Deploy. Ihr Erfolg beweist nur den **direkten
+technischen RIS-Sitzungszugang vom gehosteten Edge-Standort** und die
+beobachtete Tagesordnungszahl, **nicht** PDF-Inhalte,
+Beschlussentwürfe oder einen gespeicherten produktiven 19er-Import.
+Ein fehlgeschlagener Abruf wird mit einer verständlichen Fehlermeldung
+zurückgegeben und verändert keine Bestandsdaten. Den vorhandenen
+Integrations-Schreibmodus `integrationSession=1032` nicht als
+Ersatz für diese Diagnose verwenden.
