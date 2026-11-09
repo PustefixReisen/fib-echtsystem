@@ -29,6 +29,35 @@ export function RisMinutesReview({agendaId,eventId,source,onReload,api,eventLock
     source.source_url.startsWith("https://buergerinfo-feldkirchen.digitalfabrix.de/") &&
     source.latest_version_id && pointKey.trim() && content.trim().length >= 20 &&
     verified && validCounts && (result !== "no_vote" || counts.every(v => !v.trim()));
+  async function prepareAutomaticDraft() {
+    if (busy || pending || source.status !== "confirmed" || !source.latest_version_id) return;
+    setBusy(true);setError("");setSuccess("");
+    try {
+      const r = await api({
+        action:"ris_prepare_minutes_draft",
+        agendaId,versionId:source.latest_version_id,
+      });
+      if (r.status !== "review_required" || !Array.isArray(r.drafts) ||
+          r.drafts.length < 1)
+        throw Error("Für diesen TOP konnte noch kein prüffähiger KI-Entwurf erstellt werden.");
+      const first=r.drafts[0] as {
+        pointKey:string;factualText:string;
+        vote:{status:string;yes:number|null;no:number|null;abstention:number|null};
+      };
+      if (!first || typeof first.factualText !== "string" || !first.vote)
+        throw Error("Unvollständiger KI-Entwurf.");
+      setPointKey(String(first.pointKey));setContent(first.factualText);
+      setResult(first.vote.status);setYes(first.vote.yes==null?"":String(first.vote.yes));
+      setNo(first.vote.no==null?"":String(first.vote.no));
+      setAbstention(first.vote.abstention==null?"":String(first.vote.abstention));
+      setVerified(false);
+      setSuccess(r.drafts.length>1
+        ? "KI-Entwurf vorbereitet. Mehrere Beschlusspunkte erkannt – bitte alle einzeln prüfen."
+        : "KI-Entwurf vorbereitet. Inhalt und Abstimmung bitte anhand der Niederschrift prüfen.");
+    }catch(e){
+      setError(e instanceof Error?e.message:"Automatischer Entwurf ist noch nicht verfügbar.");
+    }finally{setBusy(false);}
+  }
   async function submit() {
     if (!complete || pending || busy) return;
     setBusy(true);setError("");setSuccess("");
@@ -74,6 +103,9 @@ export function RisMinutesReview({agendaId,eventId,source,onReload,api,eventLock
     <p><a href={source.source_url} target="_blank" rel="noopener noreferrer">
       Originalniederschrift zum Vergleich öffnen ↗</a></p>
     {source.status!=="confirmed" && <p role="alert">Niederschrift noch nicht als Quelle bestätigt.</p>}
+    <button type="button" disabled={busy||!!pending||source.status!=="confirmed"}
+      onClick={()=>void prepareAutomaticDraft()}>KI-Entwurf vorbereiten</button>
+
     <label>Beschlusspunkt
       <input value={pointKey} maxLength={200} disabled={!!pending||busy}
         onChange={e=>setPointKey(e.target.value)}/>
