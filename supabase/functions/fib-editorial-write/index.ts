@@ -141,12 +141,13 @@ export default {
           return json({error:'ris_invalid_draft_request'},400);
         const found=await sql.unsafe(
           `select a.number,s.id session_id,s.source_url session_source_url,
-                  d.source_url document_source_url
+                  d.source_url document_source_url,v.content_hash document_hash
              from fib.ris_agenda_items a
              join fib.ris_sessions s on s.id=a.session_id
              join fib.ris_document_links l on l.session_id=s.id
               and l.agenda_id is null and l.kind='minutes' and l.status='confirmed'
              join fib.ris_documents d on d.id=l.document_id
+             join fib.ris_document_versions v on v.id=d.latest_version_id and v.document_id=d.id
             where a.id=$1::uuid and d.latest_version_id=$2::uuid`,
           [body.agendaId,body.versionId],
         );
@@ -179,6 +180,7 @@ export default {
         const outcome=await prepareRisMinutesSessionDrafts({
           sessionId:row.session_id,
           sourceDocumentId,sourceUrl:official,
+          expectedPdfHash:String(row.document_hash),
           expectedNumbers:expected,selectedTopNumber:n,provider,
         },fetch,async bytes=>(await extractText(bytes.slice(),{mergePages:true})).text);
         // Contains ONLY rewritten draft and vote metadata, never PDF bytes
