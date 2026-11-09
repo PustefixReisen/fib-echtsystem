@@ -559,7 +559,7 @@ async function main() {
     rationale: "Synthetischer Test für den getrennten Vorschlagspfad",
   });
   assert.equal(await count("ris_proposal_texts"), 1);
-  assert.equal(await count("ris_decision_points"), 2);
+  assert.equal(await count("ris_decision_points"), 3);
   const deferred = await run({
     action: "ris_propose_relation",
     eventId: event.eventId,
@@ -757,7 +757,7 @@ async function main() {
       rationale: "Originalwortlaut und Ergebnis geprüft",
     });
   }
-  assert.equal(await count("ris_decision_points"), 4);
+  assert.equal(await count("ris_decision_points"), 5);
   assert.equal(
     (await first("select count(*) from fib.ris_votes where result='no_vote'"))
       .count,
