@@ -182,3 +182,20 @@ Sitzung 1031, rechtliche Freigabe einzelner Niederschriftfassungen,
 persönliche Testabnahme des neuen redaktionellen Dialogs und
 gesondertes Release/Backup. Die zuvor abgenommene reine
 Vorschau-Darstellung ist davon unabhängig.
+
+## Bedienungsvorschau für den neuen Prüfprozess
+
+Nach Veröffentlichung des Entwicklungszweigs mit dem bestehenden
+`Preview Editorial Web`-Workflow (`preview_ref=fix/ris-minutes-evidence-20261109`)
+kann der **schreibfreie** Erfassungs-/Prüfdialog hier getestet werden:
+
+`https://fib.pustivo.de/redaktion-preview/?ris-minutes-test=2`
+
+Die bekannte Wortlautvorschau bleibt unverändert unter
+`?ris-minutes-test=1`. Der zweite Dialog nutzt ausschließlich
+synthetische Vorgangs-/Dokument-IDs und einen lokalen simulierten
+API-Dienst. Auch ein erfolgreiches `Beschluss bestätigen` verändert
+**keine** FIB-Daten. Ein erfolgreicher Frontend-Build allein ist kein
+Nachweis einer bereits veröffentlichten URL. In der eigentlichen
+Redaktion bleibt der Dialog hinter echtem AAL2, Rollenprüfung,
+RIS-Dokumentstatus und Quellen-/Rechteprüfung.
