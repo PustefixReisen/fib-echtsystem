@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import {generateRisFactualReviewDraft} from "../../supabase/functions/_shared/ris-minutes-draft.ts";
 import {readFileSync} from "node:fs";
-import {extractRisMinutesCandidates,validateRisFactualDraft} from
+import {extractRisMinutesCandidates,validateRisFactualDraft,splitRisMinutesByAgenda} from
   "../../supabase/functions/_shared/ris-minutes-candidates.ts";
 const indexed = JSON.parse(readFileSync("tests/u4/fixtures/ris-1031-public-agenda-indexed-20261109.json","utf8"));
 assert.equal(indexed.kind,"indexed_official_ris_public_agenda_reference");
@@ -12,6 +12,14 @@ assert.equal(indexed.agenda.find((a:{number:string})=>a.number==="2")?.proposal_
 assert.equal(indexed.agenda.find((a:{number:string})=>a.number==="3")?.proposal_reference,"5351/2026");
 assert.equal(indexed.agenda.find((a:{number:string})=>a.number==="6")?.proposal_reference,"5370/2026");
 assert.equal(indexed.agenda.find((a:{number:string})=>a.number==="18")?.proposal_reference,null);
+const toy="TOP 1\nBeginn\nTOP 2\nBeschlussvorlage\nAbstimmung: abgesetzt\nTOP 3\nWeiterer Inhalt";
+const segmented=splitRisMinutesByAgenda(toy,[1,2,3]);
+assert.equal(segmented.ok,true);
+assert.equal(segmented.sections.length,3);
+assert.ok(segmented.sections[1].transientText.includes("abgesetzt"));
+assert.equal(splitRisMinutesByAgenda(toy,[1,2]).ok,false);
+assert.ok(splitRisMinutesByAgenda("TOP 1\nA\nTOP 1\nB",[1,2]).issues.includes("duplicate_top_heading"));
+assert.ok(splitRisMinutesByAgenda("TOP 2\nA\nTOP 1\nB",[1,2]).issues.includes("top_sequence_mismatch"));
 const source=readFileSync("tests/u4/fixtures/ris-1031-minutes-excerpts.txt","utf8");
 const sections=source.split(/\[… Ausschnitt …\]/);
 assert.equal(sections.length,3);
