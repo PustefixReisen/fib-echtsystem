@@ -116,8 +116,8 @@ def binary_digest(payload, content_type=""):
     return hashlib.sha256(payload).hexdigest()
 
 
-def deployed_bundle_digest(token, slug):
-    """Read the documented EZBR function body, never log/persist its bytes."""
+def deployed_bundle_body(token, slug):
+    """Fetch the live ESZIP body without ever logging it."""
     req = urllib.request.Request(
         API + "/" + slug + "/body",
         headers={"Authorization": "Bearer " + token},
@@ -125,22 +125,31 @@ def deployed_bundle_digest(token, slug):
     with urllib.request.urlopen(req, timeout=30) as response:
         binary = response.read(32 * 1024 * 1024 + 1)
         content_type = response.headers.get("Content-Type", "")
-    return binary_digest(binary, content_type)
+    if len(binary) > 32 * 1024 * 1024 or not binary.startswith(b"ESZIP"):
+        raise SafeBodyError("UNEXPECTED_FORMAT")
+    if content_type.split(";", 1)[0].strip().lower() != "application/octet-stream":
+        raise SafeBodyError("UNEXPECTED_FORMAT")
+    return binary
 
 
 def verify_deployed_bundles(metadata, fetcher, token):
-    """Independently check live deployed EZBR digests, not imaginary file JSON.
+    """Capture stable live ESZIP bytes, not a hash of the upload-only EZBR.
 
-    This does NOT prove individual CLI-extracted bytes equal original
-    source bytes. Complete source/restore review remains mandatory.
+    Two identical fetches and unchanged API inventory protect against a
+    changing /body response. They cannot prove source equivalence or restore
+    viability: those require independent operator review.
     """
+    snapshots = {}
     for slug in sorted(metadata):
-        if fetcher(token, slug) != metadata[slug]["ezbr_sha256"]:
-            raise ValueError("Deployed EZBR digest mismatch")
-    return len(metadata)
+        first = fetcher(token, slug)
+        second = fetcher(token, slug)
+        if first != second or not first.startswith(b"ESZIP"):
+            raise ValueError("Live function ESZIP body changed or invalid")
+        snapshots[slug] = first
+    return snapshots
 
 
-def export(target, token, cli="supabase", get_inventory=inventory, run=subprocess.run, get_source=deployed_bundle_digest):
+def export(target, token, cli="supabase", get_inventory=inventory, run=subprocess.run, get_source=deployed_bundle_body):
     if target.exists():
         raise ValueError("Private destination must not exist")
     before = get_inventory(token)
@@ -164,7 +173,7 @@ def export(target, token, cli="supabase", get_inventory=inventory, run=subproces
             if not (source / slug / "index.ts").is_file():
                 raise ValueError("Missing deployed function entrypoint")
         dependency_check(source)
-        verify_deployed_bundles(before, get_source, token)
+        bundles = verify_deployed_bundles(before, get_source, token)
         after = get_inventory(token)
         if before != after:
             raise ValueError("Deployed function inventory changed during export")
@@ -173,8 +182,16 @@ def export(target, token, cli="supabase", get_inventory=inventory, run=subproces
         target.mkdir(mode=0o700, parents=False)
         try:
             shutil.copytree(source, target / "edge", symlinks=False)
+            bundle_dir = target / "edge" / "_deployed_bundles"
+            bundle_dir.mkdir(mode=0o700)
+            rows = []
+            for slug in sorted(before):
+                body = bundles[slug]
+                (bundle_dir / (slug + ".eszip")).write_bytes(body)
+                rows.append({**before[slug],
+                             "download_eszip_sha256": hashlib.sha256(body).hexdigest()})
             (target / "edge" / "inventory.json").write_text(
-                json.dumps([before[s] for s in sorted(before)], indent=2),
+                json.dumps(rows, indent=2),
                 encoding="utf-8",
             )
             for file in target.rglob("*"):
