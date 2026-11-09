@@ -271,6 +271,17 @@ try {
   assert.equal(await optionalEditor.getAttribute("open"),null,"Rare correction UI is initially collapsed");
   await optionalEditor.locator("summary").click();
   const review=page.getByRole("region",{name:"Beschlussinhalt redaktionell prüfen"});
+  await review.getByRole("button",{name:"KI-Entwurf vorbereiten"}).click();
+  await review.getByText(/Mehrere Beschlusspunkte erkannt/).waitFor();
+  const aiSelect=review.getByLabel("Automatisch vorbereiteten Beschlusspunkt auswählen");
+  await aiSelect.selectOption("1");
+  assert.equal(await review.getByLabel("Beschlusspunkt",{exact:true}).inputValue(),"2");
+  assert.equal(await review.getByRole("combobox",{name:"Abstimmung"}).inputValue(),"no_vote");
+  await aiSelect.selectOption("0");
+  assert.equal(await review.getByLabel("Beschlusspunkt",{exact:true}).inputValue(),"1");
+  assert.equal(await review.getByLabel("Ja").inputValue(),"10");
+  assert.equal(await page.evaluate(()=>window.calls.filter(c=>c.action==="ris_prepare_minutes_draft").length),1,
+    "AI generated only on deliberate editorial action");
   await review.getByLabel("Beschlussinhalt – vollständig, aber eigenständig formuliert")
     .fill("Der Gemeinderat beauftragte die Verwaltung mit der Prüfung des Vorhabens sowie der anschließenden Berichterstattung.");
   await review.getByRole("combobox").selectOption("accepted");
