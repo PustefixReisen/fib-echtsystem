@@ -331,6 +331,15 @@ async function main() {
     (await call({ action: "ris_read", sessionId: session })).status,
     200,
   );
+  // AI prefill is completely off in ordinary development/runtime. Even
+  // a signed-in MFA editor cannot invoke Mistral without explicit budget/DPA
+  // and a configured provider; no source is downloaded in this path.
+  const aiBlocked=await call({action:"ris_prepare_minutes_draft",
+    agendaId:"22222222-2222-4222-8222-222222222222",
+    versionId:"33333333-3333-4333-8333-333333333333"});
+  assert.equal(aiBlocked.status,503);
+  assert.equal((await aiBlocked.json()).error,"ris_draft_not_enabled");
+
   assert.equal((await call(null)).status, 400);
   assert.equal((await call({action:"ris_review_document",kind:"proposal",status:"confirmed"})).status,409);
   assert.equal(
