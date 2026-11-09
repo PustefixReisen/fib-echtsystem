@@ -348,3 +348,84 @@ Freigabe im HTTP-Handler nachgewiesen sein.
 Eine Produktivbereitstellung der bestehenden UI
 allein wäre deshalb **kein** Abschluss der
 automatischen Beschlusserzeugung.
+
+## Technisch geschlossener Redaktionsaufruf (09.11.2026)
+
+Im Entwurf ergänzt `fib-editorial-write` den neuen Aufruf
+`ris_prepare_minutes_draft` (nur angemeldete, aktive FIB-Editoren/
+Administratoren mit MFA/AAL2 und freigeschaltetem RIS-Modul).
+Der Button `KI-Entwurf vorbereiten` befindet sich ausschließlich
+in der standardmäßig eingeklappten redaktionellen Korrekturmaske.
+
+Vor einem externen KI-Aufruf prüft der Server:
+
+- Explizite Schalter `FIB_RIS_MISTRAL_ENABLED=true`,
+  `FIB_RIS_MISTRAL_BUDGET_CONFIRMED=true` und
+  `FIB_RIS_MISTRAL_DPA_CONFIRMED=true`; ohne sie bleibt der
+  gesamte Aufruf abgeschaltet. Die Schalter sind technische
+  Belege **nach** tatsächlicher Einrichtung, keine
+  eigenständige Kostenbegrenzung oder Datenschutzgarantie.
+- Serverseitiges Secret `FIB_RIS_MISTRAL_API_KEY` (nicht im
+  Frontend, Chat, GitHub oder Quelltext) und optional
+  `FIB_RIS_MISTRAL_MODEL`; kein Secret wurde hier angelegt.
+- Das angeforderte TOP muss in FIB gespeichert sein und
+  zu genau einer **bestätigten** aktuellen, nicht TOP-fremden
+  Niederschrift verknüpft sein. Die Versions-ID stammt
+  aus dem echten Datenbestand, nicht aus einer freien URL.
+- Die amtliche RIS-Sitzungsseite wird **frisch**
+  abgerufen; nur eine eindeutige vollständige nummerierte
+  Tagesordnung und ein dort aktuell verlinktes,
+  identisches Niederschriftdokument gelten als Quelle.
+- Der vollständige Niederschrifttext wird im RAM zu allen
+  TOPs abgegrenzt, aber **nur der vom Redakteur
+  ausgewählte TOP** wird an die KI übertragen.
+  Ein TOP ohne Abstimmungsbeleg löst keinen kostenpflichtigen
+  KI-Textaufruf aus.
+- Die KI liefert eigenständig formulierte, nicht
+  automatisch bestätigte Prüftexte. Bei mehreren
+  Beschlusspunkten kann der Redakteur **jeden einzeln
+  auswählen**, gegen die Originalquelle kontrollieren
+  und anschließend über die bereits gesicherte
+  `ris_suggest`/`ris_review_suggestion`-Strecke
+  freigeben. Keine Original-PDFs im FIB-Speicher,
+  keine automatische Veröffentlichung.
+
+**Betriebsbereit erst nach Mistral-Einrichtung:**
+Laut offizieller Mistral-Dokumentation sind API-Keys
+erst nach Pay-as-you-go-Aktivierung verfügbar.
+Im Mistral-Administrationsbereich einen getrennten
+FIB-Workspace anlegen, sein **monatliches
+Ausgabenlimit auf 5 EUR** setzen und die Begrenzung
+nachprüfen. Das Limit wirkt auf den Workspace;
+Org-Limit kann zusätzlich enger sein. Es ist ein
+*monatliches* Limit, nicht automatisch ein
+einmaliger Gesamtdeckel; nach der Probe ist
+es zu reduzieren oder die Freigabeschalter
+abzuschalten. Mistral weist auf mögliche
+Abrechnungsverzögerungen/geringe Überziehungen hin.
+
+Aktuelle Primärquellen:
+[Billing](https://docs.mistral.ai/admin/billing-usage/billing),
+[Usage limits](https://docs.mistral.ai/admin/billing-usage/usage-limits),
+[Storage EU](https://help.mistral.ai/en/articles/347629-where-do-you-store-my-data-or-my-organization-s-data),
+[Data Processing Addendum](https://legal.mistral.ai/terms/data-processing-addendum/).
+Die Standardaufbewahrung von Chat-API-Daten
+beträgt laut Mistral bis zu 30 Tage;
+Zero Data Retention muss gesondert beantragt,
+aktiviert und nachgewiesen werden.
+Vor Übermittlung echter RIS-Texte sind
+Datenschutzbedingungen, technisch konkrete
+Aufbewahrungsregel und Ausgabenlimit zu
+prüfen und die drei FIB-Schalter erst dann
+zu setzen. Kein Key/Limit-Zugriff durch
+den aktuellen GitHub-Connector.
+
+**Aktuelle Live-Sperre:** Die einzige in
+Shared-Apps lesend nachgewiesene Niederschrift
+für Sitzung 1031 ist noch `candidate`,
+nicht `confirmed`. Deshalb wäre die
+Vorbefüllung selbst bei aktivierter Mistral-
+Verbindung aktuell noch blockiert, bis die
+amtliche Quelle redaktionell bestätigt
+ist. Dies ist beabsichtigtes Fail-Closed-
+Verhalten und kein Defekt der KI.
