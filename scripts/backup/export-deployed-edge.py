@@ -149,6 +149,24 @@ def verify_deployed_bundles(metadata, fetcher, token):
     return snapshots
 
 
+
+def cleanup_private_download_tree(root):
+    """Restore owner directory permissions before TemporaryDirectory cleanup.
+
+    The CLI may create read-only directories. Only directories in our own
+    newly allocated private workspace are modified; no symlinks are followed
+    and no staged output, repository, or deployed file is touched.
+    """
+    for base, dirs, _files in os.walk(root, topdown=True, followlinks=False):
+        for name in list(dirs):
+            path = pathlib.Path(base) / name
+            if path.is_symlink():
+                dirs.remove(name)
+                continue
+            path.chmod(0o700)
+    pathlib.Path(root).chmod(0o700)
+
+
 def export(target, token, cli="supabase", get_inventory=inventory, run=subprocess.run, get_source=deployed_bundle_body):
     if target.exists():
         raise ValueError("Private destination must not exist")
@@ -202,6 +220,10 @@ def export(target, token, cli="supabase", get_inventory=inventory, run=subproces
         except Exception:
             shutil.rmtree(target)
             raise
+        finally:
+            # Supabase CLI sometimes leaves read-only nested directories.
+            # Fix permissions only in this disposable private CLI workspace.
+            cleanup_private_download_tree(root)
     return len(before)
 
 
