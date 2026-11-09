@@ -29,6 +29,7 @@ assert.ok(validateRisFactualDraft(top6,[factual[0],{...factual[1],vote:{...factu
 assert.ok(extractRisMinutesCandidates("Unklare Beratung ohne Abstimmungsergebnis").length===0);
 console.log("PASS RIS referenced minutes: TOP2 no vote, TOP3 7:13, TOP6 two separate 17:2/19:0; no invented votes, candidate review required");
 
+async function checkDraftContract(){
 const unavailable=await generateRisFactualReviewDraft(sections[2]);
 assert.equal(unavailable.status,"unavailable");
 assert.deepEqual(unavailable.reasons,["draft_provider_not_configured"]);
@@ -50,3 +51,6 @@ const voteTamper=await generateRisFactualReviewDraft(sections[2],async(items)=>i
 assert.equal(voteTamper.status,"rejected");
 assert.deepEqual(voteTamper.drafts,[]);
 console.log("PASS provider-neutral AI drafting: no provider is unavailable, incomplete/changed votes fail, valid draft still needs human review");
+
+}
+void checkDraftContract().catch(error=>{console.error(error);process.exitCode=1;});
