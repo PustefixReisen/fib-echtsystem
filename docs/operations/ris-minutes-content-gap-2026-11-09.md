@@ -199,3 +199,40 @@ API-Dienst. Auch ein erfolgreiches `Beschluss bestätigen` verändert
 Nachweis einer bereits veröffentlichten URL. In der eigentlichen
 Redaktion bleibt der Dialog hinter echtem AAL2, Rollenprüfung,
 RIS-Dokumentstatus und Quellen-/Rechteprüfung.
+
+## Fachentscheidung 09.11.2026 – einfacher, vollständiger Sachinhalt statt Originalzitat
+
+Nach persönlichem Bedienungstest der zweiten Vorschau wurde der
+wortgetreue Erfassungsdialog **ausdrücklich verworfen**: Die Prüfung
+ist zu aufwendig. Maßgeblich ist ab jetzt eine **inhaltlich vollständige,
+eigenständig formulierte Beschlusswiedergabe**, gefolgt unmittelbar
+vom unverändert zutreffenden Abstimmungsergebnis. Vollständigkeit
+heißt insbesondere: alle Entscheidungsteile, Bedingungen, Aufträge,
+Kosten-/Finanzierungsregelungen, räumliche Festlegungen und wesentlichen
+Einschränkungen im Sachinhalt – keine stark verkürzende Zusammenfassung.
+Jeder Beschlusspunkt bleibt separat und dem Ergebnis zugeordnet.
+
+Die Rechtsnachweis-/Vollzitat-Felder entfallen aus dem standardmäßigen
+Redaktionsdialog. Es bleiben nur: freigegebene RIS-Quelle, vollständiger
+fachlicher Beschlussinhalt, Ergebnis/Zahlen, fachliche Prüfung und
+Bestätigung. Das UI kann mit einem sachlichen Entwurf vorbelegt werden;
+Redakteure sollen diesen **prüfen und nur bei Bedarf korrigieren**.
+Bei tatsächlichen RIS-Inhalten ist eine automatische Vorbefüllung noch
+nicht implementiert; der bestehende Quellenabruf ist weiterhin
+unvollständig. Die statische Testvorschau verwendet einen
+unabhängig formulierten Beispielentwurf.
+
+Die API unterscheidet die neue Darstellungsart `complete_factual`
+von einem wörtlichen Originaltext. Der Vorschlag trägt als Beleg
+Dokumentversion und amtliche URL, **ohne** einen Originalauszug
+oder ein PDF zu archivieren. Erst die bestehende menschliche
+Bestätigung unter AAL2, Sperre, Rollenprüfung, Dokumentgültigkeit
+und Audit gibt die geprüfte Sachfassung zur Anzeige frei.
+Ungeprüfte Quellen/Entwürfe bleiben gesperrt. Für echte wörtliche
+Zitate bleibt die strengere Rechtefreigabe notwendig.
+
+**Richtungsänderung:** Frühere Aussagen, nur die wörtliche
+Wiedergabe erfülle die Fachanforderung, sind durch die neueste
+Nutzerentscheidung ersetzt. Die fachliche Gesamtintegration ist
+noch offen; der Entwicklungscode allein begründet keine
+Produktivfreigabe.
