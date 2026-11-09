@@ -104,10 +104,14 @@ an produktivem Shared-Apps oder Memorix durch dieses Arbeitspaket.
 
 ### RIS-Nacharbeit 08.11.2026 (#403)
 
-Persönliche Abnahme #356 mit Beanstandungen aus #377; zusammenhängendes Korrekturpaket
-in Entwicklung. [Ursachen, technische Belege, Grenzen und Nachabnahme](operations/ris-403-nachabnahme.md).
-Nächster Schritt: PR/CI prüfen, reale 19-TOP-Erfassung nachweisen und anschließend
-gesonderte Bereitstellungsentscheidung. PDF-/Volltextspeicherung bleibt zurückgestellt.
+PR #404 ist mit acht erfolgreichen CI-Workflows gemergt; der Betreiber hat den
+begrenzten Entwicklungsrelease an `09a7ec0` freigegeben. Die Bereitstellung ist noch
+nicht ausgeführt: [aktuelle Inventur und Sicherungs-/Zugriffsblocker](operations/ris-404-release-status-2026-11-08.md).
+Nächster Schritt: bestehende berechtigte Sicherungs-/Workflowzugänge verfügbar machen,
+aktuelle Sicherung verifizieren, dann genehmigtes Paket ausführen. Reale 19-TOP-Erfassung
+und persönliche Nachabnahme bleiben offen; PDF-/Volltextspeicherung zurückgestellt.
+[Einmalfreigabe-Vorschlag zu #398](operations/fib-release-einmalfreigabe-vorschlag.md)
+ist dokumentiert, aber nicht implementiert; er verändert diesen Release nicht.
 
 ## 3. U1 – aktueller Stand
 

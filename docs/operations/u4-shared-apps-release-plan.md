@@ -4,6 +4,17 @@
 |---|---|---|
 | 1.0 | 31.10.2026 | Josef Walter – mit KI-Unterstützung |
 
+## Aktuelle Entwicklungsfreigabe PR #404 – 08.11.2026
+
+Der Betreiber hat die begrenzte Bereitstellung des Merge-Commits
+`09a7ec003430f444d53ecd3d9ea78550b1ceda6e` mit aktueller Gesamtsicherung ausdrücklich
+freigegeben. Keine erneute fachliche Freigabe erforderlich. Zielumfang: die zwei
+vorhandenen betroffenen Edge Functions und Redaktion; keine Migration, Bereinigung,
+Cron-/Quellenaktivierung, Auth-/Memorix-Änderung oder Dokument-/Volltextspeicherung.
+[Lesende Inventur, Sicherungs-/Zugriffsblocker und tatsächlicher Ausführungsstand](ris-404-release-status-2026-11-08.md).
+Dieser Durchlauf ist vor Sicherung/Deployment gestoppt; die folgenden älteren
+Freigaben und Inventuren sind historische Quellen und kein Deploymentnachweis für #404.
+
 ## Verbindliche Entwicklungsfreigabe für PR #378 – 03.11.2026
 
 Auftrag vom 03.11.2026 und [Betriebsentscheidung des Auftraggebers](https://github.com/PustefixReisen/fib-echtsystem/pull/378#issuecomment-6597723230): FIB läuft derzeit im **Entwicklungsbetrieb ohne produktive redaktionelle Echtdaten**. Diese ausdrücklich genehmigte Ausnahme gilt für die unveränderte Implementierung aus PR #378 auf `44bb0695252eecf312ed743a87945f3f1b1b7129` sowie nachfolgende reine Dokumentationsänderungen.
