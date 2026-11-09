@@ -793,8 +793,10 @@ export async function risEditorial(
         // A proposal PDF is never admissible as an actual decision. A reviewed minutes document is.
         await one(
           tx,
-          `select a.id from fib.ris_agenda_items a join fib.ris_document_links l on l.session_id=a.session_id join fib.ris_documents d on d.id=l.document_id join fib.event_findings ef on ef.finding_id=d.finding_id where a.id=$1 and l.document_id=$2 and ((l.agenda_id is null and l.kind='minutes') or (l.agenda_id=a.id and l.kind='decision')) and l.status='confirmed' and ef.event_id=$3`,
-          [s.agenda_id, v.document_id, p.eventId],
+          `select a.id from fib.ris_agenda_items a join fib.ris_document_links l on l.session_id=a.session_id join fib.ris_documents d on d.id=l.document_id where a.id=$1 and l.document_id=$2 and ((l.agenda_id is null and l.kind='minutes') or (l.agenda_id=a.id and l.kind='decision')) and l.status='confirmed'
+          and (exists(select 1 from fib.event_findings ef where ef.finding_id=d.finding_id and ef.event_id=$3)
+            or ($4::boolean and l.kind='minutes' and exists(select 1 from fib.ris_agenda_events ae where ae.agenda_id=a.id and ae.event_id=$3 and ae.role='main_event')))`,
+          [s.agenda_id, v.document_id, p.eventId, p.manualSourceVerification === true],
         );
         if (
           !["unknown", "accepted", "rejected", "no_vote"].includes(p.result)
