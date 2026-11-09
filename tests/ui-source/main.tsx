@@ -109,7 +109,7 @@ const api = async (b: any) => {
         number: "3",
         title: "Beitragsanpassung der Kindertageseinrichtungen zum 01.01.2027",
       }],
-      documents: [doc,...((window as any).showDecisionCases ? [{...doc,id:"minutes",agenda_id:null,kind:"minutes",source_url:origin+"/getfile.asp?id=75785"}] : [])],
+      documents: [doc,...((window as any).showDecisionCases ? [{...doc,id:"minutes",agenda_id:null,kind:"minutes",status:"confirmed",source_url:origin+"/getfile.asp?id=75785"}] : [])],
       proposals: [{
         id: "p1",
         agenda_id: "t2",
@@ -135,6 +135,16 @@ const api = async (b: any) => {
       sessionEvents: sessionLinks,
       sessionRelated: {messages: [],processes: [],topics: []},
     };
+  }
+  if (b.action === "ris_suggest") {
+    if (!b.payload?.manualSourceVerification || !b.payload?.usageRightsEvidence ||
+      b.payload.usageRightsEvidence.length < 30 || !b.payload.usageRightsBasis)
+      throw Error("Nutzungsrechte müssen belegt sein");
+    return {suggestionId:"synthetic-reviewed-suggestion",status:"pending"};
+  }
+  if (b.action === "ris_review_suggestion") {
+    if (!b.rationale || b.suggestionId !== "synthetic-reviewed-suggestion") throw Error("invalid review");
+    return {status:b.status};
   }
   if (b.action === "source_read") {
     if (b.scopeId) return { observation };
