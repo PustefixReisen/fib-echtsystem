@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { type SourceApi, type SourceApi as Api, withEventLock } from "./source-api.js";
+import { type SourceApi, withEventLock } from "./source-api.js";
 
 type Source = {
   source_url: string;
