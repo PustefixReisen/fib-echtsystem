@@ -129,6 +129,21 @@ class ExportTests(unittest.TestCase):
                               run=missing, get_source=source_digest)
             self.assertFalse(path.exists())
 
+    def test_cleanup_restores_readonly_directories_without_changing_files(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = pathlib.Path(tmp) / "private"
+            root.mkdir(mode=0o700)
+            folder = root / "supabase/functions"
+            folder.mkdir(parents=True)
+            file = folder / "original.ts"
+            file.write_text("real source stays unchanged")
+            file.chmod(0o400)
+            folder.chmod(0o500)
+            module.cleanup_private_download_tree(root)
+            self.assertEqual(folder.stat().st_mode & 0o777, 0o700)
+            self.assertEqual(file.stat().st_mode & 0o777, 0o400)
+            self.assertEqual(file.read_text(), "real source stays unchanged")
+
     def test_existing_destination_untouched(self):
         with tempfile.TemporaryDirectory() as tmp:
             path = pathlib.Path(tmp) / "existing"
