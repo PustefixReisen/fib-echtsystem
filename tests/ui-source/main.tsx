@@ -137,9 +137,9 @@ const api = async (b: any) => {
     };
   }
   if (b.action === "ris_suggest") {
-    if (!b.payload?.manualSourceVerification || !b.payload?.usageRightsEvidence ||
-      b.payload.usageRightsEvidence.length < 30 || !b.payload.usageRightsBasis)
-      throw Error("Nutzungsrechte müssen belegt sein");
+    if (!b.payload?.manualSourceVerification || b.payload?.representation !== "complete_factual" ||
+        b.payload?.usageRightsBasis || !b.payload?.wording?.trim())
+      throw Error("Sachliche Beschlussprüfung fehlt");
     return {suggestionId:"synthetic-reviewed-suggestion",status:"pending"};
   }
   if (b.action === "ris_review_suggestion") {
