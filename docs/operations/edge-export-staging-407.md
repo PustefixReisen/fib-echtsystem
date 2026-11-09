@@ -1,5 +1,30 @@
 # Issue #407 – geschützter Export bereits bereitgestellter Edge Functions
 
+## PostgreSQL-17-Entwicklungssicherung – Betreiberbeleg vom 09.11.2026
+
+Der Betreiber hat die vorhandenen FIB-only-Routinen
+`scripts/ris-shared-apps/backup.mjs` und
+`scripts/backup/restore-local.py` ausgeführt.
+
+- **Kennung:** `fib-db-20261109T105332Z`
+- **Ablage:** `fib-backup-crypt:Development/fib-db-20261109T105332Z`
+- **Umfang:** konsistenter Custom-Dump ausschließlich des Schemas `fib`,
+  privates Manifest/Auth-ID-Beleg und isolierter Restore-Bericht;
+  vier Dateien insgesamt.
+- **Nachweise:** `Private snapshot-consistent fib dump created`;
+  `PASS isolated PostgreSQL17 restore` ohne Shared-Apps-Verbindung;
+  verschlüsselter rclone-Crypt-Upload und vollständige Rücklesung;
+  **4/4** Dateien mit gleichen SHA-256-Inventaren; aus der
+  Rücklesekopie geprüfter Restore-Bericht `restore=passed`.
+- **Grenze:** kein FIB-Frontend in diesem DB-Bundle; kein vollständiger
+  Release-System-Receipt und keine Freigabe einer produktiven
+  Konfigurationsänderung. Die vorangegangene Edge/Config-Aufnahme ist
+  separat unter `PreReview/snapshot-20261109T104910Z-4f8e54d609ec6bf4`
+  gesichert. RIS-Secretwert bleibt unbekannt.
+
+Diese Angaben sind anhand der lokalen Betreiber-Terminalausgabe belegt;
+kein GitHub-Actions-Release-Receipt wird behauptet.
+
 ## Verhältnismäßige Entwicklungssicherung – Entscheidung 09.11.2026
 
 Das FIB-Echtsystem wird derzeit im **Entwicklungsbetrieb** geführt;
