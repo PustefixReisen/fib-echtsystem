@@ -83,6 +83,7 @@ async function main() {
   await pool.query("create schema if not exists storage;create table if not exists storage.buckets(id text primary key,name text,public boolean,file_size_limit bigint,allowed_mime_types text[]);delete from storage.buckets where id='fib-ris-originals';");
   await pool.query(readFileSync("supabase/migrations/20261102221038_fib_ris_originals_and_editorial_links.sql","utf8"));
   await pool.query(readFileSync("supabase/migrations/20261103113500_fib_ris_session_top_events.sql","utf8"));
+  await pool.query(readFileSync("supabase/migrations/20261109150000_fib_ris_factual_vote_evidence.sql","utf8"));
   await pool.query(
     "insert into fib.app_users(user_id,role,setup_status) values($1,'editor','active')",
     [uid],
@@ -300,6 +301,9 @@ async function main() {
       payload: {
         wording: quote.split("Abstimmung:")[0].trim(),
         evidenceQuote: quote,
+        factualSummary: i === 0
+          ? "Der Gemeinderat befürwortete die Anpassung des Bebauungsplans für ein Rechenzentrum."
+          : "Die Kostenbeteiligung des Investors soll geprüft werden.",
         eventId: event.eventId,
         pointKey: String(i + 1),
         result: i === 0 ? "accepted" : "unknown",
@@ -352,6 +356,7 @@ async function main() {
     payload: {
       wording: quote2.split("Abstimmung:")[0].trim(),
       evidenceQuote: quote2,
+      factualSummary: "Die Verwaltung soll eine mögliche Kostenbeteiligung im Vertrag prüfen.",
       eventId: event.eventId,
       pointKey: "2",
       result: "accepted",
@@ -401,6 +406,65 @@ async function main() {
   }
   const projection = await run({ action: "ris_read", sessionId: a.sessionId });
   assert.equal(projection.decisions!.length, 3);
+  assert.ok(
+    projection.decisions!.every((d: any) => d.display_wording == null),
+    "Legacy confirmed wording is not released without document-specific reproduction rights",
+  );
+  // Review the complete wording from a manually verified official source.
+  // The synthetic permission text is intentionally NOT a real document licence.
+  const manualWording = quote1.split("Abstimmung:")[0].trim();
+  const manualRightsEvidence =
+    "Isolated synthetic test licence; not a real-world reproduction permission.";
+  await assert.rejects(
+    () => run({
+      action: "ris_suggest", agendaId:top, versionId, kind:"decision", origin:"editor",
+      payload:{eventId:event.eventId,pointKey:"manual-invalid",wording:manualWording,
+        evidenceQuote:quote1, result:"accepted",yes:17,no:2,
+        manualSourceVerification:true, verifiedSourceUrl:url},
+    }),
+    /ris_wording_rights_review_required/,
+    "Manual source verification alone cannot grant verbatim reproduction rights",
+  );
+  const manuallyProposed = await run({
+    action:"ris_suggest", agendaId:top, versionId, kind:"decision", origin:"editor",
+    payload:{eventId:event.eventId,pointKey:"manual-review",wording:manualWording,
+      evidenceQuote:quote1,result:"accepted",yes:17,no:2,
+      manualSourceVerification:true, verifiedSourceUrl:url,
+      usageRightsBasis:"explicit_permission",usageRightsEvidence:manualRightsEvidence},
+  });
+  const beforeReview = await run({action:"ris_read",sessionId:a.sessionId});
+  assert.ok(beforeReview.decisions!.every((d:any) => d.point_key !== "manual-review"),
+    "Unreviewed decision remains invisible");
+  await run({action:"ris_review_suggestion", suggestionId:manuallyProposed.suggestionId,
+    status:"confirmed",rationale:"Synthetic source text and reproduction permission checked"});
+  const afterReview = await run({action:"ris_read",sessionId:a.sessionId});
+  const reviewed = afterReview.decisions!.find((d:any) => d.point_key === "manual-review");
+  assert.equal(reviewed?.display_wording,manualWording);
+  assert.equal(reviewed?.yes_count,17);
+  assert.equal(reviewed?.no_count,2);
+  const factualWording = "Der Gemeinderat unterstützt die Ansiedlung des Rechenzentrums und verlangt eine Anpassung des Bebauungsplanentwurfs einschließlich Sondergebietsausweisung und baulicher Vorgaben.";
+  await assert.rejects(
+    () => run({action:"ris_suggest",agendaId:top,versionId,kind:"decision",origin:"editor",
+      payload:{eventId:event.eventId,pointKey:"factual-no-review",wording:factualWording,
+        evidenceQuote:"",representation:"complete_factual",result:"accepted",yes:17,no:2,
+        verifiedSourceUrl:url}}),
+    /ris_factual_review_required/,
+  );
+  const factual = await run({action:"ris_suggest",agendaId:top,versionId,
+    kind:"decision",origin:"editor",
+    payload:{eventId:event.eventId,pointKey:"factual-reviewed",wording:factualWording,
+      evidenceQuote:"",representation:"complete_factual",manualSourceVerification:true,
+      verifiedSourceUrl:url,result:"accepted",yes:17,no:2}});
+  await run({action:"ris_review_suggestion",suggestionId:factual.suggestionId,
+    status:"confirmed",rationale:"Sachliche Vollständigkeit und Abstimmung gegen RIS geprüft"});
+  const factualRead = await run({action:"ris_read",sessionId:a.sessionId});
+  const fdecision = factualRead.decisions!.find((d:any)=>d.point_key==="factual-reviewed");
+  assert.equal(fdecision?.display_wording,factualWording,
+    "Reviewed independently formulated complete factual content may be displayed without a verbatim licence");
+  assert.equal(fdecision?.yes_count,17);
+  assert.equal(fdecision?.no_count,2);
+  assert.ok(afterReview.decisions!.filter((d:any) => d.point_key !== "manual-review")
+    .every((d:any) => d.display_wording == null));
   assert.equal(projection.events!.length, 0, "Decision events are separate from local references");
   assert.equal((await first("select topic_id from fib.event_topics where event_id=$1",[event.eventId])).topic_id,topicId);
   const pending = await run({
@@ -517,7 +581,7 @@ async function main() {
     rationale: "Synthetischer Test für den getrennten Vorschlagspfad",
   });
   assert.equal(await count("ris_proposal_texts"), 1);
-  assert.equal(await count("ris_decision_points"), 2);
+  assert.equal(await count("ris_decision_points"), 4);
   const deferred = await run({
     action: "ris_propose_relation",
     eventId: event.eventId,
@@ -715,7 +779,7 @@ async function main() {
       rationale: "Originalwortlaut und Ergebnis geprüft",
     });
   }
-  assert.equal(await count("ris_decision_points"), 4);
+  assert.equal(await count("ris_decision_points"), 6);
   assert.equal(
     (await first("select count(*) from fib.ris_votes where result='no_vote'"))
       .count,

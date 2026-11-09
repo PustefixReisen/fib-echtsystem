@@ -1,0 +1,107 @@
+{
+  "kind": "indexed_official_ris_public_agenda_reference",
+  "captured_on": "2026-11-09",
+  "session": "GR/439/2026",
+  "date": "2026-10-15",
+  "source_url": "https://buergerinfo-feldkirchen.digitalfabrix.de/si0057.asp?__ksinr=1031",
+  "retrieval": "public_web_search_indexed_official_page_not_live_direct_http",
+  "scope": "public_agenda",
+  "limitations": "Metadata-only verification of indexed official page. No proof of live RIS scanner reachability, stored FIB rows, complete source document PDF, minutes text or current revision. Do not import into production without normal RIS source/version review.",
+  "agenda": [
+    {
+      "number": "1",
+      "title": "Genehmigung der Niederschrift vom 29.09.2026 und 01.10.2026",
+      "proposal_reference": null
+    },
+    {
+      "number": "2",
+      "title": "Errichtung einer Hundewiese auf dem Grundstück Fl.Nr. 630/Teilfläche Gemarkung Feldkirchen, östlich des Friedhofs - Entscheidung über das weitere Vorgehen nach Vorlage der schalltechnischen Stellungnahme",
+      "proposal_reference": "5283/2026"
+    },
+    {
+      "number": "3",
+      "title": "Antrag der CSU-Fraktion auf Schaffung einer innerörtlichen Parkanlage",
+      "proposal_reference": "5351/2026"
+    },
+    {
+      "number": "4",
+      "title": "Novellierung der Erschließungskostensatzung (EBS) vom 19 April 2010",
+      "proposal_reference": "5336/2026"
+    },
+    {
+      "number": "5",
+      "title": "Radverkehrskonzept - Entscheidung über die Umsetzung von Maßnahmen",
+      "proposal_reference": "5380/2026"
+    },
+    {
+      "number": "6",
+      "title": "Voranfrage zur Errichtung eines Rechenzentrums auf den Flst.-Nr. 597/5 und 598/2; Einleitung der Änderung des Bebauungsplanes Nr. 112",
+      "proposal_reference": "5370/2026"
+    },
+    {
+      "number": "7",
+      "title": "Bauantrag auf Verlängerung der Nutzungsänderung von Büroteilflächen zur schulischen Nutzung für die Berufsfachschule für Kinderpflege im 1. Obergeschoss, Dornacher Str. 3, Fl.Nr. 319/2 Gemarkung Feldkirchen",
+      "proposal_reference": "5369/2026"
+    },
+    {
+      "number": "8",
+      "title": "Bauantrag auf Verlängerung der befristeten Nutzungsänderung von Büroteilflächen zur schulischen Nutzung für Berufs-Integrationsklassen auf dem Grundstück Fl.Nr. 319/2, Dornacher Str. 3, Gemarkung Feldkirchen",
+      "proposal_reference": "5368/2026"
+    },
+    {
+      "number": "9",
+      "title": "Antrag auf Verlängerung der befristeten Nutzungsänderung von Büroteilflächen zur Erweiterung der bestehenden Berufsintegrationsschule, Fl.Nr. 319/2, Dornacher Str. 3, Gemarkung Feldkirchen",
+      "proposal_reference": "5367/2026"
+    },
+    {
+      "number": "10",
+      "title": "Antrag auf Verlängerung: Nutzungsänderung Büronutzung in schulische Nutzung, 1 OG, Fl.Nr. 319/2, Dornacher Str. 3 b-c, Gemarkung Feldkirchen",
+      "proposal_reference": "5365/2026"
+    },
+    {
+      "number": "11",
+      "title": "Bauantrag, Nutzungsänderung von Büronutzung zu schulischer Nutzung zur Erweiterung der bestehenden Berufsintegrationsschule, befristet auf fünf Jahre bis zum 01.09.2031, Fl.Nr. 319/2, Dornacher Str. 3- 3e, Gemarkung Feldkirchen",
+      "proposal_reference": "5361/2026"
+    },
+    {
+      "number": "12",
+      "title": "Antrag auf Vorbescheid, Neubau von zwei Wohngebäuden mit Teilgewerbefläche im Erdgeschoss des nördlichen Baukörpers und Tiefgarage auf dem Grundstück Fl.Nr. 475 Gemarkung Feldkirchen, Bahnhofstraße 19 – erneute Vorlage",
+      "proposal_reference": "5371/2026"
+    },
+    {
+      "number": "13",
+      "title": "Bauantrag, Tektur zum Neubau einer Wohnanlage mit 22 Wohneinheiten mit einer Tiefgarage auf dem Grundstück Fl.Nr. 36/0 Gemarkung Feldkirchen, Aschheimer Straße 12 a - erneute Vorlage",
+      "proposal_reference": "5390/2026"
+    },
+    {
+      "number": "14",
+      "title": "Bauantrag, Nutzungsänderung von einzelnen Räumen und Hallen, Xaver-Münch-Str. 2, Fl.Nr. 563 und 563/7, Gemarkung Feldkirchen - erneute Vorlage",
+      "proposal_reference": "5372/2026"
+    },
+    {
+      "number": "15",
+      "title": "Antrag auf Festsetzung neuer Fristen für die Verfüllung der Kiesgrube, Fl.Nr. 488, Gemarkung Feldkirchen",
+      "proposal_reference": "5355/2026"
+    },
+    {
+      "number": "16",
+      "title": "Wochenmarkt in Feldkirchen - Entscheidung über eine Anpassung der Standgebühren",
+      "proposal_reference": "5382/2026"
+    },
+    {
+      "number": "17",
+      "title": "Antrag der Fraktion Bündnis 90/Die Grünen zum Schutz des Griecherl-Gehölzes an der Münchner Straße",
+      "proposal_reference": "5378/2026"
+    },
+    {
+      "number": "18",
+      "title": "Bekanntgaben und Berichte",
+      "proposal_reference": null
+    },
+    {
+      "number": "19",
+      "title": "Anfragen",
+      "proposal_reference": null
+    }
+  ]
+}

@@ -165,7 +165,7 @@ export async function risEditorial(
       [session.id],
     );
     const decisions = await tx.unsafe(
-      `select p.*,v.id version_id,v.wording,v.document_version_id,v.created_at,w.result,w.yes_count,w.no_count,w.abstention_count,w.evidence_quote,(d.latest_version_id<>v.document_version_id) source_changed from fib.ris_decision_points p join fib.ris_agenda_items a on a.id=p.agenda_id join fib.ris_decision_versions v on v.point_id=p.id join fib.ris_document_versions dv on dv.id=v.document_version_id join fib.ris_documents d on d.id=dv.document_id left join fib.ris_votes w on w.decision_version_id=v.id where a.session_id=$1`,
+      `select p.*,v.id version_id,v.document_version_id,v.created_at,w.result,w.yes_count,w.no_count,w.abstention_count,(d.latest_version_id<>v.document_version_id) source_changed,case when s.status='confirmed' and d.latest_version_id=v.document_version_id and ((s.payload->>'representation'='complete_factual' and s.payload->>'manualSourceVerification'='true') or (s.payload->>'usageRightsBasis' in ('official_work_5_urhg','explicit_permission') and length(coalesce(s.payload->>'usageRightsEvidence',''))>=30)) then v.wording else null end display_wording from fib.ris_decision_points p join fib.ris_agenda_items a on a.id=p.agenda_id join fib.ris_decision_versions v on v.point_id=p.id join fib.ris_document_versions dv on dv.id=v.document_version_id join fib.ris_documents d on d.id=dv.document_id left join fib.ris_votes w on w.decision_version_id=v.id left join fib.ris_suggestions s on s.id=v.suggestion_id where a.session_id=$1`,
       [session.id],
     );
     const events = await tx.unsafe(
@@ -691,16 +691,44 @@ export async function risEditorial(
     if (!payload || typeof payload !== "object") {
       throw Error("invalid_ris_input");
     }
+    const completeFactual = payload.representation === "complete_factual";
     const wording = required(payload.wording, 30000),
-      quote = required(payload.evidenceQuote, 30000);
+      quote = completeFactual ? "" : required(payload.evidenceQuote, 30000);
+    if (completeFactual && wording.length < 20) throw Error("ris_factual_content_too_short");
+    if (completeFactual && (input.kind !== "decision" || input.origin !== "editor" ||
+        actor.kind !== "human" || payload.manualSourceVerification !== true ||
+        payload.verifiedSourceUrl == null || payload.usageRightsBasis != null ||
+        payload.usageRightsEvidence != null)) {
+      throw Error("ris_factual_review_required");
+    }
+    // Original wording may be stored only following an explicit document-specific
+    // rights assessment. Public access to a PDF is not itself a reproduction licence.
+    const manuallyReviewed = payload.manualSourceVerification === true;
+    const usageRightsBasis = payload.usageRightsBasis == null ? null
+      : required(payload.usageRightsBasis, 60);
+    const usageRightsEvidence = payload.usageRightsEvidence == null ? null
+      : required(payload.usageRightsEvidence, 2000);
+    if (!completeFactual && (manuallyReviewed || usageRightsBasis || usageRightsEvidence)) {
+      if (input.kind !== "decision" || input.origin !== "editor" ||
+          actor.kind !== "human" || !manuallyReviewed ||
+          !["official_work_5_urhg", "explicit_permission"].includes(usageRightsBasis ?? "") ||
+          (usageRightsEvidence?.length ?? 0) < 30) {
+        throw Error("ris_wording_rights_review_required");
+      }
+    }
     const v = await one(
       tx,
-      "select v.*,d.latest_version_id from fib.ris_document_versions v join fib.ris_documents d on d.id=v.document_id where v.id=$1",
+      "select v.*,d.latest_version_id,d.source_url from fib.ris_document_versions v join fib.ris_documents d on d.id=v.document_id where v.id=$1",
       [input.versionId],
     );
     if (v.id !== v.latest_version_id) throw Error("stale_ris_review");
-    if (!v.extracted_text?.includes(quote) || !quote.includes(wording)) {
+    if ((!completeFactual && !quote.includes(wording)) ||
+        (!manuallyReviewed && !v.extracted_text?.includes(quote))) {
       throw Error("missing_exact_evidence");
+    }
+    if (manuallyReviewed && (payload.verifiedSourceUrl !== v.source_url ||
+        (!completeFactual && !quote.includes(wording)))) {
+      throw Error("ris_manual_source_verification_required");
     }
     await one(
       tx,
@@ -715,7 +743,10 @@ export async function risEditorial(
         v.id,
         input.kind,
         input.origin,
-        JSON.stringify({ ...payload, wording, evidenceQuote: quote }),
+        JSON.stringify({ ...payload, wording, evidenceQuote: completeFactual ? "" : quote,
+          representation: completeFactual ? "complete_factual" : payload.representation,
+          manualSourceVerification: manuallyReviewed,
+          usageRightsBasis, usageRightsEvidence }),
         actor.userId,
       ],
     );
@@ -743,11 +774,21 @@ export async function risEditorial(
         [s.document_version_id],
       );
       if (v.id !== v.latest_version_id) throw Error("stale_ris_review");
-      if (
-        !v.extracted_text?.includes(p.evidenceQuote) ||
-        !p.evidenceQuote?.includes(p.wording)
-      ) {
+      const completeFactual = p.representation === "complete_factual";
+      if ((!completeFactual && !p.evidenceQuote?.includes(p.wording)) ||
+          (!p.manualSourceVerification && !v.extracted_text?.includes(p.evidenceQuote))) {
         throw Error("missing_exact_evidence");
+      }
+      if (p.manualSourceVerification) {
+        if (s.kind !== "decision" || s.origin !== "editor" ||
+            (!completeFactual &&
+              (!["official_work_5_urhg", "explicit_permission"].includes(p.usageRightsBasis) ||
+               typeof p.usageRightsEvidence !== "string" || p.usageRightsEvidence.length < 30))) {
+          throw Error("ris_wording_rights_review_required");
+        }
+        await one(tx,
+          `select d.id from fib.ris_documents d where d.id=$1 and d.source_url=$2`,
+          [v.document_id,p.verifiedSourceUrl]);
       }
       if (s.kind === "proposal_text") {
         await one(
@@ -764,8 +805,10 @@ export async function risEditorial(
         // A proposal PDF is never admissible as an actual decision. A reviewed minutes document is.
         await one(
           tx,
-          `select a.id from fib.ris_agenda_items a join fib.ris_document_links l on l.session_id=a.session_id join fib.ris_documents d on d.id=l.document_id join fib.event_findings ef on ef.finding_id=d.finding_id where a.id=$1 and l.document_id=$2 and ((l.agenda_id is null and l.kind='minutes') or (l.agenda_id=a.id and l.kind='decision')) and l.status='confirmed' and ef.event_id=$3`,
-          [s.agenda_id, v.document_id, p.eventId],
+          `select a.id from fib.ris_agenda_items a join fib.ris_document_links l on l.session_id=a.session_id join fib.ris_documents d on d.id=l.document_id where a.id=$1 and l.document_id=$2 and ((l.agenda_id is null and l.kind='minutes') or (l.agenda_id=a.id and l.kind='decision')) and l.status='confirmed'
+          and (exists(select 1 from fib.event_findings ef where ef.finding_id=d.finding_id and ef.event_id=$3)
+            or ($4::boolean and l.kind='minutes' and exists(select 1 from fib.ris_agenda_events ae where ae.agenda_id=a.id and ae.event_id=$3 and ae.role in ('main_event','decision'))))`,
+          [s.agenda_id, v.document_id, p.eventId, p.manualSourceVerification === true],
         );
         if (
           !["unknown", "accepted", "rejected", "no_vote"].includes(p.result)
@@ -800,7 +843,7 @@ export async function risEditorial(
             p.yes ?? null,
             p.no ?? null,
             p.abstention ?? null,
-            p.evidenceQuote,
+            completeFactual ? null : p.evidenceQuote,
           ],
         );
       }

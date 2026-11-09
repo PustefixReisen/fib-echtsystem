@@ -110,11 +110,40 @@ export async function handleRis(req:Request,mode:'interactive'|'scheduler'='inte
    const allowed=await sql.unsafe("select 1 from fib.app_users where user_id=$1::uuid and role='admin' and active=true and setup_status='active' limit 1",[interactiveUserId]);
    if(!allowed.length)return reply({error:'admin_required'},403);
   }
-  const payload=await req.json().catch(()=>({})) as {commit?:boolean;pdfBackfill?:boolean;cadence?:'daily'|'weekly';integrationSession?:string};
+  const payload=await req.json().catch(()=>({})) as {commit?:boolean;pdfBackfill?:boolean;cadence?:'daily'|'weekly';integrationSession?:string;previewSession?:string};
   const structureEnabled=Deno.env.get('FIB_RIS_STRUCTURE_ENABLED')==='true';
   const backfill=payload.pdfBackfill===true && payload.commit===true;
   if(payload.cadence && payload.cadence!=='daily'&&payload.cadence!=='weekly')return reply({error:'invalid_cadence'},400);
   const cadence=payload.cadence??'daily';
+  // Explicit administrator-only AAL2 read-only source/coverage probe.
+  // No cursor, PDF, original content, source observation or FIB data is stored.
+  if(payload.previewSession!==undefined){
+   if(mode!=='interactive'||payload.commit===true||payload.pdfBackfill===true||
+      payload.integrationSession!==undefined)return reply({error:'preview_requires_read_only'},403);
+   if(!['1031','1032'].includes(payload.previewSession))
+     return reply({error:'preview_session_not_allowed'},400);
+   const sessionUrl=origin+'/si0057.asp?__ksinr='+payload.previewSession;
+   try{
+    const response=await fetch(sessionUrl,{redirect:'error',signal:AbortSignal.timeout(15000),
+      headers:{accept:'text/html','user-agent':'FIB-U4-RIS-Pilot/0.1'}});
+    if(!response.ok)return reply({error:'ris_preview_http',status:response.status},502);
+    const contentType=response.headers.get('content-type')??'';
+    if(contentType && !/text\/html/i.test(contentType))
+      return reply({error:'ris_preview_unexpected_content_type'},502);
+    const html=await response.text();
+    if(html.length>1500000||!/<(?:html|body|a)\b/i.test(html))
+      return reply({error:'ris_preview_invalid_html'},502);
+    const snapshot=await parseRisStructure(html,sessionUrl,new Date().toISOString());
+    const agenda=snapshot.agenda.map(item=>({
+      number:item.number,title:item.title,
+      observedTreatment:item.observedTreatment??null,
+      proposalReferences:item.proposals,
+    }));
+    return reply({mode:'read_only_session_preview',session:payload.previewSession,
+      source:sessionUrl,publicTopCount:agenda.length,completeness:'unverified',agenda});
+   }catch(e){return reply({error:'ris_preview_unavailable',
+      detail:String(e).slice(0,150)},502)}
+  }
   const scopes=await sql.unsafe("select id from fib.source_scopes where scope_key='ris-dokumentliste' and status='candidate'");
   if(scopes.length!==1)throw new Error('ris_scope_unavailable');
   const scopeId=scopes[0].id as string;

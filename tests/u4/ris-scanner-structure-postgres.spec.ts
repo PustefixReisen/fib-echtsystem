@@ -62,7 +62,7 @@ const fetchMock = async (url: string) => {
     );
   if (url === origin + "/si0057.asp?__ksinr=1032") {
     if (failPage) throw Error("session_outage");
-    return new Response(html);
+    return new Response(html,{headers:{"content-type":"text/html; charset=utf-8"}});
   }
   if (url.startsWith(origin + "/getfile.asp?id=")) {
     if (failPdf) throw Error("pdf_outage");
@@ -97,6 +97,8 @@ const source = edgeDatasetSupport +
     .replace(/export async function /g, "async function ") +
   "\nglobalThis.handler=handleRis;";
 const context: any = {
+  // TS may emit an ES-module interop marker when transpiling combined fixtures.
+  exports: {},
   __postgres: () => sqlClient(pool),
   extractText: async () => ({
     text: "synthetic PDF text for fault-injection only",
@@ -186,6 +188,29 @@ async function main() {
       (await first("select count(*) from fib.ris_session_versions")).count,
     );
   const initial = await revisions();
+  // Reuse exactly the production AAL2/admin handler for the no-write
+  // official-session coverage probe; no original bytes are returned.
+  async function previewSession(body:Record<string,unknown>) {
+    const response=await context.handler(new Request("https://test.invalid", {
+      method:"POST",
+      headers:{authorization:"Bearer "+jwt,"content-type":"application/json"},
+      body:JSON.stringify(body),
+    }));
+    return {status:response.status,body:await response.json()};
+  }
+  const cursorBeforePreview=await cursor();
+  const previewsBefore=await revisions();
+  const trial=await previewSession({previewSession:"1032",commit:false});
+  assert.equal(trial.status,200,JSON.stringify(trial));
+  assert.equal(trial.body.mode,"read_only_session_preview");
+  assert.equal(trial.body.publicTopCount,2);
+  assert.equal(trial.body.completeness,"unverified");
+  assert.equal(trial.body.agenda.length,2);
+  assert.equal(await cursor(),cursorBeforePreview,"Preview must never change scanner cursor");
+  assert.equal(await revisions(),previewsBefore,"Preview must never import session data");
+  assert.equal((await previewSession({previewSession:"1031",commit:true})).status,403);
+  assert.equal((await previewSession({previewSession:"9999",commit:false})).status,400);
+
   failPage = true;
   const gap = await invoke();
   assert.equal(gap.status, 200, JSON.stringify(gap));
@@ -270,6 +295,8 @@ async function main() {
     readFileSync("supabase/functions/fib-editorial-write/index.ts", "utf8")
       .replace(/^import .*ris-originals.*;\s*/m, "")
       .replace(/^import .*ris-structure.*;\s*/m, "")
+      .replace(/^import .*ris-minutes-pipeline.*;\s*/m, "")
+      .replace(/^import .*ris-minutes-mistral-provider.*;\s*/m, "")
       .replace(/^import .*npm:unpdf.*;\s*/m, "")
       .replace(/^import .*source-editorial.*;\s*/m, "")
       .replace(/^import .*ris-editorial.*;\s*/m, "")
@@ -304,6 +331,15 @@ async function main() {
     (await call({ action: "ris_read", sessionId: session })).status,
     200,
   );
+  // AI prefill is completely off in ordinary development/runtime. Even
+  // a signed-in MFA editor cannot invoke Mistral without explicit budget/DPA
+  // and a configured provider; no source is downloaded in this path.
+  const aiBlocked=await call({action:"ris_prepare_minutes_draft",
+    agendaId:"22222222-2222-4222-8222-222222222222",
+    versionId:"33333333-3333-4333-8333-333333333333"});
+  assert.equal(aiBlocked.status,503);
+  assert.equal((await aiBlocked.json()).error,"ris_draft_not_enabled");
+
   assert.equal((await call(null)).status, 400);
   assert.equal((await call({action:"ris_review_document",kind:"proposal",status:"confirmed"})).status,409);
   assert.equal(

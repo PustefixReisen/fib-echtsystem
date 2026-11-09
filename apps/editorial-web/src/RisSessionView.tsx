@@ -2,6 +2,7 @@ import { useState } from "react";
 import { type SourceApi, sourceApi, withEventLock } from "./source-api.js";
 import { ActionIcon, OriginalLink } from "./ActionIcon.js";
 import { EventAssignmentView } from "./EventAssignmentView.js";
+import { RisMinutesReview } from "./RisMinutesReview.js";
 type Row = Record<string, any>;
 // Legacy reference titles included the portal's separate status block.
 export const topTitle = (a: Row) => String(a.title ?? "").replace(/\s+Beschluss:\s*.+$/i, "");
@@ -20,6 +21,8 @@ type Props = {
   registerLeaveGuard?: (guard: () => boolean) => void;
   api?: SourceApi;
   eventLock?: typeof withEventLock;
+  /** Only the isolated, static acceptance preview may show supplied source wording. */
+  previewOriginalWording?: boolean;
 };
 const displayDate = (v: unknown) =>
   v ? new Date(String(v)).toLocaleDateString("de-DE") : "Datum unbekannt";
@@ -34,6 +37,7 @@ export function RisSessionView(
     registerLeaveGuard,
     api = sourceApi,
     eventLock = withEventLock,
+    previewOriginalWording = false,
   }: Props,
 ) {
   const [localTop, setLocalTop] = useState(""),
@@ -280,18 +284,42 @@ export function RisSessionView(
             )}
             <section className="panel card-headed">
               <div className="section-heading"><h2>Niederschrift der Sitzung</h2></div>
-              <p>TOP {selected.number}: {topStatus(selected)}. Veröffentlichter RIS-Stand; keine redaktionelle Beschlussbestätigung daraus abgeleitet.</p>
-              {decisions.map((d, i) => (
-                <p key={d.version_id ?? i}>
-                  Beschlusspunkt {d.point_key ?? i + 1}: {({accepted:"angenommen",rejected:"abgelehnt",no_vote:"keine Abstimmung",unknown:"Ergebnis nicht angegeben"} as Row)[d.result] ?? "Ergebnis nicht angegeben"}.
-                  {d.result !== "no_vote" && <> Die Quelle nennt {d.yes_count ?? "keine Angabe zu"} Ja-Stimmen, {d.no_count ?? "keine Angabe zu"} Nein-Stimmen und {d.abstention_count ?? "keine Angabe zu"} Enthaltungen.</>}
-                  {d.source_changed && " Die Originalquelle wurde seither geändert; erneute Prüfung erforderlich."}
-                </p>
-              ))}
-              {!decisions.length && <p>Keine geprüften TOP-spezifischen Beschlussangaben erfasst.</p>}
-              <p className="meta">Wörtliche Niederschriftabschnitte werden bis zur rechtlichen Klärung nicht übernommen. Maßgeblich bleibt die vollständige Originalniederschrift.</p>
+              {decisions.length > 0 ? (
+                <div className="ris-minutes-decisions">
+                  {decisions.map((d, i) => (
+                    <div key={d.version_id ?? i} className="ris-minutes-decision">
+                      <p><strong>Beschlusspunkt {d.point_key ?? i + 1}</strong></p>
+                      {(previewOriginalWording && d.wording || d.display_wording)
+                        ? <p className="ris-minutes-wording" style={{whiteSpace:"pre-line"}}>{previewOriginalWording && d.wording || d.display_wording}</p>
+                        : <p className="meta">Die vollständige sachliche Beschlussdarstellung ist noch nicht geprüft und freigegeben. Maßgeblich bleibt die Originalniederschrift.</p>}
+                      <p><strong>Abstimmung:</strong> {({accepted:"angenommen",rejected:"abgelehnt",no_vote:"keine Abstimmung",unknown:"Ergebnis nicht angegeben"} as Row)[d.result] ?? "Ergebnis nicht angegeben"}
+                        {d.result !== "no_vote" && <> · Ja {d.yes_count ?? "nicht angegeben"} · Nein {d.no_count ?? "nicht angegeben"}{d.abstention_count != null && <> · Enthaltungen {d.abstention_count}</>}</>}
+                      </p>
+                      {d.source_changed && <p role="status">Originalquelle geändert – erneute Prüfung erforderlich.</p>}
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <p role="status">{String(topStatus(selected)).toLowerCase() === "abgesetzt"
+                  ? "Dieser TOP wurde abgesetzt. Ein Beschluss oder Abstimmungsergebnis liegt für diesen TOP nicht vor; der protokollierte Behandlungstext ist in FIB noch nicht erfasst."
+                  : "Die vollständige sachliche Beschlussdarstellung und die Abstimmungsergebnisse wurden noch nicht geprüft und übernommen."}</p>
+              )}
               <ul>{[...sessionDocuments,...topDocuments].filter((d) => d.kind === "minutes").map(documentItem)}</ul>
             </section>
+            {!previewOriginalWording && mainEvents.length > 0 && sessionDocuments.some(d => d.kind === "minutes") && (
+              <details className="panel ris-minutes-editor-optional">
+                <summary>Beschlussinhalt prüfen oder korrigieren</summary>
+                <p className="meta">Nur bei Bedarf öffnen. Die geprüfte Niederschriftanzeige bleibt unverändert.</p>
+                <RisMinutesReview agendaId={selected.id}
+                  eventId={mainEvents[0].event_id}
+                  source={{...sessionDocuments.find(d => d.kind === "minutes")!,
+                    source_url: String(sessionDocuments.find(d => d.kind === "minutes")?.source_url ?? ""),
+                    latest_version_id: String(sessionDocuments.find(d => d.kind === "minutes")?.latest_version_id ?? ""),
+                    status: String(sessionDocuments.find(d => d.kind === "minutes")?.status ?? ""),
+                    kind: "minutes"}}
+                  api={api} eventLock={eventLock} onReload={onReload}/>
+              </details>
+            )}
             <section className="panel card-headed">
               <div className="section-heading">
                 <h2>TOP als Ereignis festlegen</h2>

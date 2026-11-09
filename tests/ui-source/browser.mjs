@@ -260,11 +260,46 @@ try {
   await button("Sitzung öffnen").click();
   await page.getByRole("navigation",{name:"Sitzung und Tagesordnungspunkte"}).getByRole("button",{name:"TOP 2"}).click();
   const minutes=page.locator("section").filter({has:heading("Niederschrift der Sitzung")});
-  await minutes.getByText(/Beschlusspunkt A:/).waitFor();
-  await minutes.getByText(/Beschlusspunkt B: angenommen/).waitFor();
+  await minutes.getByText("Beschlusspunkt A", { exact: true }).waitFor();
+  await minutes.getByText("Beschlusspunkt B", { exact: true }).waitFor();
+  await minutes.getByText(/Abstimmung: angenommen · Ja 10 · Nein 2/).waitFor();
+  await minutes.getByText(/Die vollständige sachliche Beschlussdarstellung ist noch nicht geprüft und freigegeben/).first().waitFor();
   assert.equal(await minutes.locator("img").count(),0,"No unlicensed wording or HTML rendered");
-  assert.ok((await minutes.innerText()).includes("10 Ja-Stimmen, 2 Nein-Stimmen"));
+  assert.ok((await minutes.innerText()).includes("Ja 10 · Nein 2"));
   assert.equal(await minutes.locator('a[href*="id=75785"]').count(),1,"Complete original remains linked");
+  const optionalEditor=page.locator("details.ris-minutes-editor-optional");
+  assert.equal(await optionalEditor.getAttribute("open"),null,"Rare correction UI is initially collapsed");
+  await optionalEditor.locator("summary").click();
+  const review=page.getByRole("region",{name:"Beschlussinhalt redaktionell prüfen"});
+  await review.getByRole("button",{name:"KI-Entwurf vorbereiten"}).click();
+  await review.getByText(/Mehrere Beschlusspunkte erkannt/).waitFor();
+  const aiSelect=review.getByLabel("Automatisch vorbereiteten Beschlusspunkt auswählen");
+  await aiSelect.selectOption("1");
+  assert.equal(await review.getByLabel("Beschlusspunkt",{exact:true}).inputValue(),"2");
+  assert.equal(await review.getByRole("combobox",{name:"Abstimmung"}).inputValue(),"no_vote");
+  await aiSelect.selectOption("0");
+  assert.equal(await review.getByLabel("Beschlusspunkt",{exact:true}).inputValue(),"1");
+  assert.equal(await review.getByLabel("Ja").inputValue(),"10");
+  assert.equal(await page.evaluate(()=>window.calls.filter(c=>c.action==="ris_prepare_minutes_draft").length),1,
+    "AI generated only on deliberate editorial action");
+  await review.getByLabel("Beschlussinhalt – vollständig, aber eigenständig formuliert")
+    .fill("Der Gemeinderat beauftragte die Verwaltung mit der Prüfung des Vorhabens sowie der anschließenden Berichterstattung.");
+  await review.getByRole("combobox",{name:"Abstimmung"}).selectOption("accepted");
+  await review.getByLabel("Ja").fill("10");
+  await review.getByLabel("Nein").fill("2");
+  const submit=review.getByRole("button",{name:"Geprüften Entwurf vormerken"});
+  assert.equal(await submit.isDisabled(),true,"Source verification required");
+  await review.getByRole("checkbox").check();
+  await submit.click();
+  await review.getByText(/Entwurf vorgemerkt/).waitFor();
+  const proposals=await page.evaluate(()=>window.calls.filter(c=>c.action==="ris_suggest"));
+  assert.equal(proposals.length,1);
+  assert.equal(proposals[0].payload.representation,"complete_factual");
+  assert.equal(proposals[0].payload.usageRightsBasis,undefined);
+  await review.getByRole("button",{name:"Beschluss bestätigen"}).click();
+  await review.getByText(/Beschlussinhalt und Abstimmung bestätigt/).waitFor();
+  assert.equal(await page.evaluate(()=>window.calls.filter(c=>c.action==="ris_review_suggestion").length),1,
+    "Separate submission and confirmation");
   assert.deepEqual(errors, []);
   console.log(
     "PASS actual SourceWorkspace/RisSessionView components: local event links, modal cancel navigation, event creation, lock retry, external RIS navigation without stored-PDF UI, exact TOP return, origin, title, mobile and Gemeinde regression (simulated APIs; no live MFA or print claim)",

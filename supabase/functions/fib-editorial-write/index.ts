@@ -1,3 +1,6 @@
+import {parseRisStructure,risUrl} from '../_shared/ris-structure.ts';
+import {prepareRisMinutesSessionDrafts} from '../_shared/ris-minutes-pipeline.ts';
+import {createMistralRisDraftProvider} from '../_shared/ris-minutes-mistral-provider.ts';
 import {persistRisDocument} from '../_shared/ris-structure.ts';
 import {extractText} from 'npm:unpdf@2.1.0';
 import {originalStore,readOriginal,fetchRisOriginal} from '../_shared/ris-originals.ts';
@@ -122,6 +125,69 @@ export default {
       if(body.action==='source_readiness'){
         if(membership[0].role!=='admin')return json({error:'admin_required'},403);
         return json({ok:true,...await sourceReadiness(sql,Deno.env.get('FIB_RIS_STRUCTURE_ENABLED')==='true')});
+      }
+      // Opt-in, no-write, editor-triggered AI prefill. No background billing,
+      // no upload until a verified source and explicit privacy/budget gates exist.
+      if(body.action==='ris_prepare_minutes_draft'){
+        if(Deno.env.get('FIB_RIS_MISTRAL_ENABLED')!=='true' ||
+           Deno.env.get('FIB_RIS_MISTRAL_BUDGET_CONFIRMED')!=='true' ||
+           Deno.env.get('FIB_RIS_MISTRAL_DPA_CONFIRMED')!=='true')
+          return json({error:'ris_draft_not_enabled'},503);
+        const key=Deno.env.get('FIB_RIS_MISTRAL_API_KEY')??'';
+        const model=Deno.env.get('FIB_RIS_MISTRAL_MODEL')??'mistral-small-latest';
+        if(!key)return json({error:'ris_draft_provider_key_missing'},503);
+        if(typeof body.agendaId!=='string'||! /^[0-9a-f-]{36}$/i.test(body.agendaId) ||
+           typeof body.versionId!=='string'||! /^[0-9a-f-]{36}$/i.test(body.versionId))
+          return json({error:'ris_invalid_draft_request'},400);
+        const found=await sql.unsafe(
+          `select a.number,s.id session_id,s.source_url session_source_url,
+                  d.source_url document_source_url,v.content_hash document_hash
+             from fib.ris_agenda_items a
+             join fib.ris_sessions s on s.id=a.session_id
+             join fib.ris_document_links l on l.session_id=s.id
+              and l.agenda_id is null and l.kind='minutes' and l.status='confirmed'
+             join fib.ris_documents d on d.id=l.document_id
+             join fib.ris_document_versions v on v.id=d.latest_version_id and v.document_id=d.id
+            where a.id=$1::uuid and d.latest_version_id=$2::uuid`,
+          [body.agendaId,body.versionId],
+        );
+        if(found.length!==1)return json({error:'ris_draft_confirmed_source_required'},409);
+        const row=found[0],n=Number(row.number);
+        const canonicalSession=risUrl(row.session_source_url);
+        if(!Number.isSafeInteger(n)||n<1||n>150||
+           !canonicalSession || !canonicalSession.includes('__ksinr='))
+          return json({error:'ris_draft_ambiguous_top'},409);
+        const live=await fetch(canonicalSession,{redirect:'error',
+          signal:AbortSignal.timeout(15000),
+          headers:{accept:'text/html','user-agent':'FIB-U4-RIS-Pilot/0.1'}});
+        if(!live.ok)return json({error:'ris_draft_official_session_unavailable'},502);
+        const html=await live.text();
+        if(html.length>1500000)return json({error:'ris_draft_source_too_large'},502);
+        const observed=await parseRisStructure(html,canonicalSession,new Date().toISOString());
+        const expected=observed.agenda.map(x=>Number(x.number));
+        if(expected.length<1||expected.length>150||
+           expected.some((k,i)=>!Number.isSafeInteger(k)||k!==i+1))
+          return json({error:'ris_draft_live_agenda_incomplete'},409);
+        // The minutes source must be directly linked on the current
+        // authoritative session HTML, not merely stored in an older FIB row.
+        const official=risUrl(row.document_source_url);
+        if(!official||!observed.documents.some(d=>d.kind==='minutes'&&d.url===official))
+          return json({error:'ris_draft_minutes_source_changed'},409);
+        const sourceDocumentId=new URL(official).searchParams.get('id')??'';
+        const provider=createMistralRisDraftProvider({
+          apiKey:key,model,enabled:true,
+        });
+        const outcome=await prepareRisMinutesSessionDrafts({
+          sessionId:row.session_id,
+          sourceDocumentId,sourceUrl:official,
+          expectedPdfHash:String(row.document_hash),
+          expectedNumbers:expected,selectedTopNumber:n,provider,
+        },fetch,async bytes=>(await extractText(bytes.slice(),{mergePages:true})).text);
+        // Contains ONLY rewritten draft and vote metadata, never PDF bytes
+        // or a raw official source excerpt.
+        return json({ok:true,status:outcome.status,reasons:outcome.reasons,
+          drafts:outcome.topResults[0]?.result.drafts??[],
+          topNumber:n});
       }
       if(risAction){
         if(body.action==='ris_review_document'&&typeof body.versionId!=='string')return json({error:'invalid_review'},409);
