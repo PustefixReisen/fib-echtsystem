@@ -30,6 +30,16 @@ jobs:
           grep -Fq -- '--single-transaction' .github/workflows/ris-dev-single-release.yml
           grep -Fq -- '--no-verify-jwt' .github/workflows/ris-dev-single-release.yml
           grep -Fq 'StrictHostKeyChecking=yes' .github/workflows/ris-dev-single-release.yml
+          node - <<'JS'
+          const fs=require('node:fs');
+          const src=fs.readFileSync('.github/workflows/ris-dev-single-release.yml','utf8');
+          const build=src.indexOf('- name: Build and validate editorial frontend before any live changes');
+          const snapshot=src.indexOf('- name: Secure current FIB-only snapshot');
+          const migration=src.indexOf('- name: Apply the single, FIB-only');
+          if(build<0 || snapshot<0 || migration<0 || !(build<snapshot && snapshot<migration)) {
+            throw Error('Preflight build must precede backup and all live changes');
+          }
+          JS
   deploy:
     if: github.ref == 'refs/heads/main' && inputs.confirmation == 'RIS-DEV'
     runs-on: ubuntu-latest
@@ -59,6 +69,17 @@ jobs:
           grep -q 'alter table fib.ris_votes alter column evidence_quote drop not null' \
             supabase/migrations/20261109150000_fib_ris_factual_vote_evidence.sql
       - run: npm install --no-audit --no-fund
+      - name: Build and validate editorial frontend before any live changes
+        env:
+          VITE_FIB_ACCEPTANCE_MODE: shared-apps
+          VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
+          VITE_SUPABASE_PUBLISHABLE_KEY: ${{ secrets.VITE_SUPABASE_PUBLISHABLE_KEY }}
+        run: |
+          set -euo pipefail
+          test -n "$VITE_SUPABASE_URL"
+          test -n "$VITE_SUPABASE_PUBLISHABLE_KEY"
+          npm run build --workspace @fib/editorial-web
+          test -f apps/editorial-web/dist/index.html
       - name: Install PostgreSQL 17 and verified SSH/SFTP/rclone clients
         run: |
           set -euo pipefail
@@ -179,9 +200,6 @@ jobs:
           IONOS_SFTP_PASSWORD: ${{ secrets.IONOS_SFTP_PASSWORD }}
         run: |
           set -euo pipefail
-          test -n "$VITE_SUPABASE_URL"
-          test -n "$VITE_SUPABASE_PUBLISHABLE_KEY"
-          npm run build --workspace @fib/editorial-web
           test -f apps/editorial-web/dist/index.html
           lftp -u "$IONOS_SFTP_USER","$IONOS_SFTP_PASSWORD" "sftp://$IONOS_SFTP_HOST" <<EOF
           set cmd:fail-exit yes
