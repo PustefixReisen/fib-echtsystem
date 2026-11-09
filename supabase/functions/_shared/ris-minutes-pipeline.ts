@@ -1,4 +1,3 @@
-import {extractText} from "unpdf";
 import {splitRisMinutesByAgenda} from "./ris-minutes-candidates.ts";
 import {
   generateRisFactualReviewDraft,
@@ -31,7 +30,7 @@ export async function prepareRisMinutesSessionDrafts(
     provider?:RisMinutesDraftProvider;
   },
   transport:typeof fetch=fetch,
-  extractor:PdfTextExtractor=async bytes=>(await extractText(bytes.slice(),{mergePages:true})).text,
+  extractor:PdfTextExtractor,
 ):Promise<RisSessionDraftReview>{
   const unavailable=(reason:string):RisSessionDraftReview=>({
     sessionId:opts.sessionId,sourceDocumentId:opts.sourceDocumentId,
