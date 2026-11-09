@@ -97,6 +97,8 @@ const source = edgeDatasetSupport +
     .replace(/export async function /g, "async function ") +
   "\nglobalThis.handler=handleRis;";
 const context: any = {
+  // TS may emit an ES-module interop marker when transpiling combined fixtures.
+  exports: {},
   __postgres: () => sqlClient(pool),
   extractText: async () => ({
     text: "synthetic PDF text for fault-injection only",
