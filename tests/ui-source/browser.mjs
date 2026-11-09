@@ -262,10 +262,10 @@ try {
   const minutes=page.locator("section").filter({has:heading("Niederschrift der Sitzung")});
   await minutes.getByText("Beschlusspunkt A", { exact: true }).waitFor();
   await minutes.getByText("Beschlusspunkt B", { exact: true }).waitFor();
-  await minutes.getByText(/Ergebnis laut Niederschrift: angenommen\. Ja: 10, Nein: 2/).waitFor();
-  await minutes.getByText(/Der Gemeinderat beauftragte die Verwaltung mit einer weiteren Prüfung/).waitFor();
+  await minutes.getByText(/Abstimmung: angenommen · Ja 10 · Nein 2/).waitFor();
+  await minutes.getByText(/Der vollständige Beschlusswortlaut wurde für die Anzeige noch nicht freigegeben/).first().waitFor();
   assert.equal(await minutes.locator("img").count(),0,"No unlicensed wording or HTML rendered");
-  assert.ok((await minutes.innerText()).includes("Ja: 10, Nein: 2"));
+  assert.ok((await minutes.innerText()).includes("Ja 10 · Nein 2"));
   assert.equal(await minutes.locator('a[href*="id=75785"]').count(),1,"Complete original remains linked");
   assert.deepEqual(errors, []);
   console.log(
