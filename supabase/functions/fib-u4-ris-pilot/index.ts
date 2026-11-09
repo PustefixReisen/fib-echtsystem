@@ -128,10 +128,10 @@ export async function handleRis(req:Request,mode:'interactive'|'scheduler'='inte
       headers:{accept:'text/html','user-agent':'FIB-U4-RIS-Pilot/0.1'}});
     if(!response.ok)return reply({error:'ris_preview_http',status:response.status},502);
     const contentType=response.headers.get('content-type')??'';
-    if(contentType && !/text\\/html/i.test(contentType))
+    if(contentType && !/text\/html/i.test(contentType))
       return reply({error:'ris_preview_unexpected_content_type'},502);
     const html=await response.text();
-    if(html.length>1500000||!/<(?:html|body|a)\\b/i.test(html))
+    if(html.length>1500000||!/<(?:html|body|a)\b/i.test(html))
       return reply({error:'ris_preview_invalid_html'},502);
     const snapshot=await parseRisStructure(html,sessionUrl,new Date().toISOString());
     const agenda=snapshot.agenda.map(item=>({
