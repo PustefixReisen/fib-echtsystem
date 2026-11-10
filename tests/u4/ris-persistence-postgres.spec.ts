@@ -239,8 +239,12 @@ async function main() {
     "Vorhandener Redaktionstitel",
   );
   assert.equal(await count("finding_versions"), 1);
-  for (const t of ["events", "messages", "processes", "topics"])
-    assert.equal(await count(t), 0);
+  assert.equal(await count("events"),3,"Every imported TOP generates a FIB event");
+  assert.equal(await count("ris_top_events"),3);
+  for (const t of ["messages", "processes", "topics"])
+    assert.equal(await count(t),0);
+  const derivedBefore=await first("select count(*)::int n from fib.ris_top_events");
+  assert.equal(derivedBefore.n,3);
   const event = await tx(async (db) => {
     const r = await confirmEvent(
       {
