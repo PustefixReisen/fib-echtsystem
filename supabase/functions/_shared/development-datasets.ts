@@ -7,6 +7,8 @@ export const DATASET_KEYS: Record<string, string[]> = {
   ris_decision_points: ["id"],
   ris_proposal_texts: ["id"],
   ris_suggestions: ["id"],
+  ris_top_vote_results: ["agenda_id", "vote_index"],
+  ris_top_events: ["agenda_id"],
   ris_agenda_events: ["agenda_id", "event_id"],
   ris_relation_suggestions: ["id"],
   ris_review_log: ["id"],
