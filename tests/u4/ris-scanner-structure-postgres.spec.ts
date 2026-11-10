@@ -26,6 +26,7 @@ const baseHtml = readFileSync(
   "tests/u4/fixtures/ris-1032-top-2-3.html",
   "utf8",
 );
+let test1031Html = "";
 let html = baseHtml,
   failPage = false,
   failPdf = false,
@@ -64,6 +65,8 @@ const fetchMock = async (url: string) => {
     if (failPage) throw Error("session_outage");
     return new Response(html,{headers:{"content-type":"text/html; charset=utf-8"}});
   }
+  if (url === origin + "/si0057.asp?__ksinr=1031")
+    return new Response(test1031Html,{headers:{"content-type":"text/html; charset=utf-8"}});
   if (url.startsWith(origin + "/getfile.asp?id=")) {
     if (failPdf) throw Error("pdf_outage");
     return new Response(
@@ -106,6 +109,7 @@ const context: any = {
   Deno: {
     env: {
       get: (k: string) =>
+        k === "FIB_RIS_INTEGRATION_TEST_ENABLED" ? "true" :
         k === "FIB_RIS_STRUCTURE_ENABLED"
           ? enabled
             ? "true"
@@ -392,6 +396,30 @@ async function main() {
     JSON.parse(await cursor()).structureState,
     structureBeforeDisable,
   );
+  // Dedicated 15 October integration: 19/19 required before any write.
+  test1031Html=agendaHtml(18);
+  const cursorBefore1031=await cursor();
+  const blocked1031=await previewSession({integrationSession:"1031",commit:true});
+  assert.equal(blocked1031.status,409,JSON.stringify(blocked1031.body));
+  assert.equal(blocked1031.body.error,"integration_session_incomplete");
+  assert.equal(await cursor(),cursorBefore1031);
+  test1031Html=agendaHtml(19);
+  const imported1031=await previewSession({integrationSession:"1031",commit:true});
+  assert.equal(imported1031.status,200,JSON.stringify(imported1031.body));
+  assert.equal(imported1031.body.observedTopCount,19);
+  const realSession=await first(
+    "select id from fib.ris_sessions where source_url=$1",
+    [origin+"/si0057.asp?__ksinr=1031"],
+  );
+  assert.ok(realSession?.id);
+  assert.equal((await first(
+    "select count(*)::int n from fib.ris_agenda_items where session_id=$1",
+    [realSession.id])).n,19);
+  const repeat1031=await previewSession({integrationSession:"1031",commit:true});
+  assert.equal(repeat1031.status,200);
+  assert.equal(repeat1031.body.changed,false,"Repeated official session import must be idempotent");
+  assert.equal(await cursor(),cursorBefore1031,"Direct approved session import must not change scanner cursor");
+  assert.equal((await previewSession({integrationSession:"9999",commit:true})).status,400);
   console.log(
     "Actual RIS handler + actual migration: active feature, atomic snapshots/checkpoints, PDF failure, rollback, repeat, late publication, runtime role and disabled feature passed",
   );

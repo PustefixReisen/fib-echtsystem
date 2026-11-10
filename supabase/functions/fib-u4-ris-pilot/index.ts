@@ -151,13 +151,25 @@ export async function handleRis(req:Request,mode:'interactive'|'scheduler'='inte
   // calendar backfill, PDF downloads, scanner checkpoints or source observations.
   // Only an explicitly approved AAL2 admin request may use this write path.
   if(payload.integrationSession!==undefined){
-   if(payload.integrationSession!=='1032')return reply({error:'integration_session_not_allowed'},400);
-   if(mode!=='interactive'||payload.commit!==true)return reply({error:'integration_requires_interactive_commit'},403);
-   if(Deno.env.get('FIB_RIS_INTEGRATION_TEST_ENABLED')!=='true')return reply({error:'integration_test_disabled'},403);
-   const singleUrl=origin+'/si0057.asp?__ksinr=1032';
+   if(!['1031','1032'].includes(payload.integrationSession))
+     return reply({error:'integration_session_not_allowed'},400);
+   if(mode!=='interactive'||payload.commit!==true)
+     return reply({error:'integration_requires_interactive_commit'},403);
+   if(Deno.env.get('FIB_RIS_INTEGRATION_TEST_ENABLED')!=='true')
+     return reply({error:'integration_test_disabled'},403);
+   const sessionId=payload.integrationSession;
+   const singleUrl=origin+'/si0057.asp?__ksinr='+sessionId;
    const response=await fetch(singleUrl,{redirect:'error',signal:AbortSignal.timeout(15000)});
    if(!response.ok)return reply({error:'integration_session_http',status:response.status},502);
    const snapshot=await parseRisStructure(await response.text(),singleUrl,new Date().toISOString());
+   // Only a truly complete official 19-TOP response may update the
+   // known 15 October partial reference. This avoids silent source loss.
+   if(sessionId==='1031'){
+    const actual=snapshot.agenda.map(a=>Number(a.number));
+    if(actual.length!==19||actual.some((n,i)=>n!==i+1))
+     return reply({error:'integration_session_incomplete',observed:actual.length,
+       expected:19},409);
+   }
    const result=await sql.begin(async tx=>{
     return withDevelopmentDataset(tx,{action:'source_scan',scopeId},async()=>{
      const locked=await tx.unsafe("select id from fib.source_scopes where id=$1::uuid and status='candidate' for update",[scopeId]);
@@ -165,7 +177,8 @@ export async function handleRis(req:Request,mode:'interactive'|'scheduler'='inte
      return persistRisStructure(tx,snapshot);
     });
    });
-   return reply({mode:'single_session_integration',session:'1032',...result});
+   return reply({mode:'single_session_integration',session:sessionId,
+    observedTopCount:snapshot.agenda.length,...result});
   }
 
   if(structureEnabled&&payload.commit===true){failureScope=scopeId;failureCadence=cadence;}
