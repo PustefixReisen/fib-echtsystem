@@ -109,7 +109,7 @@ const context: any = {
   Deno: {
     env: {
       get: (k: string) =>
-        k === "FIB_RIS_INTEGRATION_TEST_ENABLED" ? "true" :
+        k === "FIB_RIS_INTEGRATION_TEST_ENABLED" ? "false" :
         k === "FIB_RIS_STRUCTURE_ENABLED"
           ? enabled
             ? "true"
@@ -420,6 +420,10 @@ async function main() {
   assert.equal(repeat1031.body.changed,false,"Repeated official session import must be idempotent");
   assert.equal(await cursor(),cursorBefore1031,"Direct approved session import must not change scanner cursor");
   assert.equal((await previewSession({integrationSession:"9999",commit:true})).status,400);
+  const disabled1032=await previewSession({integrationSession:"1032",commit:true});
+  assert.equal(disabled1032.status,403);
+  assert.equal(disabled1032.body.error,"integration_test_disabled");
+
   console.log(
     "Actual RIS handler + actual migration: active feature, atomic snapshots/checkpoints, PDF failure, rollback, repeat, late publication, runtime role and disabled feature passed",
   );
