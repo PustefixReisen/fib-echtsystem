@@ -145,6 +145,9 @@ async function main() {
     const finding = await transact(runtime, (tx) =>
       withDevelopmentDataset(tx, accept, () => risEditorial(tx, human, accept)),
     );
+    const ownedBeforeEventCreate=Number((await first(
+      "select count(*) n from fib.development_objects where table_name='events' and ownership='owned'"
+    )).n);
     const create = {
       action: "source_create_event",
       findingId: finding.findingId,
@@ -162,14 +165,10 @@ async function main() {
         return sourceEditorial(tx, human, create);
       }),
     );
-    assert.equal(
-      (
-        await first(
-          "select count(*) n from fib.development_objects where table_name='events' and ownership='owned'",
-        )
-      ).n,
-      "1",
-    );
+    assert.equal(Number((await first(
+      "select count(*) n from fib.development_objects where table_name='events' and ownership='owned'"
+    )).n),ownedBeforeEventCreate+1,
+      "Explicit editorial event creates one additional object beyond automatically imported RIS-TOP events");
     assert.equal(
       (
         await first(
