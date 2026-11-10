@@ -407,6 +407,7 @@ async function main() {
   const imported1031=await previewSession({integrationSession:"1031",commit:true});
   assert.equal(imported1031.status,200,JSON.stringify(imported1031.body));
   assert.equal(imported1031.body.observedTopCount,19);
+  assert.equal(imported1031.body.storedTopCount,19,"Must verify 19 committed TOPs, not just 19 parsed headings");
   const realSession=await first(
     "select id from fib.ris_sessions where source_url=$1",
     [origin+"/si0057.asp?__ksinr=1031"],
