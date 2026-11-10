@@ -69,7 +69,7 @@ export function RisMinutesPreview() {
         <p role="status"><strong>Nur Vorschau. Keine Anmeldung, keine Datenbankverbindung und keine Speicherung.</strong></p>
         <p>Die Vorschau zeigt die Abstimmungsergebnisse für TOP 2, 3 und 6 vom 15.10.2026.</p>
       </header>
-      <RisSessionView data={data} onOpenEvent={() => {}} />
+      <RisSessionView data={data} />
     </main>
   );
 }

@@ -193,6 +193,8 @@ export default {
         );
       }
 
+      const risReadOnly = Boolean((await sql.unsafe("select to_regclass('fib.ris_top_events') as relation"))[0]?.relation)
+        && (await sql.unsafe("select 1 from fib.ris_top_events where event_id=$1", [payload.eventId])).length > 0;
       const sources = await sql.unsafe(
         `select distinct f.id as finding_id, f.title as finding_title, f.original_url,
                 s.name as source_name, ef.evidence_role, ef.note, ef.justification
@@ -205,6 +207,7 @@ export default {
       );
       return json({
         ...result,
+        event: {...result.event, risReadOnly},
         sources: sources.map((row) => ({
           findingId: row.finding_id,
           findingTitle: row.finding_title,

@@ -81,6 +81,11 @@ export default {
 
       if (action === 'get_state') return json({ ok: true, state: await state() });
 
+      if (objectType === 'event' && action !== 'release_lock' && action !== 'release_lead' &&
+          (await sql.unsafe("select to_regclass('fib.ris_top_events') as relation"))[0]?.relation &&
+          (await sql.unsafe("select 1 from fib.ris_top_events where event_id=$1", [objectId])).length)
+        return json({ error: 'ris_event_readonly' }, 403);
+
       if (action === 'take_lead') {
         await sql.unsafe("insert into fib.lead_responsibilities(object_type,object_id,user_id) values ($1,$2::uuid,$3) on conflict (object_type,object_id) do update set user_id=excluded.user_id,assigned_at=now()", [objectType,objectId,uid]);
         return json({ ok: true, state: await state() });

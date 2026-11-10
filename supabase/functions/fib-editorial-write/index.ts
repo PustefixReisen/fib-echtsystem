@@ -104,8 +104,23 @@ export default {
       if (membership.length === 0) return json({ error: 'fib_membership_missing_or_inactive' }, 403);
 
       if (!['admin','editor'].includes(membership[0].role) && body.action !== 'source_readiness') return json({error:'editor_required'},403);
-      if (body.action === 'source_create_event' && (body.sessionId || body.agendaId || body.mainEvent))
-        return json({error:'ris_source_readonly'},403);
+      if (body.action === 'source_create_event') {
+        if (body.sessionId || body.agendaId || body.mainEvent)
+          return json({error:'ris_source_readonly'},403);
+        if (body.findingId && (await sql.unsafe(`select 1 from fib.ris_documents d
+            join fib.ris_document_links l on l.document_id=d.id
+            where d.finding_id=$1 and l.status<>'rejected'
+              and (l.agenda_id is not null or l.kind='minutes') limit 1`, [body.findingId])).length)
+          return json({error:'ris_source_readonly'},403);
+      }
+      if ((!risAction || body.action === 'source_propose_relation' || body.action === 'source_review_relation') &&
+          (await sql.unsafe("select to_regclass('fib.ris_top_events') as relation"))[0]?.relation) {
+        const protectedEvent = body.action === 'source_review_relation'
+          ? await sql.unsafe(`select 1 from fib.ris_relation_suggestions r
+              join fib.ris_top_events t on t.event_id=r.event_id where r.id=$1`, [body.suggestionId])
+          : await sql.unsafe("select 1 from fib.ris_top_events where event_id=$1", [body.eventId ?? null]);
+        if (protectedEvent.length) return json({error:'ris_event_readonly'},403);
+      }
       if (body.action === 'source_capture_pdf') {
         const store = originalStore(Deno.env.get('SUPABASE_URL') ?? '',Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? '');
         await sql.begin(tx=>withDevelopmentDataset(tx,body,async()=>{

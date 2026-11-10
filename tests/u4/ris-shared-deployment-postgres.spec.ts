@@ -13,6 +13,7 @@ import {
 import { withDevelopmentDataset } from "../../supabase/functions/_shared/development-datasets.ts";
 import { risEditorial } from "../../supabase/functions/_shared/ris-editorial.ts";
 import { sourceEditorial } from "../../supabase/functions/_shared/source-editorial.ts";
+import { captureAcceptance, rebuildAcceptance } from "../../scripts/ris-shared-apps/rebuild-acceptance.mts";
 import { sourceReadiness } from "../../supabase/functions/_shared/source-readiness.ts";
 import {
   adapter,
@@ -517,6 +518,60 @@ async function main() {
     console.log(
       "PASS real PostgreSQL: active-source gate, exact transaction ownership, concurrent unmarked row protection, runtime/RLS restrictions, stale/foreign-reference refusal, cyclic FK cleanup and retained master data/Auth/public sentinel",
     );
+    const originals = process.env.FIB_TEST_RIS_423_SOURCE_DIR;
+    const sourceIds = ["1031","1032"];
+    const numbers = [19,12];
+    const dates = ["15.10.2026","29.10.2026"];
+    const refs = ["GR/439/2026","GR/440/2026"];
+    const sourceHtml = sourceIds.map((id,index) => originals
+      ? readFileSync(join(originals,index ? "1032/session.html" : "session.html"),"utf8")
+      : `<div class="siname">${refs[index]}</div><div class="sidat">${dates[index]}</div>
+          <div class="sigrname">Gemeinderat</div><table>${Array.from({length:numbers[index]},(_,i) =>
+          `<tr><td class="tofnum">Ö ${i+1}</td><td class="tolink"><a href="to0050.asp?__ktonr=${id}${i+1}">Test TOP ${i+1}</a></td></tr>`).join("")}</table>`);
+    const fakeFetch = async (input: RequestInfo | URL) => {
+      const url = new URL(String(input));
+      if (url.pathname === "/getfile.asp" && url.searchParams.get("id") === "75785" && originals)
+        return new Response(readFileSync(join(originals,"minutes.pdf")),{headers:{"content-type":"application/pdf"}});
+      const html = sourceHtml[sourceIds.indexOf(url.searchParams.get("__ksinr") ?? "")];
+      if (html) return new Response(html);
+      throw Error("Unexpected source in isolated acceptance test");
+    };
+    const captures = originals ? await captureAcceptance(fakeFetch as typeof fetch) : await Promise.all(
+      sourceIds.map(async (id,index) => ({
+        snapshot:await parseRisStructure(sourceHtml[index],"https://buergerinfo-feldkirchen.digitalfabrix.de/si0057.asp?__ksinr="+id,new Date().toISOString()),
+        minutes:null,
+      })),
+    );
+    for (const {snapshot} of captures) {
+      const partial = {...snapshot, agenda:snapshot.agenda.slice(0,2), observedAt:"2026-11-09T00:00:00.000Z", hash:"1".repeat(64)};
+      await transact(owner, tx => persistRisStructure(tx,partial));
+    }
+    await owner.query(`insert into fib.ris_agenda_events(agenda_id,event_id,role,reviewed_by)
+      select id,$1,'main_event',$2 from fib.ris_agenda_items order by id limit 1`,[outside,actor]);
+    const readLinks = async () => (await owner.query("select agenda_id,event_id from fib.ris_top_events order by agenda_id")).rows;
+    const oldLinks = await readLinks();
+    await owner.query("begin");
+    const rehearsal = await rebuildAcceptance(adapter(owner),captures);
+    assert.equal(rehearsal.reset,true);
+    await owner.query("rollback");
+    assert.deepEqual(await readLinks(),oldLinks);
+    const rebuilt = await transact(owner, tx => rebuildAcceptance(tx,captures));
+    assert.equal(rebuilt.reset,true);
+    assert.deepEqual(rebuilt.sessions.map(r=>r.events),numbers);
+    assert.deepEqual(rebuilt.sessions.map(r=>r.voteCount), originals ? [29,0] : [0,0]);
+    const links = await readLinks();
+    assert.equal(links.length,31);
+    assert.ok(links.every(l=>l.event_id!==outside && !oldLinks.some(o=>o.event_id===l.event_id)));
+    assert.equal((await first("select count(*) n from fib.ris_agenda_events")).n,"0");
+    assert.equal((await first("select id from fib.events where id=$1",[outside])).id,outside);
+    assert.equal((await first("select payload from public.memorix_sentinel")).payload,"unchanged");
+    const repeated = await transact(owner, tx => rebuildAcceptance(tx,captures));
+    assert.equal(repeated.reset,false);
+    assert.deepEqual(await readLinks(),links);
+    if (originals) assert.equal((await first(`select count(*) n from fib.ris_top_events t
+      join fib.event_findings ef on ef.event_id=t.event_id join fib.ris_documents d on d.finding_id=ef.finding_id
+      where d.source_url like '%id=75785'`)).n,"19");
+    console.log("PASS #423 two-session reset rehearsal, safe rebuild, external event preservation and duplicate-free retry");
   } finally {
     if (runtime!) await runtime.end();
     await other.end();

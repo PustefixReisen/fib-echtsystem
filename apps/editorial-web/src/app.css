@@ -234,6 +234,7 @@ h3 { margin-bottom: .45rem; }
 .work-item .object-icon { width: 24px; height: 24px; }
 .action-button { display: inline-flex; align-items: center; justify-content: center; gap: .5rem; }
 .action-icon { width: 18px; height: 18px; flex: none; }
+.action-icon.navigation-glyph { width: 1em; height: 1em; }
 .card-headed { padding-top: 0; overflow: hidden; }
 .card-headed > h2:first-child, .card-headed > .section-heading:first-child {
   margin: 0 -1.2rem 1.2rem;
@@ -723,7 +724,7 @@ button:has(> .action-icon) { display: inline-flex; align-items: center; justify-
 
 .ris-simplified ul { list-style: none; margin: 0; padding: 0; }
 .ris-document-item .source-actions, .ris-simplified .work-item .source-actions { flex-direction: row; flex-wrap: wrap; align-items: center; gap: .25rem; }
-.source-workspace .source-actions .fib-action-icon { flex: 0 0 44px; }
+.source-workspace .source-actions .fib-action-icon:not(.fib-navigation-icon) { flex: 0 0 44px; }
 
 
 /* RIS acceptance #379: headings, compact labels and directly adjacent actions. */
@@ -841,11 +842,15 @@ button:has(> .action-icon) { display: inline-flex; align-items: center; justify-
 .ris-external-reference { display: inline-flex; align-items: flex-start; flex-wrap: nowrap; gap: .4rem; min-width: 0; max-width: 100%; }
 .ris-external-reference > span { min-width: 0; overflow-wrap: anywhere; padding-top: .45rem; }
 .ris-external-reference > span { color: inherit; text-decoration: none; }
-.fib-external-icon {
-  display: inline-flex; min-width: 36px; width: 36px; min-height: 36px; height: 36px;
-  border: 1px solid #c1d9c9; border-radius: 7px; background: #fff;
-  padding: .4rem; color: #18533e; align-items: center; justify-content: center;
+.fib-action-icon.fib-navigation-icon {
+  min-width: 24px; min-height: 24px; padding: .125rem;
+  border: 0; background: transparent; color: #18533e; font-size: 1em;
 }
+.fib-navigation-icon svg { width: 1em; height: 1em; }
+.fib-action-icon.fib-navigation-icon:hover { background: #e7eee9; }
+.ris-external-reference > span { padding-top: 0; }
+.ris-result-line { display: flex; align-items: center; flex-wrap: wrap; gap: .25rem; }
+button.ris-info-icon { border: 0; padding: .125rem; min-width: 24px; min-height: 24px; background: transparent; color: #18533e; font-size: 1.1em; }
 .ris-simplified .card-headed > .section-heading:first-child > button {
   background: #fff; color: #18533e; border: 1px solid #b8d1c2; font-weight: 600;
 }
