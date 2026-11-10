@@ -4,6 +4,7 @@ import {calendarMonth,calendarSessions} from '../_shared/ris-calendar.ts';
 import postgres from 'npm:postgres@3.4.7';
 import {extractText} from 'npm:unpdf@2.1.0';
 import {risSessionLinks,risUrl,parseRisStructure,persistRisStructure,persistRisDocument} from '../_shared/ris-structure.ts';
+import {persistRisTopVotes} from '../_shared/ris-top-votes.ts';
 const origin='https://buergerinfo-feldkirchen.digitalfabrix.de';
 const entry=origin+'/do0040.asp?smcmode=32832';
 const cors={'access-control-allow-origin':'https://fib.pustivo.de','access-control-allow-headers':'authorization,apikey,x-client-info,content-type','access-control-allow-methods':'POST, OPTIONS'};
@@ -333,6 +334,25 @@ export async function handleRis(req:Request,mode:'interactive'|'scheduler'='inte
    if((latest.length?JSON.stringify(latest[0].cursor_state):null)!==previousSerialized)throw new Error('cursor_changed_retry');
    for(const snapshot of snapshots)await persistRisStructure(tx,snapshot);
    for(const pdf of pdfs)if(structureEnabled)await persistRisDocument(tx,pdf.url,pdf.hash,pdf.text,'unpdf-2.1.0',stamp,{bytes:pdf.bytes,store:{put:async(key,bytes)=>originalStore(Deno.env.get('SUPABASE_URL') ?? '',Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? '').put(key,bytes)}});
+   // Minutes metadata belongs to each TOP, never to a session event.
+   // Source vote parsing is fail-closed and never stores original wording.
+   for(const pdf of pdfs){
+     if(!structureEnabled||!pdf.text)continue;
+     const targets=await tx.unsafe(
+       `select distinct l.session_id from fib.ris_document_links l
+         join fib.ris_documents d on d.id=l.document_id
+        where d.source_url=$1 and l.kind='minutes' and l.agenda_id is null`,
+       [pdf.url],
+     );
+     for(const row of targets){
+       try{await persistRisTopVotes(tx,row.session_id,pdf.url,pdf.hash,pdf.text,stamp);}
+       catch(e){
+         // No vote facts are written unless the full document and all
+         // headings are verifiable. Other RIS source imports continue.
+         console.warn('RIS vote extraction pending: '+String(e).slice(0,100));
+       }
+     }
+   }
    for(const u of newly){
     const id='ris:'+u;
     await tx.unsafe('insert into fib.source_observations(scope_id,external_id,canonical_url,content_fingerprint,first_seen_at,last_seen_at,revision) values ($1::uuid,$2,$3,$4,$5,$5,1) on conflict(scope_id,external_id) do update set last_seen_at=excluded.last_seen_at',[scopeId,id,u,id,stamp]);
