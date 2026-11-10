@@ -34,18 +34,16 @@ export function OriginalLink(
   { url, label = "Original im RIS öffnen", text }: {
     url?: string | null;
     label?: string;
-    text?: string;
+    text: ReactNode;
   },
 ) {
-  if (!url || !/^https:\/\//i.test(url)) return null;
-  const icon = (
-    <a className="fib-action-icon fib-navigation-icon fib-external-icon"
+  if (!url || !/^https:\/\//i.test(url)) return <span>{text}</span>;
+  return (
+    <a className="ris-external-reference"
       href={url} target="_blank" rel="noopener noreferrer"
-      title={label} aria-label={label}>
+      title={label}>
       <IconGlyph name="↗"/>
+      <span>{text}</span>
     </a>
   );
-  return text
-    ? <span className="ris-external-reference">{icon}<span>{text}</span></span>
-    : icon;
 }

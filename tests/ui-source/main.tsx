@@ -54,7 +54,11 @@ const observation = {
 (window as any).legacyChoices = false;
 const api = async (b: any) => {
   (window as any).calls.push(b);
-  await new Promise((r) => setTimeout(r, 20));
+  const term = (b.search ?? "").toLocaleLowerCase("de-DE");
+  const matches = (...fields: string[]) => fields.some(field =>
+    field.toLocaleLowerCase("de-DE").includes(term)
+  );
+  await new Promise((r) => setTimeout(r, b.search === "ohne Treffer" ? 450 : 20));
   if ((window as any).failNext) {
     (window as any).failNext = false;
     throw Error("Vorübergehender Verbindungsfehler");
@@ -62,11 +66,9 @@ const api = async (b: any) => {
   if (b.action === "source_choices") {
     return {
       events: events.filter((e) => {
-        const term=(b.search ?? "").toLocaleLowerCase("de-DE");
         const date=e.event_date ?? "";
         const shownDate=date ? new Date(date).toLocaleDateString("de-DE") : "";
-        const searchable=[e.title,e.summary ?? "",date,shownDate].join(" ").toLocaleLowerCase("de-DE");
-        return searchable.includes(term) && ((window as any).legacyChoices || !b.agendaId ||
+        return matches(e.title, e.summary ?? "", date, shownDate) && ((window as any).legacyChoices || !b.agendaId ||
           (b.eventRole === "main_event"
             ? mainEventFindings.some((link:any)=>link.event_id===e.id)
             : !mainEventFindings.some((link:any)=>link.event_id===e.id) &&
@@ -85,14 +87,21 @@ const api = async (b: any) => {
         reference: "GR/440/2026",
         committee_name: "Gemeinderat",
         session_date: "2026-10-29",
-      }],
+      }, {
+        id: "s2",
+        reference: "B/99/2026",
+        committee_name: "Bauausschuss",
+        session_date: "2026-09-15",
+      }].filter(s => matches(s.reference, s.committee_name, s.session_date,
+        new Date(s.session_date).toLocaleDateString("de-DE", {day:"2-digit", month:"2-digit", year:"numeric", timeZone:"UTC"}))),
     };
   }
   if (b.action === "source_list") {
     return {
-      findings,
+      findings: findings.filter(f => matches(f.title, f.source_name, f.original_url)),
       documents: [],
-      observations: findings.length === 1 ? [observation] : [],
+      observations: findings.length === 1 && matches(observation.source_name, observation.canonical_url)
+        ? [observation] : [],
     };
   }
   if (b.action === "ris_read") {
@@ -109,7 +118,7 @@ const api = async (b: any) => {
         number: "3",
         title: "Beitragsanpassung der Kindertageseinrichtungen zum 01.01.2027",
       }],
-      documents: [doc,...((window as any).showDecisionCases ? [{...doc,id:"minutes",agenda_id:null,kind:"minutes",status:"confirmed",source_url:origin+"/getfile.asp?id=75785"}] : [])],
+      documents: [{...doc, reference: "5395/2026 – Antrag zur Förderung der Kindertageseinrichtungen und zur langfristigen Finanzierung kommunaler Angebote in Feldkirchen"}, {...doc,id:"agenda",agenda_id:null,kind:"unknown",source_url:origin+"/to0040.asp"},...((window as any).showDecisionCases ? [{...doc,id:"minutes",agenda_id:null,kind:"minutes",status:"confirmed",source_url:origin+"/getfile.asp?id=75785"}] : [])],
       proposals: [{
         id: "p1",
         agenda_id: "t2",
@@ -118,7 +127,9 @@ const api = async (b: any) => {
         source_url: origin + "/vo0050.asp?__kvonr=8640",
       }],
       topVotes: (window as any).showDecisionCases
-        ? [{agenda_id:"t2",vote_index:1,result:"accepted",yes_count:10,no_count:2}]
+        ? [{agenda_id:"t2",vote_index:1,result:"accepted",yes_count:10,no_count:2},
+           {agenda_id:"t2",vote_index:2,result:"rejected",yes_count:2,no_count:10},
+           {agenda_id:"t2",vote_index:3,result:"accepted",yes_count:12,no_count:0}]
         : [],
       events: local,
       mainEvents: mainLinks,

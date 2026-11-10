@@ -1,7 +1,8 @@
 import { ActionIcon, OriginalLink } from "./ActionIcon.js";
 import { EventAssignmentView } from "./EventAssignmentView.js";
-import { RisSessionView } from "./RisSessionView.js";
+import { formatRisDate, RisSessionView } from "./RisSessionView.js";
 import { type ReactNode, useEffect, useRef, useState } from "react";
+import { liveSearchDelay } from "./live-search.js";
 import { type SourceApi, sourceApi, withEventLock } from "./source-api.js";
 
 type Row = Record<string, any>;
@@ -109,7 +110,13 @@ export function SourceWorkspace({
   const dirtyRef = useRef(false);
   dirtyRef.current = dirty;
   const inFlight = useRef(false);
-  const generation = useRef(0);
+  const [listRevision, setListRevision] = useState(0);
+  const [listBusy, setListBusy] = useState(true);
+  const [listError, setListError] = useState("");
+  function refreshList() {
+    setListBusy(true);
+    setListRevision(value => value + 1);
+  }
   const leave = () => {
     if (inFlight.current || !assignmentGuard.current()) return false;
     const ok = !dirtyRef.current ||
@@ -153,14 +160,31 @@ export function SourceWorkspace({
       setBusy(false);
     }
   }
-  async function loadList(next = route) {
-    const token = ++generation.current;
-    const data = await api({
-      action: next === "sessions" ? "ris_sessions" : "source_list",
-      search,
-    });
-    if (token === generation.current) setList(data);
-  }
+  useEffect(() => {
+    if (detail || session) return;
+    let active = true;
+    setListBusy(true);
+    setListError("");
+    const timer = window.setTimeout(async () => {
+      try {
+        const data = await api({
+          action: route === "sessions" ? "ris_sessions" : "source_list",
+          search: search.trim(),
+        });
+        if (active) setList(data);
+      } catch (e) {
+        if (active) {
+          setListError(e instanceof Error ? e.message : "Liste konnte nicht geladen werden.");
+        }
+      } finally {
+        if (active) setListBusy(false);
+      }
+    }, liveSearchDelay);
+    return () => {
+      window.clearTimeout(timer);
+      active = false;
+    };
+  }, [api, detail, session, route, search, listRevision]);
   async function openFinding(input: Row, preserveContext = false) {
     if (!leave()) return;
     setDirty(false);
@@ -201,7 +225,7 @@ export function SourceWorkspace({
       void openFinding({ findingId: initialFindingId });
     } else if (initialSessionId && mode === "sessions") {
       void openSession(initialSessionId, initialTopId);
-    } else void run(() => loadList(mode));
+    }
   }, [mode, initialFindingId, initialSessionId, initialTopId]);
   const finding = detail?.finding,
     document = detail?.document,
@@ -260,7 +284,6 @@ export function SourceWorkspace({
         setDetail(
           await api({ action: "source_read", findingId: result.findingId }),
         );
-        await loadList("findings");
       },
       "Fundstelle übernommen. Es wurde kein Ereignis und keine Meldung automatisch angelegt.",
     );
@@ -313,7 +336,7 @@ export function SourceWorkspace({
             setDirty(false);
             setDetail(null);
             setSession(null);
-            void run(() => loadList());
+            refreshList();
           }}
         >
           {route === "sessions" ? "Sitzungen" : "Fundstellen"}
@@ -324,7 +347,7 @@ export function SourceWorkspace({
             <span aria-current="page">
               {session
                 ? `${session.session.committee_name ?? "Sitzung"} · ${
-                  date(session.session.session_date)
+                  formatRisDate(session.session.session_date)
                 }`
                 : currentTitle}
             </span>
@@ -359,7 +382,7 @@ export function SourceWorkspace({
             setDirty(false);
             setDetail(null);
             setSession(null);
-            void run(() => loadList());
+            refreshList();
           }}
         >
           Zurück zur Liste
@@ -394,28 +417,22 @@ export function SourceWorkspace({
             <button
               disabled={busy}
               aria-label="Liste aktualisieren"
-              onClick={() => void run(() => loadList())}
+              onClick={refreshList}
             >
               ↻
             </button>
           }
         >
-          <form
-            className="finding-filter"
-            onSubmit={(e) => {
-              e.preventDefault();
-              void run(() => loadList());
-            }}
-          >
+          <div className="finding-filter">
             <label>
-              Suche nach Titel, Quelle oder Adresse
-              <input
-                type="search"
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-              />
+              {route === "sessions"
+                ? "Suche nach Gremium, Sitzungsnummer oder Datum"
+                : "Suche nach Titel, Quelle oder Adresse"}
+              <input type="search" value={search} onChange={e => {
+                setListBusy(true);
+                setSearch(e.target.value);
+              }} />
             </label>
-            <button disabled={busy}>Suchen</button>
             {route === "findings" && (
               <label>
                 Status
@@ -432,48 +449,49 @@ export function SourceWorkspace({
                 </select>
               </label>
             )}
-          </form>
-          {list.hasMore || list.sessions?.length > 100
-            ? (
-              <p role="status">
-                Mehr als 100 Treffer. Bitte die Suche eingrenzen.
-              </p>
-            )
-            : null}
-          {route === "sessions"
-            ? (list.sessions ?? []).slice(0, 100).map((s: Row) => (
-              <div className="work-item" key={s.id}>
-                <div>
+          </div>
+          {!listBusy && listError && <p role="alert">{listError}</p>}
+          {listBusy && <p role="status">Suche läuft …</p>}
+          {!listBusy && !listError && <>
+            {list.hasMore || list.sessions?.length > 100
+              ? (
+                <p role="status">
+                  Mehr als 100 Treffer. Bitte die Suche eingrenzen.
+                </p>
+              )
+              : null}
+            {route === "sessions"
+              ? (list.sessions ?? []).slice(0, 100).map((s: Row) => (
+                <div className="work-item source-list-row" key={s.id}>
                   <strong>{s.reference ?? "Sitzung ohne Referenz"}</strong>
-                  <p>
-                    {s.committee_name ?? "Gremium unbekannt"} ·{" "}
-                    {date(s.session_date)}
-                  </p>
+                  <div className="source-navigation-row">
+                    <p>{s.committee_name ?? "Gremium unbekannt"} · {formatRisDate(s.session_date)}</p>
+                    <ActionIcon label="Sitzung öffnen" disabled={busy} onClick={() => void openSession(s.id)}>→</ActionIcon>
+                  </div>
                 </div>
-                <ActionIcon label="Sitzung öffnen" disabled={busy} onClick={()=>void openSession(s.id)}>→</ActionIcon>
-              </div>
-            ))
-            : items.map((x: Row) => (
-              <div className="work-item" key={x.key}>
-                <div>
-                  <strong>{x.caption}</strong>
-                  <p>
-                    {x.source_name} · {x.type === "finding"
-                      ? "Übernommene Fundstelle"
-                      : "Übernahme offen / neue Fassung"}
-                  </p>
+              ))
+              : items.map((x: Row) => (
+                <div className="work-item source-navigation-row" key={x.key}>
+                  <div>
+                    <strong>{x.caption}</strong>
+                    <p>
+                      {x.source_name} · {x.type === "finding"
+                        ? "Übernommene Fundstelle"
+                        : "Übernahme offen / neue Fassung"}
+                    </p>
+                  </div>
+                  <ActionIcon label="Fundstelle öffnen" disabled={busy} onClick={()=>void openFinding(x.input)}>→</ActionIcon>
                 </div>
-                <ActionIcon label="Fundstelle öffnen" disabled={busy} onClick={()=>void openFinding(x.input)}>→</ActionIcon>
-              </div>
-            ))}
-          {!busy &&
-            !error &&
-            (route === "sessions" ? !list.sessions?.length : !items.length) && (
-            <p>
-              Keine passenden Einträge im erfassten Bestand. Das ist kein
-              Nachweis, dass die Quelle keine Veröffentlichungen enthält.
-            </p>
-          )}
+              ))}
+            {!busy &&
+              !error &&
+              (route === "sessions" ? !list.sessions?.length : !items.length) && (
+              <p>
+                Keine passenden Einträge im erfassten Bestand. Das ist kein
+                Nachweis, dass die Quelle keine Veröffentlichungen enthält.
+              </p>
+            )}
+          </>}
         </Card>
       )}
       {detail && (

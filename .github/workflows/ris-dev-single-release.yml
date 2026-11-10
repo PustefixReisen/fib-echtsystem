@@ -10,7 +10,7 @@ on:
         required: false
         type: string
       confirmation:
-        description: "After checking Mistral is disabled and development data is low-risk, type RIS-DEV"
+        description: "RIS-DEV for full release; RIS-UI-425 for read-only session search and frontend only"
         required: true
         type: string
 permissions:
@@ -45,7 +45,10 @@ jobs:
           }
           JS
   deploy:
-    if: github.ref == 'refs/heads/main' && inputs.confirmation == 'RIS-DEV'
+    if: >-
+      github.ref == 'refs/heads/main' &&
+      (inputs.confirmation == 'RIS-DEV' ||
+       (inputs.confirmation == 'RIS-UI-425' && inputs.rebuild_acceptance == ''))
     runs-on: ubuntu-latest
     environment: fib-release
     timeout-minutes: 45
@@ -175,14 +178,25 @@ jobs:
             "$RUNNER_TEMP/fib-ris-dev-release/frontend-before" "$dest/frontend-before" --download
           echo "FIB-only backup and prior frontend encrypted, uploaded and verified; release steps now permitted."
       - name: Rehearse the two-session rebuild before changing the deployment
-        if: inputs.rebuild_acceptance == 'RIS-423'
+        if: inputs.confirmation == 'RIS-DEV' && inputs.rebuild_acceptance == 'RIS-423'
         env:
           FIB_MAINTENANCE_DATABASE_URL: ${{ secrets.FIB_MAINTENANCE_DATABASE_URL }}
         run: |
           set -euo pipefail
           node --import tsx scripts/ris-shared-apps/rebuild-acceptance.mts \
             --out="$RUNNER_TEMP/fib-ris-dev-release/ris-423-rehearsal.json"
+      - name: Verify the RIS schema already exists for the UI release
+        if: inputs.confirmation == 'RIS-UI-425'
+        env:
+          FIB_MAINTENANCE_DATABASE_URL: ${{ secrets.FIB_MAINTENANCE_DATABASE_URL }}
+        run: |
+          set -euo pipefail
+          result=$(psql "$FIB_MAINTENANCE_DATABASE_URL" -X -Atq -v ON_ERROR_STOP=1 -c \
+            "select count(*) from pg_class c join pg_namespace n on n.oid=c.relnamespace
+              where n.nspname='fib' and c.relname in ('ris_top_events','ris_top_vote_results') and c.relrowsecurity")
+          test "$result" = "2"
       - name: Apply the single, FIB-only, non-destructive RIS migration
+        if: inputs.confirmation == 'RIS-DEV'
         env:
           FIB_MAINTENANCE_DATABASE_URL: ${{ secrets.FIB_MAINTENANCE_DATABASE_URL }}
         run: |
@@ -194,6 +208,7 @@ jobs:
               where n.nspname='fib' and c.relname in ('ris_top_events','ris_top_vote_results') and c.relrowsecurity")
           test "$result" = "2"
       - name: Deploy only changed FIB Edge handlers; preserve existing JWT gateway settings
+        if: inputs.confirmation == 'RIS-DEV'
         env:
           SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
         run: |
@@ -207,13 +222,21 @@ jobs:
           npx --yes supabase@2.122.0 functions deploy fib-coordination \
             --project-ref apaubomxffcwtzjimori --no-verify-jwt
       - name: Rebuild the two confirmed RIS acceptance sessions
-        if: inputs.rebuild_acceptance == 'RIS-423'
+        if: inputs.confirmation == 'RIS-DEV' && inputs.rebuild_acceptance == 'RIS-423'
         env:
           FIB_MAINTENANCE_DATABASE_URL: ${{ secrets.FIB_MAINTENANCE_DATABASE_URL }}
         run: |
           set -euo pipefail
           node --import tsx scripts/ris-shared-apps/rebuild-acceptance.mts \
             --apply --approval=RIS-423 --out="$RUNNER_TEMP/fib-ris-dev-release/ris-423-applied.json"
+      - name: Deploy only the session search handler for the UI release
+        if: inputs.confirmation == 'RIS-UI-425'
+        env:
+          SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
+        run: |
+          set -euo pipefail
+          npx --yes supabase@2.122.0 functions deploy fib-editorial-write \
+            --project-ref apaubomxffcwtzjimori --no-verify-jwt
       - name: Build and deploy non-deleting IONOS editorial frontend
         env:
           VITE_FIB_ACCEPTANCE_MODE: shared-apps
@@ -235,7 +258,8 @@ jobs:
           bye
           EOF
           curl --fail --silent --show-error --location --max-time 25 \
-            https://fib.pustivo.de/redaktion/ >/dev/null
+            "https://fib.pustivo.de/redaktion/?release=$GITHUB_SHA" -o "$RUNNER_TEMP/fib-ris-dev-release/live-index.html"
+          cmp apps/editorial-web/dist/index.html "$RUNNER_TEMP/fib-ris-dev-release/live-index.html"
       - name: Remove all private material from runner
         if: always()
         run: rm -rf "$RUNNER_TEMP/fib-ris-dev-release"

@@ -45,6 +45,16 @@ async function main() {
       "utf8",
     ),
   );
+  const meeting = await first(`select s.id, s.reference, c.name,
+    to_char(s.session_date, 'DD.MM.YYYY') as display_date,
+    to_char(s.session_date, 'YYYY-MM-DD') as iso_date
+    from fib.ris_sessions s join fib.ris_committees c on c.id=s.committee_id
+    where s.reference is not null and s.session_date is not null limit 1`);
+  for (const search of [meeting.name, meeting.reference, meeting.display_date, meeting.iso_date]) {
+    const { sessions } = await run({ action: "ris_sessions", search });
+    assert.ok(sessions.some((session: any) => session.id === meeting.id), search);
+  }
+  assert.deepEqual((await run({ action: "ris_sessions", search: "kein Sitzungsdatum" })).sessions, []);
   const source = (
     await first(
       "insert into fib.sources(name,homepage_url) values('Gemeinde Feldkirchen','https://www.feldkirchen.de') returning id",

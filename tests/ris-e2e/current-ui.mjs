@@ -76,7 +76,7 @@ try {
   await page.getByRole("button",{name:"Info zur RIS-Übernahme"}).click();
   await page.getByRole("note",{name:"RIS-Geschäftsregel"}).waitFor();
   const top2 = page.locator("article").filter({has:page.getByRole("heading",{name:/^TOP 2 ·/})});
-  await top2.getByRole("link",{name:"Beschlussvorlage im RIS öffnen"}).waitFor();
+  await top2.getByRole("link",{name:/^Beschlussvorlage/}).waitFor();
   const event = await db.query(`select te.event_id from fib.ris_top_events te
     join fib.ris_agenda_items a on a.id=te.agenda_id where a.session_id=$1 and a.number='2'`,[session.id]);
   assert.equal(event.rowCount,1);

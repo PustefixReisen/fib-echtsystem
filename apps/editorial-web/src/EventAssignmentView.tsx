@@ -1,3 +1,4 @@
+import { liveSearchDelay } from "./live-search.js";
 import { useEffect, useRef, useState } from "react";
 import { type SourceApi, sourceApi, withEventLock } from "./source-api.js";
 type Row = Record<string, any>;
@@ -86,7 +87,7 @@ export function EventAssignmentView(
   // Shared live-search convention: update after each change, debounce network
   // requests and discard stale responses from earlier terms.
   useEffect(() => {
-    const timer = window.setTimeout(() => void searchEvents(search), 250);
+    const timer = window.setTimeout(() => void searchEvents(search.trim()), liveSearchDelay);
     return () => {
       window.clearTimeout(timer);
       generation.current++;
