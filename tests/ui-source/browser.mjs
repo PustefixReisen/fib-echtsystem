@@ -76,7 +76,8 @@ try {
     await proposal.waitFor();
     assert.match(await proposal.innerText(), /Beschlussvorlage.*5395\/2026/s);
     assert.equal(await proposal.getAttribute("target"), "_blank");
-    await proposal.focus();
+    await page.locator(".ris-overview-links a").last().focus();
+    await page.keyboard.press("Tab");
     assert.ok(await proposal.evaluate(link => link.matches(":focus-visible")));
     const proposalIcon = await proposal.locator("svg").boundingBox();
     const proposalText = await proposal.locator("span").boundingBox();
