@@ -178,7 +178,16 @@ export async function handleRis(req:Request,mode:'interactive'|'scheduler'='inte
     return withDevelopmentDataset(tx,{action:'source_scan',scopeId},async()=>{
      const locked=await tx.unsafe("select id from fib.source_scopes where id=$1::uuid and status='candidate' for update",[scopeId]);
      if(locked.length!==1)throw Error('scope_changed');
-     return persistRisStructure(tx,snapshot);
+     const written=await persistRisStructure(tx,snapshot);
+     if(sessionId!=='1031')return written;
+     const stored=await tx.unsafe(
+       'select number from fib.ris_agenda_items where session_id=$1::uuid order by number::integer',
+       [written.sessionId],
+     );
+     const actual=stored.map(r=>Number(r.number));
+     if(actual.length!==19||actual.some((n,i)=>n!==i+1))
+       throw Error('ris_1031_saved_top_count_mismatch');
+     return {...written,storedTopCount:actual.length};
     });
    });
    return reply({mode:'single_session_integration',session:sessionId,
