@@ -1838,9 +1838,14 @@ export function App() {
                 {u4Busy && <p role="status">Quellenabruf läuft …</p>}
                 {u4Error && <p role="alert">Fehler: {u4Error}</p>}
                 {u4Result && <div aria-live="polite">
-                  <p><strong>Ergebnis:</strong> {u4Result.mode==='dry_run'?'Lesender Test':'Speichertest'}</p>
-                  {u4Result.ris===true && u4Result.backfill===true && <p>PDF-Nachprüfung: {String(u4Result.pdfChecked)} PDFs im letzten Paket geprüft · Noch offen: {String(u4Result.backfillRemaining)}</p>}
-                  {u4Result.ris ? <>
+                  <p><strong>Ergebnis:</strong> {u4Result.session1031===true
+                    ? (u4Result.mode==='read_only_session_preview'?'Amtliche Sitzung ohne Speicherung geprüft':'Amtliche Sitzungsstruktur übernommen')
+                    : u4Result.mode==='dry_run'?'Lesender Test':'Speichertest'}</p>
+                  {u4Result.session1031!==true && u4Result.ris===true && u4Result.backfill===true && <p>PDF-Nachprüfung: {String(u4Result.pdfChecked)} PDFs im letzten Paket geprüft · Noch offen: {String(u4Result.backfillRemaining)}</p>}
+                  {u4Result.session1031===true
+                    ? <p>{String(u4Result.publicTopCount??u4Result.observedTopCount)} der 19 öffentlichen TOPs erkannt.
+                      {u4Result.mode==='single_session_integration'?' Bitte die Sitzungsansicht neu öffnen und den Bestand prüfen.':' Ein Import ist damit noch nicht erfolgt.'}</p>
+                    : u4Result.ris ? <>
                     <p>RIS-Dokumentverweise: {String(u4Result.documents)} · Neue Verweise: {String(u4Result.newCount)} · Noch zu prüfende Freigabeansichten: {String(u4Result.pending)} · Alle gefundenen Ansichten geprüft: {u4Result.complete?'Ja':'Nein'}</p>
                     {typeof u4Result.coverageStatus==='string' && <p>Rückblick ({u4Result.cadence==='weekly'?'120':'30'} Tage) · benötigt ab: {String(u4Result.requiredSince)} · frühester belegter Start: {String(u4Result.earliestObserved??'unbekannt')} · Nachweis: {u4Result.coverageStatus==='candidate'?'Startdatum ausreichend; Vollständigkeit nicht belegt':u4Result.coverageStatus==='in_progress'?'Prüfung läuft':u4Result.coverageStatus==='insufficient'?'Rückblick nicht ausreichend':'Nicht nachgewiesen'}</p>}
                     {Array.isArray(u4Result.dueChecks) && <p>Prüfbedarf: {(u4Result.dueChecks as {cadence:string;due:boolean;reason:string;overdueDays:number|null}[]).map(x=>`${x.cadence==='daily'?'Täglich':'Wöchentlich'}: ${x.reason==='recovery_needed'?'Nachholung erforderlich':x.reason==='never_completed'?'Noch kein Abschluss':x.due?'Fällig':'Nicht fällig'}`).join(' · ')}</p>}
