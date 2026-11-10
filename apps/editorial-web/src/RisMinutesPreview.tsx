@@ -53,42 +53,12 @@ const data = {
     title: "Originalniederschrift",
     reference: null,
   }],
-  proposals: [],
-  decisions: [{
-    agenda_id: "preview-top-3",
-    point_key: "1",
-    version_id: "preview-v3",
-    wording: "Der zur Abstimmung gestellte Antrag sah vor, einen Entwurf für eine innerörtliche Parkanlage ausarbeiten zu lassen. Dieser sollte einen Tiny Forest, einen Biodiversitätsgarten, Wege, Bänke und weitere Bepflanzung umfassen und anschließend erneut dem Gemeinderat zur Beratung vorgelegt werden. Die Planungskosten sollten im Haushalt 2027 berücksichtigt werden. Der Gemeinderat lehnte diesen Antrag ab.",
-    result: "rejected",
-    yes_count: 7,
-    no_count: 13,
-    abstention_count: null,
-    source_changed: false,
-  },{
-    agenda_id: "preview-top-6",
-    point_key: "1",
-    version_id: "preview-v6a",
-    wording: "Der Gemeinderat bewertet die geplante Ansiedlung eines Rechenzentrums grundsätzlich positiv. Dazu soll der Vorentwurf des Bebauungsplans angepasst werden: Im westlichen Bereich des Plangebiets ist ein Sondergebiet für das Rechenzentrum vorzusehen. Auch die baulichen Festsetzungen des Entwurfs sollen entsprechend geändert werden.",
-    result: "accepted",
-    yes_count: 17,
-    no_count: 2,
-    abstention_count: null,
-    source_changed: false,
-  },{
-    agenda_id: "preview-top-6",
-    point_key: "2",
-    version_id: "preview-v6b",
-    wording: "Die Verwaltung soll prüfen, ob und in welchem Umfang der Investor sich wegen der vorgesehenen Änderungen am Bebauungsplan anteilig an den Planungskosten beteiligen kann. Falls dies möglich ist, soll sie einen entsprechenden städtebaulichen Vertrag ausarbeiten. Die Verfahrenskosten sollen sich Investor und Gemeinde Feldkirchen entsprechend dem Verhältnis ihrer Grundstücksflächen teilen.",
-    result: "accepted",
-    yes_count: 19,
-    no_count: 0,
-    abstention_count: null,
-    source_changed: false,
-  }],
-  events: [],
-  mainEvents: [],
-  sessionEvents: [],
-  sessionRelated: { messages: [], processes: [], topics: [] },
+  topVotes: [
+    {agenda_id:"preview-top-2",vote_index:1,result:"no_vote"},
+    {agenda_id:"preview-top-3",vote_index:1,result:"rejected",yes_count:7,no_count:13},
+    {agenda_id:"preview-top-6",vote_index:1,result:"accepted",yes_count:17,no_count:2},
+    {agenda_id:"preview-top-6",vote_index:2,result:"accepted",yes_count:19,no_count:0},
+  ],
 };
 
 export function RisMinutesPreview() {
@@ -97,20 +67,9 @@ export function RisMinutesPreview() {
       <header className="panel" style={{padding: "1rem", marginBottom: "1rem"}}>
         <h1>RIS-Niederschrift – Testdarstellung</h1>
         <p role="status"><strong>Nur Vorschau. Keine Anmeldung, keine Datenbankverbindung und keine Speicherung.</strong></p>
-        <p>Historische Referenzbeschlüsse vom 15.10.2026 in vollständiger sachlicher Wiedergabe, jedoch unabhängig vom Original formuliert. Jeder wesentliche Punkt des Beschlussinhalts soll erhalten bleiben.
-          Diese drei TOPs sind keine vollständige Tagesordnung und keine bereits im Echtsystem
-          redaktionell bestätigten Beschlussdaten.</p>
-        <p>Bitte nacheinander TOP 2, TOP 3 und TOP 6 auswählen und prüfen, ob Behandlung,
-          Beschlussinhalt und Abstimmung verständlich dargestellt werden.</p>
+        <p>Die Vorschau zeigt die Abstimmungsergebnisse für TOP 2, 3 und 6 vom 15.10.2026.</p>
       </header>
-      <RisSessionView data={data} busy={false} previewOriginalWording={true}
-        selectedTopId={undefined}
-        onOpenEvent={() => {}}
-        onOpenDocument={() => {}}
-        onReload={async () => {}}
-        api={async () => {throw new Error("In der Vorschau ist keine Datenänderung möglich.");}}
-        eventLock={async () => {throw new Error("In der Vorschau ist keine Datenänderung möglich.");}}
-      />
+      <RisSessionView data={data} onOpenEvent={() => {}} />
     </main>
   );
 }

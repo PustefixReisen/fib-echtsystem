@@ -38,6 +38,7 @@ function connection(state:State){
   if(q.startsWith('insert into fib.ris_scan_cursors')){state.cursor=structuredClone(params[1]);return [];}
   if(q.startsWith('insert into fib.source_runs')){state.runs.push({status:params[2],cadence:params[7]});return [];}
   if(q.startsWith('update fib.source_scopes')){state.scopeError=params[3];return [];}
+  if (q.includes('select distinct l.session_id from fib.ris_document_links')) return [];
   throw new Error('Unexpected SQL: '+q.slice(0,120));
  };
  const sql:any={unsafe:query,json:(v:any)=>v,end:async()=>{},begin:async(fn:(tx:any)=>Promise<void>)=>{
@@ -89,7 +90,7 @@ const source=edgeDatasetSupport+(readFileSync('supabase/functions/_shared/ris-ca
 const js=ts.transpileModule(source,{compilerOptions:{target:ts.ScriptTarget.ES2022,module:ts.ModuleKind.None}}).outputText;
 const settings:Record<string,string>={SUPABASE_URL:'https://auth.test',SUPABASE_ANON_KEY:'test',FIB_DATABASE_URL:'test'};
 const context:any=vm.createContext({
- __postgres:fakePostgres,fetch:fakeFetch,extractText:async()=>({text:'fixture PDF text'}),Request,Response,URL,URLSearchParams,
+ exports:{}, require:()=>({}), __postgres:fakePostgres,fetch:fakeFetch,extractText:async()=>({text:'fixture PDF text'}),Request,Response,URL,URLSearchParams,
  TextDecoder,TextEncoder,Uint8Array,Date,Set,Map,AbortSignal,crypto:webcrypto,atob,
  Deno:{env:{get:(key:string)=>settings[key]}},
 });

@@ -4,6 +4,7 @@ import { readFileSync } from "node:fs";
 import vm from "node:vm";
 import ts from "typescript";
 import pg from "pg";
+import {extractText} from "unpdf";
 import { webcrypto } from "node:crypto";
 const connection = process.env.U4_TEST_DATABASE_URL;
 if (!connection) throw Error("U4_TEST_DATABASE_URL required");
@@ -27,6 +28,20 @@ const baseHtml = readFileSync(
   "utf8",
 );
 let test1031Html = "";
+const originalFixture = process.env.FIB_TEST_RIS_1031_SOURCE_DIR;
+const minutesUrl = origin + "/getfile.asp?id=75785";
+let minutesText = Array.from({length:19}, (_, index) => {
+  const top = index + 1;
+  const votes = {
+    2: "Abstimmung: abgesetzt",
+    3: "Abstimmung: abgelehnt Ja 7 Nein 13",
+    6: "Abstimmung: mehrheitlich angenommen Ja 17 Nein 2\nAbstimmung: einstimmig angenommen Ja 19 Nein 0",
+  }[top] ?? "";
+  return `TAGESORDNUNGSPUNKT ${top}\n${votes}`;
+}).join("\n");
+const minutesPdf = originalFixture
+  ? new Uint8Array(readFileSync(originalFixture + "/minutes.pdf"))
+  : new TextEncoder().encode("%PDF-1.4\nsynthetic reference minutes");
 let html = baseHtml,
   failPage = false,
   failPdf = false,
@@ -67,6 +82,7 @@ const fetchMock = async (url: string) => {
   }
   if (url === origin + "/si0057.asp?__ksinr=1031")
     return new Response(test1031Html,{headers:{"content-type":"text/html; charset=utf-8"}});
+  if (url === minutesUrl) return new Response(minutesPdf as BodyInit);
   if (url.startsWith(origin + "/getfile.asp?id=")) {
     if (failPdf) throw Error("pdf_outage");
     return new Response(
@@ -78,6 +94,9 @@ const fetchMock = async (url: string) => {
 const source = edgeDatasetSupport +
   (
     readFileSync("supabase/functions/_shared/ris-calendar.ts", "utf8").replace(/\bexport /g, "") + "\n" +
+    readFileSync("supabase/functions/_shared/ris-minutes-candidates.ts", "utf8").replace(/\bexport /g,"") + "\n" +
+    readFileSync("supabase/functions/_shared/ris-top-votes.ts", "utf8")
+      .replace(/^import .*;\s*/gm,"").replace(/\bexport /g,"") + "\n" +
     readFileSync("supabase/functions/_shared/ris-structure.ts", "utf8").replace(
       /\bexport /g,
       "",
@@ -86,6 +105,7 @@ const source = edgeDatasetSupport +
     readFileSync("supabase/functions/fib-u4-ris-pilot/index.ts", "utf8")
   )
     .replace(/^import .*ris-originals.*;\s*/m, "")
+    .replace(/^import .*ris-top-votes.*;\s*/m, "")
     .replace(/^import .*ris-calendar.*;\s*/m, "")
     .replace(/^import .*development-datasets.*;\s*/m, "")
     .replace(
@@ -103,8 +123,17 @@ const context: any = {
   // TS may emit an ES-module interop marker when transpiling combined fixtures.
   exports: {},
   __postgres: () => sqlClient(pool),
-  extractText: async () => ({
-    text: "synthetic PDF text for fault-injection only",
+  fetchRisOriginal: async (url: string) => {
+    const response = await fetchMock(url);
+    const bytes = new Uint8Array(await response.arrayBuffer());
+    const hash = Buffer.from(await webcrypto.subtle.digest("SHA-256", bytes)).toString("hex");
+    return {bytes, hash};
+  },
+  sourceReadiness: async () => ({}),
+  extractText: async (bytes: Uint8Array) => ({
+    text: Buffer.from(bytes).equals(Buffer.from(minutesPdf))
+      ? originalFixture ? (await extractText(bytes, {mergePages:true})).text : minutesText
+      : "synthetic PDF text for fault-injection only",
   }),
   Deno: {
     env: {
@@ -341,11 +370,11 @@ async function main() {
   const aiBlocked=await call({action:"ris_prepare_minutes_draft",
     agendaId:"22222222-2222-4222-8222-222222222222",
     versionId:"33333333-3333-4333-8333-333333333333"});
-  assert.equal(aiBlocked.status,503);
-  assert.equal((await aiBlocked.json()).error,"ris_draft_not_enabled");
+  assert.equal(aiBlocked.status,403);
+  assert.equal((await aiBlocked.json()).error,"ris_source_readonly");
 
   assert.equal((await call(null)).status, 400);
-  assert.equal((await call({action:"ris_review_document",kind:"proposal",status:"confirmed"})).status,409);
+  assert.equal((await call({action:"ris_review_document",kind:"proposal",status:"confirmed"})).status,403);
   assert.equal(
     (await call({ action: "ris_suggest", origin: "ai" })).status,
     403,
@@ -403,7 +432,23 @@ async function main() {
   assert.equal(blocked1031.status,409,JSON.stringify(blocked1031.body));
   assert.equal(blocked1031.body.error,"integration_session_incomplete");
   assert.equal(await cursor(),cursorBefore1031);
-  test1031Html=agendaHtml(19);
+  test1031Html=originalFixture
+    ? readFileSync(originalFixture + "/session.html", "utf8")
+    : agendaHtml(19).replace("</html>", '<a href="getfile.asp?id=75785">Niederschrift öffentlich</a></html>');
+  if (!originalFixture) {
+    const before = await first("select id,last_observed_at from fib.ris_sessions where source_url like '%=1031'");
+    const goodMinutes = minutesText;
+    minutesText = minutesText.replace("Ja 17 Nein 2", "Ja unklar Nein 2");
+    const blocked = await previewSession({integrationSession:"1031",commit:true});
+    assert.equal(blocked.status,502);
+    assert.match(blocked.body.detail,/ris_minutes_vote_incomplete/);
+    assert.deepEqual(await first("select id,last_observed_at from fib.ris_sessions where source_url like '%=1031'"), before);
+    minutesText = goodMinutes;
+  }
+  const countSessionEvents = async () => (await first(
+    "select count(*)::int n from fib.ris_session_events se join fib.ris_sessions s on s.id=se.session_id where s.source_url like '%=1031'",
+  )).n;
+  const legacySessionEvents = await countSessionEvents();
   const imported1031=await previewSession({integrationSession:"1031",commit:true});
   assert.equal(imported1031.status,200,JSON.stringify(imported1031.body));
   assert.equal(imported1031.body.observedTopCount,19);
@@ -416,9 +461,51 @@ async function main() {
   assert.equal((await first(
     "select count(*)::int n from fib.ris_agenda_items where session_id=$1",
     [realSession.id])).n,19);
+  const generated=await first(
+    "select count(*)::int n from fib.ris_top_events te join fib.ris_agenda_items a on a.id=te.agenda_id where a.session_id=$1",
+    [realSession.id],
+  );
+  assert.equal(generated.n,19,"Each officially imported TOP has one separate generated FIB event");
+  assert.equal(await countSessionEvents(),legacySessionEvents,"The import creates no session event");
+  const votesQuery = `select a.number,v.vote_index,v.result,v.yes_count,v.no_count,v.observed_at,v.source_sha256
+    from fib.ris_top_vote_results v join fib.ris_agenda_items a on a.id=v.agenda_id
+    where a.session_id=$1 order by a.number::integer,v.vote_index`;
+  const beforeVotes = (await pool.query(votesQuery,[realSession.id])).rows;
+  assert.equal(beforeVotes.length,originalFixture ? 29 : 4);
+  assert.deepEqual(beforeVotes.filter(v=>["2","3","6"].includes(v.number))
+    .map(v=>[v.number,v.result,v.yes_count,v.no_count]),[
+      ["2","no_vote",null,null],["3","rejected",7,13],
+      ["6","accepted",17,2],["6","accepted",19,0],
+    ]);
+  enabled = true;
+  assert.equal((await call({action:"ris_sessions"})).status,200);
+  const response = await call({action:"ris_read",sessionId:realSession.id});
+  assert.equal(response.status,200);
+  assert.equal((await response.json()).topVotes.length,beforeVotes.length);
+  const eventIds = async () => (await pool.query(
+    "select te.event_id from fib.ris_top_events te join fib.ris_agenda_items a on a.id=te.agenda_id where a.session_id=$1 order by a.number::integer",
+    [realSession.id])).rows;
+  const beforeEvents = await eventIds();
+  const minutesLinks = await first(`select count(*)::int n from fib.ris_top_events te
+    join fib.ris_agenda_items a on a.id=te.agenda_id
+    join fib.event_findings ef on ef.event_id=te.event_id
+    join fib.ris_documents d on d.finding_id=ef.finding_id
+    where a.session_id=$1 and d.source_url=$2`,[realSession.id,minutesUrl]);
+  assert.equal(minutesLinks.n,19);
   const repeat1031=await previewSession({integrationSession:"1031",commit:true});
   assert.equal(repeat1031.status,200);
   assert.equal(repeat1031.body.changed,false,"Repeated official session import must be idempotent");
+  assert.equal((await first(
+    "select count(*)::int n from fib.ris_top_events te join fib.ris_agenda_items a on a.id=te.agenda_id where a.session_id=$1",
+    [realSession.id])).n,19,"Repeated import must not create duplicate events");
+
+  assert.deepEqual(await eventIds(),beforeEvents);
+  assert.deepEqual((await pool.query(votesQuery,[realSession.id])).rows,beforeVotes);
+  for (const action of ["ris_review_agenda_status","ris_link_session_event","ris_link_main_event"]) {
+    const denied = await call({action,sessionId:realSession.id});
+    assert.equal(denied.status,403);
+    assert.equal((await denied.json()).error,"ris_source_readonly");
+  }
   assert.equal(await cursor(),cursorBefore1031,"Direct approved session import must not change scanner cursor");
   assert.equal((await previewSession({integrationSession:"9999",commit:true})).status,400);
   const disabled1032=await previewSession({integrationSession:"1032",commit:true});

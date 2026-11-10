@@ -3,7 +3,9 @@ from reportlab.pdfgen import canvas
 from pathlib import Path
 import os
 root=Path(os.environ['RUNNER_TEMP'])
-texts={'75785':Path('tests/u4/fixtures/ris-1031-minutes-excerpts.txt').read_text(),
+excerpts=Path('tests/u4/fixtures/ris-1031-minutes-excerpts.txt').read_text().split('[… Ausschnitt …]')
+minutes='\n'.join(f'TAGESORDNUNGSPUNKT {number}\n{text}' for number,text in zip([2,3,6],excerpts))
+texts={'75785':minutes,
        '75714':'Synthetischer Vorschlagstext zu TOP 2. Keine Beschlussbehauptung.',
        '75790':'Synthetischer Vorschlagstext zu TOP 3. Keine Beschlussbehauptung.',
        '99001':'SYNTHETISCHER TEST: Die Niederschrift vom 15.10.2026 wird genehmigt.',

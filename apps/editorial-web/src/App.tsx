@@ -777,7 +777,7 @@ export function App() {
     if(sessionContext?.role!=='admin'||state!=='aal2'||u4Busy)return;
     if(importRecords && !window.confirm(
       'Die vollständige amtliche RIS-Sitzung vom 15.10.2026 (19 öffentliche TOPs) jetzt übernehmen? '+
-      'Es werden nur Sitzungs- und Quellenstrukturen gespeichert, keine redaktionellen Beschlüsse oder Ereignisse.'
+      'FIB übernimmt die amtlichen Quellen und lesbaren Abstimmungen und ergänzt die zugehörigen TOP-Ereignisse.'
     ))return;
     setU4Busy(true);setU4Error(null);setU4Result(null);
     try {
@@ -1824,7 +1824,7 @@ export function App() {
                 </div>
                 <section aria-label="RIS-Sitzung 15.10.2026 vollständig erfassen">
                   <h3>Gemeinderat 15.10.2026 – vollständige Tagesordnung</h3>
-                  <p>Die amtliche Tagesordnung enthält 19 öffentliche TOPs. Erst wird die aktuelle RIS-Quelle ohne Speicherung geprüft. Der getrennt bestätigte Import übernimmt ausschließlich die Sitzungsstruktur und keine redaktionellen Beschlüsse.</p>
+                  <p>Die amtliche Tagesordnung enthält 19 öffentliche TOPs. Erst wird die aktuelle RIS-Quelle ohne Speicherung geprüft. Der Import übernimmt die amtlichen Quellen und lesbaren Abstimmungen und ergänzt die TOP-Ereignisse.</p>
                   <div style={{display:'flex',gap:'.75rem',flexWrap:'wrap'}}>
                     <button type="button" disabled={u4Busy} onClick={()=>void runRisSession1031(false)}>19 TOPs direkt im RIS prüfen</button>
                     <button type="button" disabled={u4Busy} onClick={()=>void runRisSession1031(true)}>Vollständige RIS-TOPs übernehmen</button>
@@ -1833,6 +1833,8 @@ export function App() {
                     {u4Result.mode==='single_session_integration'?'Amtliche RIS-Struktur übernommen':'Amtliche Quelle nur geprüft'}:
                     {String(u4Result.publicTopCount??u4Result.observedTopCount)} öffentliche TOPs.
                     {u4Result.mode==='read_only_session_preview'?' Keine Daten geändert.':''}
+                    {u4Result.votes && typeof u4Result.votes==='object' && 'voteCount' in u4Result.votes
+                      ? ' '+String(u4Result.votes.voteCount)+' protokollierte Ergebnisse aus der Niederschrift.' : ''}
                   </p>}
                 </section>
                 {u4Busy && <p role="status">Quellenabruf läuft …</p>}

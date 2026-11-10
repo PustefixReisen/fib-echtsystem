@@ -145,6 +145,9 @@ async function main() {
     const finding = await transact(runtime, (tx) =>
       withDevelopmentDataset(tx, accept, () => risEditorial(tx, human, accept)),
     );
+    const ownedBeforeEventCreate=Number((await first(
+      "select count(*) n from fib.development_objects where table_name='events' and ownership='owned'"
+    )).n);
     const create = {
       action: "source_create_event",
       findingId: finding.findingId,
@@ -162,14 +165,10 @@ async function main() {
         return sourceEditorial(tx, human, create);
       }),
     );
-    assert.equal(
-      (
-        await first(
-          "select count(*) n from fib.development_objects where table_name='events' and ownership='owned'",
-        )
-      ).n,
-      "1",
-    );
+    assert.equal(Number((await first(
+      "select count(*) n from fib.development_objects where table_name='events' and ownership='owned'"
+    )).n),ownedBeforeEventCreate+1,
+      "Explicit editorial event creates one additional object beyond automatically imported RIS-TOP events");
     assert.equal(
       (
         await first(
@@ -229,7 +228,7 @@ async function main() {
       () => transact(owner, (tx) => cleanup(tx, batch, blocked.sha256)),
       /unmarked_reference_blocks_cleanup/,
     );
-    assert.equal((await first("select count(*) n from fib.events")).n, "2");
+    assert.equal((await first("select count(*) n from fib.events")).n, String(2 + ownedBeforeEventCreate));
     await owner.query(
       "delete from fib.event_findings where event_id=$1 and finding_id=$2",
       [outside, finding.findingId],
@@ -466,7 +465,7 @@ async function main() {
         (await first("select count(*) n from fib.ris_decision_points")).n,
         "0",
       );
-      assert.equal((await first("select count(*) n from fib.events")).n, "1");
+      assert.equal((await first("select count(*) n from fib.events")).n, "6");
       const batchArg = "--batch=" + bundle.batch;
       const closeRun = operator("cleanup", "closed.json", [
         batchArg,

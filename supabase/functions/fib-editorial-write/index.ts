@@ -104,6 +104,8 @@ export default {
       if (membership.length === 0) return json({ error: 'fib_membership_missing_or_inactive' }, 403);
 
       if (!['admin','editor'].includes(membership[0].role) && body.action !== 'source_readiness') return json({error:'editor_required'},403);
+      if (body.action === 'source_create_event' && (body.sessionId || body.agendaId || body.mainEvent))
+        return json({error:'ris_source_readonly'},403);
       if (body.action === 'source_capture_pdf') {
         const store = originalStore(Deno.env.get('SUPABASE_URL') ?? '',Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? '');
         await sql.begin(tx=>withDevelopmentDataset(tx,body,async()=>{
@@ -128,6 +130,10 @@ export default {
       }
       // Opt-in, no-write, editor-triggered AI prefill. No background billing,
       // no upload until a verified source and explicit privacy/budget gates exist.
+      // RIS is now a strictly imported source, never an editorial object.
+      // Legacy status/document/suggestion/AI mutations are explicitly closed.
+      if(typeof body.action==='string' && body.action.startsWith('ris_') &&
+         body.action!=='ris_read' && body.action!=='ris_sessions')return json({error:'ris_source_readonly'},403);
       if(body.action==='ris_prepare_minutes_draft'){
         if(Deno.env.get('FIB_RIS_MISTRAL_ENABLED')!=='true' ||
            Deno.env.get('FIB_RIS_MISTRAL_BUDGET_CONFIRMED')!=='true' ||

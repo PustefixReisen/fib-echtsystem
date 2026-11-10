@@ -612,28 +612,10 @@ export function SourceWorkspace({
         <RisSessionView
           key={session.session.id}
           data={session}
-          busy={busy}
-          onOpenEvent={(id) => {
-            const top = session.agenda.find((a: Row) => a.id === topId);
-            onOpenEvent(id, {sessionId:session.session.id, agendaId:topId, number:top?.number ?? ""});
+          onOpenEvent={(id, top) => {
+            setTopId(top.id);
+            onOpenEvent(id, {sessionId:session.session.id, agendaId:top.id, number:top.number});
           }}
-          selectedTopId={topId}
-          onSelectTop={setTopId}
-          registerLeaveGuard={(guard) => {
-            assignmentGuard.current = guard;
-          }}
-          api={api}
-          eventLock={eventLock}
-          onOpenDocument={(versionId) => {
-            const a = session.agenda.find((a: Row) => a.id === topId);
-            setReturnContext({
-              sessionId: session.session.id,
-              agendaId: topId,
-              number: a?.number ?? "",
-            });
-            void openFinding({ versionId }, true);
-          }}
-          onReload={refreshSession}
         />
       )}
 

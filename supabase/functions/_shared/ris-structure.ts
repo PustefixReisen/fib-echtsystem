@@ -308,6 +308,7 @@ export async function persistRisStructure(tx: RisSql, snapshot: RisSnapshot) {
       "update fib.ris_sessions set last_observed_at=$2 where id=$1",
       [s.id, snapshot.observedAt],
     );
+    await ensureRisTopEvents(tx,s.id);
     return { sessionId: s.id, revision: latest.revision, changed: false };
   }
   // Bind serialized JSON as text: postgres.js otherwise serializes the string again
@@ -376,7 +377,64 @@ export async function persistRisStructure(tx: RisSql, snapshot: RisSnapshot) {
     for (const d of a.documents) await document(d, top.id);
   }
   for (const d of snapshot.documents) await document(d, null);
+  await ensureRisTopEvents(tx,s.id);
   return { sessionId: s.id, revision, changed: true };
+}
+/** A TOP is source metadata. Its generated event is an independent FIB object.
+ * Only the original documents become findings; no copied PDF/wording.
+ * Called on BOTH changed and unchanged source scans to backfill older imports.
+ */
+export async function ensureRisTopEvents(tx:RisSql,sessionId:string):Promise<number>{
+  const tops=await tx.unsafe(
+    "select id,title from fib.ris_agenda_items where session_id=$1 order by number::integer,id for update",
+    [sessionId],
+  );
+  for(const top of tops){
+    const existing=await tx.unsafe(
+      "select event_id from fib.ris_top_events where agenda_id=$1",[top.id]);
+    if(existing.length)continue;
+    // A previously assigned main event takes precedence. Do not create
+    // another event or rewrite editorially modified event details.
+    const legacy=await tx.unsafe(
+      "select event_id from fib.ris_agenda_events where agenda_id=$1 and role='main_event' order by reviewed_at limit 1",
+      [top.id],
+    );
+    const eventId=legacy[0]?.event_id ?? (await tx.unsafe(
+      `insert into fib.events(title,occurred_at,status,confirmed_at)
+       select a.title, s.session_date::timestamp at time zone 'Europe/Berlin',
+              'confirmed',now()
+       from fib.ris_agenda_items a join fib.ris_sessions s on s.id=a.session_id
+       where a.id=$1 returning id`,[top.id],
+    ))[0]?.id;
+    if(!eventId)throw Error("ris_top_event_creation_failed");
+    await tx.unsafe(
+      "insert into fib.ris_top_events(agenda_id,event_id) values($1,$2) on conflict(agenda_id) do nothing",
+      [top.id,eventId],
+    );
+  }
+  // For all TOPs, link TOP-specific source documents and the one session
+  // minutes document to their generated events; no session-level events.
+  for(const top of tops){
+    const matches=await tx.unsafe(
+      `select distinct d.id
+         from fib.ris_document_links l
+         join fib.ris_documents d on d.id=l.document_id
+        where l.session_id=$1 and l.status<>'rejected'
+          and (l.agenda_id=$2 or (l.agenda_id is null and l.kind='minutes'))`,
+      [sessionId,top.id],
+    );
+    for(const doc of matches){
+      const findingId=await ensureRisFinding(tx,doc.id);
+      await tx.unsafe(
+        `insert into fib.event_findings(event_id,finding_id,evidence_role,justification)
+         select te.event_id,$2::uuid,'source',
+           'Amtliche RIS-Unterlage zum zugehörigen Tagesordnungspunkt.'
+         from fib.ris_top_events te where te.agenda_id=$1
+         on conflict do nothing`,[top.id,findingId],
+      );
+    }
+  }
+  return tops.length;
 }
 /** Import metadata never implies authorship or an editorial event/decision. */
 export async function ensureRisFinding(
