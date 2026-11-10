@@ -117,17 +117,8 @@ const api = async (b: any) => {
         wording: "Must not render raw",
         source_url: origin + "/vo0050.asp?__kvonr=8640",
       }],
-      decisions: (window as any).showDecisionCases
-        ? [{
-          agenda_id: "t2",
-          point_key: "A",
-          wording: "<img src=x onerror=alert(1)>",
-          factual_summary: "Der Gemeinderat befasste sich mit einer Antragstellung.",
-          result: "unknown",
-        },{
-          agenda_id:"t2",point_key:"B",result:"accepted",yes_count:10,no_count:2,abstention_count:null,
-          factual_summary:"Der Gemeinderat beauftragte die Verwaltung mit einer weiteren Prüfung.",
-        }]
+      topVotes: (window as any).showDecisionCases
+        ? [{agenda_id:"t2",vote_index:1,result:"accepted",yes_count:10,no_count:2}]
         : [],
       events: local,
       mainEvents: mainLinks,

@@ -33,6 +33,7 @@ const button = (name) => page.getByRole("button", { name, exact: true });
 const heading = (name) => page.getByRole("heading", { name, exact: true });
 try {
   await page.goto("http://127.0.0.1:4174");
+  await page.evaluate(() => { window.showDecisionCases=true; });
   await button("Sitzungsbereich").click();
   await button("Sitzung öffnen").click();
   await heading("Sitzungsübersicht").waitFor();
@@ -42,6 +43,7 @@ try {
   const top2 = page.locator("article").filter({has:page.getByRole("heading",{name:/^TOP 2 ·/})});
   await top2.getByRole("link",{name:"Beschlussvorlage im RIS öffnen"}).waitFor();
   await top2.getByRole("link",{name:/Niederschrift/}).waitFor();
+  await top2.getByText(/Ja 10 · Nein 2/).waitFor();
   assert.equal(await button("Ereignis zuordnen").count(),0);
   assert.equal(await heading("Ereignisse zur Sitzung").count(),0);
   mkdirSync("/tmp/fib-source-ui", { recursive: true });
