@@ -168,6 +168,20 @@ export async function risEditorial(
       `select p.*,v.id version_id,v.document_version_id,v.created_at,w.result,w.yes_count,w.no_count,w.abstention_count,(d.latest_version_id<>v.document_version_id) source_changed,case when s.status='confirmed' and d.latest_version_id=v.document_version_id and ((s.payload->>'representation'='complete_factual' and s.payload->>'manualSourceVerification'='true') or (s.payload->>'usageRightsBasis' in ('official_work_5_urhg','explicit_permission') and length(coalesce(s.payload->>'usageRightsEvidence',''))>=30)) then v.wording else null end display_wording from fib.ris_decision_points p join fib.ris_agenda_items a on a.id=p.agenda_id join fib.ris_decision_versions v on v.point_id=p.id join fib.ris_document_versions dv on dv.id=v.document_version_id join fib.ris_documents d on d.id=dv.document_id left join fib.ris_votes w on w.decision_version_id=v.id left join fib.ris_suggestions s on s.id=v.suggestion_id where a.session_id=$1`,
       [session.id],
     );
+    const topEvents = await tx.unsafe(
+      `select te.agenda_id,te.event_id,e.title event_title,e.occurred_at event_date
+         from fib.ris_top_events te
+         join fib.ris_agenda_items a on a.id=te.agenda_id
+         join fib.events e on e.id=te.event_id
+        where a.session_id=$1`,[session.id],
+    );
+    const topVotes = await tx.unsafe(
+      `select v.agenda_id,v.vote_index,v.result,v.yes_count,v.no_count,
+              v.abstention_count,v.source_sha256
+         from fib.ris_top_vote_results v
+         join fib.ris_agenda_items a on a.id=v.agenda_id
+        where a.session_id=$1 order by a.number::integer,v.vote_index`,[session.id],
+    );
     const events = await tx.unsafe(
       "select ae.*,e.title event_title,e.occurred_at event_date from fib.ris_agenda_events ae join fib.ris_agenda_items a on a.id=ae.agenda_id join fib.events e on e.id=ae.event_id where a.session_id=$1 and ae.role='local_reference'",
       [session.id],
@@ -234,6 +248,8 @@ export async function risEditorial(
       session,
       agenda,
       documents,
+      topEvents,
+      topVotes,
       decisions,
       events,
       mainEvents,
