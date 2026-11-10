@@ -773,6 +773,32 @@ export function App() {
     finally{setU4Busy(false)}
   }
 
+  async function runRisSession1031(importRecords:boolean) {
+    if(sessionContext?.role!=='admin'||state!=='aal2'||u4Busy)return;
+    if(importRecords && !window.confirm(
+      'Die vollständige amtliche RIS-Sitzung vom 15.10.2026 (19 öffentliche TOPs) jetzt übernehmen? '+
+      'Es werden nur Sitzungs- und Quellenstrukturen gespeichert, keine redaktionellen Beschlüsse oder Ereignisse.'
+    ))return;
+    setU4Busy(true);setU4Error(null);setU4Result(null);
+    try {
+      const body=importRecords ? {integrationSession:"1031",commit:true}
+        : {previewSession:"1031",commit:false};
+      const {data,error}=await supabase.functions.invoke<Record<string,unknown>>('fib-u4-ris-pilot',{body});
+      if(error||!data||data.error){
+        setU4Error('RIS-Sitzung 15.10.2026: '+String(data?.detail??data?.error??error?.message??'Quellenprüfung fehlgeschlagen'));
+        return;
+      }
+      const topCount=Number(data.publicTopCount??data.observedTopCount??0);
+      if(topCount!==19){
+        setU4Error('Amtliche Tagesordnung unvollständig: '+topCount+' statt 19 TOPs.');
+        return;
+      }
+      setU4Result({...data,ris:true,session1031:true});
+    }catch(err){
+      setU4Error(err instanceof Error?err.message:'Verbindungsfehler beim RIS-Abruf');
+    }finally{setU4Busy(false)}
+  }
+
   async function runRisCombinedAcceptance() {
     if(sessionContext?.role!=='admin'||state!=='aal2'||u4Busy)return;
     if(!window.confirm('Beide RIS-Prüfpläne (30 und 120 Tage) vollständig testen? Höchstens 8 kontrollierte Teilaufrufe, keine Zeitsteuerung.'))return;
@@ -1796,6 +1822,19 @@ export function App() {
                     <button type="button" disabled={u4Busy} onClick={()=>void runRisPdfBackfill()}>RIS-PDFs gesammelt prüfen</button>
                   </div>
                 </div>
+                <section aria-label="RIS-Sitzung 15.10.2026 vollständig erfassen">
+                  <h3>Gemeinderat 15.10.2026 – vollständige Tagesordnung</h3>
+                  <p>Die amtliche Tagesordnung enthält 19 öffentliche TOPs. Erst wird die aktuelle RIS-Quelle ohne Speicherung geprüft. Der getrennt bestätigte Import übernimmt ausschließlich die Sitzungsstruktur und keine redaktionellen Beschlüsse.</p>
+                  <div style={{display:'flex',gap:'.75rem',flexWrap:'wrap'}}>
+                    <button type="button" disabled={u4Busy} onClick={()=>void runRisSession1031(false)}>19 TOPs direkt im RIS prüfen</button>
+                    <button type="button" disabled={u4Busy} onClick={()=>void runRisSession1031(true)}>Vollständige RIS-TOPs übernehmen</button>
+                  </div>
+                  {u4Result?.session1031===true && <p role="status">
+                    {u4Result.mode==='single_session_integration'?'Amtliche RIS-Struktur übernommen':'Amtliche Quelle nur geprüft'}:
+                    {String(u4Result.publicTopCount??u4Result.observedTopCount)} öffentliche TOPs.
+                    {u4Result.mode==='read_only_session_preview'?' Keine Daten geändert.':''}
+                  </p>}
+                </section>
                 {u4Busy && <p role="status">Quellenabruf läuft …</p>}
                 {u4Error && <p role="alert">Fehler: {u4Error}</p>}
                 {u4Result && <div aria-live="polite">
