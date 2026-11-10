@@ -1,3 +1,4 @@
+import { liveSearchDelay } from "./live-search.js";
 import { isRisCollection } from "./ris-presentation.js";
 import {SourceWorkspace} from './SourceWorkspace.js';
 import { FormEvent, useEffect, useState, useRef, type ReactNode } from 'react';
@@ -299,7 +300,6 @@ export function App() {
     setView(nextView);
     setNavigationOpen(false);
     if (nextView === 'dashboard') void loadEditorialStart();
-    if (nextView === 'events') void loadEventList();
     if (nextView === 'users') void loadAdminUsers();
     if (nextView === 'topics') {setTopicListOpen(true);void loadTopics();}
   }
@@ -485,7 +485,6 @@ export function App() {
       setView(nextView);
       setNavigationOpen(false);
       if (nextView === 'dashboard') void loadEditorialStart();
-      if (nextView === 'events') void loadEventList();
       if (nextView === 'users') void loadAdminUsers();
     };
     window.addEventListener('popstate', onPopState);
@@ -637,8 +636,10 @@ export function App() {
 
   useEffect(() => {
     if (view !== 'events') return;
-    const timer = window.setTimeout(() => { void loadEventList(eventSearch); }, 300);
-    return () => window.clearTimeout(timer);
+    setEventListBusy(true);
+    setEventListError(null);
+    const timer = window.setTimeout(() => { void loadEventList(eventSearch.trim()); }, liveSearchDelay);
+    return () => { window.clearTimeout(timer); eventListRequestRef.current++; };
   }, [view, eventSearch]);
 
   async function loadEventList(search = '') {
@@ -950,8 +951,10 @@ export function App() {
 
   useEffect(() => {
     if (!sourcePickerOpen) return;
-    const timer = window.setTimeout(() => { void searchAvailableFindings(sourceSearch); }, 300);
-    return () => window.clearTimeout(timer);
+    setSourceBusy(true);
+    setSourceMessage(null);
+    const timer = window.setTimeout(() => { void searchAvailableFindings(sourceSearch.trim()); }, liveSearchDelay);
+    return () => { window.clearTimeout(timer); sourceRequestRef.current++; };
   }, [sourcePickerOpen, sourceSearch]);
 
   async function searchAvailableFindings(search = '') {

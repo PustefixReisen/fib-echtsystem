@@ -24,7 +24,12 @@ export async function sourceEditorial(
   if (input.action === "ris_sessions") {
     return {
       sessions: await tx.unsafe(
-        "select s.*,c.name committee_name from fib.ris_sessions s left join fib.ris_committees c on c.id=s.committee_id where coalesce(s.reference,'') ilike $1 or coalesce(c.name,'') ilike $1 order by s.session_date desc nulls last limit 101",
+        `select s.*,c.name committee_name
+         from fib.ris_sessions s left join fib.ris_committees c on c.id=s.committee_id
+         where s.reference ilike $1 or c.name ilike $1
+           or to_char(s.session_date, 'DD.MM.YYYY') ilike $1
+           or to_char(s.session_date, 'YYYY-MM-DD') ilike $1
+         order by s.session_date desc nulls last limit 101`,
         [query],
       ),
     };
