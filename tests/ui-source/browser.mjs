@@ -105,12 +105,14 @@ try {
     assert.ok(firstGap > 0 && Math.abs(firstGap - secondGap) <= 1,
       `Ungleichmäßige Linkabstände bei ${width} px: ${firstGap} / ${secondGap}`);
 
-    const voteTops = await top2.locator(".ris-result-line").evaluateAll(rows =>
-      rows.map(row => Math.round(row.getBoundingClientRect().top))
+    const voteGaps = await top2.locator(".ris-result-line").evaluateAll(rows =>
+      rows.slice(1).map((row, i) =>
+        row.getBoundingClientRect().top - rows[i].getBoundingClientRect().bottom
+      )
     );
-    assert.equal(voteTops.length, 3);
-    assert.ok(voteTops[1] - voteTops[0] < 30);
-    assert.ok(Math.abs((voteTops[2] - voteTops[1]) - (voteTops[1] - voteTops[0])) <= 1);
+    assert.equal(voteGaps.length, 2);
+    assert.ok(voteGaps.every(gap => gap >= 3 && gap <= 5),
+      `Abstimmungsabstände bei ${width} px: ${voteGaps.join(" / ")}`);
     assert.equal(await page.locator("h1").count(),1);
     assert.equal(await button("Info zur RIS-Übernahme").count(),1);
     assert.equal(await page.getByLabel("Hilfe zur aktuellen Seite").count(),0);
