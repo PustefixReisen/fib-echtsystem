@@ -128,6 +128,10 @@ export default {
       }
       // Opt-in, no-write, editor-triggered AI prefill. No background billing,
       // no upload until a verified source and explicit privacy/budget gates exist.
+      // RIS is now a strictly imported source, never an editorial object.
+      // Legacy status/document/suggestion/AI mutations are explicitly closed.
+      if(typeof body.action==='string' && body.action.startsWith('ris_') &&
+         body.action!=='ris_read')return json({error:'ris_source_readonly'},403);
       if(body.action==='ris_prepare_minutes_draft'){
         if(Deno.env.get('FIB_RIS_MISTRAL_ENABLED')!=='true' ||
            Deno.env.get('FIB_RIS_MISTRAL_BUDGET_CONFIRMED')!=='true' ||
