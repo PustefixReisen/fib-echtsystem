@@ -78,6 +78,9 @@ const fetchMock = async (url: string) => {
 const source = edgeDatasetSupport +
   (
     readFileSync("supabase/functions/_shared/ris-calendar.ts", "utf8").replace(/\bexport /g, "") + "\n" +
+    readFileSync("supabase/functions/_shared/ris-minutes-candidates.ts", "utf8").replace(/\bexport /g,"") + "\n" +
+    readFileSync("supabase/functions/_shared/ris-top-votes.ts", "utf8")
+      .replace(/^import .*;\s*/gm,"").replace(/\bexport /g,"") + "\n" +
     readFileSync("supabase/functions/_shared/ris-structure.ts", "utf8").replace(
       /\bexport /g,
       "",
@@ -86,6 +89,7 @@ const source = edgeDatasetSupport +
     readFileSync("supabase/functions/fib-u4-ris-pilot/index.ts", "utf8")
   )
     .replace(/^import .*ris-originals.*;\s*/m, "")
+    .replace(/^import .*ris-top-votes.*;\s*/m, "")
     .replace(/^import .*ris-calendar.*;\s*/m, "")
     .replace(/^import .*development-datasets.*;\s*/m, "")
     .replace(
@@ -166,6 +170,7 @@ async function main() {
     "20261030132000_u4_ris_scan_cursors.sql",
     "20261030134000_u4_ris_cursor_runtime_rls.sql",
     "20261030163000_fib_ris_source_run_cadence.sql",
+    "20261110120000_fib_ris_immutable_top_events_votes.sql",
   ])
     await pool.query(readFileSync("supabase/migrations/" + f, "utf8"));
   await pool.query("update fib.app_users set role='admin' where user_id=$1", [
