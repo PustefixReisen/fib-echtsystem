@@ -84,6 +84,7 @@ async function main() {
   await pool.query(readFileSync("supabase/migrations/20261102221038_fib_ris_originals_and_editorial_links.sql","utf8"));
   await pool.query(readFileSync("supabase/migrations/20261103113500_fib_ris_session_top_events.sql","utf8"));
   await pool.query(readFileSync("supabase/migrations/20261109150000_fib_ris_factual_vote_evidence.sql","utf8"));
+  await pool.query(readFileSync("supabase/migrations/20261110120000_fib_ris_immutable_top_events_votes.sql","utf8"));
   await pool.query(
     "insert into fib.app_users(user_id,role,setup_status) values($1,'editor','active')",
     [uid],
