@@ -421,9 +421,21 @@ async function main() {
   assert.equal((await first(
     "select count(*)::int n from fib.ris_agenda_items where session_id=$1",
     [realSession.id])).n,19);
+  const generated=await first(
+    "select count(*)::int n from fib.ris_top_events te join fib.ris_agenda_items a on a.id=te.agenda_id where a.session_id=$1",
+    [realSession.id],
+  );
+  assert.equal(generated.n,19,"Each officially imported TOP has one separate generated FIB event");
+  assert.equal((await first(
+    "select count(*)::int n from fib.ris_session_events where session_id=$1",
+    [realSession.id])).n,0,"RIS meetings do not have their own events");
   const repeat1031=await previewSession({integrationSession:"1031",commit:true});
   assert.equal(repeat1031.status,200);
   assert.equal(repeat1031.body.changed,false,"Repeated official session import must be idempotent");
+  assert.equal((await first(
+    "select count(*)::int n from fib.ris_top_events te join fib.ris_agenda_items a on a.id=te.agenda_id where a.session_id=$1",
+    [realSession.id])).n,19,"Repeated import must not create duplicate events");
+
   assert.equal(await cursor(),cursorBefore1031,"Direct approved session import must not change scanner cursor");
   assert.equal((await previewSession({integrationSession:"9999",commit:true})).status,400);
   const disabled1032=await previewSession({integrationSession:"1032",commit:true});
