@@ -94,10 +94,17 @@ try {
       assert.ok((await proposal.boundingBox()).height >= 44);
     }
     const overviewLinks = await page.locator(".ris-overview-links a").evaluateAll(links =>
-      links.map(link => Math.round(link.getBoundingClientRect().top))
+      links.map(link => {
+        const { top, bottom } = link.getBoundingClientRect();
+        return { top, bottom };
+      })
     );
     assert.equal(overviewLinks.length, 3);
-    assert.ok(Math.abs((overviewLinks[2] - overviewLinks[1]) - (overviewLinks[1] - overviewLinks[0])) <= 1);
+    const firstGap = overviewLinks[1].top - overviewLinks[0].bottom;
+    const secondGap = overviewLinks[2].top - overviewLinks[1].bottom;
+    assert.ok(firstGap > 0 && Math.abs(firstGap - secondGap) <= 1,
+      `Ungleichmäßige Linkabstände bei ${width} px: ${firstGap} / ${secondGap}`);
+
     const voteTops = await top2.locator(".ris-result-line").evaluateAll(rows =>
       rows.map(row => Math.round(row.getBoundingClientRect().top))
     );

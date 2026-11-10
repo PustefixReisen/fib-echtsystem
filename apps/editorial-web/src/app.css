@@ -861,6 +861,7 @@ button:has(> .action-icon) { display: inline-flex; align-items: center; justify-
 }
 .fib-action-icon.fib-navigation-icon:hover { background: #e7eee9; }
 .ris-document-list, .ris-overview-links, .ris-minutes-outcomes { display: grid; gap: .25rem; }
+.ris-document-list > li { display: flex; min-width: 0; }
 .ris-overview-links > a, .ris-minutes-outcomes > a { justify-self: start; }
 .ris-minutes-outcomes { margin-top: .35rem; }
 .ris-result-line { margin: 0; }
