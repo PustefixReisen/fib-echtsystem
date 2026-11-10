@@ -90,12 +90,12 @@ export async function readOriginal(
 }
 
 /** Original download shared by the scanner and explicit authorized capture. */
-export async function fetchRisOriginal(url: string) {
+export async function fetchRisOriginal(url: string, fetcher = fetch) {
   const canonical = risUrl(url);
   if (!canonical || new URL(canonical).pathname !== "/getfile.asp") {
     throw Error("invalid_pdf_url");
   }
-  const r = await fetch(canonical, {
+  const r = await fetcher(canonical, {
     redirect: "error",
     signal: AbortSignal.timeout(20000),
     headers: {

@@ -72,7 +72,7 @@ try {
   await page.locator(".work-item").filter({ hasText: "GR/440/2026" })
     .getByRole("button", { name: "Sitzung öffnen" }).click();
   await page.getByRole("heading", { name: "Sitzungsübersicht", exact: true }).waitFor();
-  await page.getByRole("heading", { name: "TOPs", exact: true }).waitFor();
+  await page.getByRole("heading", { name: "2 öffentliche TOPs", exact: true }).waitFor();
   await page.getByRole("button",{name:"Info zur RIS-Übernahme"}).click();
   await page.getByRole("note",{name:"RIS-Geschäftsregel"}).waitFor();
   const top2 = page.locator("article").filter({has:page.getByRole("heading",{name:/^TOP 2 ·/})});
@@ -83,8 +83,22 @@ try {
   assert.equal((await db.query("select count(*)::int n from fib.ris_session_events")).rows[0].n,0);
   assert.ok((await db.query("select count(*)::int n from fib.event_findings where event_id=$1",[event.rows[0].event_id])).rows[0].n > 0);
   assert.equal((await invoke("fib-editorial-write",{action:"ris_review_agenda_status"})).status,403);
-  await top2.getByRole("button",{name:/^Ereignis öffnen/}).click();
-  await page.getByRole("button",{name:"Sitzungen · TOP 2"}).waitFor();
+  const eventId = event.rows[0].event_id;
+  assert.equal(await top2.getByRole("button",{name:/Ereignis/}).count(),0);
+  const read = await invoke("fib-get-event",{eventId});
+  assert.equal(read.status,200);
+  assert.equal(read.data.event.risReadOnly,true);
+  for (const action of ["edit_event","link_finding","unlink_finding","update_finding_link","update_finding_justification"]) {
+    const denied = await invoke("fib-editorial-write",{action,eventId,title:"Rejected edit"});
+    assert.equal(denied.status,403);
+    assert.equal(denied.data.error,"ris_event_readonly");
+  }
+  assert.equal((await invoke("fib-coordination",{action:"acquire_lock",objectType:"event",objectId:eventId})).status,403);
+  const finding = (await db.query("select finding_id from fib.event_findings where event_id=$1 limit 1",[eventId])).rows[0].finding_id;
+  assert.equal((await invoke("fib-editorial-write",{action:"source_create_event",findingId:finding})).data.error,"ris_source_readonly");
+  const ordinaryEvent = (await db.query("insert into fib.events(title) values('Normales Testereignis') returning id")).rows[0].id;
+  assert.equal((await invoke("fib-get-event",{eventId:ordinaryEvent})).data.event.risReadOnly,false);
+  assert.equal((await invoke("fib-coordination",{action:"acquire_lock",objectType:"event",objectId:ordinaryEvent})).status,200);
   assert.deepEqual(errors, []);
   record("Real login and TOTP → RIS agenda → TOP2/TOP3 → separate event search view, without retired review masks");
   assert.equal((await db.query("select count(*)::int as n from fib.messages")).rows[0].n, 0);

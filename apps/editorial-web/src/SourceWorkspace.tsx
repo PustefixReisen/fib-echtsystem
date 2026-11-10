@@ -99,7 +99,7 @@ export function SourceWorkspace({
     }),
     [detail, setDetail] = useState<Row | null>(null),
     [session, setSession] = useState<Row | null>(null),
-    [topId, setTopId] = useState("");
+    [, setTopId] = useState("");
   const [busy, setBusy] = useState(false),
     [error, setError] = useState(""),
     [notice, setNotice] = useState(""),
@@ -330,30 +330,18 @@ export function SourceWorkspace({
             </span>
           </>
         )}
-        <details className="fib-context-help">
+        {!session && <details className="fib-context-help">
           <summary aria-label="Hilfe zur aktuellen Seite" title="Hilfe zur aktuellen Seite">ⓘ</summary>
           <div role="note">
-            {session
-              ? "Sitzung: TOPs öffnen, Originalunterlagen im RIS ansehen und lokale Ereignisse beim TOP zuordnen."
-              : detail
-                ? "Fundstellen zeigen Quellen und Verweise. RIS-Dokumente werden über Original-Links geprüft; lokale Bezüge bearbeiten Sie beim TOP."
-                : "In der Liste können Sie nach Sitzungen oder Fundstellen suchen und Einträge öffnen."}
+            {detail ? "Fundstellen zeigen Quellen und Verweise. RIS-Dokumente öffnen Sie über den Originallink."
+              : "In der Liste können Sie nach Sitzungen oder Fundstellen suchen und Einträge öffnen."}
           </div>
-        </details>
+        </details>}
       </nav>
-      <div className="page-heading">
+      {!session && <div className="page-heading">
         <div>
-          <p className="eyebrow">{session || route === "sessions" ? "Sitzungen" : "Recherche · Redaktion"}</p>
-          <h1>
-            {session
-              ? `${session.session.committee_name ?? "Sitzung"} · ${
-                date(session.session.session_date)
-              }`
-              : detail
-              ? currentTitle
-              : route === "sessions"
-              ? "Sitzungen"
-              : "Fundstellen"}
+          <p className="eyebrow">{route === "sessions" ? "Sitzungen" : "Recherche · Redaktion"}</p>
+          <h1>{detail ? currentTitle : route === "sessions" ? "Sitzungen" : "Fundstellen"}
           </h1>
         </div>
         <div className="source-actions ris-page-navigation">
@@ -377,7 +365,7 @@ export function SourceWorkspace({
           Zurück zur Liste
         </button>
         </div>
-      </div>
+      </div>}
       {route === "findings" && (
         <p className="source-release-note" role="note">
           Recherche und redaktionelle Prüfung im Entwicklungsstand.
@@ -511,7 +499,7 @@ export function SourceWorkspace({
                 label="Originalquelle öffnen"
                 text={document ? "Originaldokument im RIS öffnen" : "Originalquelle öffnen"} />
             </Card>
-            {!document && <Card title="Ereignisbezug" action={finding ? (
+            {!document && <Card title="Ereignisbezug" action={finding && !detail.originVerified ? (
               <button disabled={busy} onClick={() => setAssignment(true)}>
                 Ereignis zuordnen
               </button>
@@ -533,7 +521,7 @@ export function SourceWorkspace({
                     >
                       →
                     </ActionIcon>
-                    <ActionIcon
+                    {!detail.originVerified && <ActionIcon
                       label={`Ereignisbezug zu ${e.title} entfernen`}
                       disabled={busy}
                       onClick={() => {
@@ -562,7 +550,7 @@ export function SourceWorkspace({
                       }}
                     >
                       🗑
-                    </ActionIcon>
+                    </ActionIcon>}
                   </div>
                 </div>
               ))}
@@ -609,14 +597,7 @@ export function SourceWorkspace({
         </div>
       )}
       {session && (
-        <RisSessionView
-          key={session.session.id}
-          data={session}
-          onOpenEvent={(id, top) => {
-            setTopId(top.id);
-            onOpenEvent(id, {sessionId:session.session.id, agendaId:top.id, number:top.number});
-          }}
-        />
+        <RisSessionView key={session.session.id} data={session} />
       )}
 
     </div>

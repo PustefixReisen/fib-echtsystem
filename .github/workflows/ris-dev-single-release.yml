@@ -5,6 +5,10 @@ on:
       - '.github/workflows/ris-dev-single-release.yml'
   workflow_dispatch:
     inputs:
+      rebuild_acceptance:
+        description: "Optional RIS-423 confirmation to rebuild the two acceptance sessions after the verified backup"
+        required: false
+        type: string
       confirmation:
         description: "After checking Mistral is disabled and development data is low-risk, type RIS-DEV"
         required: true
@@ -190,6 +194,20 @@ jobs:
             --project-ref apaubomxffcwtzjimori --no-verify-jwt
           npx --yes supabase@2.122.0 functions deploy fib-u4-ris-pilot \
             --project-ref apaubomxffcwtzjimori
+          npx --yes supabase@2.122.0 functions deploy fib-get-event \
+            --project-ref apaubomxffcwtzjimori --no-verify-jwt
+          npx --yes supabase@2.122.0 functions deploy fib-coordination \
+            --project-ref apaubomxffcwtzjimori --no-verify-jwt
+      - name: Rehearse and rebuild the two confirmed RIS acceptance sessions
+        if: inputs.rebuild_acceptance == 'RIS-423'
+        env:
+          FIB_MAINTENANCE_DATABASE_URL: ${{ secrets.FIB_MAINTENANCE_DATABASE_URL }}
+        run: |
+          set -euo pipefail
+          node --import tsx scripts/ris-shared-apps/rebuild-acceptance.mts \
+            --out="$RUNNER_TEMP/fib-ris-dev-release/ris-423-rehearsal.json"
+          node --import tsx scripts/ris-shared-apps/rebuild-acceptance.mts \
+            --apply --approval=RIS-423 --out="$RUNNER_TEMP/fib-ris-dev-release/ris-423-applied.json"
       - name: Build and deploy non-deleting IONOS editorial frontend
         env:
           VITE_FIB_ACCEPTANCE_MODE: shared-apps

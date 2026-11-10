@@ -20,7 +20,7 @@ export function ActionIcon(
   return (
     <button
       type="button"
-      className="fib-action-icon"
+      className={children === "→" ? "fib-action-icon fib-navigation-icon" : "fib-action-icon"}
       title={label}
       aria-label={label}
       disabled={disabled}
@@ -39,7 +39,7 @@ export function OriginalLink(
 ) {
   if (!url || !/^https:\/\//i.test(url)) return null;
   const icon = (
-    <a className="fib-action-icon fib-external-icon"
+    <a className="fib-action-icon fib-navigation-icon fib-external-icon"
       href={url} target="_blank" rel="noopener noreferrer"
       title={label} aria-label={label}>
       <IconGlyph name="↗"/>

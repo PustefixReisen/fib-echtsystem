@@ -393,18 +393,12 @@ export async function ensureRisTopEvents(tx:RisSql,sessionId:string):Promise<num
     const existing=await tx.unsafe(
       "select event_id from fib.ris_top_events where agenda_id=$1",[top.id]);
     if(existing.length)continue;
-    // A previously assigned main event takes precedence. Do not create
-    // another event or rewrite editorially modified event details.
-    const legacy=await tx.unsafe(
-      "select event_id from fib.ris_agenda_events where agenda_id=$1 and role='main_event' order by reviewed_at limit 1",
-      [top.id],
-    );
-    const eventId=legacy[0]?.event_id ?? (await tx.unsafe(
+    const eventId = (await tx.unsafe(
       `insert into fib.events(title,occurred_at,status,confirmed_at)
-       select a.title, s.session_date::timestamp at time zone 'Europe/Berlin',
-              'confirmed',now()
+       select regexp_replace(a.title, '[[:space:]]+Beschluss:[[:space:]]*.+$', '', 'i'),
+              s.session_date::timestamp at time zone 'Europe/Berlin', 'confirmed', now()
        from fib.ris_agenda_items a join fib.ris_sessions s on s.id=a.session_id
-       where a.id=$1 returning id`,[top.id],
+       where a.id=$1 returning id`, [top.id],
     ))[0]?.id;
     if(!eventId)throw Error("ris_top_event_creation_failed");
     await tx.unsafe(
