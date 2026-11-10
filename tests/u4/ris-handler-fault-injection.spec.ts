@@ -89,7 +89,7 @@ const source=edgeDatasetSupport+(readFileSync('supabase/functions/_shared/ris-ca
 const js=ts.transpileModule(source,{compilerOptions:{target:ts.ScriptTarget.ES2022,module:ts.ModuleKind.None}}).outputText;
 const settings:Record<string,string>={SUPABASE_URL:'https://auth.test',SUPABASE_ANON_KEY:'test',FIB_DATABASE_URL:'test'};
 const context:any=vm.createContext({
- exports:{}, __postgres:fakePostgres,fetch:fakeFetch,extractText:async()=>({text:'fixture PDF text'}),Request,Response,URL,URLSearchParams,
+ exports:{}, require:()=>({}), __postgres:fakePostgres,fetch:fakeFetch,extractText:async()=>({text:'fixture PDF text'}),Request,Response,URL,URLSearchParams,
  TextDecoder,TextEncoder,Uint8Array,Date,Set,Map,AbortSignal,crypto:webcrypto,atob,
  Deno:{env:{get:(key:string)=>settings[key]}},
 });
