@@ -155,7 +155,11 @@ export async function handleRis(req:Request,mode:'interactive'|'scheduler'='inte
      return reply({error:'integration_session_not_allowed'},400);
    if(mode!=='interactive'||payload.commit!==true)
      return reply({error:'integration_requires_interactive_commit'},403);
-   if(Deno.env.get('FIB_RIS_INTEGRATION_TEST_ENABLED')!=='true')
+   // The operator-approved 1031-only development capture is deliberately
+   // authorized by a live MFA admin request and an exact 19-TOP source check.
+   // The separate 1032 integration TEST remains disabled unless explicitly enabled.
+   if(payload.integrationSession==='1032' &&
+      Deno.env.get('FIB_RIS_INTEGRATION_TEST_ENABLED')!=='true')
      return reply({error:'integration_test_disabled'},403);
    const sessionId=payload.integrationSession;
    const singleUrl=origin+'/si0057.asp?__ksinr='+sessionId;
