@@ -93,7 +93,7 @@ const api = async (b: any) => {
         committee_name: "Bauausschuss",
         session_date: "2026-09-15",
       }].filter(s => matches(s.reference, s.committee_name, s.session_date,
-        new Date(s.session_date).toLocaleDateString("de-DE"))),
+        new Date(s.session_date).toLocaleDateString("de-DE", {day:"2-digit", month:"2-digit", year:"numeric", timeZone:"UTC"}))),
     };
   }
   if (b.action === "source_list") {

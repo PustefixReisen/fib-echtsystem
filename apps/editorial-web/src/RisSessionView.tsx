@@ -8,7 +8,11 @@ export const topStatus=(a:Row)=>a.observed_treatment ||
 type Props={
   data:Row;
 };
-const date=(v:unknown)=>v?new Date(String(v)).toLocaleDateString("de-DE"):"Datum unbekannt";
+const risDateFormat = new Intl.DateTimeFormat("de-DE", {
+  day: "2-digit", month: "2-digit", year: "numeric", timeZone: "UTC",
+});
+export const formatRisDate = (value: unknown) =>
+  value ? risDateFormat.format(new Date(String(value))) : "Datum unbekannt";
 const outcome=(s:unknown)=>({
   accepted:"angenommen",rejected:"abgelehnt",no_vote:"keine Abstimmung",
   unknown:"nicht eindeutig ermittelt",
@@ -19,7 +23,7 @@ export function RisSessionView({data}:Props){
   const agenda:Row[]=[...(data.agenda??[])].sort((a,b)=>Number(a.number)-Number(b.number));
   const documents:Row[]=(data.documents??[]).filter((document:Row)=>document.status!=="rejected");
   const votes:Row[]=data.topVotes??[];
-  const when=date(session.session_date);
+  const when=formatRisDate(session.session_date);
   const docTitle=(d:Row)=>d.kind==="minutes"?"Niederschrift"
     :d.kind==="unknown" && !d.agenda_id?"Tagesordnung"
     :d.kind==="proposal"?"Beschlussvorlage"

@@ -43,6 +43,9 @@ try {
     await sessions.filter({ hasText: "GR/440/2026" }).waitFor();
     assert.equal(await sessions.count(), 1, term);
   }
+  await search.fill("15.09.2026");
+  await sessions.getByText("Bauausschuss · 15.09.2026", {exact:true}).waitFor();
+  assert.equal(await sessions.count(), 1);
   await search.fill("ohne Treffer");
   await page.waitForFunction(() => window.calls.some(c => c.search === "ohne Treffer"));
   await search.fill("Gemeinderat");
@@ -59,8 +62,11 @@ try {
     await page.setViewportSize({ width, height: 884 });
     const council = sessions.filter({ hasText: "GR/440/2026" });
     const arrow = council.getByRole("button", { name: "Sitzung öffnen" });
-    const text = await council.getByText("Gemeinderat · 29.10.2026", { exact: true }).boundingBox();
+    const councilLabel = council.getByText("Gemeinderat · 29.10.2026", { exact: true });
+    await councilLabel.waitFor();
+    const text = await councilLabel.boundingBox();
     const icon = await arrow.boundingBox();
+    assert.ok(text && icon, "Sitzungsdatum und Pfeil sind sichtbar");
     assert.ok(icon.x >= text.x + text.width);
     assert.ok(icon.y <= text.y && icon.y + icon.height >= text.y + text.height);
     assert.ok(icon.width >= 44 && icon.height >= 44);

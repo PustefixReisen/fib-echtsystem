@@ -1,6 +1,6 @@
 import { ActionIcon, OriginalLink } from "./ActionIcon.js";
 import { EventAssignmentView } from "./EventAssignmentView.js";
-import { RisSessionView } from "./RisSessionView.js";
+import { formatRisDate, RisSessionView } from "./RisSessionView.js";
 import { type ReactNode, useEffect, useRef, useState } from "react";
 import { liveSearchDelay } from "./live-search.js";
 import { type SourceApi, sourceApi, withEventLock } from "./source-api.js";
@@ -113,6 +113,10 @@ export function SourceWorkspace({
   const [listRevision, setListRevision] = useState(0);
   const [listBusy, setListBusy] = useState(true);
   const [listError, setListError] = useState("");
+  function refreshList() {
+    setListBusy(true);
+    setListRevision(value => value + 1);
+  }
   const leave = () => {
     if (inFlight.current || !assignmentGuard.current()) return false;
     const ok = !dirtyRef.current ||
@@ -332,7 +336,7 @@ export function SourceWorkspace({
             setDirty(false);
             setDetail(null);
             setSession(null);
-            setListRevision(value => value + 1);
+            refreshList();
           }}
         >
           {route === "sessions" ? "Sitzungen" : "Fundstellen"}
@@ -343,7 +347,7 @@ export function SourceWorkspace({
             <span aria-current="page">
               {session
                 ? `${session.session.committee_name ?? "Sitzung"} · ${
-                  date(session.session.session_date)
+                  formatRisDate(session.session.session_date)
                 }`
                 : currentTitle}
             </span>
@@ -378,7 +382,7 @@ export function SourceWorkspace({
             setDirty(false);
             setDetail(null);
             setSession(null);
-            setListRevision(value => value + 1);
+            refreshList();
           }}
         >
           Zurück zur Liste
@@ -413,7 +417,7 @@ export function SourceWorkspace({
             <button
               disabled={busy}
               aria-label="Liste aktualisieren"
-              onClick={() => setListRevision(value => value + 1)}
+              onClick={refreshList}
             >
               ↻
             </button>
@@ -424,7 +428,10 @@ export function SourceWorkspace({
               {route === "sessions"
                 ? "Suche nach Gremium, Sitzungsnummer oder Datum"
                 : "Suche nach Titel, Quelle oder Adresse"}
-              <input type="search" value={search} onChange={e => setSearch(e.target.value)} />
+              <input type="search" value={search} onChange={e => {
+                setListBusy(true);
+                setSearch(e.target.value);
+              }} />
             </label>
             {route === "findings" && (
               <label>
@@ -443,47 +450,47 @@ export function SourceWorkspace({
               </label>
             )}
           </div>
-          {listError && <p role="alert">{listError}</p>}
+          {!listBusy && listError && <p role="alert">{listError}</p>}
           {listBusy && <p role="status">Suche läuft …</p>}
           {!listBusy && !listError && <>
-          {list.hasMore || list.sessions?.length > 100
-            ? (
-              <p role="status">
-                Mehr als 100 Treffer. Bitte die Suche eingrenzen.
+            {list.hasMore || list.sessions?.length > 100
+              ? (
+                <p role="status">
+                  Mehr als 100 Treffer. Bitte die Suche eingrenzen.
+                </p>
+              )
+              : null}
+            {route === "sessions"
+              ? (list.sessions ?? []).slice(0, 100).map((s: Row) => (
+                <div className="work-item source-list-row" key={s.id}>
+                  <strong>{s.reference ?? "Sitzung ohne Referenz"}</strong>
+                  <div className="source-navigation-row">
+                    <p>{s.committee_name ?? "Gremium unbekannt"} · {formatRisDate(s.session_date)}</p>
+                    <ActionIcon label="Sitzung öffnen" disabled={busy} onClick={() => void openSession(s.id)}>→</ActionIcon>
+                  </div>
+                </div>
+              ))
+              : items.map((x: Row) => (
+                <div className="work-item source-navigation-row" key={x.key}>
+                  <div>
+                    <strong>{x.caption}</strong>
+                    <p>
+                      {x.source_name} · {x.type === "finding"
+                        ? "Übernommene Fundstelle"
+                        : "Übernahme offen / neue Fassung"}
+                    </p>
+                  </div>
+                  <ActionIcon label="Fundstelle öffnen" disabled={busy} onClick={()=>void openFinding(x.input)}>→</ActionIcon>
+                </div>
+              ))}
+            {!busy &&
+              !error &&
+              (route === "sessions" ? !list.sessions?.length : !items.length) && (
+              <p>
+                Keine passenden Einträge im erfassten Bestand. Das ist kein
+                Nachweis, dass die Quelle keine Veröffentlichungen enthält.
               </p>
-            )
-            : null}
-          {route === "sessions"
-            ? (list.sessions ?? []).slice(0, 100).map((s: Row) => (
-              <div className="work-item source-list-row" key={s.id}>
-                <strong>{s.reference ?? "Sitzung ohne Referenz"}</strong>
-                <div className="source-navigation-row">
-                  <p>{s.committee_name ?? "Gremium unbekannt"} · {date(s.session_date)}</p>
-                  <ActionIcon label="Sitzung öffnen" disabled={busy} onClick={() => void openSession(s.id)}>→</ActionIcon>
-                </div>
-              </div>
-            ))
-            : items.map((x: Row) => (
-              <div className="work-item source-navigation-row" key={x.key}>
-                <div>
-                  <strong>{x.caption}</strong>
-                  <p>
-                    {x.source_name} · {x.type === "finding"
-                      ? "Übernommene Fundstelle"
-                      : "Übernahme offen / neue Fassung"}
-                  </p>
-                </div>
-                <ActionIcon label="Fundstelle öffnen" disabled={busy} onClick={()=>void openFinding(x.input)}>→</ActionIcon>
-              </div>
-            ))}
-          {!busy &&
-            !error &&
-            (route === "sessions" ? !list.sessions?.length : !items.length) && (
-            <p>
-              Keine passenden Einträge im erfassten Bestand. Das ist kein
-              Nachweis, dass die Quelle keine Veröffentlichungen enthält.
-            </p>
-          )}
+            )}
           </>}
         </Card>
       )}
