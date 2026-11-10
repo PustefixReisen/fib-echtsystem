@@ -74,7 +74,7 @@ export function RisSessionView({data}:Props){
           {docs(topDocs)}
           <div className="ris-minutes-outcomes">
             <strong>Beschlussergebnis</strong>
-            {topVotes.length?topVotes.map(v=><p className="ris-result-line" key={v.vote_index}>
+            {topVotes.length?topVotes.map((v,index)=><p className="ris-result-line" key={v.vote_index}>
               {topVotes.length>1?"Abstimmung "+v.vote_index+": ":""}
               {v.result==="no_vote" && topStatus(a)!=="Nicht angegeben" ? topStatus(a) : outcome(v.result)}
               {(v.yes_count!==null && v.yes_count!==undefined)
@@ -83,7 +83,7 @@ export function RisSessionView({data}:Props){
                 ?" · Nein "+v.no_count:""}
               {(v.abstention_count!==null && v.abstention_count!==undefined)
                 ?" · Enthaltungen "+v.abstention_count:""}
-              {minutesLink}
+              {index===0 && minutesLink}
             </p>)
             :<p className="ris-result-line meta">{topStatus(a)==="Nicht angegeben"
               ? "Kein Abstimmungsergebnis verfügbar." : topStatus(a)}{minutesLink}</p>}
