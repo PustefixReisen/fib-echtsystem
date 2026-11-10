@@ -65,6 +65,7 @@ function makeHandler(){
   .replace(/^import .*ris-originals.*;\s*/m, "")
     .replace(/^import .*ris-calendar.*;\s*/m,'')
  .replace(/^import .*development-datasets.*;\s*/m,'')
+  .replace(/^import .*ris-top-votes.*;\s*/m,'')
  .replace(/^import postgres from .*;\s*/m,'const postgres = globalThis.__postgres;\n')
   .replace(/^import .*from ['"](?:npm:unpdf|\.\.\/_shared\/ris-structure)[^\n]+$/gm,'')
  .replace("export async function verifyRisScheduler(","async function verifyRisScheduler(")
@@ -72,7 +73,7 @@ function makeHandler(){
  .replace("export default {fetch(req:Request){return handleRis(req,'interactive')}};", "};");
  const js=ts.transpileModule(source,{compilerOptions:{target:ts.ScriptTarget.ES2022,module:ts.ModuleKind.None}}).outputText;
  const sandbox:any=vm.createContext({
-  __postgres:()=>sqlClient(pool), fetch:fetchMock,Request,Response,URL,URLSearchParams,
+  exports:{}, require:()=>({}), __postgres:()=>sqlClient(pool), fetch:fetchMock,Request,Response,URL,URLSearchParams,
   TextDecoder,Uint8Array,Date,Set,Map,AbortSignal,crypto:webcrypto,atob,
   Deno:{env:{get:(key:string)=>({SUPABASE_URL:'https://auth.test',SUPABASE_ANON_KEY:'test',FIB_DATABASE_URL:'isolated'} as Record<string,string>)[key]}}
  });
