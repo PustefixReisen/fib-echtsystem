@@ -180,7 +180,14 @@ export async function risEditorial(
               v.abstention_count,v.source_sha256
          from fib.ris_top_vote_results v
          join fib.ris_agenda_items a on a.id=v.agenda_id
-        where a.session_id=$1 order by a.number::integer,v.vote_index`,[session.id],
+        where a.session_id=$1 and exists (
+          select 1 from fib.ris_document_links l
+          join fib.ris_documents d on d.id=l.document_id
+          join fib.ris_document_versions dv on dv.id=d.latest_version_id
+          where l.session_id=a.session_id and l.agenda_id is null and l.kind='minutes'
+            and l.status<>'rejected' and d.source_url=v.source_document_url
+            and dv.content_hash=v.source_sha256
+        ) order by a.number::integer,v.vote_index`,[session.id],
     );
     const events = await tx.unsafe(
       "select ae.*,e.title event_title,e.occurred_at event_date from fib.ris_agenda_events ae join fib.ris_agenda_items a on a.id=ae.agenda_id join fib.events e on e.id=ae.event_id where a.session_id=$1 and ae.role='local_reference'",

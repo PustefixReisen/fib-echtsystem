@@ -31,7 +31,20 @@ alter table fib.ris_top_vote_results enable row level security;
 
 grant select,insert,update,delete on fib.ris_top_events to fib_runtime;
 grant select,insert,update,delete on fib.ris_top_vote_results to fib_runtime;
+drop policy if exists ris_top_events_runtime on fib.ris_top_events;
 create policy ris_top_events_runtime on fib.ris_top_events
  for all to fib_runtime using (true) with check (true);
+drop policy if exists ris_top_votes_runtime on fib.ris_top_vote_results;
 create policy ris_top_votes_runtime on fib.ris_top_vote_results
  for all to fib_runtime using (true) with check (true);
+
+-- Permit the two new RIS objects in the scoped development ownership ledger.
+alter table if exists fib.development_objects drop constraint development_objects_table_name_check;
+alter table if exists fib.development_objects add constraint development_objects_table_name_check check(table_name in (
+ 'ris_committees','ris_sessions','ris_session_versions','ris_agenda_items','ris_proposals',
+ 'ris_documents','ris_document_versions','ris_document_links','ris_agenda_events',
+ 'ris_top_events','ris_top_vote_results','ris_suggestions','ris_proposal_texts','ris_decision_points','ris_decision_versions',
+ 'ris_votes','ris_relation_suggestions','ris_minutes_approvals','ris_review_log',
+ 'findings','finding_versions','events','event_findings','event_processes','event_topics',
+ 'event_finding_change_log','event_finding_metadata_log','event_finding_justification_log',
+ 'lead_responsibilities','object_last_edits','source_observations','source_scopes'));

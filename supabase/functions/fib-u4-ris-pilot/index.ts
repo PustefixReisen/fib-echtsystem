@@ -4,7 +4,7 @@ import {calendarMonth,calendarSessions} from '../_shared/ris-calendar.ts';
 import postgres from 'npm:postgres@3.4.7';
 import {extractText} from 'npm:unpdf@2.1.0';
 import {risSessionLinks,risUrl,parseRisStructure,persistRisStructure,persistRisDocument} from '../_shared/ris-structure.ts';
-import {persistRisTopVotes} from '../_shared/ris-top-votes.ts';
+import {persistRisTopVotes,RisVoteSourceError} from '../_shared/ris-top-votes.ts';
 const origin='https://buergerinfo-feldkirchen.digitalfabrix.de';
 const entry=origin+'/do0040.asp?smcmode=32832';
 const cors={'access-control-allow-origin':'https://fib.pustivo.de','access-control-allow-headers':'authorization,apikey,x-client-info,content-type','access-control-allow-methods':'POST, OPTIONS'};
@@ -149,7 +149,7 @@ export async function handleRis(req:Request,mode:'interactive'|'scheduler'='inte
   if(scopes.length!==1)throw new Error('ris_scope_unavailable');
   const scopeId=scopes[0].id as string;
   // Separate, strictly single-session integration path. No release-list crawl,
-  // calendar backfill, PDF downloads, scanner checkpoints or source observations.
+  // calendar backfill, scanner checkpoints or source observations.
   // Only an explicitly approved AAL2 admin request may use this write path.
   if(payload.integrationSession!==undefined){
    if(!['1031','1032'].includes(payload.integrationSession))
@@ -175,12 +175,22 @@ export async function handleRis(req:Request,mode:'interactive'|'scheduler'='inte
      return reply({error:'integration_session_incomplete',observed:actual.length,
        expected:19},409);
    }
+   const minutes=snapshot.documents.filter(document=>document.kind==='minutes');
+   if(minutes.length>1)return reply({error:'integration_minutes_ambiguous'},409);
+   const minutesUrl=minutes[0]?.url;
+   const minutesPdf=minutesUrl?await pdfHash(minutesUrl,true):null;
    const result=await sql.begin(async tx=>{
     return withDevelopmentDataset(tx,{action:'source_scan',scopeId},async()=>{
      const locked=await tx.unsafe("select id from fib.source_scopes where id=$1::uuid and status='candidate' for update",[scopeId]);
      if(locked.length!==1)throw Error('scope_changed');
      const written=await persistRisStructure(tx,snapshot);
-     if(sessionId!=='1031')return written;
+     const votes=minutesPdf && minutesUrl
+       ? await persistRisTopVotes(tx,written.sessionId,minutesUrl,minutesPdf.hash,
+                                  minutesPdf.text??'',snapshot.observedAt)
+       : null;
+     if(minutesPdf && minutesUrl)
+       await persistRisDocument(tx,minutesUrl,minutesPdf.hash,null,'unpdf-2.1.0',snapshot.observedAt);
+     if(sessionId!=='1031')return {...written,votes};
      const stored=await tx.unsafe(
        'select number from fib.ris_agenda_items where session_id=$1::uuid order by number::integer',
        [written.sessionId],
@@ -188,7 +198,7 @@ export async function handleRis(req:Request,mode:'interactive'|'scheduler'='inte
      const actual=stored.map(r=>Number(r.number));
      if(actual.length!==19||actual.some((n,i)=>n!==i+1))
        throw Error('ris_1031_saved_top_count_mismatch');
-     return {...written,storedTopCount:actual.length};
+     return {...written,storedTopCount:actual.length,votes};
     });
    });
    return reply({mode:'single_session_integration',session:sessionId,
@@ -341,12 +351,16 @@ export async function handleRis(req:Request,mode:'interactive'|'scheduler'='inte
      const targets=await tx.unsafe(
        `select distinct l.session_id from fib.ris_document_links l
          join fib.ris_documents d on d.id=l.document_id
-        where d.source_url=$1 and l.kind='minutes' and l.agenda_id is null`,
+        where d.source_url=$1 and l.kind='minutes' and l.agenda_id is null and l.status<>'rejected'
+          and (select count(*) from fib.ris_document_links m
+               where m.session_id=l.session_id and m.kind='minutes'
+                 and m.agenda_id is null and m.status<>'rejected')=1`,
        [pdf.url],
      );
      for(const row of targets){
        try{await persistRisTopVotes(tx,row.session_id,pdf.url,pdf.hash,pdf.text,stamp);}
        catch(e){
+         if(!(e instanceof RisVoteSourceError))throw e;
          // No vote facts are written unless the full document and all
          // headings are verifiable. Other RIS source imports continue.
          console.warn('RIS vote extraction pending: '+String(e).slice(0,100));

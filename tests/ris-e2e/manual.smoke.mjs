@@ -103,7 +103,7 @@ try {
   const db = new pg.Client({ connectionString: f.runtime });
   await db.connect();
   assert.equal(
-    (await db.query("select count(*) n from fib.ris_decision_points")).rows[0]
+    (await db.query("select count(*) n from fib.ris_top_vote_results")).rows[0]
       .n,
     "4",
   );
@@ -122,24 +122,10 @@ try {
     .filter({ hasText: "GR/439/2026" })
     .getByRole("button", { name: "Sitzung öffnen" })
     .click();
-  await page.getByRole("button", { name: "TOP 6 öffnen" }).click();
-  assert.equal(
-    await page
-      .locator("section")
-      .filter({
-        has: page.getByRole("heading", {
-          name: "Niederschrift der Sitzung",
-          exact: true,
-        }),
-      })
-      .locator("p").filter({hasText:/Beschlusspunkt/})
-      .count(),
-    2,
-  );
-  // This manual launcher test verifies RIS persistence across restarts. Source
-  // intake is covered by the dedicated source-editorial UI suite; no fixture
-  // observation is assumed to exist in this isolated RIS launch.
-  assert.equal(await page.getByRole("heading", { name: "Niederschrift der Sitzung", exact: true }).count(), 1);
+  const top6 = page.locator("article").filter({has:page.getByRole("heading",{name:/^TOP 6 ·/})});
+  await top6.getByText(/Ja 17 · Nein 2/).waitFor();
+  await top6.getByText(/Ja 19 · Nein 0/).waitFor();
+  await top6.getByRole("link",{name:/Niederschrift/}).waitFor();
   await context.close();
   await stop();
   console.log(
@@ -150,12 +136,13 @@ try {
   assert.equal(next.f.users.editor.password, f.users.editor.password);
   await next.page.locator(".side-nav").getByRole("button", { name: "Sitzungen", exact: true }).click();
   await next.page.locator(".work-item").filter({ hasText: "GR/439/2026" }).getByRole("button", { name: "Sitzung öffnen" }).click();
-  await next.page.getByRole("button", { name: "TOP 6 öffnen" }).click();
-  assert.equal(await next.page.locator("section").filter({has:next.page.getByRole("heading",{name:"Niederschrift der Sitzung",exact:true})}).locator("p").filter({hasText:/Beschlusspunkt/}).count(), 2);
+  const resumedTop6 = next.page.locator("article").filter({has:next.page.getByRole("heading",{name:/^TOP 6 ·/})});
+  await resumedTop6.getByText(/Ja 17 · Nein 2/).waitFor();
+  await resumedTop6.getByText(/Ja 19 · Nein 0/).waitFor();
   const resumed = new pg.Client({ connectionString: next.f.runtime });
   await resumed.connect();
   assert.equal(
-    (await resumed.query("select count(*) n from fib.ris_decision_points"))
+    (await resumed.query("select count(*) n from fib.ris_top_vote_results"))
       .rows[0].n,
     "4",
   );

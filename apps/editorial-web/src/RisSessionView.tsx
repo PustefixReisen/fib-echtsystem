@@ -6,11 +6,8 @@ export const topStatus=(a:Row)=>a.observed_treatment ||
   String(a.title??"").match(/\s+Beschluss:\s*(.+)$/i)?.[1] ||
   ({withdrawn:"Abgesetzt",deferred:"Vertagt",treated:"Behandelt",announced:"Angekündigt"} as Row)[a.treatment_status] || "Nicht angegeben";
 type Props={
-  data:Row;busy:boolean;onOpenEvent:(id:string)=>void;
-  onOpenDocument:(versionId:string)=>void;onReload:()=>Promise<void>;
-  selectedTopId?:string;onSelectTop?:(id:string)=>void;
-  registerLeaveGuard?:(guard:()=>boolean)=>void;
-  api?:any;eventLock?:any;previewOriginalWording?:boolean;
+  data:Row;
+  onOpenEvent:(id:string,top:{id:string;number:string})=>void;
 };
 const date=(v:unknown)=>v?new Date(String(v)).toLocaleDateString("de-DE"):"Datum unbekannt";
 const outcome=(s:unknown)=>({
@@ -20,8 +17,8 @@ const outcome=(s:unknown)=>({
 export function RisSessionView({data,onOpenEvent}:Props){
   const [infoOpen,setInfoOpen]=useState(false);
   const session:Row=data.session??{};
-  const agenda:Row[]=data.agenda??[];
-  const documents:Row[]=data.documents??[];
+  const agenda:Row[]=[...(data.agenda??[])].sort((a,b)=>Number(a.number)-Number(b.number));
+  const documents:Row[]=(data.documents??[]).filter((document:Row)=>document.status!=="rejected");
   const events:Row[]=data.topEvents??[];
   const votes:Row[]=data.topVotes??[];
   const when=date(session.session_date);
@@ -77,6 +74,7 @@ export function RisSessionView({data,onOpenEvent}:Props){
         const topVotes=votes.filter(v=>v.agenda_id===a.id);
         return <article className="ris-top-item" key={a.id}>
           <h3>TOP {a.number} · {topTitle(a)}</h3>
+          <p className="meta">Status: {topStatus(a)}</p>
           {docs(topDocs)}
           <div className="ris-minutes-outcomes">
             <strong>Beschlussergebnis</strong>
@@ -90,14 +88,14 @@ export function RisSessionView({data,onOpenEvent}:Props){
               {(v.abstention_count!==null && v.abstention_count!==undefined)
                 ?" · Enthaltungen "+v.abstention_count:""}
             </p>)
-            :<p className="meta">Abstimmungsergebnis noch nicht aus der Niederschrift ermittelt.</p>}
+            :<p className="meta">Kein Abstimmungsergebnis verfügbar.</p>}
             {minutes.length>0&&<p><OriginalLink url={minutes[0].source_url}
               label={"Niederschrift vom "+when+" im RIS öffnen"}/></p>}
           </div>
           {event&&<p className="ris-derived-event">
             <strong>Ereignis:</strong> {String(event.event_title)}
             {" "}<ActionIcon label={"Ereignis öffnen: "+event.event_title}
-              onClick={()=>onOpenEvent(event.event_id)}>→</ActionIcon>
+              onClick={()=>onOpenEvent(event.event_id,{id:a.id,number:String(a.number)})}>→</ActionIcon>
           </p>}
           {!event&&<p className="meta">Ereignis wird beim nächsten Quellenabgleich automatisch ergänzt.</p>}
         </article>;

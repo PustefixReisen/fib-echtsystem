@@ -38,6 +38,7 @@ function connection(state:State){
   if(q.startsWith('insert into fib.ris_scan_cursors')){state.cursor=structuredClone(params[1]);return [];}
   if(q.startsWith('insert into fib.source_runs')){state.runs.push({status:params[2],cadence:params[7]});return [];}
   if(q.startsWith('update fib.source_scopes')){state.scopeError=params[3];return [];}
+  if (q.includes('select distinct l.session_id from fib.ris_document_links')) return [];
   throw new Error('Unexpected SQL: '+q.slice(0,120));
  };
  const sql:any={unsafe:query,json:(v:any)=>v,end:async()=>{},begin:async(fn:(tx:any)=>Promise<void>)=>{
