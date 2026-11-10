@@ -109,7 +109,7 @@ const context: any = {
   Deno: {
     env: {
       get: (k: string) =>
-        k === "FIB_RIS_INTEGRATION_TEST_ENABLED" ? "true" :
+        k === "FIB_RIS_INTEGRATION_TEST_ENABLED" ? "false" :
         k === "FIB_RIS_STRUCTURE_ENABLED"
           ? enabled
             ? "true"
@@ -407,6 +407,7 @@ async function main() {
   const imported1031=await previewSession({integrationSession:"1031",commit:true});
   assert.equal(imported1031.status,200,JSON.stringify(imported1031.body));
   assert.equal(imported1031.body.observedTopCount,19);
+  assert.equal(imported1031.body.storedTopCount,19,"Must verify 19 committed TOPs, not just 19 parsed headings");
   const realSession=await first(
     "select id from fib.ris_sessions where source_url=$1",
     [origin+"/si0057.asp?__ksinr=1031"],
@@ -420,6 +421,10 @@ async function main() {
   assert.equal(repeat1031.body.changed,false,"Repeated official session import must be idempotent");
   assert.equal(await cursor(),cursorBefore1031,"Direct approved session import must not change scanner cursor");
   assert.equal((await previewSession({integrationSession:"9999",commit:true})).status,400);
+  const disabled1032=await previewSession({integrationSession:"1032",commit:true});
+  assert.equal(disabled1032.status,403);
+  assert.equal(disabled1032.body.error,"integration_test_disabled");
+
   console.log(
     "Actual RIS handler + actual migration: active feature, atomic snapshots/checkpoints, PDF failure, rollback, repeat, late publication, runtime role and disabled feature passed",
   );

@@ -773,6 +773,32 @@ export function App() {
     finally{setU4Busy(false)}
   }
 
+  async function runRisSession1031(importRecords:boolean) {
+    if(sessionContext?.role!=='admin'||state!=='aal2'||u4Busy)return;
+    if(importRecords && !window.confirm(
+      'Die vollständige amtliche RIS-Sitzung vom 15.10.2026 (19 öffentliche TOPs) jetzt übernehmen? '+
+      'Es werden nur Sitzungs- und Quellenstrukturen gespeichert, keine redaktionellen Beschlüsse oder Ereignisse.'
+    ))return;
+    setU4Busy(true);setU4Error(null);setU4Result(null);
+    try {
+      const body=importRecords ? {integrationSession:"1031",commit:true}
+        : {previewSession:"1031",commit:false};
+      const {data,error}=await supabase.functions.invoke<Record<string,unknown>>('fib-u4-ris-pilot',{body});
+      if(error||!data||data.error){
+        setU4Error('RIS-Sitzung 15.10.2026: '+String(data?.detail??data?.error??error?.message??'Quellenprüfung fehlgeschlagen'));
+        return;
+      }
+      const topCount=Number(data.publicTopCount??data.observedTopCount??0);
+      if(topCount!==19){
+        setU4Error('Amtliche Tagesordnung unvollständig: '+topCount+' statt 19 TOPs.');
+        return;
+      }
+      setU4Result({...data,ris:true,session1031:true});
+    }catch(err){
+      setU4Error(err instanceof Error?err.message:'Verbindungsfehler beim RIS-Abruf');
+    }finally{setU4Busy(false)}
+  }
+
   async function runRisCombinedAcceptance() {
     if(sessionContext?.role!=='admin'||state!=='aal2'||u4Busy)return;
     if(!window.confirm('Beide RIS-Prüfpläne (30 und 120 Tage) vollständig testen? Höchstens 8 kontrollierte Teilaufrufe, keine Zeitsteuerung.'))return;
@@ -1796,12 +1822,30 @@ export function App() {
                     <button type="button" disabled={u4Busy} onClick={()=>void runRisPdfBackfill()}>RIS-PDFs gesammelt prüfen</button>
                   </div>
                 </div>
+                <section aria-label="RIS-Sitzung 15.10.2026 vollständig erfassen">
+                  <h3>Gemeinderat 15.10.2026 – vollständige Tagesordnung</h3>
+                  <p>Die amtliche Tagesordnung enthält 19 öffentliche TOPs. Erst wird die aktuelle RIS-Quelle ohne Speicherung geprüft. Der getrennt bestätigte Import übernimmt ausschließlich die Sitzungsstruktur und keine redaktionellen Beschlüsse.</p>
+                  <div style={{display:'flex',gap:'.75rem',flexWrap:'wrap'}}>
+                    <button type="button" disabled={u4Busy} onClick={()=>void runRisSession1031(false)}>19 TOPs direkt im RIS prüfen</button>
+                    <button type="button" disabled={u4Busy} onClick={()=>void runRisSession1031(true)}>Vollständige RIS-TOPs übernehmen</button>
+                  </div>
+                  {u4Result?.session1031===true && <p role="status">
+                    {u4Result.mode==='single_session_integration'?'Amtliche RIS-Struktur übernommen':'Amtliche Quelle nur geprüft'}:
+                    {String(u4Result.publicTopCount??u4Result.observedTopCount)} öffentliche TOPs.
+                    {u4Result.mode==='read_only_session_preview'?' Keine Daten geändert.':''}
+                  </p>}
+                </section>
                 {u4Busy && <p role="status">Quellenabruf läuft …</p>}
                 {u4Error && <p role="alert">Fehler: {u4Error}</p>}
                 {u4Result && <div aria-live="polite">
-                  <p><strong>Ergebnis:</strong> {u4Result.mode==='dry_run'?'Lesender Test':'Speichertest'}</p>
-                  {u4Result.ris===true && u4Result.backfill===true && <p>PDF-Nachprüfung: {String(u4Result.pdfChecked)} PDFs im letzten Paket geprüft · Noch offen: {String(u4Result.backfillRemaining)}</p>}
-                  {u4Result.ris ? <>
+                  <p><strong>Ergebnis:</strong> {u4Result.session1031===true
+                    ? (u4Result.mode==='read_only_session_preview'?'Amtliche Sitzung ohne Speicherung geprüft':'Amtliche Sitzungsstruktur übernommen')
+                    : u4Result.mode==='dry_run'?'Lesender Test':'Speichertest'}</p>
+                  {u4Result.session1031!==true && u4Result.ris===true && u4Result.backfill===true && <p>PDF-Nachprüfung: {String(u4Result.pdfChecked)} PDFs im letzten Paket geprüft · Noch offen: {String(u4Result.backfillRemaining)}</p>}
+                  {u4Result.session1031===true
+                    ? <p>{String(u4Result.publicTopCount??u4Result.observedTopCount)} der 19 öffentlichen TOPs erkannt.
+                      {u4Result.mode==='single_session_integration'?' Bitte die Sitzungsansicht neu öffnen und den Bestand prüfen.':' Ein Import ist damit noch nicht erfolgt.'}</p>
+                    : u4Result.ris ? <>
                     <p>RIS-Dokumentverweise: {String(u4Result.documents)} · Neue Verweise: {String(u4Result.newCount)} · Noch zu prüfende Freigabeansichten: {String(u4Result.pending)} · Alle gefundenen Ansichten geprüft: {u4Result.complete?'Ja':'Nein'}</p>
                     {typeof u4Result.coverageStatus==='string' && <p>Rückblick ({u4Result.cadence==='weekly'?'120':'30'} Tage) · benötigt ab: {String(u4Result.requiredSince)} · frühester belegter Start: {String(u4Result.earliestObserved??'unbekannt')} · Nachweis: {u4Result.coverageStatus==='candidate'?'Startdatum ausreichend; Vollständigkeit nicht belegt':u4Result.coverageStatus==='in_progress'?'Prüfung läuft':u4Result.coverageStatus==='insufficient'?'Rückblick nicht ausreichend':'Nicht nachgewiesen'}</p>}
                     {Array.isArray(u4Result.dueChecks) && <p>Prüfbedarf: {(u4Result.dueChecks as {cadence:string;due:boolean;reason:string;overdueDays:number|null}[]).map(x=>`${x.cadence==='daily'?'Täglich':'Wöchentlich'}: ${x.reason==='recovery_needed'?'Nachholung erforderlich':x.reason==='never_completed'?'Noch kein Abschluss':x.due?'Fällig':'Nicht fällig'}`).join(' · ')}</p>}
