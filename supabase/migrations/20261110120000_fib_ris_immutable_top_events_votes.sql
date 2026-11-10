@@ -28,3 +28,10 @@ grant select on fib.ris_top_vote_results to authenticated;
 alter table fib.ris_top_events enable row level security;
 alter table fib.ris_top_vote_results enable row level security;
 -- Follow the established role-gated API read path; no direct client RLS policies.
+
+grant select,insert,update,delete on fib.ris_top_events to fib_runtime;
+grant select,insert,update,delete on fib.ris_top_vote_results to fib_runtime;
+create policy ris_top_events_runtime on fib.ris_top_events
+ for all to fib_runtime using (true) with check (true);
+create policy ris_top_votes_runtime on fib.ris_top_vote_results
+ for all to fib_runtime using (true) with check (true);
