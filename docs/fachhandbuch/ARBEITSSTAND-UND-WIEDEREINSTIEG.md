@@ -8,9 +8,9 @@ Das Fachhandbuch wurde am 29.10.2026 abgenommen. Am 11.11.2026 folgte die persö
 
 ## Nächster fachlicher Arbeitsblock
 
-Paket B zur automatischen strukturierten RIS-Inhaltsanalyse ist als nächstes zu konkretisieren. Es ist noch nicht implementiert. Eine manuelle RIS-Analysefreigabe ist nicht geplant. Die Verwendung von Analyseergebnissen in Meldungen, Vorgängen und Themen ist gegen deren vorhandene Regeln und öffentliche Freigaben abzugleichen.
+Paket B aus #428 implementiert eine getrennte regelbasierte Erkenntnisbildung. Der [Fach-/Technikbericht](../operations/ris-analysis-428.md) beschreibt Umfang, Grenzen, Tests und den kontrollierten Bereitstellungsweg. Die Installation und die zulässige temporäre Dokumentauswertung sind von der Umsetzung zu unterscheiden. Eine manuelle RIS-Analysefreigabe ist nicht vorgesehen.
 
-Der Auftrag #427 aktualisiert ausschließlich die Dokumentation. Die technische Umsetzung von Paket B erhält einen eigenen Auftrag. Die übrigen Arbeitspakete der [Roadmap](../Roadmap.md) behalten ihre fachliche Abgrenzung.
+Der nächste fachliche Ausbau betrifft die Verwendung dieser Erkenntnisse in Meldungen, Vorgängen und Themen nach deren bestehenden Regeln. Die optionale Mistral-Anbindung benötigt eine eigene ausdrückliche Freigabe und Budgetabsicherung. Die übrigen Arbeitspakete der [Roadmap](../Roadmap.md) behalten ihre Abgrenzung.
 
 ## Freigabegrenzen
 

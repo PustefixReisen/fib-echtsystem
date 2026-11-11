@@ -1,3 +1,5 @@
+import {analysisDocumentPolicy} from '../_shared/ris-analysis.ts';
+import {readRisAnalysis} from '../_shared/ris-analysis-worker.ts';
 import {parseRisStructure,risUrl} from '../_shared/ris-structure.ts';
 import {prepareRisMinutesSessionDrafts} from '../_shared/ris-minutes-pipeline.ts';
 import {createMistralRisDraftProvider} from '../_shared/ris-minutes-mistral-provider.ts';
@@ -138,6 +140,16 @@ export default {
         const store = originalStore(Deno.env.get('SUPABASE_URL') ?? '',Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? '');
         const bytes = await sql.begin(tx => readOriginal(tx,body.versionId,store));
         return new Response(bytes as BodyInit,{headers:{...corsHeaders,'content-type':'application/pdf','content-disposition':'inline; filename="fib-original.pdf"','cache-control':'private, no-store','x-content-type-options':'nosniff'}});
+      }
+      if(body.action==='ris_analysis_read'){
+        if(typeof body.agendaId!=='string'||! /^[0-9a-f-]{36}$/i.test(body.agendaId))
+          return json({error:'invalid_agenda_id'},400);
+        if(!(await sql.unsafe("select to_regclass('fib.ris_analysis_versions') as relation"))[0]?.relation)
+          return json({ok:true,status:'not_configured'});
+        const result=await sql.begin(tx=>readRisAnalysis(tx,body.agendaId,
+          analysisDocumentPolicy(Deno.env.get('FIB_RIS_ANALYSIS_DOCUMENTS_ENABLED')==='true',
+            Deno.env.get('FIB_RIS_ANALYSIS_APPROVED_DOCUMENT_CLASSES'))));
+        return json({ok:true,...result});
       }
       if(body.action==='source_readiness'){
         if(membership[0].role!=='admin')return json({error:'admin_required'},403);

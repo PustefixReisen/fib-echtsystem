@@ -174,7 +174,7 @@ Detailregeln: `docs/Themen-und-Vorgangslogik.md`, `docs/Datenmodell.md` und `doc
 
 Für den abgenommenen RIS-Import gilt [Kapitel 07](fachhandbuch/07-Sitzungen-und-Beschluesse-Entwurf-2026-10-26.md). Sitzungen und ihre öffentlichen TOPs werden quellengebunden übernommen. Jedes TOP-Ereignis und seine Dokumentfundstellen entstehen automatisch und bleiben redaktionell unveränderlich. Beschlussstatus und verfügbare Abstimmungen werden anhand der amtlichen Nachweise übernommen. Fehlende Nachweise bleiben kenntlich. Die Vorlage enthält einen Vorschlag und belegt keinen tatsächlich gefassten Beschluss.
 
-Die automatische strukturierte Inhaltsanalyse ist das noch nicht implementierte Paket B. Aus dem Import folgt keine bereits arbeitende automatische Analyse oder Fortschreibung von Meldungen, Vorgängen und Themen. Eine manuelle RIS-Analysefreigabe ist nicht geplant. Öffentliche Beitragsfreigaben und die fachlichen Regeln der Folgeobjekte werden dadurch nicht ersetzt.
+Paket B implementiert eine getrennte regelbasierte Erkenntnisbildung. Mistral ist als optionale Erweiterung vorbereitet und standardmäßig nicht angebunden. Der Import bleibt vom nachgelagerten Analysearbeiter getrennt. Die automatische inhaltliche Fortschreibung von Meldungen, Vorgängen und Themen ist ein späterer Ausbau. Eine manuelle RIS-Analysefreigabe ist nicht geplant. Öffentliche Beitragsfreigaben und die fachlichen Regeln der Folgeobjekte werden dadurch nicht ersetzt.
 
 Veröffentlichungs-/Freigabedatum eines Dokuments darf nicht ohne geeigneten Beleg als Beratungs- oder Entscheidungsdatum verwendet werden. Dokumentdatum, öffentliche Freigabe, geplanter Sitzungstermin, veröffentlichte Tagesordnung und tatsächliche Beratung/Entscheidung sind unterschiedliche Datumsarten.
 

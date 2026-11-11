@@ -27,7 +27,7 @@ Ein Bericht nennt die Aufnahme von Kaufverhandlungen. Das wird als Ereignis erfa
 
 Jeder importierte TOP erhält genau ein redaktionell nicht bearbeitbares Ereignis. Seine zugehörigen RIS-Dokumente und die gemeinsame Sitzungsniederschrift werden automatisch als Fundstellen verknüpft. Veröffentlichung einer Vorlage, spätere Niederschrift und einzelne Abstimmungen erzeugen keine weiteren Ereignisse zu demselben TOP. Die automatische Anlage kennzeichnet die eindeutige Quellenzuordnung und behauptet keine Annahme eines Beschlussvorschlags.
 
-Ein Presseartikel oder ein späteres eigenständiges Geschehen kann im allgemeinen Redaktionsprozess ein anderes Ereignis begründen. Dieses wird nicht zusätzlich am TOP verknüpft und ändert das TOP-Ereignis oder seine Dokumentzuordnungen nicht. Redaktionelle Meldungen, Vorgänge und Themen werden an ihren eigenen Objekten bearbeitet. Die strukturierte RIS-Inhaltsanalyse aus Paket B ist noch nicht implementiert.
+Ein Presseartikel oder ein späteres eigenständiges Geschehen kann im allgemeinen Redaktionsprozess ein anderes Ereignis begründen. Dieses wird nicht zusätzlich am TOP verknüpft und ändert das TOP-Ereignis oder seine Dokumentzuordnungen nicht. Redaktionelle Meldungen, Vorgänge und Themen werden an ihren eigenen Objekten bearbeitet. Paket B erzeugt getrennte, automatisch gekennzeichnete regelbasierte Erkenntnisse. Eine automatische fachlich verbindliche Folgezuordnung ist damit nicht verbunden.
 
 ## 04.3 Ereignisse erkennen und fortschreiben
 

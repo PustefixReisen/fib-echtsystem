@@ -1,3 +1,5 @@
+import {notifyRisAnalysis} from '../_shared/ris-analysis-notify.ts';
+declare const EdgeRuntime: {waitUntil(promise:Promise<unknown>):void};
 // RIS-only server scheduler. No user JWT is accepted here; all calls must pass
 // the opt-in flag and purpose-scoped secret checked inside handleRis.
 // A single invocation may need multiple two-view RIS batches.
@@ -33,8 +35,16 @@ export default {async fetch(req:Request){
   const result=await handleRis(req.clone(),'scheduler');
   if(!result.ok)return result;
   latest=await result.json() as Record<string,unknown>;
-  if(latest.skipped==='not_due'||latest.complete===true)
+  if(latest.skipped==='not_due'||latest.complete===true) {
+   if(Deno.env.get('FIB_RIS_ANALYSIS_ENABLED')==='true') {
+    const task=notifyRisAnalysis(Deno.env.get('SUPABASE_URL'),Deno.env.get('FIB_RIS_SCHEDULER_TOKEN'));
+    try {
+     if(typeof EdgeRuntime!=='undefined')EdgeRuntime.waitUntil(task);
+     else await task;
+    } catch { /* Scheduling failure is independent of the committed import. */ }
+   }
    return Response.json({...latest,batches:batch},{status:200});
+  }
   if(Number(latest.failures??0)>0)
    return Response.json({...latest,batches:batch,error:'ris_retry_needed'},{status:503});
  }

@@ -1,3 +1,5 @@
+import {notifyRisAnalysis} from '../_shared/ris-analysis-notify.ts';
+declare const EdgeRuntime: {waitUntil(promise:Promise<unknown>):void};
 import {originalStore,fetchRisOriginal} from '../_shared/ris-originals.ts';
 import {withDevelopmentDataset} from '../_shared/development-datasets.ts';
 import {calendarMonth,calendarSessions} from '../_shared/ris-calendar.ts';
@@ -64,8 +66,8 @@ function dueStatus(states:Record<string,{lastCompleteAt?:string|null;pending?:st
   return {cadence,due:recovery||today>=next,reason:recovery?'recovery_needed':today>=next?'due':'not_due',overdueDays};
  });
 }
-export async function verifyRisScheduler(req:Request):Promise<Response|null>{
- if(Deno.env.get('FIB_RIS_AUTOMATION_ENABLED')!=='true')return reply({error:'scheduler_disabled'},503);
+export async function verifyRisScheduler(req:Request,enabledFlag:'FIB_RIS_AUTOMATION_ENABLED'|'FIB_RIS_ANALYSIS_ENABLED'='FIB_RIS_AUTOMATION_ENABLED'):Promise<Response|null>{
+ if(Deno.env.get(enabledFlag)!=='true')return reply({error:'scheduler_disabled'},503);
  const expected=Deno.env.get('FIB_RIS_SCHEDULER_TOKEN');
  const provided=req.headers.get('x-fib-ris-scheduler');
  if(!expected||expected.length<32||!provided)return reply({error:'scheduler_forbidden'},403);
@@ -389,4 +391,18 @@ export async function handleRis(req:Request,mode:'interactive'|'scheduler'='inte
  }catch(e){await recordStructureFailure(e);return reply({error:'ris_pilot_failed',detail:String(e).slice(0,180)},502)}
  finally{await sql.end()}
 }
-export default {fetch(req:Request){return handleRis(req,'interactive')}};
+export default {async fetch(req:Request){
+ const inspection=Deno.env.get('FIB_RIS_ANALYSIS_ENABLED')==='true'?req.clone():null;
+ const response=await handleRis(req,'interactive');
+ if(response.ok && inspection) {
+  const payload=await inspection.json().catch(()=>null);
+  if(payload?.commit===true) {
+   const task=notifyRisAnalysis(Deno.env.get('SUPABASE_URL'),Deno.env.get('FIB_RIS_SCHEDULER_TOKEN'));
+   try {
+    if(typeof EdgeRuntime!=='undefined')EdgeRuntime.waitUntil(task);
+    else await task;
+   } catch { /* Scheduling failures never change the successful import response. */ }
+  }
+ }
+ return response;
+}};

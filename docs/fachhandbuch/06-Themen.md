@@ -9,7 +9,7 @@
 > **Geltung:** Dieses Kapitel ist die fachliche Primärquelle für Themen und Themenanalysen. Historische Quellen dienen nur noch dem Nachweis der Herkunft und früherer Fassungen. Neue technische Zustände, Datenbankobjekte oder Rechte entstehen weiterhin nicht ohne die dafür vorgesehenen technischen und fachlichen Prüfungen.
 
 
-**RIS-Anschluss seit 11.11.2026.** Die amtlichen Daten, TOP-Ereignisse und ihre Fundstellenzuordnungen sind gemäß [Kapitel 07](07-Sitzungen-und-Beschluesse-Entwurf-2026-10-26.md) geschützt. Eine redaktionelle Themenentscheidung findet am Thema statt und ändert den RIS-Import nicht. Die automatische strukturierte RIS-Inhaltsanalyse und die daraus folgende Themenfortschreibung sind Teil des noch nicht implementierten Pakets B. Die allgemeinen Themenregeln dieses Kapitels sind kein Umsetzungsnachweis dafür.
+**RIS-Anschluss seit 11.11.2026.** Die amtlichen Daten, TOP-Ereignisse und ihre Fundstellenzuordnungen sind gemäß [Kapitel 07](07-Sitzungen-und-Beschluesse-Entwurf-2026-10-26.md) geschützt. Eine redaktionelle Themenentscheidung findet am Thema statt und ändert den RIS-Import nicht. Paket B erzeugt getrennte regelbasierte Erkenntnisse und Zusammenhangskandidaten. Die automatische Fortschreibung einer Themenanalyse bleibt ein weiterer Ausbau. Die allgemeinen Themenregeln dieses Kapitels sind kein Umsetzungsnachweis dafür.
 
 ## 06.1 Aufgabe und Grenzen
 
@@ -667,4 +667,4 @@ Diese Regelgruppe präzisiert den zugehörigen fachlichen Arbeitsablauf; verbind
 
 ## Nachweise und RIS-Fachabnahme
 
-Die [Referenzquellenprüfung vom 31.10.2026](../operations/u4-reference-sources-acceptance.md), die [damalige technische RIS-Ableitung](../operations/u4-ris-persistence.md) und der [frühere Bediennachweis](../operations/u4-editorial-ui-acceptance.md) dokumentieren historische Prüfstände. Frühere redaktionelle RIS-Zuordnungswege sind durch die Fachabnahme vom 11.11.2026 ersetzt. Der aktuelle Umfang steht in [Kapitel 07](07-Sitzungen-und-Beschluesse-Entwurf-2026-10-26.md). Eine automatische strukturierte RIS-Inhaltsanalyse und automatische Vorgangs-/Themenfortschreibung sind damit nicht als umgesetzt nachgewiesen.
+Die [Referenzquellenprüfung vom 31.10.2026](../operations/u4-reference-sources-acceptance.md), die [damalige technische RIS-Ableitung](../operations/u4-ris-persistence.md) und der [frühere Bediennachweis](../operations/u4-editorial-ui-acceptance.md) dokumentieren historische Prüfstände. Frühere redaktionelle RIS-Zuordnungswege sind durch die Fachabnahme vom 11.11.2026 ersetzt. Der aktuelle Umfang steht in [Kapitel 07](07-Sitzungen-und-Beschluesse-Entwurf-2026-10-26.md). Der zusätzliche Stand der regelbasierten Erkenntnisbildung aus Paket B ist in Kapitel 07 beschrieben. Die automatische Fortschreibung redaktioneller Vorgangs-/Themenanalysen ist damit nicht als umgesetzt nachgewiesen.

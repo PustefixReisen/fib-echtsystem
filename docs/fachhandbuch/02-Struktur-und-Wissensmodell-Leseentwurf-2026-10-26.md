@@ -90,7 +90,7 @@ Quelle: [Persistenz- und Lebenszyklusmodell](../Persistenz-und-Lebenszyklusmodel
 
 Die gemeinsame Recherche aus Kapitel 03 beobachtet das RIS. Die automatische Übernahme erzeugt Sitzung, TOPs, Dokumentfundstellen sowie genau ein eigenes TOP-Ereignis je TOP. Die Regeln und der am 11.11.2026 abgenommene Funktionsumfang stehen in [Kapitel 07](07-Sitzungen-und-Beschluesse-Entwurf-2026-10-26.md).
 
-Importierte Angaben und ihre Beziehungen werden ausschließlich aus der amtlichen Quelle aktualisiert. Die Sitzung selbst erhält kein Ereignis. Zusätzliche Ereigniszuordnungen an TOPs entfallen. Redaktionelle Meldungen, Vorgänge und Themen verarbeiten Informationen in ihren eigenen Arbeitsabläufen. Die automatische strukturierte RIS-Inhaltsanalyse gehört zum noch nicht implementierten Paket B.
+Importierte Angaben und ihre Beziehungen werden ausschließlich aus der amtlichen Quelle aktualisiert. Die Sitzung selbst erhält kein Ereignis. Zusätzliche Ereigniszuordnungen an TOPs entfallen. Redaktionelle Meldungen, Vorgänge und Themen verarbeiten Informationen in ihren eigenen Arbeitsabläufen. Paket B ergänzt eine getrennte regelbasierte Erkenntnisbildung. Deren Einführung und Grenzen sind in Kapitel 07 beschrieben.
 
 ### Öffentlichkeitslogik: Meldung und Vorgang
 
