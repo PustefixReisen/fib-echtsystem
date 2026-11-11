@@ -1,10 +1,13 @@
 import {analysisDocumentPolicy} from '../_shared/ris-analysis.ts';
+import {analysisPreflight} from '../_shared/ris-analysis-preflight.ts';
 import postgres from 'npm:postgres@3.4.7';
 import {extractText} from 'npm:unpdf@2.1.0';
 import {verifyRisScheduler} from '../fib-u4-ris-pilot/index.ts';
 import {runRisAnalysis, type AnalysisDatabase} from '../_shared/ris-analysis-worker.ts';
 
 export default {async fetch(req:Request) {
+  const preflight=analysisPreflight(req,name=>Deno.env.get(name));
+  if(preflight)return preflight;
   const reply=(body:unknown,status=200)=>Response.json(body,{status,headers:{'cache-control':'no-store'}});
   if(req.method!=='POST')return reply({error:'method_not_allowed'},405);
   if(Deno.env.get('FIB_RIS_ANALYSIS_ENABLED')!=='true')return reply({error:'analysis_disabled'},503);

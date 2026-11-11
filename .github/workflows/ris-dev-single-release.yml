@@ -37,13 +37,28 @@ jobs:
           node - <<'JS'
           const fs=require('node:fs');
           const src=fs.readFileSync('.github/workflows/ris-dev-single-release.yml','utf8');
-          const build=src.indexOf('- name: Build and validate editorial frontend before any live changes');
-          const snapshot=src.indexOf('- name: Secure current FIB-only snapshot');
-          const migration=src.indexOf('- name: Apply the single, FIB-only');
+          const step=name=>src.indexOf('\n      - name: '+name+'\n');
+          const build=step('Build and validate editorial frontend before any live changes');
+          const snapshot=step('Secure current FIB-only snapshot; verify custom archive');
+          const migration=step('Apply the single, FIB-only, non-destructive RIS migration');
           if(build<0 || snapshot<0 || migration<0 || !(build<snapshot && snapshot<migration)) {
             throw Error('Preflight build must precede backup and all live changes');
           }
+          const probe=step('Verify existing runtime credentials without reading project secrets');
+          const worker=step('Deploy analysis worker for read-only runtime preflight');
+          const analysisSchema=step('Apply only the additive derived-analysis schema');
+          const readback=step('Encrypt FIB-only snapshot and prior frontend in separate Nextcloud crypt remote; verify readback');
+          const activation=src.indexOf('\n            FIB_RIS_ANALYSIS_ENABLED=true');
+          if(!(snapshot<readback && readback<worker && worker<probe && probe<analysisSchema && analysisSchema<activation))
+            throw Error('Verified backup and runtime preflight must precede analysis schema and activation');
+          if(/supabase[^\n]*secrets\s+list/.test(src) || !src.includes('\n        run: node scripts/ris-analysis/preflight.mjs\n'))
+            throw Error('Runtime preflight is mandatory; no secret-list permission dependency');
           JS
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Test fail-closed runtime preflight
+        run: node --experimental-strip-types tests/ris-analysis/preflight.spec.mts
   deploy:
     if: >-
       github.ref == 'refs/heads/main' &&
@@ -195,19 +210,16 @@ jobs:
             "select count(*) from pg_class c join pg_namespace n on n.oid=c.relnamespace
               where n.nspname='fib' and c.relname in ('ris_top_events','ris_top_vote_results') and c.relrowsecurity")
           test "$result" = "2"
-      - name: Require the existing scoped RIS scheduler credential
+      - name: Deploy analysis worker for read-only runtime preflight
         if: inputs.confirmation == 'RIS-ANALYSIS-428'
         env:
           SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
         run: |
           set -euo pipefail
-          npx --yes supabase@2.122.0 secrets list --project-ref apaubomxffcwtzjimori --output json \
-            > "$RUNNER_TEMP/fib-ris-dev-release/secret-names.json"
-          python3 - <<'PYCODE'
-          import json,os
-          rows=json.load(open(os.environ['RUNNER_TEMP']+'/fib-ris-dev-release/secret-names.json'))
-          assert isinstance(rows,list) and any(row.get('name')=='FIB_RIS_SCHEDULER_TOKEN' for row in rows), 'Existing RIS scheduler credential required; no new credential is created'
-          PYCODE
+          npx --yes supabase@2.122.0 functions deploy fib-ris-analysis --project-ref apaubomxffcwtzjimori --no-verify-jwt
+      - name: Verify existing runtime credentials without reading project secrets
+        if: inputs.confirmation == 'RIS-ANALYSIS-428'
+        run: node scripts/ris-analysis/preflight.mjs
       - name: Apply only the additive derived-analysis schema
         if: inputs.confirmation == 'RIS-ANALYSIS-428'
         env:
@@ -221,13 +233,12 @@ jobs:
               -f supabase/migrations/20261111083118_fib_ris_automatic_analysis.sql
           fi
           node --import tsx scripts/ris-analysis/run.mts --approval=RIS-ANALYSIS-428
-      - name: Deploy derived-analysis worker and post-import notifications
+      - name: Deploy analysis reader and post-import notifications
         if: inputs.confirmation == 'RIS-ANALYSIS-428'
         env:
           SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
         run: |
           set -euo pipefail
-          npx --yes supabase@2.122.0 functions deploy fib-ris-analysis --project-ref apaubomxffcwtzjimori --no-verify-jwt
           npx --yes supabase@2.122.0 functions deploy fib-editorial-write --project-ref apaubomxffcwtzjimori --no-verify-jwt
           npx --yes supabase@2.122.0 functions deploy fib-u4-ris-pilot --project-ref apaubomxffcwtzjimori
           npx --yes supabase@2.122.0 functions deploy fib-u4-ris-scheduled --project-ref apaubomxffcwtzjimori --no-verify-jwt
