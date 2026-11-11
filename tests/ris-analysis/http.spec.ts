@@ -23,9 +23,12 @@ try {
  Deno.env.set('FIB_RIS_ANALYSIS_ENABLED','false');
  const probe=()=>handler.fetch(new Request('https://example.invalid/functions/v1/fib-ris-analysis/preflight'));
  const ready=await probe();equal(ready.status,200);
- equal(await ready.text(),JSON.stringify({check:'ris-analysis-runtime-v1',ready:true}));
+ equal(await ready.text(),JSON.stringify({check:'ris-analysis-runtime-v2',ready:true,checks:{schedulerToken:'ready',databaseUrl:'ready'}}));
  Deno.env.delete('FIB_RIS_SCHEDULER_TOKEN');equal((await probe()).status,503);
+ equal((await (await probe()).json()).checks.schedulerToken,'missing');
+ equal((await (await probe()).json()).checks.databaseUrl,'ready');
  Deno.env.set('FIB_RIS_SCHEDULER_TOKEN','short');equal((await probe()).status,503);
+ equal((await (await probe()).json()).checks.schedulerToken,'too_short');
  Deno.env.set('FIB_RIS_SCHEDULER_TOKEN','test-only-'.repeat(5));
  equal((await call()).status,503); // Probe did not activate analysis.
  Deno.env.set('FIB_RIS_ANALYSIS_ENABLED','true');

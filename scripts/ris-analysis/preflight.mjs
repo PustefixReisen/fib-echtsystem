@@ -1,7 +1,7 @@
 import {pathToFileURL} from 'node:url';
 
 const endpoint='https://apaubomxffcwtzjimori.supabase.co/functions/v1/fib-ris-analysis/preflight';
-const contract='ris-analysis-runtime-v1';
+const contract='ris-analysis-runtime-v2';
 
 /** No management API, credential argument, response logging or fail-open path. */
 export async function checkAnalysisRuntime(request=fetch,pause=ms=>new Promise(r=>setTimeout(r,ms))) {
@@ -26,9 +26,16 @@ export async function checkAnalysisRuntime(request=fetch,pause=ms=>new Promise(r
     } catch {await reader?.cancel().catch(()=>{});throw Error('ris_analysis_preflight_invalid_response');}
     let body;
     try {body=JSON.parse(raw);}catch {/* Cold starts can return non-JSON gateway errors. */}
-    const exact=body && Object.keys(body).sort().join(',')==='check,ready' && body.check===contract;
-    if(response.status===200 && exact && body.ready===true)return;
-    if(response.status===503 && exact && body.ready===false)throw Error('ris_analysis_runtime_not_ready');
+    const checks=body?.checks;
+    const exact=body && Object.keys(body).sort().join(',')==='check,checks,ready' && body.check===contract &&
+      checks && Object.keys(checks).sort().join(',')==='databaseUrl,schedulerToken' &&
+      ['missing','too_short','ready'].includes(checks.schedulerToken) && ['missing','ready'].includes(checks.databaseUrl) &&
+      body.ready===(checks.schedulerToken==='ready' && checks.databaseUrl==='ready');
+    if(response.status===200 && exact && body.ready===true)return checks;
+    if(response.status===503 && exact && body.ready===false) {
+      // Only allowlisted states enter this fixed diagnostic, never response text.
+      throw Error('ris_analysis_runtime_not_ready: FIB_RIS_SCHEDULER_TOKEN='+checks.schedulerToken+'; FIB_DATABASE_URL='+checks.databaseUrl);
+    }
     if([404,502,503,504].includes(response.status) && attempt<2){await pause(1000);continue;}
     throw Error('ris_analysis_preflight_invalid_response');
   }
