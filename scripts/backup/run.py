@@ -5,6 +5,14 @@ from components import exports
 spec=importlib.util.spec_from_file_location('frontend',pathlib.Path(__file__).with_name('frontend-run.py'))
 f=importlib.util.module_from_spec(spec);spec.loader.exec_module(f)
 
+def verify_live_snapshot(metadata, current):
+ if set(metadata)!=set(current):raise ValueError('Incomplete live ESZIP snapshot')
+ for slug,body in current.items():
+  if not isinstance(body,bytes) or not body.startswith(b'ESZIP'):
+   raise ValueError('Invalid live ESZIP')
+  if hashlib.sha256(body).hexdigest()!=metadata[slug].get('download_eszip_sha256'):
+   raise ValueError('Live deployed ESZIP differs from reviewed snapshot')
+
 def backup(env,run=f.command):
  print('Backup phase: prerequisites',flush=True)
  mode=env.get('FIB_BACKUP_MODE','manual');commit=env.get('GITHUB_SHA','')
@@ -28,6 +36,17 @@ def backup(env,run=f.command):
   if isinstance(live,dict):live=live['functions']
   print('Backup phase: validate-function-exports',flush=True)
   now=datetime.datetime.now(datetime.timezone.utc);slugs=exports(bundle,live,now)
+  print('Backup phase: verify-live-eszip-against-reviewed-snapshot',flush=True)
+  # Do not compare GET /body ESZIP bytes against upload-only ezbr_sha256.
+  # Recheck that two live ESZIP responses are stable and match the exact
+  # encrypted-input bytes already validated by components.exports().
+  # Neither proves CLI source byte equality nor executable restore.
+  spec=importlib.util.spec_from_file_location('fib_export_deployed',pathlib.Path(__file__).with_name('export-deployed-edge.py'))
+  verifier=importlib.util.module_from_spec(spec);spec.loader.exec_module(verifier)
+  metadata={item['slug']:item for item in json.loads((bundle/'edge/inventory.json').read_text())}
+  current=verifier.verify_deployed_bundles(metadata,verifier.deployed_bundle_body,
+                                          env['FIB_BACKUP_MANAGEMENT_TOKEN'])
+  verify_live_snapshot(metadata,current)
   print('Backup phase: database-capture',flush=True)
   run(['node','scripts/ris-shared-apps/backup.mjs','--out='+str(bundle/'database')],env=env)
   dump=bundle/'database/fib.dump';digest=hashlib.sha256(dump.read_bytes()).hexdigest()
@@ -62,7 +81,24 @@ def backup(env,run=f.command):
   check=root/'proof.json';run(rc+['copyto','fib-backup-crypt:Receipts/'+backup_id+'.json',str(check)],env=env)
   if check.read_bytes()!=proof.read_bytes():raise ValueError('Receipt mismatch')
   return receipt
+def emit_verified_receipt(receipt,env):
+ """Action outputs only after readback/receipt verification is complete."""
+ if receipt.get('readback')!='passed' or not re.fullmatch(r'release-[a-f0-9]{32}',receipt.get('backupId','')) or not re.fullmatch(r'[a-f0-9]{64}',receipt.get('manifestSha256','')) or not re.fullmatch(r'[a-f0-9]{40}',receipt.get('commit','')):
+  raise ValueError('Invalid release receipt')
+ output=env.get('GITHUB_OUTPUT','')
+ if not output:raise ValueError('GitHub Actions output channel unavailable')
+ with open(output,'a',encoding='utf-8') as stream:
+  stream.write('backup_id='+receipt['backupId']+'\n')
+  stream.write('manifest_sha256='+receipt['manifestSha256']+'\n')
+  stream.write('verified_commit='+receipt['commit']+'\n')
+
 if __name__=='__main__':
  os.umask(0o077)
- try:print(json.dumps(backup(dict(os.environ))))
- except Exception:print('Complete backup failed; inspect protected prerequisites. No deployment permitted.',file=sys.stderr);sys.exit(1)
+ try:
+  env=dict(os.environ);receipt=backup(env)
+  if env.get('FIB_BACKUP_EMIT_GITHUB_OUTPUT')=='true':
+   emit_verified_receipt(receipt,env)
+   print('Complete FIB release backup verified and sealed; private receipt passed to protected workflow.')
+  else:print(json.dumps(receipt))
+ except Exception:
+  print('Complete backup failed; inspect protected prerequisites. No deployment permitted.',file=sys.stderr);sys.exit(1)

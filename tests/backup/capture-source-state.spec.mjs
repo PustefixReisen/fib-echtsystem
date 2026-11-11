@@ -1,0 +1,17 @@
+import { strict as assert } from "node:assert";
+import { sourceState } from "../../scripts/backup/capture-source-state.mjs";
+const id1="11111111-1111-4111-8111-111111111111";
+const id2="22222222-2222-4222-8222-222222222222";
+const sources=[{id:id1,active:false,homepage_url:"https://example.invalid",password:"DO_NOT_EXPORT",name:"Test"}];
+const scopes=[{id:id2,source_id:id1,scope_key:"ris-dokumentliste",status:"candidate",required:true,secret:"DO_NOT_EXPORT"}];
+const state=sourceState(sources,scopes,"2026-11-08T17:00:00Z");
+assert.equal(state.sourceFlags[0].active,false);
+assert.equal(state.scopeFlags[0].status,"candidate");
+assert.equal(state.projectFeatures.status,"not_captured");
+assert.equal(state.operatorReview,false);
+assert(!JSON.stringify(state).includes("DO_NOT_EXPORT"));
+assert(!JSON.stringify(state).includes("password"));
+assert.throws(()=>sourceState(sources,[{...scopes[0],source_id:"33333333-3333-4333-8333-333333333333"}]),/identity/);
+assert.throws(()=>sourceState([{...sources[0],active:"false"}],scopes),/schema/);
+assert.throws(()=>sourceState([...sources,...sources],scopes),/identity/);
+console.log("FIB read-only source configuration contract passed; no project features invented.");

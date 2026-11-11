@@ -1,5 +1,9 @@
 """Application-neutral private inventory, freshness and retention planning contracts."""
-import datetime,json,pathlib,re
+import datetime,json,pathlib,re,hashlib
+
+# Covers side-effect imports, re-exports, static imports and literal dynamic imports.
+# Non-literal runtime dynamic imports remain an independent operator review item.
+RELATIVE_IMPORT_RE=re.compile(r'''(?:\bfrom\s*|\bimport\s*\(?\s*)["'](\.{1,2}/[^"'\r\n]+)["']''')
 
 def fresh(value, now, hours=1):
  t=datetime.datetime.fromisoformat(value.replace('Z','+00:00'))
@@ -20,12 +24,25 @@ def exports(root, live, now):
    if f.get(key)!=expected[slug].get(key) or f.get(key) is None:raise ValueError('Deployment drift')
   folder=root/'edge'/slug
   if not (folder/'index.ts').is_file():raise ValueError('Missing entrypoint')
-  # Every relative code dependency must be present within the exported edge tree.
-  for file in folder.rglob('*'):
-   if file.is_file() and file.suffix in ['.ts','.js','.mjs','.json']:
-    for dep in re.findall(r'''(?:from\s*|import\s*\()?["'](\.{1,2}/[^"'\r\n]+)["']''',file.read_text()):
-     target=(file.parent/dep).resolve()
-     if not target.is_relative_to((root/'edge').resolve()) or not target.is_file():raise ValueError('Missing relative dependency')
+  # Original deployed EZBR digest is retained as metadata, NOT falsely
+  # equated to the downloaded ESZIP. Verify the preserved live-body bytes.
+  path=root/'edge'/'_deployed_bundles'/(slug+'.eszip')
+  if not path.is_file() or path.is_symlink():raise ValueError('Missing deployed ESZIP snapshot')
+  body=path.read_bytes()
+  if len(body)>32*1024*1024 or not body.startswith(b'ESZIP'):raise ValueError('Invalid deployed ESZIP snapshot')
+  if hashlib.sha256(body).hexdigest()!=f.get('download_eszip_sha256'):raise ValueError('Deployed ESZIP readback mismatch')
+ # Check the entire *combined* export tree, including nested imports from
+ # _shared modules. Functions may ship type-only dependencies in another
+ # deployed function's _shared source set; their joint full-FIB backup must
+ # still contain the exact deployed file, never a guessed main-branch copy.
+ edge=(root/'edge').resolve()
+ for file in edge.rglob('*'):
+  if not file.is_file() or file.suffix not in ['.ts','.js','.mjs','.json']:
+   continue
+  for dep in RELATIVE_IMPORT_RE.findall(file.read_text(encoding='utf-8')):
+   target=(file.parent/dep).resolve()
+   if not target.is_relative_to(edge) or not target.is_file():
+    raise ValueError('Missing relative dependency in complete FIB Edge tree')
  evidence=json.loads((root/'configuration/capture.json').read_text())
  fresh(evidence['capturedAt'],now)
  if evidence.get('featureStatesReviewed') is not True or evidence.get('completeFunctionExportsReviewed') is not True:
