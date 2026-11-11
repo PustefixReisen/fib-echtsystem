@@ -1,6 +1,8 @@
-# 09 – Öffentliches FIB-Angebot (Lese- und Migrationsentwurf)
+# 09 – Öffentliches FIB-Angebot
 
-**Stand:** 26.10.2026 · **Status:** Fachlicher Entwurf zur Durchsicht, keine technische UI-Freigabe. Die bestehenden Fachquellen – insbesondere `docs/UX-und-Informationsarchitektur.md` und `docs/Mehr-wissen-Modell.md` – bleiben bis zum vollständigen Regelabgleich verbindlich.
+**RIS-Abgleich 11.11.2026.** Die einschlägigen Übergänge sind an [Kapitel 07](07-Sitzungen-und-Beschluesse-Entwurf-2026-10-26.md) angepasst. Die RIS-Fachabnahme bestätigt nicht die vollständige technische Umsetzung dieses Kapitels.
+
+**Fachstand.** Handbuchabnahme vom 29.10.2026. RIS-Fortschreibung vom 11.11.2026 gemäß [Kapitel 07](07-Sitzungen-und-Beschluesse-Entwurf-2026-10-26.md). Die technische Umsetzung und die öffentliche Bereitstellung der weiteren Fachprozesse sind gesondert nachzuweisen.
 
 ## 09.1 Aufgabe und Nutzen für Besucher
 
@@ -32,8 +34,8 @@ flowchart TD
   M <-->|"eine Meldung, zwei Zugangswege"| V
   V <-->|"fachliche Bezüge"| T
   SITZ --> TOP["Sitzung / TOP"]
-  TOP --> BES["Beschluss und Abstimmung"]
-  TOP <-->|"Ereignisbezug"| V
+  TOP --> BES["Belegter Status und Abstimmungen"]
+  TOP -->|"über ein TOP-Ereignis"| V
   TOP -.->|"ggf. Meldung"| M
   M --> MEHR["Mehr wissen?"]
   V --> MEHR
@@ -78,17 +80,11 @@ Die öffentliche Liste **„Im Blick“** führt **Vorgänge und Themen gemeinsa
 
 ## 09.6 Sitzungen und Beschlüsse nachvollziehen
 
-Eine Sitzung ist ein eigener öffentlicher Informationszugang, unabhängig davon, ob aus ihren TOPs Meldungen entstehen. Die Übersicht soll anstehende Sitzungen und zurückliegende Beratungen auffindbar machen.
+Die öffentliche Sitzungsdarstellung ist ein Zielbild des Besuchersystems. Die Fachabnahme vom 11.11.2026 betrifft die Redaktionsansicht aus [Kapitel 07](07-Sitzungen-und-Beschluesse-Entwurf-2026-10-26.md) und bestätigt keine bereits bereitgestellte öffentliche Sitzungsoberfläche.
 
-Die Sitzungs- und TOP-Ansicht unterscheidet:
-- **Angekündigt:** Tagesordnung, zugeordnete Vorlage, Unterlagen, soweit vorhanden.
-- **Behandelt:** tatsächlich erfolgte Beratung, Vertagung/Absetzung oder Beschlussfassung.
-- **Beschlossen:** belegte Beschlusspunkte, ihre tatsächlich abgestimmten Fassungen und Abstimmungsergebnisse.
-- **Nachweis:** Verweis auf ursprünglichen Beschlussvorschlag und verfügbare Niederschrift, unter Beachtung der Nutzungs- und Bereitstellungsrechte.
+Eine Sitzung soll unabhängig von optionalen Meldungen zu ihren TOPs auffindbar sein. Die Besuchersicht verwendet den belegten, importierten Stand mit Gremium, Datum, öffentlichen TOPs, Beschlussstatus und verfügbaren Abstimmungen. Vorlagen und Niederschrift bleiben über Original-Links nachprüfbar. Ein TOP auf der Tagesordnung belegt keinen tatsächlich gefassten Beschluss. Der Wortlaut wird über das amtliche Original erschlossen. FIB führt dafür keine eigene redaktionelle RIS-Beschlussfassung.
 
-Ein TOP auf der Agenda ist **kein Beweis für eine spätere Beschlussfassung**. Beschlossener Text und ursprünglicher Vorschlag können voneinander abweichen. Die Fachlogik dieser Unterschiede gehört in **Kapitel 07**, die Gestaltung und Navigation hierher.
-
-Über das zugrunde liegende Ereignis sind Verweise zwischen Sitzung/TOP und Vorgang/Thema in beide Richtungen möglich. Eine Meldung wird nicht unabhängig ein weiteres Mal mit dem TOP verknüpft.
+Bezüge zu redaktionellen Meldungen, Vorgängen und Themen werden über das eine TOP-Ereignis abgeleitet. Eine zusätzliche Meldung–TOP-Zuordnung oder ein Sitzungsereignis wird nicht angelegt. Die konkrete öffentliche Navigation und die automatische inhaltliche Erschließung als Paket B sind nicht Teil des abgenommenen UI-Funktionsumfangs.
 
 ## 09.7 Hintergründe erschließen: „Mehr wissen?“
 
@@ -215,7 +211,7 @@ Bei späterem Erkenntnisgewinn prüft FIB die Aktualität der öffentlichen Inha
 3. Ein Vorgang ohne Thema erscheint in **„Im Blick“**.
 4. Ein Thema erklärt einen übergreifenden Zusammenhang und verbindet mehrere Vorgänge, ohne ihre Ereignisse doppelt zu zählen.
 5. Vor einer Ratssitzung wird der TOP mitsamt Vorlage angezeigt, ausdrücklich **ohne** bereits behaupteten Beschluss.
-6. Nach Erscheinen der Niederschrift erkennt der Besucher tatsächliche Beschlussfassung, Abstimmung und mögliche Abweichung vom Vorschlag.
+6. Nach Erscheinen der Niederschrift kann der Besucher belegten Status und Abstimmungen sowie die Originaldokumente einsehen. Der Wortlaut und mögliche Abweichungen vom Vorschlag sind im amtlichen Original nachprüfbar.
 7. Eine Vertiefungsfrage erscheint öffentlich nur mit dafür freigegebener Antwort; deren Aussagen sind belegbar.
 8. Eine technisch bearbeitete Meldung wird nicht als neue inhaltliche Entwicklung angezeigt.
 9. Eine öffentliche Korrektur verändert nicht stillschweigend die früher veröffentlichte Fassung.

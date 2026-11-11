@@ -70,7 +70,7 @@ Der Echtbetrieb muss auch Änderungen erkennen können, wenn:
 - eine neue Unterseite ohne Suchmaschinenindexierung erscheint,
 - ein Dokument im RIS freigegeben wird, bevor oder ohne dass es in einer Tagesordnung auffällt.
 
-RIS-Dokumentfreigaben werden deshalb unabhängig von Tagesordnungen als Recherchekandidaten erfasst. Eine Dokumentfreigabe allein beweist noch keinen konkreten TOP oder Sitzungstermin.
+Frei aufgefundene Dokumentfreigaben können allgemeine Recherchekandidaten sein. Für den systematischen RIS-Sitzungsbestand gilt [Fachhandbuch Kapitel 07](fachhandbuch/07-Sitzungen-und-Beschluesse-Entwurf-2026-10-26.md). Beschlussvorlagen werden dabei nur mit nachgewiesener TOP-Zuordnung übernommen und automatisch dem einen geschützten TOP-Ereignis als Fundstelle zugeordnet. Ein allgemeiner Quellenfund erzeugt keinen erfundenen TOP oder Beschluss.
 
 Für bekannte Quellen gilt der Grundsatz:
 

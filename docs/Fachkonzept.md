@@ -127,9 +127,9 @@ FIB unterscheidet insbesondere:
 
 Eine Beschlussvorlage ist kein Beschluss. Ergebnisse werden nur dargestellt, wenn sie öffentlich belastbar belegt sind.
 
-Auf der Sitzungsdetailseite werden alle öffentlichen TOPs aus dem RIS dargestellt; FIB-relevante Meldungen, Vorgänge, Themen und Presseberichte werden möglichst dem konkreten TOP zugeordnet.
+Die aktuelle RIS-Fachlogik und die am 11.11.2026 abgenommene Redaktionsansicht stehen in [Fachhandbuch Kapitel 07](fachhandbuch/07-Sitzungen-und-Beschluesse-Entwurf-2026-10-26.md). Importierte Sitzungs- und TOP-Daten bleiben redaktionell unveränderlich. Meldungen, Vorgänge, Themen und Presseberichte werden in ihren eigenen Redaktionsprozessen behandelt. Die frühere zusätzliche Zuordnung dieser Objekte unmittelbar an TOPs entfällt.
 
-Eine Sitzung gilt in FIB als abgeschlossen, sobald die Genehmigung ihrer Niederschrift öffentlich belegt ist. Genehmigung und öffentliche Verfügbarkeit der Niederschrift werden getrennt geführt.
+Die öffentlichen Sitzungsseiten bleiben ein Zielbild des Besuchersystems. Die RIS-Fachabnahme ist auf den geprüften Import- und Redaktionsumfang begrenzt.
 
 ### 4.5 Mehr wissen? – Was steckt dahinter?
 

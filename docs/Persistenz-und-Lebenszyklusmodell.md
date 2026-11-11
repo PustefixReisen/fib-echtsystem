@@ -18,7 +18,7 @@ Es konkretisiert die allgemeinen Grundsätze aus `docs/Datenmodell.md` und gilt 
 
 Je nach Objekt oder Beziehung kommen stattdessen insbesondere fachliche Änderung, Rücknahme, Zusammenführung, Archivierung, Aufhebung einer Beziehung, nachvollziehbare Korrektur oder Historisierung über einen übergeordneten Gesamtstand in Betracht.
 
-Ein echtes technisches Löschen ist nur für Inhalte zulässig, die noch nie fachlich wirksam waren, z. B. verworfene technische Zwischenstände oder unbeabsichtigte technische Dubletten vor Bestätigung.
+Für den regulären Fachbestand ist technisches Löschen auf die dafür zulässigen Fälle beschränkt, etwa verworfene technische Zwischenstände oder unbeabsichtigte Dubletten. Der fachliche Testbestand wird nach [Entwicklungs-, Referenz- und Echtdaten](Entwicklungs-Referenz-und-Echtdaten.md) behandelt. Er ist nicht als dauerhaft aufzubewahrender Echtdatenbestand einzustufen.
 
 ## 3. Statusmodelle nur bei echtem Lebenszyklus
 
@@ -32,8 +32,8 @@ Nicht jedes Fachobjekt erhält einen künstlichen eigenen Lebenszyklusstatus.
 | Meldung | `Entwurf / freigegeben / veröffentlicht / zurückgezogen` |
 | Vorgang | `aktiv / ruhend / abgeschlossen / archiviert` |
 | Thema | `aktiv / ruhend / archiviert` |
-| Sitzung | `angekündigt / stattgefunden / abgeschlossen / abgesagt` |
-| TOP | angekündigt, behandelt, vertagt, abgesetzt/nicht behandelt |
+| Sitzung | Quellenstand aus dem RIS. Keine manuelle redaktionelle Statuspflege. |
+| TOP | Amtlich belegter Behandlungs-/Ergebnisstatus und Abstimmungen nach Kapitel 07. |
 | offene Frage / Wissenslücke | `offen / teilweise geklärt / geklärt / gegenstandslos`; Bearbeitung zusätzlich `aktiv / zurückgestellt` |
 | Beobachtungsauftrag | `aktiv / pausiert / beendet` |
 | Referenzwissen | `vorgeschlagen / bestätigt / nicht mehr gültig bzw. zurückgenommen` |
@@ -47,13 +47,13 @@ Die endgültigen technischen Enum-Bezeichnungen werden erst im physischen Datenm
 
 ### 3.2 Objekte ohne künstlichen Lebenszyklusstatus
 
-Insbesondere Wirkung, Perspektive, Bewertung, Begründung, Gestaltungsoption, Beschlusspunkt, Beschlusspunkt-Fassung, Abstimmung und Recherchelauf erhalten keinen allgemeinen Aktiv-/Archiviert-Lebenszyklus.
+Insbesondere Wirkung, Perspektive, Bewertung, Begründung, Gestaltungsoption, Abstimmung und Recherchelauf erhalten keinen allgemeinen Aktiv-/Archiviert-Lebenszyklus.
 
 Analysebestandteile werden über den versionierten strukturierten Gesamtstand des zuständigen Vorgangs bzw. Themas historisiert. Beschluss- und Rechercheobjekte bleiben als historische Tatsachen bzw. Provenienz erhalten und werden bei Fehlern nachvollziehbar korrigiert.
 
 ## 4. Stabile fachliche Identitäten
 
-Fachliche Objekte, auf die dauerhaft verwiesen wird, benötigen stabile Identitäten. Dies gilt insbesondere für Ereignis, Meldung, Vorgang, Thema, Sitzung, TOP, Beschlusspunkt, Quelle, Fundstelle, Bild, offene Frage, Beobachtungsauftrag, Recherchelauf, Referenzobjekt, Vertiefungsfrage und Vertiefungsantwort.
+Fachliche Objekte, auf die dauerhaft verwiesen wird, benötigen stabile Identitäten. Dies gilt insbesondere für Ereignis, Meldung, Vorgang, Thema, Sitzung, TOP, Quelle, Fundstelle, Bild, offene Frage, Beobachtungsauftrag, Recherchelauf, Referenzobjekt, Vertiefungsfrage und Vertiefungsantwort.
 
 Eine spätere Korrektur verändert die Identität grundsätzlich nicht. Nur eine fachlich falsche Identitätsannahme kann nach den jeweiligen Spezialregeln zu Rücknahme oder Zusammenführung führen.
 
@@ -66,7 +66,7 @@ Auch fachlich wirksame Beziehungen dürfen bei späterer Änderung nicht spurlos
 - direkte `Ereignis ↔ Thema`-Beziehungen,
 - `Ereignis ↔ Wirkung` und Herkunftskontext einer Wirkung,
 - `Wirkung ↔ Perspektive`,
-- `TOP ↔ Ereignis`,
+- `TOP → genau ein automatisch erzeugtes TOP-Ereignis`,
 - `Beobachtungsauftrag → Primärbezug`,
 - `Beobachtungsauftrag → Recherchelauf`,
 - `Recherchelauf → Fundstelle`,
@@ -75,7 +75,7 @@ Auch fachlich wirksame Beziehungen dürfen bei späterer Änderung nicht spurlos
 - Bildverwendungen,
 - Vertiefungsantwort ↔ Fundstelle.
 
-**Nicht** als eigenständige autoritative Beziehungen geführt werden `Meldung ↔ Sitzung` oder `Meldung ↔ TOP`. Diese Bezüge werden aus `Meldung → Ereignis → TOP/Sitzung` abgeleitet.
+**Nicht** als eigenständige autoritative Beziehungen geführt werden `Meldung ↔ Sitzung` oder `Meldung ↔ TOP`. Diese Bezüge werden aus `Meldung → TOP-Ereignis → TOP → Sitzung` abgeleitet.
 
 Für fachlich wirksame Beziehungen muss rekonstruierbar bleiben, wann sie wirksam wurden, ob und wann sie aufgehoben oder ersetzt wurden und warum.
 
@@ -97,7 +97,7 @@ Die Wiederaufnahme eines pausierten Beobachtungsauftrags setzt dessen bestehende
 
 ## 8. Korrekturen historischer Tatsachen
 
-Historische Tatsachenobjekte wie Beschlusspunkte, Fassungen und Abstimmungen werden bei später erkannten Fehlern nachvollziehbar berichtigt. Der frühere fehlerhafte Stand bleibt in der Auditspur rekonstruierbar.
+Importierte RIS-Daten und ihre Ergebnisse werden nur quellengebunden durch erneute Übernahme aktualisiert. Die Herkunft bleibt nachvollziehbar. Redaktionelle Korrekturen an TOP-Ereignissen und ihren automatischen Fundstellenzuordnungen sind ausgeschlossen. Für das gültige Modell gilt [Fachhandbuch Kapitel 07](fachhandbuch/07-Sitzungen-und-Beschluesse-Entwurf-2026-10-26.md).
 
 Dasselbe Prinzip gilt für fachlich relevante Korrekturen an bereits verwendeten Fundstellen oder anderen historischen Belegen.
 

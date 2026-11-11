@@ -1,6 +1,6 @@
-# 10 – Fachliche Qualitätssicherung (Migrationsentwurf)
+# 10 – Fachliche Qualitätssicherung
 
-**Stand:** 26.10.2026 · **Status:** Fachlicher Entwurf, keine Freigabe. Bestehende Primärquellen bleiben bis zum abschnittsweisen Regelabgleich gültig.
+**Fachstand.** Handbuchabnahme vom 29.10.2026. RIS-Fortschreibung vom 11.11.2026 gemäß [Kapitel 07](07-Sitzungen-und-Beschluesse-Entwurf-2026-10-26.md). Die technische Umsetzung und die öffentliche Bereitstellung der weiteren Fachprozesse sind gesondert nachzuweisen.
 
 ## 10.1 Auftrag und Qualitätsverständnis
 FIB soll recherchierte Fakten, Analysen, Meldungen und Themenbeiträge fachlich belastbar, nachvollziehbar und bürgernah halten. Qualität wird bei der Entdeckung, bei jeder wesentlichen Sachstandsänderung und unmittelbar vor Veröffentlichungen geprüft – nicht erst bei der Schlussredaktion. Die KI bereitet vor, die Redaktion bestätigt fachlich wirksame Änderungen.
@@ -102,11 +102,11 @@ Fehleranfällige Sachverhalte (z. B. RIS-Vorlage vs. Beschluss, Ereignisdublette
 
 Ergebnisse werden in einer **administrativen KI-Qualitäts- und Kostenübersicht** dargestellt: Modell/Rolle, Aufgabenart, Testumfang, Qualitätsmerkmale, Fehlertypen, Eskalations- und Stichprobenergebnisse, Kosten sowie Entwicklung im Zeitverlauf. Für die Redaktion erscheinen nur handlungsrelevante Qualitätswarnungen und Prüfaufgaben; der vollständige Modellvergleich ist Administrationsaufgabe. Einzelheiten und Schwellen werden im späteren Administrationskonzept festgelegt.
 
-### Regelmäßiger Umgang mit amtlichen RIS-Dokumenten
+### Amtliche RIS-Dokumente und Importqualität
 
-Bei offiziell öffentlich bereitgestellten **kommunalen Beschlussvorlagen und Niederschriften** soll FIB eine **einfach zu bedienende, dokumentklassenbezogene Rechteprüfung** ermöglichen. Nach § 5 UrhG können solche amtlichen Texte als amtliche Werke urheberrechtlich nicht geschützt sein, soweit sie die gesetzlichen Voraussetzungen erfüllen. Die pauschale Annahme „im RIS öffentlich = in FIB vollständig erneut veröffentlichbar“ ist dennoch unzulässig: Drittinhalte, Datenschutz, Veröffentlichungsbedingungen und Quellen-/Änderungskennzeichnung sind zu prüfen.
+Die Herkunft, Speicherrechte und öffentlichen Nutzungsrechte von Original-PDF und extrahiertem Volltext sind getrennt nach [Kapitel 07](07-Sitzungen-und-Beschluesse-Entwurf-2026-10-26.md) zu prüfen. Öffentliche Abrufbarkeit allein erlaubt keine pauschale dauerhafte Übernahme. Die abgenommene Ansicht zeigt amtliche Original-Links. Die frühere allgemeine Forderung, alle kommunalen Vorlagen und Niederschriften als vollständige Texte dauerhaft vorzuhalten, entfällt.
 
-Die fachliche Zielvorgabe ist, gleichartige unauffällige amtliche Dokumente nach geklärter Rechtsgrundlage **ohne wiederkehrende manuelle Einzelbestätigung** verfügbar zu machen; nur Ausnahmen und ungeklärte Fälle werden vor öffentlicher Volltextausgabe angehalten. Anlagen Dritter werden getrennt behandelt. Diese vereinfachte Regel benötigt vor technischer Aktivierung die dokumentierte rechtliche Prüfung des konkreten RIS und der betroffenen Dokumentklassen.
+Die RIS-Qualitätsprüfung umfasst vollständige TOP-Zuordnung innerhalb der erfassten Sitzung, genau ein TOP-Ereignis, automatische Dokumentbelege, mehrere getrennte Abstimmungen, erkennbare Quellenlücken und stabilen Wiederholungsimport. Ein Importfehler wird technisch untersucht und nicht durch redaktionelle Änderung des amtlichen Ergebnisses überbrückt. Die Prüfung von Meldungen und Analysen erfolgt an den redaktionellen Folgeobjekten. Die strukturierte RIS-Inhaltsanalyse ist Paket B und noch nicht implementiert.
 
 ## 10.10 Abnahmefälle
 1. Amtliche Vorlage widerspricht Medienbericht; FIB unterscheidet gesicherten Stand und Annahme.
@@ -120,7 +120,7 @@ Die fachliche Zielvorgabe ist, gleichartige unauffällige amtliche Dokumente nac
 9. Neue amtliche Information löst dringende Korrekturprüfung einer alten Veröffentlichung aus; Aufgabe bleibt auch bei archiviertem Thema sichtbar.
 10. Eine neu veröffentlichte RIS-Vorlage ohne bestätigten Sitzungstermin wird als Fundstelle erkannt, aber nicht automatisch einem konkreten TOP oder Beschluss zugewiesen.
 11. Eine zeitlich geplante Veröffentlichung mit später entzogener Freigabe wird zur Ausführung gesperrt; eine unveränderte, weiter gültige Fassung darf nach einmaliger terminbezogener S3-Bestätigung automatisch erscheinen.
-12. Eine intern gespeicherte RIS-PDF ohne geklärte öffentliche Bereitstellungsrechte bleibt intern nutzbar; FIB stellt sie öffentlich nicht als eigene Datei bereit.
+12. Eine RIS-PDF darf nur bei geklärtem Speicherrecht dauerhaft intern vorgehalten werden. Ein solches Speicherrecht allein erteilt keine öffentliche Wiederbereitstellungsfreigabe.
 13. Eine freigegebene Antwort unter „Mehr wissen?“ ist genau einer Meldung, einem Vorgang oder einem Thema als primärem Kontext zugeordnet und enthält nachvollziehbare Quellen.
 
 ## 10.11 Konsistenz- und Umsetzungspunkte
@@ -130,6 +130,6 @@ Die fachliche Zielvorgabe ist, gleichartige unauffällige amtliche Dokumente nac
 - **Rechte- und Medienprüfung** mit dem bestehenden Freigabesystem: öffentliche PDFs/Bilder nur mit positiv geklärter Berechtigung; reine Internet-Zugänglichkeit genügt nicht.
 - **Fachliche Schnittstellen:** Analysefreigabe in Kapitel 05/06, redaktioneller Workflow in 08, öffentliche Darstellung in 09 und Fachrechte in 11.
 - **Noch offen:** strukturierte Belegdeckung je Aussage, Schwelle für schwerwiegende belegbare Blocker, Teilfreigabe und Versionierung, konkrete Darstellung von Schlussprüfung und Änderungspaketen.
-- Bis zu vollständigem Quellabschnittsabgleich, fachlicher Abnahme und Regressionstests bleiben die bisherigen Primärquellen gültig.
+- Herkunftsquellen und technische Prüfberichte erläutern die Ableitung. Für den fachlichen Stand sind die abgenommenen Handbuchkapitel maßgeblich.
 
 **Bezugsquellen:** `docs/Fachliche-Plausibilitaets-und-Freigaberegeln.md`, `docs/Sprachleitfaden.md`, `docs/KI-Qualitaet-und-Modellunabhaengigkeit.md`, bestehendes Fachhandbuch sowie Migrationsentwürfe 03–06 und 08.

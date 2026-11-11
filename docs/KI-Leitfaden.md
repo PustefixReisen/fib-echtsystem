@@ -172,18 +172,9 @@ Detailregeln: `docs/Themen-und-Vorgangslogik.md`, `docs/Datenmodell.md` und `doc
 
 ## 10. Sitzungen und TOPs
 
-Für relevante öffentliche Gremien werden Sitzungen und Tagesordnungen vollständig geprüft.
+Für den abgenommenen RIS-Import gilt [Kapitel 07](fachhandbuch/07-Sitzungen-und-Beschluesse-Entwurf-2026-10-26.md). Sitzungen und ihre öffentlichen TOPs werden quellengebunden übernommen. Jedes TOP-Ereignis und seine Dokumentfundstellen entstehen automatisch und bleiben redaktionell unveränderlich. Beschlussstatus und verfügbare Abstimmungen werden anhand der amtlichen Nachweise übernommen. Fehlende Nachweise bleiben kenntlich. Die Vorlage enthält einen Vorschlag und belegt keinen tatsächlich gefassten Beschluss.
 
-Verbindlich:
-
-- Vorlage ist nicht Beschluss,
-- Ergebnis nur bei belastbarem öffentlichem Nachweis,
-- konkrete Sitzungsseite ist bevorzugte Quelle für Beratungsbezug,
-- Vorlagenlinks nur bei eindeutiger Zuordnung und erreichbarem Ziel,
-- Vorlagenlink und Dokumentziel werden bei fachlich relevanter Aktualisierung erneut geprüft,
-- Linkbezeichnungen müssen das tatsächlich verlinkte Dokument korrekt benennen,
-- Genehmigung und öffentliche Verfügbarkeit der Niederschrift getrennt führen,
-- Beschlüsse aus lesbaren Niederschriften TOP-bezogen auswerten.
+Die automatische strukturierte Inhaltsanalyse ist das noch nicht implementierte Paket B. Aus dem Import folgt keine bereits arbeitende automatische Analyse oder Fortschreibung von Meldungen, Vorgängen und Themen. Eine manuelle RIS-Analysefreigabe ist nicht geplant. Öffentliche Beitragsfreigaben und die fachlichen Regeln der Folgeobjekte werden dadurch nicht ersetzt.
 
 Veröffentlichungs-/Freigabedatum eines Dokuments darf nicht ohne geeigneten Beleg als Beratungs- oder Entscheidungsdatum verwendet werden. Dokumentdatum, öffentliche Freigabe, geplanter Sitzungstermin, veröffentlichte Tagesordnung und tatsächliche Beratung/Entscheidung sind unterschiedliche Datumsarten.
 

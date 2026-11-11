@@ -64,50 +64,13 @@ Ein Issue darf mehrere Umsetzungsschritte auslösen. Bei umfangreichen Vorhaben 
 | U5 Veröffentlichung / Deployment / Betrieb | **Geplant** | S3-Publish-Prozess, statischer Build, Deployment, Monitoring, Backup/Restore und betriebliche Automatisierung |
 | U6 Integration / Pilot / Go-live-Vorbereitung | **Geplant** | End-to-End-Tests, Demonstrator-Regressionen, Usability-Feinschliff, Datenmigration, Pilotbetrieb und Vorbereitung der realen Go-live-Abnahme |
 
-### Referenzquellen – Stand 31.10.2026
+### RIS – Fachabnahme und Dokumentationsabschluss 11.11.2026
 
-PRs #346/#347 sind integriert. PR #348 ergänzt die persistente RIS-Fachstruktur,
-Scanner-Verarbeitung von Änderungen/Nachveröffentlichungen und die ausdrücklich
-bestätigten Übergänge Fundstelle → Ereignis → bestehender Vorgang/Thema.
-Mehrere Beschlusspunkte/Fassungen, unbekannte Resultate, Herkunft und unveränderliche
-Belege sind Bestandteil des isolierten PostgreSQL-Nachweises mit `fib_runtime`.
-Die [technische Abnahme](operations/u4-reference-sources-acceptance.md) bestätigt den
-**integrierten Gesamtpfad der definierten Referenzfälle**. U4 bleibt insgesamt teilweise umgesetzt.
-Automatisierte Browserabläufe prüfen Übernahme, Ereignisübergabe und Themenbezug;
-[Prüfdurchgang und Grenzen](operations/u4-editorial-ui-acceptance.md). Umsetzung und vorbereitete Freigabeschritte stehen
-in [U4 RIS-Persistenz](operations/u4-ris-persistence.md).
-Der [integrierte Prüfstand zu #352](operations/u4-integrated-acceptance.md) führt
-Gesamt-App, tatsächliche Anmeldung/MFA, Deno-Handler und PostgreSQL zusammen.
-Sechs erfolgreiche CI-Prüfungen einschließlich des Gesamtpfads und die Grenzen kontrollierter Quellantworten sind gesondert
-im Abnahmebericht ausgewiesen.
+Der RIS-Import und die Redaktionsansicht aus PR #422, #424 und #426 sind fachlich abgenommen. Dazu gehören unveränderliche Quelldaten, je TOP genau ein geschütztes Ereignis, automatische Dokumentfundstellen und Ergebnisse aus der verfügbaren Niederschrift. Desktop und Firefox bei 412 px wurden persönlich geprüft. [Kapitel 07](fachhandbuch/07-Sitzungen-und-Beschluesse-Entwurf-2026-10-26.md) beschreibt den geprüften Umfang und die Referenzsitzungen mit 19 und 12 öffentlichen TOPs.
 
-Die [persönliche Abnahme](operations/u4-persoenliche-nutzerabnahme.md) erfolgt verbindlich
-in der bestehenden Redaktion mit Shared-Apps/fib und vorhandenen Konten/MFA.
-PR #355 bleibt ein isolierter technischer Prüfstand; seine lokale Standardempfehlung
-ist korrigiert. #357 / PR #358 bereiten die Bereitstellung vor:
-[Istvergleich](operations/u4-shared-apps-inventory-2026-10-31.md) und
-[Freigabe-/Sicherungs-/Rücknahmeplan](operations/u4-shared-apps-release-plan.md).
-Die Bestandsaufnahme vom 02.11.2026 bestätigt die ursprünglichen Struktur-/Manifest-
-Migrationen und sechs RIS-Fassungen in Shared-Apps; die obige historische Vorbereitung
-ist kein aktueller vollständiger Deploymentstatus. #377 / PR #378 ergänzt Original-PDFs,
-automatische Fundstellen und unabhängige Ereignisbeziehungen. Neues Paket und
-Betriebsgrenzen: [technischer Release-/Abnahmebericht](operations/ris-ui-377-release.md).
-Neue Migration, privater RIS-Bucket und überarbeitete Oberfläche sind noch nicht bereitgestellt.
+Paket C aus [#427](https://github.com/PustefixReisen/fib-echtsystem/issues/427) führt diese Abnahme in das Handbuch, das Strukturmodell und die abhängigen Regeln über. Der [Änderungsnachweis](tests/ris-fachabnahme-2026-11-11.md) dokumentiert die Konsistenzprüfung. Die früheren Zwischenstände vom 31.10. bis 08.11. bleiben in den datierten technischen Berichten und der Git-Historie nachvollziehbar.
 
-Nächste Schritte in #281: genehmigte Bereitstellung in Shared-Apps und fachliche Nutzerabnahme der integrierten Ansichten,
-Bewertung der Belegdialoge aus PR #350, vertrauenswürdige
-KI-Produzenten, weitergehende RIS-Abdeckung und Identitätswechsel. Vorläufige
-Ereignisse (#260) und Langzeitqualität der Gemeinde-Archive bleiben offen.
-Produktive Migration/Deployment/Feature-Aktivierung brauchen separate Freigabe;
-#336 betrifft weiterhin die davon getrennte RIS-Automatisierung. Keine Änderungen
-an produktivem Shared-Apps oder Memorix durch dieses Arbeitspaket.
-
-### RIS-Nacharbeit 08.11.2026 (#403)
-
-Persönliche Abnahme #356 mit Beanstandungen aus #377; zusammenhängendes Korrekturpaket
-in Entwicklung. [Ursachen, technische Belege, Grenzen und Nachabnahme](operations/ris-403-nachabnahme.md).
-Nächster Schritt: PR/CI prüfen, reale 19-TOP-Erfassung nachweisen und anschließend
-gesonderte Bereitstellungsentscheidung. PDF-/Volltextspeicherung bleibt zurückgestellt.
+**Nächster fachlicher Schritt ist Paket B**, die automatische strukturierte RIS-Inhaltsanalyse. Sie ist noch nicht implementiert und wird separat konkretisiert. Eine manuelle RIS-Analysefreigabe ist nicht geplant. Die bestehende Fachabnahme bestätigt weder den vollständigen allgemeinen U4-Umfang noch eine allgemeine Betriebs-/Sicherheitsfreigabe.
 
 ## 3. U1 – aktueller Stand
 

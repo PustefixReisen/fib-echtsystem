@@ -44,10 +44,12 @@ Typische Fälle sind insbesondere:
 - auffällige Kombination strukturierter Bewertungswerte,
 - widersprüchliche Wirkungen oder Quellen,
 - ungewöhnliche Themenabgrenzung,
-- unsichere TOP-/Ereignis- oder Beschlusspunkt-Zuordnung,
+- unzureichende Quellenbelege einer redaktionellen Aussage,
 - möglicher Widerspruch oder Überlappung eines vorgeschlagenen Referenzmaßstabs.
 
 Eine Plausibilitätsprüfung erzeugt grundsätzlich einen **sichtbaren Prüfhinweis** und verhindert automatische fachliche Übernahme, wenn die Entscheidung nicht eindeutig ist. Sie ersetzt aber keine redaktionelle Entscheidung.
+
+Für den RIS-Import gilt [Kapitel 07](fachhandbuch/07-Sitzungen-und-Beschluesse-Entwurf-2026-10-26.md). Eine fehlerhafte Extraktion oder unklare Quellenzuordnung wird technisch geprüft. Die allgemeinen redaktionellen Plausibilitätsentscheidungen eröffnen keinen Schreibweg auf importierte TOPs, TOP-Ereignisse oder deren Dokumentzuordnungen.
 
 ## 3. Entscheidungsregel
 

@@ -121,6 +121,10 @@ Sie durchsucht den internen FIB-Bestand, insbesondere:
 
 Externe Web- oder Quellenrecherche ist **nicht** Bestandteil dieser Suche. Sie wird über Recherche oder den FIB-Assistenten gestartet.
 
+#### RIS-Ansicht und Live-Suche, abgenommen am 11.11.2026
+
+Die konkret umgesetzte Sitzungsansicht steht in [Fachhandbuch Kapitel 07](fachhandbuch/07-Sitzungen-und-Beschluesse-Entwurf-2026-10-26.md). Eine Seite zeigt Sitzungsübersicht und öffentliche TOPs mit amtlichen Dokumentlinks und Ergebnissen. Interne Navigation steht rechts beim Bezugstext, externe Dokumentlinks haben ein vorangestelltes Icon als Teil des Links. Desktop und 412 px sind geprüft. Die aktiven Suchlisten filtern während der Eingabe, servergestützt mit etwa 150 ms Verzögerung. Die globale Suche bleibt ein gesondertes Zielbild.
+
 ### 6.2 Statuskarten
 
 Vier kompakte Statuskarten:

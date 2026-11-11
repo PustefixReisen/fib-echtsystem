@@ -2,7 +2,7 @@
 
 ## Dokumentstand
 
-**Stand:** 05.10.2026, 23:45 Uhr  
+**Stand:** 11.11.2026
 **Verantwortlich:** Josef Walter – erstellt mit KI-Unterstützung
 
 Dieses Dokument wird im Normalfall über das **Stand-Datum einschließlich Uhrzeit** fortgeschrieben. Eine neue Versionsnummer wird nur eingeführt, wenn sich die Struktur oder das Grundkonzept des Dokuments wesentlich ändert.
@@ -37,9 +37,13 @@ Für fachliche Regeln und Kardinalitäten bleiben die jeweiligen Primärdokument
 
 Ein fachlich relevantes Geschehen oder eine relevante Entwicklung in der Wirklichkeit.
 
-Beispiel: Eine neue Beschlussvorlage zur Hundewiese wird veröffentlicht oder der Gemeinderat fasst dazu später einen Beschluss.
+Beispiel. Der TOP zur Hundewiese hat ein automatisches TOP-Ereignis mit seinen amtlichen Dokumentbelegen. Für die besondere RIS-Erfassung gilt [Fachhandbuch Kapitel 07](fachhandbuch/07-Sitzungen-und-Beschluesse-Entwurf-2026-10-26.md).
 
 Nicht zu verwechseln mit Meldung. Das Ereignis beschreibt, was passiert; die Meldung beschreibt, was FIB darüber veröffentlicht.
+
+### `TOP-Ereignis`
+
+Automatisch erzeugtes FIB-Ereignis zu genau einem importierten Tagesordnungspunkt. Jeder TOP hat genau ein solches Ereignis. Titel und Datum stammen aus TOP und Sitzung. Es ist einschließlich seiner automatischen RIS-Fundstellenzuordnungen redaktionell nicht bearbeitbar. Eine Sitzung hat kein eigenes Ereignis. Maßgeblich ist [Fachhandbuch Kapitel 07](fachhandbuch/07-Sitzungen-und-Beschluesse-Entwurf-2026-10-26.md).
 
 ### `Meldung`
 
@@ -57,7 +61,7 @@ Beispiel: Die Veröffentlichung einer neuen Beschlussvorlage kann als Meldung ve
 
 Ein konkreter länger laufender Sachverhalt, der mehrere Ereignisse bündeln kann und einen eigenen aktuellen Stand, Verlauf, Status, offene Punkte und nächste belegte Schritte besitzt.
 
-Beispiel: „Hundewiese“ ist ein Vorgang, zu dem Veröffentlichung einer Vorlage, Beratung und spätere Beschlussfassung verschiedene Ereignisse sein können.
+Beispiel. „Hundewiese“ ist ein Vorgang mit Entwicklungen wie einer Standortentscheidung und der späteren Eröffnung. Innerhalb eines importierten TOPs bleiben Vorlage, Beratung und Beschlussergebnis beim selben TOP-Ereignis.
 
 Nicht zu verwechseln mit Thema. Ein Vorgang ist konkret; ein Thema ist eine übergeordnete Fragestellung.
 

@@ -6,7 +6,7 @@
 |---|---|---|
 | 3.0 | 06.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
 
-> **Fachhandbuch-Reorganisation (22.10.2026):** [Neuer Einstieg zum Fachhandbuch](fachhandbuch/README.md) und [erste Quellinventur](Fachhandbuch-Inventur-2026-10-22.md). Während der kontrollierten Konsolidierung bleiben die hier genannten bisherigen Fachquellen verbindlich. Die neue Struktur ersetzt sie erst nach geprüftem Abschluss der Übernahme. Zentraler Governance-Standard: [pustivo – Fachliches Dokumentationsmodell](https://github.com/PustefixReisen/pustivo/blob/main/docs/governance/Fachliches-Dokumentationsmodell.md).
+> **Verbindlicher Facheinstieg.** Das [Fachhandbuch](fachhandbuch/README.md) ist seit der Abnahme vom 29.10.2026 maßgeblich. Die RIS-Regeln sind nach der Fachabnahme vom 11.11.2026 in [Kapitel 07](fachhandbuch/07-Sitzungen-und-Beschluesse-Entwurf-2026-10-26.md) fortgeschrieben. Ältere Fachquellen erklären die Herleitung und können die dort ersetzten RIS-Regeln nicht wieder einführen.
 
 ## 1. Zweck
 
@@ -84,7 +84,7 @@ Konsolidierte Integrationsquelle:
 Spezialisierte Primärquellen liefern Detailregeln, insbesondere:
 
 - `docs/Themen-und-Vorgangslogik.md`
-- `docs/Sitzungs-und-Beschlussmodell.md`
+- [Fachhandbuch Kapitel 07](fachhandbuch/07-Sitzungen-und-Beschluesse-Entwurf-2026-10-26.md) für RIS. `docs/Sitzungs-und-Beschlussmodell.md` dient als Weiterleitung.
 - `docs/Wirkungsmodell.md`
 - `docs/Persistenz-und-Lebenszyklusmodell.md`
 - `docs/Mehr-wissen-Modell.md`

@@ -22,6 +22,10 @@ Ergänzende Primärquellen:
 - öffentliche UX: `docs/UX-und-Informationsarchitektur.md`
 - visuelle Identität und Bildverwendungslogik: `docs/Visuelle-Identitaet-und-Bildkonzept.md`
 
+## RIS-Anbindung seit der Fachabnahme vom 11.11.2026
+
+Die folgenden Redaktionsabläufe beschreiben Meldungen, Vorgänge, Themen und deren Analysen und Beiträge. Für importierte RIS-Daten und die automatisch angelegten TOP-Ereignisse gilt [Fachhandbuch Kapitel 07](fachhandbuch/07-Sitzungen-und-Beschluesse-Entwurf-2026-10-26.md). Sie und ihre automatischen Dokumentbeziehungen bleiben schreibgeschützt. Folgeobjekte werden in ihren jeweiligen Prozessen bearbeitet. Die automatische strukturierte RIS-Inhaltsanalyse ist als Paket B noch nicht implementiert. Eine manuelle RIS-Analysefreigabe ist nicht geplant.
+
 ## 2. Grundprinzipien
 
 ### 2.1 Strukturierte Bearbeitung statt Formularsprache

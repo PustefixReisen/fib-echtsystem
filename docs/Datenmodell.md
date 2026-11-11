@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 3.3 | 31.10.2026 | Josef Walter – erstellt mit KI-Unterstützung |
+| 3.4 | 11.11.2026 | Josef Walter – erstellt mit KI-Unterstützung |
 
 ## 1. Zweck und Geltung
 
@@ -74,13 +74,13 @@ Ein `Ereignis` ist ein fachlich relevantes Geschehen oder eine relevante Entwick
 
 Beispiele:
 
-- eine neue Beschlussvorlage wird veröffentlicht,
-- ein Gemeinderat behandelt einen TOP oder fasst einen Beschluss,
+- ein importierter TOP wird durch sein automatisch erzeugtes TOP-Ereignis erschlossen,
+- eine nachfolgende eigenständige Entwicklung betrifft denselben Vorgang,
 - ein Planungsstand ändert sich,
 - ein Vorhabenträger veröffentlicht neue relevante Unterlagen,
 - eine neue belastbare Information verändert den Stand eines laufenden Sachverhalts.
 
-Ein Dokument selbst ist kein Ereignis. Seine Veröffentlichung kann jedoch ein Ereignis sein.
+Ein Dokument selbst ist kein Ereignis. Für allgemeine Quellen kann seine Veröffentlichung ein Ereignis begründen. Bei RIS-Dokumenten gilt das eine automatisch erzeugte TOP-Ereignis aus Abschnitt 8.
 
 Fachliche Zustände bestätigter Ereignisse:
 
@@ -378,35 +378,19 @@ Kardinalität:
 
 Ein TOP ist kein Ereignis. Er beschreibt den Verfahrens-/Behandlungskontext.
 
-### 8.2 Sitzung/TOP ↔ Ereignis
+### 8.2 TOP-Ereignis und Dokumentfundstellen
 
-Sitzung und TOP können mit mehreren Ereignissen verbunden sein; ein Ereignis kann mehreren Sitzung-/TOP-Kontexten zugeordnet sein, wenn dies sachlich tatsächlich zutrifft.
+Jeder importierte TOP hat genau ein eigenes, automatisch erzeugtes und redaktionell nicht bearbeitbares TOP-Ereignis. Das TOP-Ereignis gehört genau diesem TOP. Eine Sitzung hat keine eigenen Ereignisse. Zusätzliche oder sitzungsfremde Ereignisse werden nicht am TOP verknüpft.
 
-Meldungsbezüge werden abgeleitet:
+TOP-Dokumente werden als Fundstellen automatisch dem TOP-Ereignis zugeordnet. Die Sitzungsniederschrift ist eine gemeinsame Fundstelle für alle TOP-Ereignisse der Sitzung. Wiederholungsimporte erhalten deren Identität und erzeugen keine doppelten Zuordnungen. Die Regeln stehen in [Fachhandbuch Kapitel 07](fachhandbuch/07-Sitzungen-und-Beschluesse-Entwurf-2026-10-26.md).
 
-```text
-Meldung → Ereignis → TOP → Sitzung
-```
+Meldungsbezüge ergeben sich aus Meldung → TOP-Ereignis → TOP → Sitzung. Redaktionelle Vorgänge und Themen verwenden ihre eigenen Beziehungen. Der RIS-Import erzeugt weder automatisch eine Meldung noch eine Vorgangs- oder Themenanalyse.
 
-Es werden keine zusätzlichen autoritativen Beziehungen `Meldung ↔ TOP` oder `Meldung ↔ Sitzung` gespeichert.
+### 8.3 Status, Abstimmungen und Originalnachweise
 
-### 8.3 Vorlage, Beratung und Beschluss
+Eine Vorlage belegt einen Vorschlag. Sobald eine verfügbare amtliche Niederschrift zuverlässig auswertbar ist, übernimmt FIB den Ergebnisstatus und die Abstimmungen mit Stimmenzahlen und Herkunft. Ein TOP kann mehrere getrennte Abstimmungen enthalten. Vorlage, Niederschrift und Abstimmung erzeugen keine zusätzlichen Ereignisse zu demselben TOP.
 
-Verbindliche Trennung:
-
-- Beschlussvorlage = Fundstelle/Dokument,
-- Veröffentlichung der Vorlage = mögliches Ereignis,
-- tatsächliche Beratung/Behandlung = späteres Ereignis,
-- Vertagung/Absetzung = späteres Ereignis, soweit fachlich relevant,
-- Beschlussfassung = späteres Ereignis bzw. Teil desselben realen Behandlungs-/Entscheidungsschritts.
-
-Der ursprüngliche Beschlussvorschlag bleibt als Vergleichsfassung erhalten.
-
-### 8.4 Beschlusspunkt, Fassung und Abstimmung
-
-Beschlusspunkte und Abstimmungen werden erst aus der Niederschrift bzw. der belastbaren Dokumentation des tatsächlichen Sitzungsverlaufs erzeugt.
-
-Ein Beschlusspunkt kann mehrere Fassungen und mehrere Abstimmungen besitzen. Die tatsächlich abgestimmte Fassung bleibt mit ihrem Abstimmungsergebnis und der belegenden Fundstelle nachvollziehbar.
+Beschlusswortlaut und Beschlussfassungen werden im abgenommenen Umfang über das Original erschlossen. Frühere Modellierungen redaktionell bearbeitbarer Beschlusspunkte und Fassungsvergleiche sind dadurch ersetzt. Die strukturierte Inhaltsanalyse gehört zum noch nicht implementierten Paket B. Dauerhafte Original-/Volltextspeicherung erfordert dokumentierte Rechte gemäß Kapitel 07.
 
 ## 9. Referenzwissen
 
@@ -608,7 +592,7 @@ erDiagram
     WIRKUNG }o--o{ PERSPEKTIVE : wird_zugeordnet
 
     SITZUNG ||--o{ TOP : enthaelt
-    TOP }o--o{ EREIGNIS : hat_bezug
+    TOP |o--|| EREIGNIS : hat_TOP_Ereignis
 
     VORGANG ||--o{ BEOBACHTUNGSAUFTRAG : kann_haben
     THEMA ||--o{ BEOBACHTUNGSAUFTRAG : kann_haben
@@ -761,6 +745,7 @@ Nicht relevante Fundstellen werden nicht allein wegen ihrer Relevanzentscheidung
 
 | Version | Datum | Änderung |
 |---|---|---|
+| 3.4 | 11.11.2026 | RIS-Fachabnahme eingearbeitet. TOP und TOP-Ereignis 1:1, automatische Fundstellen, quellengebundene Ergebnisse, Paket B als Zukunftskonzept. |
 | 3.3 | 31.10.2026 | Entwicklungsdatenzuordnung und geschützte Referenzen für Shared-Apps verknüpft. |
 | 3.2 | 31.10.2026 | Technischen UI-Nachweis und gemeinsame Quellen-/Beziehungsobjekte verknüpft; keine Änderung der fachlichen Kardinalitäten. |
 | 3.1 | 31.10.2026 | G3-Gesamtkonsolidierung: zentrales Datenmodell zur Integrationsquelle gestrafft; Wissenskern, strukturierter Redaktionsstand, Quellen/Fundstellen, Beobachtungsauftrag/Recherchelauf, Sitzung/Beschluss, Referenzwissen, Referenzmaßstab, „Mehr wissen?“, Bilder, AI Tasks, Persistenz, Plausibilität/Freigabe und gemeinsame Fachfunktionsschicht integriert. Veraltete offene G3-Punkte entfernt; Vorlage als Fundstelle und spätere Behandlung/Beschlussfassung als getrennte Ereignisentwicklung konsolidiert. Verbleibende Fragen ausdrücklich auf technische/physische Modellierung begrenzt. |
@@ -785,24 +770,11 @@ Nicht relevante Fundstellen werden nicht allein wegen ihrer Relevanzentscheidung
 | 0.3 | 02.10.2026 | Beziehung Ereignis↔Vorgang festgelegt. |
 | 0.2 | 02.10.2026 | Kardinalität Ereignis↔Meldung festgelegt. |
 | 0.1 | 01.10.2026 | G3-Primärdokument angelegt. |
-## Technische Ableitung der RIS-Struktur – 31.10.2026
+## RIS-Fachabnahme und historische technische Ableitung
 
-Die technische Abbildung und ihre Tests sind in
-[U4 RIS-Persistenz](operations/u4-ris-persistence.md) dokumentiert. Sie hält Sitzung,
-TOP, Vorlage, Vorschlag, tatsächlichen Beschlusspunkt, Fassung/Abstimmung und
-Dokumentbeleg getrennt. Niederschriftverfügbarkeit ist keine Genehmigung; fehlendes
-Ergebnis bleibt unbekannt. Herkunft und frühere Fassungen bleiben nachvollziehbar.
-Der Übergang zum regulären Ereignis und zu bestehenden Vorgängen/Themen folgt
-expliziten redaktionellen Entscheidungen. Diese technische Ableitung ändert keine
-Fachregel. Maßgeblich sind die abgenommenen Fachhandbuchkapitel, insbesondere
-[Kapitel 07](fachhandbuch/07-Sitzungen-und-Beschluesse-Entwurf-2026-10-26.md);
-die früheren Teilmodelle dienen als historische Herleitung.
+Die fachliche Struktur ist mit der Abnahme vom 11.11.2026 an [Fachhandbuch Kapitel 07](fachhandbuch/07-Sitzungen-und-Beschluesse-Entwurf-2026-10-26.md) angepasst. Die [technischen Berichte vom 31.10.2026](operations/u4-ris-persistence.md) und der [damalige UI-Nachweis](operations/u4-editorial-ui-acceptance.md) beschreiben frühere Implementierungen. Deren redaktionelle RIS-Zuordnungswege und bearbeitbare Beschlussmodelle sind keine aktuellen Fachanforderungen.
 
-Die [reguläre Redaktionsoberfläche](operations/u4-editorial-ui-acceptance.md) verwendet
-dieselben Fundstellen/Ereignisse und Beziehungsobjekte. Der vorbereitete gemeinsame
-Prüfweg `ris_relation_suggestions` wird auch für Gemeinde-Ereignisse verwendet; es
-entstehen keine parallelen Ereignis- oder Fundstellentabellen. Keine neue Migration
-ist für diese UI-Anbindung erforderlich; die Migration aus PR #348 bleibt freigabepflichtig.
+Der [Änderungsnachweis zu #427](tests/ris-fachabnahme-2026-11-11.md) führt die betroffenen Dokumente und Konsistenzprüfungen auf. Die physische Datenbank wird mit dieser Dokumentationsfortschreibung nicht verändert.
 
 Die Entwicklungsdatenzuordnung ist eine technische Eigenschaft und kein neues
 redaktionelles Fachobjekt. Sie unterscheidet neu erzeugte Abnahmeobjekte von bloß
