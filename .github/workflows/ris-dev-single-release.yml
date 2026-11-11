@@ -48,10 +48,10 @@ jobs:
           const worker=step('Deploy analysis worker for read-only runtime preflight');
           const analysisSchema=step('Apply only the additive derived-analysis schema');
           const readback=step('Encrypt FIB-only snapshot and prior frontend in separate Nextcloud crypt remote; verify readback');
-          const activation=src.indexOf('\n            FIB_RIS_ANALYSIS_ENABLED=true');
+          const activation=step('Verify operator-managed analysis activation (no management write)');
           if(!(snapshot<readback && readback<worker && worker<probe && probe<analysisSchema && analysisSchema<activation))
             throw Error('Verified backup and runtime preflight must precede analysis schema and activation');
-          if(/supabase[^\n]*secrets\s+list/.test(src) || !src.includes('\n        run: node scripts/ris-analysis/preflight.mjs\n'))
+          if(/supabase[^\n]*secrets\s+(?:list|set)/.test(src) || !src.includes('\n        run: node scripts/ris-analysis/preflight.mjs\n') || !src.includes('\n        run: node scripts/ris-analysis/activation.mjs\n'))
             throw Error('Runtime preflight is mandatory; no secret-list permission dependency');
           JS
       - uses: actions/setup-node@v4
