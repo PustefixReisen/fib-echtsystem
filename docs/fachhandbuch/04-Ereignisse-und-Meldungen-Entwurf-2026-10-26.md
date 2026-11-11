@@ -1,10 +1,6 @@
 # 04 – Ereignisse und Meldungen (Migrationsentwurf)
 
-| Stand | Status | Grundlage |
-|---|---|---|
-| 26.10.2026 | **Entwurf; noch nicht fachlich abgenommen** | Gemeinsame Modellerprobung 25.–26.10., bestehendes Fachkonzept, Redaktionsworkflow, Kap. 03 |
-
-> **Migrationshinweis:** Dieses Kapitel führt neu abgestimmte Anforderungen zusammen, ersetzt aber die bisherigen Primärquellen **noch nicht**. Regelkennungen, Status- und Rechteübergänge werden vor Verbindlicherklärung abgeglichen. Es werden keine zusätzlichen Statuswerte oder Datenbankfelder als bereits beschlossen ausgegeben.
+**Stand 11.11.2026.** Grundlage ist die Fachabnahme des Handbuchs vom 29.10.2026. Die RIS-Anbindung ist gemäß Kapitel 07 auf die Fachabnahme vom 11.11.2026 fortgeschrieben. Die allgemeinen Analyse- und Veröffentlichungsabläufe bleiben fachliche Anforderungen mit eigener Umsetzung und Abnahme.
 
 ## 04.1 Fachliche Aufgabe und Abgrenzung
 
@@ -19,17 +15,25 @@ FIB soll relevante Informationen möglichst umfassend erfassen, aber nur bericht
 
 **Fundstelle sichern → Sachverhalt erkennen → neues oder bestehendes Ereignis bestimmen → ggf. Ereignis fortschreiben / korrigieren → Veröffentlichungsrelevanz prüfen → optionalen Meldungsentwurf erstellen → redaktionell prüfen und freigeben → veröffentlichen → spätere Entwicklungen auf Aktualisierungsbedarf prüfen.**
 
+Der allgemeine Ablauf gilt für redaktionell bearbeitbare Ereignisse. Für automatisch erzeugte TOP-Ereignisse gilt die quellengebundene Übernahme aus [Kapitel 07](07-Sitzungen-und-Beschluesse-Entwurf-2026-10-26.md).
+
 Parallel können Ereignisse direkt Vorgängen und Themen zugeordnet werden. Das setzt weder eine Meldung noch einen Themenbeitrag voraus. Die Kette ist keine Pflichtabfolge für jedes Ereignis. Eine neue Fundstelle führt nicht automatisch zu einem neuen Ereignis oder einer Meldung (FIB-RECH-ABLAUF-001).
 
 ### 04.2.1 Beispiel Grundstückskauf Feldkirchen
 
 Ein Bericht nennt die Aufnahme von Kaufverhandlungen. Das wird als Ereignis erfasst. Eine später aufgefundene amtliche Unterlage kann **dasselbe Ereignis ergänzen oder korrigieren**. Eine spätere Unterzeichnung des Kaufvertrags kann ein **eigenständiges Folgeereignis** sein. FIB prüft in jedem Fall, ob eine neue Meldung, eine Ergänzung der bestehenden Meldung oder keine Veröffentlichung sinnvoll ist. Ein Bericht über abgeschlossene Verhandlungen kann auf frühere Meldungen verweisen, ohne die zeitliche Entwicklung des Vorgangs zu verdecken.
 
+### 04.2.2 Automatische TOP-Ereignisse
+
+Jeder importierte TOP erhält genau ein redaktionell nicht bearbeitbares Ereignis. Seine zugehörigen RIS-Dokumente und die gemeinsame Sitzungsniederschrift werden automatisch als Fundstellen verknüpft. Veröffentlichung einer Vorlage, spätere Niederschrift und einzelne Abstimmungen erzeugen keine weiteren Ereignisse zu demselben TOP. Die automatische Anlage kennzeichnet die eindeutige Quellenzuordnung und behauptet keine Annahme eines Beschlussvorschlags.
+
+Ein Presseartikel oder ein späteres eigenständiges Geschehen kann im allgemeinen Redaktionsprozess ein anderes Ereignis begründen. Dieses wird nicht zusätzlich am TOP verknüpft und ändert das TOP-Ereignis oder seine Dokumentzuordnungen nicht. Redaktionelle Meldungen, Vorgänge und Themen werden an ihren eigenen Objekten bearbeitet. Die strukturierte RIS-Inhaltsanalyse aus Paket B ist noch nicht implementiert.
+
 ## 04.3 Ereignisse erkennen und fortschreiben
 
 FIB prüft bei einer neuen Fundstelle, ob sie einen neuen Sachverhalt, eine Ergänzung oder einen Widerspruch zu Bekanntem enthält. Die Ergebnisse werden mit Quellen und Zeitbezug dokumentiert. Gleiche Aussagen aus unterschiedlichen Fundstellen werden nicht als zusätzliche Ereignisse gezählt.
 
-**Jede Fundstelle wird fachlich eingeordnet**: FIB analysiert automatisch Herkunft, möglichen Orts- und Themenbezug, Neuigkeitswert, Belege und vorhandene Zuordnungen. Das ist zunächst eine **KI-gestützte Einordnung**, keine verbindliche persönliche Entscheidung eines Redakteurs. Sämtliche Fundstellen bleiben redaktionell sichtbar und überprüfbar. Eine **menschliche Einzelprüfung ist nicht für jeden Fund vorgeschrieben**, wohl aber bei relevanten Konflikten, notwendiger verbindlicher Zurückstellung oder vor der Freigabe öffentlicher Aussagen. 
+**Jede Fundstelle des allgemeinen Redaktionsprozesses wird fachlich eingeordnet**: FIB analysiert automatisch Herkunft, möglichen Orts- und Themenbezug, Neuigkeitswert, Belege und vorhandene Zuordnungen. Das ist zunächst eine **KI-gestützte Einordnung**, keine verbindliche persönliche Entscheidung eines Redakteurs. Sämtliche Fundstellen bleiben redaktionell sichtbar und überprüfbar. Eine **menschliche Einzelprüfung ist nicht für jeden Fund vorgeschrieben**, wohl aber bei relevanten Konflikten, notwendiger verbindlicher Zurückstellung oder vor der Freigabe öffentlicher Aussagen.
 
 **Vorläufige, redaktionell noch nicht bestätigte Ereignisse** kann FIB selbstständig erfassen, zuordnen, fachlich weiterverarbeiten und unter nachvollziehbarer Protokollierung berichtigen. Eine verpflichtende redaktionelle Einzelbestätigung jedes Ereignisses ist **nicht** vorgesehen. Sämtliche Fundstellen und Ereignisse bleiben redaktionell einsehbar; bei wesentlichen Widersprüchen oder entscheidungsrelevanter Unsicherheit entsteht gezielt eine Prüfaufgabe. **Bereits redaktionell bestätigte Ereignisse** werden bei materiellen Korrekturen nicht unbemerkt überschrieben: FIB legt einen begründeten Vorschlag mit Belegen vor. Widersprüche bleiben nachvollziehbar.
 
@@ -106,7 +110,7 @@ Quelle: [Fachkonzept](../Fachkonzept.md), §7; die konkrete Anzeige von Neuigkei
 
 ## 04.7 Abnahmeszenarien
 
-1. **Zwei Fundstellen, ein Ereignis:** Zeitungsartikel und amtliche Vorlage belegen denselben Beschluss, ohne Dublettenereignis.
+1. **Zwei Fundstellen, ein Ereignis.** Zwei Presseartikel belegen denselben Sachverhalt, ohne Dublettenereignis. Die automatische Quellenzuordnung eines TOP-Ereignisses bleibt davon getrennt.
 2. **Widerspruch:** Eine nachträglich auftauchende amtliche Quelle präzisiert den Sachstand. Bei vorläufigem Ereignis wird nachvollziehbar fortgeschrieben; beim bestätigten Ereignis entsteht ein Korrekturvorschlag.
 3. **Ereignis ohne Meldung:** Eine nur marginal geänderte Verkehrsprognose wird im Vorgang berücksichtigt, ohne öffentliche Meldung.
 4. **Folgemeldung:** Nach Verhandlungsbeginn folgt Vertragsabschluss; neue Meldung mit Rückverweis und falls nötig Rückblick.
@@ -129,4 +133,4 @@ Quelle: [Fachkonzept](../Fachkonzept.md), §7; die konkrete Anzeige von Neuigkei
 - Die alte allgemeine Fundstellen-Einzelprüfpflicht und die pauschale redaktionelle Ereignisübernahme sind gemäß beschlossener Automatik fachlich zu harmonisieren. Die vollständige Regelkennungs-, Status-, Rechte- und Versionsprüfung ist vor normativer Ablösung erforderlich.
 - Die technische Umsetzung der Wiederfunderkennung, von Korrekturversionen, bereits bestätigten Ereignissen, Publikationsterminen und Bildverwendungen wird nach der Fachabnahme getestet. Konkrete Oberflächen für Meldungskette, Textkorrektur, Belege und dringliche Aufgaben werden iterativ erprobt.
 
-**Status:** Fachlicher Leseentwurf; die Beschlüsse sind im Kapitel erfasst. Die formale Migrations- und Implementierungsprüfung ist noch nicht abgeschlossen; die ursprünglichen Primärquellen bleiben bis zur geprüften Ablösung erhalten.
+**Geltung.** Maßgeblich sind die abgenommenen Handbuchkapitel. Historische Quellverweise erläutern die Herleitung. Der Stand der technischen Umsetzung ist je Funktion gesondert nachzuweisen.

@@ -1,25 +1,12 @@
 # ADR-012 – RIS-Originale und getrennte Ereignisbeziehungen
 
-Status: umgesetzt zur technischen Prüfung in #377 / PR #378, 02.11.2026.
-Betriebsfreigabe und persönliche fachliche Abnahme sind getrennte Schritte.
+Status der Originalspeicherung wie am 02.11.2026 dokumentiert. Der fachliche Ereignis- und Beziehungsvertrag ist seit 11.11.2026 durch [Kapitel 07](../fachhandbuch/07-Sitzungen-und-Beschluesse-Entwurf-2026-10-26.md) ersetzt. Die folgenden Speicherregeln sind kein Nachweis einer allgemeinen Betriebsfreigabe.
 
 ## Entscheidung
 
-RIS bleibt eine unveränderte amtliche Quelle. Der Import legt pro kanonischer
-Dokumentadresse automatisch eine Fundstelle an und verbindet jede Dokumentfassung
-idempotent mit einer Fundstellenfassung. Originaltitel, TOP-Titel, automatisch
-gebildeter Anzeigetitel, Sitzungsdatum und Herkunft werden getrennt erhalten.
-Ein Import legt weder Ereignisse noch Meldungen oder Beschlüsse an.
+Der Import legt pro kanonischer Dokumentadresse eine Fundstelle an und verbindet die Dokumentfassungen nachvollziehbar mit ihren Fundstellenfassungen. Originaltitel, TOP-Titel, automatisch gebildeter Anzeigetitel, Sitzungsdatum und Herkunft bleiben unterscheidbar.
 
-`ris_agenda_events.role = local_reference` beschreibt einen lokalen Bezug zu einem
-Ereignis außerhalb der Sitzung. Er benötigt weder Begründung noch Beziehungstyp
-oder eine vorherige Dokument-Fundstellenzuordnung. Historische, beleggebundene
-Behandlungs-/Beschlussrollen behalten ihren bisherigen Fachvertrag.
-`event_findings` bleibt die eigenständige n:m-Beziehung für den Ereignisbezug einer
-Dokument-Fundstelle. Ihre Begründung ist bei der Bearbeitung optional. Die vorhandene
-`source_create_event`-Funktion wird für beide Ausgangskontexte wiederverwendet;
-Anlage und Verbindung sind eine Transaktion. Entfernen einer Verbindung löscht
-kein Ereignis.
+Die frühere redaktionelle Beziehungspflege über lokale TOP-Bezüge und manuelle Ereignisanlage ist ersetzt. Der Import erzeugt je TOP genau ein geschütztes Ereignis und die automatischen Dokumentzuordnungen nach Kapitel 07. Die technische Speicherentscheidung im Folgenden wird dadurch nicht erweitert.
 
 Die Speicherung wird **für den exakten Byte-Hash einer Dokumentfassung** bestätigt:
 Gemeinde als Urheberin oder anderweitige Speicherberechtigung, Nachweis, prüfendes

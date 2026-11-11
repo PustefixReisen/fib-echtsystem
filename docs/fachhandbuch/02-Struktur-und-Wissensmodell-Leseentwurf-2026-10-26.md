@@ -1,6 +1,6 @@
 # 02 – Strukturmodell und Wissensmodell (Leseentwurf)
 
-**Stand:** 26.10.2026 · **Status:** Zur fachlichen Durchsicht, keine normative Ablösung des bisherigen Datenmodells.
+**Stand 11.11.2026.** Fachhandbuch abgenommen am 29.10.2026, RIS-Struktur gemäß Fachabnahme vom 11.11.2026 fortgeschrieben. Die Darstellung unterscheidet das allgemeine Fachmodell vom umgesetzten RIS-Umfang in Kapitel 07.
 
 ## 02.1 Wozu FIB die Informationen strukturiert
 
@@ -21,7 +21,7 @@ flowchart TB
   end
   subgraph RAT["Sitzungen und Beschlüsse"]
     S["Sitzung"] --> TOP["Tagesordnungspunkt (TOP)"]
-    TOP --> BS["Beschluss / Beschlusspunkte"]
+    TOP --> BS["Status und Abstimmungen"]
   end
   RIS -->|"Sitzungsdaten"| S
   F -->|"Vorlage / Niederschrift als Nachweise"| TOP
@@ -34,8 +34,7 @@ flowchart TB
     E <-->|"zusätzlicher Bezug"| T
   end
   F -->|"belegt Ereignis (z. B. Vorlage oder Niederschrift)"| E
-  TOP <-->|"Behandlung / Beschlussereignisse"| E
-  BS -.->|"belegte Beschlussereignisse"| E
+  TOP -->|"genau ein automatisches TOP-Ereignis"| E
   AV -.->|"Erkenntnisbeitrag"| AT
   AT -.->|"Rückfragen / neue Zusammenhänge"| AV
   subgraph PUB["Öffentliches FIB-Angebot: freigegebene Informationen"]
@@ -54,7 +53,7 @@ flowchart TB
   BS --> OS
 ```
 
-**Wichtig:** Das öffentliche FIB-Angebot ist **kein einzelnes Datenobjekt**, sondern der Zweck und die Besuchersicht des Systems: Meldungen, Vorgänge, Themen sowie Sitzungen und Beschlüsse sind miteinander navigierbar. Öffentliche Vorgangsansichten enthalten einen redaktionell freigegebenen **Vorgangsbeitrag** auf Grundlage der Analyse sowie den Verlauf. Das RIS ist ein externes Quellsystem; Sitzung, TOP und Beschluss sind eigene fachliche Objekte in FIB, nicht nur gewöhnliche Fundstellen.
+**Wichtig:** Das öffentliche FIB-Angebot ist **kein einzelnes Datenobjekt**, sondern der Zweck und die Besuchersicht des Systems: Meldungen, Vorgänge, Themen sowie Sitzungen und Beschlüsse sind miteinander navigierbar. Öffentliche Vorgangsansichten enthalten einen redaktionell freigegebenen **Vorgangsbeitrag** auf Grundlage der Analyse sowie den Verlauf. Das RIS liefert unveränderliche Sitzungs- und TOP-Daten mit belegten Ergebnissen. Zu jedem TOP gehört genau ein automatisch erzeugtes, geschütztes Ereignis. Die Dokumente werden als Fundstellen nachgewiesen.
 
 **Leseschlüssel:** Durchgezogene Linien zeigen stabile fachliche Grundbeziehungen. Gestrichelte Linien zeigen mögliche Erkenntnis-, Recherche- und Bearbeitungsbezüge. Die Bezeichnung `0 bis viele` meint optionale Mehrfachbeziehungen, nicht automatisch bestätigte Zuordnungen. Abweichend gilt für den Vorgang mindestens ein identifiziertes Ereignis, das bei vorläufiger Anlage selbst vorläufig sein darf (F-02). Meldungen sind eigene redaktionelle Darstellungen, nicht die Grundlage der Vorgangs- und Themenanalyse.
 
@@ -79,7 +78,7 @@ FIB unterscheidet einen **fachlich gültigen Stand** von seiner Änderungsgeschi
 
 **Stabile Identitäten** benötigen insbesondere Ereignisse, Meldungen, Vorgänge, Themen, Sitzungen, TOPs, Fundstellen, Beobachtungsaufträge, Rechercheläufe und Vertiefungsinhalte. Auch die Historie wirksamer Beziehungen wie Ereignis–Vorgang, Vorgang–Thema, TOP–Ereignis und Recherchelauf–Fundstelle muss nachvollziehbar bleiben.
 
-**Nicht jeder Fachgegenstand benötigt eigene Lebenszyklusstatus.** Beispielsweise sind Beschlusspunkte, Abstimmungen, Rechercheläufe, Perspektiven und Wirkungen keine selbstständig zu archivierenden Vorgänge. Analysebestandteile werden über den bestätigten Gesamtstand ihres Vorgangs oder Themas historisiert; die beschlossene Teilfreigabe F-03 erzeugt bei Annahme einzelner Änderungen einen neuen solchen Gesamtstand.
+**Nicht jeder Fachgegenstand benötigt eigene Lebenszyklusstatus.** Beispielsweise sind Abstimmungen, Rechercheläufe, Perspektiven und Wirkungen keine selbstständig zu archivierenden Vorgänge. Analysebestandteile werden über den bestätigten Gesamtstand ihres Vorgangs oder Themas historisiert; die beschlossene Teilfreigabe F-03 erzeugt bei Annahme einzelner Änderungen einen neuen solchen Gesamtstand.
 
 Eine nicht mehr erreichbare Internetadresse ist **kein Löschgrund** für eine Fundstelle. Fachliche Existenz, aktuelle Erreichbarkeit, vorhandene Kopie und Rechte zur öffentlichen Bereitstellung sind zu unterscheiden. Eine erfolglose erneute Recherche entwertet frühere bestätigte Nachweise nicht.
 
@@ -87,30 +86,21 @@ Eine nicht mehr erreichbare Internetadresse ist **kein Löschgrund** für eine F
 
 Quelle: [Persistenz- und Lebenszyklusmodell](../Persistenz-und-Lebenszyklusmodell.md), §§2–12. Die konkrete Datenspeicherung wird erst nach der Fachkonzept-Abnahme gestaltet.
 
-## 02.2b RIS als Quellsystem und eigenständiger Sitzungsbereich
+## 02.2b RIS als Quellsystem und Sitzungsbereich
 
-**Fachliche Aufgabenteilung:** Das RIS wird wie andere Quellen durch die **gemeinsame Recherche** laufend auf neue oder geänderte Inhalte beobachtet (Kapitel 03). Die anschließende fachliche Erschließung von Sitzungen, TOPs, Beschlussvorschlägen, tatsächlichen Beschlüssen und Abstimmungen erfolgt als **eigenständiger Sitzungs- und Beschlussprozess** (Kapitel 07). Die öffentliche Besuchersicht gehört in Kapitel 09. Es entsteht **keine zweite unabhängige RIS-Rechercheinfrastruktur**.
+Die gemeinsame Recherche aus Kapitel 03 beobachtet das RIS. Die automatische Übernahme erzeugt Sitzung, TOPs, Dokumentfundstellen sowie genau ein eigenes TOP-Ereignis je TOP. Die Regeln und der am 11.11.2026 abgenommene Funktionsumfang stehen in [Kapitel 07](07-Sitzungen-und-Beschluesse-Entwurf-2026-10-26.md).
 
-Im bisherigen Fachmodell sind **Sitzung, Tagesordnungspunkt (TOP), Beschlussvorschlag, Beschlusspunkt, Beschlussfassung, Abstimmung und Niederschrift** bereits ausdrücklich definiert. Die Vorlage ist als Dokument eine Fundstelle; deren Veröffentlichung kann ein Ereignis auslösen. Die spätere Beratung und ein tatsächlicher Beschluss sind davon getrennte Ereignisse. Aus diesen Beziehungen ergeben sich die Navigationswege **Sitzung → TOP → Ereignis → Vorgang/Thema** und zurück. Grundlage: `docs/Sitzungs-und-Beschlussmodell.md`.
-
-Die öffentliche Ansicht sollte erkennbar machen, wie ein Beschluss zu einem laufenden Vorgang gehört und welche Entwicklung ihm vorausging. Auch ein Vorgang soll von seiner öffentlichen Übersicht zu verbundenen Meldungen, Sitzungen, Quellen und Themen führen können. Bereits im bestehenden Navigationskonzept sind **Meldungen, Vorgänge, Themen und Sitzungen** als eigenständige Inhaltsbereiche vereinbart. Die genaue Gestaltung und die notwendige öffentliche Freigabe der Vorgangsinhalte sind in Kapitel 09 noch zu präzisieren.
+Importierte Angaben und ihre Beziehungen werden ausschließlich aus der amtlichen Quelle aktualisiert. Die Sitzung selbst erhält kein Ereignis. Zusätzliche Ereigniszuordnungen an TOPs entfallen. Redaktionelle Meldungen, Vorgänge und Themen verarbeiten Informationen in ihren eigenen Arbeitsabläufen. Die automatische strukturierte RIS-Inhaltsanalyse gehört zum noch nicht implementierten Paket B.
 
 ### Öffentlichkeitslogik: Meldung und Vorgang
 
 **Fachlich vereinbart am 26.10.2026:** Eine veröffentlichte Meldung, die zu einem Vorgang gehört, wird **nicht ausschließlich im Vorgang versteckt**. Sie ist über die aktuelle Meldungsübersicht auffindbar und zugleich im chronologischen Verlauf der öffentlichen Vorgangsansicht eingebunden. Das ist **eine Meldung mit zwei Zugangswegen**, keine Verdoppelung des Datensatzes; die Beziehung wird über Meldung → Ereignis → Vorgang abgeleitet. Mehrere Meldungen desselben Vorgangs können in der aktuellen Übersicht zugunsten der Übersichtlichkeit gruppiert werden. Die konkrete öffentliche Listen- und Gruppierungslogik wird erst bei der UI-Konzeption des Benutzer-Systems in Kapitel 09 festgelegt.
 
-### RIS: Ausgangsinformationen, Fundstellen und FIB-Objekte
+### RIS-Inhalte und Fundstellen
 
-Das externe **RIS** liefert einerseits **Sitzungsdaten** (Sitzung, Gremium, TOP/Agenda), andererseits **Dokumente als Fundstellen** (Beschlussvorlage, Niederschrift, gegebenenfalls weitere Unterlagen). Die strukturierten FIB-Objekte **Sitzung, TOP, Beschlusspunkt und Abstimmung** beruhen auf diesen nachgewiesenen Angaben.
+Beschlussvorlagen und weitere TOP-Dokumente werden automatisch als Fundstellen dem jeweiligen TOP-Ereignis zugeordnet. Die Sitzungsniederschrift ist eine gemeinsame Fundstelle für alle TOP-Ereignisse der Sitzung. Später verfügbare Ergebnisse ergänzen den Quellenstand desselben TOPs. Vorlage, tatsächlicher Beschlussstatus und einzelne Abstimmungen bleiben unterscheidbar.
 
-- **Beschlussvorlage:** Fundstelle; ihre Veröffentlichung ist gegebenenfalls ein eigenes Ereignis, **nicht** der später tatsächlich gefasste Beschluss.
-- **Niederschrift:** Fundstelle der Sitzung, aus der FIB die tatsächliche TOP-Behandlung, abgestimmte Beschlussfassung und Abstimmungsergebnisse erschließt. Diese Informationen gehören zu entsprechenden Behandlungs-/Beschlussereignissen.
-- **Öffentliche Sitzungs-/Beschlussansicht:** stellt Sitzung, TOP, tatsächlich beschlossenen Text, Abstimmung, Beziehung zu Vorgang/Thema und den Originalvorschlag zusammen. Eine Datei wird nicht allein aufgrund ihrer Auffindbarkeit im RIS von FIB erneut öffentlich bereitgestellt; dafür gelten die bestehenden Rechteprüfungen.
-- **Navigation:** Sitzung → TOP → Ereignis → Vorgang/Thema und zurück. Öffentliche Meldungsbezüge werden über das Ereignis abgeleitet, nicht als eigenständige doppelte Zuordnung an TOP oder Sitzung gespeichert.
-
-**Fundstellen sind Belege, keine doppelt geführte Sitzungsinformation.** Insbesondere die Beschlussvorlage und die Niederschrift sowie gegebenenfalls Anlagen sind eigenständige Fundstellen. Ihre Inhalte werden einmal als Dokumentnachweis erfasst und daraus zusätzlich für die Sitzungs-/Beschlussansicht fachlich erschlossen. Sitzungsdatum, Gremium und TOP-Nummer werden als strukturierte Merkmale der Sitzungsobjekte geführt; sie müssen nicht als künstliche weitere Fundstellen verdoppelt werden. Auch eine RIS-Webseite kann Fundstelle sein, sofern sie als konkreter Nachweis einer Aussage verwendet wird. Verweise zu den Originalfundstellen bleiben nachvollziehbar; öffentliches Wiederbereitstellen der Dateien verlangt eine gesonderte Rechteprüfung.
-
-Die Linien zu Sitzung und TOP im Diagramm sind deshalb bewusst **durchgezogen**, wo das RIS strukturierte Sitzungsdaten liefert und Dokumente den TOP belegen. Das ist eine fachliche Informationsherkunft, keine Behauptung, dass FIB jede RIS-Information unverändert übernehmen darf.
+Die abgenommene Redaktionsansicht zeigt die amtlichen Ergebnisse und Original-Links. Sie kopiert keinen Beschlusswortlaut in eine eigene redaktionelle RIS-Fassung. Für dauerhafte Original- oder Volltextspeicherung sowie öffentliche Dokumentnutzung gelten die Rechteprüfungen aus [Kapitel 07](07-Sitzungen-und-Beschluesse-Entwurf-2026-10-26.md). Die öffentliche Besuchersicht ist in Kapitel 09 als Zielbild beschrieben und durch die RIS-Fachabnahme nicht als umgesetzt bestätigt.
 
 ### Fachliche Begriffsgrenzen für Entscheidungen und Analysen
 
@@ -126,7 +116,7 @@ Die Objekte sind nicht allein nach ihrer Darstellung zu unterscheiden, sondern n
 | **Offene Frage / „Mehr wissen?“-Frage** | Eine offene Frage dokumentiert internen Erkenntnis- und Recherchebedarf. „Mehr wissen?“ ist eine öffentliche, beantwortete und freigegebene Vertiefungsfrage bei Meldung, Vorgang oder Thema. |
 | **Vorläufig / bestätigt / freigegeben / veröffentlicht** | Vorläufig beschreibt unverbindliche KI-Vorarbeit, bestätigt eine fachliche Entscheidung, freigegeben eine bestimmte Analyse-/Beitragsfassung und veröffentlicht deren tatsächliche öffentliche Sichtbarkeit. Diese Eigenschaften ersetzen einander nicht. |
 
-**Beispiel:** Zur geplanten Umgestaltung einer Straße kann eine Beschlussvorlage als Fundstelle erfasst werden. Ihre Veröffentlichung kann ein Ereignis sein. Die tatsächlich beschlossene Maßnahme ist erst nach geeignetem Nachweis ein anderes Ereignis. Beide können einem Vorgang zugeordnet sein, dessen Analyse die Folgen erläutert. Ein öffentlicher Vorgangsbeitrag berichtet über den geprüften Sachstand; eine ergänzende „Mehr wissen?“-Antwort erklärt etwa die rechtlichen Zuständigkeiten. Keiner dieser Schritte darf aus einer noch nicht belegten Entscheidung einen schon gefassten Beschluss machen.
+**Beispiel.** Zu einem TOP zur Straßenumgestaltung entstehen ein TOP-Ereignis und die Fundstellen der Vorlage. Sobald die Niederschrift verfügbar ist, belegt sie das Ergebnis am selben TOP und wird demselben Ereignis zugeordnet. Ein redaktioneller Vorgangsbeitrag kann später die Folgen erläutern. Eine automatische Erzeugung solcher Analysen ist mit dieser RIS-Fachabnahme nicht nachgewiesen.
 
 ## 02.3 Drei Beziehungen, die man nicht verwechseln darf
 

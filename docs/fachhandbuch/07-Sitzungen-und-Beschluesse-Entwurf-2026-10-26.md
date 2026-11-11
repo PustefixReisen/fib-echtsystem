@@ -1,171 +1,120 @@
 # 07 – Sitzungen und Beschlüsse
 
-**Stand:** fachlich abgenommen am 29.10.2026; technischer Nachweis ergänzt am 31.10.2026. Der historische Dateiname ändert die Geltung nicht; siehe [verbindlichen Handbuchstand](README.md).
+**Stand 11.11.2026.** Der hier beschriebene RIS-Funktionsumfang wurde auf Desktop und in Firefox bei 412 px fachlich abgenommen. Grundlage sind [Issue #427](https://github.com/PustefixReisen/fib-echtsystem/issues/427), die Umsetzung in PR #422, #424 und #426 sowie die Nacharbeiten #423 und #425. Die Abnahme umfasst die RIS-Übernahme und ihre Redaktionsansicht. Die Freigabe des allgemeinen Betriebs und der Sicherheit wird gesondert behandelt.
 
-## 07.1 Aufgabe und Abgrenzung
+## 07.1 Aufgabe und Geltung
 
-FIB soll politische Beratungs- und Entscheidungsabläufe im Gemeinderat nachvollziehbar machen: **Was wird beraten, was ist vorgeschlagen, was ist tatsächlich geschehen und beschlossen worden – und was bedeutet das für einen Vorgang oder ein Thema?**
+FIB macht die öffentlichen Gemeinderatssitzungen mit Tagesordnung und belegten Ergebnissen zugänglich. Das amtliche Ratsinformationssystem ist die Quelle. Die Recherche beobachtet es im gemeinsamen Quellenprozess aus [Kapitel 03](03-Recherche.md). Dieses Kapitel regelt die automatische Übernahme, die Beziehung zu Fundstellen und Ereignissen und die abgenommene Sitzungsansicht.
 
-Das Ratsinformationssystem (RIS) ist dafür eine maßgebliche **externe Quelle**. Die laufende Beobachtung neuer und geänderter RIS-Informationen ist Teil der **allgemeinen Recherche** (Kapitel 03), keine zweite unabhängige Recherche. Dieses Kapitel behandelt dagegen die **eigene fachliche Verarbeitung** des kommunalen Verfahrens. Die öffentliche Darstellung erfolgt über Kapitel 09.
+Die Redaktion liest den amtlichen Stand und verwendet ihn für ihre weitere Arbeit. Sie kann importierte Sitzungen, TOPs, Dokumentdaten, Ergebnisse und ihre automatisch erzeugten Beziehungen weder bearbeiten noch ergänzen. Aktualisierungen erfolgen durch erneute Erfassung der amtlichen Quelle. Ein Fehlerhinweis veranlasst eine technische Prüfung der Erfassung und ihrer Herkunft.
 
-**Aufgabenteilung auf einen Blick:**
+Dieses Kapitel ersetzt die früheren Regeln zur redaktionellen RIS-Erschließung, zu Sitzungsereignissen, zusätzlichen TOP-Ereigniszuordnungen, kopierten Beschlussfassungen und manuellen Analysefreigaben. Der frühere Regelstand ist in der Git-Historie nachvollziehbar.
+
+## 07.2 Fachobjekte und Beziehungen
+
+| Gegenstand | Bedeutung und Beziehung |
+|---|---|
+| Sitzung | Gremium, Datum, Sitzungskennung und Originaladresse. Eine Sitzung enthält ihre öffentlichen TOPs. |
+| TOP | Gehört genau einer Sitzung an und behält seine amtliche Nummer und seinen Titel. Jeder importierte TOP erhält genau ein eigenes TOP-Ereignis. |
+| TOP-Ereignis | Automatisch erzeugtes, redaktionell nicht bearbeitbares FIB-Ereignis. Sein Titel entspricht dem TOP-Titel ohne angehängten Beschlussstatus, sein Ereignisdatum dem Sitzungsdatum. Es gehört genau diesem TOP. |
+| Beschlussvorlage und weitere TOP-Dokumente | Amtliche Dokumente werden als Fundstellen nachgewiesen und dem zugehörigen TOP-Ereignis automatisch zugeordnet. |
+| Sitzungsniederschrift | Eine Fundstelle für die Sitzung, automatisch mit allen TOP-Ereignissen dieser Sitzung verbunden. Sie wird dafür nicht je TOP als neues Dokument angelegt. |
+| Beschlussergebnis | Belegter Status und verfügbare Stimmenzahlen. Je TOP sind mehrere getrennte Abstimmungen möglich. Ihre Herkunft bleibt bis zur Niederschrift nachvollziehbar. |
+| Meldung, Vorgang und Thema | Redaktionelle Folgeobjekte nach den Kapiteln 04–06 und 08. Sie sind von den importierten RIS-Daten und ihren geschützten Beziehungen getrennt. |
 
 ```mermaid
-flowchart LR
-  R["Recherche (Kapitel 03): RIS laufend beobachten"] -->|"Sitzungsdaten und Fundstellen"| A["Sitzungs- und Beschlussverarbeitung (Kapitel 07)"]
-  A -->|"Sitzung, TOP, tatsächliche Entscheidung"| W["Fachlicher Wissenskern: Ereignis, Vorgang, Thema"]
-  A -->|"geprüfte öffentliche Angaben"| O["Öffentliches FIB-Angebot (Kapitel 09)"]
-  W -->|"freigegebene Zusammenhänge"| O
-  O -.->|"Originalnachweise"| F["Fundstellen im RIS"]
+flowchart TD
+  S["Sitzung"] -->|"enthält"| T["TOP"]
+  T -->|"genau ein eigenes"| E["TOP-Ereignis"]
+  D["TOP-Dokument als Fundstelle"] -->|"automatisch zugeordnet"| E
+  N["Niederschrift als Fundstelle"] -->|"allen TOP-Ereignissen zugeordnet"| E
+  T -->|"quellenbelegt"| A["Status und Abstimmungen"]
 ```
 
-## 07.2 Welche RIS-Informationen wohin gehören
+Eine Sitzung erhält kein eigenes Ereignis. Weitere oder sitzungsfremde Ereignisse werden einem TOP nicht zugeordnet. Auch Veröffentlichung der Vorlage, spätere Niederschrift und einzelne Abstimmungen erzeugen keine zusätzlichen Ereignisse zu demselben TOP.
 
-FIB unterscheidet zwei **ergänzende Sichtweisen auf dieselben RIS-Inhalte**:
+Externe Presseberichte durchlaufen den allgemeinen Fundstellen- und Redaktionsprozess. Sie können dort eigene Sachverhalte und Bezüge zu Vorgängen oder Themen begründen. Sie ergänzen weder den amtlichen Sitzungsbestand noch die Fundstellenzuordnungen des geschützten TOP-Ereignisses. TOP-Status und Abstimmungen werden ausschließlich aus den amtlichen RIS-Nachweisen übernommen.
 
-| RIS-Inhalt | Fachliche Rolle in FIB |
+<details>
+<summary>Verbindliche Regeln zur Übernahme und Verknüpfung</summary>
+
+**FIB-RIS-IMPORT-001 – Quellengebundener RIS-Bestand.** Importierte RIS-Daten und die automatisch erzeugten Beziehungen sind redaktionell unveränderlich. Neue Quellfassungen werden durch den Import nachvollziehbar erfasst. Wiederholungsimporte erhalten die Identität bereits zugeordneter TOP-Ereignisse und erzeugen keine doppelten Fundstellenzuordnungen.
+
+**FIB-RIS-EREIGNIS-001 – Genau ein Ereignis je TOP.** Jeder importierte TOP besitzt genau ein automatisch angelegtes, redaktionell nicht bearbeitbares TOP-Ereignis. Eine Sitzung besitzt kein Sitzungsereignis. Zusätzliche oder sitzungsfremde Ereigniszuordnungen an TOPs sind ausgeschlossen. Eine spätere Dokumentveröffentlichung oder Abstimmung vervielfacht das TOP-Ereignis nicht.
+
+**FIB-RIS-FUND-001 – Automatische Dokumentbelege.** Beschlussvorlagen und weitere zugehörige TOP-Dokumente werden als Fundstellen automatisch dem TOP-Ereignis zugeordnet. Die Sitzungsniederschrift wird als gemeinsame Fundstelle allen TOP-Ereignissen der Sitzung zugeordnet. Redaktionelle Ergänzung oder Aufhebung dieser importgesteuerten Zuordnungen ist ausgeschlossen.
+
+</details>
+
+## 07.3 Ablauf der automatischen Übernahme
+
+### Sitzung und TOPs erfassen
+
+Auslöser ist ein neuer oder geänderter amtlicher Quellenstand im vereinbarten öffentlichen Erfassungsbereich. FIB übernimmt Gremium, Datum, Kennung, Tagesordnung und die zugehörigen Dokumentverweise. Alle öffentlichen TOPs der erfassten Sitzung werden berücksichtigt. Beschlussvorlagen werden im Sitzungsprozess nur bei nachgewiesener TOP-Zuordnung übernommen. Die Tagesordnung kündigt die Behandlung an und belegt für sich keine Entscheidung.
+
+### Ereignisse und Fundstellen bereitstellen
+
+FIB legt die TOP-Ereignisse und ihre Dokumentzuordnungen automatisch an. Ein TOP-Ereignis kann schon vor Vorliegen einer Niederschrift existieren. Seine automatische Anlage ist keine Behauptung, der Vorschlag sei angenommen worden. Die später verfügbare Niederschrift ergänzt die Belege derselben TOP-Ereignisse.
+
+### Ergebnisse aus der Niederschrift übernehmen
+
+Sobald die Niederschrift verfügbar und die Zuordnung verlässlich ermittelbar ist, übernimmt FIB den Beschlussstatus und die protokollierten Abstimmungen mit Stimmenzahlen und Herkunft. Annahme, Ablehnung, Absetzung und ein nicht verfügbares Ergebnis bleiben unterscheidbar. Eine Absetzung wird nicht als Abstimmung mit erfundenen Stimmenzahlen dargestellt.
+
+Mehrere Abstimmungen eines TOPs werden einzeln und in ihrer Reihenfolge angezeigt. Fehlende Zahlen werden nicht als null Stimmen ausgegeben. Bei fehlender Niederschrift, unklarer Extraktion oder Abruffehler bleibt der belegte Informationsstand sichtbar. Der Fehler wird technisch nachvollziehbar behandelt. Es gibt keine redaktionelle Ersatzentscheidung zum amtlichen Ergebnis.
+
+<details>
+<summary>Verbindliche Ergebnisregel</summary>
+
+**FIB-RIS-ERGEBNIS-001 – Belegte Ergebnisse je TOP.** Beschlussstatus und Abstimmungen werden automatisch aus verfügbaren amtlichen Nachweisen übernommen. Mehrere Abstimmungen bleiben getrennt. Fehlende oder nicht zuverlässig ermittelbare Angaben werden als solche kenntlich gemacht. Weder Vorlagen noch Presseberichte ersetzen den Nachweis des tatsächlichen Ergebnisses. Beschlusswortlaute und ein redaktioneller Vergleich von Vorlagen- und Beschlussfassungen sind keine Funktion des abgenommenen Imports.
+
+</details>
+
+## 07.4 Abgenommene Bedienoberfläche
+
+Die Sitzungsliste filtert während der Eingabe nach Gremium, Sitzungsnummer und Datum. Ein Suchbutton oder Enter ist dafür nicht erforderlich. Die servergestützte Suche wartet einheitlich etwa 150 ms. Veraltete Suchantworten dürfen neuere Ergebnisse nicht ersetzen. Der interne Navigationspfeil steht rechts in derselben Zeile wie Gremium und Datum.
+
+Eine Seite je Sitzung zeigt die Überschrift mit Gremium und Datum sowie ein Info-Symbol zur RIS-Übernahme. Darunter stehen zwei Karten.
+
+- **Sitzungsübersicht** mit Links zum amtlichen RIS, zur Tagesordnung und zur verfügbaren Niederschrift.
+- **TOPs** mit allen öffentlichen TOPs in Nummernfolge, ihren Titeln, zugehörigen Vorlagen und weiteren Dokumentlinks sowie Beschlussergebnis und gegebenenfalls mehreren Abstimmungen. Der Link zur Niederschrift macht die Ergebnisse überprüfbar.
+
+Externe RIS- und Dokumentlinks haben ein kleines vorangestelltes Link-Icon. Icon und Bezugstext bilden zusammen einen anklickbaren Link. Bei langen Texten bleibt das Icon am Beginn, der Text darf umbrechen. Touch-Flächen, Tastaturfokus und zugängliche Beschriftungen unterstützen die Bedienung auf Desktop und Handy. Die Abstände zwischen Quellenlinks und zwischen Abstimmungen sind gleichmäßig.
+
+Die Sitzungsansicht bietet keine RIS-Bearbeitungsaktionen, keine zusätzliche Ereigniszuordnung und keine Ereigniszeile zur manuellen Bearbeitung. Die Schutzregeln gelten auch beim Öffnen automatisch erzeugter TOP-Ereignisse über die allgemeine Ereignisverwaltung.
+
+## 07.5 Redaktionelle Weiterverarbeitung und Paket B
+
+Meldungen, Vorgänge und Themen können amtliche Informationen nach den allgemeinen Redaktionsregeln nutzen. Ihre fachliche Bewertung und öffentliche Beitragsfreigabe erfolgen an diesen Folgeobjekten. Dabei entsteht kein Schreibrecht auf importierte RIS-Daten, TOP-Ereignisse oder deren Fundstellenzuordnungen. Die Übernahme von TOPs erzeugt für sich keine Meldung und keine automatische Vorgangs- oder Themenanalyse.
+
+Die **automatische strukturierte Inhaltsanalyse (Paket B)** ist ein Zukunftskonzept und noch nicht implementiert. Die RIS-Fachabnahme bestätigt die Übernahme, die Ergebnisermittlung und die Darstellung, nicht eine bereits arbeitende inhaltliche Analyse mit automatischer Fortschreibung von Meldungen, Vorgängen oder Themen. Paket B wird als nächster fachlicher Arbeitsblock konkretisiert. Eine manuelle RIS-Analysefreigabe ist dafür nicht geplant. Die bestehenden Freigaben öffentlicher Beiträge und die Regeln der jeweiligen Folgeobjekte sind davon zu unterscheiden.
+
+<details>
+<summary>Verbindliche Abgrenzung zur Inhaltsanalyse</summary>
+
+**FIB-RIS-ANALYSE-001 – Analyse als künftiger Ausbau.** Die automatische strukturierte Inhaltsanalyse gehört zu Paket B und ist keine Ist-Funktion der abgenommenen RIS-Verarbeitung. Eine manuelle RIS-Analysefreigabe ist nicht vorgesehen. Die Fortschreibung redaktioneller Folgeobjekte richtet sich nach deren eigenen Regeln und berechtigt nicht zur Änderung amtlicher Importdaten.
+
+</details>
+
+## 07.6 Originale, Herkunft und Speicherrechte
+
+FIB hält Fundstellen mit Originaladressen, Dokumentbezug, Quellenfassung und Herkunft nachvollziehbar. Der Beschlusswortlaut wird in der abgenommenen Sitzungsansicht über die amtliche Niederschrift erschlossen und nicht in einen eigenen redaktionellen RIS-Text kopiert.
+
+Eine öffentliche RIS-Adresse begründet weder ein allgemeines dauerhaftes Speicherrecht für Originaltexte noch eine öffentliche Wiederbereitstellungsbefugnis. Original-PDF und extrahierter Volltext gehören zur jeweiligen Dokumentfassung. Dauerhafte Speicherung setzt nachgewiesene kommunale Urheberschaft oder ein anderweitiges dokumentiertes Speicherrecht voraus. Bei ungeklärten oder fremden Inhalten bleiben Metadaten und Originallink maßgeblich. Besonders Anlagen Dritter werden nicht pauschal übernommen. Personenbezogene Inhalte und zulässige Nutzung bleiben zusätzlich zu prüfen. Die technische Ableitung steht in [ADR-012](../decisions/ADR-012-RIS-Originale-und-Ereignisbeziehungen.md).
+
+Die Rechteprüfung für eine Speicherung oder öffentliche Dokumentnutzung ist von einer fachlichen Bearbeitung der RIS-Quelldaten zu unterscheiden. Der Import und die Fachabnahme erteilen keine allgemeine Datei-Veröffentlichungsfreigabe. Ergänzend gilt [Kapitel 10](10-Qualitaetssicherung-Entwurf-2026-10-26.md).
+
+## 07.7 Abnahmefälle und Grenzen
+
+| Fall | Erwartetes Ergebnis der abgenommenen Funktion |
 |---|---|
-| Sitzungstermin, Gremium, Sitzungskennung | Strukturierte **Sitzung** |
-| Tagesordnung, TOP-Nummer und Beratungsgegenstand | Strukturierter **TOP**; Hinweis, was vorgesehen ist |
-| Beschlussvorlage und Anlagen | **Fundstellen** für Vorschlag, Sachverhalt und Begründung |
-| Veröffentlichte Niederschrift | **Fundstelle** für tatsächlichen Sitzungsverlauf, Beschlussfassung und Abstimmung |
-| Tatsächlich beschlossener Text | **Beschlusspunkt/Fassung**, ausschließlich durch RIS-Unterlagen zum betreffenden TOP belegt |
-| Abstimmungsergebnis | **Abstimmung**, mit beschlossener Fassung und Nachweis verknüpft |
+| Gemeinderat 15.10.2026 | 19 öffentliche TOPs mit je einem eigenen TOP-Ereignis, zugehörigen Dokumentfundstellen und gemeinsamer Niederschrift. |
+| Ergebnisse 15.10.2026 | 28 Abstimmungen mit Stimmenzahlen und eine protokollierte Absetzung. TOP 2 ist abgesetzt, TOP 3 hat Ja 7 / Nein 13, TOP 6 zwei Abstimmungen mit Ja 17 / Nein 2 und Ja 19 / Nein 0. |
+| Gemeinderat 29.10.2026 | 12 öffentliche TOPs mit je einem eigenen TOP-Ereignis. Ohne verfügbare Niederschrift werden keine Abstimmungsergebnisse erfunden. Der Zustand ist eine datierte Quellenbeobachtung. |
+| Wiederholungsimport | Bestehende TOP-Ereignis-Identitäten und Dokumentzuordnungen bleiben stabil. |
+| Redaktioneller Änderungsversuch | RIS-Daten, TOP-Ereignisse und ihre importgesteuerten Fundstellenzuordnungen bleiben schreibgeschützt. |
+| Desktop und Firefox 412 px | Sitzungsliste und Sitzungsseite sind lesbar. Suche reagiert auf Eingabe, Navigation und Links bleiben dem Bezugstext zugeordnet. |
+| Inhaltsanalyse | Aus der Import- und UI-Abnahme wird keine Umsetzung von Paket B abgeleitet. |
 
-Die Sitzung und ihre TOPs sind eigenständige fachliche Objekte. **Eine Vorlage ist eine Fundstelle, nicht bereits der Beschluss.** Eine Niederschrift kann als Beleg für mehrere Beschlusspunkte dienen. Für TOP-bezogene Beschlussvorlagen und Niederschriften soll FIB **neben URL und Herkunft den vollständigen erschlossenen Dokumenttext** dauerhaft verfügbar halten, damit der Inhalt trotz störanfälliger RIS-PDF-Links und wechselnder Browserunterstützung lesbar und recherchierbar bleibt. **Interne Speicherung und öffentliche Wiedergabe des Volltexts sind jedoch getrennte Rechtefragen:** Die öffentliche FIB-Anzeige erfolgt nur, soweit hierfür eine belastbare rechtliche Grundlage oder Nutzungsbefugnis besteht. Bis dahin werden belegte Sachinformationen, zulässige Auszüge und der Original-Link verwendet. **Anlagen Dritter** (beispielsweise Gutachten) werden nicht automatisch vollständig übernommen oder über FIB öffentlich wiedergegeben; FIB führt grundsätzlich ihren Quellenlink und die erforderlichen Metadaten. Die bloße öffentliche Abrufbarkeit einer PDF rechtfertigt nicht automatisch ihre erneute öffentliche Bereitstellung durch FIB.
+Die technischen Nachweise stehen in PR #422, #424 und #426. Die persönliche fachliche Abnahme wurde am 11.11.2026 erteilt. Das belegt den geprüften Umfang und die Referenzsitzungen, keine lückenlose Erfassung sämtlicher historischen RIS-Veröffentlichungen. Technische Wiederherstellbarkeit, Authentifizierung und Schutz der gemeinsam genutzten Shared-Apps-Umgebung bleiben Gegenstand der Betriebsregeln.
 
-## 07.3 Fachlicher Ablauf
-
-### 1. Sitzung und Tagesordnung erkennen
-
-Die Recherche erkennt eine Sitzung, ihren Termin, das Gremium und die zugehörigen TOPs. **Nur einem konkreten TOP zugeordnete Beschlussvorlagen werden in den FIB-Sitzungsbestand übernommen.** Frei zugängliche Vorlagen ohne TOP-Zuordnung werden im Rahmen dieses fachlichen Sitzungsprozesses nicht erfasst. Das Sitzungsmodell erfasst bzw. aktualisiert diese Informationen. Die Agenda kündigt einen Gegenstand an, beweist aber nicht dessen spätere Behandlung oder Beschlussfassung. Ein bereits bekannter Vorgang kann so frühzeitig eine anstehende Befassung erhalten.
-
-### 2. Vorlagen und Anlagen erschließen
-
-FIB verknüpft die Beschlussvorlage als Fundstelle mit dem passenden TOP. Aus ihr erschließt FIB den **Vorschlag**, einschließlich möglicher Entscheidungsalternativen und Begründungen. Die Veröffentlichung eines dem TOP zugeordneten Beschlussvorschlags kann ein eigenes Ereignis sein und damit Vorgänge und Themen fachlich fortschreiben; **sie löst für sich genommen regelmäßig keine Meldung aus**. Eine spätere tatsächliche Beschlussfassung ist ein weiteres Ereignis. Eine Meldung zu einer wichtigen Entscheidung ist möglich, insbesondere wenn sie für einen bestehenden Vorgang berichtenswert ist. Die Meldung wird über ihr Ereignis automatisch im betreffenden Vorgangsverlauf sichtbar. Es entsteht daraus noch **kein tatsächlich gefasster Beschluss**.
-
-### 3. Beratung und tatsächliche Entscheidung nachvollziehen
-
-Wenn belastbare Informationen über die stattgefundene Sitzung vorliegen, erfasst FIB die tatsächlichen Verfahrensschritte. **Ausschließlich aus den einschlägigen RIS-Angaben**, insbesondere der Niederschrift, werden die wirklich zur Abstimmung gestellten Beschlusspunkte, ihre Fassungen und zugehörigen Abstimmungsergebnisse erschlossen. **Vorlage und Beschlussfassung sind getrennte Entwicklungen**; Ausfälle, Vertagungen und Absetzungen dürfen nicht als Annahme des Vorschlags erscheinen.
-
-### 4. Vorlage mit Beschluss vergleichen
-
-FIB stellt gegenüber, was ursprünglich vorgeschlagen und was später tatsächlich beschlossen wurde. Falls ein Beschluss verändert, in Teilen oder anders strukturiert angenommen wurde, muss diese Abweichung nachvollziehbar bleiben. Eine starre 1:1-Abbildung einzelner Vorlagenabsätze auf Beschlusspunkte wird nicht vorausgesetzt.
-
-### 5. Wirkungen auf Ereignisse, Vorgänge und Themen prüfen
-
-Beschlussvorschlag, tatsächliche Beschlussfassung und spätere Veröffentlichung der Niederschrift sind **unterscheidbare Ereignisse**, soweit sie fachlich relevant sind. Sie bleiben für Vorgänge und Themen auswertbar, auch wenn keine Meldung entsteht. Eine wichtige Beschlussfassung kann eine Meldung begründen und darüber automatisch im zugehörigen Vorgang erscheinen. **Die Veröffentlichung der Niederschrift löst ebenfalls eine Meldungsprüfung aus**; dabei wird der tatsächliche Erkenntnisgewinn berücksichtigt, damit nicht lediglich ein bereits zuverlässig berichteter Beschluss doppelt gemeldet wird. Neue Entscheidungen können Vorgangsanalysen und Themenbeiträge aktualisierungsbedürftig machen. Diese Prüfung nutzt das allgemeine Änderungspaket- und Freigabemodell; Kapitel 07 erzeugt keine unabhängige zweite Redaktion.
-
-### 6. Informationen für das öffentliche FIB-Angebot bereitstellen
-
-Öffentliche Sitzungsansichten erschließen Sitzung, TOP, relevante Beschlussfassung und Abstimmungsergebnis sowie Links zum ursprünglichen Vorschlag und den zugehörigen Vorgängen/Themen. Ob zusätzlich eine Meldung sinnvoll ist, entscheidet der allgemeine Meldungsprozess; nicht jeder TOP erzeugt automatisch eine Meldung.
-
-### Fachlicher Detailablauf: Vom Vorschlag zum nachgewiesenen Beschluss
-
-Eine Beschlussvorlage beschreibt zunächst die **beabsichtigte Entscheidung**. FIB behandelt sie als Fundstelle und – sofern relevant – ihre Veröffentlichung als eigenes Ereignis. Die Zuordnung zu einer Sitzung und einem Tagesordnungspunkt macht aus dem Vorschlag noch keinen Beschluss.
-
-| Zeitpunkt | Fachlicher Gegenstand | Was FIB festhalten darf |
-|---|---|---|
-| Vorlage erscheint | Dokument und Veröffentlichungsereignis | vorgeschlagene Maßnahme, Ausgangsfassung, Quellen- und Datumsnachweis |
-| Tagesordnung wird veröffentlicht oder geändert | Sitzung und TOP | vorgesehene Behandlung, Tagesordnungsstand und Veränderung; kein fingiertes Abstimmungsergebnis |
-| Sitzung findet statt | tatsächliche Beratung/Behandlung | nur mit geeigneten Belegen bestätigter Sitzungsverlauf; ohne Nachweis bleibt Ergebnis offen |
-| Bekanntgabe oder Niederschrift | tatsächliche Beschlussfassung | beschlossener Wortlaut, Beschlusspunkte, Abstimmungen und Quelle nur soweit belegt |
-| Berichtigung oder genehmigte Niederschrift | aktualisierter Nachweis | ursprüngliche Aussage, Änderung, Zeitpunkt und Herkunft bleiben nachvollziehbar |
-
-**Mehrere Beschlusspunkte** eines TOPs können unterschiedliche Entscheidungen enthalten. Auch **mehrere Abstimmungen** zu einem Tagesordnungspunkt sind kein Widerspruch, sondern müssen der jeweils betroffenen Fassung oder dem jeweiligen Beschlusspunkt zugeordnet werden. Die ursprünglich vorgesehene Fassung darf dabei nicht durch den letztlich beschlossenen Wortlaut ersetzt werden.
-
-**Niederschrift und Genehmigung:** Eine zunächst vorläufige Niederschrift ist als solcher Quellenstand kenntlich zu machen; ihre spätere Genehmigung oder Berichtigung ist eine weitere, nachvollziehbare Entwicklung. **Externe Presseberichte über die Sitzung**, etwa aus dem Münchner Merkur, werden **nur der Sitzung als Ganzes** zugeordnet und dort als informelle Berichterstattung angezeigt, **nicht einzelnen TOPs oder Beschlusspunkten**. Sie dürfen eine redaktionell geprüfte allgemeine Sitzungsmeldung anregen, **aber weder TOP-Status noch Beschlusswortlaut, Beschlusspunkte oder Abstimmungsergebnisse fachlich konkretisieren oder bestätigen**. Diese TOP-spezifischen Angaben stammen ausschließlich aus dem RIS. Sobald RIS-Nachweise vorliegen, werden sie eigenständig ausgewertet. Eine Differenz zur Presseberichterstattung wird als Quellenunterschied kenntlich, ohne amtliche TOP-Daten aus dem Presseartikel abzuleiten.
-
-**Beispiel:** Beim Grundstückskauf der Gemeinde Feldkirchen enthält die Vorlage einen Beschlussvorschlag. Erst wenn ein geeigneter Nachweis zur Sitzung vorliegt, kann FIB berichten, ob und mit welcher Fassung darüber entschieden wurde. Änderungen des Kaufgegenstands oder der Bedingungen sind als Unterschied zwischen vorgeschlagenem und beschlossenem Stand zu beschreiben.
-
-Diese Erläuterung konkretisiert das bisherige [Sitzungs- und Beschlussmodell](../Sitzungs-und-Beschlussmodell.md). Die dortigen differenzierten Detailregeln zu Status und Verfahrensereignissen bleiben bis zur vollständigen normativen Migration die maßgebliche Bestandsquelle.
-
-## 07.4 Wichtige fachliche Sicherungen
-
-- Bei unsicherer Zuordnung von Niederschrifteninhalten zu TOPs, Vorlagen oder Beschlusspunkten schlägt FIB eine **redaktionelle Prüfung** vor und übernimmt strittige Zuordnungen nicht stillschweigend.
-- **Genehmigung einer Niederschrift** und **öffentliche Verfügbarkeit ihres Dokuments** sind verschiedene Sachverhalte. Eine Sitzung kann fachlich abgeschlossen sein, obwohl eine genehmigte Niederschrift nicht öffentlich als PDF vorliegt.
-- Frühere Fassungen und Belege werden nachvollziehbar erhalten. Ein späterer amtlicher Nachweis kann eine frühere Presseinformation bestätigen, ergänzen oder berichtigen.
-- Beziehungen **Meldung → Ereignis → TOP/Sitzung** werden abgeleitet, nicht als zweite unabhängige Meldungs-TOP-Zuordnung erfasst.
-- Jede öffentliche Datei- oder Bildbereitstellung unterliegt zusätzlich den allgemeinen Rechte- und Freigaberegeln.
-
-### Weitere fachliche Regeln zum Sitzungsverlauf
-
-TOP-Status und Abstimmungsergebnis sind verschieden. FIB unterscheidet angekündigte, vertagte, behandelte und abgesetzte Tagesordnungspunkte. Zwischen TOP und Ereignis sind mehrere begründete Beziehungen zulässig.
-
-Aus einer veröffentlichten Vorlage entstehen noch keine bestätigten Beschlusspunkte oder Abstimmungen. **Externe Presseberichte dürfen keinen vorläufigen TOP-Beschlussstand erzeugen.** Sie erscheinen ausschließlich als informelle Berichterstattung zur Sitzung insgesamt. Die fachliche Konkretisierung eines TOPs und die Erfassung von Beschlusswortlaut, Beschlusspunkten und Abstimmungen erfolgen nur mit RIS-Nachweisen, auch wenn diese erst später bereitgestellt werden. Bei mehreren Abstimmungen bleiben Beschlusspunkt, seine unterschiedlichen Fassungen und Abstimmungsergebnisse nachvollziehbar. Der Ausgangsvorschlag bleibt zum Vergleich erhalten.
-
-Zweifelhafte Zuordnungen zu TOP, Ereignis, Abstimmung oder Beschlusstext müssen redaktionell geprüft werden und werden nicht automatisch fachlich wirksam.
-
-Für einen fachlich abgeschlossenen Sitzungsstand ist die öffentlich belegte Genehmigung der Niederschrift maßgeblich. Das ist von der öffentlichen Verfügbarkeit des Dokuments zu unterscheiden. Quelle: [Sitzungs- und Beschlussmodell](../Sitzungs-und-Beschlussmodell.md), Abschnitte 4 bis 8.
-
-### Wie Sitzungen, Meldungen, Vorgänge und Themen zusammenhängen
-
-Die öffentliche Sitzungsansicht wird **aus den bereits bestätigten Fachbeziehungen erschlossen**. Ein Tagesordnungspunkt gehört zu einer Sitzung und kann mit einem oder mehreren Ereignissen verbunden sein. Über diese Ereignisse lassen sich zugehörige Meldungen, Vorgänge und Themen finden. Die Redaktion muss diese Beziehungen nicht ein zweites Mal an der Sitzung pflegen.
-
-- **Meldungen:** Der Bezug zur Sitzung oder zu einem TOP entsteht über **Meldung → Ereignis → TOP → Sitzung**; bei sitzungsweiten Ereignissen gegebenenfalls direkt über Ereignis → Sitzung. Es gibt keine zusätzliche verbindliche Zuordnung Meldung–TOP oder Meldung–Sitzung.
-- **Vorgänge und Themen:** Die Verbindung entsteht über **TOP → Ereignis → Vorgang → Thema** beziehungsweise über einen begründeten direkten Ereignis–Thema-Bezug. Beide Navigationsrichtungen müssen möglich bleiben.
-- **Öffentlicher Beschluss:** Im Vordergrund stehen der tatsächlich abgestimmte Wortlaut, das Abstimmungsergebnis, Sitzung und TOP. Der ursprüngliche Beschlussvorschlag bleibt als Vergleich nachvollziehbar zugänglich, sofern vorhanden.
-- **Herkunft und Verlauf:** Es muss nachvollziehbar sein, welches Ereignis welchem TOP zugeordnet wurde, welche Beschlussfassungen tatsächlich abgestimmt wurden und welche späteren Ereignisse denselben Sachverhalt betreffen. Presseberichte zur Sitzung sind davon getrennt als **sitzungsbezogene externe Fundstellen** sichtbar und erhalten keine TOP-Zuordnung.
-
-**Beispiel:** Ein Besucher öffnet einen Tagesordnungspunkt zum Parkraumkonzept. Er kann den dokumentierten Beschluss mit Abstimmung sehen, den ursprünglichen Vorschlag vergleichen und zum zugehörigen Vorgang sowie dessen Meldungen wechseln. Eine Meldung erhält dadurch **keine zweite unabhängige Zuordnung** zur Sitzung.
-
-Diese Regeln stammen aus dem [Sitzungs- und Beschlussmodell](../Sitzungs-und-Beschlussmodell.md), §§9–11. Die Gestaltung der Verlinkungen und der Beschlussansicht wird erst in der nächsten UI-Phase entschieden.
-
-## 07.5 Abnahmeszenarien
-
-1. RIS veröffentlicht TOP mit Vorlage: FIB zeigt den vorgesehenen Beratungspunkt, **noch keinen Beschluss**.
-2. Sitzung behandelt TOP nicht: keine falsche Beschlussmeldung.
-3. Niederschrift enthält vom Vorschlag abweichende beschlossene Fassung: FIB zeigt Originalvorschlag, beschlossene Fassung und Abstimmung getrennt.
-4. Niederschrift ist noch nicht verfügbar: FIB kennzeichnet Unsicherheit bzw. den vorläufigen Informationsstand, ohne die tatsächliche Entscheidung zu erfinden.
-5. Ein TOP betrifft Parkraumkonzept und Mobilitätsthema: FIB verknüpft die Information über das Ereignis mit Vorgang und Thema.
-6. Späterer RIS-Nachweis korrigiert einen früheren Pressebericht: Änderungsvorschlag mit prüfbaren Belegen und ggf. Korrekturaufgabe für öffentliche Inhalte.
-7. RIS veröffentlicht eine Vorlage **ohne TOP**: keine systematische Erfassung als Beschlussvorlage im Sitzungsbestand; keine erfundene Sitzung oder Beschlussfassung.
-8. Ein Merkur-Bericht erscheint unmittelbar nach der Sitzung: FIB ordnet ihn **nur der Sitzung** zu, zeigt ihn als externe Berichterstattung und prüft eine allgemeine Sitzungsmeldung; **keine** automatische TOP-Zuordnung, kein vorläufiger Beschlusspunkt und kein Abstimmungsergebnis aus dem Bericht.
-9. Eine TOP-bezogene Vorlage ist im Originalbrowser nicht lesbar: FIB hält den erschlossenen vollständigen Text mit URL und Provenienz vor; öffentliche Volltextanzeige erfolgt nur bei geklärter Befugnis. Gutachten Dritter werden nicht automatisch gespiegelt.
-10. Veröffentlichung einer Niederschrift zu bereits gemeldetem Beschluss: neues Ereignis und erneute Prüfung auf neuen Informationswert, aber keine doppelte Meldung ohne sachliche neue Aussage.
-
-## 07.6 Übergabe und offene Migration
-
-- **Kapitel 03:** Wann und wie RIS beobachtet wird; Fundstellen- und Änderungserkennung, Quellenlücken und Rechercheausführung.
-- **Kapitel 07 (hier):** Sitzungs-, TOP-, Vorlagen-, Niederschriften-, Beschlusspunkt- und Abstimmungslogik.
-- **Kapitel 04/05/06:** Ereignisse, Vorgänge und Themen als fachliche Folgewirkungen.
-- **Kapitel 08/10:** Redaktionelle Entscheidungen, Rechte und Qualitätssicherung.
-- **Kapitel 09:** Öffentliche Sitzungsnavigation und Darstellungsregeln.
-
-**Stand des fachlichen Quellabgleichs:** Die wesentlichen Regeln aus `docs/Sitzungs-und-Beschlussmodell.md` §§3–11 sind in diesem Prozesskapitel erklärt: Ereignisidentität, TOP-Zustände und -Beziehungen, Beschlusspunkte/Fassungen/Abstimmungen, Unsicherheitsprüfung, Niederschriftgenehmigung sowie öffentliche Navigation und Vergleich mit dem Ursprungsvorschlag. **Noch nicht abgeschlossen** ist der nachweisbare Einzelabgleich jeder Detailaussage, ihrer Quellenverweise und möglicher Sonderfälle; bis zur normativen Migration bleibt die Ursprungsquelle erhalten. Die technische RIS-Anbindung (Abfragefrequenz, Änderungsabgleich, Fehlerbehandlung und Aktualitätsnachweis) folgt in einer späteren Implementierungsphase.
-
-## Technischer Integrationsnachweis – 31.10.2026
-
-[U4 RIS-Persistenz](../operations/u4-ris-persistence.md) dokumentiert die technische
-Abbildung der bestehenden Regeln auf Versionen, Belege und redaktionelle Aktionen.
-Der [Abnahmebericht](../operations/u4-reference-sources-acceptance.md) trennt
-isoliert geprüfte Funktionen, offene Technik, UI-Abnahme und spätere Betriebsqualität.
-Die Umsetzung begründet keine automatische Gleichsetzung von Vorlage und Beschluss
-und keine allgemeine Pflichtprüfung jeder Fundstelle. Die fachlichen Regeln bleiben
-unverändert; produktive Bereitstellung ist nicht Bestandteil dieses Nachweises.
-
-Der [redaktionelle Bediennachweis](../operations/u4-editorial-ui-acceptance.md) ergänzt
-die regulären Fundstellen-/Sitzungsansichten und ausdrückliche Zuordnung zu bestehenden
-Ereignissen, Vorgängen und Themen. Technische Browserprüfung, fachliche Nutzerabnahme
-und Produktivfreigabe bleiben getrennt; der Fachregelstand wird nicht geändert.
-
-Der [integrierte Prüfstand zu #352](../operations/u4-integrated-acceptance.md) verbindet
-die Gesamt-App mit echtem Login/MFA, Deno-Handlern und isoliertem PostgreSQL. Er benennt
-kontrollierte externe Testantworten und synthetische Genehmigungsfälle ausdrücklich;
-sein CI-Ergebnis ist kein Nachweis der Vollständigkeit der realen RIS-Veröffentlichungen.
-
-
-## Präzisierung aus Auftrag #377 – 02.11.2026
-
-Original-PDF und extrahierter Text gehören zur selben Dokumentfassung. Beide werden
-nur bei bestätigter kommunaler Urheberschaft oder anderweitigem dokumentiertem
-Speicherrecht dauerhaft gespeichert; das gilt auch für ältere Fassungen. RIS-Herkunft
-allein genügt nicht. Ungeklärte oder fremde Anlagen behalten Metadaten und Originallink.
-Der technische Vertrag steht in ADR-012; die Speicherung ist keine öffentliche
-Veröffentlichungsfreigabe. Jedes importierte Dokument erhält automatisch eine
-Fundstelle, kein automatisches Ereignis und keine Meldung.
-
-„Lokale Bezüge“ verbindet TOP und externe Ereignisse ohne Pflichtbegründung oder
-Pflichttyp. „Ereignisbezug“ verbindet unmittelbar Dokument-Fundstelle und Ereignis
-als n:m-Beziehung. Neue Ereignisse entstehen ausschließlich nach bewusster
-redaktioneller Erfassung. Das Entfernen einer Zuordnung löscht kein Ereignis.
+Frühere technische Berichte aus Oktober und Anfang November dokumentieren damalige Prüfstände. Für die hier ersetzten fachlichen Regeln und die aktuelle RIS-Bedienung gilt dieses Kapitel. Änderungen gegenüber diesen Vorständen sind im [Änderungsnachweis zu #427](../tests/ris-fachabnahme-2026-11-11.md) zugeordnet.

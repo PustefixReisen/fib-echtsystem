@@ -76,7 +76,7 @@ Legende:
 | `register_finding` | S1/S2 | – | ja | ja | ja, soweit als Fund/Vorschlag | öffentliche Bereitstellung davon getrennt |
 | `manage_finding_access` | S2/S3 | – | ja | ja | – | erstmalige öffentliche Bereitstellung = S3 |
 | `propose_event` | S1 | – | ja | ja | ja | keine Ereignisbestätigung |
-| `confirm_event` | S2 | – | ja | ja | – | bestätigtes Ereignis nur durch Mensch |
+| `confirm_event` | S2 | – | ja | ja | – | redaktionell bearbeitbares Ereignis. TOP-Ereignisse entstehen automatisch und sind geschützt |
 | `edit_message_draft` | S1 | – | ja | ja | ja | Textentwurf ohne verdeckte Änderung des Fachstands |
 | `approve_message` | S2 | – | ja | ja | – | redaktionelle Freigabe, noch keine Veröffentlichung |
 | `publish_message` | S3 | – | ja | ja | – | immer unmittelbare explizite Bestätigung |
@@ -90,7 +90,7 @@ Legende:
 | `review_reference_change` | S2 | – | ja | ja | – | Bestätigung/Zurücknahme nur Mensch |
 | `propose_reference_measure` | S1 | – | ja | ja | ja | normative Aktivierung getrennt |
 | `manage_reference_measure_status` | S2/S3 | – | eingeschränkt | ja | – | besonders geschützte normative Aktivierung mit Adminvorbehalt |
-| `manage_meeting_context` | S1/S2 | – | ja | ja | nur S1 bei unsicherer Ableitung | unsichere Beschluss-/TOP-Zuordnung benötigt Redaktionsprüfung |
+| RIS-Sitzung, TOP und TOP-Ereignis lesen | S0 | nur öffentlich freigegebene Ausgabe | ja | ja | im zugelassenen Kontext | Importdaten und automatische Fundstellenzuordnungen sind redaktionell unveränderlich |
 | `manage_image_use` | S1/S2/S3 | – | ja | ja | nur S1 | erste öffentliche Bildverwendung = S3; Rechte müssen positiv geklärt sein |
 | `manage_deep_dive_content` | S1/S2/S3 | öffentliche Ausgabe nur nach Release | ja | ja | nur S1 | Veröffentlichung quellengebundener Antwort = S3 |
 | `manage_ai_task` | S1/S2 | – | ja, im fachlichen Rahmen | ja | – | systemweite Routing-/Grenzwerte mit Adminvorbehalt |
@@ -170,6 +170,10 @@ Adminvorbehalt besteht mindestens für:
 - Aktivierung besonders geschützter Fachregeln/Referenzmaßstäbe,
 - Änderung systemweiter KI-Routing-Grenzen, Providerfreigaben oder Schutzklassenregeln,
 - technische Betriebsaktionen mit möglicher Umgehung regulärer Fachrechte.
+
+## RIS-Rechte seit 11.11.2026
+
+Die frühere manuelle Verwaltung des Sitzungskontexts ist durch die automatische Übernahme aus [Fachhandbuch Kapitel 07](fachhandbuch/07-Sitzungen-und-Beschluesse-Entwurf-2026-10-26.md) ersetzt. Auch Administratoren dürfen importierte RIS-Daten, TOP-Ereignisse und deren Dokumentzuordnungen nicht redaktionell ändern. Technische Import-/Wiederherstellungsläufe unterliegen ihren bestehenden Betriebsberechtigungen. Die Analyse-/Beitragsrechte für Meldungen, Vorgänge und Themen verleihen kein RIS-Schreibrecht. Eine manuelle RIS-Analysefreigabe ist nicht vorgesehen.
 
 ## 9. Rollenentzug und Sitzungen
 

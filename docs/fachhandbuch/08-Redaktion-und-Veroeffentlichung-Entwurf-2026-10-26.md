@@ -1,9 +1,16 @@
-# 08 – Redaktion und Veröffentlichung – Integrationsentwurf
+# 08 – Redaktion und Veröffentlichung
 
-Stand: 26.10.2026. Status: Entwurf, keine Abnahme. Bisherige Primärregeln behalten ihre Gültigkeit.
+**RIS-Abgleich 11.11.2026.** Die einschlägigen Übergänge sind an [Kapitel 07](07-Sitzungen-und-Beschluesse-Entwurf-2026-10-26.md) angepasst. Die RIS-Fachabnahme bestätigt nicht die vollständige technische Umsetzung dieses Kapitels.
+
+**Fachstand.** Handbuchabnahme vom 29.10.2026. RIS-Fortschreibung vom 11.11.2026 gemäß [Kapitel 07](07-Sitzungen-und-Beschluesse-Entwurf-2026-10-26.md). Die technische Umsetzung und die öffentliche Bereitstellung der weiteren Fachprozesse sind gesondert nachzuweisen.
 
 ## 08.1 Ziel und Verantwortung
 FIB übernimmt Recherche, Auswertung und Vorbereitung. Die Redaktion trifft verbindliche fachliche Entscheidungen und veröffentlicht. KI darf keine Veröffentlichung selbst freigeben. Redakteure dürfen nach bestehendem Rollenmodell freigeben und publizieren; die administrative Rolle behält Sonderrechte. Federführung und temporäre Bearbeitungssperren sind zu unterscheiden.
+
+
+### RIS im redaktionellen Arbeitsalltag
+
+Die Redaktion liest die importierten RIS-Daten und ihre geschützten TOP-Ereignisse nach [Kapitel 07](07-Sitzungen-und-Beschluesse-Entwurf-2026-10-26.md). Sie bearbeitet daraus entstehende Meldungen, Vorgänge, Themen und Beiträge in deren eigenen Prozessen. Die Übernahme verlangt weder eine manuelle Zuordnung weiterer Ereignisse zum TOP noch eine Freigabe importierter Beschlussergebnisse. Auch über die allgemeine Ereignisverwaltung bleiben TOP-Ereignisse und ihre Fundstellenzuordnungen unveränderlich. Eine manuelle RIS-Analysefreigabe ist nicht geplant. Die automatische strukturierte Inhaltsanalyse selbst ist als Paket B noch nicht implementiert.
 
 ## 08.2 Aufgabensteuerung
 Ein gemeinsames Dashboard zeigt nur offene menschliche Entscheidungen, nicht jede KI-Aktivität. Die Aufgabe benennt Anlass, betroffenen Vorgang/Thema/Meldung, Dringlichkeit und direkten Bearbeitungszugang. Berechtigte Redakteure können Aufgaben selbst übernehmen, koordinierende Personen zuweisen. Aufgaben bei abgeschlossenen Vorgängen oder archivierten Themen bleiben sichtbar, wenn veröffentlichte Inhalte dringend korrigiert werden müssen.

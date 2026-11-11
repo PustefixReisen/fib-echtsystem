@@ -8,6 +8,9 @@
 
 > **Geltung:** Dieses Kapitel ist die fachliche Primärquelle für Themen und Themenanalysen. Historische Quellen dienen nur noch dem Nachweis der Herkunft und früherer Fassungen. Neue technische Zustände, Datenbankobjekte oder Rechte entstehen weiterhin nicht ohne die dafür vorgesehenen technischen und fachlichen Prüfungen.
 
+
+**RIS-Anschluss seit 11.11.2026.** Die amtlichen Daten, TOP-Ereignisse und ihre Fundstellenzuordnungen sind gemäß [Kapitel 07](07-Sitzungen-und-Beschluesse-Entwurf-2026-10-26.md) geschützt. Eine redaktionelle Themenentscheidung findet am Thema statt und ändert den RIS-Import nicht. Die automatische strukturierte RIS-Inhaltsanalyse und die daraus folgende Themenfortschreibung sind Teil des noch nicht implementierten Pakets B. Die allgemeinen Themenregeln dieses Kapitels sind kein Umsetzungsnachweis dafür.
+
 ## 06.1 Aufgabe und Grenzen
 
 Ein **Thema** ist eine bewusst redaktionell festgelegte, übergreifende Fragestellung mit zusätzlichem Erklärungsgewinn. Es verbindet relevante Vorgänge und ergänzende Ereignisse unter einer fachlichen Leitfrage. Ein Thema ist weder die bloße Ansammlung von Meldungen noch einfach ein großer Vorgang. Es erschließt Zusammenhänge, Ursachen, Wirkungen, Unsicherheiten und kommunale Bedeutung für die Bevölkerung.
@@ -662,22 +665,6 @@ Diese Regelgruppe präzisiert den zugehörigen fachlichen Arbeitsablauf; verbind
 </details>
 
 
-## Technischer Nachweis der Referenzquellen (31.10.2026)
+## Nachweise und RIS-Fachabnahme
 
-Der aktuelle [Abnahmebericht](../operations/u4-reference-sources-acceptance.md)
-unterscheidet getestete Teilfunktionen, technische Lücken, noch ausstehende
-UI-Abnahme und spätere iterative Qualitätsprüfung. Die manuelle Übernahme einer
-Quellenbeobachtung ist ein zusätzlicher expliziter Serviceweg; sie erklärt keine
-allgemeine menschliche Pflichtprüfung aller Fundstellen. Die fachlichen Regeln
-dieses Kapitels werden dadurch nicht eingeschränkt. Eine getestete Fundstellen-
-oder Ereignisanlage bestätigt keine automatische Vorgangs-/Themenzuordnung.
-
-Der ergänzende [RIS-Integrationsnachweis](../operations/u4-ris-persistence.md)
-belegt nun auch die dauerhafte RIS-Struktur und ausdrücklich bestätigte Beziehungen
-zu bestehenden Vorgängen/Themen im Backend. KI-Produzenten, Oberflächenabnahme und
-Produktivfreigabe bleiben davon getrennt. Dies ändert keine Fachregel des Kapitels.
-
-Der [redaktionelle Bediennachweis](../operations/u4-editorial-ui-acceptance.md) ergänzt
-die regulären Fundstellen-/Sitzungsansichten und ausdrückliche Zuordnung zu bestehenden
-Ereignissen, Vorgängen und Themen. Technische Browserprüfung, fachliche Nutzerabnahme
-und Produktivfreigabe bleiben getrennt; der Fachregelstand wird nicht geändert.
+Die [Referenzquellenprüfung vom 31.10.2026](../operations/u4-reference-sources-acceptance.md), die [damalige technische RIS-Ableitung](../operations/u4-ris-persistence.md) und der [frühere Bediennachweis](../operations/u4-editorial-ui-acceptance.md) dokumentieren historische Prüfstände. Frühere redaktionelle RIS-Zuordnungswege sind durch die Fachabnahme vom 11.11.2026 ersetzt. Der aktuelle Umfang steht in [Kapitel 07](07-Sitzungen-und-Beschluesse-Entwurf-2026-10-26.md). Eine automatische strukturierte RIS-Inhaltsanalyse und automatische Vorgangs-/Themenfortschreibung sind damit nicht als umgesetzt nachgewiesen.

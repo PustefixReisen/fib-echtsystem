@@ -1,6 +1,6 @@
-# 01 – Grundlagen, Zielsetzung und Arbeitsweise (Leseentwurf)
+# 01 – Grundlagen, Zielsetzung und Arbeitsweise
 
-**Stand:** 26.10.2026 · **Status:** Lese- und Migrationsentwurf. Die bisherigen fachlichen Primärquellen bleiben bis zum überprüften Regeltransfer verbindlich.
+**Fachstand.** Handbuchabnahme vom 29.10.2026. RIS-Fortschreibung vom 11.11.2026 gemäß [Kapitel 07](07-Sitzungen-und-Beschluesse-Entwurf-2026-10-26.md). Die technische Umsetzung und die öffentliche Bereitstellung der weiteren Fachprozesse sind gesondert nachzuweisen.
 
 ## 01.1 Was ist Feldkirchen im Blick?
 

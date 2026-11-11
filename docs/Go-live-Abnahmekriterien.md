@@ -40,7 +40,7 @@ Pflichtkriterien:
 
 1. Ereignis, Meldung, Vorgang, Thema und Sitzung/TOP werden gemäß Datenmodell getrennt und korrekt verknüpft.
 2. Neue Information wird korrekt als neues Ereignis oder Aktualisierung bestehender Meldung behandelt.
-3. Beschlussvorlage, Beratung und Beschlussereignis werden nicht vermischt.
+3. Der RIS-Import folgt [Kapitel 07](fachhandbuch/07-Sitzungen-und-Beschluesse-Entwurf-2026-10-26.md). Jeder TOP besitzt genau ein geschütztes TOP-Ereignis mit automatisch zugeordneten Dokumentfundstellen. Vorlage und tatsächliches Ergebnis bleiben unterscheidbar, mehrere Abstimmungen quellenbelegt. Die fachliche RIS-Abnahme vom 11.11.2026 ersetzt keine allgemeine Go-live-/Betriebsfreigabe.
 4. `Bedeutung für das Thema` wird nur nach redaktioneller Bestätigung fachlich wirksam.
 5. Perspektiven/Wirkungen und „Unsere Einordnung“ bleiben von Sachinformation unterscheidbar.
 6. Quellen- und Provenienzbezug bleibt für öffentliche Tatsachenbehauptungen nachvollziehbar.

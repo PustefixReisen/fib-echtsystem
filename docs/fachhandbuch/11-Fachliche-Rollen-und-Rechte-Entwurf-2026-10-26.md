@@ -1,6 +1,6 @@
-# 11 – Fachliche Rollen, Rechte und Verantwortung (Leseentwurf)
+# 11 – Fachliche Rollen, Rechte und Verantwortung
 
-**Stand:** 26.10.2026 · **Status:** Migrationsentwurf. `docs/Rollen-Rechte-und-Workflow.md` bleibt bis zur vollständigen Regelübernahme verbindlich. Technische Authentifizierung und konkrete RLS-Policies werden hier nicht neu spezifiziert.
+**Fachstand.** Handbuchabnahme vom 29.10.2026. RIS-Fortschreibung vom 11.11.2026 gemäß [Kapitel 07](07-Sitzungen-und-Beschluesse-Entwurf-2026-10-26.md). Die technische Umsetzung und die öffentliche Bereitstellung der weiteren Fachprozesse sind gesondert nachzuweisen.
 
 ## 11.1 Wozu braucht FIB Rollen und Rechte?
 
@@ -87,11 +87,17 @@ Die Bestandsmatrix erlaubt AI-Tasks im Grundsatz **Einsehen/Vorbereiten**, ohne 
 
 Eine **Federführung** organisiert Verantwortung, ist aber kein exklusives Bearbeitungsrecht. Bearbeitungssperren verhindern konkurrierendes Schreiben; andere berechtigte Redakteure können dann lesen und ggf. eine Übernahme anfragen. Eine Übernahmeanfrage verleiht keine zusätzlichen Rechte und ändert die Federführung nicht automatisch. Die Angabe der letzten Bearbeitung dient ausschließlich der Koordination, nicht der Rechtevergabe.
 
-**Das pessimistische Sperrprinzip gilt für alle gemeinsam bearbeitbaren Fachobjekte**, insbesondere Fundstellen, Ereignisse, Vorgänge, Themen, Analysen, Beiträge, Sitzungen und ihre fachlich bearbeiteten Unterobjekte. Vor der ersten schreibenden Bearbeitung wird die entsprechende exklusive Sperre erworben; andere Berechtigte können lesen, aber nicht gleichzeitig ändern. Sperren werden bei aktiver Bearbeitung erneuert, bei regulärem Abschluss freigegeben und bei ausbleibender Erneuerung nach dokumentierter Regel als verwaist behandelt. Für fachliche Unterobjekte ist im Datenmodell zu bestimmen, ob die Sperre des übergeordneten Fachobjekts mitgilt; konkurrierende Schreibwege dürfen nicht entstehen. Die Karte **„Redaktionelle Koordination“** zeigt getrennt Federführung, aktuellen Sperrinhaber und Bearbeitungszustand. Eine Sperre begründet keine zusätzlichen Fachrechte.
+**Das pessimistische Sperrprinzip gilt für alle gemeinsam bearbeitbaren Fachobjekte**, insbesondere redaktionell bearbeitbare Fundstellen, Ereignisse, Vorgänge, Themen, Analysen und Beiträge. Die importierten RIS-Daten, TOP-Ereignisse und ihre Fundstellenzuordnungen sind davon ausgenommen und bleiben redaktionell unveränderlich. Vor der ersten schreibenden Bearbeitung wird die entsprechende exklusive Sperre erworben; andere Berechtigte können lesen, aber nicht gleichzeitig ändern. Sperren werden bei aktiver Bearbeitung erneuert, bei regulärem Abschluss freigegeben und bei ausbleibender Erneuerung nach dokumentierter Regel als verwaist behandelt. Für fachliche Unterobjekte ist im Datenmodell zu bestimmen, ob die Sperre des übergeordneten Fachobjekts mitgilt; konkurrierende Schreibwege dürfen nicht entstehen. Die Karte **„Redaktionelle Koordination“** zeigt getrennt Federführung, aktuellen Sperrinhaber und Bearbeitungszustand. Eine Sperre begründet keine zusätzlichen Fachrechte.
 
 Admins dürfen verwaiste fremde Sperren unter Auditbedingungen aufheben. Fachlich wirksame Änderungen müssen veraltete Objektstände erkennen und dürfen keinen neueren bestätigten Stand stillschweigend überschreiben.
 
 Eine gemeinsame Aufgabenübersicht zeigt offene **menschliche Entscheidungen**, nicht jede technische KI-Aktivität. Berechtigte Personen können Aufgaben übernehmen; organisatorische Zuweisungen und Priorisierung verändern die fachlichen Grundrechte nicht.
+
+### Geschützter RIS-Bestand
+
+Für alle menschlichen Rollen einschließlich Administratoren gelten die Grenzen aus [Kapitel 07](07-Sitzungen-und-Beschluesse-Entwurf-2026-10-26.md). Lesen und kontrolliertes Auslösen bestehender technischer Importabläufe sind von einer redaktionellen Änderung zu unterscheiden. Ein Admin erhält kein Recht, amtliche TOP-Daten, TOP-Ereignisse oder ihre importgesteuerten Fundstellenzuordnungen zu bearbeiten. Auch die allgemeine Ereignisbestätigung und Bearbeitungssperren eröffnen hierfür keinen Schreibweg.
+
+Die automatische Anlage des TOP-Ereignisses ist ein quellengebundener Importvorgang. Sie verlangt keine menschliche Ereignisbestätigung und keine manuelle RIS-Analysefreigabe. Redaktionelle Entscheidungen über Folgeobjekte und öffentliche Beiträge folgen deren eigenen Regeln. Paket B zur strukturierten Inhaltsanalyse ist noch nicht implementiert.
 
 ## 11.8 Was darf nur ein Administrator?
 

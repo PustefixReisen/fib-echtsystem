@@ -1,10 +1,8 @@
-# 05 – Vorgänge und Vorgangsanalysen (Migrationsentwurf)
+# 05 – Vorgänge und Vorgangsanalysen
 
-| Stand | Status | Grundlage |
-|---|---|---|
-| 26.10.2026 | **Entwurf – keine fachliche Freigabe** | Modellerprobung 25.–26.10.; Datenmodell, Themen- und Vorgangslogik, Persistenzmodell, Fachhandbuch-Entwürfe Kap. 03/04 |
+**RIS-Abgleich 11.11.2026.** Die einschlägigen Übergänge sind an [Kapitel 07](07-Sitzungen-und-Beschluesse-Entwurf-2026-10-26.md) angepasst. Die RIS-Fachabnahme bestätigt nicht die vollständige technische Umsetzung dieses Kapitels.
 
-> **Normativer Hinweis:** Dieses Dokument beschreibt die neu vereinbarten Anforderungen und ihre Anknüpfung an das bestehende Fachmodell. Es ersetzt noch keine bisherigen Primärregeln. Vor einer normativen Übernahme sind Status, Rechte, Kardinalitäten, Datenmodell, Auditierung und Tests konsistent abzugleichen. Keine automatische Einführung neuer Datenbankobjekte.
+**Geltung.** Grundlage ist das am 29.10.2026 abgenommene Fachhandbuch. Die RIS-Schnittstelle folgt der Fachabnahme vom 11.11.2026 in [Kapitel 07](07-Sitzungen-und-Beschluesse-Entwurf-2026-10-26.md). Die allgemeinen Vorgangsanalysen sind dadurch nicht als vollständig umgesetzt bestätigt.
 
 ## 05.1 Aufgabe und Gegenstand
 
@@ -47,15 +45,17 @@ Beispiel: Ein neuer Beschluss klärt die zuvor offene Grundstücksnutzung. FIB p
 
 ### 05.3.3 Durchgängiger Ablauf eines Vorgangs
 
+Die nachfolgenden Analyseabläufe beschreiben das fachliche Zielbild des Vorgangsprozesses. Die abgenommene RIS-Übernahme aus [Kapitel 07](07-Sitzungen-und-Beschluesse-Entwurf-2026-10-26.md) stellt dessen Quellen bereit. Sie bestätigt keine bereits implementierte automatische Vorgangsanalyse.
+
 Der nachfolgende Beispielfall zeigt, wie Ereignisverarbeitung, Analyse und spätere öffentliche Darstellung **zusammenarbeiten, ohne dieselbe redaktionelle Entscheidung mehrfach zu verlangen**. Die Sachverhalte sind illustrative Möglichkeiten, keine Behauptung über einen tatsächlich erfolgten Grundstückskauf.
 
 | Schritt | Beispiel Grundstückskauf | FIB-Ergebnis und redaktionelle Grenze |
 |---|---|---|
-| **Anlass** | Eine öffentlich zugängliche Vorlage kündigt einen möglichen Grundstückskauf an. | Die Vorlage ist Fundstelle; ihre Veröffentlichung kann ein Ereignis sein. Der angekündigte Kauf ist noch kein nachgewiesener Beschluss. |
+| **Anlass** | Eine öffentlich zugängliche Vorlage kündigt einen möglichen Grundstückskauf an. | Die TOP-bezogene Vorlage ist automatisch zugeordnete Fundstelle des einen TOP-Ereignisses. Der angekündigte Kauf ist noch kein nachgewiesener Beschluss. |
 | **Vorgang erkennen** | Der Sachverhalt wird über längere Zeit relevant sein. | FIB kann den Vorgang vorläufig anlegen und Fundstellen/Ereignisse zuordnen, ohne obligatorische Einzelbestätigung. |
 | **Erstanalyse** | Kaufzweck, Kosten, Planungsstand, Zuständigkeit und offene Fragen werden aus bekannten Quellen zusammengestellt. | FIB erstellt einen vorläufigen Analyseentwurf und kennzeichnet unbestätigte Angaben. Keine automatische neue Erkenntnisrecherche. |
 | **Fragen klären** | Der Finanzierungsweg ist unbekannt. | FIB prüft vorhandene Informationen und kann Teilfragen sowie einen gezielten Rechercheauftrag vorschlagen. Ausführung über den genehmigten Rahmen hinaus braucht redaktionelle Entscheidung. |
-| **Neue Entwicklung** | Später erscheint eine Niederschrift mit dem tatsächlichen Beschluss. | Neues oder bestätigtes Ereignis und Auswirkungsprüfung. Vorlage, Beschlussvorschlag und Beschluss werden nicht gleichgesetzt. |
+| **Neue Entwicklung** | Später erscheint eine Niederschrift mit dem tatsächlichen Beschluss. | Die Niederschrift ergänzt als Fundstelle das bestehende TOP-Ereignis. Die allgemeine Vorgangsanalyse kann den neuen Quellenstand nutzen. Automatische strukturierte RIS-Auswertung und Analysefortschreibung sind als Paket B noch nicht implementiert. |
 | **Analyse aktualisieren** | Einzelne frühere Aussagen sind überholt; Auswirkungen müssen ergänzt werden. | FIB bietet belegte Änderungen als einzeln entscheidbare Vorschläge an. Bestätigte Erkenntnisse bleiben vor stiller Änderung geschützt. |
 | **Öffentlicher Beitrag** | Bürger sollen verstehen, was beschlossen wurde und welche Folgen denkbar sind. | Eigener Vorgangsbeitrag aus der fachlich geprüften Analyse, anschließend fassungsbezogene Freigabe und **gesonderte** Veröffentlichung. |
 | **Verlauf und Folgefragen** | Eine spätere Nutzungsentscheidung oder Kostenentwicklung tritt ein. | Meldung zum neuen Ereignis ist optional; Vorgangsverlauf und freigegebener Beitrag werden bei Bedarf aktualisiert, ohne frühere Fassungen zu überschreiben. |

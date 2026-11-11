@@ -121,13 +121,9 @@ Ein neuer Referenzmaßstab wird nur vorgeschlagen, wenn er gegenüber dem besteh
 
 ### 5.5 Sitzung und Entscheidungskontext
 
-| Funktionsfamilie | Fachliche Kernaktion |
-|---|---|
-| `manage_meeting_context` | Sitzung, TOP und die dazugehörigen fachlichen Verfahrens-/Entscheidungszusammenhänge entsprechend dem Sitzungs- und Beschlussmodell pflegen |
+Die frühere redaktionelle Funktion `manage_meeting_context` ist fachlich durch den quellengebundenen RIS-Import und die lesende Sitzungsansicht ersetzt. Der abgenommene Umfang steht in [Kapitel 07](fachhandbuch/07-Sitzungen-und-Beschluesse-Entwurf-2026-10-26.md). Je TOP entstehen genau ein geschütztes Ereignis und automatische Fundstellenzuordnungen. Der Import übernimmt belegte Status und Abstimmungen. Redaktionelle CRUD-Funktionen für Sitzung, TOP oder Beschlussfassungen sind nicht vorgesehen.
 
-Die Funktion bildet einen fachlichen Aggregatbereich. Sitzung, TOP, Beschlusspunkt, Fassung und Abstimmung müssen deshalb nicht vorsorglich jeweils eigene CRUD-Funktionsfamilien erhalten. Unsichere Zuordnungen oder semantische Ableitungen werden als Vorschlag behandelt und benötigen die im Sitzungsmodell vorgesehene redaktionelle Prüfung.
-
-Sitzungs- und TOP-Bezüge von Meldungen werden nicht als parallele autoritative Beziehungen gepflegt, sondern aus `Meldung → Ereignis → TOP/Sitzung` abgeleitet.
+Bezüge öffentlicher Meldungen werden über Meldung → TOP-Ereignis → TOP → Sitzung abgeleitet. Die strukturierte Inhaltsanalyse gehört zum künftigen Paket B und ist noch nicht implementiert. Die allgemeinen Funktionen für Meldungen, Vorgänge, Themen und deren Freigaben bleiben eigene Prozesse.
 
 ### 5.6 Bilder
 
@@ -234,7 +230,7 @@ Damit bleibt der redaktionelle Funktionskatalog schlank, ohne eine Hintertür f�
 
 Die drei beim ersten Funktionsaudit gefundenen Modelllücken sind fachlich geschlossen:
 
-1. **Sitzung/TOP:** `docs/Sitzungs-und-Beschlussmodell.md` v1.1 ist mit dem Grundsatz der Ableitung über das Ereignis konsolidiert; direkte parallele `Meldung ↔ Sitzung/TOP`-Beziehungen entfallen.
+1. **Sitzung/TOP.** Für den aktuellen Stand gilt die Fachabnahme vom 11.11.2026 in [Kapitel 07](fachhandbuch/07-Sitzungen-und-Beschluesse-Entwurf-2026-10-26.md). Das frühere Teilmodell dient als Weiterleitung.
 2. **Beobachtungsauftrag/Recherchelauf:** `docs/Beobachtungs-und-Recherchemodell.md` definiert Primärbezug, Lebenszyklus, Recherchelauf-Provenienz und die Abgrenzung zu AI Tasks.
 3. **„Mehr wissen?“:** `docs/Mehr-wissen-Modell.md` definiert Vertiefungsfrage, Vertiefungsantwort, Quellenbindung, Aktualität, Historie und Freigabe.
 

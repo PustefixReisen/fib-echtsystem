@@ -38,7 +38,7 @@ Die Informationsgewinnung nutzt **zwei unterschiedliche, sich ergänzende Betrie
 
 **A. Definierte Quellen – lückenarme Bestands- und Änderungsbeobachtung.** Für die festgelegten Erfassungsbereiche von `feldkirchen.de`, RIS Feldkirchen, Münchner Merkur, Süddeutscher Zeitung sowie die weiteren festgelegten Pflichtquellen (insbesondere tz und Hallo München online) soll FIB alle neuen Veröffentlichungen und nachträglich bekannt werdenden Einträge erkennen. Die technische Erfassung darf **nicht** durch vorgeschaltete KI-Relevanzfilter eingeschränkt werden. Die KI prüft anschließend bei allgemeinen Fundstellen deren Relevanz, erkennt örtliche/funktionale Bezüge, verknüpft Ereignisse und bewertet relevante Änderungen. Zusätzlich prüft FIB ältere bekannte Fundstellen nach einer dokumentierten, quellen- und objektabhängigen Wiedervorlage auf Änderungen; unveränderte Inhalte benötigen keine erneute KI-Auswertung. Keine starre Sechs-Stunden-Rückblicksgrenze: Nach Störungen werden alle noch nicht erfolgreich erfassten Zeiträume aufgeholt, soweit der jeweilige Zugang dies ermöglicht. Laufstatus, Erfassungslücken und technisch nicht zugängliche Bereiche werden ausgewiesen; **absolute Vollständigkeit ist keine unbelegte Betriebszusage**.
 
-**RIS-Sonderregel:** Alle öffentlich zugänglichen Objekte der Klassen **Sitzung, Tagesordnungspunkt, Beschlussvorlage, Beschluss, Niederschrift und Anlage** sind unabhängig von einer allgemeinen Relevanzschwelle zu erfassen und logisch zu verknüpfen. Zusätzlich müssen neu bereitgestellte oder geänderte Dokumente, Freigaben und Fassungen erkannt werden. Eine Beschlussvorlage ist kein Beschluss; Abstimmungsergebnisse werden nur anhand geeigneter RIS-Nachweise festgestellt. KI unterstützt die inhaltliche Erschließung, entscheidet aber **nicht** über die Erfassung dieser RIS-Objekte.
+**RIS-Sonderregel:** Alle öffentlich zugänglichen Objekte der Klassen **Sitzung, Tagesordnungspunkt, Beschlussvorlage, Beschluss, Niederschrift und Anlage** sind unabhängig von einer allgemeinen Relevanzschwelle zu erfassen und logisch zu verknüpfen. Zusätzlich müssen neu bereitgestellte oder geänderte Dokumente, Freigaben und Fassungen erkannt werden. Eine Beschlussvorlage ist kein Beschluss; Abstimmungsergebnisse werden nur anhand geeigneter RIS-Nachweise festgestellt. Die Erfassung ist unabhängig von einer KI-Relevanzbewertung. Die abgenommene automatische Übernahme und ihre geschützten TOP-Ereignisse sind in [Kapitel 07](07-Sitzungen-und-Beschluesse-Entwurf-2026-10-26.md) beschrieben. Die strukturierte Inhaltsanalyse ist als Paket B noch nicht implementiert.
 
 **B. Offene Suche – kombinierte, zunächst modellunabhängige Strategie.** (1) systematische klassische Suche entlang des dynamischen Recherchehorizonts, (2) standardmäßige KI-gestützte Erweiterung der Suchrichtungen um Quellen, Nachbarorte, Infrastruktur und nachvollziehbare funktionale Beziehungen, (3) **bedarfsweise** mehrstufige KI-Nachrecherche bei erkennbaren Hinweisen, Lücken oder ungelösten Fragen. Die bisherige praktische Untersuchung stützt die Sinnhaftigkeit zusätzlicher thematisch-räumlicher Suchrichtungen, **belegt aber keine quantitative Überlegenheit einer Variante**. Die Strategie gilt als fachlicher Umsetzungsauftrag, nicht als empirisch bewiesene kostenoptimale Lösung.
 
@@ -194,10 +194,11 @@ Neue Erkenntnisse werden auch auf öffentliche Auswirkungen geprüft. Eine wesen
 
 FIB beobachtet das Feldkirchner Ratsinformationssystem **laufend über dieselbe Recherche- und Ausführungsinfrastruktur wie andere Quellen**. Es erkennt neue und geänderte Sitzungstermine, Tagesordnungen und TOPs, Beschlussvorlagen und Anlagen sowie später verfügbare Niederschriften oder berichtete Beschlussergebnisse. Es vergleicht erkannte Angaben mit dem bisherigen Stand und erfasst die herangezogenen Dokumente bzw. Webseiten als nachvollziehbare Fundstellen.
 
-Die Recherche **liefert die Informationen und Veränderungssignale**. Die fachlich eigenständige Aufbereitung von Sitzungen, TOPs, Behandlung, Beschlusspunkten, beschlossenen Fassungen und Abstimmungen erfolgt in **Kapitel 07 – Sitzungen und Beschlüsse**, nicht als paralleles Recherchesystem. Fundstellen und strukturierte Sitzungsinformationen bleiben dabei logisch getrennt, aber nachvollziehbar verknüpft.
+Die Recherche liefert Quellenstände und Veränderungssignale an die automatische Verarbeitung in [Kapitel 07](07-Sitzungen-und-Beschluesse-Entwurf-2026-10-26.md). Diese erzeugt je TOP genau ein geschütztes Ereignis und die automatischen Dokumentzuordnungen. Auch spätere Niederschriften und Abstimmungen beziehen sich auf denselben TOP. Eine redaktionelle RIS-Nachbearbeitung ist ausgeschlossen.
 
-Eine Tagesordnung belegt, was **vorgesehen** ist; erst geeignete spätere Quellen belegen, was tatsächlich behandelt oder beschlossen wurde. FIB ordnet externe Presseberichte über Gemeinderatssitzungen **ausschließlich der jeweiligen Sitzung als Ganzes** zu; sie erscheinen dort als informelle Berichterstattung. **TOP-bezogene Konkretisierungen einschließlich Beschlusspunkt, geänderter Beschlussfassung und Abstimmungsergebnis dürfen nur aus dem RIS übernommen werden.** Eine Pressefundstelle erzeugt deshalb weder einen vorläufigen TOP-Beschluss noch eine TOP-Zuordnung, kann aber die Prüfung einer allgemeinen Sitzungsmeldung anregen. Der konkrete Abfrageplan, Änderungsabgleich und Umgang mit Ausfällen sind bei der technischen Umsetzung zu prüfen.
+Eine Tagesordnung belegt die vorgesehene Behandlung. Tatsächliche Ergebnisse werden nur aus amtlichen RIS-Nachweisen übernommen. Externe Presseberichte bleiben im allgemeinen Recherche- und Redaktionsbestand. Sie werden weder den TOPs noch den geschützten TOP-Ereignissen als zusätzliche Belege zugeordnet. Die frühere eigene Zuordnung informeller Berichterstattung an die Sitzung ist kein Arbeitsablauf der abgenommenen RIS-Ansicht.
 
+Die automatische strukturierte Inhaltsanalyse und die daraus folgende Fortschreibung redaktioneller Objekte gehören zum künftigen Paket B. Eine manuelle RIS-Analysefreigabe ist nicht geplant.
 
 ### Redaktioneller Rechercheauftrag ohne vorhandenes Fachobjekt
 
@@ -266,7 +267,7 @@ Grundlage: **FIB-RECH-QUELLE-010** und **FIB-RECH-RUECKBLICK-001** im bisherigen
 
 #### Fundstellen: Identität, Fassungen und Prüfstatus
 
-Neue Fundstellen bleiben als Recherchekandidaten erhalten; sie sind nicht schon bestätigte Ereignisse. Eine Fundstelle darf mehrere Sachverhalte betreffen. Die bestätigte Zuordnung zu einem Ereignis benötigt eine nachvollziehbare Begründung ihres Informationsbeitrags. Die KI kann sie vorschlagen, die Redaktion entscheidet.
+Der folgende allgemeine Sichtungsprozess beschreibt redaktionell bearbeitbare Fundstellen. Für importierte RIS-Dokumente und ihre automatisch geschützten Beziehungen gilt [Kapitel 07](07-Sitzungen-und-Beschluesse-Entwurf-2026-10-26.md). Neue allgemeine Fundstellen bleiben als Recherchekandidaten erhalten und sind nicht schon bestätigte Ereignisse. Eine Fundstelle darf mehrere Sachverhalte betreffen. Die bestätigte Zuordnung zu einem Ereignis benötigt eine nachvollziehbare Begründung ihres Informationsbeitrags. Die KI kann sie vorschlagen, die Redaktion entscheidet.
 
 Ein unveränderter Wiederfund verwendet dieselbe Fundstelle. Fachlich relevante Änderungen, etwa bei Kosten, Planungs- oder Beschlussinhalten, erzeugen eine neue Fassung unter derselben Identität. Bloße Layout- oder Tippfehlerkorrekturen benötigen nicht zwingend eine neue Fassung; Zweifelsfälle werden der Redaktion mit konkretem Vergleich vorgelegt. Eine neue Fundstellenfassung erzeugt nicht automatisch ein Ereignis oder eine Veröffentlichung.
 
@@ -278,7 +279,7 @@ Grundlage: **FIB-RECH-FUND-001 bis -007** im bisherigen Kapitel 03. Die Pflichtp
 
 #### Pflichtquellen, Dateien und Überwachungsqualität
 
-Alle drei Quellenzugangswege speisen denselben Rechercheprozess; keiner führt unmittelbar zu fachlicher Bestätigung oder Veröffentlichung. Bekannte Pflichtquellen, insbesondere Gemeinde- und RIS-Einstiege, werden **direkt und unabhängig von Suchmaschinen** überprüft. Das umfasst neue Unterseiten, freigegebene Dokumente außerhalb von Tagesordnungen und relevante Dateiänderungen bei gleicher URL. **Beschlussvorlagen werden für die systematische FIB-Sitzungsverarbeitung nur erfasst, wenn sie einem konkreten TOP zugeordnet sind.** Veröffentlichte Vorlagen ohne TOP-Zuordnung gehören nicht zu diesem Erfassungsumfang. Werden sie unabhängig davon im allgemeinen Recherchebestand als Quellenfund entdeckt, entsteht daraus weder automatisch ein Sitzungseintrag noch ein angenommener Beschluss. Die Recherche nach Sitzungen und TOPs sowie die spätere Zuordnung zu Ereignissen richten sich nach Kapitel 07.
+Alle drei Quellenzugangswege speisen denselben Rechercheprozess; keiner führt unmittelbar zu fachlicher Bestätigung oder Veröffentlichung. Bekannte Pflichtquellen, insbesondere Gemeinde- und RIS-Einstiege, werden **direkt und unabhängig von Suchmaschinen** überprüft. Das umfasst neue Unterseiten, freigegebene Dokumente außerhalb von Tagesordnungen und relevante Dateiänderungen bei gleicher URL. **Beschlussvorlagen werden für die systematische FIB-Sitzungsverarbeitung nur erfasst, wenn sie einem konkreten TOP zugeordnet sind.** Veröffentlichte Vorlagen ohne TOP-Zuordnung gehören nicht zu diesem Erfassungsumfang. Werden sie unabhängig davon im allgemeinen Recherchebestand als Quellenfund entdeckt, entsteht daraus weder automatisch ein Sitzungseintrag noch ein angenommener Beschluss. Die Recherche nach Sitzungen und TOPs sowie die automatische Anlage ihrer TOP-Ereignisse richten sich nach Kapitel 07.
 
 Unveränderte bekannte Inhalte benötigen grundsätzlich keine erneute KI-Auswertung. KI wird gezielt für semantische Analyse, relevante Veränderungen und offene Quellenentdeckung genutzt.
 
@@ -907,25 +908,9 @@ Diese beiden **fachlichen Grundsatzentscheidungen sind abgestimmt**. Die technis
 
 ## Ergänzende Ablaufregel
 
-**FIB-RECH-ABLAUF-001 – Drei getrennte fachliche Entscheidungen.** Neue Fundstelle, neues Ereignis und neue Meldung sind drei verschiedene Entscheidungen. Mehrere Fundstellen dürfen ein vorhandenes Ereignis ergänzen; eine neue Quelle begründet keine neue Meldung. Bei wesentlicher neuer Sachinformation wird zuerst die Fortschreibung eines vorhandenen Ereignisses und Vorgangs geprüft.
+**FIB-RECH-ABLAUF-001 – Drei getrennte fachliche Entscheidungen.** Neue Fundstelle, neues Ereignis und neue Meldung sind im allgemeinen Redaktionsprozess drei verschiedene Entscheidungen. Mehrere Fundstellen dürfen ein vorhandenes Ereignis ergänzen. Eine neue Quelle begründet keine neue Meldung. Bei wesentlicher neuer Sachinformation wird zuerst die Fortschreibung eines vorhandenen Ereignisses und Vorgangs geprüft. Für den RIS-Import gilt ergänzend die automatische Anlage genau eines geschützten Ereignisses je TOP nach [Kapitel 07](07-Sitzungen-und-Beschluesse-Entwurf-2026-10-26.md).
 
 
-## Technischer Nachweis der Referenzquellen (31.10.2026)
+## Nachweise und RIS-Fachabnahme
 
-Der aktuelle [Abnahmebericht](../operations/u4-reference-sources-acceptance.md)
-unterscheidet getestete Teilfunktionen, technische Lücken, noch ausstehende
-UI-Abnahme und spätere iterative Qualitätsprüfung. Die manuelle Übernahme einer
-Quellenbeobachtung ist ein zusätzlicher expliziter Serviceweg; sie erklärt keine
-allgemeine menschliche Pflichtprüfung aller Fundstellen. Die fachlichen Regeln
-dieses Kapitels werden dadurch nicht eingeschränkt. Eine getestete Fundstellen-
-oder Ereignisanlage bestätigt keine automatische Vorgangs-/Themenzuordnung.
-
-Der ergänzende [RIS-Integrationsnachweis](../operations/u4-ris-persistence.md)
-belegt nun auch die dauerhafte RIS-Struktur und ausdrücklich bestätigte Beziehungen
-zu bestehenden Vorgängen/Themen im Backend. KI-Produzenten, Oberflächenabnahme und
-Produktivfreigabe bleiben davon getrennt. Dies ändert keine Fachregel des Kapitels.
-
-Der [redaktionelle Bediennachweis](../operations/u4-editorial-ui-acceptance.md) ergänzt
-die regulären Fundstellen-/Sitzungsansichten und ausdrückliche Zuordnung zu bestehenden
-Ereignissen, Vorgängen und Themen. Technische Browserprüfung, fachliche Nutzerabnahme
-und Produktivfreigabe bleiben getrennt; der Fachregelstand wird nicht geändert.
+Die [Referenzquellenprüfung vom 31.10.2026](../operations/u4-reference-sources-acceptance.md), die [damalige technische RIS-Ableitung](../operations/u4-ris-persistence.md) und der [frühere Bediennachweis](../operations/u4-editorial-ui-acceptance.md) dokumentieren historische Prüfstände. Frühere redaktionelle RIS-Zuordnungswege sind durch die Fachabnahme vom 11.11.2026 ersetzt. Der aktuelle Umfang steht in [Kapitel 07](07-Sitzungen-und-Beschluesse-Entwurf-2026-10-26.md). Eine automatische strukturierte RIS-Inhaltsanalyse und automatische Vorgangs-/Themenfortschreibung sind damit nicht als umgesetzt nachgewiesen.

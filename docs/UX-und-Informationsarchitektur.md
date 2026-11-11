@@ -382,26 +382,13 @@ Pro Eintrag:
 
 Ort und Verfahrensstatus werden in der Liste nicht gezeigt. Anstehende Sitzungen werden nach Termin sortiert.
 
-### 13.2 Abschlusslogik
+### 13.2 Fachliche Grundlage und Umsetzungsstand
 
-Eine Sitzung gilt als abgeschlossen, sobald die Genehmigung der Niederschrift öffentlich belegt ist.
+Das öffentliche Besuchersystem verwendet den amtlich belegten Sitzungsstand aus [Kapitel 07](fachhandbuch/07-Sitzungen-und-Beschluesse-Entwurf-2026-10-26.md). Die dort dokumentierte Fachabnahme vom 11.11.2026 betrifft die Redaktionsansicht. Sie ist kein Umsetzungsnachweis einer öffentlichen Sitzungsoberfläche.
 
-Genehmigung und öffentliche Verfügbarkeit werden getrennt geführt.
+### 13.3 Detailseite als öffentliches Zielbild
 
-Beispiel:
-
-> **Niederschrift genehmigt · öffentlich nicht auffindbar**
-
-### 13.3 Detailseite
-
-TOP-zentriert:
-
-- Gremium, Datum, Zeit, Ort, Niederschriftsstatus,
-- alle öffentlichen RIS-TOPs,
-- amtliche Unterlagen,
-- verknüpfte FIB-Meldungen, Vorgänge und Themen,
-- Presseberichte getrennt von amtlichen Quellen,
-- vollständiger Beschlusstext und Abstimmungsergebnis, wenn belastbar aus lesbarer Niederschrift verfügbar.
+Die Besuchersicht soll alle öffentlichen TOPs, ihre amtlichen Unterlagen, belegten Status und verfügbare Abstimmungen mit Originalnachweisen zeigen. Der Beschlusswortlaut wird über die amtliche Niederschrift erschlossen. Eine eigene redaktionell bearbeitbare RIS-Beschlussfassung und eine manuelle Zuordnung zusätzlicher Ereignisse entfallen. Verweise auf Meldungen, Vorgänge und Themen ergeben sich aus dem TOP-Ereignis und den dort einschlägigen Fachbeziehungen.
 
 ## 14. Suche und Filter
 

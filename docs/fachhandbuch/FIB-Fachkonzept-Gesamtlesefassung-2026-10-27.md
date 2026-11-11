@@ -1,8 +1,8 @@
 # Feldkirchen im Blick – Fachkonzept: zusammenhängende Lesefassung
 
-**Stand 27. Oktober 2026 · Lesefassung auf Basis der elf Kapitelentwürfe · noch keine normative Ablösung der Bestandsdokumentation.**
+**Stand 11.11.2026.** Zusammenfassende Lesefassung des am 29.10.2026 abgenommenen Fachhandbuchs, mit RIS-Fortschreibung nach der Fachabnahme vom 11.11.2026.
 
-Dieses Dokument verbindet die elf fachlichen Kapitel zu einem durchgehenden Verständnis der Anwendung. Die Kapitel sind für die fachlichen Details und Regelkennungen maßgeblich; die vorhandenen ursprünglichen Primärquellen bleiben bis zur geprüften Übernahme gültig. Die nachfolgenden Beschreibungen führen keine neuen Status, Rechte oder technischen Datenobjekte ein.
+Dieses Dokument verbindet die elf fachlichen Kapitel zu einem durchgehenden Verständnis der Anwendung. Die Kapitel sind für die fachlichen Details und Regelkennungen maßgeblich; die früheren Quellen erläutern die historische Herleitung. Die nachfolgenden Beschreibungen führen keine neuen Status, Rechte oder technischen Datenobjekte ein.
 
 ## 1. Was FIB leisten soll
 
@@ -24,7 +24,7 @@ Gefundene Informationen werden mit Herkunft, Datum und fachlicher Einordnung ges
 
 Ein Ereignis, eine neue Fundstelle und eine Meldung sind drei unterschiedliche Entscheidungen. KI darf vorläufig erfassen und Änderungsvorschläge erzeugen, aber keine verbindliche Zurückstellung, fachliche Bestätigung oder Veröffentlichung eigenmächtig vornehmen. Gezielte Recherche kann sowohl neue Ereignisse als auch Erkenntnisse ohne neues Ereignis ergeben; solche Ergebnisse werden als prüfbare Vorschläge in betroffene Analysen übergeben.
 
-Die 30-%-Schwelle ist lediglich ein redaktioneller Warnwert: Sie betrifft den Anteil ausschließlich mittelbar, vergleichend oder künftig relevanter **neu veröffentlichter Beiträge der letzten 90 Tage**, nicht die zulässige Recherchebreite. [Kapitel 03](03-Recherche-Neufassung-Entwurf-2026-10-26.md)
+Die 30-%-Schwelle ist lediglich ein redaktioneller Warnwert: Sie betrifft den Anteil ausschließlich mittelbar, vergleichend oder künftig relevanter **neu veröffentlichter Beiträge der letzten 90 Tage**, nicht die zulässige Recherchebreite. [Kapitel 03](03-Recherche.md)
 
 ## 4. Von einer Fundstelle zur Nachricht
 
@@ -40,11 +40,11 @@ Neue Erkenntnisse werden als nachvollziehbare Änderungsvorschläge angeboten. *
 
 Themen sind bewusst redaktionell angelegte Leitfragen, die Wissen aus Vorgängen und zusätzlichen Ereignissen verbinden. Die Redaktion kann Vorschläge der KI zu Themen, Bezügen, Perspektiven, Teilfragen oder Wissenslücken annehmen, ändern oder ablehnen. Der Arbeitsablauf umfasst vier Bereiche: Definition, fachliche Bezüge, Themenanalyse und Themenbeitrag. Sie sind keine vier zwingenden Freigabestufen.
 
-Die Themenanalyse entwickelt eigenständiges Verständnis und kann in Teilen freigegeben werden. Auch hier gilt F-03 für den bestätigten Gesamtstand. Eine Analysefreigabe ändert den Themenstatus nicht. **Erst die erste Beitragsfreigabe macht einen Themenentwurf aktiv**; Veröffentlichung ist eine weitere Entscheidung. Änderungen an veröffentlichten Beiträgen führen zu neuen unveröffentlichten Arbeitsfassungen, solange die bisherige öffentliche Fassung gültig bleibt. [Kapitel 06](06-Themen-und-Themenanalysen-Entwurf-2026-10-26.md)
+Die Themenanalyse entwickelt eigenständiges Verständnis und kann in Teilen freigegeben werden. Auch hier gilt F-03 für den bestätigten Gesamtstand. Eine Analysefreigabe ändert den Themenstatus nicht. **Erst die erste Beitragsfreigabe macht einen Themenentwurf aktiv**; Veröffentlichung ist eine weitere Entscheidung. Änderungen an veröffentlichten Beiträgen führen zu neuen unveröffentlichten Arbeitsfassungen, solange die bisherige öffentliche Fassung gültig bleibt. [Kapitel 06](06-Themen.md)
 
 ## 7. Gemeinderatssitzungen und Beschlüsse korrekt behandeln
 
-Das Ratsinformationssystem ist eine Quelle. Eine veröffentlichte Vorlage ist eine Fundstelle und enthält zunächst einen Vorschlag, keinen nachgewiesenen Beschluss. FIB behandelt Sitzung, Tagesordnungspunkt, mögliche Beratung, tatsächlich beschlossene Fassung, Abstimmung und spätere Niederschrift als unterscheidbare Informationen. Dokumentfreigabe beweist weder einen Termin noch die spätere Entscheidung. Beschlussergebnisse werden erst mit geeigneten Belegen übernommen und an die zugehörigen Ereignisse, Vorgänge und Themen angeschlossen. [Kapitel 07](07-Sitzungen-und-Beschluesse-Entwurf-2026-10-26.md)
+FIB übernimmt die amtlichen Sitzungs- und TOP-Daten automatisch und hält sie redaktionell unveränderlich. Je TOP entsteht genau ein eigenes, nicht bearbeitbares Ereignis mit seinen automatisch zugeordneten Dokumentfundstellen. Die Niederschrift ist gemeinsame Fundstelle aller TOP-Ereignisse der Sitzung. Status und mehrere Abstimmungen werden nach amtlichem Nachweis übernommen. Die Sitzungsansicht zeigt Übersicht, TOPs und Original-Links mit einheitlicher Live-Suche auf Desktop und Handy. Die automatische strukturierte Inhaltsanalyse ist als Paket B noch nicht implementiert. [Kapitel 07](07-Sitzungen-und-Beschluesse-Entwurf-2026-10-26.md)
 
 ## 8. Wie die Redaktion entscheidet und veröffentlicht
 
@@ -70,12 +70,10 @@ Besucher lesen veröffentlichte Inhalte. Berechtigte Redakteure pflegen den Fach
 
 Federführung ist organisatorische Verantwortung und kein Sonderrecht. Sperren schützen vor konkurrierendem Schreiben; das bloße Übernehmen einer Aufgabe oder eine Übernahmeanfrage erteilt keine zusätzlichen Rechte. Schreibberechtigungen werden auch in bestehenden Sitzungen erneut geprüft, sodass ein Rechteentzug wirksam bleibt. [Kapitel 11](11-Fachliche-Rollen-und-Rechte-Entwurf-2026-10-26.md)
 
-## Vor der fachlichen Abnahme ausdrücklich offen
+## Umsetzung und verbleibender fachlicher Ausbau
 
-**Dokumentarisch:** Die vorliegenden elf Kapitel sind als Lesefassung verbunden, aber die abschnittsweise Normmigration aller Primärquellen ist noch nicht abschließend nachgewiesen. Insbesondere müssen die Regelkonflikte zur ehemaligen Pflicht-Einzelsichtung und zur früheren S3-Bestätigung formal harmonisiert, die 54. Recherche-Regel in die Regelreferenz aufgenommen und der Status-/Rechte-/Quellenabgleich abgeschlossen werden. Die bisherige Dokumentation bleibt daher normativ maßgeblich.
+Der verbindliche Stand und seine Herkunft sind im [Handbucheinstieg](README.md) dokumentiert. Die RIS-Fachabnahme bestätigt den geprüften Import- und Darstellungsumfang. Die automatische strukturierte RIS-Inhaltsanalyse als Paket B sowie die allgemeine öffentliche Besuchersicht und weitere Analyseabläufe sind gesonderte Arbeitspakete. Eine manuelle RIS-Analysefreigabe ist nicht geplant.
 
-**Fachlich noch zu entscheiden:** Der demokratisch-gesellschaftliche Referenzrahmen besitzt noch keine vollständig beschlossenen Bewertungskriterien. Daraus dürfen keine stillschweigenden neuen Publikations- oder KI-Normen abgeleitet werden.
+Der demokratisch-gesellschaftliche Referenzrahmen besitzt weiterhin keine vollständig beschlossenen Bewertungskriterien. Daraus werden im RIS-Dokumentationsabgleich keine zusätzlichen Regeln abgeleitet.
 
-**Spätere Umsetzung:** Datenbanktabellen, technische Schnittstellen, konkrete UI-Prototypen, KI-Routing-Implementierung und technische Tests sind nicht Gegenstand der Fachkonzept-Lesefreigabe.
-
-**Prüfgrundlagen:** [Quellabschnittsmatrix](archiv/pr259/PR259-Weitere-Quellen-Abschnittsabgleich-2026-10-26.md), [Regelkennungen](archiv/pr259/PR259-Regelkennungen-Migrationsmatrix-2026-10-26.md), [fachlicher Entscheidungsstand](archiv/pr259/PR259-Fachliche-Restkonflikte-und-Entscheidungsstand-2026-10-26.md), [Abnahme- und Regressionstests](archiv/pr259/PR259-Abschlusspruefung-und-Regression-2026-10-26.md).
+Den dateibezogenen Abgleich und die Prüfungen enthält der [Änderungsnachweis zu #427](../tests/ris-fachabnahme-2026-11-11.md).
