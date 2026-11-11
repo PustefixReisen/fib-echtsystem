@@ -104,7 +104,7 @@ Die tatsächliche Bereitstellung und Restaktionen werden im Abschlussbericht des
 
 [Lauf #19](https://github.com/PustefixReisen/fib-echtsystem/actions/runs/42993629644) sicherte Datenbank und Frontend einschließlich verschlüsselter Rückleseprüfung erfolgreich. Danach scheiterte die Auflistung der Projektschlüssel mit HTTP 403 und fehlendem `edge_functions_secrets_read`. Migration und Veröffentlichung waren übersprungen. Der Fehler belegt keine fehlende Scheduler-Konfiguration; er belegt die fehlende Verwaltungsberechtigung zum Auflisten.
 
-Die Sicherheitskontrolle erfolgt jetzt am tatsächlichen Verbraucher. Nach erfolgreicher Sicherung wird zunächst nur `fib-ris-analysis` veröffentlicht. Die reine GET-Route `/fib-ris-analysis/preflight` funktioniert auch bei deaktivierter Analyse. Sie prüft im Edge-Prozess, ob der vorhandene Scheduler-Schlüssel mindestens 32 Zeichen besitzt (wie die bestehende Scheduler-Authentifizierung verlangt) und ob der bestehende Datenbankzugang konfiguriert ist. Die Antwort enthält ausschließlich einen festen Vertragsbezeichner und ein gemeinsames Bereitschaftsbit. Sie enthält keine Schlüsselnamen, Werte, Hashes, Längen, Verbindungsdetails oder Fachdaten. Es werden keine SQL-Abfragen, Dokumentabrufe, Provideraufrufe oder Zustandsänderungen ausgeführt. Die öffentliche, nicht schreibende Bereitschaftsaussage gewährt keinen Zugriff auf Analyseaufträge.
+Die Sicherheitskontrolle erfolgt jetzt am tatsächlichen Verbraucher. Nach erfolgreicher Sicherung wird zunächst nur `fib-ris-analysis` veröffentlicht. Die reine GET-Route `/fib-ris-analysis/preflight` funktioniert auch bei deaktivierter Analyse. Sie prüft im Edge-Prozess, ob der vorhandene Scheduler-Schlüssel mindestens 32 Zeichen besitzt (wie die bestehende Scheduler-Authentifizierung verlangt) und ob der bestehende Datenbankzugang konfiguriert ist. Die aktuelle Antwort enthält ausschließlich einen festen Vertragsbezeichner, ein gemeinsames Bereitschaftsbit und die nachfolgend beschriebenen wertfreien Einzelzustände. Sie enthält keine Werte, Hashes, Längen, Verbindungsdetails oder Fachdaten. Es werden keine SQL-Abfragen, Dokumentabrufe, Provideraufrufe oder Zustandsänderungen ausgeführt. Die öffentliche, nicht schreibende Bereitschaftsaussage gewährt keinen Zugriff auf Analyseaufträge.
 
 `scripts/ris-analysis/preflight.mjs` ruft ausschließlich das feste Shared-Apps-Ziel über HTTPS auf, ohne Zugangsdaten mitzuschicken. Weiterleitungen, unerwartete Antworten und zu große Antwortkörper werden abgewiesen. Ein negatives Bereitschaftsbit beendet den Lauf sofort. Lediglich vorübergehende Erreichbarkeits-/Gatewayfehler werden höchstens dreimal versucht. Antwortinhalte und fremde Fehlermeldungen werden nicht protokolliert. Erst ein exakter positiver Vertragsnachweis lässt Migration und Aktivierung zu. Die bisherige Secretauflistung entfällt vollständig; es gibt keinen tolerierten 403, Ersatzschlüssel oder automatischen Rechteausbau.
 
@@ -113,3 +113,37 @@ Die Kontrolle belegt Laufzeitverfügbarkeit und Mindestlänge, keine neue fachli
 Die Tests prüfen die Bereitschaftsroute im tatsächlichen HTTP-Handler ohne Netz-/Datenbankberechtigung sowie den Workflow-Client mit fehlendem/kurzem Schlüssel, deaktivierter Analyse, falschen Antworten, Größenlimit, Weiterleitungen, Netzfehlern und begrenzten Wiederholungen. Die Workflow-CI sichert zusätzlich die Reihenfolge Rückleseprüfung → Worker → Bereitschaft → Migration → Aktivierung.
 
 **Wiederaufnahme:** Nach Merge einen neuen Lauf des Workflows auf dem aktuellen `main` mit `confirmation=RIS-ANALYSIS-428` und leerem `rebuild_acceptance` starten. Ein bloßes „Re-run“ von #19 verwendet den alten Commit und enthält die Korrektur nicht. Der neue Lauf erzeugt seine eigene aktuelle Sicherung; die erfolgreiche Sicherung aus #19 wird nicht als Freibrief zum Überspringen verwendet. Falls die Laufzeitprüfung negativ ausfällt, bleibt die Analyse deaktiviert und der Betreiber prüft die vorhandene Konfiguration. Dieser Auftrag erzeugt und ersetzt keine Zugangsdaten.
+
+## Laufzeitdiagnose nach Lauf #21
+
+[Lauf #21](https://github.com/PustefixReisen/fib-echtsystem/actions/runs/42996790296) bestätigte erneut Sicherung und verschlüsselte Rückleseprüfung und veröffentlichte den Analyse-Worker. Der anschließende v1-Nachweis meldete lediglich `ris_analysis_runtime_not_ready`; er konnte die beiden Voraussetzungen nicht unterscheiden. Migration, Erstberechnung und Aktivierung blieben übersprungen. Eine lesende Prüfung des bereitgestellten Dateibündels bestätigte vollständige Übereinstimmung mit PR #431; ein authentifizierungsfreier POST wurde als `analysis_disabled` abgewiesen.
+
+### Konfigurationsweg
+
+Der Worker liest dieselben projektspezifischen Supabase-Edge-Secrets wie die übrigen FIB-Funktionen über `Deno.env.get`. Es gibt keinen gesonderten Schlüsseltransfer je Funktion. Ein im GitHub-Environment hinterlegtes Maintenance-Datenbanksecret ist dagegen nicht automatisch ein Edge-Secret. Lokale `.env`-Dateien werden beim Funktionsdeploy ebenfalls nicht automatisch zur Projektkonfiguration. Der Release überschreibt weder `FIB_DATABASE_URL` noch `FIB_RIS_SCHEDULER_TOKEN`; er setzt erst nach erfolgreicher Kontrolle ausschließlich die Analyse-Aktivierungsschalter. Die vorgesehenen Secrets dürfen nicht durch einen Maintenance-/Adminzugang oder einen `service_role`-Schlüssel ersetzt werden.
+
+### Wertfreie Einzelzustände
+
+Vertrag `ris-analysis-runtime-v2` ergänzt das feste Objekt `checks`:
+
+| Feld | Zulässige Zustände | Bedeutung |
+|---|---|---|
+| `schedulerToken` | `missing`, `too_short`, `ready` | Nicht vorhanden/leer, unter 32 Zeichen oder Mindestlänge erfüllt. Die konkrete Länge wird nicht ausgegeben. |
+| `databaseUrl` | `missing`, `ready` | Nicht vorhanden/leer oder vorhanden. Keine URL-/Passwortausgabe und keine Verbindungsprüfung. |
+
+Beide Voraussetzungen werden unabhängig geprüft; ein fehlender Schlüssel verhindert die Prüfung der Datenbankkonfiguration nicht mehr durch Kurzschlussauswertung. Nur beide `ready` ergeben HTTP 200. Sonst bleibt es bei HTTP 503 und einem harten Release-Stopp. Der Prüfclient akzeptiert ausschließlich diese Feldnamen und Zustände, verwirft widersprüchliche Gesamt-/Einzelzustände und protokolliert nur fest zugeordnete Konfigurationsnamen mit diesen Zuständen. Unbekannte Antworttexte werden nicht ausgegeben. Der v1-Vertrag wird für einen neuen Release nicht mehr als ausreichender Nachweis akzeptiert.
+
+Für die gezielte Diagnose kann nach erfolgreichen CI-Prüfungen ausschließlich dieses Prüfmodul im bereits bereitgestellten Worker aktualisiert werden. Grundlage sind die in #21 nachgewiesene aktuelle Sicherung/Rückleseprüfung und der vorab abgeglichene unveränderte restliche Funktionsbestand. JWT-Einstellung, Import-/Analysecode, Tabellen, Fachdaten, Secrets und Aktivierung bleiben unverändert. Dies ist keine Paket-B-Aktivierung. Der vollständige neue Release verwendet weiterhin alle bestehenden Workflow-Gates und erzeugt seine eigene aktuelle Sicherung. Tatsächlich erhobene Diagnosezustände und Veröffentlichungsnachweis werden im PR-Abschluss dokumentiert.
+
+### Betreiberaktion bei fehlender Konfiguration
+
+Im Supabase-Projekt `apaubomxffcwtzjimori` unter **Edge Functions → Secrets** ausschließlich den gemeldeten Namen prüfen. Den Wert nicht anzeigen, kopieren oder in Chat/Logs mitteilen.
+
+- `FIB_RIS_SCHEDULER_TOKEN=missing`: Den bereits vorgesehenen RIS-Scheduler-Zugang aus der geschützten Betreiberablage unter exakt diesem Namen als Projekt-Secret hinterlegen. Liegt noch kein solcher Zugang vor, stoppt die Wiederaufnahme; eine Neuanlage braucht einen gesonderten Betreiberauftrag und ist nicht Teil dieser Korrektur.
+- `FIB_RIS_SCHEDULER_TOKEN=too_short`: Die Konfiguration mit dem bereits vorhandenen gültigen Scheduler-Zugang abgleichen. Nicht auffüllen, abschneiden oder durch andere Schlüssel ersetzen.
+- `FIB_DATABASE_URL=missing`: Den vorhandenen eingeschränkten FIB-Runtime-Datenbankzugang unter exakt diesem Namen als Edge-Projekt-Secret hinterlegen. Nicht den Maintenance-Zugang aus GitHub übernehmen.
+- Ein als `ready` gemeldeter Name benötigt keine Änderung. Die Diagnose belegt keine Datenbankverbindung oder fachliche Betriebsabnahme.
+
+Anschließend den rein lesenden v2-Nachweis erneut prüfen. Erst wenn beide Voraussetzungen bereit sind, einen **neuen** kontrollierten Lauf auf aktuellem `main` mit `confirmation=RIS-ANALYSIS-428` und leerem `rebuild_acceptance` starten. Kein Re-run von #21, kein Überspringen der Sicherung oder Bereitschaftsprüfung. Keine automatische Secret-Erzeugung oder Rechteerweiterung.
+
+Die lokalen Tests und die Deno-HTTP-CI prüfen alle sechs Kombinationen der Einzelzustände, Mindestlängengrenze, fehlende Datenbankkonfiguration, Auskunft ohne Zugangswerte, unveränderte Aktivierung/Authentifizierung, Ablehnung unbekannter Zustände und widersprüchlicher Bereitschaftsangaben.
