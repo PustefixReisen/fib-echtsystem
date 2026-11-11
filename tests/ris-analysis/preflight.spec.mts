@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import {analysisPreflight} from '../../supabase/functions/_shared/ris-analysis-preflight.ts';
 import {checkAnalysisRuntime} from '../../scripts/ris-analysis/preflight.mjs';
+import {checkAnalysisActivation} from '../../scripts/ris-analysis/activation.mjs';
 
 const endpoint='https://apaubomxffcwtzjimori.supabase.co/functions/v1/fib-ris-analysis/preflight';
 const contract='ris-analysis-runtime-v2';
@@ -74,3 +75,41 @@ for(const schedulerToken of ['missing','too_short','ready'])for(const databaseUr
     String(error).includes('FIB_RIS_SCHEDULER_TOKEN='+schedulerToken+'; FIB_DATABASE_URL='+databaseUrl));
 }
 console.log('PASS preflight: actual readiness handler, missing/short token, disabled worker, safe output, exact contract, fixed target, bounded retries and fail-closed workflow client');
+
+
+const activationEndpoint=endpoint.replace('/preflight','/activation');
+const activationProbe=()=>analysisPreflight(new Request(activationEndpoint),getEnv)!;
+assert.equal(activationProbe().status,503,'Disabled analysis is not active');
+assert.deepEqual(await activationProbe().json(),{check:'ris-analysis-activation-v1',ready:false});
+env.set('FIB_RIS_ANALYSIS_ENABLED','true');
+assert.equal(activationProbe().status,503,'Document processing must be explicitly disabled');
+env.set('FIB_RIS_ANALYSIS_DOCUMENTS_ENABLED','false');
+assert.equal(activationProbe().status,200);
+assert.deepEqual(await activationProbe().json(),{check:'ris-analysis-activation-v1',ready:true});
+assert.equal(analysisPreflight(new Request(activationEndpoint+'?activate=true'),getEnv)?.status,405);
+assert.equal(analysisPreflight(new Request(activationEndpoint,{method:'POST'}),getEnv)?.status,405);
+let activationCalls=0;
+await checkAnalysisActivation(async(url:string,options:RequestInit)=>{
+  activationCalls++;
+  assert.equal(url,activationEndpoint);
+  assert.equal(options.method,'GET');
+  assert.equal(options.headers,undefined);
+  return activationProbe();
+},noPause);
+assert.equal(activationCalls,1);
+env.set('FIB_RIS_ANALYSIS_ENABLED','false');
+activationCalls=0;
+await assert.rejects(()=>checkAnalysisActivation(async()=>{
+  activationCalls++;return activationProbe();
+},noPause),/activation_not_ready/);
+assert.equal(activationCalls,1,'Missing operator activation is a hard stop');
+for(const fake of [
+  ()=>Response.json({ready:true},{status:200}),
+  ()=>Response.json({check:'ris-analysis-activation-v1',ready:true,secret:fixture},{status:200}),
+  ()=>new Response('not JSON',{status:200}),
+  ()=>new Response('failure',{status:403}),
+  ()=>new Response(fixture.repeat(200),{status:200}),
+]) await assert.rejects(()=>checkAnalysisActivation(async()=>fake(),noPause),error=>!String(error).includes(fixture));
+env.set('FIB_RIS_ANALYSIS_ENABLED','false');
+env.delete('FIB_RIS_ANALYSIS_DOCUMENTS_ENABLED');
+console.log('PASS activation: operator-managed flags, exact read-only contract, disabled document processing, malformed responses fail closed');
