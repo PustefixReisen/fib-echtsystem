@@ -106,7 +106,7 @@ Ergebnisse werden in einer **administrativen KI-Qualitäts- und Kostenübersicht
 
 Die Herkunft, Speicherrechte und öffentlichen Nutzungsrechte von Original-PDF und extrahiertem Volltext sind getrennt nach [Kapitel 07](07-Sitzungen-und-Beschluesse-Entwurf-2026-10-26.md) zu prüfen. Öffentliche Abrufbarkeit allein erlaubt keine pauschale dauerhafte Übernahme. Die abgenommene Ansicht zeigt amtliche Original-Links. Die frühere allgemeine Forderung, alle kommunalen Vorlagen und Niederschriften als vollständige Texte dauerhaft vorzuhalten, entfällt.
 
-Die RIS-Qualitätsprüfung umfasst vollständige TOP-Zuordnung innerhalb der erfassten Sitzung, genau ein TOP-Ereignis, automatische Dokumentbelege, mehrere getrennte Abstimmungen, erkennbare Quellenlücken und stabilen Wiederholungsimport. Ein Importfehler wird technisch untersucht und nicht durch redaktionelle Änderung des amtlichen Ergebnisses überbrückt. Die Prüfung von Meldungen und Analysen erfolgt an den redaktionellen Folgeobjekten. Die strukturierte RIS-Inhaltsanalyse ist Paket B und noch nicht implementiert.
+Die RIS-Qualitätsprüfung umfasst vollständige TOP-Zuordnung innerhalb der erfassten Sitzung, genau ein TOP-Ereignis, automatische Dokumentbelege, mehrere getrennte Abstimmungen, erkennbare Quellenlücken und stabilen Wiederholungsimport. Ein Importfehler wird technisch untersucht und nicht durch redaktionelle Änderung des amtlichen Ergebnisses überbrückt. Die Prüfung von Meldungen und Analysen erfolgt an den redaktionellen Folgeobjekten. Die getrennte regelbasierte Erkenntnisbildung aus Paket B wird zusätzlich nach Kapitel 07 geprüft.
 
 ## 10.10 Abnahmefälle
 1. Amtliche Vorlage widerspricht Medienbericht; FIB unterscheidet gesicherten Stand und Annahme.

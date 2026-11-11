@@ -1,0 +1,239 @@
+{
+  "generatedAt": "2026-11-11T08:49:30.991Z",
+  "method": "rules",
+  "paidCalls": 0,
+  "results": [
+    {
+      "session": "GR/439/2026",
+      "top": 2,
+      "scope": "live public source reference with illustrative target catalogue",
+      "subjects": [
+        "dog_area",
+        "land_use",
+        "mobility"
+      ],
+      "references": [
+        {
+          "kind": "place",
+          "value": "Feldkirchen"
+        },
+        {
+          "kind": "place",
+          "value": "Friedhof"
+        },
+        {
+          "kind": "reference_object",
+          "value": "parcel:630"
+        },
+        {
+          "kind": "organization",
+          "value": "Gemeinderat"
+        },
+        {
+          "kind": "organization",
+          "value": "CSU"
+        },
+        {
+          "kind": "organization",
+          "value": "Gemeinde Feldkirchen"
+        }
+      ],
+      "votes": [
+        {
+          "index": 1,
+          "result": "no_vote",
+          "yes": null,
+          "no": null
+        }
+      ],
+      "relations": [
+        "probe-dog"
+      ],
+      "coverage": [
+        {
+          "documentId": "https://buergerinfo-feldkirchen.digitalfabrix.de/getfile.asp?id=74647",
+          "versionId": "observed-sha256:c28f16a06db4d9ab6ce6bf8d51bdee8df9d671178ef5f71611b56e25f12d4898",
+          "sha256": "c28f16a06db4d9ab6ce6bf8d51bdee8df9d671178ef5f71611b56e25f12d4898",
+          "status": "analyzed"
+        },
+        {
+          "documentId": "https://buergerinfo-feldkirchen.digitalfabrix.de/getfile.asp?id=75785",
+          "versionId": "observed-sha256:b1b16ef8eec7e6fe2ad3d8004ac2eb50f11b23fc9f4f10148964aff3d875d21a",
+          "sha256": "b1b16ef8eec7e6fe2ad3d8004ac2eb50f11b23fc9f4f10148964aff3d875d21a",
+          "status": "analyzed"
+        }
+      ],
+      "documents": [
+        {
+          "url": "https://buergerinfo-feldkirchen.digitalfabrix.de/getfile.asp?id=74647",
+          "sha256": "c28f16a06db4d9ab6ce6bf8d51bdee8df9d671178ef5f71611b56e25f12d4898"
+        },
+        {
+          "url": "https://buergerinfo-feldkirchen.digitalfabrix.de/getfile.asp?id=75785",
+          "sha256": "b1b16ef8eec7e6fe2ad3d8004ac2eb50f11b23fc9f4f10148964aff3d875d21a"
+        }
+      ]
+    },
+    {
+      "session": "GR/439/2026",
+      "top": 6,
+      "scope": "live public source reference with illustrative target catalogue",
+      "subjects": [
+        "data_center",
+        "land_use",
+        "mobility"
+      ],
+      "references": [
+        {
+          "kind": "reference_object",
+          "value": "parcel:597/5"
+        },
+        {
+          "kind": "reference_object",
+          "value": "parcel:598/2"
+        },
+        {
+          "kind": "place",
+          "value": "Feldkirchen"
+        },
+        {
+          "kind": "organization",
+          "value": "Gemeinderat"
+        },
+        {
+          "kind": "organization",
+          "value": "Gemeinde Feldkirchen"
+        }
+      ],
+      "votes": [
+        {
+          "index": 1,
+          "result": "accepted",
+          "yes": 17,
+          "no": 2
+        },
+        {
+          "index": 2,
+          "result": "accepted",
+          "yes": 19,
+          "no": 0
+        }
+      ],
+      "relations": [
+        "probe-center"
+      ],
+      "coverage": [
+        {
+          "documentId": "https://buergerinfo-feldkirchen.digitalfabrix.de/getfile.asp?id=75379",
+          "versionId": "observed-sha256:4c524dc5ec76f24b7e44d21bc2a4ef412fbac684bfafdca7b4b15f5f355f92ea",
+          "sha256": "4c524dc5ec76f24b7e44d21bc2a4ef412fbac684bfafdca7b4b15f5f355f92ea",
+          "status": "analyzed"
+        },
+        {
+          "documentId": "https://buergerinfo-feldkirchen.digitalfabrix.de/getfile.asp?id=75785",
+          "versionId": "observed-sha256:b1b16ef8eec7e6fe2ad3d8004ac2eb50f11b23fc9f4f10148964aff3d875d21a",
+          "sha256": "b1b16ef8eec7e6fe2ad3d8004ac2eb50f11b23fc9f4f10148964aff3d875d21a",
+          "status": "analyzed"
+        }
+      ],
+      "documents": [
+        {
+          "url": "https://buergerinfo-feldkirchen.digitalfabrix.de/getfile.asp?id=75379",
+          "sha256": "4c524dc5ec76f24b7e44d21bc2a4ef412fbac684bfafdca7b4b15f5f355f92ea"
+        },
+        {
+          "url": "https://buergerinfo-feldkirchen.digitalfabrix.de/getfile.asp?id=75785",
+          "sha256": "b1b16ef8eec7e6fe2ad3d8004ac2eb50f11b23fc9f4f10148964aff3d875d21a"
+        }
+      ]
+    },
+    {
+      "session": "GR/440/2026",
+      "top": 2,
+      "scope": "live public source reference with illustrative target catalogue",
+      "subjects": [
+        "childcare"
+      ],
+      "references": [
+        {
+          "kind": "reference_object",
+          "value": "BayKiBiG"
+        },
+        {
+          "kind": "organization",
+          "value": "Gemeinderat"
+        },
+        {
+          "kind": "place",
+          "value": "Feldkirchen"
+        },
+        {
+          "kind": "organization",
+          "value": "Gemeinde Feldkirchen"
+        }
+      ],
+      "votes": [],
+      "relations": [
+        "probe-childcare"
+      ],
+      "coverage": [
+        {
+          "documentId": "https://buergerinfo-feldkirchen.digitalfabrix.de/getfile.asp?id=75714",
+          "versionId": "observed-sha256:c5770dac95c8f14c0833e0e3320e82cbdf02f40ec1878f03f2ba91dcd4cc5d00",
+          "sha256": "c5770dac95c8f14c0833e0e3320e82cbdf02f40ec1878f03f2ba91dcd4cc5d00",
+          "status": "analyzed"
+        }
+      ],
+      "documents": [
+        {
+          "url": "https://buergerinfo-feldkirchen.digitalfabrix.de/getfile.asp?id=75714",
+          "sha256": "c5770dac95c8f14c0833e0e3320e82cbdf02f40ec1878f03f2ba91dcd4cc5d00"
+        }
+      ]
+    },
+    {
+      "session": "GR/440/2026",
+      "top": 3,
+      "scope": "live public source reference with illustrative target catalogue",
+      "subjects": [
+        "childcare"
+      ],
+      "references": [
+        {
+          "kind": "place",
+          "value": "Feldkirchen"
+        },
+        {
+          "kind": "reference_object",
+          "value": "BayKiBiG"
+        },
+        {
+          "kind": "organization",
+          "value": "Gemeinde Feldkirchen"
+        },
+        {
+          "kind": "organization",
+          "value": "Gemeinderat"
+        }
+      ],
+      "votes": [],
+      "relations": [
+        "probe-childcare"
+      ],
+      "coverage": [
+        {
+          "documentId": "https://buergerinfo-feldkirchen.digitalfabrix.de/getfile.asp?id=75790",
+          "versionId": "observed-sha256:6b08f8a9c477080fe2d5bbc1c7a9218c844822f2bf5d0a21f85c05a8e687b1c2",
+          "sha256": "6b08f8a9c477080fe2d5bbc1c7a9218c844822f2bf5d0a21f85c05a8e687b1c2",
+          "status": "analyzed"
+        }
+      ],
+      "documents": [
+        {
+          "url": "https://buergerinfo-feldkirchen.digitalfabrix.de/getfile.asp?id=75790",
+          "sha256": "6b08f8a9c477080fe2d5bbc1c7a9218c844822f2bf5d0a21f85c05a8e687b1c2"
+        }
+      ]
+    }
+  ]
+}

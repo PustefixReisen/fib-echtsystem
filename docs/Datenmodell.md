@@ -4,7 +4,7 @@
 
 | Version | Stand | Verantwortlich |
 |---|---|---|
-| 3.4 | 11.11.2026 | Josef Walter – erstellt mit KI-Unterstützung |
+| 3.5 | 11.11.2026 | Josef Walter – erstellt mit KI-Unterstützung |
 
 ## 1. Zweck und Geltung
 
@@ -390,7 +390,13 @@ Meldungsbezüge ergeben sich aus Meldung → TOP-Ereignis → TOP → Sitzung. R
 
 Eine Vorlage belegt einen Vorschlag. Sobald eine verfügbare amtliche Niederschrift zuverlässig auswertbar ist, übernimmt FIB den Ergebnisstatus und die Abstimmungen mit Stimmenzahlen und Herkunft. Ein TOP kann mehrere getrennte Abstimmungen enthalten. Vorlage, Niederschrift und Abstimmung erzeugen keine zusätzlichen Ereignisse zu demselben TOP.
 
-Beschlusswortlaut und Beschlussfassungen werden im abgenommenen Umfang über das Original erschlossen. Frühere Modellierungen redaktionell bearbeitbarer Beschlusspunkte und Fassungsvergleiche sind dadurch ersetzt. Die strukturierte Inhaltsanalyse gehört zum noch nicht implementierten Paket B. Dauerhafte Original-/Volltextspeicherung erfordert dokumentierte Rechte gemäß Kapitel 07.
+Beschlusswortlaut und Beschlussfassungen werden im abgenommenen Umfang über das Original erschlossen. Frühere Modellierungen redaktionell bearbeitbarer Beschlusspunkte und Fassungsvergleiche sind dadurch ersetzt. Die getrennte regelbasierte Erkenntnisbildung aus Paket B ist zusätzlich nach Kapitel 07 spezifiziert und implementiert. Dauerhafte Original-/Volltextspeicherung erfordert dokumentierte Rechte gemäß Kapitel 07.
+
+### 8.4 Automatische Erkenntnisprodukte
+
+Ein Analyseprodukt aus Paket B gehört genau einem TOP. Es führt seine Quellenfassungen/Fingerprints, Regelversion und automatisch erzeugten Erkenntnisse getrennt vom amtlichen Importbestand. Erkenntnisversionen sind unveränderlich. Neue Eingänge können eine neue Version erzeugen. Veraltete Ergebnisse dürfen nicht als aktueller Stand erscheinen. Abgeleitete Sachgebiete, Orte, Referenzobjekte und Zusammenhangskandidaten sind von direkt übernommenen Importangaben unterscheidbar. Es gibt keine redaktionelle Bestätigung oder Bearbeitung des Analyseprodukts.
+
+Die Analyse erzeugt keine zusätzlichen TOP-Ereignisse und keine verbindlichen Zuordnungen zu Meldungen, Vorgängen oder Themen. Originaltexte werden nicht als Teil des Analyseprodukts gespeichert. Der [Fach-/Technikbericht zu #428](operations/ris-analysis-428.md) beschreibt Arbeitszustand, Versionierung, Rechteprofil und die kontrollierte Bereitstellung.
 
 ## 9. Referenzwissen
 
@@ -745,6 +751,7 @@ Nicht relevante Fundstellen werden nicht allein wegen ihrer Relevanzentscheidung
 
 | Version | Datum | Änderung |
 |---|---|---|
+| 3.5 | 11.11.2026 | Paket B mit getrennten versionierten Erkenntnisprodukten und automatisch gekennzeichneten Zusammenhangskandidaten integriert. |
 | 3.4 | 11.11.2026 | RIS-Fachabnahme eingearbeitet. TOP und TOP-Ereignis 1:1, automatische Fundstellen, quellengebundene Ergebnisse, Paket B als Zukunftskonzept. |
 | 3.3 | 31.10.2026 | Entwicklungsdatenzuordnung und geschützte Referenzen für Shared-Apps verknüpft. |
 | 3.2 | 31.10.2026 | Technischen UI-Nachweis und gemeinsame Quellen-/Beziehungsobjekte verknüpft; keine Änderung der fachlichen Kardinalitäten. |

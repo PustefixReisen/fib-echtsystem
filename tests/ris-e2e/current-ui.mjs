@@ -35,7 +35,7 @@ try {
     email: fixture.users.editor.email, password: fixture.users.editor.password,
   });
   for (const token of [aal1.access_token, fixture.users.outsider.token, "invalid-token"]) {
-    for(const action of ['ris_sessions','source_pdf','source_capture_pdf','ris_confirm_storage_rights'])assert.equal((await invoke("fib-editorial-write", { action,versionId:crypto.randomUUID() }, token)).status,403);
+    for(const action of ['ris_sessions','ris_analysis_read','source_pdf','source_capture_pdf','ris_confirm_storage_rights'])assert.equal((await invoke("fib-editorial-write", { action,versionId:crypto.randomUUID() }, token)).status,403);
   }
   record("Restricted runtime database role, AAL1 and outsider access rejected");
 

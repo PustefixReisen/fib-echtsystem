@@ -97,7 +97,7 @@ Eine gemeinsame Aufgabenübersicht zeigt offene **menschliche Entscheidungen**, 
 
 Für alle menschlichen Rollen einschließlich Administratoren gelten die Grenzen aus [Kapitel 07](07-Sitzungen-und-Beschluesse-Entwurf-2026-10-26.md). Lesen und kontrolliertes Auslösen bestehender technischer Importabläufe sind von einer redaktionellen Änderung zu unterscheiden. Ein Admin erhält kein Recht, amtliche TOP-Daten, TOP-Ereignisse oder ihre importgesteuerten Fundstellenzuordnungen zu bearbeiten. Auch die allgemeine Ereignisbestätigung und Bearbeitungssperren eröffnen hierfür keinen Schreibweg.
 
-Die automatische Anlage des TOP-Ereignisses ist ein quellengebundener Importvorgang. Sie verlangt keine menschliche Ereignisbestätigung und keine manuelle RIS-Analysefreigabe. Redaktionelle Entscheidungen über Folgeobjekte und öffentliche Beiträge folgen deren eigenen Regeln. Paket B zur strukturierten Inhaltsanalyse ist noch nicht implementiert.
+Die automatische Anlage des TOP-Ereignisses ist ein quellengebundener Importvorgang. Sie verlangt keine menschliche Ereignisbestätigung und keine manuelle RIS-Analysefreigabe. Redaktionelle Entscheidungen über Folgeobjekte und öffentliche Beiträge folgen deren eigenen Regeln. Die getrennte regelbasierte Erkenntnisbildung aus Paket B erzeugt unveränderliche Ableitungen ohne redaktionellen Bestätigungsschritt.
 
 ## 11.8 Was darf nur ein Administrator?
 

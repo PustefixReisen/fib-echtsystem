@@ -10,7 +10,7 @@ on:
         required: false
         type: string
       confirmation:
-        description: "RIS-DEV for full release; RIS-UI-425 for read-only session search and frontend only"
+        description: "RIS-DEV full release; RIS-UI-425 UI; RIS-ANALYSIS-428 derived rules analysis only"
         required: true
         type: string
 permissions:
@@ -48,7 +48,7 @@ jobs:
     if: >-
       github.ref == 'refs/heads/main' &&
       (inputs.confirmation == 'RIS-DEV' ||
-       (inputs.confirmation == 'RIS-UI-425' && inputs.rebuild_acceptance == ''))
+       ((inputs.confirmation == 'RIS-UI-425' || inputs.confirmation == 'RIS-ANALYSIS-428') && inputs.rebuild_acceptance == ''))
     runs-on: ubuntu-latest
     environment: fib-release
     timeout-minutes: 45
@@ -195,6 +195,44 @@ jobs:
             "select count(*) from pg_class c join pg_namespace n on n.oid=c.relnamespace
               where n.nspname='fib' and c.relname in ('ris_top_events','ris_top_vote_results') and c.relrowsecurity")
           test "$result" = "2"
+      - name: Require the existing scoped RIS scheduler credential
+        if: inputs.confirmation == 'RIS-ANALYSIS-428'
+        env:
+          SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
+        run: |
+          set -euo pipefail
+          npx --yes supabase@2.122.0 secrets list --project-ref apaubomxffcwtzjimori --output json \
+            > "$RUNNER_TEMP/fib-ris-dev-release/secret-names.json"
+          python3 - <<'PYCODE'
+          import json,os
+          rows=json.load(open(os.environ['RUNNER_TEMP']+'/fib-ris-dev-release/secret-names.json'))
+          assert isinstance(rows,list) and any(row.get('name')=='FIB_RIS_SCHEDULER_TOKEN' for row in rows), 'Existing RIS scheduler credential required; no new credential is created'
+          PYCODE
+      - name: Apply only the additive derived-analysis schema
+        if: inputs.confirmation == 'RIS-ANALYSIS-428'
+        env:
+          FIB_MAINTENANCE_DATABASE_URL: ${{ secrets.FIB_MAINTENANCE_DATABASE_URL }}
+        run: |
+          set -euo pipefail
+          installed=$(psql "$FIB_MAINTENANCE_DATABASE_URL" -X -Atq -v ON_ERROR_STOP=1 -c \
+            "select to_regclass('fib.ris_analysis_versions') is not null")
+          if [ "$installed" = f ]; then
+            psql "$FIB_MAINTENANCE_DATABASE_URL" -X --single-transaction -v ON_ERROR_STOP=1 \
+              -f supabase/migrations/20261111083118_fib_ris_automatic_analysis.sql
+          fi
+          node --import tsx scripts/ris-analysis/run.mts --approval=RIS-ANALYSIS-428
+      - name: Deploy derived-analysis worker and post-import notifications
+        if: inputs.confirmation == 'RIS-ANALYSIS-428'
+        env:
+          SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
+        run: |
+          set -euo pipefail
+          npx --yes supabase@2.122.0 functions deploy fib-ris-analysis --project-ref apaubomxffcwtzjimori --no-verify-jwt
+          npx --yes supabase@2.122.0 functions deploy fib-editorial-write --project-ref apaubomxffcwtzjimori --no-verify-jwt
+          npx --yes supabase@2.122.0 functions deploy fib-u4-ris-pilot --project-ref apaubomxffcwtzjimori
+          npx --yes supabase@2.122.0 functions deploy fib-u4-ris-scheduled --project-ref apaubomxffcwtzjimori --no-verify-jwt
+          npx --yes supabase@2.122.0 secrets set --project-ref apaubomxffcwtzjimori \
+            FIB_RIS_ANALYSIS_ENABLED=true FIB_RIS_ANALYSIS_DOCUMENTS_ENABLED=false
       - name: Apply the single, FIB-only, non-destructive RIS migration
         if: inputs.confirmation == 'RIS-DEV'
         env:
@@ -238,6 +276,7 @@ jobs:
           npx --yes supabase@2.122.0 functions deploy fib-editorial-write \
             --project-ref apaubomxffcwtzjimori --no-verify-jwt
       - name: Build and deploy non-deleting IONOS editorial frontend
+        if: inputs.confirmation != 'RIS-ANALYSIS-428'
         env:
           VITE_FIB_ACCEPTANCE_MODE: shared-apps
           VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}

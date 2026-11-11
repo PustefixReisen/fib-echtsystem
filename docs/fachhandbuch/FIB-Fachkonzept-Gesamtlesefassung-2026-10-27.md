@@ -44,7 +44,7 @@ Die Themenanalyse entwickelt eigenständiges Verständnis und kann in Teilen fre
 
 ## 7. Gemeinderatssitzungen und Beschlüsse korrekt behandeln
 
-FIB übernimmt die amtlichen Sitzungs- und TOP-Daten automatisch und hält sie redaktionell unveränderlich. Je TOP entsteht genau ein eigenes, nicht bearbeitbares Ereignis mit seinen automatisch zugeordneten Dokumentfundstellen. Die Niederschrift ist gemeinsame Fundstelle aller TOP-Ereignisse der Sitzung. Status und mehrere Abstimmungen werden nach amtlichem Nachweis übernommen. Die Sitzungsansicht zeigt Übersicht, TOPs und Original-Links mit einheitlicher Live-Suche auf Desktop und Handy. Die automatische strukturierte Inhaltsanalyse ist als Paket B noch nicht implementiert. [Kapitel 07](07-Sitzungen-und-Beschluesse-Entwurf-2026-10-26.md)
+FIB übernimmt die amtlichen Sitzungs- und TOP-Daten automatisch und hält sie redaktionell unveränderlich. Je TOP entsteht genau ein eigenes, nicht bearbeitbares Ereignis mit seinen automatisch zugeordneten Dokumentfundstellen. Die Niederschrift ist gemeinsame Fundstelle aller TOP-Ereignisse der Sitzung. Status und mehrere Abstimmungen werden nach amtlichem Nachweis übernommen. Die Sitzungsansicht zeigt Übersicht, TOPs und Original-Links mit einheitlicher Live-Suche auf Desktop und Handy. Paket B ergänzt die getrennte regelbasierte Erkenntnisbildung nach Kapitel 07. Die Bereitstellung wird separat nachgewiesen. [Kapitel 07](07-Sitzungen-und-Beschluesse-Entwurf-2026-10-26.md)
 
 ## 8. Wie die Redaktion entscheidet und veröffentlicht
 
@@ -72,7 +72,7 @@ Federführung ist organisatorische Verantwortung und kein Sonderrecht. Sperren s
 
 ## Umsetzung und verbleibender fachlicher Ausbau
 
-Der verbindliche Stand und seine Herkunft sind im [Handbucheinstieg](README.md) dokumentiert. Die RIS-Fachabnahme bestätigt den geprüften Import- und Darstellungsumfang. Die automatische strukturierte RIS-Inhaltsanalyse als Paket B sowie die allgemeine öffentliche Besuchersicht und weitere Analyseabläufe sind gesonderte Arbeitspakete. Eine manuelle RIS-Analysefreigabe ist nicht geplant.
+Der verbindliche Stand und seine Herkunft sind im [Handbucheinstieg](README.md) dokumentiert. Die RIS-Fachabnahme bestätigt den geprüften Import- und Darstellungsumfang. Die getrennte regelbasierte Erkenntnisbildung aus Paket B hat eigene technische Prüfungen und einen eigenen Bereitstellungsnachweis. Die allgemeine öffentliche Besuchersicht und weitergehende Analysen bleiben gesonderte Arbeitspakete. Eine manuelle RIS-Analysefreigabe ist nicht geplant.
 
 Der demokratisch-gesellschaftliche Referenzrahmen besitzt weiterhin keine vollständig beschlossenen Bewertungskriterien. Daraus werden im RIS-Dokumentationsabgleich keine zusätzlichen Regeln abgeleitet.
 

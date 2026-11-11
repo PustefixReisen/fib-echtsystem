@@ -86,12 +86,20 @@ Die Sitzungsansicht bietet keine RIS-Bearbeitungsaktionen, keine zusätzliche Er
 
 Meldungen, Vorgänge und Themen können amtliche Informationen nach den allgemeinen Redaktionsregeln nutzen. Ihre fachliche Bewertung und öffentliche Beitragsfreigabe erfolgen an diesen Folgeobjekten. Dabei entsteht kein Schreibrecht auf importierte RIS-Daten, TOP-Ereignisse oder deren Fundstellenzuordnungen. Die Übernahme von TOPs erzeugt für sich keine Meldung und keine automatische Vorgangs- oder Themenanalyse.
 
-Die **automatische strukturierte Inhaltsanalyse (Paket B)** ist ein Zukunftskonzept und noch nicht implementiert. Die RIS-Fachabnahme bestätigt die Übernahme, die Ergebnisermittlung und die Darstellung, nicht eine bereits arbeitende inhaltliche Analyse mit automatischer Fortschreibung von Meldungen, Vorgängen oder Themen. Paket B wird als nächster fachlicher Arbeitsblock konkretisiert. Eine manuelle RIS-Analysefreigabe ist dafür nicht geplant. Die bestehenden Freigaben öffentlicher Beiträge und die Regeln der jeweiligen Folgeobjekte sind davon zu unterscheiden.
+### Paket B – getrennte automatische Erkenntnisbildung
+
+Paket B ergänzt einen nachgelagerten Analysearbeiter. Er wertet zuerst die vorhandenen strukturierten Angaben regelbasiert aus. Bei dokumentierter Zulässigkeit kann er Original-PDFs temporär abrufen und ihre Texte im Arbeitsspeicher auswerten. Er erzeugt automatisch gekennzeichnete Erkenntnisse über Sachgebiete, Orte, Referenzobjekte, ausgewählte Einrichtungen/Organisationen und wesentliche Gegenstände. Belegte Status und Abstimmungen werden aus dem Importbestand übernommen. Zusammenhangskandidaten zu vorhandenen Vorgängen und Themen sind begründete Ableitungen und keine amtlich bestätigten Aussagen oder verbindlichen Folgezuordnungen.
+
+Jede Ergebnisversion ist an TOP, Quellenfassung/Fingerprint, Regelversion und Verarbeitungsprofil gebunden. Neue Quellenstände, ein geänderter Zielkatalog oder eine neue Regelversion können eine neue Analyse auslösen. Veraltete Ergebnisse werden nicht als aktueller Stand ausgegeben. Herkunft, Abdeckung und nicht ausgewertete Dokumente bleiben nachvollziehbar. Originalvolltexte werden nicht in den Analyseprodukten gespeichert.
+
+Die Verarbeitung hat keinen redaktionellen Bearbeitungs-, Bestätigungs- oder Freigabeschritt. Ihre Fehler und Wiederholungen liegen außerhalb der Importtransaktion. Meldungen, Vorgänge und Themen entscheiden über ihre Folgebeziehungen und öffentlichen Beiträge nach ihren eigenen Regeln. Eine automatische Fortschreibung dieser Folgeobjekte oder freie inhaltliche Zusammenfassung unbekannter Dokumentinhalte ist mit dem regelbasierten ersten Umfang nicht als umgesetzt bestätigt.
+
+Die konkrete Regelbasis ist in [Fach-/Technikkonzept und Prüfbericht zu #428](../operations/ris-analysis-428.md) dokumentiert. Mistral bleibt als optionale Erweiterung vorbereitet. Der Arbeiter führt keine kostenpflichtigen KI-Aufrufe aus. Temporäre Dokumentauswertung benötigt ein dokumentiertes Rechteprofil beziehungsweise eine vom Betreiber genehmigte Dokumentklasse. Diese Betriebsentscheidung ersetzt keine Speicher- oder öffentliche Nutzungsfreigabe.
 
 <details>
-<summary>Verbindliche Abgrenzung zur Inhaltsanalyse</summary>
+<summary>Verbindliche Abgrenzung der automatischen Analyse</summary>
 
-**FIB-RIS-ANALYSE-001 – Analyse als künftiger Ausbau.** Die automatische strukturierte Inhaltsanalyse gehört zu Paket B und ist keine Ist-Funktion der abgenommenen RIS-Verarbeitung. Eine manuelle RIS-Analysefreigabe ist nicht vorgesehen. Die Fortschreibung redaktioneller Folgeobjekte richtet sich nach deren eigenen Regeln und berechtigt nicht zur Änderung amtlicher Importdaten.
+**FIB-RIS-ANALYSE-001 – Getrennte automatische Erkenntnisbildung.** Der Analysearbeiter erzeugt eigenständige, versionierte und redaktionell unveränderliche Ableitungen mit nachvollziehbaren Quellenbelegen. Er verändert weder die RIS-Originaldaten noch die TOP-Ereignisse oder ihre Dokumentzuordnungen. Es gibt keine manuelle RIS-Analysefreigabe. Unsichere beziehungsweise regelbasiert erschlossene Aussagen bleiben als automatisch erzeugte Ableitungen gekennzeichnet. Quellenänderungen lösen erneute Verarbeitung aus und entwerten frühere Ergebnisse als aktuellen Stand. Originaltexte werden nur im zulässigen Rahmen temporär verarbeitet. Fehler oder fehlendes KI-Budget dürfen den Import nicht beeinträchtigen. Die Fortschreibung redaktioneller Folgeobjekte folgt deren eigenen Regeln.
 
 </details>
 
@@ -113,7 +121,7 @@ Die Rechteprüfung für eine Speicherung oder öffentliche Dokumentnutzung ist v
 | Wiederholungsimport | Bestehende TOP-Ereignis-Identitäten und Dokumentzuordnungen bleiben stabil. |
 | Redaktioneller Änderungsversuch | RIS-Daten, TOP-Ereignisse und ihre importgesteuerten Fundstellenzuordnungen bleiben schreibgeschützt. |
 | Desktop und Firefox 412 px | Sitzungsliste und Sitzungsseite sind lesbar. Suche reagiert auf Eingabe, Navigation und Links bleiben dem Bezugstext zugeordnet. |
-| Inhaltsanalyse | Aus der Import- und UI-Abnahme wird keine Umsetzung von Paket B abgeleitet. |
+| Inhaltsanalyse | Die Import-/UI-Fachabnahme bleibt auf ihren geprüften Umfang begrenzt. Paket B hat eigene technische Nachweise im verlinkten Bericht. |
 
 Die technischen Nachweise stehen in PR #422, #424 und #426. Die persönliche fachliche Abnahme wurde am 11.11.2026 erteilt. Das belegt den geprüften Umfang und die Referenzsitzungen, keine lückenlose Erfassung sämtlicher historischen RIS-Veröffentlichungen. Technische Wiederherstellbarkeit, Authentifizierung und Schutz der gemeinsam genutzten Shared-Apps-Umgebung bleiben Gegenstand der Betriebsregeln.
 

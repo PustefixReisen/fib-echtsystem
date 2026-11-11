@@ -1,0 +1,50 @@
+name: RIS automatic analysis
+on:
+  pull_request:
+    paths:
+      - 'supabase/functions/_shared/ris-analysis*.ts'
+      - 'supabase/functions/fib-ris-analysis/**'
+      - 'supabase/functions/fib-u4-ris-pilot/**'
+      - 'supabase/functions/fib-u4-ris-scheduled/**'
+      - 'supabase/functions/fib-editorial-write/**'
+      - 'supabase/migrations/*automatic_analysis.sql'
+      - 'tests/ris-analysis/**'
+      - 'scripts/ris-analysis/**'
+      - '.github/workflows/ris-analysis.yml'
+permissions:
+  contents: read
+jobs:
+  analysis:
+    strategy:
+      fail-fast: false
+      matrix:
+        postgres: ['16', '17']
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    services:
+      postgres:
+        image: postgres:${{ matrix.postgres }}
+        env:
+          POSTGRES_PASSWORD: isolated_only
+          POSTGRES_DB: fib_u4_test
+        ports: ['5432:5432']
+        options: --health-cmd pg_isready --health-interval 2s --health-timeout 5s --health-retries 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: npm install --ignore-scripts --no-package-lock --no-audit --no-fund
+      - name: Rule-based reference cases and source boundaries
+        run: node --import tsx tests/ris-analysis/rules.spec.mts
+      - name: Actual PostgreSQL isolation, reanalysis, leases and retries
+        env:
+          U4_TEST_DATABASE_URL: postgres://postgres:isolated_only@127.0.0.1:5432/fib_u4_test
+        run: node --import tsx tests/ris-analysis/postgres.spec.mts
+      - uses: denoland/setup-deno@v2
+        with:
+          deno-version: 2.9.6
+      - name: Check new Edge worker
+        run: deno check --no-lock --node-modules-dir=auto supabase/functions/fib-ris-analysis/index.ts
+      - name: Actual worker HTTP authorization without network access
+        run: deno run --no-lock --node-modules-dir=auto --allow-env tests/ris-analysis/http.spec.ts

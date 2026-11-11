@@ -123,7 +123,7 @@ Ein neuer Referenzmaßstab wird nur vorgeschlagen, wenn er gegenüber dem besteh
 
 Die frühere redaktionelle Funktion `manage_meeting_context` ist fachlich durch den quellengebundenen RIS-Import und die lesende Sitzungsansicht ersetzt. Der abgenommene Umfang steht in [Kapitel 07](fachhandbuch/07-Sitzungen-und-Beschluesse-Entwurf-2026-10-26.md). Je TOP entstehen genau ein geschütztes Ereignis und automatische Fundstellenzuordnungen. Der Import übernimmt belegte Status und Abstimmungen. Redaktionelle CRUD-Funktionen für Sitzung, TOP oder Beschlussfassungen sind nicht vorgesehen.
 
-Bezüge öffentlicher Meldungen werden über Meldung → TOP-Ereignis → TOP → Sitzung abgeleitet. Die strukturierte Inhaltsanalyse gehört zum künftigen Paket B und ist noch nicht implementiert. Die allgemeinen Funktionen für Meldungen, Vorgänge, Themen und deren Freigaben bleiben eigene Prozesse.
+Bezüge öffentlicher Meldungen werden über Meldung → TOP-Ereignis → TOP → Sitzung abgeleitet. Die getrennte regelbasierte Erkenntnisbildung aus Paket B ist nach Kapitel 07 spezifiziert und implementiert. Die allgemeinen Funktionen für Meldungen, Vorgänge, Themen und deren Freigaben bleiben eigene Prozesse.
 
 ### 5.6 Bilder
 

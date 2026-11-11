@@ -4,7 +4,7 @@
 
 Das Fachkonzept des FIB-Echtsystems mit elf Kapiteln wurde am **29.10.2026 fachlich abgenommen**. PR #259 ist in `main` zusammengeführt.
 
-Am **11.11.2026** wurde der RIS-Funktionsumfang auf Desktop und bei 412 px fachlich abgenommen. Die dafür fortgeschriebenen Regeln stehen in [Kapitel 07](07-Sitzungen-und-Beschluesse-Entwurf-2026-10-26.md). Diese Fortschreibung ersetzt die ältere redaktionelle RIS-Bearbeitung und die zusätzlichen Ereigniszuordnungen an TOPs. Die automatische strukturierte Inhaltsanalyse als Paket B ist noch nicht implementiert. Die Abnahme ist auf den geprüften RIS-Umfang begrenzt.
+Am **11.11.2026** wurde der RIS-Funktionsumfang auf Desktop und bei 412 px fachlich abgenommen. Die dafür fortgeschriebenen Regeln stehen in [Kapitel 07](07-Sitzungen-und-Beschluesse-Entwurf-2026-10-26.md). Diese Fortschreibung ersetzt die ältere redaktionelle RIS-Bearbeitung und die zusätzlichen Ereigniszuordnungen an TOPs. Paket B ergänzt eine getrennte regelbasierte Erkenntnisbildung mit eigenem technischen Prüf- und Bereitstellungsnachweis. Die Abnahme ist auf den geprüften RIS-Umfang begrenzt.
 
 Der [Änderungs- und Prüfnachweis](../tests/ris-fachabnahme-2026-11-11.md) nennt die angepassten Kapitel, die ersetzten Regeln und die verbliebenen Umsetzungsgrenzen.
 

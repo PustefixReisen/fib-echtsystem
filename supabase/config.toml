@@ -7,3 +7,7 @@ verify_jwt = true
 # its handler requires a long secret and explicit enable flag.
 [functions.fib-u4-ris-scheduled]
 verify_jwt = false
+
+# Same purpose-scoped secret and opt-in gate as the existing RIS scheduler.
+[functions.fib-ris-analysis]
+verify_jwt = false

@@ -70,7 +70,7 @@ Der RIS-Import und die Redaktionsansicht aus PR #422, #424 und #426 sind fachlic
 
 Paket C aus [#427](https://github.com/PustefixReisen/fib-echtsystem/issues/427) führt diese Abnahme in das Handbuch, das Strukturmodell und die abhängigen Regeln über. Der [Änderungsnachweis](tests/ris-fachabnahme-2026-11-11.md) dokumentiert die Konsistenzprüfung. Die früheren Zwischenstände vom 31.10. bis 08.11. bleiben in den datierten technischen Berichten und der Git-Historie nachvollziehbar.
 
-**Nächster fachlicher Schritt ist Paket B**, die automatische strukturierte RIS-Inhaltsanalyse. Sie ist noch nicht implementiert und wird separat konkretisiert. Eine manuelle RIS-Analysefreigabe ist nicht geplant. Die bestehende Fachabnahme bestätigt weder den vollständigen allgemeinen U4-Umfang noch eine allgemeine Betriebs-/Sicherheitsfreigabe.
+**Paket B aus #428 ist regelbasiert implementiert und technisch separat zu prüfen/bereitzustellen.** Der [Bericht](operations/ris-analysis-428.md) beschreibt eigene Arbeitszustände, versionierte Erkenntnisprodukte, Quellenbelege und Zusammenhangskandidaten. Die Dokumentauswertung und die vorgesehene Mistral-Erweiterung haben eigene Betriebs-/Rechte-/Kostengrenzen. Die automatische inhaltliche Fortschreibung von Meldungen, Vorgängen und Themen bleibt ein weiterer Ausbau. Die Bereitstellung und Aktivierung werden getrennt von der bereits erteilten RIS-Fachabnahme ausgewiesen.
 
 ## 3. U1 – aktueller Stand
 
