@@ -19,6 +19,17 @@ try {
  equal(unconfigured.status,503);
  equal((await unconfigured.json()).error,'runtime_not_configured');
  Deno.env.set('FIB_DATABASE_URL','postgres://nobody@127.0.0.1:1/never-connect');
+ // Real handler routing: readiness works while disabled and without network or DB permissions.
+ Deno.env.set('FIB_RIS_ANALYSIS_ENABLED','false');
+ const probe=()=>handler.fetch(new Request('https://example.invalid/functions/v1/fib-ris-analysis/preflight'));
+ const ready=await probe();equal(ready.status,200);
+ equal(await ready.text(),JSON.stringify({check:'ris-analysis-runtime-v1',ready:true}));
+ Deno.env.delete('FIB_RIS_SCHEDULER_TOKEN');equal((await probe()).status,503);
+ Deno.env.set('FIB_RIS_SCHEDULER_TOKEN','short');equal((await probe()).status,503);
+ Deno.env.set('FIB_RIS_SCHEDULER_TOKEN','test-only-'.repeat(5));
+ equal((await call()).status,503); // Probe did not activate analysis.
+ Deno.env.set('FIB_RIS_ANALYSIS_ENABLED','true');
+ equal((await call()).status,403);equal((await call('wrong')).status,403);
  for(const body of ['null','[]','1','{"enabled":true}','{"url":"https://evil.invalid"}'])
   equal((await call('test-only-'.repeat(5),body)).status,400);
  console.log('PASS real analysis HTTP handler: disabled gate, method, scoped secret and payload restrictions. No database/network connection attempted.');
