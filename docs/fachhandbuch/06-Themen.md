@@ -55,7 +55,7 @@ Ein Thema ist eine **redaktionell verantwortete Leitfrage**. Die KI erkennt mög
 
 Ein Thema nutzt vorzugsweise **Vorgänge** und deren Ereignisse. Ergänzende **direkte Einzelereignisse** sind erlaubt, wenn sie nicht sinnvoll durch einen bestätigten Vorgang abgedeckt sind. **Meldungen bilden keinen dritten Auswahlweg**. Derselbe Sachverhalt darf nicht aufgrund mehrfacher Darstellungen übergewichtet werden.
 
-FIB erkennt neue unmittelbare und **begründet mittelbare** Beziehungen, auch ohne ausdrückliche Ortsnennung, wenn eine konkrete räumliche, funktionale oder fachliche Verbindung vorliegt. Eindeutige Beziehungen können als **vorläufige Kandidaten** entstehen; zweifelhafte werden zunächst mit erlaubten Informationsmitteln geprüft und bei verbleibendem Entscheidungsbedarf der Redaktion vorgelegt.
+FIB erkennt neue unmittelbare und **begründet mittelbare** Beziehungen, auch ohne ausdrückliche Ortsnennung, wenn eine konkrete räumliche, funktionale oder fachliche Verbindung vorliegt. Eindeutige Beziehungen können von FIB **automatisch als vorläufige Kandidaten** angelegt werden, auch ohne einzelne Redaktionshandlung. Der Status **Zugeordnet** und die Bedeutungseinstufung **prägend / relevant / ergänzend** bleiben redaktionelle Entscheidungen. Zweifelhaftes wird zunächst mit erlaubten Informationsmitteln geprüft und bei verbleibendem Entscheidungsbedarf der Redaktion vorgelegt. Bereits redaktionell abgelehnte Beziehungen dürfen nicht automatisch reaktiviert werden.
 
 Die bisherige Regel FIB-THEMA-BEZUG-002 unterscheidet **Kandidat, Zugeordnet, Zurückgestellt, Fachlich unpassend**; die neue automatische Vorprüfung erfordert **keinen fünften Status**. Bestehende bestätigte/abgelehnte Beziehungen werden nicht automatisch umgewidmet. Herkunft aus der KI ist keine Statusart.
 
@@ -65,7 +65,7 @@ Die Bedeutung eines fachlichen Bezugs ist **nicht** die redaktionelle Gewichtung
 
 ### Regeln zu lokalen Bezügen und Bedeutung
 
-Thematische Zusammenhänge entstehen aus fachlich geprüften Beziehungen zu **Vorgängen** und ergänzend geeigneten **direkten Einzelereignissen**; Meldungen sind kein dritter Auswahlweg. Die KI darf Zuordnungen vorbereiten, aber weder eine negative redaktionelle Entscheidung stillschweigend übergehen noch ihre Bedeutung automatisch als verbindlich festlegen.
+Thematische Zusammenhänge entstehen aus fachlich geprüften Beziehungen zu **Vorgängen** und ergänzend geeigneten **direkten Einzelereignissen**; Meldungen sind kein dritter Auswahlweg. Die KI darf Zuordnungen automatisch **als Kandidaten vorbereiten**, aber weder den verbindlichen Status **Zugeordnet** ohne Redaktion setzen noch eine negative redaktionelle Entscheidung stillschweigend übergehen oder ihre Bedeutung automatisch als verbindlich festlegen.
 
 | Kennung | Fachliche Regel |
 |---|---|
