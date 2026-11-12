@@ -126,3 +126,13 @@ Die Rechteprüfung für eine Speicherung oder öffentliche Dokumentnutzung ist v
 Die technischen Nachweise stehen in PR #422, #424 und #426. Die persönliche fachliche Abnahme wurde am 11.11.2026 erteilt. Das belegt den geprüften Umfang und die Referenzsitzungen, keine lückenlose Erfassung sämtlicher historischen RIS-Veröffentlichungen. Technische Wiederherstellbarkeit, Authentifizierung und Schutz der gemeinsam genutzten Shared-Apps-Umgebung bleiben Gegenstand der Betriebsregeln.
 
 Frühere technische Berichte aus Oktober und Anfang November dokumentieren damalige Prüfstände. Für die hier ersetzten fachlichen Regeln und die aktuelle RIS-Bedienung gilt dieses Kapitel. Änderungen gegenüber diesen Vorständen sind im [Änderungsnachweis zu #427](../tests/ris-fachabnahme-2026-11-11.md) zugeordnet.
+
+
+### Gemeinsamer Fundstellenabstract-Dienst – Zielbild, nicht bereits implementiert
+
+Für die automatisch zugeordneten RIS-Fundstellen gilt künftig dieselbe quellenübergreifende Abstractanalyse wie für Presse- und Gemeinde-Fundstellen ([Kapitel 03](03-Recherche.md)). **Die RIS-Originale, TOP-Ereignisse und automatisch festgelegten Fundstellenbeziehungen werden dadurch niemals redaktionell verändert.** Eine Sitzungsniederschrift bleibt genau eine Fundstelle. Ihre automatisch erzeugten, TOP-bezogenen Abstract-Abschnitte sind getrennte, quellenbelegte Auswertungssichten und dürfen keine Inhalte anderer TOPs übernehmen.
+
+Ein RIS-Abstract dient ausschließlich der internen, automatisierten Erschließung und möglichen Beziehungskandidaten zu nachgelagerten Meldungen, Vorgängen und Themen; keine zusätzliche RIS-Redaktion oder Einzelabnahme. Amtliche Beschlussergebnisse und Abstimmungen stammen weiterhin aus der deterministischen RIS-Übernahme und werden nicht durch KI überschrieben. KI-Verarbeitung und Zugriffsrechte bleiben vom Import getrennt und gesondert freizugeben.
+
+**Ist/Soll-Abgrenzung (12.11.2026):** Die bereits bereitgestellte RIS-Regelanalyse `rules-3` erzeugt strukturierte Erkenntnisse aus Metadaten, nicht diese KI-Abstracts aus vollständigen Dokumentinhalten. Die neue quellenübergreifende Funktion ist erst Fachentscheidung und Entwicklungsauftrag. Siehe [Entscheidungsvorlage](../operations/fundstellenabstracts-entscheidung-440.md).
+
