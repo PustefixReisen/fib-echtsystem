@@ -111,13 +111,13 @@ try {
  const [{id:abstractVersionId}]=await query(`insert into fib.finding_versions(
    finding_id,revision,fingerprint,observed_at,original_url,metadata)
    values($1,1,$2,now(),$3,'{}'::jsonb) returning id`,
-   [findingId,'a'.abstractRepeat(64),docUrl]);
- const ctx={findingId,findingVersionId:abstractVersionId,fingerprint:'a'.abstractRepeat(64),
+   [findingId,'a'.repeat(64),docUrl]);
+ const ctx={findingId,findingVersionId:abstractVersionId,fingerprint:'a'.repeat(64),
    sourceUrl:docUrl,sourceKind:'press' as const,model:'rules',modelVersion:'test-1',
    schemaVersion:'v1'};
  const raw={summary:'Fiktiver Testfall ohne Quelle.',claims:[{
    kind:'fact',statement:'Ein synthetischer Sachverhalt.',certainty:'supported',
-   evidence:[{url:docUrl,abstractVersionId}]}],relations:[],limitations:[]};
+   evidence:[{url:docUrl,versionId:abstractVersionId}]}],relations:[],limitations:[]};
  const permit=async()=>true;const deny=async()=>false;
  await assert.rejects(()=>db.transaction(tx=>appendFindingAbstract(tx,ctx,raw,deny)),/not_authorized/);
  const abstractFirst=await db.transaction(tx=>appendFindingAbstract(tx,ctx,raw,permit));
@@ -130,7 +130,7 @@ try {
  await assert.rejects(()=>db.transaction(tx=>appendFindingAbstract(tx,ctx,{...raw,rawText:'secret'},permit)),
    /invalid_abstract/);
  await assert.rejects(()=>db.transaction(tx=>appendFindingAbstract(tx,
-   {...ctx,fingerprint:'b'.abstractRepeat(64)},raw,permit)),/source_changed/);
+   {...ctx,fingerprint:'b'.repeat(64)},raw,permit)),/source_changed/);
  await assert.rejects(()=>db.unsafe("update fib.finding_abstract_versions set result='{}'::jsonb"),
    /permission denied/);
  await assert.rejects(()=>db.unsafe('delete from fib.finding_abstract_versions'),
@@ -138,14 +138,14 @@ try {
  const [{id:abstractNextVersion}]=await query(`insert into fib.finding_versions(
    finding_id,revision,fingerprint,observed_at,original_url,metadata)
    values($1,2,$2,now(),$3,'{}'::jsonb) returning id`,
-   [findingId,'b'.abstractRepeat(64),docUrl]);
+   [findingId,'b'.repeat(64),docUrl]);
  assert.equal(await db.transaction(tx=>readCurrentFindingAbstract(tx,ctx,permit)),null);
  await assert.rejects(()=>db.transaction(tx=>appendFindingAbstract(tx,ctx,raw,permit)),
    /source_not_current/);
- const abstractNextCtx={...ctx,findingVersionId:abstractNextVersion,fingerprint:'b'.abstractRepeat(64)};
- const abstractNextRaw={...raw,claims:raw.claims.map(c=>({...c,evidence:[{url:docUrl,abstractVersionId:abstractNextVersion}]}))};
+ const abstractNextCtx={...ctx,findingVersionId:abstractNextVersion,fingerprint:'b'.repeat(64)};
+ const abstractNextRaw={...raw,claims:raw.claims.map(c=>({...c,evidence:[{url:docUrl,versionId:abstractNextVersion}]}))};
  const abstractNext=await db.transaction(tx=>appendFindingAbstract(tx,abstractNextCtx,abstractNextRaw,permit));
- assert.equal(next.existing,false);
+ assert.equal(abstractNext.existing,false);
  assert.equal((await query('select count(*)::int n from fib.finding_abstract_versions'))[0].n,2,
    'Old derived versions are immutable history');
  await query('begin');await query('set local role authenticated');
