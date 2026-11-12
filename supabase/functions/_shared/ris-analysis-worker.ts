@@ -18,6 +18,8 @@ export async function analysisInput(tx:RisSql,agendaId:string,documentPolicy:str
     join fib.ris_sessions s on s.id=a.session_id
     join fib.ris_session_versions v on v.id=a.latest_snapshot_id where a.id=$1`,[agendaId]);
   if(!agenda)return null;
+  const peers = await tx.unsafe('select id,number,title from fib.ris_agenda_items where session_id=$1 and id<>$2 order by number::integer',[agenda.session_id,agendaId]);
+  const peerAgendas = peers.map(p=>({id:p.id,number:p.number,title:p.title,source_url:agenda.source_url}));
   const numbers = await tx.unsafe('select number from fib.ris_agenda_items where session_id=$1 order by number::integer',[agenda.session_id]);
   const documents = await tx.unsafe(`select distinct d.id,d.latest_version_id version_id,v.content_hash,
     d.source_url,d.finding_id,l.kind,v.content_author,v.rights_evidence
@@ -34,7 +36,7 @@ export async function analysisInput(tx:RisSql,agendaId:string,documentPolicy:str
   // imported versions exist, only actual source/profile/catalogue changes rerun.
   const refreshKey=documents.some(d=>!d.content_hash && documentPolicy.includes(d.kind))
     ?new Date().toISOString().slice(0,10):null;
-  return {refreshKey,documentPolicy,agenda,numbers:numbers.map(row=>Number(row.number)),documents,votes,targets} as AnalysisInput;
+  return {refreshKey,documentPolicy,agenda,numbers:numbers.map(row=>Number(row.number)),documents,votes,targets,peerAgendas} as AnalysisInput;
 }
 export async function readRisAnalysis(tx:RisSql,agendaId:string,documentPolicy:string[]=[]) {
   const input = await analysisInput(tx,agendaId,documentPolicy);
