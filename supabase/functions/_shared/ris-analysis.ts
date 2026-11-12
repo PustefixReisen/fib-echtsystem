@@ -1,7 +1,7 @@
 import { risHash } from './ris-structure.ts';
 import { splitRisMinutesByAgenda } from './ris-minutes-candidates.ts';
 
-export const RIS_ANALYZER_VERSION = 'rules-1';
+export const RIS_ANALYZER_VERSION = 'rules-2';
 export type Evidence = {
   kind: 'agenda' | 'document' | 'vote';
   url: string;
@@ -97,16 +97,24 @@ export function analyzeRis(input:AnalysisInput,
   };
   const agendaEvidence:Evidence = {kind:'agenda',url:input.agenda.source_url,topNumber:Number(input.agenda.number)};
   classify(input.agenda.title,agendaEvidence);
-  add('treatment',input.agenda.observed_treatment ?? input.agenda.treatment_status,
-    'imported-treatment-v1',agendaEvidence,'source');
   const currentVotes=input.votes.filter(vote=>!input.documents.some(d=>d.source_url===vote.source_document_url &&
     d.content_hash && d.content_hash!==vote.source_sha256));
+  const treatment=input.agenda.observed_treatment ?? input.agenda.treatment_status;
+  // An observed top-level description may describe only one of several decisions.
+  // Never present 'unanimous' as a fact for the whole TOP if a recorded vote dissents.
+  const contradictsUnanimity=/einstimmig/i.test(treatment) &&
+    currentVotes.some(v=>v.no_count!==null && v.no_count>0 || v.abstention_count!==null && v.abstention_count>0);
+  if(contradictsUnanimity) {
+    add('treatment','mehrere oder abweichende Abstimmungsergebnisse; Einzelabstimmungen maßgeblich',
+      'vote-consistency-v1',agendaEvidence,'derived');
+  } else add('treatment',treatment,'imported-treatment-v1',agendaEvidence,'source');
   for(const vote of currentVotes) add('vote',JSON.stringify({index:vote.vote_index,result:vote.result,
     yes:vote.yes_count,no:vote.no_count,abstention:vote.abstention_count}),
     'imported-vote-v1',{kind:'vote',url:vote.source_document_url,sha256:vote.source_sha256},'source');
   const limitations = ['Automatically generated. Subject, matter, entity and relationship matches are derived, not official confirmation.',
     'Fixed vocabulary. Unrecognized places, organizations and semantic relations may be missing.'];
   if(currentVotes.length!==input.votes.length)limitations.push('Imported votes refer to a superseded document fingerprint and are not asserted as current.');
+  if(contradictsUnanimity)limitations.push('A top-level unanimous treatment conflicts with individual votes; do not infer overall unanimity.');
   for(const {document,pages} of documents) {
     if(document.kind==='minutes') {
       // Never assign another TOP's discussions to the current TOP.
