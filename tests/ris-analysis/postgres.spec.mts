@@ -212,7 +212,7 @@ try {
  await query('update fib.finding_abstract_permissions set external_ai_allowed=true where finding_version_id=$1',
    [abstractNextVersion]);
  assert.equal(await checkExternalAi(identity),true);
- await query('update fib.finding_abstract_permissions set expires_at=now()-interval \'1 second\' where finding_version_id=$1',
+ await query('update fib.finding_abstract_permissions set reviewed_at=now()-interval \'2 days\', expires_at=now()-interval \'1 day\' where finding_version_id=$1',
    [abstractNextVersion]);
  assert.equal(await checkExternalAi(identity),false,'Expired approvals fail closed');
  // All requests serialized against one budget row, including multiple workers.
