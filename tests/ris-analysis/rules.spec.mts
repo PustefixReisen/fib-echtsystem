@@ -25,6 +25,22 @@ centerInput.votes=[{vote_index:1,result:'accepted',yes_count:17,no_count:2,abste
  {vote_index:2,result:'accepted',yes_count:19,no_count:0,abstention_count:null,source_document_url:url,source_sha256:'a'.repeat(64)}];
 const center=analyzeRis(centerInput,[],[]);
 assert.equal(center.insights.filter(i=>i.kind==='vote').length,2);
+const inconsistentCenter=structuredClone(centerInput);
+inconsistentCenter.agenda.observed_treatment='einstimmig angenommen';
+const mixed=analyzeRis(inconsistentCenter,[],[]);
+assert.equal(mixed.insights.some(i=>i.kind==='treatment' && i.value==='einstimmig angenommen'),false,
+  'Mixed votes must not produce an overall unanimous statement');
+assert.equal(mixed.insights.filter(i=>i.kind==='vote').length,2,'Both official votes remain unchanged');
+assert.ok(mixed.insights.some(i=>i.rule==='vote-consistency-v1'));
+assert.ok(mixed.limitations.some(x=>x.includes('conflicts with individual votes')));
+const unanimous=structuredClone(inconsistentCenter);
+unanimous.votes[0].yes_count=19;unanimous.votes[0].no_count=0;
+const fullyUnanimous=analyzeRis(unanimous,[],[]);
+assert.ok(fullyUnanimous.insights.some(i=>i.kind==='treatment' && i.value==='einstimmig angenommen'));
+const abstaining=structuredClone(unanimous);
+abstaining.votes[0].abstention_count=1;
+assert.equal(analyzeRis(abstaining,[],[]).insights.some(i=>i.kind==='treatment' && i.value==='einstimmig angenommen'),false);
+
 assert.ok(center.insights.some(i=>i.value==='data_center'));
 assert.ok(center.insights.some(i=>i.value==='parcel:597/5'));
 assert.ok(center.insights.some(i=>i.value==='parcel:598/2'));
