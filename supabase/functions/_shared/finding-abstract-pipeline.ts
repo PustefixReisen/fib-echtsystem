@@ -54,7 +54,17 @@ export async function processFindingAbstract(
  // The generator may be an offline rule adapter or a separately approved model.
  // It cannot influence either rights evaluation or source identity.
  const candidate=await pipeline.generate({context,segments:Object.freeze(segments)});
- validateFindingAbstract({...context,permitted:true},candidate);
+ const validated=validateFindingAbstract({...context,permitted:true},candidate);
+ // Schema-valid URLs alone do not prove that a cited page/TOP was loaded.
+ // Reject hallucinated page numbers before writing any derived artifact.
+ const cited=[...validated.claims.flatMap(c=>c.evidence),
+   ...validated.relations.flatMap(r=>r.evidence)];
+ for(const cite of cited){
+   if(cite.page===undefined || !segments.some(segment=>
+      segment.page===cite.page &&
+      (context.scopeTop===undefined?cite.top===undefined:segment.top===cite.top)))
+     throw Error('abstract_evidence_not_in_loaded_segments');
+ }
  // Re-evaluate authorization at persistence; the repository verifies that
  // the original revision is still current before an immutable insert.
  const stored=await pipeline.transaction(tx=>appendFindingAbstract(

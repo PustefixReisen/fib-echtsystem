@@ -5,6 +5,7 @@ import {parseRisStructure,persistRisStructure,persistRisDocument,risHash} from '
 import {runRisAnalysis,readRisAnalysis,analysisInput,type AnalysisDatabase} from '../../supabase/functions/_shared/ris-analysis-worker.ts';
 import {appendFindingAbstract,readCurrentFindingAbstract} from '../../supabase/functions/_shared/finding-abstract-storage.ts';
 import {processFindingAbstract,syntheticExtractiveGenerator} from '../../supabase/functions/_shared/finding-abstract-pipeline.ts';
+import {databaseAbstractRights,databasePilotBudget} from '../../supabase/functions/_shared/finding-abstract-pilot-gates.ts';
 const connection=process.env.U4_TEST_DATABASE_URL;
 if(!connection)throw Error('isolated_test_database_required');
 const u=new URL(connection);
@@ -34,6 +35,7 @@ try {
   await query(readFileSync('supabase/'+path,'utf8'));
  await query(readFileSync('supabase/migrations/20261111083118_fib_ris_automatic_analysis.sql','utf8'));
  await query(readFileSync('supabase/migrations/20261112140000_fib_finding_abstract_versions.sql','utf8'));
+ await query(readFileSync('supabase/migrations/20261112145000_fib_abstract_pilot_gates.sql','utf8'));
  await query('create table if not exists public.memorix_analysis_sentinel(value text);truncate public.memorix_analysis_sentinel;insert into public.memorix_analysis_sentinel values(\'unchanged\')');
  await query("insert into fib.sources(name,homepage_url) values('RIS','https://buergerinfo-feldkirchen.digitalfabrix.de')");
  const indexed=JSON.parse(readFileSync('tests/u4/fixtures/ris-1031-public-agenda-indexed-20261109.json','utf8'));
@@ -189,5 +191,62 @@ try {
  assert.equal((await query('select count(*)::int n from fib.finding_abstract_versions'))[0].n,3,
    'Fail-closed cases never store a result');
  console.log('PASS synthetic pipeline: source rights before access, bounded segments, TOP isolation, repeat cache, immutable PostgreSQL insert');
+ // Operator-owned rights: missing decision must deny, runtime cannot grant itself.
+ const checkRights=databaseAbstractRights(db.transaction,false);
+ const checkExternalAi=databaseAbstractRights(db.transaction,true);
+ const identity={findingId,findingVersionId:abstractNextVersion,sourceKind:'press' as const};
+ assert.equal(await checkRights(identity),false);
+ assert.equal(await checkExternalAi(identity),false);
+ await assert.rejects(()=>db.unsafe(`insert into fib.finding_abstract_permissions(
+   finding_version_id,source_kind,permitted,rights_basis,privacy_basis,reviewed_by,expires_at)
+   values($1,'press',true,'synthetic permission','synthetic privacy',$2,now()+interval '1 day')`,
+   [abstractNextVersion,reviewer]),/permission denied/);
+ await query(`insert into fib.finding_abstract_permissions(
+   finding_version_id,source_kind,permitted,rights_basis,privacy_basis,
+   external_ai_allowed,reviewed_by,expires_at)
+   values($1,'press',true,'Synthetic authored-by-test permission',
+     'Synthetic test only no personal data',false,$2,now()+interval '1 day')`,
+   [abstractNextVersion,reviewer]);
+ assert.equal(await checkRights(identity),true);
+ assert.equal(await checkExternalAi(identity),false,'Local rights do not grant external AI transmission');
+ await query('update fib.finding_abstract_permissions set external_ai_allowed=true where finding_version_id=$1',
+   [abstractNextVersion]);
+ assert.equal(await checkExternalAi(identity),true);
+ await query('update fib.finding_abstract_permissions set reviewed_at=now()-interval \'2 days\', expires_at=now()-interval \'1 day\' where finding_version_id=$1',
+   [abstractNextVersion]);
+ assert.equal(await checkExternalAi(identity),false,'Expired approvals fail closed');
+ // All requests serialized against one budget row, including multiple workers.
+ const money=databasePilotBudget(db.transaction);
+ const reserve1='1'.repeat(64),reserve2='2'.repeat(64),reserve3='3'.repeat(64);
+ const concurrent=await Promise.allSettled([money.reserve(reserve1,350),money.reserve(reserve2,350)]);
+ assert.equal(concurrent.filter(r=>r.status==='fulfilled').length,1,'Atomic cap permits one of two simultaneous 350-cent requests');
+ const winningKey=concurrent[0].status==='fulfilled'?reserve1:reserve2;
+ const losingKey=winningKey===reserve1?reserve2:reserve1;
+ await assert.rejects(()=>money.reserve(winningKey,1),/duplicate_request/);
+ const winner=concurrent[0].status==='fulfilled'?concurrent[0].value:(concurrent[1] as PromiseFulfilledResult<Awaited<ReturnType<typeof money.reserve>>>).value;
+ await winner.uncertain();
+ await assert.rejects(()=>winner.releaseUnsent(),/reservation_final/,
+   'Ambiguous requests cannot reclaim held funds');
+ await assert.rejects(()=>money.reserve(losingKey,151),/budget_exhausted/);
+ const lower=await money.reserve(reserve3,149);
+ await lower.settle(21);
+ await lower.settle(21); // same billed amount idempotent
+ await assert.rejects(()=>lower.settle(22),/reservation_final/);
+ await assert.rejects(()=>money.reserve(reserve3,1),/duplicate_request/);
+ const [{held_cents:held,consumed_cents:used}]=await query('select held_cents,consumed_cents from fib.abstract_pilot_budget where id=1');
+ assert.equal(Number(held),350);
+ assert.equal(Number(used),21);
+ await assert.rejects(()=>money.reserve('4'.repeat(64),130),/budget_exhausted/);
+ await assert.rejects(()=>db.unsafe('delete from fib.finding_abstract_permissions'),/permission denied/);
+ await query('begin');await query('set local role authenticated');
+ await assert.rejects(()=>query('select * from fib.abstract_pilot_reservations'),/permission denied/);
+ await query('rollback');
+ // A fake model may cite the right URL but a page it never received.
+ await assert.rejects(()=>processFindingAbstract({...abstractPipelineContext,modelVersion:'wrong-page'},
+   {...abstractPipeline,generate:async()=>({summary:'Invented page',claims:[{
+     kind:'fact',statement:'Invented page',certainty:'supported',
+     evidence:[{url:docUrl,versionId:abstractNextVersion,page:90}]}],relations:[],limitations:[]})}),
+   /evidence_not_in_loaded_segments/);
+ console.log('PASS pilot gates: operator-only versioned rights, independent external-AI approval, expired rights, concurrent atomic EUR 5 cap and uncertain charges');
  console.log('PASS actual PostgreSQL: 21 reference TOPs, version reuse, stale suppression, policy/catalog changes, immutable outputs, RLS, backoff, source races, expired leases, competing workers, no stored text and unchanged original events');
 } finally {await owner.end();await pool.end();}
