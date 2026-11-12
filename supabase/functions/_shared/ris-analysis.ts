@@ -1,7 +1,7 @@
 import { risHash } from './ris-structure.ts';
 import { splitRisMinutesByAgenda } from './ris-minutes-candidates.ts';
 
-export const RIS_ANALYZER_VERSION = 'rules-2';
+export const RIS_ANALYZER_VERSION = 'rules-3';
 export type Evidence = {
   kind: 'agenda' | 'document' | 'vote';
   url: string;
@@ -26,6 +26,7 @@ export type AnalysisDocument = {
   content_author: string | null; rights_evidence: string | null;
 };
 export type Target = { id: string; kind: 'process' | 'topic'; title: string };
+export type PeerAgenda = {id:string;number:string;title:string;source_url:string};
 export type AnalysisInput = {
   documentPolicy: string[];
   refreshKey: string | null;
@@ -36,12 +37,13 @@ export type AnalysisInput = {
   votes: Array<{vote_index:number;result:string;yes_count:number|null;no_count:number|null;
     abstention_count:number|null;source_document_url:string;source_sha256:string}>;
   targets: Target[];
+  peerAgendas: PeerAgenda[];
 };
 export type DocumentCoverage = {documentId:string;versionId:string|null;sha256:string|null;
   status:'analyzed'|'metadata_only'|'rights_unverified'|'segmentation_unavailable'|'resource_limit'};
 export type AnalysisResult = {
   generated: true; method:'rules'; label:string; insights:Insight[];
-  relations:Array<{targetId:string;targetKind:Target['kind'];status:'candidate';subjects:string[];evidence:Evidence[]}>;
+  relations:Array<{targetId:string;targetKind:Target['kind']|'agenda';status:'candidate';subjects:string[];evidence:Evidence[]}>;
   quality:{documentCount:number;analyzedDocuments:number;importedFacts:number;derivedInsights:number};
   sources:Array<Pick<AnalysisDocument,'id'|'version_id'|'content_hash'|'source_url'|'finding_id'|'kind'>>; coverage:DocumentCoverage[]; limitations:string[];
 };
@@ -145,6 +147,19 @@ export function analyzeRis(input:AnalysisInput,
       .filter(code=>foundSubjects.some(i=>i.value===code));
     if(codes.length) relations.push({targetId:target.id,targetKind:target.kind,status:'candidate',subjects:codes,
       evidence:foundSubjects.filter(i=>codes.includes(i.value as typeof codes[number])).flatMap(i=>i.evidence)});
+  }
+  // Deliberately narrow same-session relation; two original agenda URLs are evidence.
+  // A shared generic topic alone must not create a spurious relationship.
+  const title=normalized(input.agenda.title);
+  const subsidy=/elternbeitragszuschuss/.test(title) && /(wegfall|entfall|streichung)/.test(title);
+  const fees=/beitragsanpassung/.test(title) && /kindertageseinrichtung/.test(title);
+  if(subsidy || fees)for(const peer of input.peerAgendas){
+    if(peer.id===input.agenda.id)continue;
+    const other=normalized(peer.title);
+    if((subsidy && /beitragsanpassung/.test(other) && /kindertageseinrichtung/.test(other)) ||
+      (fees && /elternbeitragszuschuss/.test(other) && /(wegfall|entfall|streichung)/.test(other)))
+      relations.push({targetId:peer.id,targetKind:'agenda',status:'candidate',subjects:['childcare_financing'],
+        evidence:[agendaEvidence,{kind:'agenda',url:peer.source_url,topNumber:Number(peer.number)}]});
   }
   return {generated:true,method:'rules',label:'Automatisch erzeugte RIS-Erkenntnisse',insights,relations,
     quality:{documentCount:input.documents.length,analyzedDocuments:coverage.filter(d=>d.status==='analyzed').length,

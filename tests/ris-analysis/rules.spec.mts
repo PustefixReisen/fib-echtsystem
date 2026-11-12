@@ -8,7 +8,7 @@ export function inputFor(number:number):AnalysisInput {
   return {refreshKey:null,documentPolicy:[],agenda:{id:'a',session_id:'s',number:String(number),
     title:indexed.agenda.find((a:any)=>a.number===String(number)).title,source_url:url,
     treatment_status:number===2?'withdrawn':'treated',observed_treatment:null,event_id:'e',session_date:indexed.date},
-    numbers:[1,2,3,4,5,6],documents:[],votes:[],targets:[
+    numbers:[1,2,3,4,5,6],documents:[],votes:[],peerAgendas:[],targets:[
       {id:'p1',kind:'process',title:'Hundewiese in Feldkirchen'},
       {id:'t1',kind:'topic',title:'Kita-Finanzierung'},
       {id:'t2',kind:'topic',title:'Rechenzentrum und Bauleitplanung'},
@@ -65,6 +65,21 @@ for(const input of [childcare,childcare2]) {
  assert.ok(product.insights.some(i=>i.value==='childcare'));
  assert.deepEqual(product.relations.map(r=>r.targetId),['t1']);
 }
+const subsidy=structuredClone(childcare);
+subsidy.agenda.id='kita2';subsidy.agenda.number='2';
+subsidy.peerAgendas=[{id:'kita3',number:'3',title:childcare2.agenda.title,source_url:url},
+  {id:'other',number:'4',title:'Beitragsanpassung der Mittagsbetreuung',source_url:url}];
+const linkedSubsidy=analyzeRis(subsidy,[],[]);
+assert.deepEqual(linkedSubsidy.relations.filter(r=>r.targetKind==='agenda').map(r=>r.targetId),['kita3']);
+assert.equal(linkedSubsidy.relations.find(r=>r.targetId==='kita3')?.evidence.length,2);
+const fees=structuredClone(childcare2);
+fees.agenda.id='kita3';
+fees.peerAgendas=[{id:'kita2',number:'2',title:subsidy.agenda.title,source_url:url}];
+assert.deepEqual(analyzeRis(fees,[],[]).relations.filter(r=>r.targetKind==='agenda').map(r=>r.targetId),['kita2']);
+const generic=structuredClone(fees);
+generic.agenda.title='Allgemeine Bauleitplanung';
+assert.deepEqual(analyzeRis(generic,[],[]).relations.filter(r=>r.targetKind==='agenda'),[]);
+assert.deepEqual(analyzeRis({...subsidy,peerAgendas:[]},[],[]).relations.filter(r=>r.targetKind==='agenda'),[]);
 assert.notEqual(await analysisFingerprint(childcare),await analysisFingerprint(childcare2));
 assert.equal(risAnalysisAiPolicy.enabled,false);
 assert.equal(risAnalysisAiPolicy.budgetEur,5);
