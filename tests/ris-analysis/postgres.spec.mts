@@ -3,6 +3,7 @@ import {readFileSync} from 'node:fs';
 import pg from 'pg';
 import {parseRisStructure,persistRisStructure,persistRisDocument,risHash} from '../../supabase/functions/_shared/ris-structure.ts';
 import {runRisAnalysis,readRisAnalysis,analysisInput,type AnalysisDatabase} from '../../supabase/functions/_shared/ris-analysis-worker.ts';
+import {appendFindingAbstract,readCurrentFindingAbstract} from '../../supabase/functions/_shared/finding-abstract-storage.ts';
 const connection=process.env.U4_TEST_DATABASE_URL;
 if(!connection)throw Error('isolated_test_database_required');
 const u=new URL(connection);
@@ -31,6 +32,7 @@ try {
  for(const [,path] of readFileSync('tests/ris-e2e/bootstrap.mjs','utf8').matchAll(/"((?:schema|security|migrations)\/[^"\n]+\.sql)"/g))
   await query(readFileSync('supabase/'+path,'utf8'));
  await query(readFileSync('supabase/migrations/20261111083118_fib_ris_automatic_analysis.sql','utf8'));
+ await query(readFileSync('supabase/migrations/20261112140000_fib_finding_abstract_versions.sql','utf8'));
  await query('create table if not exists public.memorix_analysis_sentinel(value text);truncate public.memorix_analysis_sentinel;insert into public.memorix_analysis_sentinel values(\'unchanged\')');
  await query("insert into fib.sources(name,homepage_url) values('RIS','https://buergerinfo-feldkirchen.digitalfabrix.de')");
  const indexed=JSON.parse(readFileSync('tests/u4/fixtures/ris-1031-public-agenda-indexed-20261109.json','utf8'));
@@ -101,5 +103,54 @@ try {
  assert.equal((await db.transaction(tx=>readRisAnalysis(tx,agendaId,['verified-rights'])) as any).status,'current');
  assert.equal(JSON.stringify(await query('select id,title,status from fib.events order by id')),original,'Analysis does not mutate imported events');
  assert.equal((await query('select value from public.memorix_analysis_sentinel'))[0].value,'unchanged');
+ // Shared abstract storage – isolated, never real documents or models.
+ const [{id:sourceId}]=await query("select id from fib.sources limit 1");
+ const docUrl='https://example.invalid/synthetic-press';
+ const [{id:findingId}]=await query('insert into fib.findings(source_id,title,original_url) values($1,$2,$3) returning id',
+   [sourceId,'Synthetischer Pressetext',docUrl]);
+ const [{id:abstractVersionId}]=await query(`insert into fib.finding_versions(
+   finding_id,revision,fingerprint,observed_at,original_url,metadata)
+   values($1,1,$2,now(),$3,'{}'::jsonb) returning id`,
+   [findingId,'a'.repeat(64),docUrl]);
+ const ctx={findingId,findingVersionId:abstractVersionId,fingerprint:'a'.repeat(64),
+   sourceUrl:docUrl,sourceKind:'press' as const,model:'rules',modelVersion:'test-1',
+   schemaVersion:'v1'};
+ const raw={summary:'Fiktiver Testfall ohne Quelle.',claims:[{
+   kind:'fact',statement:'Ein synthetischer Sachverhalt.',certainty:'supported',
+   evidence:[{url:docUrl,versionId:abstractVersionId}]}],relations:[],limitations:[]};
+ const permit=async()=>true;const deny=async()=>false;
+ await assert.rejects(()=>db.transaction(tx=>appendFindingAbstract(tx,ctx,raw,deny)),/not_authorized/);
+ const abstractFirst=await db.transaction(tx=>appendFindingAbstract(tx,ctx,raw,permit));
+ assert.equal(abstractFirst.existing,false);
+ const abstractRepeat=await db.transaction(tx=>appendFindingAbstract(tx,ctx,raw,permit));
+ assert.equal(abstractRepeat.existing,true);assert.equal(abstractFirst.id,abstractRepeat.id);
+ assert.equal((await db.transaction(tx=>readCurrentFindingAbstract(tx,ctx,permit)))?.summary,
+   raw.summary);
+ await assert.rejects(()=>db.transaction(tx=>readCurrentFindingAbstract(tx,ctx,deny)),/not_authorized/);
+ await assert.rejects(()=>db.transaction(tx=>appendFindingAbstract(tx,ctx,{...raw,rawText:'secret'},permit)),
+   /invalid_abstract/);
+ await assert.rejects(()=>db.transaction(tx=>appendFindingAbstract(tx,
+   {...ctx,fingerprint:'b'.repeat(64)},raw,permit)),/source_changed/);
+ await assert.rejects(()=>db.unsafe("update fib.finding_abstract_versions set result='{}'::jsonb"),
+   /permission denied/);
+ await assert.rejects(()=>db.unsafe('delete from fib.finding_abstract_versions'),
+   /permission denied/);
+ const [{id:abstractNextVersion}]=await query(`insert into fib.finding_versions(
+   finding_id,revision,fingerprint,observed_at,original_url,metadata)
+   values($1,2,$2,now(),$3,'{}'::jsonb) returning id`,
+   [findingId,'b'.repeat(64),docUrl]);
+ assert.equal(await db.transaction(tx=>readCurrentFindingAbstract(tx,ctx,permit)),null);
+ await assert.rejects(()=>db.transaction(tx=>appendFindingAbstract(tx,ctx,raw,permit)),
+   /source_not_current/);
+ const abstractNextCtx={...ctx,findingVersionId:abstractNextVersion,fingerprint:'b'.repeat(64)};
+ const abstractNextRaw={...raw,claims:raw.claims.map(c=>({...c,evidence:[{url:docUrl,versionId:abstractNextVersion}]}))};
+ const abstractNext=await db.transaction(tx=>appendFindingAbstract(tx,abstractNextCtx,abstractNextRaw,permit));
+ assert.equal(abstractNext.existing,false);
+ assert.equal((await query('select count(*)::int n from fib.finding_abstract_versions'))[0].n,2,
+   'Old derived versions are immutable history');
+ await query('begin');await query('set local role authenticated');
+ await assert.rejects(()=>query('select * from fib.finding_abstract_versions'),/permission denied/);
+ await query('rollback');
+ console.log('PASS shared abstract PostgreSQL: rights gate, source-version binding, idempotence, immutable history, stale suppression and restricted roles');
  console.log('PASS actual PostgreSQL: 21 reference TOPs, version reuse, stale suppression, policy/catalog changes, immutable outputs, RLS, backoff, source races, expired leases, competing workers, no stored text and unchanged original events');
 } finally {await owner.end();await pool.end();}

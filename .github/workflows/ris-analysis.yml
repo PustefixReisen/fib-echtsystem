@@ -4,11 +4,13 @@ on:
     paths:
       - 'supabase/functions/_shared/ris-analysis*.ts'
       - 'supabase/functions/_shared/finding-abstract.ts'
+      - 'supabase/functions/_shared/finding-abstract-storage.ts'
       - 'supabase/functions/fib-ris-analysis/**'
       - 'supabase/functions/fib-u4-ris-pilot/**'
       - 'supabase/functions/fib-u4-ris-scheduled/**'
       - 'supabase/functions/fib-editorial-write/**'
       - 'supabase/migrations/*automatic_analysis.sql'
+      - 'supabase/migrations/*finding_abstract_versions.sql'
       - 'tests/ris-analysis/**'
       - 'scripts/ris-analysis/**'
       - '.github/workflows/ris-analysis.yml'
