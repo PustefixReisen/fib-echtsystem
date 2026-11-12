@@ -4,6 +4,7 @@ import pg from 'pg';
 import {parseRisStructure,persistRisStructure,persistRisDocument,risHash} from '../../supabase/functions/_shared/ris-structure.ts';
 import {runRisAnalysis,readRisAnalysis,analysisInput,type AnalysisDatabase} from '../../supabase/functions/_shared/ris-analysis-worker.ts';
 import {appendFindingAbstract,readCurrentFindingAbstract} from '../../supabase/functions/_shared/finding-abstract-storage.ts';
+import {processFindingAbstract,syntheticExtractiveGenerator} from '../../supabase/functions/_shared/finding-abstract-pipeline.ts';
 const connection=process.env.U4_TEST_DATABASE_URL;
 if(!connection)throw Error('isolated_test_database_required');
 const u=new URL(connection);
@@ -152,5 +153,41 @@ try {
  await assert.rejects(()=>query('select * from fib.finding_abstract_versions'),/permission denied/);
  await query('rollback');
  console.log('PASS shared abstract PostgreSQL: rights gate, source-version binding, idempotence, immutable history, stale suppression and restricted roles');
+ // End-to-end synthetic pipeline across a real PostgreSQL transaction.
+ let loads=0,generations=0,rightsChecks=0;
+ const abstractPipelineContext={...abstractNextCtx,modelVersion:'synthetic-pipeline-v1'};
+ const abstractPipeline={
+   rights:async()=>{rightsChecks++;return true;},
+   load:async()=>{loads++;return {fingerprint:abstractPipelineContext.fingerprint,
+      segments:[{page:1,text:'FIKTIVE Pressemitteilung. Die Gemeinde bespricht Radverkehr.'}]};},
+   generate:async(input:Parameters<typeof syntheticExtractiveGenerator>[0])=>{
+     generations++;return syntheticExtractiveGenerator(input);
+   },
+   transaction:db.transaction,
+ };
+ const processed=await processFindingAbstract(abstractPipelineContext,abstractPipeline);
+ assert.equal(processed.kind,'created');
+ assert.ok(processed.result.summary.startsWith('FIKTIVE Pressemitteilung'));
+ assert.equal(processed.result.relations.length,0);
+ assert.equal(processed.result.claims[0].evidence[0].versionId,abstractNextVersion);
+ const reprocessed=await processFindingAbstract(abstractPipelineContext,abstractPipeline);
+ assert.equal(reprocessed.kind,'cached');
+ assert.equal(loads,1);assert.equal(generations,1);
+ assert.ok(rightsChecks>=3,'Authorization is checked before load and persistence');
+ await assert.rejects(()=>processFindingAbstract({...abstractPipelineContext,modelVersion:'denied'},
+   {...abstractPipeline,rights:async()=>false}),/not_authorized/);
+ assert.equal(loads,1,'No loading when authorization fails');
+ await assert.rejects(()=>processFindingAbstract({...abstractPipelineContext,modelVersion:'changed'},
+   {...abstractPipeline,load:async()=>({fingerprint:'c'.repeat(64),
+      segments:[{page:1,text:'Only fictional'}]})}),/source_changed/);
+ await assert.rejects(()=>processFindingAbstract({...abstractPipelineContext,modelVersion:'wrong-top',scopeTop:2},
+   {...abstractPipeline,load:async()=>({fingerprint:abstractPipelineContext.fingerprint,
+      segments:[{page:1,top:3,text:'Wrong TOP'}]})}),/top_scope_unverified/);
+ await assert.rejects(()=>processFindingAbstract({...abstractPipelineContext,modelVersion:'oversize'},
+   {...abstractPipeline,load:async()=>({fingerprint:abstractPipelineContext.fingerprint,
+      segments:[{page:1,text:'x'.repeat(12001)}]})}),/resource_limit/);
+ assert.equal((await query('select count(*)::int n from fib.finding_abstract_versions'))[0].n,3,
+   'Fail-closed cases never store a result');
+ console.log('PASS synthetic pipeline: source rights before access, bounded segments, TOP isolation, repeat cache, immutable PostgreSQL insert');
  console.log('PASS actual PostgreSQL: 21 reference TOPs, version reuse, stale suppression, policy/catalog changes, immutable outputs, RLS, backoff, source races, expired leases, competing workers, no stored text and unchanged original events');
 } finally {await owner.end();await pool.end();}

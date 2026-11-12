@@ -5,6 +5,7 @@ on:
       - 'supabase/functions/_shared/ris-analysis*.ts'
       - 'supabase/functions/_shared/finding-abstract.ts'
       - 'supabase/functions/_shared/finding-abstract-storage.ts'
+      - 'supabase/functions/_shared/finding-abstract-pipeline.ts'
       - 'supabase/functions/fib-ris-analysis/**'
       - 'supabase/functions/fib-u4-ris-pilot/**'
       - 'supabase/functions/fib-u4-ris-scheduled/**'
