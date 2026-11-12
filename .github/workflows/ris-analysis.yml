@@ -37,6 +37,8 @@ jobs:
       - run: npm install --ignore-scripts --no-package-lock --no-audit --no-fund
       - name: Rule-based reference cases and source boundaries
         run: node --import tsx tests/ris-analysis/rules.spec.mts
+      - name: Synthetic A/B comparison (metadata vs transient fictional texts)
+        run: node --import tsx tests/ris-analysis/synthetic-ab.spec.mts
       - name: Read-only runtime preflight and fail-closed release client
         run: node --import tsx tests/ris-analysis/preflight.spec.mts
       - name: Actual PostgreSQL isolation, reanalysis, leases and retries
