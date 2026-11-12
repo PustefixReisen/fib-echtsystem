@@ -135,4 +135,3 @@ Für die automatisch zugeordneten RIS-Fundstellen gilt künftig dieselbe quellen
 Ein RIS-Abstract dient ausschließlich der internen, automatisierten Erschließung und möglichen Beziehungskandidaten zu nachgelagerten Meldungen, Vorgängen und Themen; keine zusätzliche RIS-Redaktion oder Einzelabnahme. Amtliche Beschlussergebnisse und Abstimmungen stammen weiterhin aus der deterministischen RIS-Übernahme und werden nicht durch KI überschrieben. KI-Verarbeitung und Zugriffsrechte bleiben vom Import getrennt und gesondert freizugeben.
 
 **Ist/Soll-Abgrenzung (12.11.2026):** Die bereits bereitgestellte RIS-Regelanalyse `rules-3` erzeugt strukturierte Erkenntnisse aus Metadaten, nicht diese KI-Abstracts aus vollständigen Dokumentinhalten. Die neue quellenübergreifende Funktion ist erst Fachentscheidung und Entwicklungsauftrag. Siehe [Entscheidungsvorlage](../operations/fundstellenabstracts-entscheidung-440.md).
-
