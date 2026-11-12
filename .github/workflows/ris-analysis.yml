@@ -3,6 +3,7 @@ on:
   pull_request:
     paths:
       - 'supabase/functions/_shared/ris-analysis*.ts'
+      - 'supabase/functions/_shared/finding-abstract.ts'
       - 'supabase/functions/fib-ris-analysis/**'
       - 'supabase/functions/fib-u4-ris-pilot/**'
       - 'supabase/functions/fib-u4-ris-scheduled/**'
@@ -39,6 +40,8 @@ jobs:
         run: node --import tsx tests/ris-analysis/rules.spec.mts
       - name: Synthetic A/B comparison (metadata vs transient fictional texts)
         run: node --import tsx tests/ris-analysis/synthetic-ab.spec.mts
+      - name: Shared versioned finding abstract contract (all sources, no API calls)
+        run: node --import tsx tests/ris-analysis/finding-abstract.spec.mts
       - name: Read-only runtime preflight and fail-closed release client
         run: node --import tsx tests/ris-analysis/preflight.spec.mts
       - name: Actual PostgreSQL isolation, reanalysis, leases and retries
