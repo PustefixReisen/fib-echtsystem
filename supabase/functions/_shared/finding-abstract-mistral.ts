@@ -100,6 +100,7 @@ TEXT:\n${sources}`;
     // keys and lock cumulative remaining budget, not merely check a balance.
     const reservation=await config.budget.reserve(config.reservationKey,maxCents);
     let dispatched=false;
+    let settled=false;
     try{
       assertAllowed();
       const request={endpoint:'https://api.mistral.ai/v1/chat/completions' as const,
@@ -117,12 +118,15 @@ TEXT:\n${sources}`;
         config.eurInputPerMillion,config.eurOutputPerMillion);
       // Spend is accounted for even if structured output fails validation.
       await reservation.settle(actual);
+      settled=true;
       // Extra independent schema/provenance gate before any persistence.
       validateFindingAbstract({...context,permitted:true} as AbstractContext,parsed.data);
       return parsed.data;
     }catch(e){
-      if(dispatched)await reservation.uncertain();
-      else await reservation.releaseUnsent();
+      if(!settled){
+        if(dispatched)await reservation.uncertain();
+        else await reservation.releaseUnsent();
+      }
       throw e;
     }
   };
