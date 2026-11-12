@@ -21,6 +21,17 @@ jobs:
           node-version: '22'
       - run: npm install --ignore-scripts --no-package-lock --no-audit --no-fund
       - run: npm install --no-save --ignore-scripts --no-package-lock playwright@1.56.1
+      - name: Use canonical Ubuntu package mirrors for Playwright dependencies
+        run: |
+          set -euo pipefail
+          # GitHub hosted 24.04 runners sometimes refer to a transiently unresolvable Azure mirror.
+          # Keep dependency installation and browser tests enabled; change only the apt mirror.
+          for source in /etc/apt/sources.list /etc/apt/sources.list.d/ubuntu.sources; do
+            if [ -f "$source" ]; then
+              sudo sed -i 's|azure.archive.ubuntu.com|archive.ubuntu.com|g' "$source"
+            fi
+          done
+          sudo apt-get update -o Acquire::Retries=3
       - run: npx playwright install --with-deps chromium
       - run: node tests/ris-e2e/originals.spec.mjs
       - name: Real personal launcher, login and persistent restart (synthetic PDF transport)

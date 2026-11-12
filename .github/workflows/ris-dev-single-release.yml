@@ -48,10 +48,10 @@ jobs:
           const worker=step('Deploy analysis worker for read-only runtime preflight');
           const analysisSchema=step('Apply only the additive derived-analysis schema');
           const readback=step('Encrypt FIB-only snapshot and prior frontend in separate Nextcloud crypt remote; verify readback');
-          const activation=src.indexOf('\n            FIB_RIS_ANALYSIS_ENABLED=true');
+          const activation=step('Verify operator-managed analysis activation (no management write)');
           if(!(snapshot<readback && readback<worker && worker<probe && probe<analysisSchema && analysisSchema<activation))
             throw Error('Verified backup and runtime preflight must precede analysis schema and activation');
-          if(/supabase[^\n]*secrets\s+list/.test(src) || !src.includes('\n        run: node scripts/ris-analysis/preflight.mjs\n'))
+          if(/supabase[^\n]*secrets\s+(?:list|set)/.test(src) || !src.includes('\n        run: node scripts/ris-analysis/preflight.mjs\n') || !src.includes('\n        run: node scripts/ris-analysis/activation.mjs\n'))
             throw Error('Runtime preflight is mandatory; no secret-list permission dependency');
           JS
       - uses: actions/setup-node@v4
@@ -242,8 +242,9 @@ jobs:
           npx --yes supabase@2.122.0 functions deploy fib-editorial-write --project-ref apaubomxffcwtzjimori --no-verify-jwt
           npx --yes supabase@2.122.0 functions deploy fib-u4-ris-pilot --project-ref apaubomxffcwtzjimori
           npx --yes supabase@2.122.0 functions deploy fib-u4-ris-scheduled --project-ref apaubomxffcwtzjimori --no-verify-jwt
-          npx --yes supabase@2.122.0 secrets set --project-ref apaubomxffcwtzjimori \
-            FIB_RIS_ANALYSIS_ENABLED=true FIB_RIS_ANALYSIS_DOCUMENTS_ENABLED=false
+      - name: Verify operator-managed analysis activation (no management write)
+        if: inputs.confirmation == 'RIS-ANALYSIS-428'
+        run: node scripts/ris-analysis/activation.mjs
       - name: Apply the single, FIB-only, non-destructive RIS migration
         if: inputs.confirmation == 'RIS-DEV'
         env:
